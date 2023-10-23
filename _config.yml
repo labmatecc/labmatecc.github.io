@@ -16,14 +16,14 @@ minimal_mistakes_skin    : "haxor" # "air", "aqua", "contrast", "dark", "dirt", 
 
 # Site Settings
 locale                   : "es-ES"
-title                    : "MatMath.h"
+title                    : "Lógica por las Ramas"
 title_separator          : "-"
-name                     : "MatMath.h"
-description              : "Divulgación matemática"
-url                      : "https://matmathh.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+name                     : "Lógica por las Ramas"
+description              : "Blog par el curso de lógica matemática"
+url                      : "https://logicaporlasramas.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
-repository               : "matmathh/matmathh.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
-logo                     : "/assets/images/masthead.png"
+repository               : "logicaporlasramas/logicaporlasramas.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+logo                     : "/assets/images/masthead.jpeg"
 teaser                   : "favicon.ico" # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 breadcrumbs              : true # true, false (default)
 words_per_minute         : 200
@@ -101,13 +101,13 @@ analytics:
 
 # Site Author
 author:
-  name             : "MatMath.h"
+  name             : "Andrés David Cadena Simons <br> Edgar Santiago Ochoa Quiroga <br> Iván Felipe Salamanca Medina <br> Jairo Sebastian Niño Castro"
   avatar           : "/assets/images/avatar.jpg"
-  bio              : "Somos estudiantes de matemáticas <link href='https://emoji-css.afeld.me/emoji.css' rel='stylesheet'><i class='em em-owl' aria-role='presentation' aria-label='BIRD'></i>.<br>Post divulgativos de matemáticas, particularmente de teoría de números, álgebra y temas relacionados."
+  bio              : "Somos estudiantes de matemáticas <link href='https://emoji-css.afeld.me/emoji.css' rel='stylesheet'><i class='em em-owl' aria-role='presentation' aria-label='BIRD'></i>."
   location         : "Colombia"
-  email            : "matm4th.h@gmail.com"
+  email            : "@gmail.com"
   uri              :
-  home             : matmathh.github.io # null (default), "absolute or relative url to link to author home"
+  home             : logicaporlasramas.github.io # null (default), "absolute or relative url to link to author home"
   bitbucket        :
   codepen          :
   dribbble         :
@@ -118,7 +118,7 @@ author:
   gitlab           :
   google_plus      :
   keybase          : #"snowscan"
-  instagram        : matmath.h
+  instagram        : 
   lastfm           :
   linkedin         : # "john-doe-12345678" (the last part of your profile url, e.g. https://www.linkedin.com/in/john-doe-12345678)
   pinterest        :
