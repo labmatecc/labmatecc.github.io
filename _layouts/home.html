@@ -15,6 +15,50 @@ header-includes: |
 
 {{ content }}
 
+    <style>
+
+        p{
+            font-size: 14px; /* Puedes ajustar el tamaño según tus preferencias */
+        }
+
+        /* Estilo para el contenedor principal */
+        .contenedor-principal {
+            display: flex;
+            align-items: center; /* Centra verticalmente los elementos dentro del contenedor */
+        }
+
+        /* Estilo para la imagen a la izquierda */
+        .imagen-izquierda {
+            max-width: 40%; /* Ajusta el tamaño máximo de la imagen al ancho del contenedor */
+            margin-right: 20px; /* Espaciado a la derecha de la imagen */
+        }
+
+        /* Estilo para el contenido a la derecha de la imagen */
+        .contenido-derecha {
+            flex-grow: 1; /* Hace que este elemento ocupe todo el espacio restante */
+        }
+    </style>
+
+
+<img src="assets/images/ramas.jpg" width="120%">
+<hr>
+<h1> ¿DE QUÉ SE TRATA EL BLOG? </h1>
+<hr>
+<div class="contenedor-principal">
+    <!-- Imagen a la izquierda -->
+    <img class="imagen-izquierda" src="assets/images/des.jpeg" alt="Descripción de la imagen">
+
+    <!-- Contenido a la derecha de la imagen -->
+    <div class="contenido-derecha">
+        <p >Bienvenidos a este viaje por el árbol de la compacidad, nosotros somos lógica por las ramas. Naturalmente cuando se trata de matemáticas buscamos conexiones entre las distintas ramas de la misma y eso despierta la curiosidad de cada uno de nosotros, bueno fue así el inicio de este proyecto, nos encontramos con el teorema de compacidad y pensamos, ¿Esto que relación tiene con la compacidad de Topología/análisis? ¿Encontraremos logicas dónde se tenga y dónde no? ¿Que necesito para tener compacidad?. Estas son solo algunas de las cuestiones que nuestras mentes ilusionadas se preguntaron al inicio del semestre. El objetivo de este proyecto es dar respuesta a esas preguntas, entender que es lo importante de la compacidad y los resultados más clásicos de la misma, explorar lugares donde está falla y la pregunta principal ¿Existe forma de recuperarla? Los invitamos a darle un vistazo a todo lo que tenemos que decir al respecto y esperamos que sea de su agrado.</p>
+    </div>
+</div>
+<hr>
+<h1> MAPA DE LECTURA </h1>
+<hr>
+<center> <img src="assets/images/ramas.jpg" width="600%"> </center>
+<hr>
+
 <h3 class="archive__subtitle">{{ site.data.ui-text[es].recent_posts | default: "¡POST RECIENTES!" }}</h3>
 
 {% for post in paginator.posts %}

@@ -5,7 +5,7 @@ excerpt: "Las lógicas de segundo orden son una extensión bastante natural e in
 date: 2023-10-10
 classes: wide
 header:
-  teaser: /assets/images/bitacora-1-santiago/5.jpeg
+  teaser: /assets/images/andres.jpg
   teaser_home_page: true
   icon: 
 categories:

@@ -5,7 +5,7 @@ excerpt: "Durante la elaboración de este proyecto, por mi parte, he podido enco
 date: 2023-10-10
 classes: wide
 header:
-  teaser: /assets/images/bitacora-1-santiago/3.jpeg
+  teaser: /assets/images/ivan.jpeg
   teaser_home_page: true
   icon: 
 categories:

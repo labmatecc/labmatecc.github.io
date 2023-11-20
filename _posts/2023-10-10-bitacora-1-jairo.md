@@ -5,7 +5,7 @@ excerpt: "Cuando consultamos con el profesor Andrés sobre bibliografía que nos
 date: 2023-10-10
 classes: wide
 header:
-  teaser: /assets/images/bitacora-1-santiago/1.jpeg
+  teaser: /assets/images/jairo.jpeg
   teaser_home_page: true
   icon: 
 categories:

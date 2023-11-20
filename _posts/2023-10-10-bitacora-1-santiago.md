@@ -5,7 +5,7 @@ excerpt: "Personalmente al ver el contenido inicial del curso pensé que de una 
 date: 2023-10-10
 classes: wide
 header:
-  teaser: /assets/images/bitacora-1-santiago/2.jpeg
+  teaser: /assets/images/santiago.jpeg
   teaser_home_page: true
   icon: 
 categories:

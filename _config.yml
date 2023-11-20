@@ -23,7 +23,7 @@ description              : "Blog para el curso de lógica matemática"
 url                      : "https://logicaporlasramas.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "logicaporlasramas/logicaporlasramas.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
-logo                     : "/assets/images/masthead.jpeg"
+logo                     : "/assets/images/masthead.png"
 teaser                   : "favicon.ico" # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 breadcrumbs              : true # true, false (default)
 words_per_minute         : 200
