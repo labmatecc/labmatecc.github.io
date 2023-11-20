@@ -15,7 +15,7 @@ remote_theme             : "mmistakes/minimal-mistakes@4.15.1"
 minimal_mistakes_skin    : "haxor" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
-locale                   : "es-ES"
+locale                   : "en-US"
 title                    : "Lógica por las Ramas"
 title_separator          : "-"
 name                     : "Lógica por las Ramas"
