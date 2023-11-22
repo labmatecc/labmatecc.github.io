@@ -16,4 +16,13 @@ header-includes: |
 <h1>Presentación inicial</h1>
 <center> <embed src="/assets/PDF/1.pdf" type="application/pdf" width="80%" height="100%"> </center>
 <hr>
-<h1>Pechakucha</h1>
+<h1>Arból de Compacidad</h1>
+<center> <embed src="/assets/PDF/arbol.pdf" type="application/pdf" width="80%" height="100%"> </center>
+<hr>
+<h1>PechaKucha</h1>
+<center>
+  <video width="960" height="540" controls>
+      <source src="/assets/Videos/PechaKucha.mp4" type="video/mp4">
+      Tu navegador no soporta el tag de video.
+  </video>
+</center>
