@@ -1,6 +1,6 @@
 ---
 layout: single
-title: Bitácora 1 (Andrés David Cadena Simons) 
+title: soy gay (Andrés David Cadena Simons) 
 excerpt: "Las lógicas de segundo orden son una extensión bastante natural e intuitiva de las lógicas de primer orden, mantenemos todas las nociones que ya conocemos de las lógicas de primer orden, es decir sentencias atómicas, reglas de conjunción y la parte crucial de todo el asunto, **los cuanticadores**. En primer orden los cuantificadores solo tienen alcance de las **variables** pero por ejemplo no se puede cuantificar algo como una relación $$n$$-aria, pero en la lógica de segundo orden si, los cuantificadores tienen el alcance de todo tipo de relaciones. Esta peculiaridad que si bien da un alcance mucho mayor a la forma de escribir sentencias y argumentos. Esta pequeña pero sustancial diferencia ocasiona que la lógica de segundo orden no sea Compacta." 
 date: 2023-10-10
 classes: wide
