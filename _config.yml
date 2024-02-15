@@ -20,7 +20,7 @@ title                    : "Laboratorio de álgebra lineal"
 title_separator          : "-"
 name                     : "Laboratorio de álgebra lineal"
 description              : "Material acompañamiento de cursos del departamento de matemáticas y ciencias de la computación de la universidad nacional de Colombia sede Bogotá."
-url                      : "https://logicaporlasramas.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+url                      : "https://laboratoriodealgebralineal.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "jcgalvisa/UNBMathCCHub" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 logo                     : "/assets/images/masterhead.png"
@@ -101,13 +101,13 @@ analytics:
 
 # Site Author
 author:
-  name             : "Andrés David Cadena Simons <br> Edgar Santiago Ochoa Quiroga <br> Iván Felipe Salamanca Medina <br> Jairo Sebastian Niño Castro"
+  name             : "Galvis"
   avatar           : "/assets/images/avatar.jpg"
-  bio              : "Somos estudiantes de matemáticas <link href='https://emoji-css.afeld.me/emoji.css' rel='stylesheet'><i class='em em-owl' aria-role='presentation' aria-label='BIRD'></i>."
+  bio              : "Material de acompañamiento para los cursos del Departamento de Matemáticas y Ciencias de la Computación de la Universidad Nacional de Colombia, sede Bogotá."
   location         : "Colombia"
   email            : "@gmail.com"
   uri              :
-  home             : logicaporlasramas.github.io # null (default), "absolute or relative url to link to author home"
+  home             : laboratoriodealgebralineal.github.io # null (default), "absolute or relative url to link to author home"
   bitbucket        :
   codepen          :
   dribbble         :
