@@ -13,7 +13,25 @@ header-includes: |
 <script src="https://tikzjax.com/v1/tikzjax.js"></script>
 
 {{ content }}
-
+<style>
+  div{
+      background-color:#FFFFFF
+  }
+      
+  p{
+      color: black;
+      font-size: 14px; /* Puedes ajustar el tamaño según tus preferencias */
+  }
+  h1{
+      color: black;
+  }
+  h2{
+      color: black;
+  }
+  h3{
+      color: black;
+  }
+</style>
 <div class="entries-{{ page.entries_layout | default: 'list' }}">
   {% include posts-tag.html taxonomy=page.taxonomy type=page.entries_layout %}
 </div>
