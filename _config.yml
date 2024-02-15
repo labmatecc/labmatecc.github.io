@@ -102,7 +102,7 @@ analytics:
 # Site Author
 author:
   name             : "Galvis"
-  avatar           : "/assets/images/avatar.jpg"
+  avatar           : "/assets/images/avatar.png"
   bio              : "Material de acompañamiento para los cursos del Departamento de Matemáticas y Ciencias de la Computación de la Universidad Nacional de Colombia, sede Bogotá."
   location         : "Colombia"
   email            : "@gmail.com"
