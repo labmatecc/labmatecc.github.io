@@ -13,25 +13,7 @@ header-includes: |
 <script src="https://tikzjax.com/v1/tikzjax.js"></script>
 
 {{ content }}
-<style>
-  div{
-      background-color:#FFFFFF
-  }
-      
-  p{
-      color: black;
-      font-size: 14px; /* Puedes ajustar el tamaño según tus preferencias */
-  }
-  h1{
-      color: black;
-  }
-  h2{
-      color: black;
-  }
-  h3{
-      color: black;
-  }
-</style>
+
 <div class="entries-{{ page.entries_layout }}">
   {% include documents-collection.html collection=page.collection sort_by=page.sort_by sort_order=page.sort_order type=page.entries_layout %}
 </div>
