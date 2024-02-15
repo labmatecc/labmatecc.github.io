@@ -16,14 +16,14 @@ minimal_mistakes_skin    : "haxor" # "air", "aqua", "contrast", "dark", "dirt", 
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Lógica por las Ramas"
+title                    : "Laboratorio de álgebra lineal"
 title_separator          : "-"
-name                     : "Lógica por las Ramas"
-description              : "Blog para el curso de lógica matemática"
+name                     : "Laboratorio de álgebra lineal"
+description              : "Material acompañamiento de cursos del departamento de matemáticas y ciencias de la computación de la universidad nacional de Colombia sede Bogotá."
 url                      : "https://logicaporlasramas.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
-repository               : "logicaporlasramas/logicaporlasramas.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
-logo                     : "/assets/images/masthead.png"
+repository               : "jcgalvisa/UNBMathCCHub" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+logo                     : "/assets/images/masterhead.png"
 teaser                   : "favicon.ico" # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 breadcrumbs              : true # true, false (default)
 words_per_minute         : 200
