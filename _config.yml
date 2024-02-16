@@ -101,11 +101,11 @@ analytics:
 
 # Site Author
 author:
-  name             : "Galvis"
+  name             : "Laboratorio de Álgebra Lineal"
   avatar           : "/assets/images/avatar.png"
   bio              : "Material de acompañamiento para los cursos del Departamento de Matemáticas y Ciencias de la Computación de la Universidad Nacional de Colombia, sede Bogotá."
   location         : "Colombia"
-  email            : "@gmail.com"
+  email            : "jcgalvisa@unal.edu.co"
   uri              :
   home             : laboratoriodealgebralineal.github.io # null (default), "absolute or relative url to link to author home"
   bitbucket        :
