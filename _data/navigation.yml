@@ -5,7 +5,5 @@ main:
     url: /categories/
   - title: "Tags"
     url: /tags/
-  - title: "Nosotros"
-    url: /about/
   - title: "Buscador"
     url: /buscador/
