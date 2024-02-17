@@ -1,18 +1,13 @@
 ---
 layout: search
-title: "Buscador"
+title: "Buscador general de palabras clave"
 permalink: /buscador/
 date: 2024-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}
 ---
 
-<!-- Formulario de búsqueda -->
-<form action="/search" method="get">
-    <label for="search">Buscar:</label>
-    <input type="text" id="search" name="q" placeholder="Escribe aquí...">
-    <button type="submit">Buscar</button>
-</form>
-
-</body>
-</html>
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+  type="text/javascript">
+</script>
