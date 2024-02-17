@@ -1,6 +1,6 @@
 ---
 layout: search
-title: "Buscador general de palabras clave"
+title: "Buscador"
 permalink: /buscador/
 date: 2024-02-15
 header-includes: |
