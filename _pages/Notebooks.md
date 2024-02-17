@@ -1,6 +1,4 @@
 ---
-<hr>
-
 title: "Notebooks"
 permalink: /Notebooks/
 date: 2019-02-15
@@ -26,6 +24,8 @@ header-includes: |
 <body>
 
 <h1>NOTEBOOKS</h1>
+
+<hr>
 
 </body>
 </html>
