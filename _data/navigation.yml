@@ -1,11 +1,11 @@
 main:
   - title: "Inicio"
     url: /
-  - title: "Categorias"
-    url: /categories/
-  - title: "Tags"
-    url: /tags/
-  - title: "Nosotros"
-    url: /about/
+#  - title: "Categorias"
+#    url: /categories/
+#  - title: "Tags"
+#    url: /tags/
+  - title: "Notebooks"
+    url: /Notebooks/
   - title: "Buscador"
     url: /buscador/
