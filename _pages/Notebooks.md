@@ -103,7 +103,7 @@ header-includes: |
             display: inline-block;
             padding: 10px 20px;
             border-radius: 20px; /* Esto hace que el botón tenga forma de pastilla */
-            background-color: #309e01; /* Cambia el color del botón a verde */
+            background-color: rgba(72, 133, 45, 0.76); /* Cambia el color del botón a verde */
             color: white; /* Cambia el color del texto a blanco */
             text-decoration: none; /* Elimina el subrayado predeterminado en los enlaces */
             font-size: 16px; /* Cambia el tamaño del texto */
