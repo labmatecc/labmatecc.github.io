@@ -23,7 +23,7 @@ header-includes: |
 </head>
 <body>
 
-<h1>Mínimoscuadrados</h1>
+<h1>Mínimos cuadrados</h1>
 
 </body>
 </html>
