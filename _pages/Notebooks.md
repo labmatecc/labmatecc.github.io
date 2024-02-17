@@ -11,7 +11,6 @@ header-includes: |
   type="text/javascript">
 </script>
 
-<!DOCTYPE html>
 <html>
 <head>
     <style>
