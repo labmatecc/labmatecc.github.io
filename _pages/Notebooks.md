@@ -170,7 +170,7 @@ header-includes: |
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>Comienza con una introducción al machine learning. Se destaca el uso de la distancia euclidiana en el contexto del clustering y se presenta una función para evaluar la calidad de los clusters. Luego, se introduce el algoritmo $$K$$-Means, con una implementación y un ejemplo de aplicación a datos generados aleatoriamente. Se aborda el preprocesamiento de datos, incluyendo la carga desde archivos y la generación aleatoria. Se detallan técnicas de normalización y estandarización, y se proporcionan funciones para Min-Máx y $$Z$$-Score. La visualización de datos antes y después de la normalización se muestra, seguida de la aplicación del algoritmo K-Means y la visualización de los clusters resultantes </p>
+        <p>Comienza con una introducción al machine learning. Se destaca el uso de la distancia euclidiana en el contexto del clustering y se presenta una función para evaluar la calidad de los clusters. Luego, se introduce el algoritmo $K$-Means, con una implementación y un ejemplo de aplicación a datos generados aleatoriamente. Se aborda el preprocesamiento de datos, incluyendo la carga desde archivos y la generación aleatoria. Se detallan técnicas de normalización y estandarización, y se proporcionan funciones para Min-Máx y $Z$-Score. La visualización de datos antes y después de la normalización se muestra, seguida de la aplicación del algoritmo K-Means y la visualización de los clusters resultantes </p>
       </div>
     </div>
   </div>
@@ -185,8 +185,52 @@ header-includes: |
     <div class="person">
       <div class="info">
         <p>El cuaderno comienza introduciendo el concepto de independencia lineal. Se define la dependencia e independencia lineal, relacionándolos con la existencia de combinaciones lineales no triviales. Se muestra un teorema clave que establece la relación de dependencia lineal entre dos vectores cuando uno es un múltiplo escalar del otro. Se ilustra este concepto con un ejemplo específico. Luego, se explora la relación entre matrices y la independencia lineal, destacando que las columnas de una matriz son linealmente independientes si y solo si el determinante de la matriz es diferente de cero.</p>
-        <p>Se proporcionan ejemplos adicionales para determinar la dependencia o independencia lineal de conjuntos de vectores en $$\mathbb{R}^n$$. Se utiliza el concepto de determinante para tomar decisiones sobre la independencia lineal. Se introduce el concepto de base en un espacio vectorial y se demuestra que cualquier conjunto de $$n$$ vectores linealmente independientes en \[\mathbb{R}^n]\ genera todo el espacio. Se ilustra este teorema con un ejemplo específico.</p>
+        <p>Se proporcionan ejemplos adicionales para determinar la dependencia o independencia lineal de conjuntos de vectores en $\mathbb{R}^n.$ Se utiliza el concepto de determinante para tomar decisiones sobre la independencia lineal. Se introduce el concepto de base en un espacio vectorial y se demuestra que cualquier conjunto de $n$ vectores linealmente independientes en $\mathbb{R}^n$ genera todo el espacio. Se ilustra este teorema con un ejemplo específico.</p>
         <p>El cuaderno concluye abordando el tema de vectores ortonormales y presenta el proceso de ortogonalización de Gram-Schmidt para convertir un conjunto linealmente independiente en un conjunto ortonormal. Se describen las variantes clásica y modificada del algoritmo de Gram-Schmidt, y se demuestra su aplicación en un ejemplo práctico. Se proporciona código para implementar los algoritmos de Gram-Schmidt clásico y modificado, así como para verificar la ortogonalidad de matrices generadas.</p>
+      </div>
+    </div>
+  </div>
+
+<hr>
+
+<div class="button-container">
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Diagonalizacion/" class="button">Diagonalización (Sucesión de Fibonacci)</a>
+</div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>El cuaderno comienza con la importación de librerías. Luego, aborda el tema de matrices semejantes, proporciona definiciones y ejemplos. También incluye un teorema que establece que matrices semejantes tienen el mismo polinomio característico y, por lo tanto, los mismos valores propios. Se presentan ejemplos de matrices semejantes y se verifica que comparten los valores propios. Luego, se introduce el concepto de matriz diagonalizable, junto con un teorema que establece las condiciones para que una matriz sea diagonalizable. Se presenta un corolario que afirma que si una matriz tiene valores propios distintos, entonces es diagonalizable. Se proporcionan ejemplos de matrices diagonalizables y se calculan sus valores y vectores propios. Posteriormente, se explora la aplicación de estos conceptos a la sucesión de Fibonacci. Se describe cómo se puede expresar el sistema recursivo de Fibonacci en términos matriciales y se muestra cómo calcular directamente el n-ésimo número de Fibonacci mediante la diagonalización de la matriz asociada. Se implementa una función para calcular Fn de manera eficiente utilizando la diagonalización. </p>
+      </div>
+    </div>
+  </div>
+
+<hr>
+
+<div class="button-container">
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Sistemasdeecuacionesdiferenciales/" class="button">Sistemas de ecuaciones diferenciales</a>
+</div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>Se comienza con una introducción sobre ecuaciones diferenciales, destacando la forma general de las ecuaciones de primer orden y proporcionando un ejemplo específico. Luego, presentan una solución numérica para el ejemplo utilizando la biblioteca DifferentialEquations de Julia.</p>
+        <p>El cuaderno continúa con una sección sobre sistemas lineales homogéneos. Se introduce la notación matricial y se explica cómo resolver sistemas lineales homogéneos mediante el uso de matrices diagonalizables. Se presenta un ejemplo concreto, mostrando cómo la solución general de un sistema homogéneo se puede expresar en términos de los vectores propios y valores propios de la matriz asociada al sistema. Luego, se muestra cómo resolver un sistema específico con condiciones iniciales dadas.</p>
+      </div>
+    </div>
+  </div>
+
+<hr>
+
+<div class="button-container">
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Minimoscuadrados/" class="button">Mínimos cuadrados</a>
+</div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>El cuaderno proporciona una introducción al método de mínimos cuadrados, destacando su aplicación para resolver sistemas sobredeterminados de ecuaciones lineales. Luego, se presenta un ejemplo con datos y se resuelve utilizando el operador de backslash (\) en Julia.</p>
+        <p>Posteriormente, el cuaderno aborda el ajuste por mínimos cuadrados en el contexto de la regresión lineal y presenta un ejemplo específico de ajuste polinomial. Se describe cómo se puede aplicar el método para encontrar un polinomio de grado específico que se ajuste de manera óptima a un conjunto de datos dado. Finalmente, se explora el ajuste por mínimos cuadrados de ecuaciones cuadráticas en las variables x e y, y se proporciona un ejemplo práctico con datos que se ajustan a una elipse.</p>
       </div>
     </div>
   </div>
