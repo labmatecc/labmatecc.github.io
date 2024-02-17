@@ -66,6 +66,13 @@ header-includes: |
       text-align: center;
       color: #333;
     }
+
+    hr {
+            border: none; /* Elimina el borde */
+            height: 2px; /* Altura de la línea */
+            background-color: #000; /* Color de la línea */
+            margin: 20px 0; /* Margen superior e inferior */
+        }
   </style>
 
   <div class="container">
@@ -107,24 +114,7 @@ header-includes: |
   <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Conceptosbasicos/" class="button">Conceptos básicos</a>
 </div>
 
-</body>
-</html>
-    <style>
-        /* Estilos opcionales para la línea horizontal */
-        hr {
-            border: none; /* Elimina el borde */
-            height: 2px; /* Altura de la línea */
-            background-color: #000; /* Color de la línea */
-            margin: 20px 0; /* Margen superior e inferior */
-        }
-    </style>
-</head>
-<body>
-
 <hr>
-
-</body>
-</html>
 
 <div class="container">
     <div class="person">
@@ -140,7 +130,9 @@ header-includes: |
       </div>
     </div>
   </div>
-  
+
 <div class="button-container">
   <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Conceptosbasicos/" class="button">Conceptos básicos</a>
 </div>
+
+<hr>
