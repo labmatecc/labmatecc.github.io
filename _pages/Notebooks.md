@@ -136,3 +136,33 @@ header-includes: |
 </div>
 
 <hr>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <h3>Introducción al procesamiento de imágenes</h3>
+        <p>Se inicia con la definición de imágenes en blanco y negro y a color, destacando las representaciones numéricas de intensidad y los canales RGB. Muestra la creación interactiva del notebook se realiza a través de Pluto.jl, aprovechando librerías como Colors e ImageShow. También muestra la exploración de píxeles y matrices de píxeles revela las propiedades RGB y demuestra la manipulación eficiente de imágenes. Se abordan operaciones básicas, como selección de subimágenes y ajuste de tamaños, junto con el operador de Broadcasting. Además, se ejemplifican operaciones de procesamiento, como reducción de tamaño e inversión, utilizando álgebra lineal para reescalar píxeles y realizar combinaciones lineales. Finaliza mostrando filtros y kernels para las imagenes. </p>
+      </div>
+    </div>
+  </div>
+
+<div class="button-container">
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Introduccionalprocesamientodeimágenes/" class="button">Introducción al procesamiento de imágenes</a>
+</div>
+
+<hr>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <h3>Descripción de grafos usando matrices</h3>
+        <p>El cuaderno muestra conceptos fundamentales de grafos, como nodos, aristas y adyacencia, ilustrando con el problema de los Puentes de Königsberg. Se describen tipos de nodos y aristas, destacando la flexibilidad en la representación. A través de ejemplos, se construyen y visualizan grafos utilizando la librería GraphPlot. Se detallan las matrices de adyacencia e incidencia para representar conexiones entre nodos y aristas. Además, se presentan generadores de grafos incorporados</p>
+      </div>
+    </div>
+  </div>
+
+<div class="button-container">
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Descripcióndegrafosusandomatrices/" class="button">Descripción de grafos usando matrices</a>
+</div>
+
+<hr>
