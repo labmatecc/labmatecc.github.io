@@ -1,6 +1,6 @@
 ---
-title: "Notebooks"
-permalink: /Notebooks/
+title: "Conceptos básicos"
+permalink: /Conceptosbasicos/
 date: 2019-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}
