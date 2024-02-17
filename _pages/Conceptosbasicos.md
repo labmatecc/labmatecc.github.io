@@ -23,7 +23,7 @@ header-includes: |
 </head>
 <body>
 
-<h1>NOTEBOOKS</h1>
+<h1>Conceptos básicos</h1>
 
 </body>
 </html>
@@ -69,14 +69,3 @@ header-includes: |
   </style>
 
 <iframe src="https://github.com/laboratoriodealgebralineal/laboratoriodealgebralineal.github.io/blob/b79451583a66276aa56657c2378c7e3e0c089e6f/HTML%20Lab/Clustering.jl.html" width="100%" height="600px"></iframe>
-
-
-  <div class="container">
-
-    <div class="person">
-      <div class="info">
-        <h3>xd 2</h3>
-        <p>xd 3</p>
-      </div>
-    </div>
-  </div>

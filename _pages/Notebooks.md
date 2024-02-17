@@ -105,7 +105,7 @@ header-includes: |
 <body>
 
 <div class="button-container">
-  <a href="https://github.com/jcgalvisa/UNBMathCCHub" class="button">Conceptos básicos</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Conceptosbasicos/" class="button">Conceptos básicos</a>
 </div>
 
 </body>
