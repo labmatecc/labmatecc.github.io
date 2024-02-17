@@ -1,5 +1,5 @@
 ---
-title: "VIndependencia lineal"
+title: "Independencia lineal"
 permalink: /Notebooks/Independencialineal/
 date: 2019-02-15
 header-includes: |
