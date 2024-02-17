@@ -68,19 +68,6 @@ header-includes: |
     }
   </style>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        /* Estilos opcionales para la línea horizontal */
-        hr {
-            border: none; /* Elimina el borde */
-            height: 2px; /* Altura de la línea */
-            background-color: #000; /* Color de la línea */
-            margin: 20px 0; /* Margen superior e inferior */
-        }
-    </style> 
-
   <div class="container">
 
     <div class="person">
@@ -99,15 +86,5 @@ header-includes: |
   <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Conceptosbasicos/" class="button">Conceptos básicos</a>
 </div>
 
-</head>
-<body>
-
-<!-- Contenido anterior -->
-
-<!-- Línea horizontal -->
-<hr>
-
-<!-- Contenido posterior -->
-
 </body>
-</html> 
+</html>
