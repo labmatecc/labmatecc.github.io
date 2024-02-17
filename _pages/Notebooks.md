@@ -132,7 +132,7 @@ header-includes: |
   </div>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Conceptosbasicos/" class="button">Conceptos básicos</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Vectores/" class="button">Vectores</a>
 </div>
 
 <hr>
