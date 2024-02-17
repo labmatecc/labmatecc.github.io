@@ -23,14 +23,6 @@ header-includes: |
 </head>
 <body>
 
-<h1>NOTEBOOKS</h1>
-
-<hr>
-
-</body>
-</html>
-
-
 <style>
 
     .container {
@@ -76,6 +68,13 @@ header-includes: |
             margin: 20px 0; /* Margen superior e inferior */
         }
   </style>
+
+<h1>NOTEBOOKS</h1>
+
+<hr>
+
+</body>
+</html>
 
 <div class="button-container">
   <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Conceptosbasicos/" class="button">Conceptos básicos</a>
