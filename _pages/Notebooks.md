@@ -165,7 +165,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Clustering/" class="button">Clustering</a>
+  <a href="https://laboratoriodealgebralineal.github.io/HTML%20Lab/Clustering.jl.html" class="button">Clustering</a>
 </div>
 
 <div class="container">
