@@ -7,7 +7,15 @@ header-includes: |
     \usepackage{amsmath,mathtools}
 ---
 
-<script
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-  type="text/javascript">
-</script>
+<!-- Formulario de búsqueda -->
+<form action="/search" method="get">
+    <label for="search">
+        <!-- Emoji de lupa -->
+        🔍
+    </label>
+    <input type="text" id="search" name="q" placeholder="Escribe aquí...">
+    <button type="submit">Buscar</button>
+</form>
+
+</body>
+</html>
