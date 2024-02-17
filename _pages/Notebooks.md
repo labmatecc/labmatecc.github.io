@@ -68,15 +68,45 @@ header-includes: |
     }
   </style>
 
-<iframe src="https://github.com/laboratoriodealgebralineal/laboratoriodealgebralineal.github.io/blob/b79451583a66276aa56657c2378c7e3e0c089e6f/HTML%20Lab/Clustering.jl.html" width="100%" height="600px"></iframe>
-
-
   <div class="container">
 
     <div class="person">
       <div class="info">
-        <h3>xd 2</h3>
-        <p>xd 3</p>
+        <h3>Conceptos básicos</h3>
+        <p>En este notebook, se presenta una introducción a las matrices. Se explica que una matriz es un conjunto rectangular de números, símbolos o expresiones organizados en filas y columnas, representados con letras mayúsculas y con su dimensión indicada por el número de filas y columnas. </p>
+
+        <p>Se muestran ejemplos de matrices reales, simbólicas y de números complejos, junto con la explicación detallada de cómo acceder a elementos específicos y mostrar submatrices. Se introducen conceptos como matrices menores y por bloques, con ejemplos prácticos. </p>
+
+        <p>Se exploran tipos de matrices como cuadradas, diagonales, identidad y nulas, con ejemplos aleatorios y operaciones básicas como suma y multiplicación por escalar. Se abordan operaciones más avanzadas, como la multiplicación de matrices por vectores, entre matrices y el producto de Kronecker, con ejemplos prácticos utilizando matrices aleatorias. </p>
       </div>
     </div>
   </div>
+
+  <html>
+<head>
+    <style>
+        .button-container {
+            text-align: center; /* Centra el contenido horizontalmente */
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 20px; /* Esto hace que el botón tenga forma de pastilla */
+            background-color: #309e01; /* Cambia el color del botón a verde */
+            color: white; /* Cambia el color del texto a blanco */
+            text-decoration: none; /* Elimina el subrayado predeterminado en los enlaces */
+            font-size: 16px; /* Cambia el tamaño del texto */
+            font-weight: bold; /* Hace que el texto sea más audaz */
+            border: none; /* Elimina el borde del botón */
+        }
+    </style>
+</head>
+<body>
+
+<div class="button-container">
+  <a href="https://github.com/jcgalvisa/UNBMathCCHub" class="button">Conceptos básicos</a>
+</div>
+
+</body>
+</html>
