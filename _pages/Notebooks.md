@@ -75,10 +75,13 @@ header-includes: |
         }
   </style>
 
+<div class="button-container">
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Conceptosbasicos/" class="button">Conceptos básicos</a>
+</div>
+
   <div class="container">
     <div class="person">
       <div class="info">
-        <h3>Conceptos básicos</h3>
         <p>En este notebook, se presenta una introducción a las matrices. Se explica que una matriz es un conjunto rectangular de números, símbolos o expresiones organizados en filas y columnas, representados con letras mayúsculas y con su dimensión indicada por el número de filas y columnas. </p>
 
         <p>Se muestran ejemplos de matrices reales, simbólicas y de números complejos, junto con la explicación detallada de cómo acceder a elementos específicos y mostrar submatrices. Se introducen conceptos como matrices menores y por bloques, con ejemplos prácticos. </p>
@@ -109,10 +112,6 @@ header-includes: |
     </style>
 </head>
 <body>
-
-<div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Conceptosbasicos/" class="button">Conceptos básicos</a>
-</div>
 
 <hr>
 
