@@ -68,4 +68,4 @@ header-includes: |
     }
   </style>
 
-<iframe src="https://github.com/laboratoriodealgebralineal/laboratoriodealgebralineal.github.io/blob/b79451583a66276aa56657c2378c7e3e0c089e6f/HTML%20Lab/Clustering.jl.html" width="100%" height="600px"></iframe>
+<iframe src="https://laboratoriodealgebralineal.github.io/HTML%20Lab/Conceptos_básicos.jl.html" width="100%" height="600px"></iframe>

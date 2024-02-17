@@ -68,4 +68,4 @@ header-includes: |
     }
   </style>
 
-<iframe src="https://github.com/laboratoriodealgebralineal/laboratoriodealgebralineal.github.io/blob/main/HTML%20Lab/Conceptos_b%C3%A1sicos.jl.html" width="100%" height="600px"></iframe>
+<iframe src="https://laboratoriodealgebralineal.github.io/HTML%20Lab/Independencia_Lineal.jl.html" width="100%" height="600px"></iframe>
