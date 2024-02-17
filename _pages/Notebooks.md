@@ -209,6 +209,21 @@ header-includes: |
 <hr>
 
 <div class="button-container">
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Compresiondeimagenes/" class="button">Compresión de imágenes</a>
+</div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>En este cuaderno, se presentan definiciones de valor y vector propio. Posteriormente, se muestra cómo hallar los valores singulares de una matriz. A continuación, se detalla la descomposición en valores singulares (SVD) con diversos ejemplos. Luego, nos enfocamos en la descomposición en valores singulares reducida, que es la que utiliza Julia, y se muestran ejemplos específicos.
+        Después de explorar la SVD, se muestra la compresión de imágenes. Este proceso implica realizar la SVD de la imagen y luego truncar dicha descomposición en k valores singulares (se realiza esto en cada canal de color para luego ensamblar nuevamente la imagen). Con este concepto presente, se presenta la creación de una marca de agua digital. Esta técnica permite personalizar imágenes sin que sea perceptible al ojo humano. La marca de agua se introduce mediante la creación de una perturbación en la matriz V. Una vez que la imagen está marcada, se muestra cómo deducir y recuperar la marca de agua. </p>
+      </div>
+    </div>
+  </div>
+
+<hr>
+
+<div class="button-container">
   <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Sistemasdeecuacionesdiferenciales/" class="button">Sistemas de ecuaciones diferenciales</a>
 </div>
 
