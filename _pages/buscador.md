@@ -2,7 +2,7 @@
 layout: search
 title: "Buscador general de palabras clave"
 permalink: /buscador/
-date: 2020-01-29
+date: 2024-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}
 ---
