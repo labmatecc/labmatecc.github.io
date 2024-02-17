@@ -171,7 +171,7 @@ header-includes: |
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>Comienza con una introducción al machine learning. Se destaca el uso de la distancia euclidiana en el contexto del clustering y se presenta una función para evaluar la calidad de los clusters. Luego, se introduce el algoritmo $K$-Means, con una implementación y un ejemplo de aplicación a datos generados aleatoriamente. Se aborda el preprocesamiento de datos, incluyendo la carga desde archivos y la generación aleatoria. Se detallan técnicas de normalización y estandarización, y se proporcionan funciones para Min-Máx y $Z$-Score. La visualización de datos antes y después de la normalización se muestra, seguida de la aplicación del algoritmo K-Means y la visualización de los clusters resultantes </p>
+        <p>Comienza con una introducción al machine learning. Se destaca el uso de la distancia euclidiana en el contexto del clustering y se presenta una función para evaluar la calidad de los clusters. Luego, se introduce el algoritmo \(K\)-Means, con una implementación y un ejemplo de aplicación a datos generados aleatoriamente. Se aborda el preprocesamiento de datos, incluyendo la carga desde archivos y la generación aleatoria. Se detallan técnicas de normalización y estandarización, y se proporcionan funciones para Min-Máx y $Z$-Score. La visualización de datos antes y después de la normalización se muestra, seguida de la aplicación del algoritmo K-Means y la visualización de los clusters resultantes </p>
       </div>
     </div>
   </div>
