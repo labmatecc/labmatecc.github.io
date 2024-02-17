@@ -69,7 +69,6 @@ header-includes: |
   </style>
 
   <div class="container">
-
     <div class="person">
       <div class="info">
         <h3>Conceptos básicos</h3>
@@ -110,3 +109,38 @@ header-includes: |
 
 </body>
 </html>
+    <style>
+        /* Estilos opcionales para la línea horizontal */
+        hr {
+            border: none; /* Elimina el borde */
+            height: 2px; /* Altura de la línea */
+            background-color: #000; /* Color de la línea */
+            margin: 20px 0; /* Margen superior e inferior */
+        }
+    </style>
+</head>
+<body>
+
+<hr>
+
+</body>
+</html>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <h3>Vectores</h3>
+        <p>El cuaderno comienza explicando los vectores como conjuntos ordenados de números, resaltando su representación en Julia mediante el tipo de dato Array. Se exploran operaciones básicas, como la dimensión del arreglo. </p>
+
+        <p>Se detalla el acceso a elementos, introduciendo el uso de índices y la función 'end'. Se muestra cómo trabajar con subconjuntos de vectores mediante rangos. La comparación de vectores y la comparación de elementos individuales. </p>
+
+        <p>Se introducen vectores nulos, canónicos y de unos, mostrando cómo construir manualmente vectores canónicos en Julia. Se utiliza el paquete Plots.jl para generar gráficos de vectores y visualizar datos.</p>
+
+        <p>Las operaciones con vectores se abordan desde la suma componente a componente hasta la multiplicación y división por escalares, proporcionando ejemplos prácticos.</p>
+      </div>
+    </div>
+  </div>
+  
+<div class="button-container">
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Conceptosbasicos/" class="button">Conceptos básicos</a>
+</div>
