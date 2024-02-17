@@ -1,6 +1,6 @@
 ---
 title: "Nosotros"
-permalink: /about/
+permalink: /Notebooks/
 date: 2019-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}
