@@ -7,5 +7,5 @@ main:
 #    url: /tags/
   - title: "Notebooks"
     url: /Notebooks/
-  - title: "Buscador"
-    url: /buscador/
+#  - title: "Buscador"
+#    url: /buscador/

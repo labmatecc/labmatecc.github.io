@@ -137,7 +137,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Introduccionalprocesamientodeimágenes/" class="button">Introducción al procesamiento de imágenes</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Introduccionalprocesamientodeimagenes/" class="button">Introducción al procesamiento de imágenes</a>
 </div>
 
 <div class="container">
@@ -151,7 +151,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Descripcióndegrafosusandomatrices/" class="button">Descripción de grafos usando matrices</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Descripciondegrafosusandomatrices/" class="button">Descripción de grafos usando matrices</a>
 </div>
 
 <div class="container">
