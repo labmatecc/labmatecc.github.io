@@ -82,6 +82,28 @@ header-includes: |
     </div>
   </div>
 
+  <html>
+<head>
+    <style>
+        .button-container {
+            text-align: center; /* Centra el contenido horizontalmente */
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 20px; /* Esto hace que el botón tenga forma de pastilla */
+            background-color: #309e01; /* Cambia el color del botón a verde */
+            color: white; /* Cambia el color del texto a blanco */
+            text-decoration: none; /* Elimina el subrayado predeterminado en los enlaces */
+            font-size: 16px; /* Cambia el tamaño del texto */
+            font-weight: bold; /* Hace que el texto sea más audaz */
+            border: none; /* Elimina el borde del botón */
+        }
+    </style>
+</head>
+<body>
+
 <div class="button-container">
   <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Conceptosbasicos/" class="button">Conceptos básicos</a>
 </div>
