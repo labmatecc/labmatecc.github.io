@@ -209,7 +209,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/HTML%20Lab/Compresion_de_imagenes.jl.html" class="button">Compresión de imágenes</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Compresiondeimagenes/" class="button">Compresión de imágenes</a>
 </div>
 
 <div class="container">
