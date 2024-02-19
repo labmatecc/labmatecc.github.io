@@ -1,7 +1,7 @@
 ---
 title: "Notebooks"
 permalink: /Notebooks/
-date: 2019-02-15
+date: 2024-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}
 ---
