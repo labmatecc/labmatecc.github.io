@@ -22,7 +22,7 @@ name                     : "Laboratorio de álgebra lineal"
 description              : "Material acompañamiento de cursos del departamento de matemáticas y ciencias de la computación de la universidad nacional de Colombia sede Bogotá."
 url                      : "https://laboratoriodealgebralineal.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
-repository               : "jcgalvisa/UNBMathCCHub" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+repository               : "-" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 logo                     : "/assets/images/masterhead.png"
 teaser                   : "favicon.ico" # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 breadcrumbs              : true # true, false (default)
