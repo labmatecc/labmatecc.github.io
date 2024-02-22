@@ -68,4 +68,4 @@ header-includes: |
     }
   </style>
 
-<iframe src="https://laboratoriodealgebralineal.github.io/HTML%20Lab/Conceptos_básicos.jl.html" width="100%" height="600px"></iframe>
+<iframe src="https://github.com/laboratoriodealgebralineal/laboratoriodealgebralineal.github.io/blob/main/HTML%20Lab/Conceptos_b%C3%A1sicos.html" width="100%" height="600px"></iframe>
