@@ -68,4 +68,4 @@ header-includes: |
     }
   </style>
 
-<iframe src="https://laboratoriodealgebralineal.github.io/HTML%20Lab/Mínimos_cuadrados.jl.html" width="100%" height="600px"></iframe>
+<iframe src="https://laboratoriodealgebralineal.github.io/HTML%20Lab/Mínimos_cuadrados.html" width="100%" height="600px"></iframe>
