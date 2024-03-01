@@ -68,4 +68,4 @@ header-includes: |
     }
   </style>
 
-<iframe src="https://laboratoriodealgebralineal.github.io/HTML%20Lab/Compresion_de_imagenes.html" width="100%" height="600px"></iframe>
+<iframe src="https://github.com/jcgalvisa/UNBMathCCHub/blob/main/HTML%20Lab/HTML_AlgebraLineal/Compresion_de_imagenes.html" width="100%" height="600px"></iframe>
