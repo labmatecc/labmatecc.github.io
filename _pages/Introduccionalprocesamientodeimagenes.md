@@ -1,6 +1,6 @@
 ---
 title: "Introducción al procesamiento de imágenes"
-permalink: /Notebooks/Introduccionalprocesamientodeimagenes/
+permalink: /Notebooks/AlgebraLineal/Introduccionalprocesamientodeimagenes/
 date: 2019-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}

@@ -1,6 +1,6 @@
 ---
 title: "Independencia lineal"
-permalink: /Notebooks/Independencialineal/
+permalink: /Notebooks/AlgebraLineal/Independencialineal/
 date: 2019-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}

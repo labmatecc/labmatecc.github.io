@@ -1,6 +1,6 @@
 ---
 title: "Sistemas de ecuaciones diferenciales"
-permalink: /Notebooks/Sistemasdeecuacionesdiferenciales/
+permalink: /Notebooks/AlgebraLineal/Sistemasdeecuacionesdiferenciales/
 date: 2019-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}

@@ -1,6 +1,6 @@
 ---
 title: "Diagonalización"
-permalink: /Notebooks/Diagonalizacion/
+permalink: /Notebooks/AlgebraLineal/Diagonalizacion/
 date: 2019-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}

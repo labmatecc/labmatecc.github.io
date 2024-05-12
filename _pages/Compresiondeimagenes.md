@@ -1,6 +1,6 @@
 ---
 title: "Compresión de imágenes"
-permalink: /Notebooks/Compresiondeimagenes/
+permalink: /Notebooks/AlgebraLineal/Compresiondeimagenes/
 date: 2019-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}

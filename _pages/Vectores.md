@@ -1,6 +1,6 @@
 ---
 title: "Vectores"
-permalink: /Notebooks/Vectores/
+permalink: /Notebooks/AlgebraLineal/Vectores/
 date: 2019-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}

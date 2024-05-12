@@ -1,6 +1,6 @@
 ---
 title: "Descripción de grafos usando matrices"
-permalink: /Notebooks/Descripciondegrafosusandomatrices/
+permalink: /Notebooks/AlgebraLineal/Descripciondegrafosusandomatrices/
 date: 2019-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}

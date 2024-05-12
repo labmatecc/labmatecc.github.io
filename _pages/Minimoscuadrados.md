@@ -1,6 +1,6 @@
 ---
 title: "Mínimos cuadrados"
-permalink: /Notebooks/Minimoscuadrados/
+permalink: /Notebooks/AlgebraLineal/Minimoscuadrados/
 date: 2019-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}
