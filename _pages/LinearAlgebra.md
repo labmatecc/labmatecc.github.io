@@ -224,6 +224,20 @@ header-includes: |
 <hr>
 
 <div class="button-container">
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/AlgebraLineal/Compresiondeimagenes/" class="button">Análisis de componentes principales (PCA)</a>
+</div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>. </p>
+      </div>
+    </div>
+  </div>
+
+<hr>
+
+<div class="button-container">
   <a href="https://laboratoriodealgebralineal.github.io/Notebooks/AlgebraLineal/Sistemasdeecuacionesdiferenciales/" class="button">Sistemas de ecuaciones diferenciales</a>
 </div>
 
