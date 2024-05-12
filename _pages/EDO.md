@@ -69,7 +69,7 @@ header-includes: |
         }
   </style>
 
-<h1>NOTEBOOKS</h1>
+<h1>ECUACIONES DIFERENCIALES ORDINARIAS</h1>
 
 <hr>
 

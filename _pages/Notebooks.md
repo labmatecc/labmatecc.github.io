@@ -113,7 +113,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/EDO/" class="button">EDO</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/EDO/" class="button">Ecuaciones Diferenciales Ordinarias</a>
 </div>
 
 <div class="container">
