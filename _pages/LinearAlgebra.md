@@ -209,7 +209,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/AlgebraLineal/Compresiondeimagenes/" class="button">Compresión de imágenes</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/AlgebraLineal/Compresiondeimagenes/" class="button">Compresión de imágenes (SVD)</a>
 </div>
 
 <div class="container">
