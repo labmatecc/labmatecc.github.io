@@ -1,6 +1,6 @@
 ---
 title: "Conceptos básicos"
-permalink: /Notebooks/Conceptosbasicos/
+permalink: /Notebooks/AlgebraLineal/Conceptosbasicos/
 date: 2019-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}

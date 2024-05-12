@@ -1,6 +1,6 @@
 ---
 title: "Álgebra Lineal"
-permalink: /EDO/
+permalink: /Notebooks/EDO/
 date: 2024-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}

@@ -1,6 +1,6 @@
 ---
 title: "Álgebra Lineal"
-permalink: /AlgebraLineal/
+permalink: /Notebooks/AlgebraLineal/
 date: 2024-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}
