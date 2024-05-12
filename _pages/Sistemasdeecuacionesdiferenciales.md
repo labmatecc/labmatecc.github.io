@@ -68,4 +68,4 @@ header-includes: |
     }
   </style>
 
-<iframe src="https://laboratoriodealgebralineal.github.io/HTML%20Lab/Sistemas_de_ecuaciones_diferenciales.html" width="100%" height="600px"></iframe>
+<iframe src="https://laboratoriodealgebralineal.github.io/HTML%20Lab/AL/Sistemas_de_ecuaciones_diferenciales.html" width="100%" height="600px"></iframe>

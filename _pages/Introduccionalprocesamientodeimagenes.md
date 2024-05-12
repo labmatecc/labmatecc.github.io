@@ -68,4 +68,4 @@ header-includes: |
     }
   </style>
 
-<iframe src="https://laboratoriodealgebralineal.github.io/HTML%20Lab/Introducción_al_procesamiento_de_imágenes.jl.html" width="100%" height="600px"></iframe>
+<iframe src="https://laboratoriodealgebralineal.github.io/HTML%20Lab/AL/IntroduccionalProcesamientodeImagenes.html" width="100%" height="600px"></iframe>
