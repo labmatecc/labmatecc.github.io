@@ -77,7 +77,7 @@ header-includes: |
 </html>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Conceptosbasicos/" class="button">Conceptos básicos</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/AlgebraLineal/Conceptosbasicos/" class="button">Conceptos básicos</a>
 </div>
 
   <div class="container">
@@ -117,7 +117,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Vectores/" class="button">Vectores</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/AlgebraLineal/Vectores/" class="button">Vectores</a>
 </div>
 
 <div class="container">
@@ -137,7 +137,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Introduccionalprocesamientodeimagenes/" class="button">Introducción al procesamiento de imágenes</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/AlgebraLineal/Introduccionalprocesamientodeimagenes/" class="button">Introducción al procesamiento de imágenes</a>
 </div>
 
 <div class="container">
@@ -151,7 +151,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Descripciondegrafosusandomatrices/" class="button">Descripción de grafos usando matrices</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/AlgebraLineal/Descripciondegrafosusandomatrices/" class="button">Descripción de grafos usando matrices</a>
 </div>
 
 <div class="container">
@@ -165,7 +165,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Clustering/" class="button">Clustering</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/AlgebraLineal/Clustering/" class="button">Clustering</a>
 </div>
 
 <div class="container">
@@ -179,7 +179,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Independencialineal/" class="button">Independencia lineal</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/AlgebraLineal/Independencialineal/" class="button">Independencia lineal</a>
 </div>
 
 <div class="container">
@@ -195,7 +195,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Diagonalizacion/" class="button">Diagonalización (Sucesión de Fibonacci)</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/AlgebraLineal/Diagonalizacion/" class="button">Diagonalización (Sucesión de Fibonacci)</a>
 </div>
 
 <div class="container">
@@ -209,7 +209,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Compresiondeimagenes/" class="button">Compresión de imágenes</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/AlgebraLineal/Compresiondeimagenes/" class="button">Compresión de imágenes</a>
 </div>
 
 <div class="container">
@@ -224,7 +224,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Sistemasdeecuacionesdiferenciales/" class="button">Sistemas de ecuaciones diferenciales</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/AlgebraLineal/Sistemasdeecuacionesdiferenciales/" class="button">Sistemas de ecuaciones diferenciales</a>
 </div>
 
 <div class="container">
@@ -239,7 +239,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Minimoscuadrados/" class="button">Mínimos cuadrados</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/AlgebraLineal/Minimoscuadrados/" class="button">Mínimos cuadrados</a>
 </div>
 
 <div class="container">
