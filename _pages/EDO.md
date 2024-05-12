@@ -1,5 +1,5 @@
 ---
-title: "Álgebra Lineal"
+title: "Ecuaciones Diferenciales Ordinarias"
 permalink: /Notebooks/EDO/
 date: 2024-02-15
 header-includes: |
@@ -77,7 +77,7 @@ header-includes: |
 </html>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Conceptosbasicos/" class="button">Introducción a la modelación matemática</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/EDO/xd/" class="button">Introducción a la modelación matemática</a>
 </div>
 
   <div class="container">
@@ -255,7 +255,7 @@ header-includes: |
   <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Minimoscuadrados/" class="button">Dosiicación de un medicamento</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/Minimoscuadrados/" class="button">Dosificación de un medicamento</a>
 </div>
 
 <div class="container">
