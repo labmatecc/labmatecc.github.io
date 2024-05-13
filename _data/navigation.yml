@@ -6,5 +6,5 @@ main:
     submenu:
       - title: "Notebook 1"
         url: /Notebooks/EDO
-  - title: "hos"
+  - title: "ho"
     url: /Notebooks/
