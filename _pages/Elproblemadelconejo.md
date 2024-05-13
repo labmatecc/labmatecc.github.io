@@ -1,5 +1,5 @@
 ---
-title: "El problema del conejo"
+title: "Atrapando al conejo"
 permalink: /Notebooks/EDO/ProblemaDelConejo/
 date: 2019-02-15
 header-includes: |
@@ -23,7 +23,7 @@ header-includes: |
 </head>
 <body>
 
-<h1>El problema del conejo</h1>
+<h1>Atrapando al conejo</h1>
 
 </body>
 </html>

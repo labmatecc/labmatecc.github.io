@@ -144,7 +144,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/EDO/ProblemaDelConejo/" class="button">El problema del conejo</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/EDO/ProblemaDelConejo/" class="button">Atrapando al conejo</a>
 </div>
 
 <div class="container">
