@@ -121,7 +121,7 @@ header-includes: |
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>hola </p>
+        <p>Los cuadernos sobre ecuaciones diferenciales ordinarias abarcan una amplia gama de temas matemáticos y científicos. Desde la introducción a la modelación matemática y las ecuaciones diferenciales hasta la resolución de problemas específicos como el crecimiento de poblaciones, el movimiento de planetas o la dosificación de medicamentos, estos cuadernos ofrecen un panorama completo de cómo las ecuaciones diferenciales se aplican en diferentes contextos. Además, exploran técnicas numéricas y analíticas para resolver ecuaciones, ajustar modelos a datos experimentales y comprender fenómenos naturales y sociales.</p>
       </div>
     </div>
   </div>
