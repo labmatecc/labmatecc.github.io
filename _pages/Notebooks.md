@@ -13,91 +13,61 @@ header-includes: |
 
 <html>
 <head>
-  <style>
-    /* Estilos para centrar y cambiar el color del texto */
-    h1 {
-      text-align: center; /* Centra el texto horizontalmente */
-      color: rgba(72, 133, 45, 0.76); /* Cambia el color del texto a verde */
-    }
-
-    .dropdown {
-      position: relative;
-      display: inline-block;
-    }
-
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: #f9f9f9;
-      min-width: 160px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      z-index: 1;
-    }
-
-    .dropdown-content a {
-      color: black;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-    }
-
-    .dropdown-content a:hover {
-      background-color: #f1f1f1;
-    }
-
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-
-    .dropdown button {
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px;
-      font-size: 16px;
-      border: none;
-      cursor: pointer;
-    }
-
-    .dropdown button:hover {
-      background-color: #3e8e41;
-    }
-  </style>
+    <style>
+        /* Estilos para centrar y cambiar el color del texto */
+        h1 {
+            text-align: center; /* Centra el texto horizontalmente */
+            color: rgba(72, 133, 45, 0.76); /* Cambia el color del texto a verde */
+        }
+    </style>
 </head>
 <body>
 
-<h1>Ejemplo de Dropdown</h1>
+<style>
 
-<div class="dropdown">
-  <button onclick="toggleDropdown()">HubSpot Resources</button>
-  <div class="dropdown-content" id="dropdownContent">
-    <a href="https://blog.hubspot.com/">Blog</a>
-    <a href="https://academy.hubspot.com/">Academy</a>
-    <a href="https://www.youtube.com/user/hubspot">YouTube</a>
-  </div>
-</div>
-
-<script>
-  function toggleDropdown() {
-    var dropdownContent = document.getElementById("dropdownContent");
-    dropdownContent.classList.toggle("show");
-  }
-
-  // Cierra el desplegable si se hace clic fuera de él
-  window.onclick = function(event) {
-    if (!event.target.matches('.dropdown button')) {
-      var dropdowns = document.getElementsByClassName("dropdown-content");
-      for (var i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('show')) {
-          openDropdown.classList.remove('show');
-        }
-      }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      overflow: hidden;
     }
-  }
-</script>
 
-</body>
-</html>
+    .person {
+      display: flex;
+      margin-bottom: 20px;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .person img {
+      max-width: 200px;
+      max-height: 200px;
+      border-radius: 50%;
+      margin-right: 20px;
+      margin-left: 20px;
+    }
+
+    .person .info {
+      flex: 1;
+      text-align: left;
+    }
+
+    .person:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    hr {
+            border: none; /* Elimina el borde */
+            height: 1px; /* Altura de la línea */
+            background-color: #000; /* Color de la línea */
+            margin: 20px 0; /* Margen superior e inferior */
+        }
+  </style>
 
 <h1>NOTEBOOKS</h1>
 
