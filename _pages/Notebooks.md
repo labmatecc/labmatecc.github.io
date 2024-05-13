@@ -68,6 +68,7 @@ header-includes: |
             margin: 20px 0; /* Margen superior e inferior */
         }
   </style>
+<hr>
 
 <h1>NOTEBOOKS</h1>
 
