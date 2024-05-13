@@ -5,8 +5,6 @@ main:
     url: /Notebooks/
     dropdown:
       - title: "Notebook 1"
-        url: /Notebooks/notebook1
-      - title: "Notebook 2"
-        url: /Notebooks/notebook2
+        url: /Notebooks/EDO/
   - title: "hola"
     url: /Notebooks/
