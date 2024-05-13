@@ -69,6 +69,8 @@ header-includes: |
         }
   </style>
 
+<hr>
+
 <h1>ÁLGEBRA LINEAL</h1>
 
 <hr>

@@ -69,6 +69,8 @@ header-includes: |
         }
   </style>
 
+<hr>
+
 <h1>ECUACIONES DIFERENCIALES ORDINARIAS</h1>
 
 <hr>
