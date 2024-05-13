@@ -8,3 +8,5 @@ main:
         url: /Notebooks/notebook1
       - title: "Notebook 2"
         url: /Notebooks/notebook2
+  - title: "hola"
+    url: /Notebooks/
