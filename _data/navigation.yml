@@ -3,7 +3,7 @@ main:
     url: /
   - title: "Notebooks"
     url: /Notebooks/
-    dropdown:
+    submenu:
       - title: "Notebook 1"
         url: /Notebooks/EDO
   - title: "hos"
