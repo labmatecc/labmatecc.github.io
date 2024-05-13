@@ -83,7 +83,9 @@ header-includes: |
   <div class="container">
     <div class="person">
       <div class="info">
-        <p>Hola </p>
+        <p>Los cuadernos de Álgebra Lineal abarcan tanto temas fundamentales como aplicaciones prácticas. Comienzan con una introducción a las matrices, donde se muestra su estructura y se explican las operaciones básicas. También incluyen un estudio detallado de los vectores, resaltando su representación en Julia y las operaciones básicas asociadas. </p>
+        <p>Además de estos conceptos básicos, los cuadernos contienen aplicaciones prácticas como el procesamiento de imágenes, donde se utiliza el álgebra lineal para manipular píxeles y aplicar filtros y kernels. También se exploran temas como la descripción de grafos mediante matrices, el clustering en machine learning y la independencia lineal de vectores y matrices.</p>
+        <p>Los cuadernos abordan temas avanzados como la diagonalización de matrices, ilustrando su aplicación a la sucesión de Fibonacci. También se cubre la compresión de imágenes mediante la descomposición en valores singulares (SVD) y técnicas de marca de agua digital. Además, se incluyen temas como el análisis de componentes principales (PCA), sistemas de ecuaciones diferenciales, mínimos cuadrados y ajuste polinomial.</p>
       </div>
     </div>
   </div>
@@ -120,8 +122,6 @@ header-includes: |
     <div class="person">
       <div class="info">
         <p>hola </p>
-
-        <p>hola.</p>
       </div>
     </div>
   </div>
