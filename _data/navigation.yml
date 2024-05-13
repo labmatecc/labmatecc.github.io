@@ -2,9 +2,8 @@ main:
   - title: "Inicio"
     url: /
   - title: "Notebooks"
-    url: /Notebooks/
-    submenu:
-      - title: "Notebook 1"
-        url: /Notebooks/EDO
-  - title: "ho"
-    url: /Notebooks/
+    #url: /Notebooks/
+    dropdown: true
+    dropdown_items:
+  - title: "Notebook 1"
+    url: "/Notebooks/EDO/"
