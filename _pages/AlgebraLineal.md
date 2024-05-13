@@ -64,7 +64,7 @@ header-includes: |
     hr {
             border: none; /* Elimina el borde */
             height: 1px; /* Altura de la línea */
-            background-color: #000; /* Color de la línea */
+            background-color: #CCCCCC; /* Color de la línea */
             margin: 20px 0; /* Margen superior e inferior */
         }
   </style>
