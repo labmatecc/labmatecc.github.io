@@ -102,7 +102,7 @@ analytics:
 # Site Author
 author:
   name             : "Laboratorio de matemáticas"
-  avatar           : "/assets/images/avataar.png"
+  avatar           : "/assets/images/avatar.png"
   bio              : "Material de acompañamiento para los cursos del Departamento de Matemáticas y Ciencias de la Computación de la Universidad Nacional de Colombia, sede Bogotá."
   location         : "Colombia"
   email            : "jcgalvisa@unal.edu.co"
