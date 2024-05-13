@@ -2,8 +2,4 @@ main:
   - title: "Inicio"
     url: /
   - title: "Notebooks"
-    #url: /Notebooks/
-    dropdown: true
-    dropdown_items:
-  - title: "Notebook 1"
-    url: "/Notebooks/EDO/"
+    url: /Notebooks/
