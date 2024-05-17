@@ -232,7 +232,7 @@ header-includes: |
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>. </p>
+        <p>Este cuaderno aborda el Método de Análisis de Componentes Principales (PCA), una técnica de reducción de dimensionalidad. Comienza explicando conceptos como la media y la varianza en un conjunto de datos. Luego, se presenta la covarianza y la matriz de covarianza, seguidas por el proceso detallado de cómo se emplea el PCA. Se describen los pasos desde la centralización de datos y cálculo de la matriz de covarianza hasta la reconstrucción de datos y la compresión de imágenes utilizando las componentes principales. Se muestra cómo la compresión efectiva mantiene la información esencial de la imagen original mientras reduce su dimensionalidad. Además, se incluyen ejemplos prácticos de compresión de imágenes con diferentes números de componentes principales y se evalúa el error de compresión en cada caso. </p>
       </div>
     </div>
   </div>
