@@ -211,7 +211,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/AlgebraLineal/Compresiondeimagenes/" class="button">Compresión de imágenes (SVD)</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/AlgebraLineal/SVD/" class="button">Compresión de imágenes (SVD)</a>
 </div>
 
 <div class="container">
@@ -226,7 +226,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/AlgebraLineal/Compresiondeimagenes/" class="button">Análisis de componentes principales (PCA)</a>
+  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/AlgebraLineal/PCA/" class="button">Análisis de componentes principales (PCA)</a>
 </div>
 
 <div class="container">
