@@ -68,4 +68,4 @@ header-includes: |
     }
   </style>
 
-<iframe src="https://laboratoriodealgebralineal.github.io/HTML%20Lab/AL/Descripci%C3%B3n_de_grafos_usando_matrices.html" width="100%" height="600px"></iframe>
+<iframe src="https://labmatecc.github.io/HTML%20Lab/AL/Descripci%C3%B3n_de_grafos_usando_matrices.html" width="100%" height="600px"></iframe>

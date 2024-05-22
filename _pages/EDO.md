@@ -79,7 +79,7 @@ header-includes: |
 </html>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/EDO/ModelacionMatematica/" class="button">Introducción a la modelación matemática</a>
+  <a href="https://labmatecc.github.io/Notebooks/EDO/ModelacionMatematica/" class="button">Introducción a la modelación matemática</a>
 </div>
 
   <div class="container">
@@ -115,7 +115,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/EDO/IntroduccionALasEDOs/" class="button">Introducción a las ecuaciones diferenciales</a>
+  <a href="https://labmatecc.github.io/Notebooks/EDO/IntroduccionALasEDOs/" class="button">Introducción a las ecuaciones diferenciales</a>
 </div>
 
 <div class="container">
@@ -130,7 +130,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/EDO/TunelDehormigas/" class="button">Construcción de un tunel de hormigas</a>
+  <a href="https://labmatecc.github.io/Notebooks/EDO/TunelDehormigas/" class="button">Construcción de un tunel de hormigas</a>
 </div>
 
 <div class="container">
@@ -144,7 +144,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/EDO/ProblemaDelConejo/" class="button">Atrapando al conejo</a>
+  <a href="https://labmatecc.github.io/Notebooks/EDO/ProblemaDelConejo/" class="button">Atrapando al conejo</a>
 </div>
 
 <div class="container">
@@ -158,7 +158,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/EDO/TrayectoriasOrtogonales/" class="button">Trayectorias ortogonales</a>
+  <a href="https://labmatecc.github.io/Notebooks/EDO/TrayectoriasOrtogonales/" class="button">Trayectorias ortogonales</a>
 </div>
 
 <div class="container">
@@ -172,7 +172,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/EDO/ProblemaDeLosDosCuerpos/" class="button">El problema de los dos cuerpos</a>
+  <a href="https://labmatecc.github.io/Notebooks/EDO/ProblemaDeLosDosCuerpos/" class="button">El problema de los dos cuerpos</a>
 </div>
 
 <div class="container">
@@ -186,7 +186,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/EDO/CrecimientoDePoblaciones/" class="button">Crecimiento de poblaciones</a>
+  <a href="https://labmatecc.github.io/Notebooks/EDO/CrecimientoDePoblaciones/" class="button">Crecimiento de poblaciones</a>
 </div>
 
 <div class="container">
@@ -200,7 +200,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/EDO/OsciladorArmonico/" class="button">Oscilador Armónico</a>
+  <a href="https://labmatecc.github.io/Notebooks/EDO/OsciladorArmonico/" class="button">Oscilador Armónico</a>
 </div>
 
 <div class="container">
@@ -214,7 +214,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/EDO/AjusteDeParametros/" class="button">Ajuste de parámetros</a>
+  <a href="https://labmatecc.github.io/Notebooks/EDO/AjusteDeParametros/" class="button">Ajuste de parámetros</a>
 </div>
 
 <div class="container">
@@ -229,7 +229,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/EDO/VaciadoDeTanque/" class="button">Vaciado de tanque</a>
+  <a href="https://labmatecc.github.io/Notebooks/EDO/VaciadoDeTanque/" class="button">Vaciado de tanque</a>
 </div>
 
 <div class="container">
@@ -243,7 +243,7 @@ header-includes: |
   <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/EDO/ModeloPresa-Depredador/" class="button">Modelo Presa-Depredador</a>
+  <a href="https://labmatecc.github.io/Notebooks/EDO/ModeloPresa-Depredador/" class="button">Modelo Presa-Depredador</a>
 </div>
 
 <div class="container">
@@ -257,7 +257,7 @@ header-includes: |
   <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/EDO/DosificacionDeUnMedicamento/" class="button">Dosificación de un medicamento</a>
+  <a href="https://labmatecc.github.io/Notebooks/EDO/DosificacionDeUnMedicamento/" class="button">Dosificación de un medicamento</a>
 </div>
 
 <div class="container">

@@ -79,7 +79,7 @@ header-includes: |
 </html>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/VariableCompleja/Conceptosbasicos/" class="button">Conceptos básicos</a>
+  <a href="https://labmatecc.github.io/Notebooks/VariableCompleja/Conceptosbasicos/" class="button">Conceptos básicos</a>
 </div>
 
   <div class="container">

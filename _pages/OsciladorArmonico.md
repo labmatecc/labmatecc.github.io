@@ -68,4 +68,4 @@ header-includes: |
     }
   </style>
 
-<iframe src="https://laboratoriodealgebralineal.github.io/HTML%20Lab/EDO/Oscilador_arm%C3%B3nico.html" width="100%" height="600px"></iframe>
+<iframe src="https://labmatecc.github.io/HTML%20Lab/EDO/Oscilador_arm%C3%B3nico.html" width="100%" height="600px"></iframe>

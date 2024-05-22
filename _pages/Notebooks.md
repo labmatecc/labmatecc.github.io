@@ -78,7 +78,7 @@ header-includes: |
 </html>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/AlgebraLineal/" class="button">Álgebra Lineal</a>
+  <a href="https://labmatecc.github.io/Notebooks/AlgebraLineal/" class="button">Álgebra Lineal</a>
 </div>
 
   <div class="container">
@@ -116,7 +116,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/EDO/" class="button">Ecuaciones Diferenciales Ordinarias</a>
+  <a href="https://labmatecc.github.io/Notebooks/EDO/" class="button">Ecuaciones Diferenciales Ordinarias</a>
 </div>
 
 <div class="container">
@@ -130,7 +130,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://laboratoriodealgebralineal.github.io/Notebooks/VariableCompleja/" class="button">Variable Compleja</a>
+  <a href="https://labmatecc.github.io/Notebooks/VariableCompleja/" class="button">Variable Compleja</a>
 </div>
 
 <div class="container">

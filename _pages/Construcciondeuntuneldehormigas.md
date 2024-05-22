@@ -68,4 +68,4 @@ header-includes: |
     }
   </style>
 
-<iframe src="https://laboratoriodealgebralineal.github.io/HTML%20Lab/EDO/Construcci%C3%B3n_de_un_tunel_de_hormigas.html" width="100%" height="600px"></iframe>
+<iframe src="https://labmatecc.github.io/HTML%20Lab/EDO/Construcci%C3%B3n_de_un_tunel_de_hormigas.html" width="100%" height="600px"></iframe>
