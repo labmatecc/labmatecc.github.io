@@ -6,9 +6,7 @@
 <body>
 
 <div class="button-container">
-  <a href="https://github.com/labmatecc/labmatecc.github.io/tree/main/NOTEBOOKS" class="button">Repositorio</a>
-
-  <a href="https://labmatecc.github.io/Notebooks/" class="button">Notebooks</a>
+  <a href="https://github.com/labmatecc/labmatecc.github.io/tree/main/NOTEBOOKS" class="button">Repositorio</a> <a href="https://labmatecc.github.io/Notebooks/" class="button">Notebooks</a>
 </div>
 
 </body>
