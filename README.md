@@ -1,16 +1,5 @@
----
-layout: archive
-header-includes: |
-    \usepackage{amsmath,mathtools}
----
-
-
-
-{{ content }}
-
 <h1> Notebooks </h1>
         <p> Con el fin de complementar los cursos de fundamentación del Departamento de Matemáticas, se han desarrollado notebooks interactivos utilizando el lenguaje de programación Julia. Los estudiantes encontrarán en estos recursos herramientas para consolidar su comprensión, explorar ejemplos prácticos y fortalecer sus habilidades de resolución de problemas. La combinación de la teoría de los cursos con la ejecución práctica en Julia busca potenciar el proceso de aprendizaje, proporcionando una experiencia educativa más completa.</p>
-        
         <p>Se han creado cuadernos que abordan temas de los cursos Álgebra Lineal y Ecuaciones Diferenciales Ordinarias. Estos cuadernos permiten no solo visualizar la teoría de manera interactiva, sino también explorar diversos ejemplos y aplicaciones prácticas. Estos archivos se pueden encontrar y descargar en el repositorio labmatecc para su libre ejecución.</p>
 
 <html>
