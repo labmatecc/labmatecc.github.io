@@ -107,7 +107,7 @@ author:
   location         : "Colombia"
   email            : "labmatecc_bog@unal.edu.co"
   uri              :
-  home             : laboratoriodealgebralineal.github.io # null (default), "absolute or relative url to link to author home"
+  home             : labmatecc.github.io # null (default), "absolute or relative url to link to author home"
   bitbucket        :
   codepen          :
   dribbble         :
