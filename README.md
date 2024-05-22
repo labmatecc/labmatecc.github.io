@@ -8,7 +8,6 @@
         .button-container {
             text-align: center; /* Centra el contenido horizontalmente */
         }
-
         .button {
             display: inline-block;
             padding: 10px 20px;
