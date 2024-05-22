@@ -3,24 +3,6 @@
         <p>Se han creado cuadernos que abordan temas de los cursos Álgebra Lineal y Ecuaciones Diferenciales Ordinarias. Estos cuadernos permiten no solo visualizar la teoría de manera interactiva, sino también explorar diversos ejemplos y aplicaciones prácticas. Estos archivos se pueden encontrar y descargar en el repositorio labmatecc para su libre ejecución.</p>
 
 <html>
-<head>
-    <style>
-        .button-container {
-            text-align: center; /* Centra el contenido horizontalmente */
-        }
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            border-radius: 20px; /* Esto hace que el botón tenga forma de pastilla */
-            background-color: rgba(72, 133, 45, 0.76); /* Cambia el color del botón a verde */
-            color: white; /* Cambia el color del texto a blanco */
-            text-decoration: none; /* Elimina el subrayado predeterminado en los enlaces */
-            font-size: 16px; /* Cambia el tamaño del texto */
-            font-weight: bold; /* Hace que el texto sea más audaz */
-            border: none; /* Elimina el borde del botón */
-        }
-    </style>
-</head>
 <body>
 
 <div class="button-container">
