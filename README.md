@@ -1,17 +1,9 @@
-#<p>Este repositorio ha sido creado para el Laboratorio de Matemáticas del departamento de Matemáticas de la Universidad Nacional de Colombia.</p>
 ---
 layout: archive
 header-includes: |
     \usepackage{amsmath,mathtools}
 ---
 
-<script
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-  type="text/javascript">
-</script>
-
-<link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css">
-<script src="https://tikzjax.com/v1/tikzjax.js"></script>
 
 
 {{ content }}
