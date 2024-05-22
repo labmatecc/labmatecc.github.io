@@ -105,7 +105,7 @@ author:
   avatar           : #"/assets/images/avataarr.png"
   bio              : "Material de acompañamiento para los cursos del Departamento de Matemáticas y Ciencias de la Computación de la Universidad Nacional de Colombia, sede Bogotá."
   location         : "Colombia"
-  email            : "jcgalvisa@unal.edu.co"
+  email            : "labmatecc_bog@unal.edu.co"
   uri              :
   home             : laboratoriodealgebralineal.github.io # null (default), "absolute or relative url to link to author home"
   bitbucket        :
