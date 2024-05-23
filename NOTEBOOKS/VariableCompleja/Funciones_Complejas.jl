@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.41
+# v0.19.42
 
 using Markdown
 using InteractiveUtils
@@ -8,7 +8,10 @@ using InteractiveUtils
 using PlutoUI
 
 # ╔═╡ b297988d-0157-4894-8b2b-9c90c1747144
-using Plots, ComplexPlots, ComplexValues, SymPy
+begin
+	using Plots, ComplexPlots, ComplexValues, SymPy
+	#using PlotlyBase
+end
 
 # ╔═╡ b18f0f08-49cc-4268-a7ce-da2f34848f02
 PlutoUI.TableOfContents(title="Funciones Complejas", aside=true)
@@ -48,7 +51,7 @@ $f(z) = u(x, y) + iv(x, y).$
 """
 
 # ╔═╡ 5b97add9-e375-46f4-87bf-563ace0bba0c
-md"""### Ejemplo 1:
+md"""### Ejemplo 1
 
 Consideremos la función $f(z)=\sin{z}$, hallemos su parte real y su parte imaginaria.
 
@@ -63,17 +66,23 @@ md"""Definimos la función:"""
 # ╔═╡ 6daaf8ba-4e00-4f7d-b49a-0fa77e8b33a4
 f(z) = sin(z)
 
-# ╔═╡ d2b67283-7b8d-43a1-914e-187e142969cf
-md"""La parte real $Re(f(z))$ es la siguiente:"""
+# ╔═╡ 03e2bcd9-022f-4cdc-99d1-01d9f7f08031
+md"""Para calcular la parte real y la parte imaginaria de $f(z)$ creamos las siguientes funciones:"""
 
-# ╔═╡ f0c0aa93-81ce-44c4-93fc-6298ecca04e9
-begin
-	eq = real( f(x+y*im) )
+# ╔═╡ 8720553f-c451-439e-a3ae-d1ac605821db
+function Re(funcion)
+	eq = real( funcion(x+y*im) )
 	eq1 = eq(imag(x) => 0)
 	eq2 = eq1(imag(y) => 0)
 	eq3 = eq2(real(x) => x)
 	eq4 = eq3(real(y) => y)
 end
+
+# ╔═╡ d2b67283-7b8d-43a1-914e-187e142969cf
+md"""Usando la función anterior, obtenemos que $Re(f(z))$ es:"""
+
+# ╔═╡ b7a1f353-d184-47b7-8b4c-5c3571f3629a
+Re(f)
 
 # ╔═╡ 489eec2a-6ec9-4a92-9f0c-cd0bd11f798d
 md"""Visualicemos la función $Re(f(z)).$"""
@@ -82,7 +91,7 @@ md"""Visualicemos la función $Re(f(z)).$"""
 begin
 	xs₁ = range(-2π, stop=2π, length=100)
 	ys₁ = range(-2π, stop=2π, length=100)
-	f₁(x,y) = eq4(x,y)
+	f₁(x,y) = (Re(f))(x,y)
 	surface(xs₁, ys₁, f₁, xlabel="x", ylabel="y", zlabel="z")
 end
 
@@ -95,16 +104,22 @@ begin
 end
 
 # ╔═╡ 29486a83-5054-466c-96b6-18f8aae2fc1b
-md"""Realizaremos lo mismo para la parte imaginaria, note que $Im(f(z))$ es:"""
+md"""Realizaremos lo mismo para la parte imaginaria, la siguiente función nos ayuda a calcular la parte imaginaria de una función compleja."""
 
 # ╔═╡ 18069a13-92db-4dd5-b269-9a0ae2701b7a
-begin
-	Eq = imag( f(x+y*im) )
+function Im(funcion)
+	Eq = imag( funcion(x+y*im) )
 	Eq1 = Eq(real(x) => 0)
 	Eq2 = Eq1(real(y) => 0)
 	Eq3 = Eq2(imag(x) => x)
 	Eq4 = Eq3(imag(y) => y)
 end
+
+# ╔═╡ f2c5dc75-7e7a-4f27-ab40-8f3d7995bf96
+md"""Así $Im(f(z))=$"""
+
+# ╔═╡ 996543ce-76c7-4b0e-9d27-54876e0b62d0
+Im(f)
 
 # ╔═╡ 5cc9f1f2-0646-48f4-977e-1ec8229d9e4b
 md"""La visualización de la función $Im(f(z))$ es la que se muestra a continuación"""
@@ -113,7 +128,7 @@ md"""La visualización de la función $Im(f(z))$ es la que se muestra a continua
 begin
 	xs₂ = range(-2π, stop=2π, length=100)
 	ys₂ = range(-2π, stop=2π, length=100)
-	f₂(x,y) = Eq4(x,y)
+	f₂(x,y) = (Im(f))(x,y)
 	surface(xs₂, ys₂, f₂, xlabel="x", ylabel="y", zlabel="z")
 end
 
@@ -185,44 +200,49 @@ begin
 	contourf(xs₄, ys₄, z_vals₄, aspect_ratio=:equal, xlabel="x", ylabel="y", title="f(z)")
 end
 
+# ╔═╡ a022ee92-4023-4891-a5bf-c13dadfe179d
+md"""Ahora usaremos la función $\texttt{zplot}$ para graficar la función compleja. La función $\texttt{zplot}$ toma una función compleja y mapea su salida a colores, utilizando la magnitud y el argumento de un número complejo. Por ejemplo, la magnitud se representa por la luminosidad o la saturación de cada color, valores de magnitud grandes pueden ser más brillantes o más saturados, mientras que valores cercanos a cero son más oscuros.
+
+Esta técnica es conocida como $\textbf{color domain coloring}.$"""
+
 # ╔═╡ efcef8a1-5164-49fd-82f8-698607ccb701
-zplot(z -> f(z))
+begin
+	zplot(z -> f(z),[-2π,2π],[-2π,2π])
+	title!("f(z)=sin(z)")
+end
+
+# ╔═╡ 5ac94bdd-caaf-4a4a-a6b5-777caacb4760
+md"""Como se observa arriba, los ceros y los polos aparecen donde los contornos de magnitud convergen en un solo punto. Los ceros se identifican por una progresión en el sentido de las agujas del reloj de los colores verde-amarillo-magenta-azul alrededor del punto. En contraste, los polos muestran estos colores en el sentido contrario a las agujas del reloj. La cantidad de veces que estos colores giran alrededor del punto indica la multiplicidad del cero o del polo."""
 
 # ╔═╡ 9f177352-2b11-490a-9bf7-450fdcbdfc15
-md"""### Ejemplo 2"""
+md"""### Ejemplo 2
+Consideremos la función $f(z)=\frac{1}{\sqrt{z}}.$
+Las siguientes gráficas muestran la parte real y la parte imaginaria de la función."""
 
 # ╔═╡ 864b3cd7-aea8-4cff-8eb3-0665dce59db8
 let
 	f(z) = 1/sqrt(z)
-	
-	eq = real( f(x+y*im) )
-	eq1 = eq(imag(x) => 0)
-	eq2 = eq1(imag(y) => 0)
-	eq3 = eq2(real(x) => x)
-	eq4 = eq3(real(y) => y)
 
 	xs₁ = range(-2π, stop=2π, length=100)
 	ys₁ = range(-2π, stop=2π, length=100)
-	f₁(x,y) = eq4(x,y)
-	p1 = surface(xs₁, ys₁, f₁, xlabel="x", ylabel="y", zlabel="z")
+	f₁(x,y) = (Re(f))(x,y)
+	p1 = surface(xs₁, ys₁, f₁, xlabel="x", ylabel="y", zlabel="z", title="Re(f(z))")
 	
 	p2 = contourf(xs₁, ys₁, f₁, aspect_ratio=:equal, xlabel="x", ylabel="y", title="Re(f(z))")
 
-	Eq = imag( f(x+y*im) )
-	Eq1 = Eq(real(x) => 0)
-	Eq2 = Eq1(real(y) => 0)
-	Eq3 = Eq2(imag(x) => x)
-	Eq4 = Eq3(imag(y) => y)
-
 	xs₂ = range(-2π, stop=2π, length=100)
 	ys₂ = range(-2π, stop=2π, length=100)
-	f₂(x,y) = Eq4(x,y)
-	p3 = surface(xs₂, ys₂, f₂, xlabel="x", ylabel="y", zlabel="z")
+	f₂(x,y) = (Im(f))(x,y)
+	p3 = surface(xs₂, ys₂, f₂, xlabel="x", ylabel="y", zlabel="z", title="Im(f(z))")
 
 	p4 = contourf(xs₂, ys₂, f₂, aspect_ratio=:equal, xlabel="x", ylabel="y", title="Im(f(z))")
 
 	plot(p1, p2, p3, p4, layout = 4, size = (800, 600))
 end
+
+# ╔═╡ 9c341258-ee81-4259-b45a-c216b8fbd3fd
+md"""De manera similar al caso anterior, podemos obtener otra representación de la función $f(z)$ en $\mathbb{R}^3$ al graficar el módulo en el eje independiente. $|f(z)|$ refleja el valor absoluto del número complejo $z$. Este concepto se ilustra a continuación.
+"""
 
 # ╔═╡ 7a922368-18bb-44ba-8b1a-ce51da560cf3
 let
@@ -247,6 +267,10 @@ let
 	plot(p1, p2, layout = (1,2), size = (800, 600))
 end
 
+# ╔═╡ 63554381-7a01-4982-9bb7-ee1d66716a51
+md"""Otra representación alternativa de la función $f(z)$ en $\mathbb{R}^3$, como ya vimos, es colocando el argumento en el eje independiente. A continuación, se presenta esta visualización.
+"""
+
 # ╔═╡ 58e44ab7-3516-47f6-b396-dc65d042567e
 let 
 	f(z) = 1/sqrt(z)
@@ -270,8 +294,27 @@ let
 	plot(p1, p2, layout = (1,2), size = (800, 600))
 end
 
+# ╔═╡ 5d4e2b25-6812-4664-9534-7e83bdab7e8f
+md"""Por último, usemos la función $\texttt{zplot}$ para graficar la función compleja."""
+
 # ╔═╡ ab6b018a-b613-4794-ab31-d104e09b2fc4
-zplot(z -> 1/sqrt(z))
+begin
+	zplot(z -> 1/sqrt(z),[-2π,2π],[-2π,2π])
+	title!("f(z)=1/sqrt(z)")
+end
+
+# ╔═╡ ea5d3da2-547b-4201-8e96-d56685fe1e99
+md"""De la gráfica anterior podemos ver que en $z=0$ hay un polo."""
+
+# ╔═╡ 7f4f0c91-cb69-434b-8ef0-1c66b34c96a4
+md"""# Referencias
+
+[1] McGraw-Hill. (2009). Complex variables and applications (8th ed.). McGraw-Hill Companies.
+
+[2] ComplexPlots.jl documentation. (n.d.). Recuperado de https://docs.juliahub.com/General/ComplexPlots/0.1.0/plots/
+
+[3] ComplexPlots.jl Documentation. (n.d.). Recuperado de https://docs.juliahub.com/General/ComplexPlots/0.1.0/plots/
+"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -294,9 +337,8 @@ SymPy = "~2.0.1"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.8.5"
+julia_version = "1.7.2"
 manifest_format = "2.0"
-project_hash = "9c874bc3bb4215b78e8bd2b1ff7d6bf8d8bb92a9"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -306,7 +348,6 @@ version = "1.3.2"
 
 [[deps.ArgTools]]
 uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
-version = "1.1.1"
 
 [[deps.Artifacts]]
 uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
@@ -327,9 +368,9 @@ version = "1.0.8+1"
 
 [[deps.Cairo_jll]]
 deps = ["Artifacts", "Bzip2_jll", "CompilerSupportLibraries_jll", "Fontconfig_jll", "FreeType2_jll", "Glib_jll", "JLLWrappers", "LZO_jll", "Libdl", "Pixman_jll", "Xorg_libXext_jll", "Xorg_libXrender_jll", "Zlib_jll", "libpng_jll"]
-git-tree-sha1 = "a4c43f59baa34011e303e76f5c8c91bf58415aaf"
+git-tree-sha1 = "a2f1c8c668c8e3cb4cca4e57a8efdb09067bb3fd"
 uuid = "83423d85-b0ee-5818-9007-b63ccbeb887a"
-version = "1.18.0+1"
+version = "1.18.0+2"
 
 [[deps.ChainRulesCore]]
 deps = ["Compat", "LinearAlgebra", "SparseArrays"]
@@ -398,7 +439,6 @@ version = "4.15.0"
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.0.1+0"
 
 [[deps.ComplexPlots]]
 deps = ["ColorSchemes", "Colors", "ComplexRegions", "ComplexValues", "LinearAlgebra", "Requires"]
@@ -457,7 +497,6 @@ uuid = "ade2ca70-3891-5945-98fb-dc099432e06a"
 
 [[deps.DelimitedFiles]]
 deps = ["Mmap"]
-git-tree-sha1 = "9e2f36d3c96a820c678f2f1f1782582fcf685bae"
 uuid = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 
 [[deps.Dierckx]]
@@ -491,9 +530,8 @@ uuid = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
 version = "0.9.3"
 
 [[deps.Downloads]]
-deps = ["ArgTools", "FileWatching", "LibCURL", "NetworkOptions"]
+deps = ["ArgTools", "LibCURL", "NetworkOptions"]
 uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
-version = "1.6.0"
 
 [[deps.EpollShim_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -525,9 +563,6 @@ git-tree-sha1 = "466d45dc38e15794ec7d5d63ec03d776a9aff36e"
 uuid = "b22a6f82-2f65-5046-a5b2-351ab43fb4e5"
 version = "4.4.4+1"
 
-[[deps.FileWatching]]
-uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
-
 [[deps.FixedPointNumbers]]
 deps = ["Statistics"]
 git-tree-sha1 = "05882d6995ae5c12bb5f36dd2ed3f61c98cbb172"
@@ -553,9 +588,9 @@ version = "0.10.36"
 
 [[deps.FreeType2_jll]]
 deps = ["Artifacts", "Bzip2_jll", "JLLWrappers", "Libdl", "Zlib_jll"]
-git-tree-sha1 = "d8db6a5a2fe1381c1ea4ef2cab7c69c2de7f9ea0"
+git-tree-sha1 = "5c1d8ae0efc6c2e7b1fc502cbe25def8f661b7bc"
 uuid = "d7e528f0-a631-5988-bf34-fe36492bcfd7"
-version = "2.13.1+0"
+version = "2.13.2+0"
 
 [[deps.FriBidi_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -711,12 +746,10 @@ version = "0.16.3"
 [[deps.LibCURL]]
 deps = ["LibCURL_jll", "MozillaCACerts_jll"]
 uuid = "b27032c2-a3e7-50c8-80cd-2d36dbcbfd21"
-version = "0.6.3"
 
 [[deps.LibCURL_jll]]
 deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll", "Zlib_jll", "nghttp2_jll"]
 uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
-version = "7.84.0+0"
 
 [[deps.LibGit2]]
 deps = ["Base64", "NetworkOptions", "Printf", "SHA"]
@@ -725,7 +758,6 @@ uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
 [[deps.LibSSH2_jll]]
 deps = ["Artifacts", "Libdl", "MbedTLS_jll"]
 uuid = "29816b5a-b9ab-546f-933c-edad1886dfa8"
-version = "1.10.2+0"
 
 [[deps.Libdl]]
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
@@ -821,7 +853,6 @@ version = "1.1.9"
 [[deps.MbedTLS_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
-version = "2.28.0+0"
 
 [[deps.Measures]]
 git-tree-sha1 = "c13304c81eec1ed3af7fc20e75fb6b26092a1102"
@@ -839,7 +870,6 @@ uuid = "a63ad114-7e13-5084-954f-fe012c677804"
 
 [[deps.MozillaCACerts_jll]]
 uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
-version = "2022.2.1"
 
 [[deps.NaNMath]]
 deps = ["OpenLibm_jll"]
@@ -849,7 +879,6 @@ version = "1.0.2"
 
 [[deps.NetworkOptions]]
 uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
-version = "1.2.0"
 
 [[deps.Ogg_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -860,12 +889,10 @@ version = "1.3.5+1"
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.20+0"
 
 [[deps.OpenLibm_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "05823500-19ac-5b8b-9628-191a04bc5112"
-version = "0.8.1+0"
 
 [[deps.OpenSSL]]
 deps = ["BitFlags", "Dates", "MozillaCACerts_jll", "OpenSSL_jll", "Sockets"]
@@ -899,7 +926,6 @@ version = "1.6.3"
 [[deps.PCRE2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "efcefdf7-47ab-520b-bdef-62a2eaa19f15"
-version = "10.40.0+0"
 
 [[deps.Parsers]]
 deps = ["Dates", "PrecompileTools", "UUIDs"]
@@ -921,7 +947,6 @@ version = "0.43.4+0"
 [[deps.Pkg]]
 deps = ["Artifacts", "Dates", "Downloads", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
-version = "1.8.0"
 
 [[deps.PlotThemes]]
 deps = ["PlotUtils", "Statistics"]
@@ -1014,7 +1039,6 @@ version = "1.3.0"
 
 [[deps.SHA]]
 uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
-version = "0.7.0"
 
 [[deps.Scratch]]
 deps = ["Dates"]
@@ -1057,9 +1081,9 @@ version = "2.4.0"
 
 [[deps.StaticArrays]]
 deps = ["LinearAlgebra", "PrecompileTools", "Random", "StaticArraysCore", "Statistics"]
-git-tree-sha1 = "bf074c045d3d5ffd956fa0a461da38a44685d6b2"
+git-tree-sha1 = "9ae599cd7529cfce7fea36cf00a62cfc56f0f37c"
 uuid = "90137ffa-7385-5640-81b9-e52037218182"
-version = "1.9.3"
+version = "1.9.4"
 
 [[deps.StaticArraysCore]]
 git-tree-sha1 = "36b3d696ce6366023a0ea192b4cd442268995a0d"
@@ -1097,12 +1121,10 @@ version = "0.1.18"
 [[deps.TOML]]
 deps = ["Dates"]
 uuid = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
-version = "1.0.0"
 
 [[deps.Tar]]
 deps = ["ArgTools", "SHA"]
 uuid = "a4e569a6-e804-4fa4-b0f3-eef7a1d5b13e"
-version = "1.10.1"
 
 [[deps.TensorCore]]
 deps = ["LinearAlgebra"]
@@ -1145,9 +1167,9 @@ version = "0.4.1"
 
 [[deps.Unitful]]
 deps = ["ConstructionBase", "Dates", "InverseFunctions", "LinearAlgebra", "Random"]
-git-tree-sha1 = "352edac1ad17e018186881b051960bfca78a075a"
+git-tree-sha1 = "dd260903fdabea27d9b6021689b3cd5401a57748"
 uuid = "1986cc42-f94f-5a68-af5c-568840ba703d"
-version = "1.19.1"
+version = "1.20.0"
 
 [[deps.UnitfulLatexify]]
 deps = ["LaTeXStrings", "Latexify", "Unitful"]
@@ -1185,9 +1207,9 @@ version = "1.31.0+0"
 
 [[deps.XML2_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libiconv_jll", "Zlib_jll"]
-git-tree-sha1 = "532e22cf7be8462035d092ff21fada7527e2c488"
+git-tree-sha1 = "52ff2af32e591541550bd753c0da8b9bc92bb9d9"
 uuid = "02c8fc9c-b97f-50b9-bbe4-9be30ff0a78a"
-version = "2.12.6+0"
+version = "2.12.7+0"
 
 [[deps.XSLT_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libgcrypt_jll", "Libgpg_error_jll", "Libiconv_jll", "Pkg", "XML2_jll", "Zlib_jll"]
@@ -1348,7 +1370,6 @@ version = "1.5.0+0"
 [[deps.Zlib_jll]]
 deps = ["Libdl"]
 uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
-version = "1.2.12+3"
 
 [[deps.Zstd_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1375,10 +1396,10 @@ uuid = "1a1c6b14-54f6-533d-8383-74cd7377aa70"
 version = "3.1.1+0"
 
 [[deps.libaom_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "3a2ea60308f0996d26f1e5354e10c24e9ef905d4"
+deps = ["Artifacts", "JLLWrappers", "Libdl"]
+git-tree-sha1 = "1827acba325fdcdf1d2647fc8d5301dd9ba43a9d"
 uuid = "a4ae2306-e953-59d6-aa16-d00cac43593b"
-version = "3.4.0+0"
+version = "3.9.0+0"
 
 [[deps.libass_jll]]
 deps = ["Artifacts", "Bzip2_jll", "FreeType2_jll", "FriBidi_jll", "HarfBuzz_jll", "JLLWrappers", "Libdl", "Pkg", "Zlib_jll"]
@@ -1389,7 +1410,6 @@ version = "0.15.1+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl", "OpenBLAS_jll"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.1.1+0"
 
 [[deps.libevdev_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1430,12 +1450,10 @@ version = "1.1.6+0"
 [[deps.nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850ede-7688-5339-a07c-302acd2aaf8d"
-version = "1.48.0+0"
 
 [[deps.p7zip_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
-version = "17.4.0+0"
 
 [[deps.x264_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1470,17 +1488,21 @@ version = "1.4.1+1"
 # ╠═a46945e5-7437-45d7-a322-5a47db66deb7
 # ╟─bdc857d8-62d1-4a49-bb2e-7a1fdef6cb47
 # ╠═6daaf8ba-4e00-4f7d-b49a-0fa77e8b33a4
+# ╟─03e2bcd9-022f-4cdc-99d1-01d9f7f08031
+# ╠═8720553f-c451-439e-a3ae-d1ac605821db
 # ╟─d2b67283-7b8d-43a1-914e-187e142969cf
-# ╠═f0c0aa93-81ce-44c4-93fc-6298ecca04e9
+# ╠═b7a1f353-d184-47b7-8b4c-5c3571f3629a
 # ╟─489eec2a-6ec9-4a92-9f0c-cd0bd11f798d
 # ╟─58b21d7d-9288-4787-b59b-6a17921a1e4a
 # ╟─27aee2de-675d-4821-8917-da3488c88474
 # ╟─a1a910f2-6db6-4721-b68b-6875982456bb
 # ╟─29486a83-5054-466c-96b6-18f8aae2fc1b
 # ╠═18069a13-92db-4dd5-b269-9a0ae2701b7a
-# ╠═5cc9f1f2-0646-48f4-977e-1ec8229d9e4b
+# ╟─f2c5dc75-7e7a-4f27-ab40-8f3d7995bf96
+# ╠═996543ce-76c7-4b0e-9d27-54876e0b62d0
+# ╟─5cc9f1f2-0646-48f4-977e-1ec8229d9e4b
 # ╟─a4ceb7d3-ca49-4d91-a3ff-8421fceaa1cd
-# ╠═a37c1e9a-7cac-438e-94a5-e342f5613c6b
+# ╟─a37c1e9a-7cac-438e-94a5-e342f5613c6b
 # ╟─41e778a4-b362-48ce-8ba2-5aba75128278
 # ╟─135db7ca-533a-47b9-ac9d-a1769875f8b7
 # ╟─91def84f-c450-4f86-9fd4-0e43f206f4ba
@@ -1490,11 +1512,18 @@ version = "1.4.1+1"
 # ╟─4675928d-d1ae-4c43-81f0-a6d3029fc95d
 # ╟─7d3525d8-ba29-486d-9bda-82657a853a33
 # ╟─61e22180-bfa3-432a-a373-3e3ff60e7d57
-# ╠═efcef8a1-5164-49fd-82f8-698607ccb701
-# ╠═9f177352-2b11-490a-9bf7-450fdcbdfc15
-# ╠═864b3cd7-aea8-4cff-8eb3-0665dce59db8
-# ╠═7a922368-18bb-44ba-8b1a-ce51da560cf3
-# ╠═58e44ab7-3516-47f6-b396-dc65d042567e
-# ╠═ab6b018a-b613-4794-ab31-d104e09b2fc4
+# ╟─a022ee92-4023-4891-a5bf-c13dadfe179d
+# ╟─efcef8a1-5164-49fd-82f8-698607ccb701
+# ╟─5ac94bdd-caaf-4a4a-a6b5-777caacb4760
+# ╟─9f177352-2b11-490a-9bf7-450fdcbdfc15
+# ╟─864b3cd7-aea8-4cff-8eb3-0665dce59db8
+# ╟─9c341258-ee81-4259-b45a-c216b8fbd3fd
+# ╟─7a922368-18bb-44ba-8b1a-ce51da560cf3
+# ╟─63554381-7a01-4982-9bb7-ee1d66716a51
+# ╟─58e44ab7-3516-47f6-b396-dc65d042567e
+# ╟─5d4e2b25-6812-4664-9534-7e83bdab7e8f
+# ╟─ab6b018a-b613-4794-ab31-d104e09b2fc4
+# ╟─ea5d3da2-547b-4201-8e96-d56685fe1e99
+# ╟─7f4f0c91-cb69-434b-8ef0-1c66b34c96a4
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
