@@ -11,7 +11,7 @@ using PlutoUI
 using LinearAlgebra
 
 # ╔═╡ ad0e2661-ac54-4037-bda1-3e665dbecaf4
-PlutoUI.TableOfContents(title="Independencia lineal", aside=true)
+PlutoUI.TableOfContents(title="Independencia lineal I", aside=true)
 
 # ╔═╡ b47f513f-114d-4b96-b866-0090c9f0d107
 md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a jcgalvisa@unal.edu.co
@@ -21,11 +21,11 @@ Tu participación es fundamental para hacer de este curso una experiencia aún m
 # ╔═╡ 55a8d645-c175-4e72-9452-08bcaffa5ec1
 md"""Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo."""
 
-# ╔═╡ 0097fe78-3013-4eaf-ae85-006d6c10c803
-md"""# Introducción"""
-
 # ╔═╡ 4a709378-cf2c-4072-9e46-46b4c7237c1b
 md"""Usaremos esta librería"""
+
+# ╔═╡ 0097fe78-3013-4eaf-ae85-006d6c10c803
+md"""# Introducción"""
 
 # ╔═╡ f60001c4-b165-4ae3-a642-3d0464a6d2d7
 md"""La independencia lineal es un concepto esencial en álgebra lineal que destaca la relación entre vectores. Se refiere a la propiedad de un conjunto de vectores donde ninguno puede expresarse como combinación lineal de los demás de manera trivial. Esta noción, clave en la resolución de sistemas de ecuaciones y análisis estructural.
