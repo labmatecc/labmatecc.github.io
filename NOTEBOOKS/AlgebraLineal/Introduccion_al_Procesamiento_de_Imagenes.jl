@@ -347,7 +347,7 @@ md""" ### Operaciones de álgebra lineal"""
 md"""Podemos reescalar de manera uniforme los píxeles, multiplicando la matriz asociada a la imagen por una constante."""
 
 # ╔═╡ a6db350f-ea77-4178-ae9e-8d44d9571754
-@bind c Slider(0:0.1:10)
+@bind c Slider(0:0.1:10, default=0.25)
 
 # ╔═╡ 064776ef-3ad1-40a3-bf36-f2e61d4fd807
 c.* imag

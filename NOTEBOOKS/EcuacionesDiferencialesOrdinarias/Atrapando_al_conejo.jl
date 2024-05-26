@@ -64,6 +64,9 @@ let
 	imag = load(fname) #declaramos la variable "imag"
 end
 
+# ╔═╡ 31a016f5-97a8-4dcf-a11f-00261f178454
+md"""$\textit{Figura 1. Trayectoria de los animales. Elaboración propia, inspirado en [1].}$"""
+
 # ╔═╡ b4268232-f7c1-41d1-b7bc-cdc5c9adc07b
 md"""Dado que el segmento de recta $DR$ es tangente a la trayectoria, tenemos
 
@@ -106,10 +109,10 @@ con $p(c)=y'(c)=0$, ya que su pendiente en ese punto es horizontal."""
 md"""Vamos a suponer que $a=b$, es decir, que las velocidades de ambos animales es la misma, y veamos que tan cerca llega el perro al conejo."""
 
 # ╔═╡ 9462a547-f5c2-4dcb-8ad4-8a74640f1cfe
-@bind a Slider(0:0.5:5, show_value=true, default=1) #velocidad del conejo
+@bind a Slider(0:0.5:5, show_value=true, default=1.5) #velocidad del conejo
 
 # ╔═╡ 7c296620-39a3-4cd4-94bd-73139761afb1
-@bind b Slider(0:0.5:5, show_value=true, default=1) #velocidad del perro
+@bind b Slider(0:0.5:5, show_value=true, default=2) #velocidad del perro
 
 # ╔═╡ 739c896b-dd19-4704-839b-690f7ae82e22
 md"""Note que si $a\geq b$ el perro no podra alcanzar al conejo."""
@@ -2565,6 +2568,7 @@ version = "1.4.1+1"
 # ╟─4ebcac4e-97b7-4346-aad3-1b643c49fb29
 # ╟─7afcbd08-4b92-4e11-9e81-40ed27417e2c
 # ╟─51fe4228-8b1c-4b55-a0fd-5c20c9c6bcef
+# ╟─31a016f5-97a8-4dcf-a11f-00261f178454
 # ╟─b4268232-f7c1-41d1-b7bc-cdc5c9adc07b
 # ╟─91be989c-67e9-4261-a9b0-67e9b5bfa582
 # ╟─d5901d7c-d94b-43d8-9899-85e8f72c739b

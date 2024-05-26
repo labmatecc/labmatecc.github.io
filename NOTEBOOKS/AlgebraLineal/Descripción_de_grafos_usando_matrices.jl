@@ -46,6 +46,9 @@ begin
 	imag = load(fname)
 end
 
+# ╔═╡ 7fda0cae-0cdb-4d86-b74a-56a1552147a9
+md"""$\textit{Figura 1. Puentes de Königsberg. Imagen tomada de Wikipedia.}$"""
+
 # ╔═╡ 1cf5d9ba-b3ee-49e6-b9c2-5f650f93ef05
 md"""El Problema de los Puentes de Königsberg es un famoso problema matemático que surgió en la ciudad de Königsberg (hoy Kaliningrado, Rusia) en el siglo XVIII. La ciudad estaba ubicada en ambas orillas del río Pregel y tenía dos grandes islas conectadas por siete puentes. El problema consistía en determinar si era posible recorrer la ciudad cruzando cada puente una vez y solo una vez, regresando al punto de partida.
 
@@ -1856,6 +1859,7 @@ version = "1.4.1+1"
 # ╟─fbf5bba4-ff73-47c2-8f50-bd0f42efce5a
 # ╟─62521ab1-b157-45f2-a53c-5381b7d6952f
 # ╟─42d36955-57e9-45a4-81d4-1069c22d0639
+# ╟─7fda0cae-0cdb-4d86-b74a-56a1552147a9
 # ╟─1cf5d9ba-b3ee-49e6-b9c2-5f650f93ef05
 # ╟─e66358c7-4a33-4bec-b686-b696eef6da92
 # ╟─2235d60e-4d49-483d-ae23-43121dc98b38

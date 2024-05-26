@@ -64,6 +64,9 @@ begin
 	imag = load(fname) #declaramos la variable "imag"
 end
 
+# ╔═╡ 064ade09-6eef-4cd1-9592-15f7ad993b6c
+md"""$\textit{Figura 1. Modelo de dos compartimentos. Elaboración propia.}$"""
+
 # ╔═╡ 30310b6e-99e7-4aae-88cf-828668e3803d
 md"""Para desarrollar este modelo, tendremos en cuenta que el medicamento que se ingiere por vía oral debe pasar inicialmente por el tracto digestivo hasta el momento en que, gracias al proceso de digestión, pueda ser procesado e incorporado a la sangre. En el caso específico del paracetamol, se espera que inhiba la producción de prostaglandinas tanto en el cerebro como en todo el cuerpo.
 
@@ -94,6 +97,9 @@ begin
 	fname2 = download(url2) #bajamos la imagen a la máquina local
 	imag2 = load(fname2) #declaramos la variable "imag"
 end
+
+# ╔═╡ 021108be-196d-453f-a22b-732823738248
+md"""$\textit{Figura 2. Modelo de dos compartimentos. Elaboración propia.}$"""
 
 # ╔═╡ e936780e-66e4-4266-81d1-9ca33553cf98
 md"""Así, la concentración del fármaco que pierde el tracto digestivo es a través del tiempo es $-\beta D$, es decir
@@ -2945,9 +2951,11 @@ version = "1.4.1+1"
 # ╟─bd219546-971c-42e9-88ad-3af9fec89cd2
 # ╟─67c3ddd5-63ab-4bda-8dbd-a358a068e53c
 # ╟─fce1bcc6-fbfc-4556-8672-8197b1a15727
+# ╟─064ade09-6eef-4cd1-9592-15f7ad993b6c
 # ╟─30310b6e-99e7-4aae-88cf-828668e3803d
 # ╟─558b526d-69dd-4fc7-a596-b974d7885c64
 # ╟─5b813fdb-c5f4-48c6-b59e-8598e4a6ff5f
+# ╟─021108be-196d-453f-a22b-732823738248
 # ╟─e936780e-66e4-4266-81d1-9ca33553cf98
 # ╟─8a0a1400-1500-4912-b739-486059c0648b
 # ╠═780d0ffa-0ce7-4e29-beb5-cccb06e42e7e

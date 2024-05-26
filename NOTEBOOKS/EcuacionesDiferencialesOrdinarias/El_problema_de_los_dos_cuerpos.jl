@@ -46,6 +46,9 @@ let
 	imag = load(fname) #declaramos la variable "imag"
 end
 
+# ╔═╡ 58e20601-5d5c-4d97-8704-6e8cd671518b
+md"""$\textit{Figura 1. Trayectoria de la masa m. Elaboración propia, inspirada en [1].}$"""
+
 # ╔═╡ bcf413bb-5b40-4036-8dc0-d689e14911ec
 md"""y expresamos el vector de radio desde el origen hasta la partícula en movimiento $m$ de esa manera
 
@@ -168,6 +171,9 @@ begin
 	fname = download(url) #bajamos la imagen a la máquina local
 	imag = load(fname) #declaramos la variable "imag"
 end
+
+# ╔═╡ 725f383a-6910-497a-9c94-982bd59d08bf
+md"""$\textit{Figura 2. Orbita de la masa m. Elaboración propia, inspirada en [1].}$"""
 
 # ╔═╡ 01484609-92b9-4552-9008-d39ef252cd3a
 md"""Recordamos que la relación entre la distancia entre un punto $P$ en una curva y un punto $F$ (el foco) y la distancia entre el punto $P$ y una recta $D$ (la directriz) de una sección cónica, es conocida como la excentricidad $e$ de la sección cónica (está relacionada con la forma y la orientación de la curva).
@@ -2596,6 +2602,7 @@ version = "1.4.1+1"
 # ╟─4b25186e-b286-46ca-ae61-88234b7a0576
 # ╟─623e738d-d3e4-449f-b96d-844ca249fc3d
 # ╟─51fe4228-8b1c-4b55-a0fd-5c20c9c6bcef
+# ╟─58e20601-5d5c-4d97-8704-6e8cd671518b
 # ╟─bcf413bb-5b40-4036-8dc0-d689e14911ec
 # ╟─0be71780-732d-43d4-9ae8-050d9516e4ee
 # ╟─d9725c10-6329-422c-b8a7-b5b069defa9a
@@ -2608,6 +2615,7 @@ version = "1.4.1+1"
 # ╠═a8b3a377-16ab-405d-b85e-587aabaca696
 # ╟─228de1eb-1d09-44b3-84d7-29aad26f53c1
 # ╟─67312149-15a9-48fc-a9d7-226b086042d5
+# ╟─725f383a-6910-497a-9c94-982bd59d08bf
 # ╟─01484609-92b9-4552-9008-d39ef252cd3a
 # ╟─7533a427-cffe-433f-b55b-23e1bee545ea
 # ╟─62cfe850-a350-4303-b116-b79f0c542a8c

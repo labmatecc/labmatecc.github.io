@@ -4,264 +4,389 @@
 using Markdown
 using InteractiveUtils
 
-# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
-macro bind(def, element)
-    quote
-        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
-        local el = $(esc(element))
-        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
-        el
-    end
-end
-
-# ╔═╡ d882946c-aee6-43f9-8516-1c72ee946408
+# ╔═╡ 8495d410-af20-11ee-0e03-59f8e6fcbbca
 using PlutoUI
 
-# ╔═╡ 3cbddb7c-e7d6-4f2c-b0bb-92a14ff55c65
+# ╔═╡ 4bdbd2b9-1e4f-41cd-b29b-391d4e3f7b34
 begin
-	using Colors, ColorVectorSpace, ImageShow, FileIO, ImageIO
-	using HypertextLiteral
+	using LinearAlgebra
 	using Plots
+	using Statistics
+	using Distances
+	using Clustering
 end
 
-# ╔═╡ fed0c56f-fe3e-4b32-b4f0-dda5c269abfe
-PlutoUI.TableOfContents(title="Introducción a la modelación matemática", aside=true)
+# ╔═╡ 30a70338-df77-4c05-bc25-ec4e463f700e
+begin
+	using CSV
+	using ExcelFiles
+end
 
-# ╔═╡ 089cc976-124e-40f7-9aa1-ba4ca5089aef
+# ╔═╡ 319ac194-3e32-4c9d-ac1a-198b9fcc234f
+PlutoUI.TableOfContents(title="Clustering", aside=true)
+
+# ╔═╡ 061014c9-ac70-4007-bf5a-1829939d3833
 md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a jcgalvisa@unal.edu.co
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
-# ╔═╡ c48f0bd3-ecb4-4e44-8aa2-aebf32bb5b82
-md"""Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo. 
-"""
+# ╔═╡ e42bf648-7797-4fb8-a871-ec8953384813
+md"""Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo."""
 
-# ╔═╡ 914ef67f-c856-433d-be13-009e17486c08
+# ╔═╡ 99e2cc16-b2b7-436c-a1c1-9d26776c31aa
 md"""Usaremos las siguientes librerías:"""
 
-# ╔═╡ 010bd77b-b5e6-4441-b4bd-739eb4f64b35
-md"""
-# Introducción"""
+# ╔═╡ 7bd37955-2bfc-428b-b94a-e11f299842fb
+md"""# Introducción"""
 
-# ╔═╡ b0bb08ad-40c1-4944-a200-245a0ee9827d
-md"""El enfoque matemático para la solución de problemas usa herramientas específicas, entre ellas, la abstracción, generalización y, en muchos casos, métodos numéricos e implementación de algoritmos.
-
-
-Cuando se usa el enfoque matemático para resolver problemas se inicia de una pregunta o situación concreta y se desea responder esta pregunta o entender la situación considerada. A grosso modo para finalizar el ejercicio de modelado de manera exitosa debemos:
-
-1. Modelar el problema o situación concreta: se debe abstraer el problema para poder escribirlo en lenguaje matemático preciso. Se requiere identificar los grados de libertad del modelo considerado, $p$, así como las cantidades u objetos que deben ser encontrados o calculados, $q$.   Con grados de libertad del modelo nos referimos a los parámetros (numéricos o de alguna otra naturaleza) que caracterizan completamente el modelo estudiado.
-
-    $\cdot$ Como parte del ejercicio de modelado se identifican los datos, posibles mediciones  e información disponible a priori sobre el problema o pregunta. 
-        Denotemos esta información por $d$. Debe ser posible obtener el parámetro $p$ a partir de esta información.
+# ╔═╡ 488b679d-deff-42c9-b533-be70bfe5e732
+md"""El clustering, dentro del campo del machine learning, es una técnica de aprendizaje no supervisado que se centra en la identificación y agrupación de patrones similares dentro de un conjunto de datos. A diferencia de los métodos supervisados que requieren etiquetas predefinidas, el clustering busca descubrir estructuras y relaciones en los datos sin la necesidad de guía externa.
 
 
-    
-2. Escribir $q$ como algún tipo de función (o algoritmo de calculo a partir) de $p$ usando el modelo planteado; es decir, relacionar los parámetros que describen el modelo con las cantidades u objetos matemáticos que necesitamos encontrar. En muchas aplicaciones practicas obtener las cantidad de interés $q$ es imposible  solo usando el modelo planteado. Eh estos casos se puede calcular únicamente cantidades primales o principales, denotadas aquí por $v$.    Tendremos entonces que introducir una ley  o relación de la forma $q=F(v,\alpha)$ en donde $\alpha$ es un parámetro de la ley que relaciona $v$  y $q$.  El parámetro $\alpha$ puede ser de tipo numérico o algún otro objeto matemático.
+El objetivo principal del clustering es dividir el conjunto de datos en clústeres o grupos, donde las muestras dentro de un mismo clúster comparten similitudes entre sí, mientras que son distintas de las muestras en otros clústeres. Este enfoque permite identificar patrones subyacentes, facilitando la exploración y comprensión de la variabilidad presente en los datos.Las medidas de similitud, como la distancia euclidiana, son fundamentales para determinar la proximidad entre puntos de datos.
 
-3. Proponer un método numérico  (asumiendo aritmética exacta) que permita usar la relación  obtenida para $q$  a partir de $p$ ya sea en un número finito de pasos o como limite de un método iterativo.
+Recordemos como calcular la distancia euclidiana, la distancia euclidiana entre dos puntos $P(x_1, y_1)$ y $Q(x_2, y_2)$ en un espacio bidimensional se define de la siguiente forma
 
-4. Implementar en un sistema de computo el método numérico propuesto obtenido teniendo en cuenta aspectos de estabilidad, precisión y eficiencia. Además:
+$d(P,Q) = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$
 
-    $\cdot$ Se considera la calidad y cantidad de datos  disponibles $d$.
+Más generalmente, en un espacio de $n$-dimensiones con puntos $P(p_1, p_2, \ldots, p_n)$ y $Q(q_1, q_2, \ldots, q_n)$, la distancia euclidiana se calcula como
 
-    $\cdot$ Se obtienen los parámetros del modelo y se calculan las cantidades de interés.
+$d(P,Q) = \sqrt{\sum_{i=1}^{n}(q_i - p_i)^2}$
 
+Esta fórmula representa la longitud de la línea recta que conecta los dos puntos en el espacio euclidiano.
+"""
 
-5. Una vez se obtiene la respuesta a la pregunta o se obtiene el objeto matemático de interés, se debe verificar si en realidad se resolvió el problema planteado o si ajustes deben ser realizados.
+# ╔═╡ 0a336d8a-9b57-470c-aa88-341c47d98662
+md"""En el ámbito del clustering, la tarea de agrupar datos similares es esencial para descubrir patrones y estructuras inherentes en conjuntos de datos. Sin embargo, evaluar la calidad de los clusters resultantes es fundamental para comprender la eficacia de los algoritmos de agrupamiento. En este contexto, la siguiente función se presenta como una herramienta valiosa para medir la dispersión o error cuadrático medio entre los puntos de datos y sus representantes de clúster asignados."""
 
-Notamos que los pasos 2. y 3. pueden no ser necesarios en algunos casos dependiendo del problema estudiado. En la actualidad es cada vez mas común la gran importancia y dificultad de los pasos 2. y 3.
+# ╔═╡ 85b618fa-b4fa-4d8a-823d-ecafa54e5cfb
+Jclust(x,reps,assignment) = mean([norm(x[i]-reps[assignment[i]])^2 for i=1:length(x)] )
 
-En este trabajo ilustramos el proceso de modelación matemática  a través de un ejemplo sencillo."""
+# ╔═╡ aeb76509-87ed-4400-a4e3-77b59f5e8654
+md"""La función $\texttt{Jclust}$ toma como entrada tres parámetros cruciales: el conjunto de datos $\texttt{x}$ representado como una lista de vectores, los representantes de clúster $\texttt{reps}$, y las asignaciones de clúster $\texttt{assignment}$ para cada punto en $\texttt{x}$. Su objetivo principal es calcular una medida cuantitativa que indique qué tan bien los puntos se ajustan a sus respectivos clusters.
 
-# ╔═╡ c6cf6f44-9e09-4f7f-9509-168d329d9f31
-md"""# ¿Cuánto jugo hay en una naranja?
+La lógica subyacente implica calcular la distancia cuadrática entre cada punto y su representante de clúster asignado, ponderando estos valores por las asignaciones específicas. Posteriormente, se calcula un promedio de estas distancias cuadráticas, proporcionando una métrica cuantitativa de la coherencia y proximidad de los puntos dentro de sus clusters.
 
-El objetivo es estimar, de una manera no invasiva y con herramientas sencillas, la cantidad de jugo de naranja en una naranja.
+Esta función no solo es útil para la evaluación de la calidad de los clusters, sino que también puede desempeñar un papel crucial en la optimización de parámetros y ajuste de modelos de clustering. A través de la comprensión de cómo $\texttt{Jclust}$ responde a diferentes asignaciones y configuraciones de representantes, los practicantes de clustering pueden tomar decisiones informadas para mejorar la eficacia y precisión de sus análisis.
 
-Es claro que queremos usar el enfoque matemático para alcanzar nuestro objetivo. Supongamos que disponemos de una cuerda y una regla para hacer las mediciones que queramos. 
-Podemos asumir entonces que podemos contar con algunas medidas de diámetros de curvas al rededor de la naranja para así encontrar una respuesta en centímetros cúbicos. """
+Consideremos:
+"""
 
-# ╔═╡ da3dff57-eacd-4e18-8439-41dbde4bab6f
-md"""A continuación se muestra una imagen de una naranja, dicha imagen está disponible en el URL indicado."""
-
-# ╔═╡ 3a962c19-ec0a-4758-9a0f-51804745a39c
-url = "https://c7.alamy.com/compes/2c0ywp4/cinta-metrica-con-naranja-aislada-2c0ywp4.jpg"
-
-# ╔═╡ e0616ea2-970e-4e9a-9622-a60c557bceec
-md"""Ahora bajamos la imagen a la máquina local."""
-
-# ╔═╡ 48cb2f10-4496-4dd7-aba4-a5be79cf06ff
-fname = download(url)
-
-# ╔═╡ 21bf9efa-69c5-40ed-90e0-4b7f51210e13
-md"""Ahora declaramos la variable "imag", que corresponde a un tipo de dato que representa imágenes. Recuerde que, además de asignar la variable en una expresión del tipo "
-", también se despliega la variable. En este caso, Pluto entiende que queremos ver la imagen representada por la variable."""
-
-# ╔═╡ 6eb930d2-c0e5-43d8-801f-024928705453
-imag = load(fname)[1:900,1:1300]
-
-# ╔═╡ d8be3494-4b1c-419b-a8ab-28c40cb18f99
-md"""$\textit{Figura 1. Midiendo una naranja. Imagen tomada de Wikipedia.}$"""
-
-# ╔═╡ 3d35a65c-3620-4a1f-adf3-1280eff4c597
-md"""## Modelo matemático
-
-El modelo matemático más sencillo para la naranja es asumir que la naranja tiene una forma esférica (sólida) o de bola tridimensional. Esto, en realidad, quiere decir que en algún conjunto y noción de distancia adecuados, la naranja se encuentra a poca distancia de una bola (o esfera sólida). Observe que en este caso, podemos trasladar la esfera para colocar su centro en el origen y, por lo tanto, necesitamos un solo parámetro para describirla. En este caso, un parámetro que puede ser usado es el radio de la bola,
-
-$p=\mbox{ ``radio de la bola''}.$"""
-
-# ╔═╡ 354b94c8-20db-448f-b508-34963b4e3645
-@bind ρ Slider(1:10, show_value=true)
-
-# ╔═╡ 472d3cf7-9aa6-4eab-910d-3216426367ff
-let
-	# Crear un rango de valores para theta y phi
-	theta_range = range(0, 2π, length=100)
-	phi_range = range(0, π, length=100)
-
-	# Generar los puntos de la esfera
-	x = [ρ * sin(φ) * cos(θ) for φ in phi_range, θ in theta_range]
-	y = [ρ * sin(φ) * sin(θ) for φ in phi_range, θ in theta_range]
-	z = [ρ * cos(φ) for φ in phi_range, θ in theta_range]
-
-	# Graficar la esfera
-	surface(x, y, z, xlabel="X", ylabel="Y", zlabel="Z", title="Esfera de Radio p = $ρ")
+# ╔═╡ e1a2e484-76f2-4291-94b7-9a94664a05b3
+begin
+	x = [ [0,1], [1,0], [-1,1] ]
+	reps = [ [1,1], [0,0] ]
+	assignment₁ = [1,2,1]
 end
 
-# ╔═╡ dd142f60-9e4f-4332-b1e5-1f5c065048b1
-md"""
-**Error del modelo matemático:**  
+# ╔═╡ 1fa48bf7-ad98-4aea-84e5-e75e351474ab
+md"""Se obtiene como resultado:"""
 
-Tenemos aquí la primera fuente de error de nuestro procedimiento, el error de modelado matemático. La naranja no es una esfera. Este error puede (y en algunos casos debe) ser cuantificado. Para esto se deben proponer medidas de error de modelado matemático. Es también claro que este error de modelado matemático está ligado a la complejidad del modelo y en particular al número de parámetros usados para describirlo, es decir, a la dimensión del modelo usado.
+# ╔═╡ 9c53f844-6d0c-4a40-898d-ed264ffe4bb9
+Jclust(x,reps,assignment₁)
 
-Note que podemos medir el mayor círculo sobre la frontera de la bola, es decir, sobre la esfera, y así tener un dato a partir del cual hacer una estimación de $q$. En este caso, podemos tener,
+# ╔═╡ d8d3019f-6e7a-4955-8766-5db54223a143
+md"""O si consideramos"""
 
-$d=\mbox{``diámetro del mayor círculo sobre la esfera''}$
+# ╔═╡ 6fb695f6-00d9-41ce-904c-b92e6a1ff51b
+assignment₂ = [1,1,2];
 
+# ╔═╡ 81515c5d-664f-44e4-9cb9-75f9887b28d9
+md"""De la función se obtiene:"""
 
-**Errores en los datos (errores de medición):**  
+# ╔═╡ d3aabbc1-5c51-418a-be92-c25152a339b4
+Jclust(x,reps,assignment₂)
 
-Tenemos aquí otra fuente de error de nuestro procedimiento, el error en la medición. Observe que no existe la noción de diámetro exacto, pues la naranja no es una esfera. De todos modos, se puede hacer una medición sobre la esfera ubicando la cuerda de manera adecuada para obtener una medición aproximada de la cantidad que podemos usar en nuestro modelo como $d$. 
-Este error puede (y en algunos casos debe) ser cuantificado. Para ello se debe conocer las especificaciones de las herramientas usadas o lidiar con la falta de ellas si no se conocen.
+# ╔═╡ e3af430e-c5f4-4a91-941d-5f0720522aae
+md"""# Algoritmo de Clustering"""
 
-En este caso, vemos que 
+# ╔═╡ 6e7b812c-d63b-4624-9a8d-77408e1f9aba
+md"""El análisis de clustering ofrece diversas herramientas para revelar patrones intrínsecos y agrupar datos de manera significativa. En esta sección, mostraremos un  algoritmo de clustering destacados: K-Means."""
 
-$p= \frac{d}{2\pi}$
-es la relación que transforma datos en parámetros del modelo.
+# ╔═╡ 1b36505e-79dc-45de-a654-1c2f5053410c
+md"""## K-Means"""
+
+# ╔═╡ 19f37699-3a2e-4932-9aec-8969165e8fcf
+md"""El término K-means describe un algoritmo, el cual asigna cada elemento al clúster que tiene el centroide (media) más cercano. En su forma más sencilla, el proceso consta de estos tres pasos:
+
+1. Particionar los elementos en K clústeres iniciales.
+2. Recorrer la lista de elementos, asignando cada elemento al clúster cuyo centroide (media) esté más cercano. La distancia se calcula generalmente utilizando la distancia euclidiana con observaciones estandarizadas o no estandarizadas. Recalcular el centroide para el clúster que recibe el nuevo elemento y para el clúster que pierde el elemento.
+3. Repetir el Paso 2 hasta que no haya más reasignaciones.
+
+En lugar de comenzar con una partición de todos los elementos en K grupos preliminares en el Paso 1, podríamos especificar K centroides iniciales (puntos semilla) y luego proceder al Paso 2.
+
+La asignación final de elementos a clústeres dependerá, en cierta medida, de la partición inicial o de la selección inicial de puntos semilla. La experiencia sugiere que la mayoría de los cambios importantes en la asignación ocurren con el primer paso de reasignación real.
+
+Creemos así la función kmeans, donde es posible ingresar los elementos, el número de clústers iniciales, el número máximo de iteraciones y la tolerancia, respectivamente.
 """
 
-# ╔═╡ 51be810f-2961-4d65-94f8-323bd29a9bd0
-md"""
-## Cantidad primal y relación con cantidades de interés
+# ╔═╡ 326edf33-fe12-4815-a128-cb33f59c0281
+function kmeans(x, k; maxiters = 100, tol = 1e-5)
+    N = length(x) #longitud de x
+    n = length(x[1])
+    distances = zeros(N)  # se utiliza para almacenar la distancia de cada punto al representante más cercano.
+    reps = [zeros(n) for j=1:k]  # se utiliza para almacenar a los representantes.
 
-En este caso vemos que no es fácil, al menos no es obvio, calcular la cantidad de jugo de naranja en una naranja esférica a partir del radio de la misma. Podemos sospechar que el volumen de la esfera (que es más fácil de obtener) está relacionado con la cantidad de interés. En este caso introducimos:
+    # 'assignment' es un array de N enteros entre 1 y k. La asignación inicial se elige al azar.
+    assignment = [rand(1:k) for i in 1:N]
 
-$v=\mbox{``volumen de la bola''}.$
+    Jprevious = Inf  # utilizado en la condición de parada
+    for iter = 1:maxiters
 
-Queremos estimar,
+        # El representante del clúster j es el promedio de los puntos en el clúster j.
+        for j = 1:k
+            group = [i for i=1:N if assignment[i] == j]
+            reps[j] = sum(x[group]) / length(group)
+        end
 
-$q=\mbox{``cantidad de jugo de naranja''}.$
+        # Para cada x[i], encontrar la distancia al representante más cercano
+        # y su índice de grupo.
+        for i = 1:N
+            (distances[i], assignment[i]) = findmin([norm(x[i] - reps[j]) for j = 1:k])
+        end
 
-Para esto podemos proponer una relación de la forma 
+        # Calcular medida objetiva del redimiento del clustering
+        J = norm(distances)^2 / N
 
-$q=F(v,\alpha).$
+        # Mostrar progreso y terminar si J deja de disminuir.
+        if Jprevious - J < tol
+            break
+        end
+        Jprevious = J
+    end
+    return assignment, reps
+end
 
-Establecer esta relación necesita conocimiento del problema y del ejercicio de modelado matemático en curso. En este primer acercamiento y para simplificar podemos asumir una relación lineal del tipo
+# ╔═╡ d3abb069-8a6b-4253-a489-3cd56ddc89b5
+md"""Veamos un ejemplo de esto, consideremos los siguientes datos:"""
 
-$q=\alpha v,$
+# ╔═╡ aa09bbf6-7ef6-4359-8181-a8272a498cce
+begin
+X = vcat( [ 0.3*randn(2) for i = 1:100 ],
+[ [1,1] + 0.3*randn(2) for i = 1:100 ],
+[ [1,-1] + 0.3*randn(2) for i = 1:100 ] )
+scatter([x[1] for x in X], [x[2] for x in X])
+plot!(legend = false, grid = false, size = (500,500), xlims = (-1.5,2.5), ylims = (-2,2))
+end
 
-donde $\alpha$ es una proporción (un parámetro). Es decir, asumimos que la cantidad de jugo de naranja (de una naranja perfectamente redonda) se puede estimar por una proporción de su volumen.
+# ╔═╡ acd5ba29-4e13-4ce9-98d3-7a62de7754b4
+md"""Aplicando el algoritmo anterior a los datos, para $k=3$ se obtiene lo siguiente"""
 
-**Error de aproximación de relaciones:** 
+# ╔═╡ f40a0030-1830-4543-8259-a039e70a76ea
+begin
+k₁ = 3
+assignment₃, reps₃ = kmeans(X, k₁)
+end
 
-Tenemos aquí otra fuente de error de nuestro procedimiento, el error en la aproximación de funciones que relacionan las variables primarias con las variables de interés. 
-Este error puede (y en algunos casos debe) ser cuantificado. Para eso, debemos estudiar (de alguna manera) la posible relación entre las variables. Podemos usar, por ejemplo, información a priori del problema y técnicas de aproximación de funciones para deducir o calcular esas relaciones.
+# ╔═╡ 50f9f855-1daf-41d8-aeb2-195fe02f5dae
+begin
+N = length(X)
+grps = [[X[i] for i=1:N if assignment₃[i] == j] for j=1:k₁]
+scatter([c[1] for c in grps[1]], [c[2] for c in grps[1]])
+scatter!([c[1] for c in grps[2]], [c[2] for c in grps[2]])
+scatter!([c[1] for c in grps[3]], [c[2] for c in grps[3]])
+plot!(legend = false, grid = false, size = (500,500), xlims = (-1.5,2.5), ylims = (-2,2))
+end
 
-**Error en determinación de parámetros:** 
+# ╔═╡ 97f5fdff-4e5c-40d1-a4d4-6887d6ffd7fd
+md"""# Preprocesamiento de datos"""
 
-Tenemos aquí otra fuente de error de nuestro procedimiento, el error en los parámetros de las relaciones funcionales. En muchas aplicaciones reales no existe forma de verificar si la relación funcional es adecuada de manera teórica y muchas veces se usan diferentes criterios para la estimación de los parámetros de estas relaciones. En todo caso, se debe estudiar la sensibilidad de los resultados obtenidos a posibles variaciones de los parámetros de las relaciones funcionales.
+# ╔═╡ 340273d2-bb12-469d-bf55-a77b03144799
+md"""En Julia, se puede cargar datos de diversas maneras, por ejemplo archivos CSV o archivo de Excel, esto se puede realizar con las siguientes librerías."""
+
+# ╔═╡ 46bf3629-1c97-41ca-9d43-a1f80efe1401
+md"""O como ya sabemos, podemos generar datos aleatorios."""
+
+# ╔═╡ 0bc7542e-750a-443a-a737-3f596f64d086
+md"""## Normalización/Estandarización"""
+
+# ╔═╡ be347a4e-50a8-4b98-ad57-eb4bbba8de23
+md"""La normalización y estandarización son técnicas comunes de preprocesamiento de datos que ayudan a poner todas las características en una escala común. Esto puede ser crucial para algoritmos sensibles a la escala, como K-Means, y puede mejorar la convergencia y el rendimiento del modelo."""
+
+# ╔═╡ 17b8ed28-a579-4fab-ad48-5bad655b2463
+md"""### Min-Máx"""
+
+# ╔═╡ 27d00db4-a3e7-4a8a-adcd-84371da8ad6e
+md"""La normalización Min-Max es un método de preprocesamiento de datos que ajusta los valores de las características de un conjunto de datos para que estén dentro de un rango específico, generalmente entre 0 y 1. El propósito de esta normalización es asegurar que todas las características tengan la misma escala, lo que puede ser importante para ciertos algoritmos que son sensibles a la magnitud de las características.
+
+La fórmula general para la normalización Min-Max es la siguiente:
+
+$X_{\text{normalized}} = \frac{X - X_{\text{min}}}{X_{\text{max}} - X_{\text{min}}}$
+
+Donde:
+
+$\begin{align*}
+X & \text{ es el valor original de la característica.} \\
+X_{\text{min}} & \text{ es el valor mínimo de la característica en el conjunto de datos.} \\
+X_{\text{max}} & \text{ es el valor máximo de la característica en el conjunto de datos.}
+\end{align*}$
+
+Esta fórmula ajusta cada valor de la característica para que esté en una escala relativa al rango completo de la característica en el conjunto de datos."""
+
+# ╔═╡ 2ea9eacf-58f0-4993-b689-d7e8935f628b
+md"""La siguiente función normaliza los datos usando "min-máx". """
+
+# ╔═╡ 1faf0cff-2991-47d4-b84d-5ed0cc227733
+function minmax_normalize(data)
+    min_vals = minimum(data, dims=1)
+    max_vals = maximum(data, dims=1)
+
+    normalized_data = (data .- min_vals) ./ (max_vals - min_vals)[1]
+    return normalized_data
+end
+
+# ╔═╡ c5196e31-5095-4259-9a61-89afbfc8f808
+md"""Por ejemplo, consideremos el siguiente conjunto de datos"""
+
+# ╔═╡ bcc9197f-4d21-43fa-b2d5-40f567d15ab0
+x₁=1.5*rand(100)
+
+# ╔═╡ 51462f44-1829-4e9c-88dc-c9f09db4124b
+md"""Visualizándolos"""
+
+# ╔═╡ 55f987bf-e708-45b8-a0f8-bc5840d4e119
+plot(scatter(x=1:100, x₁))
+
+# ╔═╡ d400446c-6d89-418d-830f-3f0fefebfcb6
+md"""Normalizando estos datos con la función anterior, se obtiene lo siguiente:"""
+
+# ╔═╡ fc4cec7d-546a-47b8-8271-7322f57b9888
+minmax_normalize(x₁)
+
+# ╔═╡ cd47b25a-cfe7-41e7-bc6f-15f3d5098cd7
+md"""Los podemos visualizar de la siguiente forma"""
+
+# ╔═╡ 22ae57f4-002c-4314-a2d8-9b47b0d01386
+plot(scatter(x=1:100, minmax_normalize(x₁)))
+
+# ╔═╡ 1d5261ce-2f45-4e88-b6b9-462ea6c1897a
+md"""Note que la distribución de los datos no se ve alterada."""
+
+# ╔═╡ ed64ca57-26f3-420b-aae0-2c605340b072
+md"""### $Z$-Score"""
+
+# ╔═╡ 81502e8e-ee6a-4abd-b822-cdaddfbd81f8
+md"""La estandarización ($Z$-Score) es otro método común de preprocesamiento de datos que transforma las características de un conjunto de datos para que tengan una media de cero y una desviación estándar de uno. Este proceso es útil para algoritmos que asumen normalidad en los datos y para aquellos que son sensibles a la magnitud de las características.
+
+La fórmula general para la estandarización (Z-Score) es la siguiente:
+
+$Z = \frac{X - \mu}{\sigma}$
+
+Donde:
+
+$\begin{align*}
+X & \text{ es el valor original de la característica.} \\
+\mu & \text{ es la media del conjunto de datos.} \\
+\sigma & \text{ es la desviación estándar del conjunto de datos.}
+\end{align*}$
+
+El resultado $Z$ indica cuántas desviaciones estándar el valor $X$ está por encima o por debajo de la media. Un $Z$-score positivo indica que el valor está por encima de la media, mientras que un $Z$-score negativo indica que está por debajo.
 """
 
-# ╔═╡ fabba741-1d31-434c-a111-302d63af0b75
-md"""## Método numérico
+# ╔═╡ 2eef15d2-b351-4af1-aa50-50efe3a439ee
+md"""La siguiente función normaliza los datos usando la estandarización. """
 
-Como $p$ representa el radio de la bola, y $p=\frac{d}{2\pi}$, así tenemos que
+# ╔═╡ 2227f54a-56be-4105-91b5-aa4e0ef907d7
+function zscore_standardize(data)
+    mean_vals = mean(data, dims=1)
+    std_vals = std(data, dims=1)
 
-$v=\frac{4}{3} \pi p^3
-=\frac{4}{3} \pi \left(\frac{d}{2\pi} \right)^3
-=\frac{d^3}{6\pi^2},$
-por lo tanto nuestra estimación está dada por 
+    standardized_data = (data .- mean_vals) ./ std_vals
+    return standardized_data
+end
 
-$q=\alpha v= \frac{\alpha d^3}{6\pi^2}.$"""
+# ╔═╡ c78301fa-7bbe-4abc-b1e6-f9f32a652fa9
+md"""Para los mismos datos anteriores se tiene:"""
 
-# ╔═╡ ba35a0f6-6197-4b02-96c9-f68448e66770
-md"""## Implementación del método numérico
+# ╔═╡ 660d640c-910b-4ab8-940b-daa15cda9721
+zscore_standardize(x₁)
 
-Imaginemos que decidimos implementar nuestro método numérico en una máquina que redondea todas las cantidades a 2 dígitos decimales (usando notación científica normalizada). 
-Tomemos como caso particular $\alpha=0.7$ y $d=21$ cm. En este caso, la aproximación de nuestra implementación es 
+# ╔═╡ 4384266e-f8f7-4f42-bdc0-58c3c8761194
+plot(scatter(x=1:100, zscore_standardize(x₁)))
 
-$q\approx\widetilde{q}=\frac{0.7 (21)^3}{6 (3.14)^2} \approx \frac{6482.7}{59.16}\approx 109.58 \mbox{ cm}^3.$
+# ╔═╡ 90f3f183-bbc6-4c07-b270-fe980527012e
+md"""Al igual que con min-máx la distribución de los datos no se ve alterada, esta es una de las ventajas de normalizar los datos."""
 
-Note que $q$ es aproximado por $\widetilde{q}$ que tiene errores de redondeo. Dado que trabajamos con 2 decimales en base 10 ($\pi\approx 3.14$), en cada cálculo intermedio tenemos un error de redondeo.
+# ╔═╡ 2d5bf322-f095-4e93-bee3-5374e899362c
+md"""# Visualización"""
 
-Podemos implementar una aplicación o programa que, dados el diámetro $d$ y el valor $\alpha$, calcule la cantidad de jugo en la naranja. Con eso terminamos una primera etapa del ejercicio de modelado y estamos listos para la etapa de validación del modelo y, por último, la etapa de uso del modelo en donde los resultados se acoplan con otras herramientas para resolver un problema más interesante. 
+# ╔═╡ 71201a55-47c4-4a74-b54f-11a70c3d2cd0
+md"""Consideremos el siguiente conjunto de datos:"""
 
-**Error de redondeo:** 
+# ╔═╡ 5758c5dc-f6a6-4da5-ba71-6404f8001d27
+a = vcat(1.7*randn(500), 0.3*randn(500))
 
-Al implementar un método numérico en aritmética finita en un sistema de cómputo, cometemos errores de redondeo en cada cálculo intermedio que realicemos. Este error puede (y en algunos casos debe) ser cuantificado.
-"""
+# ╔═╡ eb0150c0-eec9-4b5f-8e9d-2353702784a6
+b = vcat(1.7*randn(150), -3.3*randn(175), 0.5*randn(325), -0.1*randn(350))
 
-# ╔═╡ 776dfee9-08b0-4424-967a-8d1b1b1d37ac
-md"""## Determinación de parámetros de leyes constitutivas
+# ╔═╡ 1e32425b-4078-49d2-a502-7cb591a5669a
+plot(scatter(a,b))
 
-Notemos que el valor del parámetro $\alpha$ en la relación 
+# ╔═╡ cae655c3-8e89-4b08-b83a-e7ea578b5723
+datos=[vcat(a[i],b[i]) for i=1:1000]
 
-$\mbox{``cantidad de jugo''}=\alpha \cdot(\mbox{``volumen de la naranja''})$
-representa nuestro conocimiento previo de esta relación. En la practica, el valor de $\alpha$ puede ser determinado de diferentes formas: estudios previos, estudios estadísticos previos, mediciones previas invasivas, criterio de expertos, entre otros enfoques. Dicho parámetro puede ser hallado con metodos de optimización o estadisticos."""
+# ╔═╡ a094e975-08ec-4f98-be86-6feac5f472b7
+md"""Vamos a normalizar los datos con Min-Máx"""
 
-# ╔═╡ 9409857c-052e-4ac6-a99e-9285346161b5
-md"""## Validación del modelo
+# ╔═╡ f415835f-1587-4019-8eca-a5c2f37222c5
+datos_norm=[vcat(minmax_normalize(a)[i],minmax_normalize(b)[i]) for i=1:1000]
 
-Después de obtener el modelo es necesario hacer el experimento con la naranja, si el modelo no cumple con lo esperado, se pueden tomar medidas para mejorarlo. Esto incluye revisar los datos, ajustar los parámetros y validar las mejoras. Una vez que el modelo esté listo y validado, se puede implementar para responder la pregunta original con mayor precisión."""
+# ╔═╡ 1ff000f0-a9a6-4f29-82c5-1b22cfb5f387
+plot(scatter([x[1] for x in datos_norm], [x[2] for x in datos_norm]))
 
-# ╔═╡ e6509621-9ab6-45fe-aa0e-44eeb82ae497
-md"""## Balance de errores
+# ╔═╡ fbcd4e16-d49d-47a0-9805-ea41bad1ba3f
+md"""Aplicando el algoritmo K-Means para $k=5$, se obtiene lo siguiente"""
 
-Como hemos visto, son diversos los errores y simplificaciones de la realidad introducidos en diferentes etapas de la modelación matemática. Estos incluyen el error de modelación (las naranjas no son esferas, y debemos saber qué porcentaje de error existe en esto), el error de medición (debemos determinar qué porcentaje de error se produce al medir con una cinta métrica el diámetro de la naranja), errores de redondeo y errores de parámetros (en este caso, $\alpha$). Deseamos que nuestro modelo no sea sensible a este parámetro; es decir, si variamos un poco dicho parámetro, la solución no debería tener un cambio brusco.
+# ╔═╡ f0efd8b5-74d0-4490-bc5c-5ef40a2aea31
+begin
+k₂ = 5
+assignment₄, reps₄ = kmeans(datos_norm, k₂)
+end
 
-Es bastante obvio que no tiene sentido preocuparse por reducir este error únicamente en una de estas etapas. Por ejemplo, no tiene sentido práctico realizar el cálculo numérico asegurando una precisión de 14 cifras decimales si no puedo garantizar ese mismo orden de error en las otras etapas. Para esto, debo poder cuantificar el margen de error en todas las etapas del proceso."""
+# ╔═╡ 26a4fe64-ab46-4f10-8037-c0427f50322c
+md"""A continuación se muestran los datos con el color de su respectivo grupo"""
 
-# ╔═╡ fbaaf968-b40d-4731-a947-240c8df50e21
-md"""
-# Referencias
-[1] Lin, C. C., & Segel, L. A. (1988). Mathematics Applied to Deterministic Problems in the Natural Sciences (Classics in Applied Mathematics, Series Number 1) (1st ed.). SIAM: Society for Industrial and Applied.
+# ╔═╡ 4093a818-cebb-40b1-b934-43a124dc1ca2
+begin
+N1 = length(datos_norm)
+grps1 = [[datos_norm[i] for i=1:N1 if assignment₄[i] == j] for j=1:k₂]
+scatter([c[1] for c in grps1[1]], [c[2] for c in grps1[1]])
+scatter!([c[1] for c in grps1[2]], [c[2] for c in grps1[2]])
+scatter!([c[1] for c in grps1[3]], [c[2] for c in grps1[3]])
+scatter!([c[1] for c in grps1[4]], [c[2] for c in grps1[4]])
+scatter!([c[1] for c in grps1[5]], [c[2] for c in grps1[5]])
+plot!(legend = false, grid = false, size = (500,500))
+end
 
-[2] Kincaid, D. R., & Cheney, E. W. (1996). Numerical Analysis: Mathematics of Scientific Computing (2nd ed.). Brooks Cole.
+# ╔═╡ f415ea7b-d19c-4714-bfdc-bf52e0bac815
+md"""# Referencias"""
 
-[3] Strang, G. (1986). Introduction to Applied Mathematics. Wellesley-Cambridge Press
-"""
+# ╔═╡ 0635b3a0-652c-40ae-af64-3b4ad75836a8
+md"""[1] Johnson, R. A., & Wichern, D. (2007). Applied Multivariate Statistical Analysis. Pearson Prentice Hall.
+
+[3] Boyd, S., & Vandenberghe, L. (2018). Introduction to Applied Linear Algebra: Vectors, Matrices, and Least Squares. Cambridge University Press.
+
+[2] Bartlett, V. (2018). VMLS Julia, Ch.04 Clustering. VMLS Companions. https://github.com/vbartle/VMLS-Companions/blob/master/VMLS%20Julia%20Companion/VMLS%20Julia%2C%20Ch.04%20Clustering.ipynb"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
-ColorVectorSpace = "c3611d14-8923-5661-9e6a-0046d554d3a4"
-Colors = "5ae59095-9a9b-59fe-a467-6f913c188581"
-FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
-HypertextLiteral = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
-ImageIO = "82e4d734-157c-48bb-816b-45c225c6df19"
-ImageShow = "4e3cecfd-b093-5904-9786-8bbb286a6a31"
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+Clustering = "aaaa29a8-35af-508c-8bc3-b662a17a0fe5"
+Distances = "b4f34e82-e78d-54a5-968a-f98e89d6e8f7"
+ExcelFiles = "89b67f3b-d1aa-5f6f-9ca4-282e8d98620d"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 
 [compat]
-ColorVectorSpace = "~0.10.0"
-Colors = "~0.12.10"
-FileIO = "~1.16.3"
-HypertextLiteral = "~0.9.5"
-ImageIO = "~0.6.7"
-ImageShow = "~0.3.8"
-Plots = "~1.40.3"
-PlutoUI = "~0.7.58"
+CSV = "~0.10.12"
+Clustering = "~0.15.6"
+Distances = "~0.10.11"
+ExcelFiles = "~1.0.0"
+Plots = "~1.39.0"
+PlutoUI = "~0.7.54"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -270,13 +395,13 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.3"
 manifest_format = "2.0"
-project_hash = "cef516209b5dec7b18cf7e7a33b410d403cfffef"
+project_hash = "45f4f83d0c604492680a448751b046bfc80c25c0"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
-git-tree-sha1 = "0f748c81756f2e5e6854298f11ad8b2dfae6911a"
+git-tree-sha1 = "c278dfab760520b8bb7e9511b968bf4ba38b7acc"
 uuid = "6e696c72-6542-2067-7265-42206c756150"
-version = "1.3.0"
+version = "1.2.3"
 
 [[deps.ArgTools]]
 uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
@@ -284,12 +409,6 @@ version = "1.1.1"
 
 [[deps.Artifacts]]
 uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
-
-[[deps.AxisArrays]]
-deps = ["Dates", "IntervalSets", "IterTools", "RangeArrays"]
-git-tree-sha1 = "16351be62963a67ac4083f748fdb3cca58bfd52f"
-uuid = "39de3d68-74b9-583c-8d2d-e117c070f3a9"
-version = "0.4.7"
 
 [[deps.Base64]]
 uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
@@ -305,22 +424,29 @@ git-tree-sha1 = "9e2a6b69137e6969bab0152632dcb3bc108c8bdd"
 uuid = "6e34b625-4abd-537c-b88f-471c36dfa7a0"
 version = "1.0.8+1"
 
-[[deps.CEnum]]
-git-tree-sha1 = "389ad5c84de1ae7cf0e28e381131c98ea87d54fc"
-uuid = "fa961155-64e5-5f13-b03f-caf6b980ea82"
-version = "0.5.0"
+[[deps.CSV]]
+deps = ["CodecZlib", "Dates", "FilePathsBase", "InlineStrings", "Mmap", "Parsers", "PooledArrays", "PrecompileTools", "SentinelArrays", "Tables", "Unicode", "WeakRefStrings", "WorkerUtilities"]
+git-tree-sha1 = "679e69c611fff422038e9e21e270c4197d49d918"
+uuid = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+version = "0.10.12"
 
 [[deps.Cairo_jll]]
-deps = ["Artifacts", "Bzip2_jll", "CompilerSupportLibraries_jll", "Fontconfig_jll", "FreeType2_jll", "Glib_jll", "JLLWrappers", "LZO_jll", "Libdl", "Pixman_jll", "Xorg_libXext_jll", "Xorg_libXrender_jll", "Zlib_jll", "libpng_jll"]
-git-tree-sha1 = "a4c43f59baa34011e303e76f5c8c91bf58415aaf"
+deps = ["Artifacts", "Bzip2_jll", "CompilerSupportLibraries_jll", "Fontconfig_jll", "FreeType2_jll", "Glib_jll", "JLLWrappers", "LZO_jll", "Libdl", "Pixman_jll", "Pkg", "Xorg_libXext_jll", "Xorg_libXrender_jll", "Zlib_jll", "libpng_jll"]
+git-tree-sha1 = "4b859a208b2397a7a623a03449e4636bdb17bcf2"
 uuid = "83423d85-b0ee-5818-9007-b63ccbeb887a"
-version = "1.18.0+1"
+version = "1.16.1+1"
+
+[[deps.Clustering]]
+deps = ["Distances", "LinearAlgebra", "NearestNeighbors", "Printf", "Random", "SparseArrays", "Statistics", "StatsBase"]
+git-tree-sha1 = "407f38961ac11a6e14b2df7095a2577f7cb7cb1b"
+uuid = "aaaa29a8-35af-508c-8bc3-b662a17a0fe5"
+version = "0.15.6"
 
 [[deps.CodecZlib]]
 deps = ["TranscodingStreams", "Zlib_jll"]
-git-tree-sha1 = "59939d8a997469ee05c4b4944560a820f9ba0d73"
+git-tree-sha1 = "cd67fc487743b2f0fd4380d4cbd3a24660d0eec8"
 uuid = "944b1d66-785c-5afd-91f1-9de20f533193"
-version = "0.7.4"
+version = "0.7.3"
 
 [[deps.ColorSchemes]]
 deps = ["ColorTypes", "ColorVectorSpace", "Colors", "FixedPointNumbers", "PrecompileTools", "Random"]
@@ -330,9 +456,9 @@ version = "3.24.0"
 
 [[deps.ColorTypes]]
 deps = ["FixedPointNumbers", "Random"]
-git-tree-sha1 = "b10d0b65641d57b8b4d5e234446582de5047050d"
+git-tree-sha1 = "eb7f0f8307f71fac7c606984ea5fb2817275d6e4"
 uuid = "3da002f7-5984-5a60-b8a6-cbb66c0b333f"
-version = "0.11.5"
+version = "0.11.4"
 
 [[deps.ColorVectorSpace]]
 deps = ["ColorTypes", "FixedPointNumbers", "LinearAlgebra", "Requires", "Statistics", "TensorCore"]
@@ -353,10 +479,10 @@ uuid = "5ae59095-9a9b-59fe-a467-6f913c188581"
 version = "0.12.10"
 
 [[deps.Compat]]
-deps = ["TOML", "UUIDs"]
-git-tree-sha1 = "c955881e3c981181362ae4088b35995446298b80"
+deps = ["UUIDs"]
+git-tree-sha1 = "886826d76ea9e72b35fcd000e535588f7b60f21d"
 uuid = "34da2185-b29b-5c13-b0c7-acf172513d20"
-version = "4.14.0"
+version = "4.10.1"
 weakdeps = ["Dates", "LinearAlgebra"]
 
     [deps.Compat.extensions]
@@ -369,25 +495,42 @@ version = "1.1.1+0"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
-git-tree-sha1 = "6cbbd4d241d7e6579ab354737f4dd95ca43946e1"
+git-tree-sha1 = "8cfa272e8bdedfa88b6aefbbca7c19f1befac519"
 uuid = "f0e56b4a-5159-44fe-b623-3e5288b988bb"
-version = "2.4.1"
+version = "2.3.0"
+
+[[deps.Conda]]
+deps = ["Downloads", "JSON", "VersionParsing"]
+git-tree-sha1 = "51cab8e982c5b598eea9c8ceaced4b58d9dd37c9"
+uuid = "8f4d0f93-b110-5947-807f-2305c1781a2d"
+version = "1.10.0"
 
 [[deps.Contour]]
-git-tree-sha1 = "439e35b0b36e2e5881738abc8857bd92ad6ff9a8"
+git-tree-sha1 = "d05d9e7b7aedff4e5b51a029dced05cfb6125781"
 uuid = "d38c429a-6771-53c6-b99e-75d170b6e991"
-version = "0.6.3"
+version = "0.6.2"
 
 [[deps.DataAPI]]
-git-tree-sha1 = "abe83f3a2f1b857aac70ef8b269080af17764bbe"
+git-tree-sha1 = "8da84edb865b0b5b0100c0666a9bc9a0b71c553c"
 uuid = "9a962f9c-6df0-11e9-0e5d-c546b8b5ee8a"
-version = "1.16.0"
+version = "1.15.0"
 
 [[deps.DataStructures]]
 deps = ["Compat", "InteractiveUtils", "OrderedCollections"]
-git-tree-sha1 = "0f4b5d62a88d8f59003e43c25a8a90de9eb76317"
+git-tree-sha1 = "ac67408d9ddf207de5cfa9a97e114352430f01ed"
 uuid = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
-version = "0.18.18"
+version = "0.18.16"
+
+[[deps.DataValueInterfaces]]
+git-tree-sha1 = "bfc1187b79289637fa0ef6d4436ebdfe6905cbd6"
+uuid = "e2d170a0-9d28-54be-80f0-106bbe20a464"
+version = "1.0.0"
+
+[[deps.DataValues]]
+deps = ["DataValueInterfaces", "Dates"]
+git-tree-sha1 = "d88a19299eba280a6d062e135a43f00323ae70bf"
+uuid = "e7dc6d0d-1eca-5fa6-8ad6-5aecde8b7ea5"
+version = "0.4.13"
 
 [[deps.Dates]]
 deps = ["Printf"]
@@ -399,9 +542,19 @@ git-tree-sha1 = "9e2f36d3c96a820c678f2f1f1782582fcf685bae"
 uuid = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 version = "1.9.1"
 
-[[deps.Distributed]]
-deps = ["Random", "Serialization", "Sockets"]
-uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
+[[deps.Distances]]
+deps = ["LinearAlgebra", "Statistics", "StatsAPI"]
+git-tree-sha1 = "66c4c81f259586e8f002eacebc177e1fb06363b0"
+uuid = "b4f34e82-e78d-54a5-968a-f98e89d6e8f7"
+version = "0.10.11"
+
+    [deps.Distances.extensions]
+    DistancesChainRulesCoreExt = "ChainRulesCore"
+    DistancesSparseArraysExt = "SparseArrays"
+
+    [deps.Distances.weakdeps]
+    ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
+    SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 
 [[deps.DocStringExtensions]]
 deps = ["LibGit2"]
@@ -420,6 +573,18 @@ git-tree-sha1 = "8e9441ee83492030ace98f9789a654a6d0b1f643"
 uuid = "2702e6a9-849d-5ed8-8c21-79e8b8f9ee43"
 version = "0.0.20230411+0"
 
+[[deps.ExcelFiles]]
+deps = ["DataValues", "Dates", "ExcelReaders", "FileIO", "IterableTables", "IteratorInterfaceExtensions", "Printf", "PyCall", "TableShowUtils", "TableTraits", "TableTraitsUtils", "XLSX"]
+git-tree-sha1 = "f3e5f4279d77b74bf6aef2b53562f771cc5a0474"
+uuid = "89b67f3b-d1aa-5f6f-9ca4-282e8d98620d"
+version = "1.0.0"
+
+[[deps.ExcelReaders]]
+deps = ["DataValues", "Dates", "PyCall", "Test"]
+git-tree-sha1 = "6f9db420dd362bd5bcea3a0f6dabf8bda587fec3"
+uuid = "c04bee98-12a5-510c-87df-2a230cb6e075"
+version = "0.11.0"
+
 [[deps.ExceptionUnwrapping]]
 deps = ["Test"]
 git-tree-sha1 = "dcb08a0d93ec0b1cdc4af184b26b591e9695423a"
@@ -431,6 +596,12 @@ deps = ["Artifacts", "JLLWrappers", "Libdl"]
 git-tree-sha1 = "4558ab818dcceaab612d1bb8c19cee87eda2b83c"
 uuid = "2e619515-83b5-522b-bb60-26c02a35a201"
 version = "2.5.0+0"
+
+[[deps.EzXML]]
+deps = ["Printf", "XML2_jll"]
+git-tree-sha1 = "380053d61bb9064d6aa4a9777413b40429c79901"
+uuid = "8f5d6c58-4d21-5cfd-889c-e3ad7ee6a615"
+version = "1.2.0"
 
 [[deps.FFMPEG]]
 deps = ["FFMPEG_jll"]
@@ -446,9 +617,15 @@ version = "4.4.4+1"
 
 [[deps.FileIO]]
 deps = ["Pkg", "Requires", "UUIDs"]
-git-tree-sha1 = "82d8afa92ecf4b52d78d869f038ebfb881267322"
+git-tree-sha1 = "c5c28c245101bd59154f649e19b038d15901b5dc"
 uuid = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
-version = "1.16.3"
+version = "1.16.2"
+
+[[deps.FilePathsBase]]
+deps = ["Compat", "Dates", "Mmap", "Printf", "Test", "UUIDs"]
+git-tree-sha1 = "9f00e42f8d99fdde64d40c8ea5d14269a2e2c1aa"
+uuid = "48062228-2e41-5def-b9a4-89aafe57970f"
+version = "0.9.21"
 
 [[deps.FileWatching]]
 uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
@@ -465,10 +642,11 @@ git-tree-sha1 = "21efd19106a55620a188615da6d3d06cd7f6ee03"
 uuid = "a3f928ae-7b40-5064-980b-68af3947d34b"
 version = "2.13.93+0"
 
-[[deps.Format]]
-git-tree-sha1 = "9c68794ef81b08086aeb32eeaf33531668d5f5fc"
-uuid = "1fa38f19-a742-5d3f-a2b9-30dd87b9d5f8"
-version = "1.3.7"
+[[deps.Formatting]]
+deps = ["Printf"]
+git-tree-sha1 = "8339d61043228fdd3eb658d86c926cb282ae72a8"
+uuid = "59287772-0a20-5a39-b81b-1366585eb4c0"
+version = "0.4.2"
 
 [[deps.FreeType2_jll]]
 deps = ["Artifacts", "Bzip2_jll", "JLLWrappers", "Libdl", "Zlib_jll"]
@@ -482,6 +660,10 @@ git-tree-sha1 = "aa31987c2ba8704e23c6c8ba8a4f769d5d7e4f91"
 uuid = "559328eb-81f9-559d-9380-de523a88c83c"
 version = "1.0.10+0"
 
+[[deps.Future]]
+deps = ["Random"]
+uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
+
 [[deps.GLFW_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll"]
 git-tree-sha1 = "ff38ba61beff76b8f4acad8ab0c97ef73bb670cb"
@@ -490,15 +672,15 @@ version = "3.3.9+0"
 
 [[deps.GR]]
 deps = ["Artifacts", "Base64", "DelimitedFiles", "Downloads", "GR_jll", "HTTP", "JSON", "Libdl", "LinearAlgebra", "Pkg", "Preferences", "Printf", "Random", "Serialization", "Sockets", "TOML", "Tar", "Test", "UUIDs", "p7zip_jll"]
-git-tree-sha1 = "3437ade7073682993e092ca570ad68a2aba26983"
+git-tree-sha1 = "27442171f28c952804dede8ff72828a96f2bfc1f"
 uuid = "28b8d3ca-fb5f-59d9-8090-bfdbd6d07a71"
-version = "0.73.3"
+version = "0.72.10"
 
 [[deps.GR_jll]]
 deps = ["Artifacts", "Bzip2_jll", "Cairo_jll", "FFMPEG_jll", "Fontconfig_jll", "FreeType2_jll", "GLFW_jll", "JLLWrappers", "JpegTurbo_jll", "Libdl", "Libtiff_jll", "Pixman_jll", "Qt6Base_jll", "Zlib_jll", "libpng_jll"]
-git-tree-sha1 = "a96d5c713e6aa28c242b0d25c1347e258d6541ab"
+git-tree-sha1 = "025d171a2847f616becc0f84c8dc62fe18f0f6dd"
 uuid = "d2c73de3-f751-5644-a686-071e5b155ba9"
-version = "0.73.3+0"
+version = "0.72.10+0"
 
 [[deps.Gettext_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "Libdl", "Libiconv_jll", "Pkg", "XML2_jll"]
@@ -508,9 +690,9 @@ version = "0.21.0+0"
 
 [[deps.Glib_jll]]
 deps = ["Artifacts", "Gettext_jll", "JLLWrappers", "Libdl", "Libffi_jll", "Libiconv_jll", "Libmount_jll", "PCRE2_jll", "Zlib_jll"]
-git-tree-sha1 = "359a1ba2e320790ddbe4ee8b4d54a305c0ea2aff"
+git-tree-sha1 = "e94c92c7bf4819685eb80186d51c43e71d4afa17"
 uuid = "7746bdde-850d-59dc-9ae8-88ece973131d"
-version = "2.80.0+0"
+version = "2.76.5+0"
 
 [[deps.Graphite2_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -525,9 +707,9 @@ version = "1.0.2"
 
 [[deps.HTTP]]
 deps = ["Base64", "CodecZlib", "ConcurrentUtilities", "Dates", "ExceptionUnwrapping", "Logging", "LoggingExtras", "MbedTLS", "NetworkOptions", "OpenSSL", "Random", "SimpleBufferStream", "Sockets", "URIs", "UUIDs"]
-git-tree-sha1 = "8e59b47b9dc525b70550ca082ce85bcd7f5477cd"
+git-tree-sha1 = "abbbb9ec3afd783a7cbd82ef01dcd088ea051398"
 uuid = "cd3eb016-35fb-5094-929b-558a96fad6f3"
-version = "1.10.5"
+version = "1.10.1"
 
 [[deps.HarfBuzz_jll]]
 deps = ["Artifacts", "Cairo_jll", "Fontconfig_jll", "FreeType2_jll", "Glib_jll", "Graphite2_jll", "JLLWrappers", "Libdl", "Libffi_jll", "Pkg"]
@@ -537,9 +719,9 @@ version = "2.8.1+1"
 
 [[deps.Hyperscript]]
 deps = ["Test"]
-git-tree-sha1 = "179267cfa5e712760cd43dcae385d7ea90cc25a4"
+git-tree-sha1 = "8d511d5b81240fc8e6802386302675bdf47737b9"
 uuid = "47d2ed2b-36de-50cf-bf87-49c2cf4b8b91"
-version = "0.0.5"
+version = "0.0.4"
 
 [[deps.HypertextLiteral]]
 deps = ["Tricks"]
@@ -549,86 +731,35 @@ version = "0.9.5"
 
 [[deps.IOCapture]]
 deps = ["Logging", "Random"]
-git-tree-sha1 = "8b72179abc660bfab5e28472e019392b97d0985c"
+git-tree-sha1 = "d75853a0bdbfb1ac815478bacd89cd27b550ace6"
 uuid = "b5f81e59-6552-4d32-b1f0-c071b021bf89"
-version = "0.2.4"
+version = "0.2.3"
 
-[[deps.ImageAxes]]
-deps = ["AxisArrays", "ImageBase", "ImageCore", "Reexport", "SimpleTraits"]
-git-tree-sha1 = "2e4520d67b0cef90865b3ef727594d2a58e0e1f8"
-uuid = "2803e5a7-5153-5ecf-9a86-9b4c37f5f5ac"
-version = "0.6.11"
-
-[[deps.ImageBase]]
-deps = ["ImageCore", "Reexport"]
-git-tree-sha1 = "eb49b82c172811fd2c86759fa0553a2221feb909"
-uuid = "c817782e-172a-44cc-b673-b171935fbb9e"
-version = "0.1.7"
-
-[[deps.ImageCore]]
-deps = ["ColorVectorSpace", "Colors", "FixedPointNumbers", "MappedArrays", "MosaicViews", "OffsetArrays", "PaddedViews", "PrecompileTools", "Reexport"]
-git-tree-sha1 = "b2a7eaa169c13f5bcae8131a83bc30eff8f71be0"
-uuid = "a09fc81d-aa75-5fe9-8630-4744c3626534"
-version = "0.10.2"
-
-[[deps.ImageIO]]
-deps = ["FileIO", "IndirectArrays", "JpegTurbo", "LazyModules", "Netpbm", "OpenEXR", "PNGFiles", "QOI", "Sixel", "TiffImages", "UUIDs"]
-git-tree-sha1 = "bca20b2f5d00c4fbc192c3212da8fa79f4688009"
-uuid = "82e4d734-157c-48bb-816b-45c225c6df19"
-version = "0.6.7"
-
-[[deps.ImageMetadata]]
-deps = ["AxisArrays", "ImageAxes", "ImageBase", "ImageCore"]
-git-tree-sha1 = "355e2b974f2e3212a75dfb60519de21361ad3cb7"
-uuid = "bc367c6b-8a6b-528e-b4bd-a4b897500b49"
-version = "0.9.9"
-
-[[deps.ImageShow]]
-deps = ["Base64", "ColorSchemes", "FileIO", "ImageBase", "ImageCore", "OffsetArrays", "StackViews"]
-git-tree-sha1 = "3b5344bcdbdc11ad58f3b1956709b5b9345355de"
-uuid = "4e3cecfd-b093-5904-9786-8bbb286a6a31"
-version = "0.3.8"
-
-[[deps.Imath_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "3d09a9f60edf77f8a4d99f9e015e8fbf9989605d"
-uuid = "905a6f67-0a94-5f89-b386-d35d92009cd1"
-version = "3.1.7+0"
-
-[[deps.IndirectArrays]]
-git-tree-sha1 = "012e604e1c7458645cb8b436f8fba789a51b257f"
-uuid = "9b13fd28-a010-5f03-acff-a1bbcff69959"
-version = "1.0.0"
-
-[[deps.Inflate]]
-git-tree-sha1 = "ea8031dea4aff6bd41f1df8f2fdfb25b33626381"
-uuid = "d25df0c9-e2be-5dd7-82c8-3ad0b3e990b9"
-version = "0.1.4"
+[[deps.InlineStrings]]
+deps = ["Parsers"]
+git-tree-sha1 = "9cc2baf75c6d09f9da536ddf58eb2f29dedaf461"
+uuid = "842dd82b-1e85-43dc-bf29-5d0ee9dffc48"
+version = "1.4.0"
 
 [[deps.InteractiveUtils]]
 deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
-
-[[deps.IntervalSets]]
-git-tree-sha1 = "dba9ddf07f77f60450fe5d2e2beb9854d9a49bd0"
-uuid = "8197267c-284f-5f27-9208-e0e47529a953"
-version = "0.7.10"
-weakdeps = ["Random", "RecipesBase", "Statistics"]
-
-    [deps.IntervalSets.extensions]
-    IntervalSetsRandomExt = "Random"
-    IntervalSetsRecipesBaseExt = "RecipesBase"
-    IntervalSetsStatisticsExt = "Statistics"
 
 [[deps.IrrationalConstants]]
 git-tree-sha1 = "630b497eafcc20001bba38a4651b327dcfc491d2"
 uuid = "92d709cd-6900-40b7-9082-c6be49f344b6"
 version = "0.2.2"
 
-[[deps.IterTools]]
-git-tree-sha1 = "42d5f897009e7ff2cf88db414a389e5ed1bdd023"
-uuid = "c8e1da08-722c-5040-9ed9-7db0dc04731e"
-version = "1.10.0"
+[[deps.IterableTables]]
+deps = ["DataValues", "IteratorInterfaceExtensions", "Requires", "TableTraits", "TableTraitsUtils"]
+git-tree-sha1 = "70300b876b2cebde43ebc0df42bc8c94a144e1b4"
+uuid = "1c8ee90f-4401-5389-894e-7a04a3dc0f4d"
+version = "1.0.0"
+
+[[deps.IteratorInterfaceExtensions]]
+git-tree-sha1 = "a3f24677c21f5bbe9d2a714f95dcd58337fb2856"
+uuid = "82899510-4779-5014-852e-03e436cf321d"
+version = "1.0.0"
 
 [[deps.JLFzf]]
 deps = ["Pipe", "REPL", "Random", "fzf_jll"]
@@ -648,17 +779,11 @@ git-tree-sha1 = "31e996f0a15c7b280ba9f76636b3ff9e2ae58c9a"
 uuid = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 version = "0.21.4"
 
-[[deps.JpegTurbo]]
-deps = ["CEnum", "FileIO", "ImageCore", "JpegTurbo_jll", "TOML"]
-git-tree-sha1 = "fa6d0bcff8583bac20f1ffa708c3913ca605c611"
-uuid = "b835a17e-a41a-41e7-81f0-2f016b05efe0"
-version = "0.1.5"
-
 [[deps.JpegTurbo_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "3336abae9a713d2210bb57ab484b1e065edd7d23"
+git-tree-sha1 = "60b1194df0a3298f460063de985eae7b01bc011a"
 uuid = "aacddb02-875f-59d6-b918-886e6ef4fbf8"
-version = "3.0.2+0"
+version = "3.0.1+0"
 
 [[deps.LAME_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -690,10 +815,10 @@ uuid = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
 version = "1.3.1"
 
 [[deps.Latexify]]
-deps = ["Format", "InteractiveUtils", "LaTeXStrings", "MacroTools", "Markdown", "OrderedCollections", "Requires"]
-git-tree-sha1 = "cad560042a7cc108f5a4c24ea1431a9221f22c1b"
+deps = ["Formatting", "InteractiveUtils", "LaTeXStrings", "MacroTools", "Markdown", "OrderedCollections", "Printf", "Requires"]
+git-tree-sha1 = "f428ae552340899a935973270b8d98e5a31c49fe"
 uuid = "23fbe1c1-3f47-55db-b15f-69d7ec21a316"
-version = "0.16.2"
+version = "0.16.1"
 
     [deps.Latexify.extensions]
     DataFramesExt = "DataFrames"
@@ -702,11 +827,6 @@ version = "0.16.2"
     [deps.Latexify.weakdeps]
     DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
     SymEngine = "123dc426-2d89-5057-bbad-38513e3affd8"
-
-[[deps.LazyModules]]
-git-tree-sha1 = "a560dd966b386ac9ae60bdd3a3d3a326062d3c3e"
-uuid = "8cdb02fc-e678-4876-92c5-9defec4f444e"
-version = "0.3.1"
 
 [[deps.LibCURL]]
 deps = ["LibCURL_jll", "MozillaCACerts_jll"]
@@ -766,10 +886,10 @@ uuid = "94ce4f54-9a6c-5748-9c1c-f9c7231a4531"
 version = "1.17.0+0"
 
 [[deps.Libmount_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "dae976433497a2f841baadea93d27e68f1a12a97"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
+git-tree-sha1 = "9c30530bf0effd46e15e0fdcf2b8636e78cbbd73"
 uuid = "4b2f31a3-9ecc-558c-b454-b3730dcb73e9"
-version = "2.39.3+0"
+version = "2.35.0+0"
 
 [[deps.Libtiff_jll]]
 deps = ["Artifacts", "JLLWrappers", "JpegTurbo_jll", "LERC_jll", "Libdl", "XZ_jll", "Zlib_jll", "Zstd_jll"]
@@ -778,10 +898,10 @@ uuid = "89763e89-9b03-5906-acba-b20f662cd828"
 version = "4.5.1+1"
 
 [[deps.Libuuid_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "0a04a1318df1bf510beb2562cf90fb0c386f58c4"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
+git-tree-sha1 = "7f3efec06033682db852f8b3bc3c1d2b0a0ab066"
 uuid = "38a345b3-de98-5d2b-a5d3-14cd9215e700"
-version = "2.39.3+1"
+version = "2.36.0+0"
 
 [[deps.LinearAlgebra]]
 deps = ["Libdl", "OpenBLAS_jll", "libblastrampoline_jll"]
@@ -789,9 +909,9 @@ uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [[deps.LogExpFunctions]]
 deps = ["DocStringExtensions", "IrrationalConstants", "LinearAlgebra"]
-git-tree-sha1 = "18144f3e9cbe9b15b070288eef858f71b291ce37"
+git-tree-sha1 = "7d6dd4e9212aebaeed356de34ccf262a3cd415aa"
 uuid = "2ab3a3ac-af41-5b50-aa03-7779005ae688"
-version = "0.3.27"
+version = "0.3.26"
 
     [deps.LogExpFunctions.extensions]
     LogExpFunctionsChainRulesCoreExt = "ChainRulesCore"
@@ -819,14 +939,9 @@ version = "0.1.4"
 
 [[deps.MacroTools]]
 deps = ["Markdown", "Random"]
-git-tree-sha1 = "2fa9ee3e63fd3a4f7a9a4f4744a52f4856de82df"
+git-tree-sha1 = "b211c553c199c111d998ecdaf7623d1b89b69f93"
 uuid = "1914dd2f-81c6-5fcd-8719-6d5c9610ff09"
-version = "0.5.13"
-
-[[deps.MappedArrays]]
-git-tree-sha1 = "2dab0221fe2b0f2cb6754eaa743cc266339f527e"
-uuid = "dbb5928d-eab1-5f90-85c2-b9b0edb7c900"
-version = "0.4.2"
+version = "0.5.12"
 
 [[deps.Markdown]]
 deps = ["Base64"]
@@ -850,18 +965,12 @@ version = "0.3.2"
 
 [[deps.Missings]]
 deps = ["DataAPI"]
-git-tree-sha1 = "ec4f7fbeab05d7747bdf98eb74d130a2a2ed298d"
+git-tree-sha1 = "f66bdc5de519e8f8ae43bdc598782d35a25b1272"
 uuid = "e1d29d7a-bbdc-5cf2-9ac0-f12de2c33e28"
-version = "1.2.0"
+version = "1.1.0"
 
 [[deps.Mmap]]
 uuid = "a63ad114-7e13-5084-954f-fe012c677804"
-
-[[deps.MosaicViews]]
-deps = ["MappedArrays", "OffsetArrays", "PaddedViews", "StackViews"]
-git-tree-sha1 = "7b86a5d4d70a9f5cdf2dacb3cbe6d251d1a61dbe"
-uuid = "e94cdb99-869f-56ef-bcf0-1ae2bcbe0389"
-version = "0.3.4"
 
 [[deps.MozillaCACerts_jll]]
 uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
@@ -873,26 +982,15 @@ git-tree-sha1 = "0877504529a3e5c3343c6f8b4c0381e57e4387e4"
 uuid = "77ba4419-2d1f-58cd-9bb1-8ffee604a2e3"
 version = "1.0.2"
 
-[[deps.Netpbm]]
-deps = ["FileIO", "ImageCore", "ImageMetadata"]
-git-tree-sha1 = "d92b107dbb887293622df7697a2223f9f8176fcd"
-uuid = "f09324ee-3d7c-5217-9330-fc30815ba969"
-version = "1.1.1"
+[[deps.NearestNeighbors]]
+deps = ["Distances", "StaticArrays"]
+git-tree-sha1 = "ded64ff6d4fdd1cb68dfcbb818c69e144a5b2e4c"
+uuid = "b8a86587-4115-5ab1-83bc-aa920d37bbce"
+version = "0.4.16"
 
 [[deps.NetworkOptions]]
 uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
 version = "1.2.0"
-
-[[deps.OffsetArrays]]
-git-tree-sha1 = "6a731f2b5c03157418a20c12195eb4b74c8f8621"
-uuid = "6fe1bfb0-de20-5000-8ca7-80f57d26f881"
-version = "1.13.0"
-
-    [deps.OffsetArrays.extensions]
-    OffsetArraysAdaptExt = "Adapt"
-
-    [deps.OffsetArrays.weakdeps]
-    Adapt = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
 
 [[deps.Ogg_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -905,18 +1003,6 @@ deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
 version = "0.3.23+4"
 
-[[deps.OpenEXR]]
-deps = ["Colors", "FileIO", "OpenEXR_jll"]
-git-tree-sha1 = "327f53360fdb54df7ecd01e96ef1983536d1e633"
-uuid = "52e1d378-f018-4a11-a4be-720524705ac7"
-version = "0.3.2"
-
-[[deps.OpenEXR_jll]]
-deps = ["Artifacts", "Imath_jll", "JLLWrappers", "Libdl", "Zlib_jll"]
-git-tree-sha1 = "a4ca623df1ae99d09bc9868b008262d0c0ac1e4f"
-uuid = "18a262bb-aa17-5467-a713-aee519bc75cb"
-version = "3.1.4+0"
-
 [[deps.OpenLibm_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "05823500-19ac-5b8b-9628-191a04bc5112"
@@ -924,15 +1010,15 @@ version = "0.8.1+2"
 
 [[deps.OpenSSL]]
 deps = ["BitFlags", "Dates", "MozillaCACerts_jll", "OpenSSL_jll", "Sockets"]
-git-tree-sha1 = "af81a32750ebc831ee28bdaaba6e1067decef51e"
+git-tree-sha1 = "51901a49222b09e3743c65b8847687ae5fc78eb2"
 uuid = "4d8831e6-92b7-49fb-bdf8-b643e874388c"
-version = "1.4.2"
+version = "1.4.1"
 
 [[deps.OpenSSL_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "3da7367955dcc5c54c1ba4d402ccdc09a1a3e046"
+git-tree-sha1 = "cc6e1927ac521b659af340e0ca45828a3ffc748f"
 uuid = "458c3c95-2e84-50aa-8efc-19380b2a3a95"
-version = "3.0.13+1"
+version = "3.0.12+0"
 
 [[deps.Opus_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -949,18 +1035,6 @@ version = "1.6.3"
 deps = ["Artifacts", "Libdl"]
 uuid = "efcefdf7-47ab-520b-bdef-62a2eaa19f15"
 version = "10.42.0+1"
-
-[[deps.PNGFiles]]
-deps = ["Base64", "CEnum", "ImageCore", "IndirectArrays", "OffsetArrays", "libpng_jll"]
-git-tree-sha1 = "67186a2bc9a90f9f85ff3cc8277868961fb57cbd"
-uuid = "f57f5aa1-a3ce-4bc8-8ab9-96f992907883"
-version = "0.4.3"
-
-[[deps.PaddedViews]]
-deps = ["OffsetArrays"]
-git-tree-sha1 = "0fac6313486baae819364c52b4f483450a9d793f"
-uuid = "5432bcbf-9aad-5242-b902-cca2824c8663"
-version = "0.5.12"
 
 [[deps.Parsers]]
 deps = ["Dates", "PrecompileTools", "UUIDs"]
@@ -984,12 +1058,6 @@ deps = ["Artifacts", "Dates", "Downloads", "FileWatching", "LibGit2", "Libdl", "
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 version = "1.10.0"
 
-[[deps.PkgVersion]]
-deps = ["Pkg"]
-git-tree-sha1 = "f9501cc0430a26bc3d156ae1b5b0c1b47af4d6da"
-uuid = "eebad327-c553-4316-9ea0-9fa01ccd7688"
-version = "0.3.3"
-
 [[deps.PlotThemes]]
 deps = ["PlotUtils", "Statistics"]
 git-tree-sha1 = "1f03a2d339f42dca4a4da149c7e15e9b896ad899"
@@ -998,15 +1066,15 @@ version = "3.1.0"
 
 [[deps.PlotUtils]]
 deps = ["ColorSchemes", "Colors", "Dates", "PrecompileTools", "Printf", "Random", "Reexport", "Statistics"]
-git-tree-sha1 = "7b1a9df27f072ac4c9c7cbe5efb198489258d1f5"
+git-tree-sha1 = "862942baf5663da528f66d24996eb6da85218e76"
 uuid = "995b91a9-d308-5afd-9ec6-746e21dbc043"
-version = "1.4.1"
+version = "1.4.0"
 
 [[deps.Plots]]
-deps = ["Base64", "Contour", "Dates", "Downloads", "FFMPEG", "FixedPointNumbers", "GR", "JLFzf", "JSON", "LaTeXStrings", "Latexify", "LinearAlgebra", "Measures", "NaNMath", "Pkg", "PlotThemes", "PlotUtils", "PrecompileTools", "Printf", "REPL", "Random", "RecipesBase", "RecipesPipeline", "Reexport", "RelocatableFolders", "Requires", "Scratch", "Showoff", "SparseArrays", "Statistics", "StatsBase", "UUIDs", "UnicodeFun", "UnitfulLatexify", "Unzip"]
-git-tree-sha1 = "3bdfa4fa528ef21287ef659a89d686e8a1bcb1a9"
+deps = ["Base64", "Contour", "Dates", "Downloads", "FFMPEG", "FixedPointNumbers", "GR", "JLFzf", "JSON", "LaTeXStrings", "Latexify", "LinearAlgebra", "Measures", "NaNMath", "Pkg", "PlotThemes", "PlotUtils", "PrecompileTools", "Preferences", "Printf", "REPL", "Random", "RecipesBase", "RecipesPipeline", "Reexport", "RelocatableFolders", "Requires", "Scratch", "Showoff", "SparseArrays", "Statistics", "StatsBase", "UUIDs", "UnicodeFun", "UnitfulLatexify", "Unzip"]
+git-tree-sha1 = "ccee59c6e48e6f2edf8a5b64dc817b6729f99eb5"
 uuid = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
-version = "1.40.3"
+version = "1.39.0"
 
     [deps.Plots.extensions]
     FileIOExt = "FileIO"
@@ -1024,37 +1092,37 @@ version = "1.40.3"
 
 [[deps.PlutoUI]]
 deps = ["AbstractPlutoDingetjes", "Base64", "ColorTypes", "Dates", "FixedPointNumbers", "Hyperscript", "HypertextLiteral", "IOCapture", "InteractiveUtils", "JSON", "Logging", "MIMEs", "Markdown", "Random", "Reexport", "URIs", "UUIDs"]
-git-tree-sha1 = "71a22244e352aa8c5f0f2adde4150f62368a3f2e"
+git-tree-sha1 = "bd7c69c7f7173097e7b5e1be07cee2b8b7447f51"
 uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
-version = "0.7.58"
+version = "0.7.54"
+
+[[deps.PooledArrays]]
+deps = ["DataAPI", "Future"]
+git-tree-sha1 = "36d8b4b899628fb92c2749eb488d884a926614d3"
+uuid = "2dfb63ee-cc39-5dd5-95bd-886bf059d720"
+version = "1.4.3"
 
 [[deps.PrecompileTools]]
 deps = ["Preferences"]
-git-tree-sha1 = "5aa36f7049a63a1528fe8f7c3f2113413ffd4e1f"
+git-tree-sha1 = "03b4c25b43cb84cee5c90aa9b5ea0a78fd848d2f"
 uuid = "aea7be01-6a6a-4083-8856-8a6e6704d82a"
-version = "1.2.1"
+version = "1.2.0"
 
 [[deps.Preferences]]
 deps = ["TOML"]
-git-tree-sha1 = "9306f6085165d270f7e3db02af26a400d580f5c6"
+git-tree-sha1 = "00805cd429dcb4870060ff49ef443486c262e38e"
 uuid = "21216c6a-2e73-6563-6e65-726566657250"
-version = "1.4.3"
+version = "1.4.1"
 
 [[deps.Printf]]
 deps = ["Unicode"]
 uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
-[[deps.ProgressMeter]]
-deps = ["Distributed", "Printf"]
-git-tree-sha1 = "763a8ceb07833dd51bb9e3bbca372de32c0605ad"
-uuid = "92933f4c-e287-5a05-a399-4b506db050ca"
-version = "1.10.0"
-
-[[deps.QOI]]
-deps = ["ColorTypes", "FileIO", "FixedPointNumbers"]
-git-tree-sha1 = "18e8f4d1426e965c7b532ddd260599e1510d26ce"
-uuid = "4b34888f-f399-49d4-9bb3-47ed5cae4e65"
-version = "1.0.0"
+[[deps.PyCall]]
+deps = ["Conda", "Dates", "Libdl", "LinearAlgebra", "MacroTools", "Serialization", "VersionParsing"]
+git-tree-sha1 = "9816a3826b0ebf49ab4926e2b18842ad8b5c8f04"
+uuid = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
+version = "1.96.4"
 
 [[deps.Qt6Base_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Fontconfig_jll", "Glib_jll", "JLLWrappers", "Libdl", "Libglvnd_jll", "OpenSSL_jll", "Vulkan_Loader_jll", "Xorg_libSM_jll", "Xorg_libXext_jll", "Xorg_libXrender_jll", "Xorg_libxcb_jll", "Xorg_xcb_util_cursor_jll", "Xorg_xcb_util_image_jll", "Xorg_xcb_util_keysyms_jll", "Xorg_xcb_util_renderutil_jll", "Xorg_xcb_util_wm_jll", "Zlib_jll", "libinput_jll", "xkbcommon_jll"]
@@ -1069,11 +1137,6 @@ uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 [[deps.Random]]
 deps = ["SHA"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
-
-[[deps.RangeArrays]]
-git-tree-sha1 = "b9039e93773ddcfc828f12aadf7115b4b4d225f5"
-uuid = "b3c3ace0-ae52-54e7-9d0b-2c1406fd6b9d"
-version = "0.3.2"
 
 [[deps.RecipesBase]]
 deps = ["PrecompileTools"]
@@ -1114,6 +1177,12 @@ git-tree-sha1 = "3bac05bc7e74a75fd9cba4295cde4045d9fe2386"
 uuid = "6c6a2e73-6563-6170-7368-637461726353"
 version = "1.2.1"
 
+[[deps.SentinelArrays]]
+deps = ["Dates", "Random"]
+git-tree-sha1 = "0e7508ff27ba32f26cd459474ca2ede1bc10991f"
+uuid = "91c51154-3ec4-41a3-a24f-3f23e20d615c"
+version = "1.4.1"
+
 [[deps.Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
 
@@ -1127,18 +1196,6 @@ version = "1.0.3"
 git-tree-sha1 = "874e8867b33a00e784c8a7e4b60afe9e037b74e1"
 uuid = "777ac1f9-54b0-4bf8-805c-2214025038e7"
 version = "1.1.0"
-
-[[deps.SimpleTraits]]
-deps = ["InteractiveUtils", "MacroTools"]
-git-tree-sha1 = "5d7e3f4e11935503d3ecaf7186eac40602e7d231"
-uuid = "699a6c99-e7fa-54fc-8d76-47d257e15c1d"
-version = "0.9.4"
-
-[[deps.Sixel]]
-deps = ["Dates", "FileIO", "ImageCore", "IndirectArrays", "OffsetArrays", "REPL", "libsixel_jll"]
-git-tree-sha1 = "2da10356e31327c7096832eb9cd86307a50b1eb6"
-uuid = "45858cf5-a6b0-47a3-bbea-62219f50df47"
-version = "0.1.3"
 
 [[deps.Sockets]]
 uuid = "6462fe0b-24de-5631-8697-dd941f90decc"
@@ -1154,11 +1211,24 @@ deps = ["Libdl", "LinearAlgebra", "Random", "Serialization", "SuiteSparse_jll"]
 uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 version = "1.10.0"
 
-[[deps.StackViews]]
-deps = ["OffsetArrays"]
-git-tree-sha1 = "46e589465204cd0c08b4bd97385e4fa79a0c770c"
-uuid = "cae243ae-269e-4f55-b966-ac2d0dc13c15"
-version = "0.1.1"
+[[deps.StaticArrays]]
+deps = ["LinearAlgebra", "PrecompileTools", "Random", "StaticArraysCore"]
+git-tree-sha1 = "4e17a790909b17f7bf1496e3aec138cf01b60b3b"
+uuid = "90137ffa-7385-5640-81b9-e52037218182"
+version = "1.9.0"
+
+    [deps.StaticArrays.extensions]
+    StaticArraysChainRulesCoreExt = "ChainRulesCore"
+    StaticArraysStatisticsExt = "Statistics"
+
+    [deps.StaticArrays.weakdeps]
+    ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
+    Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
+
+[[deps.StaticArraysCore]]
+git-tree-sha1 = "36b3d696ce6366023a0ea192b4cd442268995a0d"
+uuid = "1e83bf80-4336-4d27-bf5d-d5a4f845583c"
+version = "1.4.2"
 
 [[deps.Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
@@ -1173,9 +1243,9 @@ version = "1.7.0"
 
 [[deps.StatsBase]]
 deps = ["DataAPI", "DataStructures", "LinearAlgebra", "LogExpFunctions", "Missings", "Printf", "Random", "SortingAlgorithms", "SparseArrays", "Statistics", "StatsAPI"]
-git-tree-sha1 = "5cf7606d6cef84b543b483848d4ae08ad9832b21"
+git-tree-sha1 = "1d77abd07f617c4868c33d4f5b9e1dbb2643c9cf"
 uuid = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
-version = "0.34.3"
+version = "0.34.2"
 
 [[deps.SuiteSparse_jll]]
 deps = ["Artifacts", "Libdl", "libblastrampoline_jll"]
@@ -1186,6 +1256,30 @@ version = "7.2.1+1"
 deps = ["Dates"]
 uuid = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
 version = "1.0.3"
+
+[[deps.TableShowUtils]]
+deps = ["DataValues", "Dates", "JSON", "Markdown", "Unicode"]
+git-tree-sha1 = "2a41a3dedda21ed1184a47caab56ed9304e9a038"
+uuid = "5e66a065-1f0a-5976-b372-e0b8c017ca10"
+version = "0.2.6"
+
+[[deps.TableTraits]]
+deps = ["IteratorInterfaceExtensions"]
+git-tree-sha1 = "c06b2f539df1c6efa794486abfb6ed2022561a39"
+uuid = "3783bdb8-4a98-5b6b-af9a-565f29a5fe9c"
+version = "1.0.1"
+
+[[deps.TableTraitsUtils]]
+deps = ["DataValues", "IteratorInterfaceExtensions", "Missings", "TableTraits"]
+git-tree-sha1 = "78fecfe140d7abb480b53a44f3f85b6aa373c293"
+uuid = "382cd787-c1b6-5bf2-a167-d5b971a19bda"
+version = "1.0.2"
+
+[[deps.Tables]]
+deps = ["DataAPI", "DataValueInterfaces", "IteratorInterfaceExtensions", "LinearAlgebra", "OrderedCollections", "TableTraits"]
+git-tree-sha1 = "cb76cf677714c095e535e3501ac7954732aeea2d"
+uuid = "bd369af6-aec1-5ad0-b16a-f7cc5008161c"
+version = "1.11.1"
 
 [[deps.Tar]]
 deps = ["ArgTools", "SHA"]
@@ -1202,16 +1296,10 @@ version = "0.1.1"
 deps = ["InteractiveUtils", "Logging", "Random", "Serialization"]
 uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
-[[deps.TiffImages]]
-deps = ["ColorTypes", "DataStructures", "DocStringExtensions", "FileIO", "FixedPointNumbers", "IndirectArrays", "Inflate", "Mmap", "OffsetArrays", "PkgVersion", "ProgressMeter", "UUIDs"]
-git-tree-sha1 = "34cc045dd0aaa59b8bbe86c644679bc57f1d5bd0"
-uuid = "731e570b-9d59-4bfa-96dc-6df516fadf69"
-version = "0.6.8"
-
 [[deps.TranscodingStreams]]
-git-tree-sha1 = "71509f04d045ec714c4748c785a59045c3736349"
+git-tree-sha1 = "1fbeaaca45801b4ba17c251dd8603ef24801dd84"
 uuid = "3bb67fe8-82b1-5028-8e26-92a6c54297fa"
-version = "0.10.7"
+version = "0.10.2"
 weakdeps = ["Random", "Test"]
 
     [deps.TranscodingStreams.extensions]
@@ -1265,6 +1353,11 @@ git-tree-sha1 = "ca0969166a028236229f63514992fc073799bb78"
 uuid = "41fe7b60-77ed-43a1-b4f0-825fd5a5650d"
 version = "0.2.0"
 
+[[deps.VersionParsing]]
+git-tree-sha1 = "58d6e80b4ee071f5efd07fda82cb9fbe17200868"
+uuid = "81def892-9a0e-5fdd-b105-ffc91e053289"
+version = "1.3.0"
+
 [[deps.Vulkan_Loader_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Wayland_jll", "Xorg_libX11_jll", "Xorg_libXrandr_jll", "xkbcommon_jll"]
 git-tree-sha1 = "2f0486047a07670caad3a81a075d2e518acc5c59"
@@ -1283,11 +1376,28 @@ git-tree-sha1 = "93f43ab61b16ddfb2fd3bb13b3ce241cafb0e6c9"
 uuid = "2381bf8a-dfd0-557d-9999-79630e7b1b91"
 version = "1.31.0+0"
 
+[[deps.WeakRefStrings]]
+deps = ["DataAPI", "InlineStrings", "Parsers"]
+git-tree-sha1 = "b1be2855ed9ed8eac54e5caff2afcdb442d52c23"
+uuid = "ea10d353-3f73-51f8-a26c-33c1cb351aa5"
+version = "1.4.2"
+
+[[deps.WorkerUtilities]]
+git-tree-sha1 = "cd1659ba0d57b71a464a29e64dbc67cfe83d54e7"
+uuid = "76eceee3-57b5-4d4a-8e66-0e911cebbf60"
+version = "1.6.1"
+
+[[deps.XLSX]]
+deps = ["Dates", "EzXML", "Printf", "Tables", "ZipFile"]
+git-tree-sha1 = "7fa8618da5c27fdab2ceebdff1da8918c8cd8b5d"
+uuid = "fdbf4ff8-1666-58a4-91e7-1b58723a45e0"
+version = "0.7.10"
+
 [[deps.XML2_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libiconv_jll", "Zlib_jll"]
-git-tree-sha1 = "532e22cf7be8462035d092ff21fada7527e2c488"
+git-tree-sha1 = "801cbe47eae69adc50f36c3caec4758d2650741b"
 uuid = "02c8fc9c-b97f-50b9-bbe4-9be30ff0a78a"
-version = "2.12.6+0"
+version = "2.12.2+0"
 
 [[deps.XSLT_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libgcrypt_jll", "Libgpg_error_jll", "Libiconv_jll", "Pkg", "XML2_jll", "Zlib_jll"]
@@ -1297,9 +1407,9 @@ version = "1.1.34+0"
 
 [[deps.XZ_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "ac88fb95ae6447c8dda6a5503f3bafd496ae8632"
+git-tree-sha1 = "522b8414d40c4cbbab8dee346ac3a09f9768f25d"
 uuid = "ffd25f8a-64ca-5728-b0f7-c24cf3aae800"
-version = "5.4.6+0"
+version = "5.4.5+0"
 
 [[deps.Xorg_libICE_jll]]
 deps = ["Libdl", "Pkg"]
@@ -1445,6 +1555,12 @@ git-tree-sha1 = "e92a1a012a10506618f10b7047e478403a046c77"
 uuid = "c5fb5394-a638-5e4d-96e5-b29de1b5cf10"
 version = "1.5.0+0"
 
+[[deps.ZipFile]]
+deps = ["Libdl", "Printf", "Zlib_jll"]
+git-tree-sha1 = "3593e69e469d2111389a9bd06bac1f3d730ac6de"
+uuid = "a5390f91-8eb1-5f08-bee0-b1d1ffed6cea"
+version = "0.9.4"
+
 [[deps.Zlib_jll]]
 deps = ["Libdl"]
 uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
@@ -1452,9 +1568,9 @@ version = "1.2.13+1"
 
 [[deps.Zstd_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "e678132f07ddb5bfa46857f0d7620fb9be675d3b"
+git-tree-sha1 = "49ce682769cd5de6c72dcf1b94ed7790cd08974c"
 uuid = "3161d3a3-bdf6-5164-811a-617609db77b4"
-version = "1.5.6+0"
+version = "1.5.5+0"
 
 [[deps.eudev_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg", "gperf_jll"]
@@ -1511,15 +1627,9 @@ version = "1.18.0+0"
 
 [[deps.libpng_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Zlib_jll"]
-git-tree-sha1 = "d7015d2e18a5fd9a4f47de711837e980519781a4"
+git-tree-sha1 = "93284c28274d9e75218a416c65ec49d0e0fcdf3d"
 uuid = "b53b4c65-9356-5827-b1ea-8c7a1a84506f"
-version = "1.6.43+1"
-
-[[deps.libsixel_jll]]
-deps = ["Artifacts", "JLLWrappers", "JpegTurbo_jll", "Libdl", "Pkg", "libpng_jll"]
-git-tree-sha1 = "d4f63314c8aa1e48cd22aa0c17ed76cd1ae48c3c"
-uuid = "075b6546-f08a-558a-be8f-8157d0f608a5"
-version = "1.10.3+0"
+version = "1.6.40+0"
 
 [[deps.libvorbis_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Ogg_jll", "Pkg"]
@@ -1563,32 +1673,75 @@ version = "1.4.1+1"
 """
 
 # ╔═╡ Cell order:
-# ╟─d882946c-aee6-43f9-8516-1c72ee946408
-# ╟─fed0c56f-fe3e-4b32-b4f0-dda5c269abfe
-# ╟─089cc976-124e-40f7-9aa1-ba4ca5089aef
-# ╟─c48f0bd3-ecb4-4e44-8aa2-aebf32bb5b82
-# ╟─914ef67f-c856-433d-be13-009e17486c08
-# ╠═3cbddb7c-e7d6-4f2c-b0bb-92a14ff55c65
-# ╟─010bd77b-b5e6-4441-b4bd-739eb4f64b35
-# ╟─b0bb08ad-40c1-4944-a200-245a0ee9827d
-# ╟─c6cf6f44-9e09-4f7f-9509-168d329d9f31
-# ╟─da3dff57-eacd-4e18-8439-41dbde4bab6f
-# ╟─3a962c19-ec0a-4758-9a0f-51804745a39c
-# ╟─e0616ea2-970e-4e9a-9622-a60c557bceec
-# ╠═48cb2f10-4496-4dd7-aba4-a5be79cf06ff
-# ╟─21bf9efa-69c5-40ed-90e0-4b7f51210e13
-# ╟─6eb930d2-c0e5-43d8-801f-024928705453
-# ╟─d8be3494-4b1c-419b-a8ab-28c40cb18f99
-# ╟─3d35a65c-3620-4a1f-adf3-1280eff4c597
-# ╠═354b94c8-20db-448f-b508-34963b4e3645
-# ╠═472d3cf7-9aa6-4eab-910d-3216426367ff
-# ╟─dd142f60-9e4f-4332-b1e5-1f5c065048b1
-# ╟─51be810f-2961-4d65-94f8-323bd29a9bd0
-# ╟─fabba741-1d31-434c-a111-302d63af0b75
-# ╟─ba35a0f6-6197-4b02-96c9-f68448e66770
-# ╟─776dfee9-08b0-4424-967a-8d1b1b1d37ac
-# ╟─9409857c-052e-4ac6-a99e-9285346161b5
-# ╟─e6509621-9ab6-45fe-aa0e-44eeb82ae497
-# ╟─fbaaf968-b40d-4731-a947-240c8df50e21
+# ╟─8495d410-af20-11ee-0e03-59f8e6fcbbca
+# ╟─319ac194-3e32-4c9d-ac1a-198b9fcc234f
+# ╟─061014c9-ac70-4007-bf5a-1829939d3833
+# ╟─e42bf648-7797-4fb8-a871-ec8953384813
+# ╟─99e2cc16-b2b7-436c-a1c1-9d26776c31aa
+# ╠═4bdbd2b9-1e4f-41cd-b29b-391d4e3f7b34
+# ╟─7bd37955-2bfc-428b-b94a-e11f299842fb
+# ╟─488b679d-deff-42c9-b533-be70bfe5e732
+# ╟─0a336d8a-9b57-470c-aa88-341c47d98662
+# ╠═85b618fa-b4fa-4d8a-823d-ecafa54e5cfb
+# ╟─aeb76509-87ed-4400-a4e3-77b59f5e8654
+# ╠═e1a2e484-76f2-4291-94b7-9a94664a05b3
+# ╟─1fa48bf7-ad98-4aea-84e5-e75e351474ab
+# ╠═9c53f844-6d0c-4a40-898d-ed264ffe4bb9
+# ╟─d8d3019f-6e7a-4955-8766-5db54223a143
+# ╠═6fb695f6-00d9-41ce-904c-b92e6a1ff51b
+# ╟─81515c5d-664f-44e4-9cb9-75f9887b28d9
+# ╠═d3aabbc1-5c51-418a-be92-c25152a339b4
+# ╟─e3af430e-c5f4-4a91-941d-5f0720522aae
+# ╟─6e7b812c-d63b-4624-9a8d-77408e1f9aba
+# ╟─1b36505e-79dc-45de-a654-1c2f5053410c
+# ╟─19f37699-3a2e-4932-9aec-8969165e8fcf
+# ╠═326edf33-fe12-4815-a128-cb33f59c0281
+# ╟─d3abb069-8a6b-4253-a489-3cd56ddc89b5
+# ╠═aa09bbf6-7ef6-4359-8181-a8272a498cce
+# ╟─acd5ba29-4e13-4ce9-98d3-7a62de7754b4
+# ╠═f40a0030-1830-4543-8259-a039e70a76ea
+# ╠═50f9f855-1daf-41d8-aeb2-195fe02f5dae
+# ╟─97f5fdff-4e5c-40d1-a4d4-6887d6ffd7fd
+# ╟─340273d2-bb12-469d-bf55-a77b03144799
+# ╠═30a70338-df77-4c05-bc25-ec4e463f700e
+# ╟─46bf3629-1c97-41ca-9d43-a1f80efe1401
+# ╟─0bc7542e-750a-443a-a737-3f596f64d086
+# ╟─be347a4e-50a8-4b98-ad57-eb4bbba8de23
+# ╟─17b8ed28-a579-4fab-ad48-5bad655b2463
+# ╟─27d00db4-a3e7-4a8a-adcd-84371da8ad6e
+# ╟─2ea9eacf-58f0-4993-b689-d7e8935f628b
+# ╠═1faf0cff-2991-47d4-b84d-5ed0cc227733
+# ╟─c5196e31-5095-4259-9a61-89afbfc8f808
+# ╠═bcc9197f-4d21-43fa-b2d5-40f567d15ab0
+# ╟─51462f44-1829-4e9c-88dc-c9f09db4124b
+# ╠═55f987bf-e708-45b8-a0f8-bc5840d4e119
+# ╟─d400446c-6d89-418d-830f-3f0fefebfcb6
+# ╠═fc4cec7d-546a-47b8-8271-7322f57b9888
+# ╟─cd47b25a-cfe7-41e7-bc6f-15f3d5098cd7
+# ╠═22ae57f4-002c-4314-a2d8-9b47b0d01386
+# ╟─1d5261ce-2f45-4e88-b6b9-462ea6c1897a
+# ╟─ed64ca57-26f3-420b-aae0-2c605340b072
+# ╟─81502e8e-ee6a-4abd-b822-cdaddfbd81f8
+# ╟─2eef15d2-b351-4af1-aa50-50efe3a439ee
+# ╠═2227f54a-56be-4105-91b5-aa4e0ef907d7
+# ╟─c78301fa-7bbe-4abc-b1e6-f9f32a652fa9
+# ╠═660d640c-910b-4ab8-940b-daa15cda9721
+# ╠═4384266e-f8f7-4f42-bdc0-58c3c8761194
+# ╟─90f3f183-bbc6-4c07-b270-fe980527012e
+# ╟─2d5bf322-f095-4e93-bee3-5374e899362c
+# ╟─71201a55-47c4-4a74-b54f-11a70c3d2cd0
+# ╠═5758c5dc-f6a6-4da5-ba71-6404f8001d27
+# ╠═eb0150c0-eec9-4b5f-8e9d-2353702784a6
+# ╠═1e32425b-4078-49d2-a502-7cb591a5669a
+# ╠═cae655c3-8e89-4b08-b83a-e7ea578b5723
+# ╟─a094e975-08ec-4f98-be86-6feac5f472b7
+# ╠═f415835f-1587-4019-8eca-a5c2f37222c5
+# ╠═1ff000f0-a9a6-4f29-82c5-1b22cfb5f387
+# ╟─fbcd4e16-d49d-47a0-9805-ea41bad1ba3f
+# ╠═f0efd8b5-74d0-4490-bc5c-5ef40a2aea31
+# ╟─26a4fe64-ab46-4f10-8037-c0427f50322c
+# ╠═4093a818-cebb-40b1-b934-43a124dc1ca2
+# ╟─f415ea7b-d19c-4714-bfdc-bf52e0bac815
+# ╟─0635b3a0-652c-40ae-af64-3b4ad75836a8
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

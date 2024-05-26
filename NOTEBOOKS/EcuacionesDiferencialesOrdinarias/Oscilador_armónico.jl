@@ -57,6 +57,9 @@ begin
 	imag = load(fname) #declaramos la variable "imag"
 end
 
+# ╔═╡ 75b940f5-0bed-474a-af33-5204592aa8f2
+md"""$\textit{Figura 1. Resorte y bloque. Elaboración propia, inspirada en [1].}$"""
+
 # ╔═╡ 4226a6f2-1541-4aa1-9851-d22678206ae4
 md"""Un bloque de masa $M$ está conectado a un extremo de un resorte horizontal, mientras que el otro extremo está fijo, donde $k$ es la constante de restitución del resorte. Este bloque se encuentra sobre una superficie horizontal sin fricción. ¿Qué tipo de movimiento puede experimentar este bloque?
 
@@ -114,6 +117,9 @@ begin
 	imag₂ = load(fname₂) #declaramos la variable "imag"
 end
 
+# ╔═╡ 57f3b1b0-dc26-4185-9ce1-3f68831d6ada
+md"""$\textit{Figura 2. Dos resortes y un bloque. Elaboración propia, inspirada en [1].}$"""
+
 # ╔═╡ a6af49ae-930d-43a9-afda-a4c5740fedc3
 md"""Ahora, supongamos que un bloque de masa $m$ está conectado a los extremos inferiores de dos resortes verticales, mientras que los otros extremos están fijos, las constantes de restitución de los resortes son $k_1$ y $k_2$, tal como se muestra en la figura. Si deseamos hallar la posición del bloque en el instante $t$ primero debemos definir la ecuación que describe el movimiento. 
 
@@ -125,6 +131,9 @@ begin
 	fname₃ = download(url₃) #bajamos la imagen a la máquina local
 	imag₃ = load(fname₃) #declaramos la variable "imag"
 end
+
+# ╔═╡ c447a26a-8bc8-47ea-b3a2-26a78a8c8e66
+md"""$\textit{Figura 3. Diagrama de cuerpos. Elaboración propia, inspirada en [1].}$"""
 
 # ╔═╡ 63595c29-5fff-4371-a450-fb643187a2b8
 md"""
@@ -260,6 +269,9 @@ begin
 	fname₄ = download(url₄) #bajamos la imagen a la máquina local
 	imag₄ = load(fname₄) #declaramos la variable "imag"
 end
+
+# ╔═╡ 90a68cd3-9feb-4ca6-a827-69ddb98bdb2b
+md"""$\textit{Figura 4. Péndulo simple y diagrama de cuerpo. Elaboración propia, inspirada en [1].}$"""
 
 # ╔═╡ 08ba90ed-4a5a-4222-af87-4d8e62e5d414
 md"""La figura muestra un dibujo de un péndulo simple junto con el diagrama de fuerzas. La fuerza tangencial es $-W \sin(\phi)$, y esto nos lleva a la ecuación 
@@ -2671,6 +2683,7 @@ version = "1.4.1+1"
 # ╟─4fc7e5a2-c591-48ee-b4bb-fa42f1538a95
 # ╟─2887f24e-bb2a-4b61-b89c-63c0484d70a9
 # ╟─3a5175a1-50a5-4a3c-8d90-28cffdbf2a4d
+# ╟─75b940f5-0bed-474a-af33-5204592aa8f2
 # ╟─4226a6f2-1541-4aa1-9851-d22678206ae4
 # ╟─51a6712c-5f57-4704-a6f7-61fa8e600c49
 # ╟─93f4f695-6bbc-4eaf-8dd2-8308de3954b6
@@ -2682,8 +2695,10 @@ version = "1.4.1+1"
 # ╟─b8ebef50-a4d2-4058-b94d-fd51baeec7fd
 # ╟─be4a4cc9-4ec1-4ddc-a37c-2806bf46dcf3
 # ╟─cfa121a6-02f0-4eb2-8037-f27fb34eae9f
+# ╟─57f3b1b0-dc26-4185-9ce1-3f68831d6ada
 # ╟─a6af49ae-930d-43a9-afda-a4c5740fedc3
 # ╟─cb17a57a-870b-4d25-b336-ff1b654547ab
+# ╟─c447a26a-8bc8-47ea-b3a2-26a78a8c8e66
 # ╟─63595c29-5fff-4371-a450-fb643187a2b8
 # ╟─b18eeedc-1a6d-42c7-8c2b-3fee35f954b7
 # ╟─7b431ef5-688f-4939-9915-b33a2afd4a39
@@ -2710,6 +2725,7 @@ version = "1.4.1+1"
 # ╟─4e479594-d98f-4f5f-b269-e18f4e200587
 # ╟─e15e76d4-3516-4ade-a61e-3eb0e11a164e
 # ╟─77187efa-2a08-4176-a0d7-d5df7296205b
+# ╟─90a68cd3-9feb-4ca6-a827-69ddb98bdb2b
 # ╟─08ba90ed-4a5a-4222-af87-4d8e62e5d414
 # ╟─a97b90b9-1f95-4e5a-b5e0-51244c8c93a7
 # ╠═b9d8fe7d-0a66-435e-848a-491951f6dc31

@@ -265,6 +265,9 @@ begin
 	imag = load(fname)
 end
 
+# ╔═╡ 222ce78d-40d2-4c6a-b692-322c680b90bc
+md"""$\textit{Figura 1. Secciones cónicas. Imagen tomada de Wikipedia.}$"""
+
 # ╔═╡ abc2a459-9dd8-4cfe-9c51-82d493574da2
 md"""Una formulación alternativa de la ecuación anterior es
 
@@ -401,8 +404,14 @@ begin
 	imag1 = load(fname1)
 end
 
+# ╔═╡ 1dd7a5b7-50ea-49cc-a8f9-4fe9022b1547
+md"""$\textit{Figura 2. El Bautismo de Cristo. Imagen tomada de Wikipedia.}$"""
+
 # ╔═╡ be342e4a-0086-4dc6-b623-7e0760265356
-md"""Vamos a seleccionar $20$ puntos que delineen cada elipse."""
+md"""Vamos a seleccionar $n$ puntos que delineen cada elipse."""
+
+# ╔═╡ ca3f7f44-fa66-44e5-b34c-7bfda72edb19
+n=20 #Seleccione n puntos de cada elipse
 
 # ╔═╡ 8abf8ea9-5d7e-43d6-9f81-4714dd30c9d4
 begin
@@ -424,10 +433,10 @@ end
 
 # ╔═╡ ced48584-9f65-4a7d-9549-7970b4a6115d
 begin
-	a1x = [lx[i] for i in 1:length(lx) if i % 2 == 0][1:20]
-	a1y = [ly[i] for i in 1:length(ly) if i % 2 == 0][1:20]
-	a2x = [lx[i] for i in 1:length(lx) if i % 2 == 0][21:40]
-	a2y = [ly[i] for i in 1:length(ly) if i % 2 == 0][21:40]
+	a1x = [lx[i] for i in 1:length(lx) if i % 2 == 0][1:n]
+	a1y = [ly[i] for i in 1:length(ly) if i % 2 == 0][1:n]
+	a2x = [lx[i] for i in 1:length(lx) if i % 2 == 0][n+1:2*n]
+	a2y = [ly[i] for i in 1:length(ly) if i % 2 == 0][n+1:2*n]
 	fig4 = Figure()
 	Aax = Axis(fig4[1, 1])
 
@@ -487,8 +496,8 @@ begin
 	A2 = [a2x.^2 a2x.*a2y a2y.^2 a2x a2y]; #Definimos la matriz A2
 
 	#aureola 2
-	b1 = ones(20); #Definimos el vector b1
-	b2 = ones(20); #Definimos el vector b2
+	b1 = ones(n); #Definimos el vector b1
+	b2 = ones(n); #Definimos el vector b2
 end
 
 # ╔═╡ a108f864-bb92-405c-9de0-6dadd76e3eff
@@ -2303,7 +2312,8 @@ version = "3.5.0+0"
 # ╠═cc7369b7-d0bb-4e63-9402-bf8aa7b4dc93
 # ╟─d8180bd6-8a0d-4647-a084-366705f2a4d7
 # ╟─005e3d8f-b411-4088-936e-59473fb00f6d
-# ╟─925a3293-94a3-4e25-b0af-4d57f87812f0
+# ╠═925a3293-94a3-4e25-b0af-4d57f87812f0
+# ╟─222ce78d-40d2-4c6a-b692-322c680b90bc
 # ╟─abc2a459-9dd8-4cfe-9c51-82d493574da2
 # ╟─ea01b6cc-e60f-406a-bf7c-323df4c3d44e
 # ╠═8c079ee9-dafc-4101-b6d2-8181fa9c0b76
@@ -2315,7 +2325,9 @@ version = "3.5.0+0"
 # ╠═c5760b4d-c784-4a70-8990-608a3edbe36b
 # ╟─c227c241-ce0b-4fe2-adba-8825648917fd
 # ╟─ed0ea5b5-5150-4b85-8db0-7a1317d68db2
+# ╟─1dd7a5b7-50ea-49cc-a8f9-4fe9022b1547
 # ╟─be342e4a-0086-4dc6-b623-7e0760265356
+# ╠═ca3f7f44-fa66-44e5-b34c-7bfda72edb19
 # ╠═8abf8ea9-5d7e-43d6-9f81-4714dd30c9d4
 # ╠═ced48584-9f65-4a7d-9549-7970b4a6115d
 # ╟─e2037336-3de2-477d-a6b3-f8d47d5b0562

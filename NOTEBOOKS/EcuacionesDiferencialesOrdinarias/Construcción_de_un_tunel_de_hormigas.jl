@@ -69,6 +69,9 @@ begin
 	imag = load(fname) #declaramos la variable "imag"
 end
 
+# ╔═╡ 0ef4051f-d2ff-4029-940f-9e535445ed63
+md"""$\textit{Figura 1. Construcción de un tunel x. Elaboración propia, inspirado en [2].}$"""
+
 # ╔═╡ ee838869-1eed-446e-bedf-62a936db7bd2
 md"""Ahora, si deseamos saber cuánto tiempo tomaría a una hormiga extender un túnel desde la distancia $x$ hasta $x + h$.
 
@@ -80,6 +83,9 @@ begin
 	fname2 = download(url2) #bajamos la imagen a la máquina local
 	imag2 = load(fname2) #declaramos la variable "imag"
 end
+
+# ╔═╡ 203c5a4b-d307-4102-abfd-e6231d995ee8
+md"""$\textit{Figura 2. Construcción de un tunel x+h. Elaboración propia, inspirado en [2].}$"""
 
 # ╔═╡ 61a288c5-36d2-4dd1-a8f6-9ae837c2c572
 md"""Así que tenemos el tiempo para extender el túnel desde la distancia $x$ hasta $x+ h$ es $T(x + h) - T(x)$."""
@@ -1737,8 +1743,10 @@ version = "1.4.1+1"
 # ╟─c3eb58fc-20ae-471c-a005-37093a20f9f6
 # ╟─be6b03e5-d7c1-44b0-ad07-fe3f5e25f4ad
 # ╟─e078a44d-91b9-447c-846d-77d09c9381a0
+# ╟─0ef4051f-d2ff-4029-940f-9e535445ed63
 # ╟─ee838869-1eed-446e-bedf-62a936db7bd2
 # ╟─cfa7a704-b305-444f-a017-29599e4c4aa7
+# ╟─203c5a4b-d307-4102-abfd-e6231d995ee8
 # ╟─61a288c5-36d2-4dd1-a8f6-9ae837c2c572
 # ╟─44ce9eff-c436-4c57-85ff-157e4c0044ec
 # ╟─84349bfe-19e6-40f1-8e14-9cbadb19ff3a
