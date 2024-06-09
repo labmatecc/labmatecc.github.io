@@ -95,12 +95,32 @@ v^Tv & = (x_1 - \sigma)^2 + x_2^2 + \dots + x_m^2\\
 \end{align*}$
 
 En muchas implementaciones para ahorrar en memoria se normaliza $v$ de tal forma que $\tilde{v} = v/v_1$ y se guardan las últimas $n-1$ entradas de $v_2/v_1, \dots, v_m/v_1$ en las entradas de $x_2, x_3, \dots, x_m$ (debajo de la diagonal de la matriz $R$ en la aplicación de ortonormalización).
-
-Tenemos entonces el siguiente algoritmo que, dado un vector $x$, calcula de forma correcta el vector de Householder $v$.
 """
 
 # ╔═╡ 26847907-9d04-4c9e-b2e7-64248258c0dd
-md""" $\textcolor{red}{Algoritmo 5.1.1, página 210 del texto guía.}$"""
+md"""Dado $x \in \mathbb{R}^n$, esta función calcula $v \in \mathbb{R}^n$ con $v_1 = 1$ y $\beta \in \mathbb{R}$ tal que $P = I_n - \beta v v^T$ es ortogonal y $Px = \|x\|_2 e_1$, es decir, dado un vector $x$, calcula de forma correcta el vector de Householder $v$.
+
+**ALGORITMO Vector de Householder**:
+
+1. **función:** $[v, \beta]$ = house$(x)$
+2.   $n$=length(x)
+3.   $\sigma=x(2:n)^Tx(2:n)$
+4.   $v=\left[ \begin{matrix}1\\ x(2:n)\end{matrix} \right]$
+5. **if** $\sigma=0$
+6.   $\beta=0$
+7. **else**
+8.   $\mu=\sqrt{x(1)^2+\sigma}$
+9. **if** $x(1)\leq 0$
+10.   $v(1)=x(1)-\mu$
+11. **else**
+12.   $v(1)=\frac{-\sigma}{x(1)+\mu}$
+13. **end**
+14.   $\beta=\frac{2(1)^2}{\sigma+v(1)^2}$
+15.   $v = \frac{v}{v(1)}$
+16. **end**"""
+
+# ╔═╡ df902773-1bef-4bb4-a53c-c16b68c14fd0
+md"""Programando el algoritmo, se obtiene la siguiente función"""
 
 # ╔═╡ 9311ee53-94e6-49cc-8eaa-b5f2efcb9f16
 function house(x)
@@ -169,7 +189,7 @@ md"""Consideremos nuevamente la matriz $A=(a_1,a_2,\dots,a_n)$. Aplicando el pro
 $A_1=H_1A = (\sigma e_1, H_1a_2,\dots, H_1a_n)$
 es una matriz con $A_1(2:m,1)=(0,\dots,0)$. 
 
-Ahora debemos obtener entradas nulas también en la segunda columna debajo de la diagonal. Para continuar con la triangularización de Householder, construimos una reflexión de Householder en $\mathbb{R}^{m-1}$ que transforme el vector $A_1(2:m,\color{red}{2})$ en el vector $(1,0,\dots,0)\in \mathbb{R}^{m-1}$. Sea $\tilde{H}_2$ esta transformación. Definamos 
+Ahora debemos obtener entradas nulas también en la segunda columna debajo de la diagonal. Para continuar con la triangularización de Householder, construimos una reflexión de Householder en $\mathbb{R}^{m-1}$ que transforme el vector $A_1(2:m,2)$ en el vector $(1,0,\dots,0)\in \mathbb{R}^{m-1}$. Sea $\tilde{H}_2$ esta transformación. Definamos 
 
 $H_2= \begin{pmatrix}1 & 0\\ 0 &\tilde{H}_2\end{pmatrix}.$
 
@@ -186,7 +206,13 @@ Note que quedamos con la matriz $R$, pero para poder obtener la matriz $Q$ debem
 """
 
 # ╔═╡ 5a8f5d62-3f4e-48ab-aef7-8a9446e33f14
-md"""Consideremos el siguiente algoritmo $\textcolor{red}{en la página 211}.$ Este algoritmo usa el algoritmo anterior para obtener la matriz $R$ de la factorización $QR$. Recuerde que asumimos que las columnas de $A$ son linealmente independientes."""
+md"""Consideremos el siguiente algoritmo 
+
+1.   $[v, \beta]$ = house$(A(j:m,j))$
+2.   $A(j:m,j;n)=(I_{m-j+1}-\beta v v^T)A(j:m, j:n)$
+3.   $A(j+1:m,j)=v(2:m-j+1)$
+
+Este algoritmo usa el algoritmo anterior para obtener la matriz $R$ de la factorización $QR$. Recuerde que asumimos que las columnas de $A$ son linealmente independientes."""
 
 # ╔═╡ 11ce39a8-7b98-4ea5-bfe9-81c7bbfd9e8e
 function Rhouse(A)
@@ -194,7 +220,6 @@ function Rhouse(A)
     for j = 1:n
         v, β = house(A[j:m,j])
         A[j:m,j:n] = ( UniformScaling(1) - β*v*v')A[j:m,j:n]
-#        A[j+1:m,j]=v[2:end]
     end
     return A
 end
@@ -630,15 +655,26 @@ Ejecutamos el algoritmo sobre una matriz $A$, verificamos que $A=QR$ y la ortogo
 # ╔═╡ 667ddc44-d8a9-4ef4-9e36-c0e36ebce40e
 A₁₅  = floor.(20*rand(5,4))
 
+# ╔═╡ 557c517c-897d-4e56-abf3-b0b0e3b0acae
+md"""Así, usando givens rápido sobre $A$ se tiene lo siguiente"""
+
 # ╔═╡ c4f50bbb-28dd-4ed5-a93f-50ede0bcb3cb
 begin
 	B₁₅=copy(A₁₅)
 	M₁₅, D₁₅ = FastGivensQR(B₁₅)
-	
-	
-	Q₁₅ = M₁₅*Diagonal(1 ./ sqrt.(D₁₅))
-	R₁₅ = Diagonal(1 ./ sqrt.(D₁₅))*B₁₅
 end
+
+# ╔═╡ 77c2194f-772e-49f3-a6dc-69bf8f50cf69
+md"""De lo anterior se tiene que $Q$ y $R$ son, respectivamente,"""
+
+# ╔═╡ e15d1205-1780-4d0d-a2d4-01edba895742
+Q₁₅ = M₁₅*Diagonal(1 ./ sqrt.(D₁₅))
+
+# ╔═╡ 65e2781c-8851-4628-87b9-1aab7bb26b22
+R₁₅ = Diagonal(1 ./ sqrt.(D₁₅))*B₁₅
+
+# ╔═╡ 313d2c07-be5f-4579-a8f1-904b068a87b5
+md"""Verificamos que el error sea pequeño con ayuda de la norma."""
 
 # ╔═╡ ef68b4f9-4bd3-4311-b8aa-0e1a5edaa049
 begin
@@ -955,7 +991,8 @@ version = "17.4.0+2"
 # ╟─4592e579-0c6c-4599-98fc-f3f11507f4ab
 # ╟─6193030e-3807-471c-aaf9-d3c8a3ac895e
 # ╟─a5a2b67c-80ee-4f9b-a933-f3485a6cd892
-# ╠═26847907-9d04-4c9e-b2e7-64248258c0dd
+# ╟─26847907-9d04-4c9e-b2e7-64248258c0dd
+# ╟─df902773-1bef-4bb4-a53c-c16b68c14fd0
 # ╠═9311ee53-94e6-49cc-8eaa-b5f2efcb9f16
 # ╟─3573d257-bf10-46d2-9549-dfedcd95bc82
 # ╠═93a5cf53-5796-4ca6-879b-5271eb49f2f6
@@ -1020,7 +1057,12 @@ version = "17.4.0+2"
 # ╠═83988e50-454c-43ab-96dd-8c4f94c7d7fc
 # ╟─131a04f5-67eb-4457-9239-9a0eb698d5db
 # ╠═667ddc44-d8a9-4ef4-9e36-c0e36ebce40e
+# ╟─557c517c-897d-4e56-abf3-b0b0e3b0acae
 # ╠═c4f50bbb-28dd-4ed5-a93f-50ede0bcb3cb
+# ╟─77c2194f-772e-49f3-a6dc-69bf8f50cf69
+# ╠═e15d1205-1780-4d0d-a2d4-01edba895742
+# ╠═65e2781c-8851-4628-87b9-1aab7bb26b22
+# ╟─313d2c07-be5f-4579-a8f1-904b068a87b5
 # ╠═ef68b4f9-4bd3-4311-b8aa-0e1a5edaa049
 # ╟─06b07e27-0781-434f-9e8c-04edcaba4f31
 # ╟─567004f4-77a1-4693-ba6e-017c4e84572e
