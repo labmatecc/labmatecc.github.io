@@ -1,6 +1,6 @@
 ---
-title: "Independencia lineal I"
-permalink: /Notebooks/AlgebraLineal/Independencialineal/
+title: "Independencia lineal II"
+permalink: /Notebooks/AlgebraLineal/IndependencialinealII/
 date: 2019-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}
@@ -23,7 +23,7 @@ header-includes: |
 </head>
 <body>
 
-<h1>Independencia lineal I</h1>
+<h1>Independencia lineal II</h1>
 
 </body>
 </html>
@@ -68,4 +68,4 @@ header-includes: |
     }
   </style>
 
-<iframe src="https://labmatecc.github.io/HTML%20Lab/AL/Independencia_Lineal.html" width="100%" height="600px"></iframe>
+<iframe src="https://labmatecc.github.io/HTML%20Lab/AL/Independencia_Lineal_II.html" width="100%" height="600px"></iframe>

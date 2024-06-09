@@ -181,7 +181,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/AlgebraLineal/Independencialineal/" class="button">Independencia lineal</a>
+  <a href="https://labmatecc.github.io/Notebooks/AlgebraLineal/Independencialineal/" class="button">Independencia lineal I</a>
 </div>
 
 <div class="container">
@@ -190,6 +190,21 @@ header-includes: |
         <p>El cuaderno comienza introduciendo el concepto de independencia lineal. Se define la dependencia e independencia lineal, relacionándolos con la existencia de combinaciones lineales no triviales. Se muestra un teorema clave que establece la relación de dependencia lineal entre dos vectores cuando uno es un múltiplo escalar del otro. Se ilustra este concepto con un ejemplo específico. Luego, se explora la relación entre matrices y la independencia lineal, destacando que las columnas de una matriz son linealmente independientes si y solo si el determinante de la matriz es diferente de cero.</p>
         <p>Se proporcionan ejemplos adicionales para determinar la dependencia o independencia lineal de conjuntos de vectores en \(\mathbb{R}^n.\) Se utiliza el concepto de determinante para tomar decisiones sobre la independencia lineal. Se introduce el concepto de base en un espacio vectorial y se demuestra que cualquier conjunto de \(n\) vectores linealmente independientes en \(\mathbb{R}^n\) genera todo el espacio. Se ilustra este teorema con un ejemplo específico.</p>
         <p>El cuaderno concluye abordando el tema de vectores ortonormales y presenta el proceso de ortogonalización de Gram-Schmidt para convertir un conjunto linealmente independiente en un conjunto ortonormal. Se describen las variantes clásica y modificada del algoritmo de Gram-Schmidt, y se demuestra su aplicación en un ejemplo práctico. Se proporciona código para implementar los algoritmos de Gram-Schmidt clásico y modificado, así como para verificar la ortogonalidad de matrices generadas.</p>
+      </div>
+    </div>
+  </div>
+
+<hr>
+
+<div class="button-container">
+  <a href="https://labmatecc.github.io/Notebooks/AlgebraLineal/IndependencialinealII/" class="button">Independencia lineal II</a>
+</div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>El notebook presenta una introducción a la factorización QR, un método clave para descomponer una matriz A en el producto de una matriz ortogonal Q y una matriz triangular superior R. La descomposición QR se utiliza para resolver sistemas de ecuaciones lineales y problemas de optimización. El cuaderno describe métodos para obtener la factorización QR, centrándose en las reflexiones de Householder y las rotaciones de Givens</p>
+        <p>Primero, se explican las propiedades y el cálculo de las matrices de Householder, que se utilizan para transformar un vector en un múltiplo de un vector canónico, facilitando la ortogonalización de las columnas de una matriz. Se proporciona un algoritmo para calcular el vector y el coeficiente de Householder, junto con ejemplos prácticos. Luego, se muestra cómo usar las reflexiones de Householder para triangularizar una matriz y obtener la matriz R, así como la matriz Q mediante acumulación progresiva. Finalmente, se introducen las rotaciones de Givens, que son especialmente útiles para matrices dispersas, mostrando cómo aplicar estas rotaciones para lograr una factorización QR eficiente.</p>
       </div>
     </div>
   </div>
