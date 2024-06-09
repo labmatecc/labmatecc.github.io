@@ -687,9 +687,9 @@ end
 md"""# Referencias"""
 
 # ╔═╡ 567004f4-77a1-4693-ba6e-017c4e84572e
-md"""[1] Saad, Y. (2003). Iterative methods for sparse linear systems (2nd ed.). Society for Industrial and Applied Mathematics.
+md"""[1] Golub, G. H. (1996). Matrix computation and the theory of moments. Numerical analysis (Louvain-la-Neuve, 1995). Bull. Belg. Math. Soc. Simon Stevin, 1996(suppl.), 1–9.
 
-[2] Golub, G. H. (1996). Matrix computation and the theory of moments. Numerical analysis (Louvain-la-Neuve, 1995). Bull. Belg. Math. Soc. Simon Stevin, 1996(suppl.), 1–9.
+[2] Saad, Y. (2003). Iterative methods for sparse linear systems (2nd ed.). Society for Industrial and Applied Mathematics.
 
 [3] Martínez R., H. J., & Sanabria R., A. M. (2014). Álgebra Lineal. Programa Editorial Universidad del Valle.
 
