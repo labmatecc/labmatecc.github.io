@@ -49,11 +49,11 @@ function conjunto_julia(c, limite_iteraciones, grid=500)
     x_vals = range(-1.5, 1.5, length=grid)
     y_vals = range(-1.5, 1.5, length=grid)
     conjunto = [conjunto_julia_punto(complex(x, y), c, limite_iteraciones) for y in y_vals, x in x_vals]
-    heatmap(x_vals, y_vals, conjunto, aspect_ratio=:equal, xlabel="Parte Real", ylabel="Parte Imaginaria", title="Conjunto de Julia para c = $c")
+    heatmap(x_vals, y_vals, conjunto, color = :jet, x_lims = (-1.5,1.5), y_lims = (-1.5,1.5), aspect_ratio=:equal, xlabel="Parte Real", ylabel="Parte Imaginaria", title="Conjunto de Julia para c = $c")
 end
 
 # ╔═╡ 865accd1-44bc-48a1-862d-c13f7da9789f
-conjunto_julia(0.8im, 100)
+conjunto_julia(0.8im, 1000)
 
 # ╔═╡ 2035e4bc-4489-4709-a17e-780845a0cdb8
 conjunto_julia(0.37 + 0.1im, 100)
@@ -68,7 +68,7 @@ conjunto_julia(-0.4 + -0.59im, 100)
 conjunto_julia(0.355534 - 0.337292im, 100)
 
 # ╔═╡ ac4f6baf-a870-4e3d-a8be-402cee265bf3
-conjunto_julia(-0.202420806884766 + 0.39527333577474im, 100)
+conjunto_julia(-2, 100)
 
 # ╔═╡ 588bc675-7db5-4314-b3ca-aa287ae8ed5d
 md"""# Referencias 
