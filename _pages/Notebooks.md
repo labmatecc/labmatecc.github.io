@@ -128,3 +128,9 @@ header-includes: |
   </div>
 
 <hr>
+
+<hr>
+
+<div class="button-container">
+  <a href="https://labmatecc.github.io/Notebooks/VariableCompleja/" class="button">Variable Compleja</a>
+</div>

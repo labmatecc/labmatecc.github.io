@@ -52,12 +52,6 @@ Donde $b_i\in\{0,1\}$.
 Acontinuación se muestran ejemplos de esto.
 """
 
-# ╔═╡ e4f9582a-9e9c-41e9-bb91-ef7aa5386235
-# ╠═╡ disabled = true
-#=╠═╡
-@bind n Slider(-50:50, show_value=true, default=0)
-  ╠═╡ =#
-
 # ╔═╡ 995bfd52-77ac-4703-ae15-2f3ce22dc369
 md"""La representación como un entero de 64 bits es la siguiente"""
 
@@ -452,9 +446,6 @@ r, θ
 # ╔═╡ 4084ca08-1790-40cd-8e99-5ce7b7cad927
 md"""Así $z^2$ es el siguiente número complejo."""
 
-# ╔═╡ ee349ac2-9442-40c2-b20e-7e02abacb56e
-@bind n Slider(-10:1:10, show_value=true, default=2)
-
 # ╔═╡ b5db23af-8f59-47d4-b480-785d82adb22f
 typeof(n) #tipo de dato
 
@@ -621,6 +612,15 @@ md"""# Referencias
 [3] Julia Documentation. (n.d.). Integers and floating-point numbers. Retrieved May 19, 2024, from https://web.mit.edu/julia_v0.6.2/julia/share/doc/julia/html/en/manual/integers-and-floating-point-numbers.html
 
 [4] Kigami, J. (2001). *Analysis on fractals* (Vol. 143). Cambridge University Press."""
+
+# ╔═╡ e4f9582a-9e9c-41e9-bb91-ef7aa5386235
+@bind n Slider(-50:50, show_value=true, default=0)
+
+# ╔═╡ ee349ac2-9442-40c2-b20e-7e02abacb56e
+# ╠═╡ disabled = true
+#=╠═╡
+@bind n Slider(-10:1:10, show_value=true, default=2)
+  ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
