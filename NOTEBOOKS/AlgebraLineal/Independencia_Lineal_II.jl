@@ -25,94 +25,84 @@ md"""Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo."""
 md"""Usaremos esta librería"""
 
 # ╔═╡ ecff234d-eb13-4cd9-aaa5-7bbf88c14271
-md"""# Introducción"""
+md"""# Introducción
 
-# ╔═╡ 96817925-53b3-45e3-83c8-a1ab2c747ad8
-md"""
-Considermos el problema de ortogonaliar las columnas de una matriz dada $A$. Los métodos mas usados son
-1. Gram-Schmidt clásico, CGS,  ([Gram](https://en.wikipedia.org/wiki/J%C3%B8rgen_Pedersen_Gram) 1883, Popularizado por [Schmidt](https://en.wikipedia.org/wiki/Erhard_Schmidt) 1907)
-2. Gram-Schmidt modificado, MG (Desde 1820 por [Laplace](https://en.wikipedia.org/wiki/Pierre-Simon_Laplace))
-3. Householder (H) (usando reflexiones). Desarrollado en 1958 por [Householder](https://en.wikipedia.org/wiki/Alston_Scott_Householder) en el [Oak Ridge National Laboratory](https://www.ornl.gov/)
-4. Givens (G) (usando rotaciones). Desarrollado en 1950 por [Givens](https://en.wikipedia.org/wiki/Wallace_Givens) en el [Argone National Laboratory](Argone National Laboratory).
-Además se usa 
-5. Reortogonalización 
+La factorización $QR$ es una herramienta fundamental. Esta técnica se emplea para descomponer una matriz $A$ en el producto de dos matrices: una matriz ortogonal $Q$ y una matriz triangular superior $R$. La notación usual para esta factorización es $A = QR$. Veamos:
 
-En aplicaciones practicas CGS es poco usado. MGS es mas estable que CGS. H es el mejor método en términos de estabilidad. G tiene mas calculos pero puede ser usado para matrices esparsas (ralas). En ocaciones debido a errores numéricos o perturbaciones es conveniente reortogonalizar, por ejemplo se puede combinar MGS con reortogonalización.
+Dada $A\in\mathbb{R}^{m\times n}$ con $A=[a_1,a_2,\dots,a_n]$, donde $a_i, i=1,2,\dots,n$ son las columnas de $A$, queremos escribir $A= QR$, con $Q\in\mathbb{R}^{m\times p}$ y $R\in\mathbb{R}^{p\times n}$, donde $Q$ es una matriz ortogonal. 
 
+Observamos que $Q^TQ=I$, pero si $p<n$, entonces $QQ^T\neq I$. Además, $\text{Span}(A)=\text{Span}\{ a_i\}_{i=1}^n=\text{Span}\{q_j\}_{j=1}^p=\text{Span}(Q)$. 
 
-La ortogonalización de vectores tiene muchas aplicaciones. Por ejemplo en la solución estable de sistemas lineales. Se puede por ejemplo usar ortogonalización para calcular de forma estable la factorización $LU$. Existen métodos iterativos para calculo de vectores propios que son basados en ortogonalización. También es usado en el cálculo de la descomposición SVD. 
+Es común escribir la factorización **completa** $A=QR$ como:
+
+$A= [ Q_1  \quad Q_2] \left[ \begin{matrix}R_1\\ 0\end{matrix} \right],$ 
+
+de donde se deduce que $\text{Span}(A)=\text{Span}(Q_1)$ y $\text{Span}(A^T)^\perp=\text{Span}(Q_2)$.
+
+Por último, si las columnas de $A$ son linealmente independientes, entonces $p=n$. 
 """
 
-# ╔═╡ 172c756c-c7f4-480d-9e4a-52fbc0564ed2
-md"""
-Sea $Q\in \mathbb{R}^{m\times p}$, decimos que $Q$ es ortogonal si $Q^TQ=I_{p\times p}$. Si $Q\in \mathbb{C}^{m\times p}$, decimos que $Q$ es unitaria si $Q^*Q=I$. 
+# ╔═╡ bc320da0-1258-46f0-8f07-b8d36cdbcdc9
+md"""El el cuaderno titulado **Independencia Lineal I** vimos el proceso de Gram-Schmidt Clásico y Gram-Schmidt Modificado, en este cuaderno mostraremos las reflexiones de Householder y las rotaciones de Givens para realizar la factorización $QR.$"""
 
-Note que si $q_j$, $j=1,2,\dots,p$, denotan las columas de $Q$, entonces $q_j\in \mathbb{R}^m$ y $q_i^Tq_j=\delta_{ij}$. 
+# ╔═╡ a5733492-14dc-4dc8-a596-80a82010a53c
+md"""# Reflexiones de Householder"""
+
+# ╔═╡ 2bbf4bdf-ae76-4189-80b8-71b51c70fe62
+md"""Dado $v \in \mathbb{R}^m$, definimos la matriz de Householder como $H_v = I - 2 \frac{vv^T}{v^Tv}$, donde $v$ es el vector de Householder. Veamos algunas propiedades importantes de esta matriz:
+
+1. La matriz $H_v$ es una isometría en la norma $\|\cdot\|_2$: Esto significa que $\|H_v x\|_2 = \|x\|_2$ para cualquier vector $x$. La matriz $H_v$ preserva las distancias bajo la norma $\|\cdot\|_2$.
+
+2. La matriz $H_v$ es simétrica: La matriz $H_v$ es igual a su traspuesta, es decir, $H_v^T = H_v$. Esto se debe a la simetría de la operación de reflexión que realiza la matriz Householder.
+
+3. La matriz $H_v$ es ortogonal: La matriz $H_v$ es ortogonal porque $H_v^T H_v = I$, lo que implica que la inversa de $H_v$ es igual a su traspuesta.
+
+Para reflejar un vector $x$ respecto al hiperplano $v^\perp$, utilizamos la fórmula $y = H_v x = x - 2 \frac{v^Tx}{v^Tv}v$. Es importante destacar que para calcular $y$ no es necesario calcular todas las entradas de la matriz $H_v$; simplemente calculamos el producto interno $s = v^Tx$ y realizamos la resta $x - \beta s v$, donde $\beta = 2 \frac{1}{v^Tv}$. El valor de $\beta$ puede ser precalculado, lo que reduce la complejidad computacional del cálculo de la reflexión de Householder.
 """
 
-# ╔═╡ a645cf2d-f176-4947-8122-bcdf41aa5c9d
-md""" 
-# Teorema de ortogonalización
+# ╔═╡ 4592e579-0c6c-4599-98fc-f3f11507f4ab
+md"""Dado $x,y \in \mathbb{R}^m$, nos preguntamos si ¿existe un vector $v$ tal que $H_v x = y$? Si $|x|_2 = |y|_2$, la respuesta es afirmativa y $v = \alpha (x - y)$.
 
-Terminamos enunciado el siguiente resultado.
+Para utilizar Householder en la ortogonalización, procedemos de la siguiente manera. Supongamos que deseamos ortogonalizar las columnas de $A = (a_1, a_2, \dots, a_n) \in \mathbb{R}^{m \times n}$. Consideremos inicialmente el caso de columnas linealmente independientes. Comenzamos la ortogonalización de Householder calculando el vector $v$ que transforma $a_1$ en un múltiplo del primer vector canónico $e_1 = (1, 0, \dots, 0)$. Es decir, $H_v a_1 = \sigma e_1$ con $\sigma = \pm \|x\|_2$."""
 
-**Teorema:** Si las columnas de $A$ son linealmente independientes y $r_{ii}>0$ para $i=1,\dots,n$ entonces la factorización $A=Q_1R_1$ con $Q_1$ ortogonal y $R_1$ triangular superior es única. 
+# ╔═╡ 6193030e-3807-471c-aaf9-d3c8a3ac895e
+md"""Supongamos que $x \in \mathbb{R}^m$ y queremos calcular $v$ tal que $H_v x$ sea un múltiplo de $e_1$, digamos $\sigma e_1$ con $\sigma = \pm \|x\|_2$. En la resta $x_1 - \sigma$, puede ocurrir cancelación catastrófica. Para evitarla, consideramos las siguientes opciones:
 
-**Demostración:** Dado que $A=Q_1R_1$ implica $A^TA=(Q_1R_1)^T(Q_1R_1)= R_1^T ( Q_1^TQ_1)R_1=R_1^TR_1$, el resultado se sigue de la unicidad de la factorización de Cholesky para matrices positivas definidas, en este caso aplicada a $A^TA$. """
+*Opción 1:* Si $x_1 > 0$, entonces $x$ está más cerca de $\|x\|_2 e_1$ que de $-\|x\|_2 e_1$. Podemos tomar $\sigma = -\text{sign}(x_1)$ para evitar la cancelación catastrófica. Después de calcular $v_1 = x_1 - \sigma$, obtenemos
 
-# ╔═╡ 5aa7ba63-870f-4b1b-a2da-02cc21295e87
-md""" # Reflexiones de Householder
+$\beta = \frac{2}{v^Tv} = \frac{2}{v_1^2 + s}$
 
-Dado $v\in\mathbb{R}^m$ defina la matrix de Housholder por $\displaystyle H_v=I - 2\frac{vv^T}{v^Tv}.$ Decimos que $v$ es el vector de Hoseholder.  Podemos verificar que 
+donde $s = x_2^2 + \dots + x_m^2$.
 
-1. La matriz $H$ es una isometría en la norma $\|\cdot\|_2$.
-2. La matriz $H$ es simétrica 
-3. La matriz $H$ es ortogonal
-
-Dado $x\in \mathbb{R}^m$, la reflexión de $x$ con eje de reflexión el huperplano $v^\perp$ es dada por 
-$y=H_vx = x- 2\frac{v^Tx}{v^Tv}v.
-$
-Note que para cacular $y$ no es necesario calcular todas la entradas de la matriz $H$, es suficiente calcular el producto interno $s=v^Tx$ y realizar la resta $x-\beta s v$ donde $\beta= 2\frac{1}{v^Tv}$. El valor de $\beta$ puede ser precalculado. 
+Al elegir el signo de $\sigma$ de esta manera, evitamos la cancelación catastrófica en la resta $x_1 - \sigma$, asegurando la estabilidad numérica en el cálculo de $v_1$ y $\beta$.
 """
 
-# ╔═╡ 8acbac14-8724-4e01-b6e4-4000c6345233
-md""" 
-Dados $x,y\in \mathbb{R}^m$. ¿Existe $v$ tal que $H_vx=y$?. Si $\|x\|_2=\|y\|_2$ la respuesta es afirmativa  y 
-$v=\alpha (x-y)$. 
+# ╔═╡ a5a2b67c-80ee-4f9b-a933-f3485a6cd892
+md"""*Opción 2:* Podemos seleccionar $\sigma = \|x\|_2$ pero debemos tener cuidado al calcular $x_1 - \sigma$:
+- Si $x_1 < 0$, entonces podemos calcular $v_1 = x_1 - \sigma$ (no hay resta).
+- Si $x_1 > 0$, entonces calculamos 
+  $x_1 - \sigma = (x_1 - \sigma) \frac{x_1 + \sigma}{x_1 + \sigma} = \frac{x_1^2 - \|x\|_2^2}{x_1 + \sigma} = -\frac{x_2^2 + \dots + x_m^2}{x_1 + \sigma} = - \frac{s}{x_1 + \sigma}$
+  donde $s = x_2^2 + \dots + x_m^2$.
 
-Para usar Householder en ortogonalización procedemos como sigue. Suponga que queremos orgonaliar las columnas de $A=(a_1,a_2,\dots,a_n)\in \mathbb{R}^{m\times n}$. Considere inicialmente el caso de columnas linealmente independientes. Iniciamos la ortogonalización de Householder calculando $v$ que transforme $a_1$ en un multiplo del primer vector canónico $e_1=(1,0,\dots,0)$. Es decir $H_v a_1= \sigma e_1$ con $\sigma = \pm \|x\|_2$.
+Note también que se puede calcular $v^Tv$ como sigue (recuerde que $\sigma = \|x\|_2$):
 
+$\begin{align*}
+v^Tv & = (x_1 - \sigma)^2 + x_2^2 + \dots + x_m^2\\
+& = x_1^2 - 2\sigma x_1 + \sigma^2 + x_2^2 + \dots + x_m^2\\
+& = 2\sigma^2 - 2\sigma x_1 \\
+& = 2\sigma (\sigma - x) \\
+& = -2\sigma v_1.
+\end{align*}$
 
+En muchas implementaciones para ahorrar en memoria se normaliza $v$ de tal forma que $\tilde{v} = v/v_1$ y se guardan las últimas $n-1$ entradas de $v_2/v_1, \dots, v_m/v_1$ en las entradas de $x_2, x_3, \dots, x_m$ (debajo de la diagonal de la matriz $R$ en la aplicación de ortonormalización).
 
-Suponga que $x\in\mathbb{R}^m$ y queremos calcular $v$ tal que $H_v x$ sea múltiplo de $e_1$, digamos $\sigma e_1$. Debe ser $\sigma= \pm\|x\|_2$. Observe que 
+Tenemos entonces el siguiente algoritmo que, dado un vector $x$, calcula de forma correcta el vector de Householder $v$.
+"""
 
-$x-\sigma e_1 = (x_1-\sigma,x_2,x_3,\dots,x_m).$
+# ╔═╡ 26847907-9d04-4c9e-b2e7-64248258c0dd
+md""" $\textcolor{red}{Algoritmo 5.1.1, página 210 del texto guía.}$"""
 
-En la resta $x_1-\sigma$ puede ocurrir cancelacion catastrófica. Tenemos las siguientes opciones para evitar la cancelación catastrófica, 
-
-*Opción 1:* Observe que si $x_1>0$ entonces $x$ esta mas cerca a  $\|x\|_2e_1$ que a $-\|x\|_2e_1$. Entonces podemos tomar $\sigma = -\mbox{sign}(x_1)$ y evitamos la cancelación catastrófica. 
-Despues de calcular $v_1=x_1-\sigma$ podemos calcular 
-
-$\beta =  \frac{2}{v^Tv}= \frac{2}{ v^Tv} = \frac{2}{ v_1^2+s}$
-
-donde $s=x_2^2+\dots+x_m^2$.
-
-*Opción 2:* Podemos seleccionar $\sigma=\|x\|_2$ pero tener cuidado al calcular $x_1-\sigma$. 
-- Si $x_1<0$ entonces podemos calcular $v_1=x_1-\sigma$ (no hay resta).
-- Si $x_1>0$ entonces calculamos 
-    $x_1-\sigma = (x_1-\sigma) \frac{x_1+\sigma}{x_1+\sigma}= \frac{x_1^2-\|x\|_2^2}{x_1+\sigma}= 
-    -\frac{x_2^2+\dots+x_m^2}{x_1+\sigma} = - \frac{s}{x_1+\sigma}$ donde $s=x_2^2+\dots+x_m^2$.
-    
-    Note tambien que se puede calcular $v^Tv$ como sigue (recuerde que $\sigma=\|x\|_2$)
-    
-$v^Tv= (x_1-\sigma)^2+x_2^2+\dots+x_m^2 = x_1^2-2\sigma x_1+\sigma^2+x_2^2+\dots+x_m^2= 
-    2\sigma^2 - 2\sigma x_1= 2\sigma (\sigma -x)= -2\sigma v_1.$
-
-En muchas implementaciones para ahorar en memoria se normaliza $v$ de tal forma que $\tilde{v}=v/v_1$ y se guardan las entradas $n-1$ últimas entradas de  $v_2/v_1,\dots,v_m/v_1$  en las entradas de $x_2,x_3, \dots,x_m$ (debajo de la diagonal de la matriz $R$ en aplicacion de ortonormalización).
-
-Tenemos entonces el siguiente algorimos que dado un vector $x$, calcula de forma correcta el vector de Householder $v$. Algoritmo 5.1.1, página 210 del texto guía. """
-
-# ╔═╡ 2586a5af-1604-4ccc-99e9-43e4cbc0b51f
+# ╔═╡ 9311ee53-94e6-49cc-8eaa-b5f2efcb9f16
 function house(x)
     n = size(x,1) #(m,n)
     s = x[2:n]'x[2:n]
@@ -134,60 +124,71 @@ function house(x)
     return v, β
 end
 
-# ╔═╡ 686f7301-e588-4819-a88e-460d175eaf38
-md""" 
-## Ejemplo 5
-Considere el siguiente ejemplo."""
+# ╔═╡ 3573d257-bf10-46d2-9549-dfedcd95bc82
+md""" Veamos el siguiente ejemplo.
 
-# ╔═╡ 0d3cddee-0a20-48c3-958e-1ca3ec890e3b
+*Ejemplo:*
+
+Sea $x=\begin{bmatrix}
+0.5 \\
+\frac{\sqrt{3}}{2} \\
+4
+\end{bmatrix},$ se tiene que $v$ y $\beta$ son:"""
+
+# ╔═╡ 93a5cf53-5796-4ca6-879b-5271eb49f2f6
 begin
-x=[0.5;sqrt(3)/2;4];
-v, β= house(x)
-println(v)
-println(β)
-print(x)
+	x=[0.5;sqrt(3)/2;4];
+	v, β= house(x)
+	println("v = ", v)
+	println("β = ", β)
 end
 
-# ╔═╡ 6b024c51-f449-473d-b07e-f0d54b046af1
+# ╔═╡ bd4ae79d-a712-4a5e-9d85-2c6b24aefdf3
+md"""Así, la matriz de Householder $H_v$ es la siguiente"""
+
+# ╔═╡ a5cc8644-a521-407e-af28-9983da292b63
 H=UniformScaling(1)- 2(v*v')/(v'v)
 
-# ╔═╡ dc01bbf0-8f62-4f2f-a64d-40ea2cdce63e
+# ╔═╡ aa63c29e-c5c7-4ee6-91fb-f4dfaf01b5e7
+md"""Así"""
+
+# ╔═╡ 36d99657-dcfb-4516-9265-0cc8d61ae35e
 H*x
 
-# ╔═╡ 49da426d-9b98-4e93-9ec3-d90385c28046
-md""" 
-Note que si estamos haciendo la factorización de una sola columna, $x$, entonces $H^T$ corresponde a la matriz $Q$ de la factorización $QR$, **pero esta vez la matriz $Q$ es cuadrada y genera todo $\mathbb{R}^m$**. Es decir, obtenemos la factorización completa. En esta caso las filas $2:m$ de la matriz $H$ son vectores ortogonales a $x$. Recuerde que si queremos obtener la factorizació completa con GS tendríamos que iniciar con $m$ columnas, es decir, tendriamos que encontrar $m-n$ columnas linealmente independientes a las que tenemos y despues aplicar GS. 
-"""
+# ╔═╡ db3855fb-f8d2-484b-a95c-e467ba8dfc93
+md"""Note que $\|H_v x\|_2 = \|x\|_2$:"""
 
-# ╔═╡ 21935a4e-cd5c-4a43-821e-9ffb4399147b
+# ╔═╡ 160a23f8-0950-40c3-8aa2-d25ca8b22913
+norm(x)==norm(H*x)
+
+# ╔═╡ eb6b82d9-2047-44e7-b104-a3ea8a977d3a
 md""" ## Uso de Householder en ortogonalización"""
 
-# ╔═╡ 47a1f5fb-52d5-4956-901c-d0cd4990facb
-md""" 
-Consideremos nuevamente la matrix $A=(a_1,a_2,\dots,a_n)$. Aplicando el procedimiento anterior construimos $H_1$ tal que 
+# ╔═╡ 029f4ce6-87da-44be-afd4-776230245937
+md"""Consideremos nuevamente la matriz $A=(a_1,a_2,\dots,a_n)$. Aplicando el procedimiento anterior, construimos $H_1$ tal que 
 $A_1=H_1A = (\sigma e_1, H_1a_2,\dots, H_1a_n)$
 es una matriz con $A_1(2:m,1)=(0,\dots,0)$. 
-Ahora debemos obtener entradas nulas también en la segunda columna debajo de la diagonal.
-Para continuar con la triagularización de Householder construimos una reflexion de Householder en $\mathbb{R}^{m-1}$ que transforme el vector $A_1(2:m,{\color{red}{2}})$ en el vector $(1,0,\dots,0)\in \mathbb{R}^{m-1}$. Sea $\tilde{H}_2$ esta transformación. Defina 
+
+Ahora debemos obtener entradas nulas también en la segunda columna debajo de la diagonal. Para continuar con la triangularización de Householder, construimos una reflexión de Householder en $\mathbb{R}^{m-1}$ que transforme el vector $A_1(2:m,\color{red}{2})$ en el vector $(1,0,\dots,0)\in \mathbb{R}^{m-1}$. Sea $\tilde{H}_2$ esta transformación. Definamos 
 
 $H_2= \begin{pmatrix}1 & 0\\ 0 &\tilde{H}_2\end{pmatrix}.$
 
-Vemos que $H_2H_1a_2= (A_1(1,2), \sigma_2,0,\dots,0)\in \mathbb{R}^m$. 
-Concluimos que $A_2= H_2H_1 A =  ( \sigma e_1, H_2H_1a_2, H_2H_1a_3,\dots, H_2H_1a_n)$
+Vemos que $H_2H_1a_2= (A_1(1,2), \sigma_2,0,\dots,0)\in \mathbb{R}^m$. Concluimos que 
+$A_2= H_2H_1 A =  ( \sigma e_1, H_2H_1a_2, H_2H_1a_3,\dots, H_2H_1a_n)$
 es una matriz con entradas nulas debajo de la diagonal en las dos primeras columnas. 
 
-Podemos continuar este proceso hasta la ultima columna y obtenemos una matriz triangular superior. Es decir, obtenemos 
+Podemos continuar este proceso hasta la última columna y obtenemos una matriz triangular superior. Es decir, obtenemos 
 $H_nH_{n-1}\cdots  H_1  A = R
 $
-y por tanto $ A= H_1^TH_2^T\cdots H_n^T R =QR$ donde $Q=H_1H_2\cdots H_n$. 
+y por tanto $ A= H_1^TH_2^T\cdots H_n^T R = QR$ donde $Q=H_1H_2\cdots H_n$. 
 
-Note que quedamos con la matriz $R$ pero para poder obtener la matriz $Q$ debemos, en prinicipio, multiplicar las matrices $H_i$, lo cual es computacionalmente costoso. Veamos primero como queda el algoritmos para obtener $R$ y después  mostraremos un algoritmo para construir $Q$. 
-
-
-Considere el algorimos en la página 211 que usa el algoritmo anterior para obtener la matriz $R$ de la factorizacion $QR$. Recuerde que asumimos que las columnas de $A$ son linealmente independientes. 
+Note que quedamos con la matriz $R$, pero para poder obtener la matriz $Q$ debemos, en principio, multiplicar las matrices $H_i$, lo cual es computacionalmente costoso. Veamos primero cómo queda el algoritmo para obtener $R$ y después mostraremos un algoritmo para construir $Q$.
 """
 
-# ╔═╡ f31d90d8-5168-449c-894a-b38e90e8f671
+# ╔═╡ 5a8f5d62-3f4e-48ab-aef7-8a9446e33f14
+md"""Consideremos el siguiente algoritmo $\textcolor{red}{en la página 211}.$ Este algoritmo usa el algoritmo anterior para obtener la matriz $R$ de la factorización $QR$. Recuerde que asumimos que las columnas de $A$ son linealmente independientes."""
+
+# ╔═╡ 11ce39a8-7b98-4ea5-bfe9-81c7bbfd9e8e
 function Rhouse(A)
     m,n = size(A)
     for j = 1:n
@@ -198,23 +199,30 @@ function Rhouse(A)
     return A
 end
 
-# ╔═╡ 7f1b9df8-b615-4e56-a29a-30ee91f414d4
+# ╔═╡ 575ae122-a70d-4c28-8c93-4213b72f5a6a
+md"""*Ejemplo:*
+
+Consideremos la siguiente matriz"""
+
+# ╔═╡ 7bcc8c19-176b-4bec-9788-14bed749f920
 begin
-n₁₀ = 3 ;
-m₁₀ = 5 ;
-A₁₀ = rand(m₁₀,n₁₀)
-B₁₀ = A₁₀
+	n₁ = 3 ;
+	m₁ = 5 ;
+	A₁ = rand(m₁,n₁)
+	B₁ = A₁
 end
 
-# ╔═╡ fc6bbc21-17a4-4fe3-9f87-9d4f690bee5a
-R₁₀h=Rhouse(B₁₀)
+# ╔═╡ d57bf3b8-8758-4734-a23c-5b256943b946
+md"""Así la matriz $R$ de la factorización $QR$ es la siguiente:"""
 
-# ╔═╡ 42a9d7cf-dc39-4fad-ac3a-c68353c37473
-md""" 
-##  Matriz $Q$ acumulación progresiva
+# ╔═╡ d88bb07b-84b2-42e7-8732-dc94fee01cfd
+R₁h=Rhouse(B₁)
+
+# ╔═╡ adc0d7dd-665c-49ce-b5f9-442fe2d5c000
+md""" Ahora debemos hallar a la matriz $Q$, esto lo podemos hacer realizando acumulación progresiva. Con el siguiente algoritmo
 """
 
-# ╔═╡ f83064a3-a069-49ca-8fd3-21acf7644a81
+# ╔═╡ 6e610a1f-fb78-491a-8719-fb26e48f694b
 function QFA(A)
     Q = UniformScaling(1)
     m,n = size(A)
@@ -229,123 +237,38 @@ function QFA(A)
     return Q, A
 end
 
-# ╔═╡ 927c7a39-c246-479f-bb80-98bf1695c666
+# ╔═╡ ef43ca1d-a653-4a5d-97a4-4009fdfad54c
+md"""*Ejemplo:*
+
+Consideremos nuevamente la matriz del ejemplo anterior"""
+
+# ╔═╡ 26bd3a24-5c5b-4d1a-82b0-3c00b3b8443d
+A₁
+
+# ╔═╡ 8aa0a10e-48d2-4f1d-865a-64786821c8f6
+md"""Usando el algoritmo anterior se tiene que su factorización $QR$ es la siguiente"""
+
+# ╔═╡ 1fff49b0-de66-4d7a-be0a-54da00d29d60
 begin
-Q₁₀,R₁₀=QFA(copy(A₁₀))
-#Q11'*Q11
-A₁₀-Q₁₀*R₁₀
+	Q₁,R₁ =QFA(A₁)
 end
 
-# ╔═╡ cc29c002-414b-4c9d-a32d-60e0f5d2dd47
-Q₁₀[:,1:n₁₀]
+# ╔═╡ 3acf0e47-42cb-4d43-aa81-4823c95a3dda
+md"""Para analizar el error, podemos hacerlo de la siguientes formas"""
 
-# ╔═╡ aecf4109-da0b-4697-a1d1-a48ccbfb3613
-Q₁₀[:,n₁₀+1:m₁₀]
+# ╔═╡ a3a992d9-6757-4a3e-9bd9-cd568fd60dca
+opnorm(UniformScaling(1)-Q₁'Q₁) #I ∼ Q^T*Q
 
-# ╔═╡ 85d9218c-5e9f-4a63-bb68-cdfb3f1bc333
-begin
-	n₁₁ = 30 ;
-	m₁₁ = 50 ;
-	A₁₁ = rand(m₁₁,n₁₁);
-	B₁₁ = A₁₁;
-	Q₁₁,R₁₁=QFA(A₁₁);
-end
+# ╔═╡ 9bd370df-7194-4dcc-acdf-9c66c53fc142
+opnorm(A₁-Q₁*R₁) #A ∼ Q*R
 
-# ╔═╡ f979d7b3-aa78-4d4c-a610-41f971e39d3d
-opnorm(UniformScaling(1)-Q₁₁'Q₁₁)
-
-# ╔═╡ 90183fec-5530-4502-9974-b1fad810224c
-opnorm(A₁₁-Q₁₁*R₁₁)
-
-# ╔═╡ a917a34e-9922-4281-bc99-8c73d503093a
-md""" 
-##  Matriz $Q$: acumulación progresiva
-"""
-
-# ╔═╡ f5565ecd-cd50-405f-b0ca-900b02f2bc87
-md""" 
-
-Mencionamos antes que realizar la multiplicación de las matrices de Householder puede ser costoso. En su lugar, cuando se requiere la $R$ podemos usar al siguiente resulado. 
-
-"""
-
-# ╔═╡ 450a7a6d-efb5-4b8d-aa40-dfb3826c1c0d
-md""" 
-**Teorema (Representación por bloques de Householder)** Si definimos 
-$Q_1=H_1, \quad Q_2=H_1H_2, \dots, Q_i=H_1H_{2}\cdots H_{i-1}H_i= Q_{i-1}H_i$
-entonces $Q_i=I +W_i Y_i^T$, $i=1,2,\dots,n$, $W_i, Y_i \in \mathbb{R}^{m\times i}$.
-
-**Demostración:** Tensmos que $Q_1=H_1=I -\beta_1 v_1 v_1^T==I +W_1 Y_1^T$ donde $W_1=-\beta_1v_1$ y $Y_1=v_1$. Continuando por inducción suponga que 
-$Q_j=I +W_j Y_j^T$, con $W_j,Y_j\in \mathbb{R}^{m\times j}$. Tenemos que 
-
-$\begin{align}
-Q_{j+1}=Q_jH_{j+1}&= (I +W_j Y_j^T)(I -\beta_{j+1}v_{j+1}  v_{j+1}^T)\\
-&= I +W_j Y_j^T -\beta_{j+1}Q_jv_{j+1}  v_{j+1}^T\\
-&= I +W_j Y_j^T +z_{j+1} v_{j+1}^T \quad \mbox{ con } \quad z_{j+1}=-\beta_{j+1}Q_jv_{j+1},\\
-&=  I +[W_j\quad  z_{j+1}][Y_j \quad v_{j+1}]^T\\
-&= I +W_{j+1} Y_{j+1}^T.
-\end{align}$
-"""
-
-# ╔═╡ e4bd815e-0f8f-4aa1-b659-3293f245ac1b
-function VβHouse(A)
-    m,n = size(A)
-    β   = zeros(n,1)
-    Y   = zeros(m,n)
-
-    Am  = copy(A)
-    
-    # Primera actualización
-    v1,β[1] = house(Am[:,1])
-    Y[:,1]  = v1
-    W       = -β[1]*v1
-    Am      = ( UniformScaling(1) - β[1]*v1*v1')Am
-    
-    #De ahi para adelante
-    for j = 2:n
-        v1,β[j] = house(Am[j:m,j])
-        Y[:,j]  = [ zeros(j-1,1) ; v1 ] 
-        z       = -β[j]*(UniformScaling(1)+W*Y[:,1:j-1]')*Y[:,j]
-        W       = [ W z ]
-        Am[j:m,j:n] = ( UniformScaling(1) - β[j]*v1*v1')Am[j:m,j:n]
-    end
-    
-    
-    return Y,W,Am
-end
-
-# ╔═╡ 6e4a35d6-c365-4cb2-b6c6-c010151c3f18
-Y,W,R = VβHouse(A₁₀)
-
-# ╔═╡ f959900f-1785-4b6e-92e1-4ca2cfb6d6ab
-display(Y)
-
-# ╔═╡ 6c7ed78c-7084-462f-830a-5c007cb83620
-display(W)
-
-# ╔═╡ 3e2df74d-3b00-4294-9662-5ec36b5e1b04
-Q₁₀r = UniformScaling(1) + W*Y'
-
-# ╔═╡ c9172d77-f6ce-42e5-b866-679d4412d1b2
-A₁₀-Q₁₀r*R
-
-# ╔═╡ 7b7eeac0-1b60-4145-86f3-c14be909121d
-md""" ## Observaciones
-
-El costo de este algoritmo es del orden de $2n^2m-2n^3/3$.
-
-Una ventaja empirica de Householder es que opera con transformaciones ortogonales, así que preserva normas, mientras que MGS no tiene transformaciones ortogonales. 
-
-Otra ventaja es que cuando los vectores son casi linealmente independientes, en las cuentas del algoritmos de Householder se hace el cálculo numerico con cuidado, esto no se hace en MGS.
-"""
-
-# ╔═╡ a669b08d-e608-4fd6-8104-b60ea5cf8419
+# ╔═╡ fa729ae6-54c9-467a-8bd7-03abdb295a3b
 md"""# Rotaciones de Givens """
 
-# ╔═╡ 71b65271-f6ad-4d19-af2a-e09d0644e6a9
+# ╔═╡ f3e51af1-5dcc-4bbf-b190-cfcbd741b231
 md""" También conocido como rotaciones de planos. Se aplica en el caso de matrices dispersas (sparse matrices) ya que tiene un efecto "local". """
 
-# ╔═╡ b98a9ad3-4774-4397-8040-a39c85633e71
+# ╔═╡ 99f54ca8-46a5-4c06-8164-38b648f27629
 md""" Dados $i,k\in \{1,\dots,m\}, \theta\in\mathbb{R}$, defina:
 $c=\cos(\theta), s=\sin(\theta)$,
 
@@ -360,7 +283,7 @@ $G(i,k,\theta)=\begin{pmatrix}
 Aplicar $G^T(i,k,\theta)$ a una matriz $A=(a_1,\dots,a_n)$ equivale a "rotar" los ejes $i$ y $k$.
 """
 
-# ╔═╡ aac81505-9de9-4faf-979b-8c206e4424d6
+# ╔═╡ 1b72085e-a0fd-4c17-aca4-56622a4a5bb3
 md""" 
 Si $y=G^T(i,k,\theta)x$ con $x\in \mathbb{R}^n$ tenemos que 
 
@@ -389,7 +312,7 @@ r_m
 \end{pmatrix}$
 """
 
-# ╔═╡ d4d04c4c-0354-420c-9014-9e70b1acf140
+# ╔═╡ 29959f97-471f-4e2f-a124-eedea72fbab3
 md"""Si
 
 $x_i=||x||\cos(\phi), \quad x_k=||x||\sin(\phi)$
@@ -407,10 +330,10 @@ $c=\cos(\theta)=\frac{x_i}{\sqrt{x_i^2+x_k^2}}, \quad
 s=\sin(\theta)=-\frac{x_k}{\sqrt{x_i^2+x_k^2}}$
 """
 
-# ╔═╡ 4903bc32-709c-4bb6-9d38-02ce341f0f73
+# ╔═╡ ddf93e9b-5d73-410c-b3a0-ac39e1075746
 md"""Tenemos el siguiente algoritmo (que evita división por la menor componente y también evita división por norma pequeña."""
 
-# ╔═╡ a448ba92-6e0e-4fc9-8593-dd4b959d9064
+# ╔═╡ 06efe5f4-8f9a-411b-a63a-28280f579212
 function Givens(a,b)
     if b!=0
         if abs(b)>abs(a)
@@ -428,27 +351,37 @@ function Givens(a,b)
     return c,s
 end
 
-# ╔═╡ a4cedd9f-a634-4896-994f-5d3a95455947
+# ╔═╡ ca11ea3a-e4e7-4ad7-8a88-915e274539af
 md"""Observe que $|\tau|\leq 1$ e que para calsuclar $s$ y $c$ necesitamos de 5 operaciones y una raíz cuadrada.  """
 
-# ╔═╡ 60c24631-edff-40d1-a206-0ba660f2a9cd
-md""" ## Ejemplo 6"""
+# ╔═╡ 13cb5cc9-c818-4f5d-ba96-ec35c75b3c39
+md"""*Ejemplo:*
 
-# ╔═╡ 26039653-4ddc-4f0c-8cd3-6b573e4eb2b8
+Consideremos el siguiente vector"""
+
+# ╔═╡ e61cc769-d17d-47d3-9844-d122019d520d
+v₁₁=[8; 6]
+
+# ╔═╡ 0153bd7b-2e4f-4da5-964a-5e86f9d7c517
+md"""La matríz de rotaciones de Givens es la siguiente:"""
+
+# ╔═╡ d82dd29f-ee96-443b-9067-a8d1b3cc675e
 begin
-	v₁₁=[8; 6]
 	c,s = Givens(v₁₁[1],v₁₁[2])
 	G=[c -s; s c]
 end
 
-# ╔═╡ 396cba4d-e917-40d0-a0f3-cbcaedaf2426
+# ╔═╡ f99c3371-35a9-4bd0-95ae-1f8e5be6e6cf
+md"""Así $G\cdot v$ es el siguiente vector"""
+
+# ╔═╡ 67593be2-7185-4695-8d88-9682042ff043
 G*v₁₁
 
-# ╔═╡ 8a2f9a09-59f4-4439-b588-df50ad700434
+# ╔═╡ ee4c46a7-aeaf-4029-900b-56522d6a1963
 md"""Tenemos la siguiente función que  aplica una 
 rotación de Gives dadas dos filas de una matriz $A$."""
 
-# ╔═╡ 5aa40728-98a9-4889-8c4a-db1e847c5af1
+# ╔═╡ e7691b15-f8ab-4f8f-95a7-d918c6d44057
 function Giv(A, i, k, c, s)
     for j=1:size(A)[2]
         τ1 = A[i,j]
@@ -460,36 +393,33 @@ function Giv(A, i, k, c, s)
     return A
 end
 
-# ╔═╡ b4848641-6639-4ee1-834e-aaa0a297afd9
-md""" ## Ejemplo 7"""
+# ╔═╡ 7a3c3bf8-44d5-4d38-b73a-3d829f9bd2f6
+md""" *Ejemplo:*"""
 
-# ╔═╡ b6b1d326-854c-4e02-836c-bbbd3de081dd
-begin
-	A₁₂ = floor.(10*rand( 3, 3))
-	B₁₂=copy(A₁₂)
-end
+# ╔═╡ 03219844-9eb9-433f-acfd-525455fcf83a
+A₁₂ = floor.(10*rand( 3, 3))
 
-# ╔═╡ 0226c6c0-ef0a-4123-8f33-63f96ac7ce1a
+# ╔═╡ 9464edf3-1096-4e77-b64b-ad15fd256b76
 begin
 	if( A₁₂[3,1] !=0.0)
 	c₁, s₁ = Givens(A₁₂[2,1], A₁₂[3,1])
-	A₁₃= Giv(B₁₂ , 2,3 ,c₁,s₁)
+	A₁₃= Giv(A₁₂ , 2,3 ,c₁,s₁)
 	end
 	A₁₃
 end
 
-# ╔═╡ af14f7a0-6765-4454-a985-0265934f9d4f
+# ╔═╡ 53cfcfd5-a41f-4518-8a2b-6b36d34efb54
 begin
 	c₂, s₂ = Givens(A₁₃[1,1], A₁₃[2,1])
 	D = Giv(A₁₃, 1,2,c₂,s₂)
 end
 
-# ╔═╡ 8f396bc5-1fe0-4723-b41f-dc8818dd9ffb
+# ╔═╡ a4930f05-7401-4a3c-80b5-5ee906d19fda
 md""" 
 ## Givens rápido
 """
 
-# ╔═╡ a69a2fce-ddbf-486a-81cd-1f0cf2f155fb
+# ╔═╡ 7bb9ca37-7339-4e47-8831-caa6895f7dfc
 md""" 
 Una matriz $G(i,k,\theta)$ puede escribirse (según sea tipo 1 o 2) como: 
 
@@ -516,7 +446,7 @@ $G(i,k,\theta)^T=
 \end{pmatrix}=S_2(i,k,c)T_2(i,k,\tau).$
 """
 
-# ╔═╡ ab8c204c-91a2-4db0-97a6-ffd9ba6c50ab
+# ╔═╡ 4e512555-bed0-40d6-aa59-b351a6a25c77
 md"""Tenemos así que, por ejemplo  
 
 $G^T(i_1,k_1,\theta_1)A=S_p(i_1,k_1,c)T_p(i_1,k_1,\tau_1)=S_p(i_1,k_1,c_1)\widetilde{A}$
@@ -526,19 +456,19 @@ donde $A(1,k)=0$. Para el siguiente paso, tendriamos,
 $G^T(i_2,k_2,\theta_2)G^T(i_1,k_1,\theta_1)A= S_q(i_2,k_2,c_2)T_q(i_2,k_2,\tau_2)S_p(i_1,k_1,c_1)\widetilde{A}$
 """
 
-# ╔═╡ 092d92b5-a499-4c30-92c2-8536ba6cafdc
+# ╔═╡ 296f0f5a-f430-4acd-bef8-2eaf4694c1e9
 md"""
 Queremos proceder de tal manera que la multiplicación $C_p(i_1,k_1,c_1)\widetilde{A}$ no se haga y solo acumule hasta el final. Queremos escribir 
 
 $T_q(i_2,k_2,\tau_2)S_p(i_1,k_1,c_1)= \text{ Digonal}\times \text{Matrix similar to S}$
 """
 
-# ╔═╡ 7e8aeab0-e46b-485d-9c1c-49f7f349f59b
+# ╔═╡ 12f4f64c-9746-4180-9e9c-c90be81b9de4
 md""" 
 Para esto consideramos dos casos dependiendo si la rotación de Givens es tipo 1 o tipo 2. Para simplificar consideremos solo las entradas implicadas en nuestra notación. Por ejemplo en el caso tipo 1, tenemos, 
 """
 
-# ╔═╡ e593f931-957a-4054-b2b4-2fd5301bfa50
+# ╔═╡ b13610de-ea16-4ee8-92f6-33fcd1b0653b
 md""" 
 $
 G(a,b,\theta)^T
@@ -552,7 +482,7 @@ c&-s\\ s&c\end{pmatrix}=
 con $\tau=c/s$.
 """
 
-# ╔═╡ f4db36eb-0669-416d-927d-b20ee197a15a
+# ╔═╡ 2e9b5a7f-f491-42ef-9516-5f1cf915bfa8
 md"""
 Para realizar la multiplicación por una nueva matriz diagonal por la derecha podemos usar que 
 
@@ -567,27 +497,27 @@ D(d_1,d_2) S_3$
 y podemos realizar  la multiplicación $S_2\tilde{A}$ y acumular la multipliación de matrices diagonales $S_p\times D$. 
 """
 
-# ╔═╡ db108ef8-3c3e-4ea5-916c-9bfbf72ed9d3
+# ╔═╡ 21018e14-b76e-48e4-8dbc-52990dbc34c0
 md"""
 Obtenemos así matrices $\tilde{G}_\ell=S_3(i,k)$ tales que
 
 $D\tilde{G}_N\tilde{G}_{N-1}\cdots \tilde{G}_1 A= M (\text{ que es triangular superior})$
 """
 
-# ╔═╡ 89e4bca0-e984-4fed-bf8b-8a493020b1f8
+# ╔═╡ de0dadd6-3b56-4604-bc10-297900a65092
 md"""Para obtener las matrices $\tilde{G}_\ell$ basta calcular $\tau$. Para calcular las entradas de la diagonal de la matriz D, tenemos elementos de la forma 
 
 $d^2=\prod_{\ell=1}^N\left(\frac{1}{1+\tau_\ell^2}\right)$
 """
 
-# ╔═╡ bb59d3ed-e13b-4140-ac84-e8ec1a726368
+# ╔═╡ 9a7ed401-4344-4039-aebc-9d3e6d4c8263
 md"""
 Se implementa la función FastGivens que define los valores de 
  $\alpha$ y $\beta$ 
  de la matriz que elimina la segunda entrada del vector $x$, La función modifica $d$.
 """
 
-# ╔═╡ e173aeea-050a-4df3-aa65-8660a27236f7
+# ╔═╡ 083f1674-085f-4207-812c-6ce36b260a7e
 #Input: x vector 2x1, d vecor 2x1 que representa las diagonales de una matriz 2x2
 #Output: α, β y el tipo de la matriz.
 function FastGivens(x, d)
@@ -616,13 +546,13 @@ function FastGivens(x, d)
     return α, β, tipo
 end
 
-# ╔═╡ 1e079e91-0f65-4261-a9b9-e6ddd6e6bcd9
+# ╔═╡ c70369a5-8fac-4eae-8a2a-754e2621f8c6
 A₁₄ = floor.(10*rand(4, 4))
 
-# ╔═╡ 75cd6109-1982-433f-b36c-e0d44e138d2d
-md"""A continuación verificamos que se elimina la primera fila de la matriz $A_{14$}."""
+# ╔═╡ 0bf40e80-8a00-4c82-88a7-ec95982eb1a0
+md"""A continuación verificamos que se elimina la primera fila de la matriz $A_{14}$."""
 
-# ╔═╡ 837534d5-2079-4e8b-ac64-1e2b07b98819
+# ╔═╡ 3a305d4c-3def-4a83-ac66-a281fa4f74a3
 begin
 	D₁₄ = ones(4)
 	#Se copia A1 para no modificar la matriz inicial
@@ -650,7 +580,7 @@ begin
 	sqrt.(D₁₄).*Aaux
 end
 
-# ╔═╡ 6696c1b0-3fef-4668-9df5-1c158abbd1cc
+# ╔═╡ 6527c6dc-d1d7-41fe-af22-d549647ccd0a
 md"""
 Ahora se implementa FastGivensQR, la cual toma una matriz $A$ y sobreescribe en ella una matriz triangular superior $T$ y devuelve las matrices $M, D$ que satisfacen:
 
@@ -661,7 +591,7 @@ A=\left(MD^{-\frac{1}{2}}\right)\left(D^{-\frac{1}{2}}T\right)
 
 """
 
-# ╔═╡ 9a1f938f-fdc1-4cd7-a2ad-a1a78cbf5697
+# ╔═╡ 83988e50-454c-43ab-96dd-8c4f94c7d7fc
 function FastGivensQR(P)
     m, n = size(P)
     D = ones(m)
@@ -691,15 +621,16 @@ function FastGivensQR(P)
     return M, D
 end
 
-# ╔═╡ dac13369-d651-4382-a47b-874663365096
-md""" ## Ejemplo 8
+# ╔═╡ 131a04f5-67eb-4457-9239-9a0eb698d5db
+md""" *Ejemplo:*
+
 Ejecutamos el algoritmo sobre una matriz $A$, verificamos que $A=QR$ y la ortogonalidad de $Q$,
 """
 
-# ╔═╡ ea739032-5a45-42cb-8e95-8776bd37e6a1
+# ╔═╡ 667ddc44-d8a9-4ef4-9e36-c0e36ebce40e
 A₁₅  = floor.(20*rand(5,4))
 
-# ╔═╡ 946e765b-6273-4332-a945-32707ebec723
+# ╔═╡ c4f50bbb-28dd-4ed5-a93f-50ede0bcb3cb
 begin
 	B₁₅=copy(A₁₅)
 	M₁₅, D₁₅ = FastGivensQR(B₁₅)
@@ -709,136 +640,24 @@ begin
 	R₁₅ = Diagonal(1 ./ sqrt.(D₁₅))*B₁₅
 end
 
-# ╔═╡ 0192486e-319c-4b44-add6-2c8e669fc34f
+# ╔═╡ ef68b4f9-4bd3-4311-b8aa-0e1a5edaa049
 begin
 	println("La norma de M'M-D es ", opnorm(M₁₅'*M₁₅-Diagonal(D₁₅)))
 	println("la norma de Q'Q-I es ", opnorm(Q₁₅'*Q₁₅ - UniformScaling(1)))
 	println("La norma de Q*R-A es ", opnorm(Q₁₅*R₁₅-A₁₅))
 end
 
-# ╔═╡ 4901f309-bf67-40ad-9b1c-a216cc0db42b
-md""" 
-# Householder con dependencia lineal
-"""
-
-# ╔═╡ c1b3e1ed-d76f-4514-b85b-a2fcead6c658
-md"""
-Cosidere ahora $A\in\mathbb{R}^{m\times n}$ con $A=[a_1,a_2,\dots,a_n]$ donde $a_i, i=1,2,\dots,n$ denotan las columnas de $A$ que no son necesariamente linealmente independientes. 
-
-Podemos aplicar, por ejemplo, Householder con permutación de columnas y si en ese caso llegamos hasta el paso $r$, entonces, $\mbox{rank}(A)\geq r$ y además, 
-
-$
-H_rH_{r-1}\cdots H_1 A \pi_1\pi_2\cdots\pi_r =
-\begin{pmatrix}
-R_{11}&R_{12}\\ 0&R_{22}\end{pmatrix}$
-donde $R_{11}$ es de tamaño $r\times r$, $R_{1,2}$ es de tamaño $(r,n-r)$, 
-$R_{2,2}$ es de tamaño $(m-r)\times (m-r)$ y $0$ representa la matriz $0$ de tamaño 
-$(m-r)\times r$.
-"""
-
-# ╔═╡ c12ed9df-e9aa-42e2-be20-0f20e9881f9f
-md"""
-Supongamos que $\mbox{rank}(A)=r$, debe ser $R_{2,2}\equiv 0$. Queremos ahora obtener "0" en el lugar de $R_{2,1}$, para esto observe que podemos aplicar Hoseholder a 
-
-$
-\begin{pmatrix}
-R_{12}^T\\ R_{12}^T\end{pmatrix}$
-para obtener
-
-$
-Z_r\dots Z_1\begin{pmatrix}
-R_{12}^T\\ R_{12}^T\end{pmatrix}=
-\begin{pmatrix}
-T_{11}^T\\ 0\end{pmatrix} \mbox{ y por tanto } \begin{pmatrix}
-R_{11} & R_{12}\end{pmatrix}\widetilde{Q}= \begin{pmatrix}
-T_{11} & 0\end{pmatrix}$
-con $T_{11}$ de tamaño $r\times r$ triangular inferior y 
-$\widetilde{Q}^T=Z_r\dots Z_1$. Note que en esta última aplicación de Householder no es necesario aplicar permutaciones pues las filas de
-$\begin{pmatrix}
-R_{11} & R_{12}\end{pmatrix}$ son linealmente independientes.
-
-"""
-
-# ╔═╡ ee54552d-1e56-408b-921c-c7b10358a12a
-md""" 
-Concluimos que
-
-$Q^TA\pi \widetilde{Q}\begin{pmatrix}R_{11}& R_{12}\\ 0& R_{22}\end{pmatrix}\widetilde{Q}
-=\begin{pmatrix} T_{11} &0\\ 0 &0\end{pmatrix}$
-donde $T_{1,1}$ es una matriz triangular inferior de tamaño $r \times r$. Finalmente, para obtener una matriz triangular superior en el lugar de $T_{11}$, permutamos la filas y columnas de $T_{11}$, para esto usamos las siguientes tranformaciones
-"""
-
-# ╔═╡ 5c13b0f8-8385-4cdb-8561-6f89dfcb7c32
-md""" 
-$\widetilde{\pi}_1 =
-\begin{pmatrix}
-J & 0\\ 0 & I_{n-r}\end{pmatrix} \quad \mbox{ con } \quad 
-J_{r\times r}=\begin{pmatrix}
-0& 0& \cdots & 0 & 0 &1\\  
-0& 0& \cdots & 0 & 1 &0\\
-0& 0& \cdots & 1 & 0 &0\\
-\vdots & \vdots& \cdots & \vdots & \vdots &\vdots\\
-0& 1& \cdots & 0 & 0 &0\\
-1& 0& \cdots & 0 & 0 &0\\
-\end{pmatrix}$\
-y donde $I_{n-r}$ denota la matriz identidad $(n-r)\times(n-r)$. Analogamente
-
-$\widetilde{\pi}_2 =
-\begin{pmatrix}
-J & 0\\ 0 & I_{m-r}\end{pmatrix}$
-"""
-
-# ╔═╡ 4e5d2083-29e6-4527-8fe5-5d2eb67be7b4
-md"""Obtenemos
-
-$\overline{Q}^TAW=\widetilde{\pi}_2Q^TA\pi \widetilde{Q}\widetilde{\pi}_1=
-\begin{pmatrix} T_{11}^T &0\\ 0 &0\end{pmatrix}$
-donde $\overline{Q}^T=\widetilde{\pi}_2Q^T$y $W=\pi \widetilde{Q}\widetilde{\pi}_1$. Esta descomposición es concocida como la descomposición ortogonal completa (y no es la descomposición de Schur que es dela forma $Q^TAQ=R$ donde $R$ es triangular superior). 
-"""
-
-# ╔═╡ c645d6c5-b926-4f5d-b193-c039c67523b0
-md"""En lugar de pedir $T_{11}$ triangular superior se puede requerir que sea bidiagonal superior, lo que se conoce como bidiagonalización. Podemos usar Householder de la siguiente manera. Resumimos el procedimiento aplicado a una matriz $B$
-
-1. Aplicackos HH a la primera columa de $B$ para obtener $H_1B$ con zeros debajo de la primera entrada
-2. Aplicamos HH a la primera fila sin la primera entrada para obtener zero en la primera fila despues de la segunda entrada, obtenermos $H_1B\widetilde{H}_2$
-3. Continuamos con este procedimiento obtenemos 
-
-$
-H_n\dots H_1 B \widetilde{H}_2 \dots \widetilde{H}_m$
-qie debe ser una matriz  bidiagonal. 
-
-La bidiagonalización es usadad en el calculo de valore propios, primero se bidiagonliza y despues se aplica el método de Jacobi. 
-
-Como aspecto negativo de este algoritmo, tenemos su forato "alternado", por lo que se pierde la facultad de usar operaciones de nivel 3 como en Householder normal.  Por esta razon se realiza $R-bidiagonliaación$ que consiste en aplicar Householder para obtner
-
-$
-Q^TA=\begin{pmatrix}R_{1} \\ 0\end{pmatrix}$
-y depués aplicar Bidiagonlización a la matrix $R_{1}$ que generalmente es menor que $A$. Se obtine entonces 
-
-$
-Q_B^TR_{1}U_B=\mbox{ bigiagonal}$
-y luego usamos 
-
-$
-\overline{U}_B=Q\begin{pmatrix}Q_B &0\\ 0& I\end{pmatrix}$ 
-para terminar con 
-
-$
-\overline{U}_B^TAU_B=\begin{pmatrix}Q_B^T &0\\ 0& I\end{pmatrix}Q^TAU_B=
-\begin{pmatrix}Q_B^T &0\\ 0& I\end{pmatrix}
-\begin{pmatrix}R_1\\ 0\end{pmatrix}U_B=
-\begin{pmatrix}Q_B^TR_1U_B\\ 0\end{pmatrix}=\begin{pmatrix}\mbox{didiagonal}\\ 0\end{pmatrix}.$
-"""
-
 # ╔═╡ 06b07e27-0781-434f-9e8c-04edcaba4f31
 md"""# Referencias"""
 
 # ╔═╡ 567004f4-77a1-4693-ba6e-017c4e84572e
-md"""[1] Strang, G. (2016). Introduction to Linear Algebra (5ta ed.). Wellesley-Cambridge Press.
+md"""[1] Saad, Y. (2003). Iterative methods for sparse linear systems (2nd ed.). Society for Industrial and Applied Mathematics.
 
-[2] Saad, Y. (2003). Iterative methods for sparse linear systems (2nd ed.). Society for Industrial and Applied Mathematics.
+[2] Golub, G. H. (1996). Matrix computation and the theory of moments. Numerical analysis (Louvain-la-Neuve, 1995). Bull. Belg. Math. Soc. Simon Stevin, 1996(suppl.), 1–9.
 
-[4] Martínez R., H. J., & Sanabria R., A. M. (2014). Álgebra Lineal. Programa Editorial Universidad del Valle.
+[3] Martínez R., H. J., & Sanabria R., A. M. (2014). Álgebra Lineal. Programa Editorial Universidad del Valle.
+
+[4] Strang, G. (2016). Introduction to Linear Algebra (5ta ed.). Wellesley-Cambridge Press.
 
 [5] Boyd, S., & Vandenberghe, L. (2021). Introduction to Applied Linear Algebra: Vectors, Matrices, and Least Squares - Julia Language Companion. Cambridge University Press.
 
@@ -1130,84 +949,79 @@ version = "17.4.0+2"
 # ╟─bd96fb46-9a41-42a5-86f1-51eb05d3d312
 # ╠═537df122-4692-4a5a-847f-70777ed330ce
 # ╟─ecff234d-eb13-4cd9-aaa5-7bbf88c14271
-# ╟─96817925-53b3-45e3-83c8-a1ab2c747ad8
-# ╠═172c756c-c7f4-480d-9e4a-52fbc0564ed2
-# ╟─a645cf2d-f176-4947-8122-bcdf41aa5c9d
-# ╟─5aa7ba63-870f-4b1b-a2da-02cc21295e87
-# ╟─8acbac14-8724-4e01-b6e4-4000c6345233
-# ╠═2586a5af-1604-4ccc-99e9-43e4cbc0b51f
-# ╟─686f7301-e588-4819-a88e-460d175eaf38
-# ╠═0d3cddee-0a20-48c3-958e-1ca3ec890e3b
-# ╠═6b024c51-f449-473d-b07e-f0d54b046af1
-# ╠═dc01bbf0-8f62-4f2f-a64d-40ea2cdce63e
-# ╟─49da426d-9b98-4e93-9ec3-d90385c28046
-# ╟─21935a4e-cd5c-4a43-821e-9ffb4399147b
-# ╟─47a1f5fb-52d5-4956-901c-d0cd4990facb
-# ╠═f31d90d8-5168-449c-894a-b38e90e8f671
-# ╠═7f1b9df8-b615-4e56-a29a-30ee91f414d4
-# ╠═fc6bbc21-17a4-4fe3-9f87-9d4f690bee5a
-# ╟─42a9d7cf-dc39-4fad-ac3a-c68353c37473
-# ╠═f83064a3-a069-49ca-8fd3-21acf7644a81
-# ╠═927c7a39-c246-479f-bb80-98bf1695c666
-# ╠═cc29c002-414b-4c9d-a32d-60e0f5d2dd47
-# ╠═aecf4109-da0b-4697-a1d1-a48ccbfb3613
-# ╠═85d9218c-5e9f-4a63-bb68-cdfb3f1bc333
-# ╠═f979d7b3-aa78-4d4c-a610-41f971e39d3d
-# ╠═90183fec-5530-4502-9974-b1fad810224c
-# ╟─a917a34e-9922-4281-bc99-8c73d503093a
-# ╟─f5565ecd-cd50-405f-b0ca-900b02f2bc87
-# ╟─450a7a6d-efb5-4b8d-aa40-dfb3826c1c0d
-# ╠═e4bd815e-0f8f-4aa1-b659-3293f245ac1b
-# ╠═6e4a35d6-c365-4cb2-b6c6-c010151c3f18
-# ╠═f959900f-1785-4b6e-92e1-4ca2cfb6d6ab
-# ╠═6c7ed78c-7084-462f-830a-5c007cb83620
-# ╠═3e2df74d-3b00-4294-9662-5ec36b5e1b04
-# ╠═c9172d77-f6ce-42e5-b866-679d4412d1b2
-# ╟─7b7eeac0-1b60-4145-86f3-c14be909121d
-# ╟─a669b08d-e608-4fd6-8104-b60ea5cf8419
-# ╟─71b65271-f6ad-4d19-af2a-e09d0644e6a9
-# ╟─b98a9ad3-4774-4397-8040-a39c85633e71
-# ╟─aac81505-9de9-4faf-979b-8c206e4424d6
-# ╟─d4d04c4c-0354-420c-9014-9e70b1acf140
-# ╟─4903bc32-709c-4bb6-9d38-02ce341f0f73
-# ╠═a448ba92-6e0e-4fc9-8593-dd4b959d9064
-# ╟─a4cedd9f-a634-4896-994f-5d3a95455947
-# ╟─60c24631-edff-40d1-a206-0ba660f2a9cd
-# ╠═26039653-4ddc-4f0c-8cd3-6b573e4eb2b8
-# ╠═396cba4d-e917-40d0-a0f3-cbcaedaf2426
-# ╟─8a2f9a09-59f4-4439-b588-df50ad700434
-# ╠═5aa40728-98a9-4889-8c4a-db1e847c5af1
-# ╟─b4848641-6639-4ee1-834e-aaa0a297afd9
-# ╠═b6b1d326-854c-4e02-836c-bbbd3de081dd
-# ╠═0226c6c0-ef0a-4123-8f33-63f96ac7ce1a
-# ╠═af14f7a0-6765-4454-a985-0265934f9d4f
-# ╟─8f396bc5-1fe0-4723-b41f-dc8818dd9ffb
-# ╟─a69a2fce-ddbf-486a-81cd-1f0cf2f155fb
-# ╟─ab8c204c-91a2-4db0-97a6-ffd9ba6c50ab
-# ╟─092d92b5-a499-4c30-92c2-8536ba6cafdc
-# ╟─7e8aeab0-e46b-485d-9c1c-49f7f349f59b
-# ╟─e593f931-957a-4054-b2b4-2fd5301bfa50
-# ╟─f4db36eb-0669-416d-927d-b20ee197a15a
-# ╟─db108ef8-3c3e-4ea5-916c-9bfbf72ed9d3
-# ╟─89e4bca0-e984-4fed-bf8b-8a493020b1f8
-# ╟─bb59d3ed-e13b-4140-ac84-e8ec1a726368
-# ╠═e173aeea-050a-4df3-aa65-8660a27236f7
-# ╠═1e079e91-0f65-4261-a9b9-e6ddd6e6bcd9
-# ╟─75cd6109-1982-433f-b36c-e0d44e138d2d
-# ╠═837534d5-2079-4e8b-ac64-1e2b07b98819
-# ╟─6696c1b0-3fef-4668-9df5-1c158abbd1cc
-# ╠═9a1f938f-fdc1-4cd7-a2ad-a1a78cbf5697
-# ╟─dac13369-d651-4382-a47b-874663365096
-# ╠═ea739032-5a45-42cb-8e95-8776bd37e6a1
-# ╠═946e765b-6273-4332-a945-32707ebec723
-# ╠═0192486e-319c-4b44-add6-2c8e669fc34f
-# ╟─4901f309-bf67-40ad-9b1c-a216cc0db42b
-# ╟─c1b3e1ed-d76f-4514-b85b-a2fcead6c658
-# ╟─c12ed9df-e9aa-42e2-be20-0f20e9881f9f
-# ╟─ee54552d-1e56-408b-921c-c7b10358a12a
-# ╟─5c13b0f8-8385-4cdb-8561-6f89dfcb7c32
-# ╟─4e5d2083-29e6-4527-8fe5-5d2eb67be7b4
-# ╟─c645d6c5-b926-4f5d-b193-c039c67523b0
+# ╟─bc320da0-1258-46f0-8f07-b8d36cdbcdc9
+# ╟─a5733492-14dc-4dc8-a596-80a82010a53c
+# ╟─2bbf4bdf-ae76-4189-80b8-71b51c70fe62
+# ╟─4592e579-0c6c-4599-98fc-f3f11507f4ab
+# ╟─6193030e-3807-471c-aaf9-d3c8a3ac895e
+# ╟─a5a2b67c-80ee-4f9b-a933-f3485a6cd892
+# ╠═26847907-9d04-4c9e-b2e7-64248258c0dd
+# ╠═9311ee53-94e6-49cc-8eaa-b5f2efcb9f16
+# ╟─3573d257-bf10-46d2-9549-dfedcd95bc82
+# ╠═93a5cf53-5796-4ca6-879b-5271eb49f2f6
+# ╟─bd4ae79d-a712-4a5e-9d85-2c6b24aefdf3
+# ╠═a5cc8644-a521-407e-af28-9983da292b63
+# ╟─aa63c29e-c5c7-4ee6-91fb-f4dfaf01b5e7
+# ╠═36d99657-dcfb-4516-9265-0cc8d61ae35e
+# ╟─db3855fb-f8d2-484b-a95c-e467ba8dfc93
+# ╠═160a23f8-0950-40c3-8aa2-d25ca8b22913
+# ╟─eb6b82d9-2047-44e7-b104-a3ea8a977d3a
+# ╟─029f4ce6-87da-44be-afd4-776230245937
+# ╟─5a8f5d62-3f4e-48ab-aef7-8a9446e33f14
+# ╠═11ce39a8-7b98-4ea5-bfe9-81c7bbfd9e8e
+# ╟─575ae122-a70d-4c28-8c93-4213b72f5a6a
+# ╠═7bcc8c19-176b-4bec-9788-14bed749f920
+# ╟─d57bf3b8-8758-4734-a23c-5b256943b946
+# ╠═d88bb07b-84b2-42e7-8732-dc94fee01cfd
+# ╟─adc0d7dd-665c-49ce-b5f9-442fe2d5c000
+# ╠═6e610a1f-fb78-491a-8719-fb26e48f694b
+# ╟─ef43ca1d-a653-4a5d-97a4-4009fdfad54c
+# ╠═26bd3a24-5c5b-4d1a-82b0-3c00b3b8443d
+# ╟─8aa0a10e-48d2-4f1d-865a-64786821c8f6
+# ╠═1fff49b0-de66-4d7a-be0a-54da00d29d60
+# ╟─3acf0e47-42cb-4d43-aa81-4823c95a3dda
+# ╠═a3a992d9-6757-4a3e-9bd9-cd568fd60dca
+# ╠═9bd370df-7194-4dcc-acdf-9c66c53fc142
+# ╟─fa729ae6-54c9-467a-8bd7-03abdb295a3b
+# ╟─f3e51af1-5dcc-4bbf-b190-cfcbd741b231
+# ╟─99f54ca8-46a5-4c06-8164-38b648f27629
+# ╟─1b72085e-a0fd-4c17-aca4-56622a4a5bb3
+# ╟─29959f97-471f-4e2f-a124-eedea72fbab3
+# ╟─ddf93e9b-5d73-410c-b3a0-ac39e1075746
+# ╠═06efe5f4-8f9a-411b-a63a-28280f579212
+# ╟─ca11ea3a-e4e7-4ad7-8a88-915e274539af
+# ╟─13cb5cc9-c818-4f5d-ba96-ec35c75b3c39
+# ╠═e61cc769-d17d-47d3-9844-d122019d520d
+# ╟─0153bd7b-2e4f-4da5-964a-5e86f9d7c517
+# ╠═d82dd29f-ee96-443b-9067-a8d1b3cc675e
+# ╟─f99c3371-35a9-4bd0-95ae-1f8e5be6e6cf
+# ╠═67593be2-7185-4695-8d88-9682042ff043
+# ╟─ee4c46a7-aeaf-4029-900b-56522d6a1963
+# ╠═e7691b15-f8ab-4f8f-95a7-d918c6d44057
+# ╟─7a3c3bf8-44d5-4d38-b73a-3d829f9bd2f6
+# ╠═03219844-9eb9-433f-acfd-525455fcf83a
+# ╠═9464edf3-1096-4e77-b64b-ad15fd256b76
+# ╠═53cfcfd5-a41f-4518-8a2b-6b36d34efb54
+# ╟─a4930f05-7401-4a3c-80b5-5ee906d19fda
+# ╟─7bb9ca37-7339-4e47-8831-caa6895f7dfc
+# ╟─4e512555-bed0-40d6-aa59-b351a6a25c77
+# ╟─296f0f5a-f430-4acd-bef8-2eaf4694c1e9
+# ╟─12f4f64c-9746-4180-9e9c-c90be81b9de4
+# ╟─b13610de-ea16-4ee8-92f6-33fcd1b0653b
+# ╟─2e9b5a7f-f491-42ef-9516-5f1cf915bfa8
+# ╟─21018e14-b76e-48e4-8dbc-52990dbc34c0
+# ╟─de0dadd6-3b56-4604-bc10-297900a65092
+# ╟─9a7ed401-4344-4039-aebc-9d3e6d4c8263
+# ╠═083f1674-085f-4207-812c-6ce36b260a7e
+# ╠═c70369a5-8fac-4eae-8a2a-754e2621f8c6
+# ╟─0bf40e80-8a00-4c82-88a7-ec95982eb1a0
+# ╠═3a305d4c-3def-4a83-ac66-a281fa4f74a3
+# ╟─6527c6dc-d1d7-41fe-af22-d549647ccd0a
+# ╠═83988e50-454c-43ab-96dd-8c4f94c7d7fc
+# ╟─131a04f5-67eb-4457-9239-9a0eb698d5db
+# ╠═667ddc44-d8a9-4ef4-9e36-c0e36ebce40e
+# ╠═c4f50bbb-28dd-4ed5-a93f-50ede0bcb3cb
+# ╠═ef68b4f9-4bd3-4311-b8aa-0e1a5edaa049
 # ╟─06b07e27-0781-434f-9e8c-04edcaba4f31
 # ╟─567004f4-77a1-4693-ba6e-017c4e84572e
 # ╟─00000000-0000-0000-0000-000000000001
