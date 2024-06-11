@@ -114,3 +114,17 @@ header-includes: |
 <body>
 
 <hr>
+
+<div class="button-container">
+  <a href="https://labmatecc.github.io/Notebooks/VariableCompleja/FuncionesComplejas/" class="button">Funciones Complejas</a>
+</div>
+
+  <div class="container">
+    <div class="person">
+      <div class="info">
+        <p>Este cuaderno explora la visualización de funciones complejas utilizando técnicas como Domain Coloring. Se explica cómo representar funciones complejas, como \( \sin(z) \) y \( \frac{1}{\sqrt{z}} \), y cómo obtener y visualizar sus partes real e imaginaria, así como el módulo y el argumento de las funciones. Se incluyen ejemplos prácticos de graficación en espacios tridimensionales, mostrando el uso de la función \texttt{zplot} para crear visualizaciones en el plano complejo, y se destaca la importancia de estas técnicas para identificar características clave como ceros y polos en las funciones complejas. </p>
+      </div>
+    </div>
+  </div>
+
+<hr>
