@@ -4,16 +4,6 @@
 using Markdown
 using InteractiveUtils
 
-# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
-macro bind(def, element)
-    quote
-        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
-        local el = $(esc(element))
-        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
-        el
-    end
-end
-
 # ╔═╡ b763cd10-d1e7-4613-b738-9fb1c1cfa1e5
 using PlutoUI
 
@@ -38,190 +28,52 @@ md"""Usaremos las siguientes librerías:"""
 # ╔═╡ 306e1583-32c9-4c8b-bdea-7cb4c693c1d2
 md"""# Introducción"""
 
-# ╔═╡ 98644ea3-71ce-4362-b901-20c706e4564e
-md"""Los fractales son estructuras geométricas que se caracterizan por ser auto-similares a diferentes escalas. Esto significa que, sin importar cuánto se amplíen, sus patrones se repiten infinitamente. Un ejemplo común de un fractal natural es la forma de una coliflor romanesca, donde cada florete es una copia más pequeña del todo.
-
-Los fractales son objetos geométricos que exhiben una estructura irregular y auto-similar en diferentes escalas, lo que significa que la forma del objeto se repite a diferentes niveles de magnificación. Los fractales tienen aplicaciones en muchos campos, tales como la física y la matemática y la biología. Los fractales se utilizan para modelar y describir fenómenos naturales y artificiales que tienen una estructura irregular y compleja, como las ramificaciones de los árboles, los patrones de crecimiento de copos de nieve, las formas de las montañas, las nubes, las costas y los ríos, la curva formada por las olas (esta es conocida como la curva de Koch), entre otros. Los fractales también se han utilizado para modelar sistemas biológicos, como la forma de los pulmones y los vasos sanguíneos, y para la generación de paisajes y texturas en gráficos por computadora."""
-
-# ╔═╡ 30abdad7-ab61-48c0-b817-9f712f6da74e
-md"""# Conjunto de Mandelbrot"""
-
-# ╔═╡ 9725713c-ee05-457e-894e-56b1686c7efd
-md"""El Conjunto de Mandelbrot fue descubierto por el matemático Benoît Mandelbrot en 1980. En esencia, el Conjunto de Mandelbrot es una región del plano complejo que muestra una estructura fractal infinitamente compleja.
-
-La función iterativa asociada al Conjunto de Mandelbrot es $f_c(z) = z^2 + c$, donde $z$ es un número complejo y $c$ es un parámetro constante que representa un punto en el plano complejo. La idea principal es iterar esta función comenzando desde $z=0$ y observar cómo se comporta la serie $f_c(z)$ después de cierto número de iteraciones.
-
-Para cada punto $c$ en el plano complejo, se determina si la serie $f_c(z)$ tiende hacia el infinito o permanece acotada. Si la serie diverge (es decir, tiende hacia el infinito), entonces el punto $c$ no pertenece al Conjunto de Mandelbrot. Por el contrario, si la serie permanece acotada (no tiende hacia el infinito), entonces el punto $c$ pertenece al Conjunto de Mandelbrot.
-"""
-
-# ╔═╡ 4342acab-4853-473a-a95c-8636b097b981
-md"""A continuación se muestra el conjunto de Mandelbrot."""
-
-# ╔═╡ 032aa983-f3a8-4a08-91e3-a6ee70b65080
-let
-function mandelbrot_set(max_iterations)
-    function iterate(c)
-        z = 0
-        for i in 1:max_iterations
-            z = z^2 + c
-            if abs(z) > 2
-                return i
-            end
-        end
-        return max_iterations
-    end
-
-    return iterate
-end
-
-x_range = -2.5:0.005:1.5
-y_range = -1.5:0.005:1.5
-
-# Crea una matriz para almacenar los valores del conjunto de Mandelbrot
-mandelbrot_matrix = [mandelbrot_set(100)(complex(x, y)) for y in y_range, x in x_range]
-
-# Grafica el conjunto de Mandelbrot
-heatmap(x_range, y_range, mandelbrot_matrix, c=:jet,  x_lims = (-2.5,1.5), y_lims = (-1.5,1.5), aspect_ratio=:equal, xlabel="Parte Real", ylabel="Parte Imaginaria", title="Conjunto de Mandelbrot")
-
-end
-
-# ╔═╡ d2fa2bf0-ffcc-4c1d-bf09-3973f3362ef2
-md"""Cuando ampliamos una región específica del Conjunto de Mandelbrot, se pueden observar miniaturas de conjuntos de Julia dentro de ciertas regiones. Esto significa que cada punto en el Conjunto de Mandelbrot corresponde a un conjunto de Julia único y viceversa."""
-
-# ╔═╡ 559e2998-11b4-4b07-9cec-94ffbc7df026
-md"""# Conjunto de Julia
-
-El conjunto de Julia es una familia de fractales que se generan a partir de una función iterativa de números complejos. Estos conjuntos fueron estudiados por el matemático Gaston Julia en la década de 1910. Cada conjunto de Julia es determinado por un número complejo $c$ y es conocido por sus patrones intrincados"""
-
-# ╔═╡ 8be4a303-0753-4f4a-a52b-4b8bdbd559fb
-md"""El conjunto de Julia está ahora asociado con aquellos puntos $z = x + iy$ en el plano complejo para los cuales la serie $z_{n+1} = z_n^2 + c$ no tiende a infinito. Aquí, $c$ es una constante compleja, y se obtiene un conjunto de Julia diferente para cada $c$. El valor inicial $z_0$ para la serie es cada punto en el plano de imagen. En un sentido más amplio, la forma exacta de la función iterada puede ser cualquier cosa, siendo la forma general $z_{n+1} = f(z_n)$."""
-
-# ╔═╡ f52dce89-a5a0-4343-bdc6-8d97bae04e63
-md"""
-La función iterativa que define el conjunto de Julia es:
-
-$f_c(z) = z^2 + c.$
-
-Aquí, $z$ es el número complejo que se itera, y $c$ es un número complejo constante. La forma del fractal de Julia depende fuertemente del valor de $c$.
-
-El conjunto de Julia se genera aplicando la función iterativa repetidamente y observando el comportamiento de los puntos en el plano complejo.
-
-Para un punto $z$, iteramos:
-
-$z_{n+1} = z_n^2 + c.$
-
-Si después de muchas iteraciones, $z$ no se ha desviado hacia el infinito, consideramos que el punto pertenece al conjunto de Julia. En la práctica, esto se determina si el valor absoluto de $z$ permanece menor que una constante (generalmente 2) después de un número fijo de iteraciones.
-"""
-
-# ╔═╡ df230eb8-8f49-4a47-b15f-b23ecafe4ba0
-md"""La siguiente función genera la función $f(z)=z^2+c.$"""
-
 # ╔═╡ 6f8f8b0a-f493-4841-bd11-685d58b5069a
 function cuadratica(z, c)
     return z^2 + c
 end
 
-# ╔═╡ 9276a6b3-57db-41d5-8984-45966ac38a10
-md"""Este código genera y visualiza un conjunto de Julia para un valor específico de $c$."""
-
-# ╔═╡ 53e4e94d-dd1f-438f-b870-9fcf5df6efb8
-begin
-	function conjunto_julia_punto(z, c, limite_iteraciones)
-    	for i in 1:limite_iteraciones
-        	z = cuadratica(z, c)
-        	if abs(z) > 2.0
-            	return i
-        	end
-    	end
-    	return limite_iteraciones
-	end
-
-	function conjunto_julia(c, limite_iteraciones, grid=500)
-    	x_vals = range(-1.5, 1.5, length=grid)
-    	y_vals = range(-1.5, 1.5, length=grid)
-    	conjunto = [conjunto_julia_punto(complex(x, y), c, limite_iteraciones) for y in y_vals, x in x_vals]
-    	heatmap(x_vals, y_vals, conjunto, color = :jet, x_lims = (-1.5,1.5), y_lims = (-1.5,1.5), aspect_ratio=:equal, xlabel="Parte Real", ylabel="Parte Imaginaria", title="Conjunto de Julia para c = $c")
-	end
+# ╔═╡ ba6776ab-54c7-4816-b6dc-195588358e3d
+function conjunto_julia_punto(z, c, limite_iteraciones)
+    for i in 1:limite_iteraciones
+        z = cuadratica(z, c)
+        if abs(z) > 2.0
+            return i
+        end
+    end
+    return limite_iteraciones
 end
 
-# ╔═╡ 752103fc-5b5c-43e3-bb82-0462230d09fc
-md"""A continuación se puede escoger los valores de los parámetros $a$ y $b$, recuerde que $c=a+bi$."""
-
-# ╔═╡ 9ce32903-7e48-4d8e-9630-2776c2b7812a
-@bind a Slider(-2.5:0.05:2.5, show_value=true, default=0) #a
-
-# ╔═╡ 830285cc-c329-428b-983d-4ac3a95668e8
-@bind b Slider(0:0.05:2.5, show_value=true, default=0.75) #b
+# ╔═╡ e4223ec1-44a2-462f-b1f4-c5bce90c390b
+function conjunto_julia(c, limite_iteraciones, grid=500)
+    x_vals = range(-1.5, 1.5, length=grid)
+    y_vals = range(-1.5, 1.5, length=grid)
+    conjunto = [conjunto_julia_punto(complex(x, y), c, limite_iteraciones) for y in y_vals, x in x_vals]
+    heatmap(x_vals, y_vals, conjunto, color = :jet, x_lims = (-1.5,1.5), y_lims = (-1.5,1.5), aspect_ratio=:equal, xlabel="Parte Real", ylabel="Parte Imaginaria", title="Conjunto de Julia para c = $c")
+end
 
 # ╔═╡ 865accd1-44bc-48a1-862d-c13f7da9789f
-conjunto_julia(a+b*im, 1000)
+conjunto_julia(0.8im, 1000)
 
-# ╔═╡ 2d99cdbb-8362-44a7-a01b-c399eb0e2359
-md"""Los colores fríos representan puntos que pertenecen al conjunto de Julia. Estos son puntos que no se escapan después de un número fijo de iteraciones y, por lo tanto, se consideran estables bajo la función iterativa. Por otro lado, los colores cálidos, amarillos y rojos, representan puntos que no pertenecen al conjunto de Julia. Estos son puntos que divergen hacia el infinito bajo la función iterativa y, por lo tanto, se consideran inestables.
+# ╔═╡ 2035e4bc-4489-4709-a17e-780845a0cdb8
+conjunto_julia(0.37 + 0.1im, 100)
 
-La transición gradual de colores desde fríos a cálidos indica cómo varía la divergencia de los puntos hacia el infinito a medida que se iteran más veces."""
+# ╔═╡ 28d9d833-47be-4c4b-b617-8525d94c9ef9
+conjunto_julia(0.355 + 0.355im, 100)
 
-# ╔═╡ f17c06bd-1781-49ec-a9fe-c59f8f15d249
-md"""Veamos otra manera de generar conjuntos de Julia, esta vez considerando la función 
+# ╔═╡ b2efc7d0-b0e1-4fde-813a-0c31e43254b8
+conjunto_julia(-0.4 + -0.59im, 100)
 
-$f(z)=c\sin{(z)}$"""
+# ╔═╡ 5deed838-71cc-407a-beb2-dbf56b81ac09
+conjunto_julia(0.355534 - 0.337292im, 100)
 
-# ╔═╡ 0c9d32fc-8ade-4441-8993-4dd5add67511
-md"""La siguiente función genera la función $f(z).$"""
-
-# ╔═╡ 43fd4a23-41b8-4e25-bd89-e53e0dc6b796
-function sin_cuadratica(z, c)
-    return c * sin(z)
-end
-
-# ╔═╡ 23e9ff8c-98b1-4ab5-8104-1501b88b3f28
-md"""**Nota:**
-La función $\texttt{sin(z)}$ se calcula con ayuda de las funciones hiperbólicas, de la siguiente manera:
-
-$\sin(z) = \frac{e^{iz} - e^{-iz}}{2i} = \frac{\sinh(y) \cdot \cos(x)}{2} + i \frac{ \cosh(y) \cdot \sin(x)}{2}$"""
-
-# ╔═╡ 96139a80-376d-4104-880d-20be49b10fc3
-md"""Este código genera y visualiza un conjunto de Julia para un valor específico de $c$."""
-
-# ╔═╡ c2a7255d-475a-4c12-840b-2b6aab59d76a
-begin
-    function conjunto_julia_punto_sin(z, c, limite_iteraciones_sin)
-        for i in 1:limite_iteraciones_sin
-            z = sin_cuadratica(z, c)
-            if abs(z) > 50.0
-                return i
-            end
-        end
-        return limite_iteraciones_sin
-    end
-
-    function conjunto_julia_sin(c, limite_iteraciones_sin, grid=500)
-        x_vals = range(-2pi, 2pi, length=grid)
-        y_vals = range(-2pi, 2pi, length=grid)
-        conjunto = [conjunto_julia_punto_sin(complex(x, y), c, limite_iteraciones_sin) for y in y_vals, x in x_vals]
-        heatmap(x_vals, y_vals, conjunto, color = :jet, x_lims = (-2pi,2pi), y_lims = (-pi,pi), aspect_ratio=:equal, xlabel="Parte Real", ylabel="Parte Imaginaria", title="Conjunto de Julia para c = $c")
-    end
-end
-
-# ╔═╡ ad0a75ba-977b-4cd7-a63e-e0a55c05f122
-md"""Aquí se ofrece la posibilidad de seleccionar los valores de los parámetros $a$ y $b$, recordando que $c=a+bi$."""
-
-# ╔═╡ 253408c6-6266-4126-84c0-0ec687b04a8e
-@bind a₁ Slider(-2.5:0.005:2.5, show_value=true, default=1) #a
-
-# ╔═╡ 64967c82-5d12-4c19-9187-82dd2bc5c3ca
-@bind b₁ Slider(0:0.005:2.5, show_value=true, default=0.02) #b
-
-# ╔═╡ 6deeadd6-a308-45d1-a8fc-3884153e6cd0
-conjunto_julia_sin(a₁ + b₁*im, 1000)
+# ╔═╡ ac4f6baf-a870-4e3d-a8be-402cee265bf3
+conjunto_julia(-2, 100)
 
 # ╔═╡ 588bc675-7db5-4314-b3ca-aa287ae8ed5d
 md"""# Referencias 
 
-[1] McGraw-Hill. (2009). Complex variables and applications (8th ed.). McGraw-Hill Companies.
-
-[2] Paul Bourke. (s.f.). Julia Sets. Recuperado de https://paulbourke.net/fractals/juliaset/
-"""
+[1]"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -242,7 +94,7 @@ PlutoUI = "~0.7.58"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.3"
 manifest_format = "2.0"
 project_hash = "dc61a35bc6186d82a863669071ec6c74908e138a"
 
@@ -1431,34 +1283,15 @@ version = "1.4.1+1"
 # ╟─fe274212-e2f3-4604-b746-109576d79f5e
 # ╠═d675dc10-eae6-11ee-096c-a184ec597d1f
 # ╟─306e1583-32c9-4c8b-bdea-7cb4c693c1d2
-# ╟─98644ea3-71ce-4362-b901-20c706e4564e
-# ╟─30abdad7-ab61-48c0-b817-9f712f6da74e
-# ╟─9725713c-ee05-457e-894e-56b1686c7efd
-# ╟─4342acab-4853-473a-a95c-8636b097b981
-# ╟─032aa983-f3a8-4a08-91e3-a6ee70b65080
-# ╟─d2fa2bf0-ffcc-4c1d-bf09-3973f3362ef2
-# ╟─559e2998-11b4-4b07-9cec-94ffbc7df026
-# ╟─8be4a303-0753-4f4a-a52b-4b8bdbd559fb
-# ╟─f52dce89-a5a0-4343-bdc6-8d97bae04e63
-# ╟─df230eb8-8f49-4a47-b15f-b23ecafe4ba0
 # ╠═6f8f8b0a-f493-4841-bd11-685d58b5069a
-# ╟─9276a6b3-57db-41d5-8984-45966ac38a10
-# ╠═53e4e94d-dd1f-438f-b870-9fcf5df6efb8
-# ╟─752103fc-5b5c-43e3-bb82-0462230d09fc
-# ╠═9ce32903-7e48-4d8e-9630-2776c2b7812a
-# ╠═830285cc-c329-428b-983d-4ac3a95668e8
-# ╟─865accd1-44bc-48a1-862d-c13f7da9789f
-# ╟─2d99cdbb-8362-44a7-a01b-c399eb0e2359
-# ╟─f17c06bd-1781-49ec-a9fe-c59f8f15d249
-# ╟─0c9d32fc-8ade-4441-8993-4dd5add67511
-# ╠═43fd4a23-41b8-4e25-bd89-e53e0dc6b796
-# ╟─23e9ff8c-98b1-4ab5-8104-1501b88b3f28
-# ╟─96139a80-376d-4104-880d-20be49b10fc3
-# ╠═c2a7255d-475a-4c12-840b-2b6aab59d76a
-# ╟─ad0a75ba-977b-4cd7-a63e-e0a55c05f122
-# ╠═253408c6-6266-4126-84c0-0ec687b04a8e
-# ╠═64967c82-5d12-4c19-9187-82dd2bc5c3ca
-# ╟─6deeadd6-a308-45d1-a8fc-3884153e6cd0
+# ╠═ba6776ab-54c7-4816-b6dc-195588358e3d
+# ╠═e4223ec1-44a2-462f-b1f4-c5bce90c390b
+# ╠═865accd1-44bc-48a1-862d-c13f7da9789f
+# ╠═2035e4bc-4489-4709-a17e-780845a0cdb8
+# ╠═28d9d833-47be-4c4b-b617-8525d94c9ef9
+# ╠═b2efc7d0-b0e1-4fde-813a-0c31e43254b8
+# ╠═5deed838-71cc-407a-beb2-dbf56b81ac09
+# ╠═ac4f6baf-a870-4e3d-a8be-402cee265bf3
 # ╟─588bc675-7db5-4314-b3ca-aa287ae8ed5d
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
