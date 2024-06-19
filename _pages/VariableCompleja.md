@@ -128,3 +128,19 @@ header-includes: |
   </div>
 
 <hr>
+
+<div class="button-container">
+  <a href="https://labmatecc.github.io/Notebooks/VariableCompleja/ConjuntosdeJulia/" class="button">Conjuntos de Julia</a>
+</div>
+
+  <div class="container">
+    <div class="person">
+      <div class="info">
+        <p>El cuaderno comienza generando y visualizando el Conjunto de Mandelbrot utilizando una función iterativa que determina si un punto en el plano complejo pertenece al conjunto o no, basándose en si la serie iterada tiende hacia el infinito o permanece acotada. Después, se menciona la relación entre el Conjunto de Mandelbrot y los Conjuntos de Julia, donde cada punto en el Conjunto de Mandelbrot corresponde a un conjunto de Julia único.</p>
+        <p>Se presenta el Conjunto de Julia como una familia de fractales generados por una función iterativa de números complejos \(f_c(z) = z^2 + c\), donde \(c\) es un número complejo. También se genera y visualiza conjuntos de Julia para valores específicos de \(c\), tanto para \(f_c(z) = z^2 + c\) como para \(f(z) = c \sin(z)\), con la posibilidad de ajustar los valores de los parámetros \(a\) y \(b\).
+        </p>
+      </div>
+    </div>
+  </div>
+
+<hr>
