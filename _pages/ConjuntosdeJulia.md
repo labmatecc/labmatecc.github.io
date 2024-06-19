@@ -68,4 +68,4 @@ header-includes: |
     }
   </style>
 
-<iframe src="https://labmatecc.github.io/HTML%20Lab/Compleja/Dinamica_Holomorfa.html" width="100%" height="600px"></iframe>
+<iframe src="https://labmatecc.github.io/HTML%20Lab/Compleja/Conjuntos_de_Julia.html" width="100%" height="600px"></iframe>
