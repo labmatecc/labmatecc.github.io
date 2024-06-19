@@ -132,3 +132,13 @@ header-includes: |
 <div class="button-container">
   <a href="https://labmatecc.github.io/Notebooks/VariableCompleja/" class="button">Variable Compleja</a>
 </div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>Los cuadernos sobre variable compleja se enfocan en diversos temas. Desde la introducción a la representación y operaciones básicas con números complejos hasta la visualización de funciones complejas y la exploración de conjuntos de Julia utilizando técnicas iterativas y de graficación en el plano complejo, estos cuadernos ofrecen un completo panorama de cómo se estudian y aplican los conceptos de variable compleja en Julia.</p>
+      </div>
+    </div>
+  </div>
+
+<hr>
