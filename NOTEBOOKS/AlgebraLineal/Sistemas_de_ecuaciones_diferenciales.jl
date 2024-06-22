@@ -4,6 +4,16 @@
 using Markdown
 using InteractiveUtils
 
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+end
+
 # ╔═╡ b51c19ab-bd3b-41b6-a389-10ddf173e8e3
 using PlutoUI
 
@@ -257,10 +267,10 @@ md"""*Ejemplo:*
 
 Consideremos el siguiente sistema de ecuaciones diferenciales lineal homogéneo dado de manera matricial
 
-$x = \begin{bmatrix}
-    x_1 \\
-    x_2 \\
-    x_3
+$x' = \begin{bmatrix}
+    x'_1 \\
+    x'_2 \\
+    x'_3
 \end{bmatrix} = \begin{bmatrix}
     0 & 1 & 0\\
     0 & 0 & 1 \\
@@ -274,9 +284,9 @@ $x = \begin{bmatrix}
 con
 
 $\begin{align*}
-x_1(0) &= 4, \\
-x_2(0) &= 6, \\
-x_3(0) &= 8.
+x_1(0) &= 0, \\
+x_2(0) &= -1, \\
+x_3(0) &= 1.
 \end{align*}$"""
 
 # ╔═╡ 8f2d135e-fff9-43b5-a756-736edb88810b
@@ -309,15 +319,24 @@ $P\begin{bmatrix}
     x_2(0)\\
     x_3(0)
 \end{bmatrix}=\begin{bmatrix}
-    4\\
-    6\\
-    8
+    0\\
+    -1\\
+    1
 \end{bmatrix}$
 Esto es equivalente a resolver un sistema de ecuaciones lineales:"""
 
+# ╔═╡ 045ac79d-0df9-4b30-b82c-436d37f8103c
+@bind b₁ Slider(0:0.5:10, show_value=true, default=0)
+
+# ╔═╡ 4a5eb925-e11b-4293-a512-548f2db6c3ac
+@bind b₂ Slider(-10:0.5:10, show_value=true, default=-1)
+
+# ╔═╡ 8b4b0e8d-386b-40de-9c93-a5259ca39941
+@bind b₃ Slider(0:0.5:10, show_value=true, default=1)
+
 # ╔═╡ 90ae6e89-6bd5-42a8-b06c-3742d3d04f19
 begin
-	b = [4, 6, 8]
+	b = [b₁, b₂, b₃]
 	C = P\b
 end
 
@@ -347,6 +366,47 @@ md"""Verifiquemos con las funciones anteriores las condiciones iniciales:"""
 # ╔═╡ 684288d8-cd0f-47a1-9b83-3ca428bc1c76
 [x₁(0), x₂(0), x₃(0)]
 
+# ╔═╡ 9705a88e-60dc-42b4-b1f8-56dbf5bb7582
+md"""Visualicemos la solución"""
+
+# ╔═╡ f7beb6e8-91df-4a47-9a99-f74faf43c779
+begin
+	plot(x₁, xlabel="Tiempo", ylabel="Soluciones", label="x1(t)", legend=:right)
+	plot!(x₂, label="x2(t)")
+	plot!(x₃, label="x3(t)")
+end
+
+# ╔═╡ 85f327ba-fc4c-43bb-8ba2-ee1a4eea3d86
+md"""Otra manera de resolver el problema mencionado es usando la función $\texttt{DifferentialEquations}$, tal como se muestra a continuación."""
+
+# ╔═╡ 8cb93262-fff4-4441-abfb-519ab939b6e5
+function system!(dx, x, p, t) #Definir el sistema de EDOs
+    dx .= A₂ * x
+end
+
+# ╔═╡ 68e2078c-25bb-4b89-9369-3c25e1530ce6
+x₀ = b #condiciones iniciales
+
+# ╔═╡ 2d7c9762-ed98-42d8-8652-b0537dd6ed38
+tspan₂ = (0.0, 5.0) #Definimos el intervalo de tiempo
+
+# ╔═╡ a1dc309d-9c54-4079-b8a9-109bfbdb779c
+md"""Ahora, creamos un problema de EDO con $\texttt{ODEProblem}$, que toma la función del sistema, las condiciones iniciales y el intervalo de tiempo que previamente definimos, y luego se resuelve el problema, de la siguiente forma"""
+
+# ╔═╡ 2a739bd3-2b81-4d81-af39-4347df1598aa
+begin
+	prob₂ = ODEProblem(system!, x₀, tspan₂)
+	sol₂ = solve(prob₂)
+end
+
+# ╔═╡ d9c8fbbc-b95d-4a0a-a1ce-b81a7d8e6f7d
+md"""Ahora visualicemos la solución del problema"""
+
+# ╔═╡ ac4cb0b1-4a15-4cd9-b223-ed8e93b73d8d
+begin
+	plot(sol₂, xlabel="Tiempo", ylabel="Soluciones")
+end
+
 # ╔═╡ b9ad2b76-4a55-4652-86fe-535e5281c978
 md"""# Referencias
 
@@ -372,7 +432,7 @@ PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.3"
+julia_version = "1.10.4"
 manifest_format = "2.0"
 project_hash = "a51071a794269c95fdf0b5990fa5f6b5778493c2"
 
@@ -2534,6 +2594,9 @@ version = "1.4.1+1"
 # ╠═b1e51091-06ef-49b6-a57b-3b6b0365e8d2
 # ╟─064ee58f-1d33-464d-af62-3550c86cb10e
 # ╟─625312f7-937c-4a50-9853-58a3a5c1d848
+# ╠═045ac79d-0df9-4b30-b82c-436d37f8103c
+# ╠═4a5eb925-e11b-4293-a512-548f2db6c3ac
+# ╠═8b4b0e8d-386b-40de-9c93-a5259ca39941
 # ╠═90ae6e89-6bd5-42a8-b06c-3742d3d04f19
 # ╟─39d890a4-43ea-45cc-87aa-2e1951418a45
 # ╠═b0ed98c6-f31b-4081-8f16-b83f67a6b391
@@ -2541,6 +2604,16 @@ version = "1.4.1+1"
 # ╠═a85b6a89-d541-40f3-a9ac-e98591ed860a
 # ╟─d16d39f6-ed28-4482-88f5-1eb1cd55aec4
 # ╠═684288d8-cd0f-47a1-9b83-3ca428bc1c76
+# ╟─9705a88e-60dc-42b4-b1f8-56dbf5bb7582
+# ╟─f7beb6e8-91df-4a47-9a99-f74faf43c779
+# ╟─85f327ba-fc4c-43bb-8ba2-ee1a4eea3d86
+# ╠═8cb93262-fff4-4441-abfb-519ab939b6e5
+# ╠═68e2078c-25bb-4b89-9369-3c25e1530ce6
+# ╠═2d7c9762-ed98-42d8-8652-b0537dd6ed38
+# ╟─a1dc309d-9c54-4079-b8a9-109bfbdb779c
+# ╠═2a739bd3-2b81-4d81-af39-4347df1598aa
+# ╟─d9c8fbbc-b95d-4a0a-a1ce-b81a7d8e6f7d
+# ╟─ac4cb0b1-4a15-4cd9-b223-ed8e93b73d8d
 # ╟─b9ad2b76-4a55-4652-86fe-535e5281c978
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
