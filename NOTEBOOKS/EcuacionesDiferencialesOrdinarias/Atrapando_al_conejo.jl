@@ -204,88 +204,155 @@ begin
 end
 
 # ╔═╡ a4a0eec8-3d44-4fe6-a2b0-2e5a4850f707
+md"""Ahora bien, consideremos el escenario donde el conejo se desplaza a lo largo de una curva cualquiera, representada por $C(t)=(x(t), y(t))$, donde $x(t)$ representa la posición horizontal del conejo y $y(t)$ su posición vertical. Así, vamos hallar la trayectoria que sigue el perro al tratar de alcanzar al conejo desde un punto fijo $(x_p, y_p)$, moviéndose con una velocidad $V_p$."""
 
+# ╔═╡ 9e5cc62f-9b6d-4436-8b12-085ba5214a96
+md"""Supongamos que la curva paramétrica que describe la trayectoria del conejo es $C(t)=(t\cos{(t)}, \sin{(t)})$, con $0\leq t\leq tf$, donde $tf$ es:"""
 
-# ╔═╡ 1dbf2561-19fc-404e-b105-d697be3bbcd7
-let
-# Definir la trayectoria paramétrica del conejo
-function conejo(t)
-    x = t * cos(t)
-    y = sin(t)
-    return x, y
-end
+# ╔═╡ 016c3b95-fa66-4373-9d5b-391d4050cd6d
+@bind tf Slider(0:0.1:10, show_value=true, default=8) #tf
 
-# Generar valores de t
-t_values = 0:0.1:10  # Desde 0 hasta 10 con paso 0.1
+# ╔═╡ 5d443e53-fcca-49f3-8113-f080651d7bb6
+md"""Definimos entonces la función de la curva paramétrica anterior."""
 
-# Calcular las coordenadas x e y del conejo y del perro para cada valor de t
-x_conejo_values = [conejo(t)[1] for t in t_values]
-y_conejo_values = [conejo(t)[2] for t in t_values]
-
-# Definir el factor de velocidad proporcional del perro (ajustar según la velocidad deseada)
-velocidad_perro = 0.05  # Reducida para acercarse al conejo lentamente
-
-# Crear la gráfica
-plot(x_conejo_values, y_conejo_values, label="Conejo", xlabel="X", ylabel="Y", title="Trayectoria del conejo")
-scatter!([0], [0], label="Origen del conejo", color=:red)
-end
-
-# ╔═╡ 74453bd8-d698-4d1d-9a3d-ae07f620f66f
-let
+# ╔═╡ 2f6cf848-63a1-4931-8210-d4807f8ba08a
 # Define la trayectoria del conejo
 function conejo(t)
     x_c = t*cos(t)
     y_c = sin(t)
+	#x_c=0
+	#y_c=t
     return x_c, y_c
 end
 
+# ╔═╡ c3a7a7a6-ab5c-49cd-9fc5-c76887dd1eed
+md"""Dado que la velocidad del conejo esta dada por $v(t)=C'(t)=(x'(t),y'(t))$, la siguiente función define esto."""
+
+# ╔═╡ 786c0157-350c-40f0-b16a-68a45cdb6320
 # Define la velocidad del conejo
 function velocidad_conejo(t)
     x_c, y_c = conejo(t)
     dx_c = cos(t) - t * sin(t)
     dy_c = cos(t)
+	#dx_c=0
+	#dy_c=1
     return dx_c, dy_c
 end
 
+# ╔═╡ 0eda8ebf-a726-4eff-9a1d-ab6b70ba550a
+md"""La función $\texttt{vector}\texttt{persecucion}$ calcula el vector paralelo de persecución según la trayectoria del conejo. Esta función recibe el tiempo actual $t$, y las posiciones horizontales $x_p$ y verticales $y_p$ del perro. El vector se obtiene restando la posición del perro a la del conejo en ambos ejes.
+"""
+
+# ╔═╡ dd968ab5-effa-4154-9e5c-884d50a7af2a
 # Define el vector paralelo de persecución
 function vector_persecucion(t, xp, yp)
     x_c, y_c = conejo(t)
     return x_c - xp, y_c - yp
 end
 
+# ╔═╡ 8c1ebd17-155a-43eb-997c-44deac57ac3c
+md"""Las ecuaciones diferenciales que describen la trayectoria del perro son $\frac{dx_p}{dt}$ y $\frac{dy_p}{dt}$, que son las derivadas de las coordenadas $x$ y $y$ del perro respecto al tiempo, respectivamente.
+
+$\frac{dx_p}{dt} = \frac{u_x}{\frac{1}{v_p} \cdot \|u\|}.$
+
+$\frac{dy_p}{dt} = \frac{u_y}{\frac{1}{v_p} \cdot \|u\|}$
+
+Donde $x_p$ y $y_p$ son las coordenadas del perro en el plano, $u_x$ y $u_y$ son las componentes del vector paralelo de persecución, $v_p$ es la velocidad del perro,  $\|u\|$ es la norma del vector paralelo de persecución. Note que la norma del vector $\|u\|$ se calcula para normalizar el vector paralelo de persecución y asegurar que el perro se mueva a la velocidad deseada $v_p$.
+"""
+
+# ╔═╡ b7727cf0-b4fa-41ae-a08f-5ea0a60b5f4e
+@bind factor_v Slider(0:0.05:10, show_value=true, default=1.2) #factor multiplicativo de la velocidad del conejo, tal que velocidad perro = factor * velocidad conejo
+
+# ╔═╡ 01db168a-b00b-4560-a124-dc4a630a518d
+md"""Lo mencionado anteriormente lo describe la siguiente función."""
+
+# ╔═╡ 3fdd5c1d-b144-4d71-9ba8-0e798a6eefb2
 # Define las ecuaciones diferenciales para la trayectoria del perro
 function perro!(du, u, p, t)
     xp, yp = u
     vc = norm(velocidad_conejo(t))
-    vp = 0.5 * vc
+    vp = factor_v* vc #velocidad del perro
     u_x, u_y = vector_persecucion(t, xp, yp)
     norma_u = norm([u_x, u_y])
     du[1] = u_x / ((1 / vp) * norma_u)
     du[2] = u_y / ((1 / vp) * norma_u)
 end
 
-# Condiciones iniciales
-u0 = [2, 0.0]
-tspan = 0:0.1:10
+# ╔═╡ 19a1112b-8a5f-4465-9226-76a571310e32
+@bind perro_x Slider(-10:1:10, show_value=true, default=2) #posición inicial del perro eje x
 
-# Definir el problema de ODE y resolverlo
-prob = ODEProblem(perro!, u0, tspan)
-sol = solve(prob, Tsit5())
+# ╔═╡ 19aa18fb-bbd8-476d-a706-fc81298ddf59
+@bind perro_y Slider(-10:1:10, show_value=true, default=0) #posición inicial del perro eje y
 
-# Extraer las soluciones
-xp_sol = sol[1, :]
-yp_sol = sol[2, :]
-t = sol.t
+# ╔═╡ c123b8cc-a213-4409-976c-7a644a5275a5
+md"""Con las condiciones iniciales para la posición del perro, resolvemos las ecuaciones diferenciales de la siguiente manera"""
 
-# Obtener la trayectoria del conejo para los mismos puntos de tiempo
-x_conejo = [conejo(ti)[1] for ti in t]
-y_conejo = [conejo(ti)[2] for ti in t]
+# ╔═╡ ff1b6c07-7c09-4bd2-9bfe-f0ad92dda233
+begin
+	# Condiciones iniciales
+	u0 = [perro_x, perro_y]
+	tspan = (0.0,tf)
 
-# Graficar las trayectorias
-plot(x_conejo, y_conejo, label="Conejo", xlabel="x", ylabel="y", legend=:bottomright, title="Curva de persecución")
-plot!(xp_sol, yp_sol, label="Perro", xlabel="x", ylabel="y")
-scatter!([u0[1]], [u0[2]], label="Inicio Perro", color=:red)
-scatter!([0], [0], label="Inicio Conejo", color=:blue)
+	# Definir el problema de ODE y resolverlo
+	prob = ODEProblem(perro!, u0, tspan)
+	sol = solve(prob)
+end
+
+# ╔═╡ be9563fb-a7ad-4932-8ad0-113febf1452b
+begin
+	# Extraer las soluciones de las EDOS
+	xp_sol = sol[1, :]
+	yp_sol = sol[2, :]
+	T = sol.t #puntos de tiempo usados
+	
+	# Obtener la trayectoria del conejo para los mismos puntos de tiempo
+	x_conejo = [conejo(ti)[1] for ti in T]
+	y_conejo = [conejo(ti)[2] for ti in T]
+end
+
+# ╔═╡ 61b12d0d-2bc1-47ea-a3fa-c0cd5913e15c
+md"""Ahora, necesitamos saber si el perro atrapó o no al conejo. En caso de que lo haya hecho, la trayectoria de ambos finaliza y el perro puede continuar su camino libremente. De la siguiente forma se halla el tiempo de intersección de los animales."""
+
+# ╔═╡ 51b1da8a-662e-4470-9f68-bfc857f5b90a
+begin
+	stop = length(T)
+	for i in 1:length(T)
+    	for j in 1:length(T)
+        	if abs(x_conejo[i] - xp_sol[j]) < 1e-3 && abs(y_conejo[i] - yp_sol[j]) < 1e-3
+            	stop = j
+            	break 
+        	end
+    	end
+    	if stop != length(T)
+        	break
+    	end
+	end
+	#Verificamos si el perro atrapó o no al conejo
+	if stop==length(T)
+		print("El perro no atrapó al conejo")
+	else
+		print("El perro atrapó al conejo")
+	end
+end
+
+# ╔═╡ 7c7ee006-ae8a-467c-8296-32bfddad2eee
+md"""A continuación se visualiza las trayectorias de ambos animales."""
+
+# ╔═╡ 74453bd8-d698-4d1d-9a3d-ae07f620f66f
+begin
+	# Graficar las trayectorias
+	if stop!=length(T)
+		plot(x_conejo[1:stop], y_conejo[1:stop], label="Conejo", xlabel="x", ylabel="y", legend=:bottomright, title="Curva de persecución")
+		plot!(xp_sol[1:stop], yp_sol[1:stop], label="Perro", xlabel="x", ylabel="y")
+		scatter!([u0[1]], [u0[2]], label="Inicio Perro", color=:red)
+		scatter!([0], [0], label="Inicio Conejo", color=:blue)
+		scatter!([xp_sol[stop]], [yp_sol[stop]], label="Punto de encuentro", color=:black)
+		else
+		plot(x_conejo[1:stop], y_conejo[1:stop], label="Conejo", xlabel="x", ylabel="y", legend=:bottomright, title="Curva de persecución")
+		plot!(xp_sol[1:stop], yp_sol[1:stop], label="Perro", xlabel="x", ylabel="y")
+		scatter!([u0[1]], [u0[2]], label="Inicio Perro", color=:red)
+		scatter!([0], [0], label="Inicio Conejo", color=:blue)
+	end
 end
 
 # ╔═╡ b631844b-3eab-4eae-b850-d9441704791f
@@ -2692,10 +2759,29 @@ version = "1.4.1+1"
 # ╠═0d5f4948-31fc-48ac-9fae-ab8975e6ce74
 # ╟─b55c4e80-fbd4-46e5-a635-8eec1f386902
 # ╠═90c410dc-57c4-4288-951f-920b14ffdf13
-# ╠═4fe19bd0-e1fa-4738-9ba9-d11d63bc3043
-# ╠═a4a0eec8-3d44-4fe6-a2b0-2e5a4850f707
-# ╠═1dbf2561-19fc-404e-b105-d697be3bbcd7
-# ╠═74453bd8-d698-4d1d-9a3d-ae07f620f66f
+# ╟─4fe19bd0-e1fa-4738-9ba9-d11d63bc3043
+# ╟─a4a0eec8-3d44-4fe6-a2b0-2e5a4850f707
+# ╟─9e5cc62f-9b6d-4436-8b12-085ba5214a96
+# ╠═016c3b95-fa66-4373-9d5b-391d4050cd6d
+# ╟─5d443e53-fcca-49f3-8113-f080651d7bb6
+# ╠═2f6cf848-63a1-4931-8210-d4807f8ba08a
+# ╟─c3a7a7a6-ab5c-49cd-9fc5-c76887dd1eed
+# ╠═786c0157-350c-40f0-b16a-68a45cdb6320
+# ╟─0eda8ebf-a726-4eff-9a1d-ab6b70ba550a
+# ╠═dd968ab5-effa-4154-9e5c-884d50a7af2a
+# ╟─8c1ebd17-155a-43eb-997c-44deac57ac3c
+# ╠═b7727cf0-b4fa-41ae-a08f-5ea0a60b5f4e
+# ╟─01db168a-b00b-4560-a124-dc4a630a518d
+# ╠═3fdd5c1d-b144-4d71-9ba8-0e798a6eefb2
+# ╠═19a1112b-8a5f-4465-9226-76a571310e32
+# ╠═19aa18fb-bbd8-476d-a706-fc81298ddf59
+# ╟─c123b8cc-a213-4409-976c-7a644a5275a5
+# ╠═ff1b6c07-7c09-4bd2-9bfe-f0ad92dda233
+# ╠═be9563fb-a7ad-4932-8ad0-113febf1452b
+# ╟─61b12d0d-2bc1-47ea-a3fa-c0cd5913e15c
+# ╠═51b1da8a-662e-4470-9f68-bfc857f5b90a
+# ╟─7c7ee006-ae8a-467c-8296-32bfddad2eee
+# ╟─74453bd8-d698-4d1d-9a3d-ae07f620f66f
 # ╟─b631844b-3eab-4eae-b850-d9441704791f
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

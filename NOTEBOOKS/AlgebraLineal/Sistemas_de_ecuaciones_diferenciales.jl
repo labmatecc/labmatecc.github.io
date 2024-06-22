@@ -90,7 +90,7 @@ md"""Finalmente, mostramos la solución de la ecuación dada."""
 plot(sol, label="Solution", xlabel="Time", ylabel="u(t)")
 
 # ╔═╡ ee7d2737-343d-40c2-a03d-281d31d3d49d
-md"""# Sistemas lineales homogeneos"""
+md"""# Sistemas lineales homogéneos"""
 
 # ╔═╡ eeb206c1-9159-4b11-8130-b77050f50d7c
 md"""Las ecuaciones diferenciales ordinarias simultáneas surgen de forma inherente en situaciones problemáticas que involucran múltiples variables dependientes. Cada una de estas variables es una función única de una sola variable independiente, representada como $t$. Las variables dependientes se denotan como $x_1, x_2, \cdots, x_n$. La derivación con respecto a $t$ se indica con $'$.
