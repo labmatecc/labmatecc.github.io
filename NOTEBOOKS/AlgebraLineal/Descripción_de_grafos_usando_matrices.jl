@@ -230,7 +230,7 @@ gplot(G₇)
 md"""Ahora consideremos la matriz de adyacencia de un grafo con bucles y visualicemos su grafo"""
 
 # ╔═╡ c0aafca6-ad08-4238-bd81-458683adeca7
-DG₁=[1 1 1; 0 0 1; 0 0 1]
+DG₁=[1 1 1; 0 1 1; 0 0 0]
 
 # ╔═╡ 0e087304-2e37-4ca6-8dc0-c0a85ee042b1
 DG₂=graphplot(DiGraph(DG₁))
@@ -352,7 +352,7 @@ PlutoUI = "~0.7.54"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.3"
+julia_version = "1.10.4"
 manifest_format = "2.0"
 project_hash = "6fc89858ad65f3b86b39002c00fb4873b42d3b42"
 
@@ -1901,7 +1901,7 @@ version = "1.4.1+1"
 # ╠═eeed9be5-4307-4a92-89a4-8da5b345a7f4
 # ╠═783e29b0-c278-4515-9e01-b74a5be514c0
 # ╠═dc99dfb6-d5ee-45b5-a4a6-b226c0003b28
-# ╠═c490b85f-4dd1-4927-bc86-ca7ecb49a2be
+# ╟─c490b85f-4dd1-4927-bc86-ca7ecb49a2be
 # ╠═b2690ecd-b721-466b-9067-20872443974b
 # ╠═69a4049e-7c9a-47a1-a846-43e1ac2c67d4
 # ╠═1efa558c-7b1f-4ed7-b6cb-b95ddb19ae28
