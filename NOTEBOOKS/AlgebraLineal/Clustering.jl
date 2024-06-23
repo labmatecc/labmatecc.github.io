@@ -182,20 +182,21 @@ end
 # ╔═╡ acd5ba29-4e13-4ce9-98d3-7a62de7754b4
 md"""Aplicando el algoritmo anterior a los datos, para $k=3$ se obtiene lo siguiente"""
 
+# ╔═╡ a6a58789-e4ee-488a-a08e-173779fd97ab
+@bind k₁ Slider(2:1:5, show_value=true, default=3)
+
 # ╔═╡ f40a0030-1830-4543-8259-a039e70a76ea
-begin
-k₁ = 3
 assignment₃, reps₃ = kmeans(X, k₁)
-end
 
 # ╔═╡ 50f9f855-1daf-41d8-aeb2-195fe02f5dae
 begin
-N = length(X)
-grps = [[X[i] for i=1:N if assignment₃[i] == j] for j=1:k₁]
-scatter([c[1] for c in grps[1]], [c[2] for c in grps[1]])
-scatter!([c[1] for c in grps[2]], [c[2] for c in grps[2]])
-scatter!([c[1] for c in grps[3]], [c[2] for c in grps[3]])
-plot!(legend = false, grid = false, size = (500,500), xlims = (-1.5,2.5), ylims = (-2,2))
+	N = length(X)
+	grps = [[X[i] for i=1:N if assignment₃[i] == j] for j=1:k₁]
+	scatter([c[1] for c in grps[1]], [c[2] for c in grps[1]])
+	for k in 1:k₁
+		scatter!([c[1] for c in grps[k]], [c[2] for c in grps[k]])
+	end
+	plot!(legend = false, grid = false, size = (500,500), xlims = (-1.5,2.5), ylims = (-2,2))
 end
 
 # ╔═╡ 97f5fdff-4e5c-40d1-a4d4-6887d6ffd7fd
@@ -361,10 +362,9 @@ begin
 N1 = length(datos_norm)
 grps1 = [[datos_norm[i] for i=1:N1 if assignment₄[i] == j] for j=1:k₂]
 scatter([c[1] for c in grps1[1]], [c[2] for c in grps1[1]])
-scatter!([c[1] for c in grps1[2]], [c[2] for c in grps1[2]])
-scatter!([c[1] for c in grps1[3]], [c[2] for c in grps1[3]])
-scatter!([c[1] for c in grps1[4]], [c[2] for c in grps1[4]])
-scatter!([c[1] for c in grps1[5]], [c[2] for c in grps1[5]])
+	for k in 1:k₂
+		scatter!([c[1] for c in grps1[k]], [c[2] for c in grps1[k]])
+	end
 plot!(legend = false, grid = false, size = (500,500))
 end
 
@@ -1708,6 +1708,7 @@ version = "1.4.1+1"
 # ╟─d3abb069-8a6b-4253-a489-3cd56ddc89b5
 # ╠═aa09bbf6-7ef6-4359-8181-a8272a498cce
 # ╟─acd5ba29-4e13-4ce9-98d3-7a62de7754b4
+# ╠═a6a58789-e4ee-488a-a08e-173779fd97ab
 # ╠═f40a0030-1830-4543-8259-a039e70a76ea
 # ╠═50f9f855-1daf-41d8-aeb2-195fe02f5dae
 # ╟─97f5fdff-4e5c-40d1-a4d4-6887d6ffd7fd
@@ -1750,7 +1751,7 @@ version = "1.4.1+1"
 # ╠═e0827d6d-4339-4161-94c8-311cec3f7f64
 # ╠═f0efd8b5-74d0-4490-bc5c-5ef40a2aea31
 # ╟─26a4fe64-ab46-4f10-8037-c0427f50322c
-# ╠═4093a818-cebb-40b1-b934-43a124dc1ca2
+# ╟─4093a818-cebb-40b1-b934-43a124dc1ca2
 # ╟─f415ea7b-d19c-4714-bfdc-bf52e0bac815
 # ╟─0635b3a0-652c-40ae-af64-3b4ad75836a8
 # ╟─00000000-0000-0000-0000-000000000001
