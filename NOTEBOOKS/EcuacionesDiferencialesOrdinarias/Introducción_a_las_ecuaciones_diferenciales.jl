@@ -370,11 +370,55 @@ md"""Ahora, resolvemos el problema y visualizamos su solución."""
 begin
 	solLz= solve(probLz)
 	plot(solLz, plotdensity = 10000)
-#	plot3d(solLz[1,:],solLz[2,:],solLz[3,:],width=0.3, color="red")
 end
+
+# ╔═╡ 8ea8c8be-4861-4e1f-8bab-917289dad7bf
+md"""A continuación se muestra su visualización en 3D."""
 
 # ╔═╡ 1abc71d1-530b-4949-b381-6060b8cbbda5
 plot(solLz, plotdensity = 10000, idxs = (1, 2, 3))
+
+# ╔═╡ 0382d1f2-14c8-4446-a363-8f09df93406e
+md"""Otra forma de visualizar lo anterior de manera más interactiva es la siguiente."""
+
+# ╔═╡ e07f3d30-3de0-4018-9076-4d041d477ddf
+begin
+Base.@kwdef mutable struct Lorenz
+    dt::Float64 = 0.02
+    σ::Float64 = 10
+    ρ::Float64 = 28
+    β::Float64 = 8/3
+    x::Float64 = rLz
+    y::Float64 = 0
+    z::Float64 = 0
+end
+
+function step!(l::Lorenz)
+    dx = l.σ * (l.y - l.x)
+    dy = l.x * (l.ρ - l.z) - l.y
+    dz = l.x * l.y - l.β * l.z
+    l.x += l.dt * dx
+    l.y += l.dt * dy
+    l.z += l.dt * dz
+end
+
+attractor = Lorenz()
+
+plt = plot3d(
+    1,
+    xlim = (-30, 30),
+    ylim = (-30, 30),
+    zlim = (0, 60),
+    title = "Lorenz",
+    legend = false,
+    marker = 2,
+)
+
+@gif for i=1:1500
+    step!(attractor)
+    push!(plt, attractor.x, attractor.y, attractor.z)
+end every 10
+end
 
 # ╔═╡ 4121acd2-1501-4dd4-9d8e-c3fd13ad5089
 md""" 
@@ -2686,7 +2730,7 @@ version = "1.4.1+1"
 # ╠═66d68f93-0ee0-4a69-9c3f-7826f8314afe
 # ╟─660f4b79-a6e7-403b-b98e-ffb988ea62be
 # ╠═bd234ad2-8177-4664-933d-0865aad30c3b
-# ╠═c7187912-a1cd-48e6-8f3d-59abaca87bbd
+# ╟─c7187912-a1cd-48e6-8f3d-59abaca87bbd
 # ╠═daea35e6-d54c-4332-b6e8-612214939ebf
 # ╟─1c2ab61c-602a-402f-b0a6-09ac404ac753
 # ╠═c175d220-1e3f-499d-86cb-a1ca6d53926f
@@ -2706,7 +2750,10 @@ version = "1.4.1+1"
 # ╠═0a651952-cf4e-4496-bcea-922b12a71ac7
 # ╟─dedf237a-cf63-458b-9adb-0583cc46f376
 # ╠═201b896c-dc5b-48b7-bc66-af2171d81b99
-# ╠═1abc71d1-530b-4949-b381-6060b8cbbda5
+# ╟─8ea8c8be-4861-4e1f-8bab-917289dad7bf
+# ╟─1abc71d1-530b-4949-b381-6060b8cbbda5
+# ╟─0382d1f2-14c8-4446-a363-8f09df93406e
+# ╟─e07f3d30-3de0-4018-9076-4d041d477ddf
 # ╟─4121acd2-1501-4dd4-9d8e-c3fd13ad5089
 # ╠═fe01d117-0818-4a02-bbaf-bd4dcab207ec
 # ╠═b7064277-97b6-40bf-9d15-1cefa3d7f1b8
