@@ -188,7 +188,7 @@ Esta es la ecuación polar de nuestra sección cónica, que puede ser una elipse
 Note así, que la órbita es una sección cónica con excentricidad $e = \frac{C_2 \cdot h^2}{k}$. Como los planetas permanecen en órbitas cerradas dentro del sistema solar, se cumple la primera ley de Kepler: la órbita de cada planeta es una elipse con el sol en uno de sus focos."""
 
 # ╔═╡ 7533a427-cffe-433f-b55b-23e1bee545ea
-md"""## Trayectoria orbital del planeta Tierra"""
+md"""## Trayectoria orbital de los planetas"""
 
 # ╔═╡ 62cfe850-a350-4303-b116-b79f0c542a8c
 md"""Consideremos las excentricidades de los siguientes planetas, estando el Sol en uno de los focos."""
