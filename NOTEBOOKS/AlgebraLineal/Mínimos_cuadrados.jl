@@ -22,7 +22,9 @@ md"""Este cuaderno esta en construcción y puede ser modificado en el futuro par
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
 # ╔═╡ cd328cd6-eee3-402a-b04d-1b72db08bb18
-md"""Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo."""
+md"""**Este cuaderno está basado en actividades del curso Modelos Matemáticos de la Universidad Nacional, sede Bogotá, dictado por el profesor Jorge Mauricio Ruiz en 2023-2.**
+
+Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo."""
 
 # ╔═╡ d732b26f-f0ec-47ca-9383-9a4930c444ed
 md"""Usaremos las siguientes librerías:"""
@@ -411,7 +413,7 @@ md"""$\textit{Figura 2. El Bautismo de Cristo. Imagen tomada de Wikipedia.}$"""
 md"""Vamos a seleccionar $n$ puntos que delineen cada elipse."""
 
 # ╔═╡ ca3f7f44-fa66-44e5-b34c-7bfda72edb19
-n=10 #Seleccione n puntos de cada elipse
+n=20 #Seleccione n puntos de cada elipse
 
 # ╔═╡ 8abf8ea9-5d7e-43d6-9f81-4714dd30c9d4
 begin
@@ -2105,7 +2107,7 @@ version = "3.5.0+0"
 # ╟─cc7369b7-d0bb-4e63-9402-bf8aa7b4dc93
 # ╟─d8180bd6-8a0d-4647-a084-366705f2a4d7
 # ╟─005e3d8f-b411-4088-936e-59473fb00f6d
-# ╠═925a3293-94a3-4e25-b0af-4d57f87812f0
+# ╟─925a3293-94a3-4e25-b0af-4d57f87812f0
 # ╟─222ce78d-40d2-4c6a-b692-322c680b90bc
 # ╟─abc2a459-9dd8-4cfe-9c51-82d493574da2
 # ╟─ea01b6cc-e60f-406a-bf7c-323df4c3d44e
