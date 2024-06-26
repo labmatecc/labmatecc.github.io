@@ -68,4 +68,4 @@ header-includes: |
     }
   </style>
 
-<iframe src="https://labmatecc.github.io/HTML%20Lab/AL/M%C3%ADnimos_cuadrados.html" width="100%" height="600px"></iframe>
+<iframe src="https://labmatecc.github.io/HTML%20Lab/AL/Minimos_cuadrados.html" width="100%" height="600px"></iframe>
