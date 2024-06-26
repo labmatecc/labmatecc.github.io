@@ -23,7 +23,7 @@ end
 PlutoUI.TableOfContents(title="Compresión de imágenes", aside=true)
 
 # ╔═╡ bbdde380-96bd-4cec-9404-4a87e4ff20ad
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a jcgalvisa@unal.edu.co
+md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a labmatecc_bog@unal.edu.co
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
@@ -1014,7 +1014,7 @@ TestImages = "~1.8.0"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.3"
+julia_version = "1.10.4"
 manifest_format = "2.0"
 project_hash = "2dad98fdd432d57470d1973d1ee2acc9e2152558"
 

@@ -36,7 +36,7 @@ end
 PlutoUI.TableOfContents(title="Clustering", aside=true)
 
 # ╔═╡ 061014c9-ac70-4007-bf5a-1829939d3833
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a jcgalvisa@unal.edu.co
+md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a labmatecc_bog@unal.edu.co
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
