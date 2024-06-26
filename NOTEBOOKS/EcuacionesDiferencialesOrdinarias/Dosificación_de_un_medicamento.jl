@@ -34,7 +34,7 @@ md"""Este cuaderno esta en construcción y puede ser modificado en el futuro par
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
 # ╔═╡ 028dbab3-6657-4fd2-8643-2c776b7a82e9
-md"""**Este cuaderno está basado en actividades del curso Modelos Matemáticos de la Universidad Nacional, sede Bogotá, dictado por el profesor Jorge Mauricio Ruiz en 2023-2.**
+md"""**Este cuaderno está basado en actividades del curso Modelos Matemáticos de la Universidad Nacional de Colombia, sede Bogotá, dictado por el profesor Jorge Mauricio Ruiz en 2023-2.**
 
 Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo. 
 """
