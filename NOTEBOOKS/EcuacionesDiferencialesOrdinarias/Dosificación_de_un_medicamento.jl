@@ -29,7 +29,7 @@ end
 PlutoUI.TableOfContents(title="Dosificación de un medicamento", aside=true)
 
 # ╔═╡ abc232ff-c0f3-414c-86f5-0bf7065b661e
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a labmatecc_bog@unal.edu.co
+md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
@@ -61,7 +61,7 @@ Vamos a proponer un modelo matemático que permita saber que sucede con la conce
 
 # ╔═╡ fce1bcc6-fbfc-4556-8672-8197b1a15727
 begin
-	url = "https://github.com/laboratoriodealgebralineal/laboratoriodealgebralineal.github.io/blob/main/Im%C3%A1genes/acetaminofen.png?raw=true"
+	url = "https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/acetaminofen.png?raw=true"
 	fname = download(url) #bajamos la imagen a la máquina local
 	imag = load(fname) #declaramos la variable "imag"
 end
@@ -95,7 +95,7 @@ md""" Sea $\beta$ la constante de absorción del medicamento; esta constante de 
 
 # ╔═╡ 5b813fdb-c5f4-48c6-b59e-8598e4a6ff5f
 begin
-	url2 = "https://github.com/laboratoriodealgebralineal/laboratoriodealgebralineal.github.io/blob/main/Im%C3%A1genes/acetaminofen2.png?raw=true"
+	url2 = "https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/acetaminofen2.png?raw=true"
 	fname2 = download(url2) #bajamos la imagen a la máquina local
 	imag2 = load(fname2) #declaramos la variable "imag"
 end

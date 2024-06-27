@@ -18,7 +18,7 @@ end
 PlutoUI.TableOfContents(title="El problema de los dos cuerpos", aside=true)
 
 # ╔═╡ e1ec3b17-f1d4-462a-9324-398d45b3dcea
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a jcgalvisa@unal.edu.co
+md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
@@ -41,7 +41,7 @@ Para situaciones donde una partícula en movimiento experimenta una fuerza que s
 
 # ╔═╡ 51fe4228-8b1c-4b55-a0fd-5c20c9c6bcef
 let
-	url = "https://github.com/laboratoriodealgebralineal/laboratoriodealgebralineal.github.io/blob/main/Im%C3%A1genes/cuerpos1.png?raw=true"
+	url = "https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/cuerpos1.png?raw=true"
 	fname = download(url) #bajamos la imagen a la máquina local
 	imag = load(fname) #declaramos la variable "imag"
 end
@@ -167,7 +167,7 @@ $r=\frac{\frac{h^2}{k}}{1+e\cos{\theta}}.$"""
 
 # ╔═╡ 67312149-15a9-48fc-a9d7-226b086042d5
 begin
-	url = "https://github.com/laboratoriodealgebralineal/laboratoriodealgebralineal.github.io/blob/main/Im%C3%A1genes/cuerpos2.png?raw=true"
+	url = "https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/cuerpos2.png?raw=true"
 	fname = download(url) #bajamos la imagen a la máquina local
 	imag = load(fname) #declaramos la variable "imag"
 end

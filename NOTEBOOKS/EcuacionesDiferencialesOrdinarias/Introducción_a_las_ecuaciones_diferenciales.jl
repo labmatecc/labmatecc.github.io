@@ -24,7 +24,7 @@ using DifferentialEquations, Plots, SymPy, CalculusWithJulia
 PlutoUI.TableOfContents(title="Introducción a las ecuaciones diferenciales", aside=true)
 
 # ╔═╡ a006d92d-5597-41f9-9322-811bc601a798
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a jcgalvisa@unal.edu.co
+md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
@@ -2705,18 +2705,18 @@ version = "1.4.1+1"
 # ╠═6cb2c1a0-2894-4079-81b0-0302f86ae2e7
 # ╠═1f4f307e-a8ae-46a5-a4e2-450ebf4aeb85
 # ╟─aed74dae-ed6a-400c-84a2-2a89649a684a
-# ╠═a08fbf43-239b-4daf-995d-f0b78e813d2b
+# ╟─a08fbf43-239b-4daf-995d-f0b78e813d2b
 # ╟─18d4f2cc-bc9b-4bb8-8f91-758e8be7d8fd
 # ╠═c73d9679-435c-495f-88f9-8154ec0f5d38
 # ╠═015455f2-ad88-462e-a190-3a500cd2761e
 # ╠═52a56709-607a-4644-9240-df53cde2d908
 # ╟─c513d916-ae6e-4474-98e0-2212e72ad465
-# ╠═279b8f23-9d3f-4d32-bce9-071b72af5d54
+# ╟─279b8f23-9d3f-4d32-bce9-071b72af5d54
 # ╟─808424f8-f7af-4717-9658-2272af28a887
 # ╠═39e2b3c5-fc61-4115-af9f-b4b22c6cb16e
 # ╠═5473012d-f309-4f47-b087-b1a99b09ac9c
 # ╟─f76c3273-20db-4b8a-a60e-d0a63899891b
-# ╠═e5b827d2-b54a-4d59-97e3-65b5cd137b98
+# ╟─e5b827d2-b54a-4d59-97e3-65b5cd137b98
 # ╟─eb640cd4-cb24-46c5-b57c-961d96c82760
 # ╠═5d297f52-cb8f-4ffa-9011-77d44e18a19f
 # ╟─d18412dc-a86c-46bf-b37d-ed546df358dc
@@ -2729,35 +2729,35 @@ version = "1.4.1+1"
 # ╟─690dd459-801f-49c3-8f94-64e4ccc6079a
 # ╠═66d68f93-0ee0-4a69-9c3f-7826f8314afe
 # ╟─660f4b79-a6e7-403b-b98e-ffb988ea62be
-# ╠═bd234ad2-8177-4664-933d-0865aad30c3b
+# ╟─bd234ad2-8177-4664-933d-0865aad30c3b
 # ╟─c7187912-a1cd-48e6-8f3d-59abaca87bbd
-# ╠═daea35e6-d54c-4332-b6e8-612214939ebf
+# ╟─daea35e6-d54c-4332-b6e8-612214939ebf
 # ╟─1c2ab61c-602a-402f-b0a6-09ac404ac753
-# ╠═c175d220-1e3f-499d-86cb-a1ca6d53926f
+# ╟─c175d220-1e3f-499d-86cb-a1ca6d53926f
 # ╟─250d3df2-81d7-4337-9b33-c03d9aa48b49
 # ╠═c0bd9c3e-ab2e-4920-bcbb-3d808a6eea85
 # ╠═76e043d6-94f2-4a57-b77b-0501531a53ed
 # ╟─7279b82e-8cd8-467b-8844-e09679013af2
 # ╠═4458279c-3dee-4635-9ecd-0f2016d4bc59
-# ╠═69448462-d422-4c69-aa05-0fabdda32a51
+# ╟─69448462-d422-4c69-aa05-0fabdda32a51
 # ╠═a23f6260-3aad-4b2f-9e51-0d44ea6553d3
 # ╟─b8ce6daa-0074-4b07-8275-ef92f05b6aa1
-# ╠═32314f01-96ba-408c-9a17-d498ce47c106
+# ╟─32314f01-96ba-408c-9a17-d498ce47c106
 # ╟─b006034b-b0e9-4597-9d63-7458018ef19f
 # ╟─0b9975e6-e4fa-40ce-bf42-3a9c82cd1e59
 # ╠═15e62ee0-ea49-48c3-adba-2f0e6867a8a7
 # ╠═7afd63fd-aa6f-4f49-a0f3-2367ac7a5226
 # ╠═0a651952-cf4e-4496-bcea-922b12a71ac7
 # ╟─dedf237a-cf63-458b-9adb-0583cc46f376
-# ╠═201b896c-dc5b-48b7-bc66-af2171d81b99
+# ╟─201b896c-dc5b-48b7-bc66-af2171d81b99
 # ╟─8ea8c8be-4861-4e1f-8bab-917289dad7bf
 # ╟─1abc71d1-530b-4949-b381-6060b8cbbda5
 # ╟─0382d1f2-14c8-4446-a363-8f09df93406e
 # ╠═e07f3d30-3de0-4018-9076-4d041d477ddf
 # ╟─4121acd2-1501-4dd4-9d8e-c3fd13ad5089
 # ╠═fe01d117-0818-4a02-bbaf-bd4dcab207ec
-# ╠═b7064277-97b6-40bf-9d15-1cefa3d7f1b8
-# ╠═fd0f8f03-bf48-48b2-866f-102dc31a745b
+# ╟─b7064277-97b6-40bf-9d15-1cefa3d7f1b8
+# ╟─fd0f8f03-bf48-48b2-866f-102dc31a745b
 # ╟─e355d521-cec7-4fb5-9b58-e8e9a46f43f7
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

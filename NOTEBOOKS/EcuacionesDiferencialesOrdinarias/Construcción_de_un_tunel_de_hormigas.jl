@@ -18,7 +18,7 @@ end
 PlutoUI.TableOfContents(title="Construcción de un tunel de hormigas", aside=true)
 
 # ╔═╡ 3c96e9bc-108b-498f-9ffd-88d1a60f7246
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a jcgalvisa@unal.edu.co
+md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
@@ -64,7 +64,7 @@ Como mencionamos anteriormente $x$ es la longitud del túnel en pies que constru
 
 # ╔═╡ e078a44d-91b9-447c-846d-77d09c9381a0
 begin
-	url = "https://github.com/laboratoriodealgebralineal/laboratoriodealgebralineal.github.io/blob/main/Im%C3%A1genes/Hormiga1.png?raw=true"
+	url = "https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/Hormiga1.png?raw=true"
 	fname = download(url) #bajamos la imagen a la máquina local
 	imag = load(fname) #declaramos la variable "imag"
 end
@@ -79,7 +79,7 @@ Se hace una distinción entre $T(x + h) - T(x)$ y $T(h)$, explicando que el prim
 
 # ╔═╡ cfa7a704-b305-444f-a017-29599e4c4aa7
 begin
-	url2 = "https://github.com/laboratoriodealgebralineal/laboratoriodealgebralineal.github.io/blob/main/Im%C3%A1genes/Hormiga2.png?raw=true"
+	url2 = "https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/Hormiga2.png?raw=true"
 	fname2 = download(url2) #bajamos la imagen a la máquina local
 	imag2 = load(fname2) #declaramos la variable "imag"
 end

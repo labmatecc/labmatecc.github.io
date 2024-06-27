@@ -26,7 +26,7 @@ end
 PlutoUI.TableOfContents(title="Trayectorias ortogonales", aside=true)
 
 # ╔═╡ e1ec3b17-f1d4-462a-9324-398d45b3dcea
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a jcgalvisa@unal.edu.co
+md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
@@ -2418,7 +2418,7 @@ version = "1.4.1+1"
 # ╟─381eb505-54f6-4afc-a3ca-b61c8381a9b5
 # ╟─03aa4a05-fdc3-40f5-9f84-69c4c4a2c13b
 # ╠═65874f41-5609-47aa-9d05-17755a523062
-# ╠═53155f86-121b-4a63-9672-1990d1c70cbd
+# ╟─53155f86-121b-4a63-9672-1990d1c70cbd
 # ╟─18bd48f1-651c-4b75-8dfa-c8f5d73811a4
 # ╟─f989a1b4-1821-48a1-a141-bb8086e2ccb7
 # ╠═99f8749b-79ac-4709-8ac3-4fb54d3f61db
