@@ -17,7 +17,7 @@ end
 PlutoUI.TableOfContents(title="Funciones Complejas", aside=true)
 
 # ╔═╡ c47e305f-6972-4aac-b36a-0cbc3c4f8789
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a jcgalvisa@unal.edu.co
+md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
@@ -146,8 +146,6 @@ md"""Otra representación que podemos obtener de la función $f(z)$ en $\mathbb{
 
 # ╔═╡ 91def84f-c450-4f86-9fd4-0e43f206f4ba
 begin 
-	plotly()  # Configura PlotlyJS como backend
-
 	xs₃ = -2π:0.1:2π
 	ys₃ = -2π:0.1:2π
 	zs₃ = [Complex(xi, yi) for xi in xs₃, yi in ys₃]
@@ -176,8 +174,6 @@ md"""Por último, veamos otra representación de la función $f(z)$ en $\mathbb{
 
 # ╔═╡ 4675928d-d1ae-4c43-81f0-a6d3029fc95d
 begin 
-	plotly()  # Configura PlotlyJS como backend
-
 	xs₄ = -2π:0.1:2π
 	ys₄ = -2π:0.1:2π
 	zs₄ = [Complex(xi, yi) for xi in xs₄, yi in ys₄]
@@ -365,7 +361,7 @@ SymPy = "~2.0.1"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.3"
+julia_version = "1.10.4"
 manifest_format = "2.0"
 project_hash = "01fd6e350675798c43923baeb25ad82752ba3d56"
 

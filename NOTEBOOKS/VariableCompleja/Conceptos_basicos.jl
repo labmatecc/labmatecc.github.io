@@ -24,7 +24,7 @@ using Plots, ComplexPlots, ComplexValues
 PlutoUI.TableOfContents(title="Conceptos básicos", aside=true)
 
 # ╔═╡ 5a638263-06dd-4f61-b2af-40e5eeb2b9c6
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a jcgalvisa@unal.edu.co
+md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
@@ -52,17 +52,35 @@ Donde $b_i\in\{0,1\}$.
 Acontinuación se muestran ejemplos de esto.
 """
 
+# ╔═╡ e4f9582a-9e9c-41e9-bb91-ef7aa5386235
+@bind n Slider(-50:50, show_value=true, default=0)
+
+# ╔═╡ b5db23af-8f59-47d4-b480-785d82adb22f
+typeof(n) #tipo de dato
+
 # ╔═╡ 995bfd52-77ac-4703-ae15-2f3ce22dc369
 md"""La representación como un entero de 64 bits es la siguiente"""
 
+# ╔═╡ c30376a7-c95f-4e2a-b489-0cdad0357ae4
+bitstring(n)
+
+# ╔═╡ fb62ff9c-6fa0-4c5c-b27d-56a1e67f5237
+length(bitstring(n)) #longitud del entero
+
 # ╔═╡ 1e2a9f02-94b7-4ead-b073-540e1607cc51
 md"""De la siguiente forma podemos representar a $n$ como un entero de 8 bits."""
+
+# ╔═╡ 1c1767ce-28f1-4f94-9e28-f61ddb41ef45
+bitstring(Int8(n))
 
 # ╔═╡ 3f89cd72-92fe-4565-92f5-b01720689369
 md"""**Nota:** La función $\texttt{Int8}$ representa números enteros con signo de 8 bits, el rango de valores que puede almacenar es de -128 a 127. Puede representar números negativos."""
 
 # ╔═╡ 9619f81f-e38a-40d5-8dce-843662bcf875
 md"""También podemos representar a $n$ como un entero de 8 bits, de la siguiente forma."""
+
+# ╔═╡ 4c74036a-79ec-4f53-a717-b089b39e2d0a
+bitstring(UInt8(n))
 
 # ╔═╡ 7f1782a0-2b5c-4687-b0b7-39057b9cb6cc
 md"""**Nota:** La función $\texttt{UInt8}$ representa números enteros sin signo de 8 bits, el rango de valores que puede almacenar es de 0 a 255. No puede representar números negativos."""
@@ -446,47 +464,11 @@ r, θ
 # ╔═╡ 4084ca08-1790-40cd-8e99-5ce7b7cad927
 md"""Así $z^2$ es el siguiente número complejo."""
 
-# ╔═╡ b5db23af-8f59-47d4-b480-785d82adb22f
-typeof(n) #tipo de dato
-
-# ╔═╡ c30376a7-c95f-4e2a-b489-0cdad0357ae4
-bitstring(n)
-
-# ╔═╡ fb62ff9c-6fa0-4c5c-b27d-56a1e67f5237
-length(bitstring(n)) #longitud del entero
-
-# ╔═╡ 1c1767ce-28f1-4f94-9e28-f61ddb41ef45
-bitstring(Int8(n))
-
-# ╔═╡ 4c74036a-79ec-4f53-a717-b089b39e2d0a
-bitstring(UInt8(n))
-
-# ╔═╡ 5851bdf2-cf91-45a1-a34d-34b1ef4588ea
-zn = r^n * cis(n * θ)
-
-# ╔═╡ 7280ebd8-7dd9-4961-8280-89925beabe94
-z₈^n
-
 # ╔═╡ 268f7dd9-c21a-425d-8562-cffd0e77033c
 md"""**Nota:** Note que el resultado no es exacto, es decir no es exactamente el mismo que al realizar $z^3$. Esto se debe a que estamos trabajando con números de punto flotante."""
 
-# ╔═╡ 38db4a8e-61b4-4ccd-896b-8d92b8acd332
-begin
-	scatter([real.(z₈)], [imag.(z₈)], color=:pink, label="z", aspect_ratio=:equal, xlabel="Parte Real", ylabel="Parte Imaginaria", title="Plano complejo")
-	scatter!([real.(zn)], [imag.(zn)], color=:red, label="z^$n")
-	scatter!([0], [0], color=:green, label="(0, 0)")
-	plot!([0, real.(z₈)], [0, imag.(z₈)], color=:gray, label="")
-	plot!([0, real.(zn)], [0, imag.(zn)], color=:gray, label="")
-end
-
 # ╔═╡ 1110da58-1c8e-420e-a9c3-d90f6787d219
 md"""Otra forma de graficar esto, es de la siguiente forma:"""
-
-# ╔═╡ 8c684d61-0015-44c3-9659-1dd151d6a2ed
-begin
-	plot([0,angle(zn)], [0,abs(zn)], proj = :polar, m = 2, legend=false, title="Plano complejo")
-	plot!([0,θ], [0,r], proj = :polar, m = 2, legend=false)
-end
 
 # ╔═╡ 64e9c3fc-a2de-4ea7-8d9a-5a8ab55cf1e4
 md"""# Raíces
@@ -587,8 +569,26 @@ end
 # ╔═╡ c5437c5b-038b-4774-a483-f910e179716d
 md"""Con 3 iteraciones en el intervalo $[0,1]$,"""
 
-# ╔═╡ d82483d4-30ab-41a1-ad47-34b398055fb0
-@bind m Slider(0:1:10, show_value=true, default=3)
+# ╔═╡ 5851bdf2-cf91-45a1-a34d-34b1ef4588ea
+zn = r^m * cis(m * θ)
+
+# ╔═╡ 8c684d61-0015-44c3-9659-1dd151d6a2ed
+begin
+	plot([0,angle(zn)], [0,abs(zn)], proj = :polar, m = 2, legend=false, title="Plano complejo")
+	plot!([0,θ], [0,r], proj = :polar, m = 2, legend=false)
+end
+
+# ╔═╡ 7280ebd8-7dd9-4961-8280-89925beabe94
+z₈^m
+
+# ╔═╡ 38db4a8e-61b4-4ccd-896b-8d92b8acd332
+begin
+	scatter([real.(z₈)], [imag.(z₈)], color=:pink, label="z", aspect_ratio=:equal, xlabel="Parte Real", ylabel="Parte Imaginaria", title="Plano complejo")
+	scatter!([real.(zn)], [imag.(zn)], color=:red, label="z^$m")
+	scatter!([0], [0], color=:green, label="(0, 0)")
+	plot!([0, real.(z₈)], [0, imag.(z₈)], color=:gray, label="")
+	plot!([0, real.(zn)], [0, imag.(zn)], color=:gray, label="")
+end
 
 # ╔═╡ 3fa547e2-8d56-40dc-9168-016fe1198508
 md"""se obtienen los siguientes puntos sobre el plano complejo"""
@@ -613,14 +613,14 @@ md"""# Referencias
 
 [4] Kigami, J. (2001). *Analysis on fractals* (Vol. 143). Cambridge University Press."""
 
-# ╔═╡ e4f9582a-9e9c-41e9-bb91-ef7aa5386235
-@bind n Slider(-50:50, show_value=true, default=0)
-
-# ╔═╡ ee349ac2-9442-40c2-b20e-7e02abacb56e
+# ╔═╡ d82483d4-30ab-41a1-ad47-34b398055fb0
 # ╠═╡ disabled = true
 #=╠═╡
-@bind n Slider(-10:1:10, show_value=true, default=2)
+@bind m Slider(0:1:10, show_value=true, default=3)
   ╠═╡ =#
+
+# ╔═╡ ee349ac2-9442-40c2-b20e-7e02abacb56e
+@bind m Slider(-10:1:10, show_value=true, default=2)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -641,7 +641,7 @@ PlutoUI = "~0.7.58"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.3"
+julia_version = "1.10.4"
 manifest_format = "2.0"
 project_hash = "dc61a35bc6186d82a863669071ec6c74908e138a"
 
