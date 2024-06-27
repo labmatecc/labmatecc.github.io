@@ -23,7 +23,7 @@ end
 PlutoUI.TableOfContents(title="Compresión de imágenes", aside=true)
 
 # ╔═╡ bbdde380-96bd-4cec-9404-4a87e4ff20ad
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a labmatecc_bog@unal.edu.co
+md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 

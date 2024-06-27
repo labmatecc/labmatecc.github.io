@@ -29,7 +29,7 @@ end
 PlutoUI.TableOfContents(title="Sistemas de ecuaciones diferenciales", aside=true)
 
 # ╔═╡ b719f24e-6851-4613-b99c-47c76a7dd7e4
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a jcgalvisa@unal.edu.co
+md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 

@@ -14,7 +14,7 @@ using LinearAlgebra, DelimitedFiles, Plots
 PlutoUI.TableOfContents(title="Independencia lineal I", aside=true)
 
 # ╔═╡ b47f513f-114d-4b96-b866-0090c9f0d107
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a jcgalvisa@unal.edu.co
+md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
@@ -283,7 +283,7 @@ v = [ [1, 1, 0], [0, 1, 1], [1, 0, 1] ] #Definimos los vectores
 u = CGS(v) #Se genera el nuevo conjunto de vectores
 
 # ╔═╡ feb39913-bc19-4e14-91c3-2b1e6bc82d31
-md"""### Proceso de ortogonormalización de Gram-Schmidt Modificado"""
+md"""### Proceso de ortonormalización de Gram-Schmidt Modificado"""
 
 # ╔═╡ 969d8800-1e8d-46b8-a3cb-2039f8cd2788
 md""" Existen formulaciones alternativas del algoritmo que tienen mejores propiedades numéricas. La más conocida de ellas es el algoritmo de Gram-Schmidt Modificado. Dicho algoritmo busca mejorar la estabilidad numérica al evitar la proyección sobre todos los vectores anteriores en cada paso, reduciendo así los errores de redondeo. Dicho algoritmo es el siguiente"""

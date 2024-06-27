@@ -14,7 +14,7 @@ using LinearAlgebra
 PlutoUI.TableOfContents(title="Independencia lineal II", aside=true)
 
 # ╔═╡ 5b6c5c95-eaaa-41c6-b153-3a7bc9fe989b
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a jcgalvisa@unal.edu.co
+md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
@@ -426,10 +426,12 @@ A₁₂ = floor.(10*rand( 3, 3))
 
 # ╔═╡ 9464edf3-1096-4e77-b64b-ad15fd256b76
 begin
-	if( A₁₂[3,1] !=0.0)
-	c₁, s₁ = Givens(A₁₂[2,1], A₁₂[3,1])
-	A₁₃= Giv(A₁₂ , 2,3 ,c₁,s₁)
-	end
+	if A₁₂[3,1] !=0.0
+		c₁, s₁ = Givens(A₁₂[2,1], A₁₂[3,1])
+		A₁₃= Giv(A₁₂ , 2,3 ,c₁,s₁)
+	else
+        A₁₃ = A₁₂
+    end
 	A₁₃
 end
 
@@ -713,7 +715,7 @@ PlutoUI = "~0.7.59"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.3"
+julia_version = "1.10.4"
 manifest_format = "2.0"
 project_hash = "e41793cbd1124ea5d05573eb874098b20a960e1d"
 

@@ -39,7 +39,7 @@ end
 PlutoUI.TableOfContents(title="Introducción al Procesamiento de Imágenes", aside=true)
 
 # ╔═╡ 20fd04ea-9d8d-45c5-b0ad-786d2bfa65ce
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a jcgalvisa@unal.edu.co
+md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
@@ -502,7 +502,7 @@ Unitful = "~1.19.0"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.3"
+julia_version = "1.10.4"
 manifest_format = "2.0"
 project_hash = "a93e4021cf5a6b3195783469fe8a0b628c95595b"
 

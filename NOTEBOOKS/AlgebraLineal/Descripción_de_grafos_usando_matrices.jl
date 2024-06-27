@@ -20,7 +20,7 @@ end
 PlutoUI.TableOfContents(title="Descripción de grafos usando matrices", aside=true)
 
 # ╔═╡ 1bccd39f-e381-4f15-a012-f26345596335
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a jcgalvisa@unal.edu.co
+md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
