@@ -14,20 +14,33 @@ macro bind(def, element)
     end
 end
 
+# ╔═╡ 462958f5-b6b9-404a-838c-e5fb3ff071fa
+using PlutoUI
+
 # ╔═╡ 9f36496a-0e7d-4a81-91e6-97b76c0feeb7
 begin
-	using PlutoUI
 	using HypertextLiteral
-	using LinearAlgebra
-	using Plots
+	using LinearAlgebra, Plots
 	using Colors, ColorVectorSpace, ImageShow, FileIO, ImageIO
 	using HypertextLiteral
-	using LinearAlgebra
-#	using GLMakie
 end
 
-# ╔═╡ d0862370-4841-11ee-161a-addd21c55aa4
+# ╔═╡ bbbefe27-eca3-4dbb-a6d8-6f9785cb5684
 PlutoUI.TableOfContents(title="Problemas sin restricciones", aside=true)
+
+# ╔═╡ 61045997-8418-4663-a4d4-79827d266899
+md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+
+Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
+
+# ╔═╡ 3de48cc6-9f3a-4fc8-b7a9-37a622f9227b
+md"""**Este cuaderno está basado en actividades del curso Introducción a la optimización de la Universidad Nacional de Colombia, sede Bogotá, dictado por el profesor Juan Galvis en 2024-1.**
+
+Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo. 
+"""
+
+# ╔═╡ d0a74529-8e62-4eae-83df-51c1ca0ecc37
+md"""Usaremos las siguientes librerías:"""
 
 # ╔═╡ f6c7bb66-a0f6-4ce8-a717-9b2db59411eb
 md"""# Métodos de descenso""" 
@@ -471,6 +484,9 @@ end
 
 # ╔═╡ 6b0ab3f5-98d9-4af2-81a2-623a25ac0d80
 pdnt(x₀,4)
+
+# ╔═╡ c523431c-c009-47aa-8825-d3b63744d9cf
+md"""# Referencias"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1777,7 +1793,11 @@ version = "1.4.1+0"
 """
 
 # ╔═╡ Cell order:
-# ╠═d0862370-4841-11ee-161a-addd21c55aa4
+# ╟─462958f5-b6b9-404a-838c-e5fb3ff071fa
+# ╟─bbbefe27-eca3-4dbb-a6d8-6f9785cb5684
+# ╟─61045997-8418-4663-a4d4-79827d266899
+# ╟─3de48cc6-9f3a-4fc8-b7a9-37a622f9227b
+# ╟─d0a74529-8e62-4eae-83df-51c1ca0ecc37
 # ╠═9f36496a-0e7d-4a81-91e6-97b76c0feeb7
 # ╟─f6c7bb66-a0f6-4ce8-a717-9b2db59411eb
 # ╟─880e413d-0aa8-42ee-87da-fe4de8d9a39e
@@ -1824,5 +1844,6 @@ version = "1.4.1+0"
 # ╟─a2784c8f-3141-4e17-8f98-0e7b91faccb1
 # ╠═cecc3464-92f6-40ed-be53-512dd1b2a916
 # ╠═6b0ab3f5-98d9-4af2-81a2-623a25ac0d80
+# ╟─c523431c-c009-47aa-8825-d3b63744d9cf
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
