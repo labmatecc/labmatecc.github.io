@@ -79,13 +79,13 @@ header-includes: |
 </html>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/EnterosYFlotante/" class="button">Enteros y Punto Flotante</a>
+  <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/EnterosYFlotante/" class="button">Enteros y de Punto Flotante</a>
 </div>
 
   <div class="container">
     <div class="person">
       <div class="info">
-        <p>. </p>
+        <p>Este cuaderno tiene un enfoque en la representación de números enteros y de punto flotante en el lenguaje de programación Julia. Comienza mostrando cómo se representan los enteros utilizando bits, proporcionando ejemplos prácticos y visuales mediante el uso de sliders y conversiones de enteros a cadenas de bits. Luego, se adentra en los números de punto flotante, explicando su representación detallada, incluyendo el signo, el exponente y el significando, y cómo estas representaciones pueden afectar los cálculos numéricos debido a errores de redondeo y límites de precisión. Se ofrecen ejemplos de sumas repetitivas y operaciones con números grandes y pequeños para ilustrar estos efectos. Además, el cuaderno introduce el cálculo simbólico utilizando la librería Symbolics en Julia, mostrando cómo realizar operaciones simbólicas que no dependen de valores numéricos específicos, y concluye con problemas prácticos y teóricos sobre la memoria requerida para almacenar números de punto flotante y las implicaciones de usar objetos en lugar de tipos de datos primitivos. </p>
       </div>
     </div>
   </div>

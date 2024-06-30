@@ -128,8 +128,8 @@ begin
 	println("signo=",bs[1],"\t exp=",bs[2:9],"\t significand=",bs[19:32])	     
 end
 
-# ╔═╡ 722a5e69-c32d-4b62-be6f-3a1b1fc04486
-md""" Otros formatos disponibles son los siguientes."""
+# ╔═╡ 16e82df5-bd72-45af-bbf3-0056a04e5727
+md"""Puede consultar cuántos bits usa cada uno de estos tipos de datos. """
 
 # ╔═╡ 2783c756-ae95-4112-b66c-927801c287e0
 begin
@@ -247,8 +247,8 @@ md""" Ahora numéros positivos grandes. """
 # ╔═╡ f274879e-93ca-409c-94a5-28b59556949f
 begin
 	xp=1.7E+308
-	y=1.8E+308 # overflow in numeric constant 
-	print("x=",xp," es un numéro de maquina pero  y genera desbordamiento\n")
+	#y=1.8E+308 # overflow in numeric constant 
+	print("x=",xp," es un numéro de maquina pero 'y' genera desbordamiento\n")
 end
 
 # ╔═╡ 0afa9453-b5af-494b-afba-4ddbeae5da8b
@@ -2127,7 +2127,7 @@ version = "1.4.1+1"
 # ╟─db2fc0fd-a234-490e-b3a0-936efd699b9c
 # ╠═d794e5ad-d893-41c3-a257-2ed0af0390dd
 # ╠═1bb97bb9-ef25-4a20-8d35-38b7caead7b9
-# ╟─722a5e69-c32d-4b62-be6f-3a1b1fc04486
+# ╟─16e82df5-bd72-45af-bbf3-0056a04e5727
 # ╠═2783c756-ae95-4112-b66c-927801c287e0
 # ╠═1f1253b4-f0d8-4a22-8eea-d0c57e3cff0c
 # ╠═649b75ff-e2a2-4b62-81a6-823d33ef330a
@@ -2168,6 +2168,6 @@ version = "1.4.1+1"
 # ╠═09119c27-56ee-4201-98b2-2dd0d5adfa64
 # ╟─3b0181ce-5038-4c34-9629-40adb5c585c2
 # ╟─818df822-2688-49c1-8ace-8494c7562800
-# ╠═dc6968ae-939a-4821-9072-853d0b5ff737
+# ╟─dc6968ae-939a-4821-9072-853d0b5ff737
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
