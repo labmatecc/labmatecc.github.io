@@ -402,17 +402,17 @@ md"""# Referencias
 
 [6] Bleacher Report. (2014). Athletes who ate insane amounts of food. Bleacher Report. Recuperado de https://bleacherreport.com/articles/1932914-athletes-who-ate-insane-amounts-of-food
 
-Dantzig, G. B. (1990). Diet problem and linear programming. Recuperado de https://web.archive.org/web/20160411141356/https://dl.dropboxusercontent.com/u/5317066/1990-dantzig-dietproblem.pdf
+[7] Dantzig, G. B. (1990). Diet problem and linear programming. Recuperado de https://web.archive.org/web/20160411141356/https://dl.dropboxusercontent.com/u/5317066/1990-dantzig-dietproblem.pdf
 
 [7] Elespectador. (2022, febrero 17). La pobreza en Colombia en medio de la pandemia. El Espectador. https://www.elespectador.com/economia/macroeconomia/la-pobreza-en-colombia-en-medio-de-la-pandemia/
 
-Frontiers in Nutrition. (2018). Dietary intake assessment. Frontiers in Nutrition, 5, Article 48. https://doi.org/10.3389/fnut.2018.00048
+[9] Frontiers in Nutrition. (2018). Dietary intake assessment. Frontiers in Nutrition, 5, Article 48. https://doi.org/10.3389/fnut.2018.00048
 
-Explain That. (2011). Logic of how simplex method works. Recuperado de http://explain-that.blogspot.com/2011/06/logic-of-how-simplex-method-works.html
+[10] Explain That. (2011). Logic of how simplex method works. Recuperado de http://explain-that.blogspot.com/2011/06/logic-of-how-simplex-method-works.html
 
-Towards Data Science. (n.d.). Maximizing profit using linear programming in Python. Recuperado de https://towardsdatascience.com/maximizing-profit-using-linear-programming-in-python-642520c43f6
+[11] Towards Data Science. (n.d.). Maximizing profit using linear programming in Python. Recuperado de https://towardsdatascience.com/maximizing-profit-using-linear-programming-in-python-642520c43f6
 
-Radzion. (n.d.). Introduction to linear programming. Recuperado de https://radzion.com/blog/operations/linearintro"""
+[12] Radzion. (n.d.). Introduction to linear programming. Recuperado de https://radzion.com/blog/operations/linearintro"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
