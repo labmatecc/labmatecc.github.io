@@ -121,7 +121,13 @@ header-includes: |
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>.</p>
+        <p>En este cuaderno se exploran métodos de integración numérica, como las sumas de Riemann, la regla del trapecio y la regla de Simpson.
+
+        Estos métodos utilizan particiones del intervalo \([a,b]\) para dividirlo en subintervalos de longitud \(\Delta x\). La suma de Riemann aproxima el área usando rectángulos con alturas determinadas por \(f(x_i)\) o \(f(x_{i-1})\), mientras que la regla del trapecio utiliza trapecios con bases \([x_{i-1}, x_i]\) y alturas \(f(x_{i-1})\) y \(f(x_i)\).
+
+        Un ejemplo concreto es calcular el área bajo la parábola \(y=x^2\) en \([0,3]\), donde se estima el área usando rectángulos y trapecios. La suma de Riemann izquierda y derecha, así como la regla del trapecio, se utilizan para aproximar estas áreas. Además, se muestra cómo estas aproximaciones convergen hacia el área exacta conforme aumenta el número de subintervalos. Otro ejemplo ilustra el uso de estos métodos para calcular el área bajo la curva \(y=e^{x^2}\) en \([0,1]\), utilizando tanto la suma de Riemann como la regla del trapecio.
+
+        Estos métodos son fundamentales para la aproximación numérica de integrales, ofreciendo herramientas para calcular áreas bajo curvas cuando no es posible realizar la integración analítica directa. </p>
       </div>
     </div>
   </div>
