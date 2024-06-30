@@ -81,15 +81,6 @@ header-includes: |
   <a href="https://labmatecc.github.io/Notebooks/AlgebraLineal/" class="button">Álgebra Lineal</a>
 </div>
 
-  <div class="container">
-    <div class="person">
-      <div class="info">
-        <p>Los cuadernos de Álgebra Lineal abarcan tanto temas fundamentales como aplicaciones prácticas. Comienzan con una introducción a las matrices, donde se muestra su estructura y se explican las operaciones básicas. También incluyen un estudio detallado de los vectores, resaltando su representación en Julia y las operaciones básicas asociadas. </p>
-        <p>Además de estos conceptos básicos, los cuadernos contienen aplicaciones prácticas como el procesamiento de imágenes, donde se utiliza el álgebra lineal para manipular píxeles y aplicar filtros y kernels. También se exploran temas como la descripción de grafos mediante matrices, el clustering en machine learning y la independencia lineal de vectores y matrices.</p>
-        <p>Los cuadernos abordan temas avanzados como la diagonalización de matrices, ilustrando su aplicación a la sucesión de Fibonacci. También se cubre la compresión de imágenes mediante la descomposición en valores singulares (SVD) y técnicas de marca de agua digital. Además, se incluyen temas como el análisis de componentes principales (PCA), sistemas de ecuaciones diferenciales, mínimos cuadrados y ajuste polinomial.</p>
-      </div>
-    </div>
-  </div>
 
   <html>
 <head>
@@ -131,14 +122,6 @@ header-includes: |
   <a href="https://labmatecc.github.io/Notebooks/EDO/" class="button">Ecuaciones Diferenciales Ordinarias</a>
 </div>
 
-<div class="container">
-    <div class="person">
-      <div class="info">
-        <p>Los cuadernos sobre ecuaciones diferenciales ordinarias abarcan una amplia gama de temas matemáticos y científicos. Desde la introducción a la modelación matemática y las ecuaciones diferenciales hasta la resolución de problemas específicos como el crecimiento de poblaciones, el movimiento de planetas o la dosificación de medicamentos, estos cuadernos ofrecen un panorama completo de cómo las ecuaciones diferenciales se aplican en diferentes contextos. Además, exploran técnicas numéricas y analíticas para resolver ecuaciones, ajustar modelos a datos experimentales y comprender fenómenos naturales y sociales.</p>
-      </div>
-    </div>
-  </div>
-
 <hr>
 
 <div class="button-container">
@@ -156,13 +139,5 @@ header-includes: |
 <div class="button-container">
   <a href="https://labmatecc.github.io/Notebooks/VariableCompleja/" class="button">Variable Compleja</a>
 </div>
-
-<div class="container">
-    <div class="person">
-      <div class="info">
-        <p>Los cuadernos sobre variable compleja se enfocan en diversos temas. Desde la introducción a la representación y operaciones básicas con números complejos hasta la visualización de funciones complejas y la exploración de conjuntos de Julia utilizando técnicas iterativas y de graficación en el plano complejo, estos cuadernos ofrecen un completo panorama de cómo se estudian y aplican los conceptos de variable compleja en Julia.</p>
-      </div>
-    </div>
-  </div>
 
 <hr>
