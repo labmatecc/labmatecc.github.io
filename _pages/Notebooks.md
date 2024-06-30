@@ -148,7 +148,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/" class="button">Optimización</a>
+  <a href="https://labmatecc.github.io/Notebooks/Optimizacion" class="button">Optimización</a>
 </div>
 
 <hr>
