@@ -4,427 +4,462 @@
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 9c4ff5a5-7516-4c40-a444-88a9166c9fcb
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+end
+
+# ╔═╡ b763cd10-d1e7-4613-b738-9fb1c1cfa1e5
 using PlutoUI
 
-# ╔═╡ e545f24f-4aa9-42b0-84e0-64796195d403
-using Plots, Polyhedra
+# ╔═╡ e2feba71-69cb-4f39-92d1-d1f4daefb4ec
+using Symbolics, Plots, LinearAlgebra
 
-# ╔═╡ bb89e3fe-a074-45bd-8017-44b7bf44df31
-PlutoUI.TableOfContents(title="El problema de la dieta", aside=true)
+# ╔═╡ a7d3298e-0138-4149-a189-0b5a92cfa0e7
+PlutoUI.TableOfContents(title="Números enteros y punto flotante", aside=true)
 
-# ╔═╡ 0ba09c5c-5a29-4900-8f08-d345e8d623e9
+# ╔═╡ 5d0d4c4e-b432-437e-9b8e-2f81c79f907e
 md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
-# ╔═╡ a129e7d9-1cfe-43a1-b233-dfbacfa2b8ed
-md"""**Este cuaderno está basado en actividades del curso Introducción a la optimización de la Universidad Nacional de Colombia, sede Bogotá, dictado por el profesor Francisco Gómez en 2022-1.**
+# ╔═╡ c08f6550-5278-436d-96ec-408570476631
+md"""**Este cuaderno está basado en actividades del curso Análisis numérico I de la Universidad Nacional de Colombia, sede Bogotá, dictado por el profesor Juan Galvis en 2022-2.**
 
 Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo. 
 """
 
-# ╔═╡ 90ff7e59-c94e-45b1-87a5-315a99d3f206
+# ╔═╡ 7b84db99-9375-4dc5-8a3e-414bc176648a
 md"""Usaremos las siguientes librerías:"""
 
-# ╔═╡ 15b4fec3-5d33-4e84-8ee0-29f6209fd380
-md"""# Introducción"""
+# ╔═╡ fd74ea36-fa50-415c-b4a0-92f594178ab9
+md"""# Enteros 
+Presentamos ejemplos sencillos de la representación de los datos enteros en Julia.
+En particular, un entero de $k$ bits biene representado de la forma
+$n=(b_{k-1}b_{k-2}\cdots b_2 b_1b_0)_2=b_0+b_1 2^1+b_22^2+\cdots+b_{k-2}2^{k-2}-b_{k-1}2^{k-1}$. 
 
-# ╔═╡ a4f8a0fb-656c-4620-b32b-4082e0169dd0
-md"""¿Podemos ayudar a la situación de hambre en Colombia?
+Recuerde que $b_i\in\{0,1\}$.
 
-**"Es una obligación eterna hacia el ser humano no dejarlo sufrir de hambre cuando uno tiene la oportunidad de acudir en su ayuda." – Simone Weil**
-
-En Colombia, la situación del hambre sigue siendo una preocupación crítica que afecta a numerosas comunidades. Según un artículo reciente de El Espectador, la situación es alarmante, destacando la necesidad urgente de apoyo a través de bancos de alimentos y otras iniciativas. Esta problemática no solo afecta el bienestar físico de las personas, sino también su desarrollo integral y sus oportunidades futuras."""
-
-# ╔═╡ 7cfd7b6a-8fb4-44ae-8742-ff44f7d837f2
-md"""# El problema de la dieta
-
-El problema de la dieta de Stigler, un ejercicio de optimización propuesto por George Stigler, Premio Nobel de Economía en 1982, ilustra cómo las decisiones alimenticias pueden ser cruciales no solo para la salud individual, sino también para la planificación económica y social. En este problema, se busca determinar la combinación óptima de alimentos para satisfacer las necesidades nutricionales mínimas con el menor costo posible, un ejemplo que subraya la importancia de abordar eficazmente la nutrición y la seguridad alimentaria en contextos variados.
-
-El objetivo del problema de la dieta es seleccionar cantidades específicas de diferentes tipos de alimentos que satisfagan un conjunto predefinido de requisitos nutricionales diarios al menor costo posible. Esto implica no solo considerar las necesidades básicas de nutrientes como proteínas, vitaminas y minerales, sino también optimizar los recursos económicos disponibles para garantizar una dieta saludable y accesible para todos los segmentos de la población. Este tipo de análisis no solo tiene implicaciones prácticas inmediatas para la gestión de programas de asistencia alimentaria, sino que también destaca la importancia de políticas públicas efectivas orientadas hacia la seguridad alimentaria y la reducción de la desigualdad nutricional."""
-
-# ╔═╡ 2aaaa5ca-f237-4a53-b481-88109e631910
-md"""## ¡Diferentes alimentos, diferentes nutrientes!
-
-Cada tipo de alimento tiene una contribución nutricional y un precio por unidad (una unidad puede ser un gramo (gr)). Por ejemplo, 100 gr de arroz aportan 120 calorías, 0.28 gr de grasa, 28.17 gr de carbohidratos y 2.69 gr de proteínas, mientras que 100 gr de carne aportan 287 calorías, 19.29 gr de grasa, 0 gr de carbohidratos y 26.41 gr de proteínas. (Esta información se puede obtener fácilmente de un sitio de nutrición, como por ejemplo [3]). Como es lógico, diferentes alimentos también tienen diferentes precios. Por ejemplo, en Colombia, 1000 gr de arroz cuestan 3,590 pesos colombianos (COP), mientras que 500 gr de carne cuestan 11,840 COP.
-
-La ingesta de una dieta particular, es decir, diferentes cantidades de alimentos, puede tener contribuciones nutricionales específicas con un precio específico. Por ejemplo, la ingesta diaria de 200 gr de arroz y 216 gr de carne resulta en aproximadamente 860 calorías, 42 gr de grasa, 56 gr de carbohidratos y 62 gr de proteínas, con un precio total diario de 5,833 COP. Como es de esperar, la ingesta de más alimentos (en gramos) puede proporcionar más nutrientes, pero impactar el presupuesto disponible para el precio. Por ejemplo, el doble de alimentos, digamos 400 gr de arroz y 432 gr de carne, puede proporcionar el doble de nutrientes, pero con el doble de precio, 11,666 COP."""
-
-# ╔═╡ 038cc7b7-92c6-4fff-b810-c49e5ae2b239
-md"""## Jugando con el presupuesto
-
-Como cualquiera que haya cocinado sabe, un hecho interesante de una dieta es que manteniendo casi el mismo presupuesto (en nuestro ejemplo, 5,833 COP), diferentes cantidades de alimentos pueden resultar en diferentes ingestas nutricionales. Por ejemplo, una dieta compuesta por 305 gr de arroz y 200 gr de carne con un presupuesto de 5,833 COP, puede resultar en 940 calorías, 39 gr de grasa, 86 gr de carbohidratos y 61 gr de proteínas. Notablemente, esta última dieta puede mejorar en casi un 50% los carbohidratos y un 9% las calorías, teniendo una pérdida en la grasa del 7% y una pérdida casi "marginal" en la cantidad de proteínas del 2% (**no es una mala selección si quieres perder peso**)."""
-
-# ╔═╡ 759e2e83-90f8-41b1-b413-720e61a496bd
-md"""## ¿Cuánto cuesta una dieta?
-
-Nuestro **objetivo** es encontrar la dieta con el costo mínimo. Para alcanzar este **objetivo**, podemos definir una función que valore nuestra selección de dieta en términos de su costo. Podemos llamar a esta función la **función objetivo**.
-
-En este problema de la dieta, la **función objetivo** se puede expresar de manera más formal. Para esto, sea $x_1$ la cantidad en gramos de arroz y $x_2$ la cantidad en gramos de carne, considerados en una dieta particular. El costo $f_0(x_1,x_2)$ asociado a cualquier dieta $(x_1,x_2)$ se puede escribir como:
-
-$$f_0(x_1,x_2) = c_1 x_1 + c_2 x_2$$
-
-donde $c_1$ y $c_2$ son los costos de arroz y carne por gramo, respectivamente. La función objetivo $f_0(x_1,x_2)$ proporciona el costo de diferentes dietas al ponderar linealmente la cantidad seleccionada de alimentos por sus respectivos costos unitarios. Al evaluar esta función, podemos medir cuantitativamente el costo de cualquier dieta (ver calculador de dieta en línea [2]).
-
-Por ejemplo, $f_0(200,216) = 5833$ y $f_0(305,200) = 5831$. Una dieta compuesta por $(x_1,x_2)=(200,200)$ costará $f_0(200,200) = 5454$ COP.
+Vea los siguientes ejemplos.
 """
 
-# ╔═╡ 648b2d01-c8a9-4012-a17e-1b81e7c7e116
-md"""La **función objetivo** $f_0$ en el problema de la dieta se puede visualizar como una función que mapea desde el espacio de todas las dietas posibles ($\mathbb{R}^2$) al costo ($\mathbb{R}$), es decir, $f_0: \mathbb{R}^2 \rightarrow \mathbb{R}$:
+# ╔═╡ 37e57a66-a785-45a1-90a0-3413e7f01898
+@bind n Slider(-50:50, show_value=true,default=0)
+
+# ╔═╡ d38e69a8-cbdb-4437-ad5b-64217f3e48d6
+typeof(n)
+
+# ╔═╡ 2cfc4a3a-91f3-416a-bcf5-89a2ecbb0a61
+bitstring(n)
+
+# ╔═╡ 5ffb3f8c-d31d-4ed1-8a34-dbe13be57c42
+1+2+4+8+16+32+64-128
+
+# ╔═╡ c53b615f-b8ca-4427-a52e-ac2e69b54545
+@bind mint TextField(10, default="0")
+
+# ╔═╡ 4bb033b7-02af-4f8d-be9c-62ee7c4fc554
+n8=parse(Int8,mint); bitstring(n8)
+
+# ╔═╡ 3681e1d1-4e78-4026-9295-a67950dfd260
+un8=parse(UInt8,mint); bitstring(un8)
+
+# ╔═╡ 1681a1f7-3edd-46e5-8214-a2ac3ab6966d
+m16=parse(Int16,mint); bitstring(m16)
+
+# ╔═╡ 4aeddca1-790a-41c6-a178-3a6369bd5fcc
+md"""Este tipo de representaciones tiene varias consecuencias como son la existencia de infinitos valores enteros que se pueden representar y consecuencias para los resultados de operaciones aritméticas las cuales son realizadas directamente en hardware en binario. Considere el siguiente ejemplo."""
+
+# ╔═╡ 36da1916-adb8-46de-ac90-f046974273f7
+k=Int8(127); l=Int8(3)
+
+# ╔═╡ 1b17b320-4d20-47d2-8da1-c34a7b35830b
+kplus=k+l
+
+# ╔═╡ f1bbb819-c83c-4b62-a376-a7a3ef82df04
+md"""Observe también el siguiente ejemplo.
 """
 
-# ╔═╡ 51f67997-b13f-4a56-8e4b-c0f6c792311a
-begin
-# Coefficients of the objective function
-c = [3.59, 23.68]
+# ╔═╡ 2d843847-ef7e-47d0-a255-c5ec3cc5ec57
+nb=10^100
 
-# Define the objective function directly within the plot call
-plot(0:500, 0:500, (x, y) -> c[1]*x + c[2]*y,
-    xlabel = "Arroz (gr)", ylabel = "Carne (gr)", zlabel = "Costo",
-    title = "Función Objetivo: Costo de la Dieta", st = :surface)
+# ╔═╡ 65543d5f-4d55-4dc5-917b-8a241e09fe86
+md"""En Julia podemos ver explícitamente los límites para cada una de las representaciones."""
 
+# ╔═╡ 4ffbafed-ca8d-443e-92ff-ec6a6d76f05d
+for T in [Int8,Int16,Int32,Int64,Int128,UInt8,UInt16,UInt32,UInt64,UInt128]
+           println("$(lpad(T,7)): [$(typemin(T)),$(typemax(T))]")
 end
 
-# ╔═╡ 86b63a27-7af7-41b3-8238-12f5bb98701b
-md"""En este caso, la función de costo vinculada al problema de la dieta está modelada por una función lineal. Vale la pena recordar que este es un modelo del proceso relacionado con el costo de una dieta. Tal vez el costo pueda diferir si se compran más alimentos en grandes superficies, pero debemos destacar que estamos modelando; por lo tanto, la suposición lineal implícita en la función de costo ya no es válida.
+# ╔═╡ 1afd2287-6a84-4f16-ab6c-141fce1782cd
+md""" 
+# Punto Flotante
+Presentamos ilustraciones simples de cálculo con números de máquina y redondeo.
+En particular, la representación usando un bit para el signo, $s_0\in \{0,1\}$, con 
+$s=(-1)^{1-s_0}$, 
+$k$ bits para el exponente
+
+$m=(b_{k-1}b_{k-2}\dots b_1b_0)_{\mbox{expfp}(k)} = b_0+b_1 2^1+b_22^2+\cdots+b_{k-1}2^{k-1}-(2^{k-1}-1)$.  
+con $e_i\in\{0,1\}$, y $p$ bits de precisión para el significando 
+
+$q=(1. a_1a_2\dots a_p)_2 = 1 + a_12^{-1}+a_22^{-2}+\dots+a_p2^{-p}$ 
+está dada por 
+
+$x=s\times q\times 2^m.$
 """
 
-# ╔═╡ 336cea97-d5b3-4bee-a504-242dabf45e25
+# ╔═╡ db2fc0fd-a234-490e-b3a0-936efd699b9c
 md"""
-Tener una función objetivo para costear cualquier 'dieta' particular $(x_1,x_2)$ es bastante útil. Usando el calculador (un evaluador de la función objetivo), podemos probar diferentes alternativas de 'dieta'. En este punto, debemos recordar que nuestro objetivo no es solo encontrar la 'dieta' con el costo mínimo, sino también encontrar una 'dieta' que un humano pueda consumir.
+Por ejemplo para $x=0.5$ tenemos en el formato Float321  tenemos bit par el signo 
+$s_0=0$, tenemos 8 bits para el exponente $m=(01111110)_{{\mbox{expfp}(8)}}=-1$ y 23 bits para el significando $q=(1.00000000000000000000000)_2$. Tenemos lo siguiente.
+"""
 
-Un primer intento para resolver este problema puede ser usar el calculador para diferentes alternativas de dieta y luego elegir la de menor costo. Sin embargo, **no todas las 'dietas' válidas como entrada en nuestro calculador son aplicables para un humano**. Por lo tanto, enfoquémonos en algunas consideraciones naturales relacionadas con lo que hace que una dieta tenga sentido:
+# ╔═╡ d794e5ad-d893-41c3-a257-2ed0af0390dd
+bitstring(Float32(0.5))
 
-* *No comes cantidades negativas de comida*. Una dieta solo tiene sentido cuando comes algo o no comes nada de un tipo particular de alimento. Por lo tanto, para el problema de la dieta, la función de costo solo debe definirse para cantidades positivas de alimentos, es decir, $x_1 \geq 0$ y $x_2 \geq 0$. Estas dos condiciones **restringen** las posibles alternativas de dieta a elegir. Por esta razón, llamamos a las expresiones $x_1 \geq 0$ y $x_2 \geq 0$ **restricciones del problema** y en particular 'restricciones de no negatividad'. Las restricciones se modelan comúnmente mediante desigualdades o, en algunos casos, igualdades, que **limitan** el conjunto de valores que puede tomar una solución.
+# ╔═╡ 1bb97bb9-ef25-4a20-8d35-38b7caead7b9
+begin
+	bs=bitstring(Float32(0.5));
+	println("signo=",bs[1],"\t exp=",bs[2:9],"\t significand=",bs[19:32])	     
+end
 
-* *Quieres vivir con tu dieta*. Debemos recordar que el papel principal de una dieta es proporcionar nutrientes para vivir. Entonces, necesitamos garantizar la **cantidad mínima** de nutrientes diarios para vivir saludablemente. La tabla a continuación muestra algunas estimaciones de las ingestas mínimas de nutrientes particulares necesarios para mantenerse saludable, ver [4]. Si consideramos solo las restricciones de no negatividad ($x_1 \geq 0$ y $x_2 \geq 0$), podríamos encontrar fácilmente una dieta de costo mínimo (en realidad un costo cero), con una dieta sin alimentos ($(x_1,x_2)=(0,0)$). Sin embargo, nuestros requisitos mínimos de nutrientes no se **cumplirían** y moriríamos de hambre. Como queremos garantizar la cantidad mínima de nutrientes, llamamos a estas restricciones **restricciones mínimas**.
+# ╔═╡ 722a5e69-c32d-4b62-be6f-3a1b1fc04486
+md""" Otros formatos disponibles son los siguientes."""
 
-| Calorías | Grasa (gr) | Carbohidratos (gr) | Proteína (gr) | 
-| --- | --- | --- | --- |
-| 1000 | 44 | 0  | 35 |
+# ╔═╡ 2783c756-ae95-4112-b66c-927801c287e0
+begin
+	x16=Float16(1.0)
+	println("x16=\t",bitstring(x16))
+	x32=Float32(1.0)
+	println("x32=\t",bitstring(x32))
+	x64=Float64(1.0)
+	println("x64=\t",bitstring(x64))
+end
 
-* *No puedes comer una cantidad infinita de comida*. También debemos recordar que incluso si tenemos mucho dinero, tenemos **restricciones biológicas** relacionadas con la **cantidad máxima** de alimentos que podemos comer. Supongamos que las personas comúnmente comen un máximo de 2000 gr [ref](https://www.precisionnutrition.com/what-are-your-4-lbs). Como queremos garantizar que las dietas no excedan la cantidad máxima de alimentos, llamamos a estas restricciones **restricciones máximas**.
+# ╔═╡ 1f1253b4-f0d8-4a22-8eea-d0c57e3cff0c
+begin
+	z16=Float16(0.1)
+	println("x16=\t",bitstring(z16))
+	z32=Float32(0.1)
+	println("x32=\t",bitstring(z32))
+	z64=Float64(0.1)
+	println("x64=\t",bitstring(z64))
+end
 
-Para tener alternativas *factibles* de dietas en nuestra búsqueda, debemos considerar *SOLO* las dietas que satisfacen *TODAS* las restricciones, a saber, no negatividad, mínima y máxima."""
+# ╔═╡ 649b75ff-e2a2-4b62-81a6-823d33ef330a
+begin
+	y16=Float16(π)
+	println("x16=\t",y16)
+	y32=Float32(π)
+	println("x32=\t",y32)
+	y64=Float64(π)
+	println("x64=\t",y64)
+	yBig=BigFloat(π)
+	println("xBig=\t", yBig)     
+end
 
-# ╔═╡ b041cc88-49c8-4cc7-b748-edadee7aa81a
+# ╔═╡ da416d35-d074-4e37-bff6-cd2f04510d0e
+md"""Podemos consultar por el 
+ de la maquina y el rango representado. """
+
+# ╔═╡ dcba3ba7-e801-4039-8a78-d1725aafa03e
+for Ft in [Float16,Float32,Float64,BigFloat]
+           println("$(lpad(Ft,7)): [$(floatmin(Ft)),$(floatmax(Ft))]")
+end
+
+# ╔═╡ 4d0544dc-cc03-442b-8d87-1677501a1356
+md"""Los campos son el signo, el significando y el exponente. Por ejemplo. """
+
+# ╔═╡ 48c7168a-56b5-41bf-b493-ddec30da8fee
+begin
+	xeps=bitstring(eps(Float32));
+	println("signo=",xeps[1],"\t exp=",xeps[2:9],"\t significand=",xeps[19:32])
+	xmin=bitstring(floatmin(Float32))
+	println("signo=",xmin[1],"\t exp=",xmin[2:9],"\t significand=",xmin[19:32])
+	xmax=bitstring(floatmax(Float32))
+	println("signo=",xmax[1],"\t exp=",xmax[2:9],"\t significand=",xmax[19:32])
+	     
+end
+
+# ╔═╡ df0d1912-104d-432f-bb80-baad219e5e8b
+md"""Debemos tener cuidado al comparar dos variables de tipo float en condiciones para control condicional o control iterativo. Considere los siguientes ejemplos. """
+
+# ╔═╡ 75e4ccf1-d51f-45c2-9bf1-46d731e579e3
+(0.1+0.1)==0.2
+
+# ╔═╡ 0f513283-82ad-47f3-84e2-b2d870a9a72d
+(0.1+0.1+0.1)==0.3
+
+# ╔═╡ 70c242d4-7de4-49a0-b3eb-93b757e1cb86
+tol=1E-10; ((0.1+0.1+0.1)-0.3)< tol
+
+# ╔═╡ eb6ab469-4830-4cea-a49a-9b901d5d9d2b
+(0.1+0.1+0.1)≈0.3
+
+# ╔═╡ 986889c7-2aa1-4ec2-ac1c-e9168eb1cd09
+md"""Veamos que pasa si intentamos sumar x=1/10 varias veces, esto es, 
+$\sum_{i=1}^N 0.1$. Veamos la siguiente implementación. """
+
+# ╔═╡ 3e2df87d-960e-43a4-affd-3b020d9a7928
+begin
+	
+	suma64=0.0
+	N=10^6
+	for i=1:N
+	  suma64=suma64+(1/10) 
+	end
+	println("Despues de ",N, " sumas(Float64) de 1/10, \nel resultado es ",suma64)
+	x=1/10
+	p=N*x
+	println("El producto es : ",p)
+	     
+end
+
+# ╔═╡ d9016efd-cc95-4ac5-bdc0-32f5e9282eeb
+begin
+	suma32=Float32(0.0)
+	for i=1:N
+	  suma32=suma32+Float32(1/10) 
+	end
+	println("Despues de ",N, " sumas(Float32) de 1/10, el resultado es ",suma32)
+	f32=Float32(1/10)
+	p32=N*f32
+	println("El producto es : ",p32)
+end
+
+# ╔═╡ 71d25ca2-7960-413a-8fad-e210fdd41a6b
+begin
+	xx=3E-324
+	yy=2E-324
+	print("x=",xx,"es un numero de maquina. Pero y=2E-324 es aproximado  a  y=\t",yy, "\n")
+	print("Al dividir x=3E-324 por dos tenemos x/2=\t",xx/2,"\n")
+	print("Note tambien que 1/x=\t",1/xx)
+end
+
+# ╔═╡ 8eb0cc2e-07e7-4c45-bde2-f53517004059
+md""" Ahora numéros positivos grandes. """
+
+# ╔═╡ f274879e-93ca-409c-94a5-28b59556949f
+begin
+	xp=1.7E+308
+	y=1.8E+308 # overflow in numeric constant 
+	print("x=",xp," es un numéro de maquina pero  y genera desbordamiento\n")
+end
+
+# ╔═╡ 0afa9453-b5af-494b-afba-4ddbeae5da8b
+begin
+xr=1E+26-1E+26+1
+yr=1E+26+1-1E+26
+print("x= ",xr, " diferente de   y=",yr)
+end
+
+# ╔═╡ f35cd3c4-6433-4f3c-9422-23a9b6dbeade
+begin
+	a=1E+308
+	b=1.1E+308
+	c=-1.001E+308
+	xs=a+(b+c)
+	ys=(a+b)+c
+	#y=a**2
+	print("x=",xs," que es diferente a  y=",ys)
+end
+
+# ╔═╡ e8846356-38b7-43a5-bb31-d5a7f4a8d63b
+begin
+	asq=1E+200
+	bsq=1
+	ysqr=sqrt( a^2+b^2)
+	print(ysqr)
+end
+
+# ╔═╡ fc6ba034-1574-48ce-9780-31977607f8a6
+z=asq*sqrt( 1+(bsq/asq)^2)
+
+# ╔═╡ 2545e2be-d3eb-4b79-8d80-d06b302e13d4
+begin
+
+xt=1
+yt=0
+zt=1E+307*100
+wt=1E+308*100
+println("x= ",xt,", y=",yt,", z=",zt,", w=",wt, "\n")
+println("Inf/Inf=",wt/zt,"\n")
+println("Inf*Inf=",wt*zt,"\n")
+println("1/NaN=", 1/(wt/zt),"\n")
+println("NaN*1=",(wt/zt)*1,"\n")
+println("sqrt(NaN)=",sqrt((wt/zt)),"\n")
+     
+
+end
+
+# ╔═╡ 8628081c-9db1-42ac-8ddd-a6283b59a0f8
+begin
+	xd=1E-15
+	yd=((1+xd)-1)/xd
+	print("y=",yd)
+	print("Con error relativo de ", 100*(yd-1),"%.")
+end
+
+# ╔═╡ 23f33d5d-f32e-4328-b7e4-651f7cdcf345
+begin
+	aleft=1-12E-3
+	aright=1+12E-3
+	xv = aleft:4E-3/50:aright;
+	uno=ones(size(xv))
+	p1= (xv.-uno).^7;
+	p2=xv.^7-7*xv.^6+21*xv.^5-35*xv.^4+35*xv.^3-21*xv.^2+7*xv.-uno;
+	p3= ((((((xv-7*uno).*xv+21*uno).*xv-35*uno).*xv+35*uno).*xv-21*uno).*xv+7*uno).*xv-uno
+	plot(xv, p1,title = "Expansion vs Fatorizado", label = ["Factorizado"], lw = 1)
+	plot!( xv, p2, label=["Expandido"],lw=1)
+	plot!( xv, p3, label=["Horner"],lw=1)
+end
+
+# ╔═╡ 966c5f92-8a7d-430e-b1e4-5450c5d4dff0
+md"""Es un buen ejercicio agregar a la gráfica arriba el esquema de Horner para calcular este polinomio y  comparar. """
+
+# ╔═╡ 0510e6d0-2628-4ef8-a9ef-ae3f562b9d2d
+md""" 
+Por último notamos que, aunque el error de redondeo es pequeño al principio, en cálculos complejos puede acumular para ocasionar efectos catastróficos.
+
+**EJEMPLO 1:** Explosión del misil Ariane en Junio de 1996 por un desbordamiento por exceso en el computador del mismo. https://www.bugsnag.com/blog/bug-day-ariane-5-disaster
+
+**EJEMPLO 2:** La falla de una misión de un misil American Patriot durante la guerra del Golfo en 1991 debido a errores de redondeo en el cálculo de la trayectoria a seguir. https://www.iro.umontreal.ca/~mignotte/IFT2425/Disasters.html
+"""
+
+# ╔═╡ a670f208-e006-47f5-89a7-9bebab429f44
+md"""
+# Cálculo simbólico
+
+Para terminar mencionaremos la librería sympy que permite realizar cálculo simbólico en lugar de cálculo numérico. Recuerden que en el cálculo numérico las variables en todo momento tiene valores particulares asignados los cuales corresponden a números de máquina que dependen del formato que se esté usando: precisión simple, precisión doble, e.t.c. En los cálculos simbólicos las variables no tienen que tomar valores particulares y se pueden manipular solo restringiendo su comportamiento a reglas que aplican a conjuntos numéricos como por ejemplo: enteros, reales, complejos, matrices, e.t.c. 
+
+A continuación presentamos algunos comandos de cálculo simbólico. 
+
+"""
+
+# ╔═╡ 1737d90d-2d20-4f2b-b256-aca34ff19b53
+@variables s t
+
+# ╔═╡ 521da315-bd00-4fa0-958f-ca9ed9d7b81f
+r=s^2+t
+
+# ╔═╡ 2c83c7d6-befa-4aae-813d-698eda707646
+expand(r^4)
+
+# ╔═╡ 57ddf55f-5ca0-443b-abb2-42fe7615cb42
+A = [s^2 + t s 2s
+     0       t 2t
+     t^2 + s s 0]
+
+# ╔═╡ db5e8c5f-3122-4b43-97a8-09b94f35b2ad
+det(A)
+
+# ╔═╡ fc8a0527-5ac0-43a1-a866-394f9265db5d
+D = Differential(t)
+
+# ╔═╡ ddfa13d6-b42e-4a21-89e2-6bceea08b0e8
+D(r)
+
+# ╔═╡ 5b5ed004-a54f-4feb-b9ce-3e4a0ccbffee
+expand_derivatives(D(r))
+
+# ╔═╡ 495df1e1-c814-4dd9-97cf-c0d9b852834f
+B = simplify.([t + t^2 + t + t^2  2t + 4t
+               s + s+2t     s^2 - 3s^2 + s^2])
+
+# ╔═╡ 09119c27-56ee-4201-98b2-2dd0d5adfa64
+simplify.(substitute.(B, (Dict(s => (t-1)^2),)))
+
+# ╔═╡ 3b0181ce-5038-4c34-9629-40adb5c585c2
+md"""
+**PROBLEMA** ¿Cuánta memoria requiere guardar 100.000 números de punto flotante de precisión doble?¿Cuánta memoria requiere guardar una matriz de números de punto flotante dimensión 100.000 x 100.000?
+
+**PROBLEMA** Los números de punto flotante en python son implementados usando la clase float. Es decir, además de la descripción en bits del número tenemos asociados a la una instancia de variable tipo float los los siguientes métodos y atributos para un dato float: as_integer_ratio, conjugate, fromhex, imag, is_integer, real .
+
+Describa cada uno de estos métodos y atributos con ejemplos simples. 
+
+La implementación del tipo de dato float en lenguaje C corresponde solo a la descripción en bits del número y no corresponde a una estructura u objeto. ¿Cuáles son las ventajas y desventajas de usar objetos?. 
+
+
+**PROBLEMA(Sullivan)** Con $x_0=1/10$, considere la sucesión,  
+
+$x_{n+1}=\left\{\begin{array}{ll}
+2x_n & \mbox{ si } x_n\in \left[0,\frac{1}{2}\right] \\
+2x_n-1 &  \mbox{ si } x_n\in \left(\frac{1}{2},1\right].
+\end{array}\right.$
+para $n=1,2,\dots$. Calcule $x_1,x_2,x_3,\dots,x_{50}$ de forma análitica y despues usandoun código en python. Compare y explique.
+
+Repetir pero ahora iniciando con $x_0=1/8$. Compare y explique. 
+
+**PROBLEMA** Explique la falla del Ariane y del American Patriot. Muestre cálculos numéricos para soportar su explicación. 
+
+
+**PROBLEMA 5** Escriba rutina que implemente la función 
+$SF_{i}(x)=\frac{\exp\left(x_{i}\right)}{\sum_{j=1}^{n}\exp\left(x_{j}\right)}.$
+La rutina debe estar estabilizada para evitar desbordamiento por exceso. 
+
+**PROBLEMA(Stoer)** Ensaye calcular las funciones $$f(x)=\sqrt{x^2+1}-1 \quad g(x)=\frac{x^2}{\sqrt{x^2+1}+1}$$
+Use valores pequeños como $x=8^{-1},8^{-2},8^{-3},\dots$. Explique los resultados. Note que, análiticamete,  $f(x)=g(x)$.
+
+"""
+
+# ╔═╡ 818df822-2688-49c1-8ace-8494c7562800
 md"""
 
-# Modelando restricciones
+**PROBLEMA(Quarteroni,Saleri,Gervasio)** El lector puede implementar el calculo de la siguiente recurrencia que approxima $\pi$ (formula de Franc,ois Viète) y estudiar su estabilidad/instabilidad numérica, 
+$z_1=2, \,\,z_{n+1}=2^{n-1/2}\sqrt{1-\sqrt{1-4^{1-n}z_n^2}},\,\,n=2,3,\dots.$
 
-## Modelando la no negatividad
 
-En principio, cualquier 'dieta' se elegirá del plano ($\mathbb{R}^2$). Para tener en cuenta las dietas que cumplen con todas las restricciones, debemos restringir el **espacio de solución**. Primero, las restricciones de no negatividad implican que no todas las soluciones (puntos en el plano) son soluciones válidas y debemos eliminar (restringir) algunas de ellas, en particular, las que tienen valores negativos. El resto de los puntos, es decir, los no negativos, son soluciones válidas al menos para estas dos restricciones. Por lo tanto, considerar las restricciones de no negatividad restringe el **conjunto de soluciones** al cuadrante no negativo (notemos este conjunto como $\mathbb{R^2_{++}}$), cambiando en consecuencia el dominio de la función objetivo $f_0$. Una función de costo que considera estas restricciones es $f_0:\mathbb{R^2_{++}} \rightarrow \mathbb{R}$.
+**PROBLEMA(Stewart)** Repita el experimento arriba con la recurrencia $x_1=\frac{1}{3}, x_2=\frac{1}{12}$,  $x_{k+1}=2.25x_k-0.5x_{k-1}$.
 
-## Modelando restricciones mínimas
+**PROBLEMA** Presente un ejemplo, adicional  a los presentados en clase, de algortimos inestables o problemas mal condicionados. 
 
-Podemos modelar las **restricciones mínimas y máximas** siguiendo la misma idea de las restricciones de no negatividad, es decir, usando desigualdades. Para esto, calculamos el total de nutrientes asociados con una dieta particular. Para esto, sea $f_1(x_1,x_2)$ la cantidad total de calorías proporcionadas por la dieta. Esta función se puede expresar como:
+**PROBLEMA** Repita el experimento arriba con $P(x)=(x-1)^7$. Agrege a la figura el siguiente método 
 
-$$f_1(x_1,x_2) = a_{1,1}x_1 + a_{1,2}x_2$$
-
-donde $a_{1,1}$ y $a_{1,2}$ corresponden a la cantidad de calorías proporcionadas por un gramo de arroz y carne, respectivamente. En este caso, $a_{1,1}=1.2$ cal/gr y $a_{1,2}=2.87$ cal/gr. Usando $f_1(x_1,x2)$ podemos calcular la cantidad de calorías proporcionadas por una dieta particular, por ejemplo, la dieta de $(x_1,x2)=(200,216)$ proporciona $f_1(200,216)=860$ Cal, lo cual es insuficiente para cumplir con el requisito mínimo (verifique nuevamente el calculador de dieta, [2]). Por lo tanto, cualquier dieta válida debe cumplir:
-
-$$f_1(x_1,x_2) = a_{1,1} x_1 + a_{1,2} x_2 \geq 1000$$ (para calorías)
-
-De manera similar, se pueden formular modelos de desigualdad para restringir el espacio de solución para los diferentes tipos de nutrientes:
-
-$$f_2(x_1,x_2) = a_{2,1} x_1 + a_{2,2} x_2 \geq 44$$ (para grasa)
-
-$$f_3(x_1,x_2) = a_{3,1} x_1 + a_{3,2} x_2 \geq 0$$ (para carbohidratos)
-
-$$f_4(x_1,x_2) = a_{4,1} x_1 + a_{4,2} x_2 \geq 35$$ (para proteínas)
-
-con $a_{2,1}$, $a_{3,1}$ y $a_{4,1}$ la cantidad de grasa, carbohidratos y proteínas del arroz, respectivamente, y $a_{2,2}$, $a_{3,2}$ y $a_{4,2}$ la cantidad de grasa, carbohidratos y proteínas de la carne, respectivamente.
-
-## Modelando restricciones máximas
-
-De manera similar, podemos modelar las restricciones máximas considerando una expresión que tenga en cuenta la cantidad total de alimentos, como sigue:
-
-$$f_5(x_1,x_2) = x_1 + x_2 \leq 2000$$ (para consumo máximo)
-
-Cualquier **solución factible** para nuestro problema de dieta debe satisfacer todas las desigualdades.
-"""
-
-# ╔═╡ 9104853c-1b84-41a6-8d5e-c5869c690ea5
-md"""# Restricciones
-
-Examinemos el espacio resultante de restringir el espacio de solución usando las desigualdades asociadas a diferentes restricciones.
-
-**Sugerencia:** Cualquier restricción se vincula a un hiperplano (línea), que define un semiespacio (la mitad del espacio dividido por la línea, que puede ser intersectado (más adelante definiremos estos conceptos más formalmente)).
-"""
-
-# ╔═╡ 8ea6d495-506d-4874-ae9b-1aef24f17993
-begin
-function getFeasibleRegion(halfspaces)
-    firstHS = true
-    h = 0
-    for hs in halfspaces
-        if firstHS ==true
-            h = HalfSpace(hs[1:2],-hs[3])
-            firstHS = false
-        else
-            h = h ∩ HalfSpace(hs[1:2],-hs[3])
-        end
-    end
-
-    p = polyhedron(h)
-    return p
-end
-end
-
-# ╔═╡ bc179b8a-fb78-445c-ab37-ceea572380c6
-begin
-halfspacesEx1 = [
-    [-1.2,   -2.87,  1000],  # 1.2    x₁ + 2.87   x₂ ≥ 1000
-    [-0.0028,-0.1929,  44],  # 0.0028 x₁ + 0.1929 x₂ ≥ 44
-    [-0.2817,-0,        0],  # 0.2817 x₁ + 0      x₂ ≥ 0
-    [-0.0269,-0.2641,35],  # 0.0269 x₁ + 0.2641 x₂ ≥ 35
-    [1., 1., -2000.],      # x₂ + x₁ ≤ 2000 
-    [-1, 0., 0],    # x₁ ≥ 0
-    [0., -1., 0.]   # x₂ ≥ 0
-]  
-
-plot(getFeasibleRegion(halfspacesEx1), ratio=:equal)
-xaxis!("rice (gr)")
-yaxis!("meet (gr)")
-end
-
-# ╔═╡ 0a822d29-6968-4763-a9db-160c933e5653
-md"""La región azul indica todas las dietas posibles que cumplen con todas las restricciones. **Hay infinitas posibilidades** pero **al menos una de ellas debería tener el costo mínimo**.
-"""
-
-# ╔═╡ 4498e0d8-fba4-4ce1-9044-15723520e310
-md"""## Una justificación geek para comer mucho
-
-Supongamos que eres un atleta competitivo, por ejemplo, un ciclista de carreras. La cantidad de calorías consumidas por estos atletas en una etapa montañosa es de ¡alrededor de 7,000 calorías, ver [5]. Por lo tanto, si queremos usar nuestro modelo, deberíamos cambiar la primera restricción a:
-
-$f_1(x_1,x_2) = a_{1,1} x_1 + a_{1,2} x_2 \geq 7000$ (para calorías)
-
-Si exploramos nuevamente el espacio de restricciones con esta nueva restricción:
-"""
-
-# ╔═╡ e087ae82-f236-47a1-84ba-b4094fdf5a3e
-begin
-	halfspacesEx2 = [
-    [-1.2,   -2.87,  7000],  # 1.2    x₁ + 2.87   x₂ ≥ 7000
-    [-0.0028,-0.1929,  44],  # 0.0028 x₁ + 0.1929 x₂ ≥ 44
-    [-0.2817,-0,        0],  # 0.2817 x₁ + 0      x₂ ≥ 0
-    [-0.0269,-0.2641,35],  # 0.0269 x₁ + 0.2641 x₂ ≥ 35
-    [1., 1., -2000.],      # x₂ + x₁ ≤ 2000 
-    [-1, 0., 0],    # x₁ ≥ 0
-    [0., -1., 0.]   # x₂ ≥ 0
-]  
-
-plot(getFeasibleRegion(halfspacesEx2), ratio=:equal)
-xaxis!("rice (gr)")
-yaxis!("meet (gr)")
-end
-
-# ╔═╡ 953a57ce-556a-413d-a471-ad206efb9f9d
-md"""En este caso, encontraremos que la región que contiene las soluciones está vacía (por eso es que la línea de código anterior arrroja un error). La razón es que con solo 2000 gr de comida no es posible alcanzar 7000 calorías. Nota que en este caso la combinación de estas dos restricciones resultó en ninguna solución candidata. Como no hay ninguna **solución factible**, decimos que el problema es **inviable**, porque no hay solución al problema que cumpla con las restricciones.
-
-Nota que, si queremos satisfacer la restricción de calorías, podemos aumentar la cantidad de comida que las personas pueden comer, por ejemplo, a 5000 gr (10 libras de comida).
-"""
-
-# ╔═╡ d0d7cd48-ab02-4bf7-82a2-81ff522afcaa
-begin
-halfspacesEx3 = [
-    [-1.2,   -2.87,  7000],  # 1.2    x₁ + 2.87   x₂ ≥ 7000
-    [-0.0028,-0.1929,  44],  # 0.0028 x₁ + 0.1929 x₂ ≥ 44
-    [-0.2817,-0,        0],  # 0.2817 x₁ + 0      x₂ ≥ 0
-    [-0.0269,-0.2641,35],  # 0.0269 x₁ + 0.2641 x₂ ≥ 35
-    [1., 1., -5000.],      # x₂ + x₁ ≤ 5000 
-    [-1, 0., 0],    # x₁ ≥ 0
-    [0., -1., 0.]   # x₂ ≥ 0
-]  
-
-plot(getFeasibleRegion(halfspacesEx3), ratio=:equal)
-xaxis!("rice (gr)")
-yaxis!("meet (gr)")
-end
-
-# ╔═╡ 911d9cd5-34db-4133-bac5-aaf060e8a40e
-md"""Esa es la razón por la que los atletas comen mucho, ver [6].
-"""
-
-# ╔═╡ 12696be3-1dbc-4231-a1c3-864389245786
-md"""# Problema de optimización matemática
-
-Al combinar la función objetivo y las restricciones, el problema de optimización matemática asociado a nuestro problema de la dieta es el siguiente:
-
-Minimiza el valor $3.59 x_1 + 23.68 x_2$ entre todos los vectores $(x_1, x_2) \in \mathbb{R}^2$,
-satisfaciendo las siguientes restricciones
-  
-$\begin{align*}
-1.2 \, x_1 + 2.87 \, x_2 &\geq 1000 \\
-0.0028 \, x_1 + 0.1929 \, x_2 &\geq 44 \\
-0.2817 \, x_1 &\geq 0 \\
-0.0269 \, x_1 + 0.2641 \, x_2 &\geq 35 \\
-x_2 + x_1 &\leq 2000 \\
-x_1 &\geq 0 \\
-x_2 &\geq 0
-\end{align*}$
-
-Resolver un **problema de optimización** consiste en buscar los valores particulares de las variables, en nuestro caso, una dieta específica, que optimice una función objetivo, en nuestro caso minimizando el costo, y al mismo tiempo satisfaciendo todas las **restricciones**.
-Una propiedad interesante de nuestra formulación es que todas las funciones involucradas, la función objetivo y las restricciones, ¡son **lineales**! Por lo tanto, llamamos a este problema un **problema de optimización lineal**.
+$P(x)= ((((((x-7)x+21)x-35)x+35)x-21)x+7)x-1.$
+Verifique esta formula. Implemente y comente los resultados. Esta forma de calcular polinimios es conocida como el esquema de Horner.
 
 """
 
-# ╔═╡ 57f8b779-108d-4644-9e75-e1f2722c69d2
-md"""## ¿Qué dietas se pueden construir usando un presupuesto fijo?
+# ╔═╡ dc6968ae-939a-4821-9072-853d0b5ff737
+md""" # Referencias
 
-Digamos *que tenemos un presupuesto fijo y queremos saber qué dietas se pueden construir con esta cantidad de dinero?*. Como hemos establecido formalmente el problema, podemos responder a esta pregunta **directamente desde el modelo de optimización**. En particular, para un costo fijo $v$, podemos buscar el conjunto de soluciones que tengan este costo, es decir:
+[1] Driscoll, T. A., & Braun, R. J. (n.d.). *Fundamentals of Numerical Computation*. Adapted for Julia. Retrieved from https://tobydriscoll.net/fnc-julia/frontmatter.html
 
-$f(x_1,x_2) = c_{1} x_{1} + c_{2} x_{2} = v$
+[2] Sullivan, E. (2020). *Numerical Methods: An Inquiry-Based Approach With Python*.
 
-En otras palabras, podemos buscar el conjunto de puntos $(x_1,x_2)$ que satisfacen esta igualdad. Como estamos trabajando en el régimen lineal (un nombre elegante para un plano), podemos ver que estos puntos corresponden a una línea en el espacio de soluciones (dietas posibles). Diferentes valores de $v$ resultan en diferentes líneas. Como cada línea corresponde a las soluciones con el mismo costo (iso), llamamos a estas líneas **líneas de nivel** de la solución para el costo correspondiente $v$.
+[3] Bulirsch, R., Stoer, J., & Stoer, J. (2002). *Introduction to Numerical Analysis* (Vol. 3). Springer.
 
-Después de la pandemia de COVID-19, la pobreza extrema aumentó en Colombia, ver [7]. El Banco Mundial define la pobreza extrema como personas que viven con $1$ dólar o menos al día. Podemos preguntarnos qué dietas se pueden proponer con un presupuesto de $1$ USD (aproximadamente $4000$ COP) por día.
+[4] Stewart, G. W. (1996). *Afternotes on Numerical Analysis*. Society for Industrial and Applied Mathematics.
 
-Podemos visualizar las líneas de nivel en nuestro problema para responder a esta pregunta:
-"""
+[5] Quarteroni, A., Saleri, F., & Gervasio, P. (2006). *Scientific Computing with MATLAB and Octave* (Vol. 3). Springer.
 
-# ╔═╡ 78076c96-79d6-443c-80f5-ebf82c7fa7f4
-begin
-	function drawIsoLinesObj(f_0,c)
-    g(x) =(c - f_0[1]*x)/f_0[2]
-    plot!(g)
-end
+[6] IEEE Standards Association. (n.d.). *IEEE Standard*.
 
-halfspacesEx4 = [
-    [-1.2,   -2.87,  1000],  # 1.2    x₁ + 2.87   x₂ ≥ 1000
-    [-0.0028,-0.1929,  44],  # 0.0028 x₁ + 0.1929 x₂ ≥ 44
-    [-0.2817,-0,        0],  # 0.2817 x₁ + 0      x₂ ≥ 0
-    [-0.0269,-0.2641,35],  # 0.0269 x₁ + 0.2641 x₂ ≥ 35
-    [1., 1., -2000.],      # x₂ + x₁ ≤ 2000 
-    [-1, 0., 0],    # x₁ ≥ 0
-    [0., -1., 0.]   # x₂ ≥ 0
-]  
+[7] Sinews. (n.d.). *Low Precision Floating-Point Formats: The Wild West of Computer Arithmetic*. Retrieved from https://sinews.siam.org/Details-Page/low-precision-floating-point-formats-the-wild-west-of-computer-arithmetic
 
-plot(getFeasibleRegion(halfspacesEx4), ratio=:equal)
-xaxis!("rice (gr)")
-yaxis!("meat (gr)")
-drawIsoLinesObj(c,4000)
-end
+[8] Goldberg, D. (1991). *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. *Computing Surveys, 23*(1), 5-48. 
 
-# ╔═╡ 86ec8fde-0117-4957-b45f-d99132d4d618
-md"""La línea roja indica el conjunto de dietas con un costo de 1 USD, **ninguna de ellas satisface los requisitos nutricionales mínimos necesarios para vivir**.
-"""
-
-# ╔═╡ 1296cfbf-7eaf-4f21-8ea6-c90268b77b67
-md"""## Buscando soluciones al problema
-Como se discutió anteriormente, para encontrar la solución al problema podemos seleccionar diferentes soluciones de entre las soluciones factibles y evaluar cada una de ellas en la función objetivo. Sin embargo, esto podría implicar **buscar un número infinito de puntos dentro de la región factible**.
-
-Usando las líneas de nivel podemos mejorar esta situación.
-"""
-
-# ╔═╡ b547313d-9efd-496f-9267-883b40af177e
-begin
-	P=getFeasibleRegion(halfspacesEx4)
-	plot(P, ratio=:equal)
-#scatter!(P, color="green")
-
-drawIsoLinesObj(c,50000)
-drawIsoLinesObj(c,45000)
-drawIsoLinesObj(c,40000)
-drawIsoLinesObj(c,35000)
-drawIsoLinesObj(c,30000)
-
-#drawIsoLinesObj(z,2)
-#drawIsoLinesObj(z,5)
-#drawIsoLinesObj(z,6)
-#drawIsoLinesObj(z,7)
-#drawIsoLinesObj(z,8)
-#drawIsoLinesObj(z,9)
-end
-
-# ╔═╡ dcfb6eb3-8304-4c89-b052-bc1080630611
-md"""Una observación interesante es que desde la perspectiva del costo (función objetivo), todas las soluciones en la misma línea de nivel son equivalentes, de hecho, tienen el mismo costo. Por lo tanto, podemos transformar el problema de buscar un número infinito de puntos en la región factible en buscar el **número infinito de líneas de nivel contenidas en la región factible** y seleccionar una de ellas.
-
-Por ejemplo, podemos iterar sobre un conjunto 'razonable' de presupuestos y preguntar si la intersección entre la región factible y la línea no está vacía, y seleccionar el presupuesto con el menor costo, ya que queremos minimizar.
+[9] Brent, R. P., & Zimmermann, P. (n.d.). *Modern Computer Arithmetic*. Retrieved from https://docs.oracle.com/cd/E19957-01/806-3568/ncgTOC.html
 
 """
-
-# ╔═╡ dca27211-b1a7-4693-8d67-ef67b0a25790
-md"""
-Vale la pena observar que cuando se itera sobre las diferentes líneas de nivel, la solución 'óptima' se encuentra en las **esquinas** (puntos extremos) de la región factible, ¿por qué?
-
-**Básicamente, porque el problema es lineal, tanto la función objetivo como las restricciones. Esto significa que hay aumentos monótonos en el costo vinculados a cambios monótonos en la solución**.
-
-Por lo tanto, solo necesitamos centrarnos en los puntos extremos.
-
-Podemos visualizar estos puntos extremos:
-"""
-
-# ╔═╡ 5268fd3f-4208-45f9-9a8f-ccd6dae2ff23
-begin
-	plot(P, ratio=:equal)
-scatter!(P, color="green")
-end
-
-# ╔═╡ 9ff91746-2ed7-4a91-ae49-bb9e17ab379a
-md"""Increíblemente, de un conjunto infinito de dietas que pueden satisfacer las restricciones, solo un subconjunto finito de ellas son candidatas adecuadas para ser soluciones del problema.
-
-Este conjunto de puntos extremos constituye una forma particular de describir lo que se conoce como **Envoltura Convexa** de la región factible.
-"""
-
-# ╔═╡ 9534e18e-8d6c-4c3b-914a-4f89302ab02f
-md"""Utilizando los puntos que constituyen la Envoltura Convexa de la región factible y la función objetivo, podemos encontrar fácilmente la solución a nuestro problema, e incluso preguntar si hay soluciones equivalentes.
-"""
-
-# ╔═╡ ca4b70c5-49f4-404f-a7cd-a7079507b105
-begin
-	vecCandiSol = zeros(0)
-	vp = vrep(P)
-for ipoint in points(vp)
-    cval = ipoint[1]*c[1]+ipoint[2]*c[2]
-    println("$ipoint => $cval")
-    append!(vecCandiSol,cval)
-end
-
-plot(getFeasibleRegion(halfspacesEx1), ratio=:equal)
-scatter!(getFeasibleRegion(halfspacesEx1), color="green")
-drawIsoLinesObj(c,minimum(vecCandiSol))
-end
-
-# ╔═╡ 3afdecbe-a115-45cd-952d-55fa3f8d3a47
-md"""# Referencias
-[1] El Espectador. (2022, 3 de febrero). La situación del hambre en Colombia sí es crítica, bancos de alimentos. El Espectador. https://www.elespectador.com/salud/la-situacion-del-hambre-en-colombia-si-es-critica-bancos-de-alimentos/
-
-[2] Google. (s.f.). Calculadora de dieta. Recuperado de https://docs.google.com/spreadsheets/d/1TzIYFFXFHBOLXQzfLVKG7W2wrrd9mdjRo-6xgGmtYGY/edit?usp=sharing
-
-[3] FatSecret. (s.f.). Meat nutrition facts. Recuperado de https://www.fatsecret.com/calories-nutrition/generic/meat?portionid=50026&portionamount=100.000
-
-[4] Stack Exchange. (n.d.). What are the bare minimum nutrients required to survive as a human? Biology Stack Exchange. Recuperado de https://biology.stackexchange.com/questions/84485/what-are-the-bare-minimum-nutrients-required-to-survive-as-a-human
-
-[5] Cycling Weekly. (n.d.). This is what you have to eat to compete in the Tour de France. Cycling Weekly. Recuperado de https://www.cyclingweekly.com/news/racing/tour-de-france/this-is-what-you-have-to-eat-to-compete-in-the-tour-de-france-182775
-
-[6] Bleacher Report. (2014). Athletes who ate insane amounts of food. Bleacher Report. Recuperado de https://bleacherreport.com/articles/1932914-athletes-who-ate-insane-amounts-of-food
-
-Dantzig, G. B. (1990). Diet problem and linear programming. Recuperado de https://web.archive.org/web/20160411141356/https://dl.dropboxusercontent.com/u/5317066/1990-dantzig-dietproblem.pdf
-
-[7] Elespectador. (2022, febrero 17). La pobreza en Colombia en medio de la pandemia. El Espectador. https://www.elespectador.com/economia/macroeconomia/la-pobreza-en-colombia-en-medio-de-la-pandemia/
-
-Frontiers in Nutrition. (2018). Dietary intake assessment. Frontiers in Nutrition, 5, Article 48. https://doi.org/10.3389/fnut.2018.00048
-
-Explain That. (2011). Logic of how simplex method works. Recuperado de http://explain-that.blogspot.com/2011/06/logic-of-how-simplex-method-works.html
-
-Towards Data Science. (n.d.). Maximizing profit using linear programming in Python. Recuperado de https://towardsdatascience.com/maximizing-profit-using-linear-programming-in-python-642520c43f6
-
-Radzion. (n.d.). Introduction to linear programming. Recuperado de https://radzion.com/blog/operations/linearintro"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
-Polyhedra = "67491407-f73d-577b-9b50-8179a7c68029"
+Symbolics = "0c5d862f-8b57-4792-8d23-62f2024744c7"
 
 [compat]
 Plots = "~1.40.4"
-PlutoUI = "~0.7.59"
-Polyhedra = "~0.7.8"
+PlutoUI = "~0.7.58"
+Symbolics = "~5.33.0"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -433,7 +468,20 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.4"
 manifest_format = "2.0"
-project_hash = "f3a136400e2b15681272ab4501b61f76bb7f1a81"
+project_hash = "89ab8ea32fc4664cef9385f22d89f2e1a86eff08"
+
+[[deps.ADTypes]]
+git-tree-sha1 = "ae44a0c3d68a420d4ac0fa1f7e0c034ccecb6dc5"
+uuid = "47edcb42-4c32-4615-8424-f2b9edc5f35b"
+version = "1.5.2"
+
+    [deps.ADTypes.extensions]
+    ADTypesChainRulesCoreExt = "ChainRulesCore"
+    ADTypesEnzymeCoreExt = "EnzymeCore"
+
+    [deps.ADTypes.weakdeps]
+    ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
+    EnzymeCore = "f151be2c-9106-41f4-ab19-57ee4f262869"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -441,9 +489,79 @@ git-tree-sha1 = "6e1d2a35f2f90a4bc7c2ed98079b2ba09c35b83a"
 uuid = "6e696c72-6542-2067-7265-42206c756150"
 version = "1.3.2"
 
+[[deps.AbstractTrees]]
+git-tree-sha1 = "2d9c9a55f9c93e8887ad391fbae72f8ef55e1177"
+uuid = "1520ce14-60c1-5f80-bbc7-55ef81b5835c"
+version = "0.4.5"
+
+[[deps.Accessors]]
+deps = ["CompositionsBase", "ConstructionBase", "Dates", "InverseFunctions", "LinearAlgebra", "MacroTools", "Markdown", "Test"]
+git-tree-sha1 = "c0d491ef0b135fd7d63cbc6404286bc633329425"
+uuid = "7d9f7c33-5ae7-4f3b-8dc6-eff91059b697"
+version = "0.1.36"
+
+    [deps.Accessors.extensions]
+    AccessorsAxisKeysExt = "AxisKeys"
+    AccessorsIntervalSetsExt = "IntervalSets"
+    AccessorsStaticArraysExt = "StaticArrays"
+    AccessorsStructArraysExt = "StructArrays"
+    AccessorsUnitfulExt = "Unitful"
+
+    [deps.Accessors.weakdeps]
+    AxisKeys = "94b1ba4f-4ee9-5380-92f1-94cde586c3c5"
+    IntervalSets = "8197267c-284f-5f27-9208-e0e47529a953"
+    Requires = "ae029012-a4dd-5104-9daa-d747884805df"
+    StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
+    StructArrays = "09ab397b-f2b6-538f-b94a-2f83cf4a842a"
+    Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
+
+[[deps.Adapt]]
+deps = ["LinearAlgebra", "Requires"]
+git-tree-sha1 = "6a55b747d1812e699320963ffde36f1ebdda4099"
+uuid = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
+version = "4.0.4"
+weakdeps = ["StaticArrays"]
+
+    [deps.Adapt.extensions]
+    AdaptStaticArraysExt = "StaticArrays"
+
+[[deps.AliasTables]]
+deps = ["PtrArrays", "Random"]
+git-tree-sha1 = "9876e1e164b144ca45e9e3198d0b689cadfed9ff"
+uuid = "66dad0bd-aa9a-41b7-9441-69ab47430ed8"
+version = "1.1.3"
+
 [[deps.ArgTools]]
 uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
 version = "1.1.1"
+
+[[deps.ArrayInterface]]
+deps = ["Adapt", "LinearAlgebra", "SparseArrays", "SuiteSparse"]
+git-tree-sha1 = "ed2ec3c9b483842ae59cd273834e5b46206d6dda"
+uuid = "4fba245c-0d91-5ea0-9b3e-6abc04ee57a9"
+version = "7.11.0"
+
+    [deps.ArrayInterface.extensions]
+    ArrayInterfaceBandedMatricesExt = "BandedMatrices"
+    ArrayInterfaceBlockBandedMatricesExt = "BlockBandedMatrices"
+    ArrayInterfaceCUDAExt = "CUDA"
+    ArrayInterfaceCUDSSExt = "CUDSS"
+    ArrayInterfaceChainRulesExt = "ChainRules"
+    ArrayInterfaceGPUArraysCoreExt = "GPUArraysCore"
+    ArrayInterfaceReverseDiffExt = "ReverseDiff"
+    ArrayInterfaceStaticArraysCoreExt = "StaticArraysCore"
+    ArrayInterfaceTrackerExt = "Tracker"
+
+    [deps.ArrayInterface.weakdeps]
+    BandedMatrices = "aae01518-5342-5314-be14-df237901396f"
+    BlockBandedMatrices = "ffab5731-97b5-5995-9138-79e8c1846df0"
+    CUDA = "052768ef-5323-5732-b1bb-66c8b64840ba"
+    CUDSS = "45b445bb-4962-46a0-9369-b4df9d0f772e"
+    ChainRules = "082447d4-558c-5d27-93f4-14fc19e9eca2"
+    GPUArraysCore = "46192b85-c4d5-4398-a991-12ede77f4527"
+    ReverseDiff = "37e2e3b7-166d-5795-8a7a-e32c996b4267"
+    StaticArraysCore = "1e83bf80-4336-4d27-bf5d-d5a4f845583c"
+    Tracker = "9f7883ad-71c0-57eb-9f7f-b5c9e6d3789c"
 
 [[deps.Artifacts]]
 uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
@@ -451,11 +569,10 @@ uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
 [[deps.Base64]]
 uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
 
-[[deps.BenchmarkTools]]
-deps = ["JSON", "Logging", "Printf", "Profile", "Statistics", "UUIDs"]
-git-tree-sha1 = "f1dff6729bc61f4d49e140da1af55dcd1ac97b2f"
-uuid = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
-version = "1.5.0"
+[[deps.Bijections]]
+git-tree-sha1 = "95f5c7e2d177b7ba1a240b0518038b975d72a8c0"
+uuid = "e2ed5e7c-b2de-5872-ae92-c73ca462fb04"
+version = "0.1.7"
 
 [[deps.BitFlags]]
 git-tree-sha1 = "0691e34b3bb8be9307330f88d1a3c3f25466c24d"
@@ -474,11 +591,21 @@ git-tree-sha1 = "a2f1c8c668c8e3cb4cca4e57a8efdb09067bb3fd"
 uuid = "83423d85-b0ee-5818-9007-b63ccbeb887a"
 version = "1.18.0+2"
 
-[[deps.CodecBzip2]]
-deps = ["Bzip2_jll", "Libdl", "TranscodingStreams"]
-git-tree-sha1 = "9b1ca1aa6ce3f71b3d1840c538a8210a043625eb"
-uuid = "523fee87-0ab8-5b00-afb7-3ecf72e48cfd"
-version = "0.8.2"
+[[deps.Calculus]]
+deps = ["LinearAlgebra"]
+git-tree-sha1 = "f641eb0a4f00c343bbc32346e1217b86f3ce9dad"
+uuid = "49dc2e85-a5d0-5ad3-a950-438e2897f1b9"
+version = "0.5.1"
+
+[[deps.ChainRulesCore]]
+deps = ["Compat", "LinearAlgebra"]
+git-tree-sha1 = "71acdbf594aab5bbb2cec89b208c41b4c411e49f"
+uuid = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
+version = "1.24.0"
+weakdeps = ["SparseArrays"]
+
+    [deps.ChainRulesCore.extensions]
+    ChainRulesCoreSparseArraysExt = "SparseArrays"
 
 [[deps.CodecZlib]]
 deps = ["TranscodingStreams", "Zlib_jll"]
@@ -514,11 +641,26 @@ git-tree-sha1 = "362a287c3aa50601b0bc359053d5c2468f0e7ce0"
 uuid = "5ae59095-9a9b-59fe-a467-6f913c188581"
 version = "0.12.11"
 
+[[deps.Combinatorics]]
+git-tree-sha1 = "08c8b6831dc00bfea825826be0bc8336fc369860"
+uuid = "861a8166-3701-5b0c-9a16-15d98fcdc6aa"
+version = "1.0.2"
+
+[[deps.CommonSolve]]
+git-tree-sha1 = "0eee5eb66b1cf62cd6ad1b460238e60e4b09400c"
+uuid = "38540f10-b2f7-11e9-35d8-d573e4eb0ff2"
+version = "0.2.4"
+
 [[deps.CommonSubexpressions]]
 deps = ["MacroTools", "Test"]
 git-tree-sha1 = "7b8a93dba8af7e3b42fecabf646260105ac373f7"
 uuid = "bbf7d656-a473-5ed7-a52c-81e309532950"
 version = "0.3.0"
+
+[[deps.CommonWorldInvalidations]]
+git-tree-sha1 = "ae52d1c52048455e85a387fbee9be553ec2b68d0"
+uuid = "f70d9fcc-98c5-4d4a-abd7-e4cdeebd8ca8"
+version = "1.0.0"
 
 [[deps.Compat]]
 deps = ["TOML", "UUIDs"]
@@ -535,6 +677,20 @@ deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
 version = "1.1.1+0"
 
+[[deps.CompositeTypes]]
+git-tree-sha1 = "bce26c3dab336582805503bed209faab1c279768"
+uuid = "b152e2b5-7a66-4b01-a709-34e65c35f657"
+version = "0.1.4"
+
+[[deps.CompositionsBase]]
+git-tree-sha1 = "802bb88cd69dfd1509f6670416bd4434015693ad"
+uuid = "a33af91c-f02d-484b-be07-31d278c5ca2b"
+version = "0.1.2"
+weakdeps = ["InverseFunctions"]
+
+    [deps.CompositionsBase.extensions]
+    CompositionsBaseInverseFunctionsExt = "InverseFunctions"
+
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
 git-tree-sha1 = "6cbbd4d241d7e6579ab354737f4dd95ca43946e1"
@@ -546,14 +702,11 @@ deps = ["LinearAlgebra"]
 git-tree-sha1 = "260fd2400ed2dab602a7c15cf10c1933c59930a2"
 uuid = "187b0558-2788-49d3-abe0-74a17ed4e7c9"
 version = "1.5.5"
+weakdeps = ["IntervalSets", "StaticArrays"]
 
     [deps.ConstructionBase.extensions]
     ConstructionBaseIntervalSetsExt = "IntervalSets"
     ConstructionBaseStaticArraysExt = "StaticArrays"
-
-    [deps.ConstructionBase.weakdeps]
-    IntervalSets = "8197267c-284f-5f27-9208-e0e47529a953"
-    StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
 
 [[deps.Contour]]
 git-tree-sha1 = "439e35b0b36e2e5881738abc8857bd92ad6ff9a8"
@@ -598,22 +751,65 @@ git-tree-sha1 = "23163d55f885173722d1e4cf0f6110cdbaf7e272"
 uuid = "b552c78f-8df3-52c6-915a-8e097449b14b"
 version = "1.15.1"
 
+[[deps.Distributed]]
+deps = ["Random", "Serialization", "Sockets"]
+uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
+
+[[deps.Distributions]]
+deps = ["AliasTables", "FillArrays", "LinearAlgebra", "PDMats", "Printf", "QuadGK", "Random", "SpecialFunctions", "Statistics", "StatsAPI", "StatsBase", "StatsFuns"]
+git-tree-sha1 = "9c405847cc7ecda2dc921ccf18b47ca150d7317e"
+uuid = "31c24e10-a181-5473-b8eb-7969acd0382f"
+version = "0.25.109"
+
+    [deps.Distributions.extensions]
+    DistributionsChainRulesCoreExt = "ChainRulesCore"
+    DistributionsDensityInterfaceExt = "DensityInterface"
+    DistributionsTestExt = "Test"
+
+    [deps.Distributions.weakdeps]
+    ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
+    DensityInterface = "b429d917-457f-4dbc-8f4c-0cc954292b1d"
+    Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
 [[deps.DocStringExtensions]]
 deps = ["LibGit2"]
 git-tree-sha1 = "2fb1e02f2b635d0845df5d7c167fec4dd739b00d"
 uuid = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
 version = "0.9.3"
 
+[[deps.DomainSets]]
+deps = ["CompositeTypes", "IntervalSets", "LinearAlgebra", "Random", "StaticArrays"]
+git-tree-sha1 = "490392af2c7d63183bfa2c8aaa6ab981c5ba7561"
+uuid = "5b8099bc-c8ec-5219-889f-1d9e522a28bf"
+version = "0.7.14"
+
+    [deps.DomainSets.extensions]
+    DomainSetsMakieExt = "Makie"
+
+    [deps.DomainSets.weakdeps]
+    Makie = "ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a"
+
 [[deps.Downloads]]
 deps = ["ArgTools", "FileWatching", "LibCURL", "NetworkOptions"]
 uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
 version = "1.6.0"
 
-[[deps.EarCut_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "e3290f2d49e661fbd94046d7e3726ffcb2d41053"
-uuid = "5ae413db-bbd1-5e63-b57d-d24a61df00f5"
-version = "2.2.4+0"
+[[deps.DualNumbers]]
+deps = ["Calculus", "NaNMath", "SpecialFunctions"]
+git-tree-sha1 = "5837a837389fccf076445fce071c8ddaea35a566"
+uuid = "fa6b7ba4-c1ee-5f82-b5fc-ecf0adba8f74"
+version = "0.6.8"
+
+[[deps.DynamicPolynomials]]
+deps = ["Future", "LinearAlgebra", "MultivariatePolynomials", "MutableArithmetics", "Pkg", "Reexport", "Test"]
+git-tree-sha1 = "30a1848c4f4fc35d1d4bbbd125650f6a11b5bc6c"
+uuid = "7c1d4256-1411-5781-91ec-d7bc3513ac07"
+version = "0.5.7"
+
+[[deps.EnumX]]
+git-tree-sha1 = "bdb1942cd4c45e3c678fd11569d5cccd80976237"
+uuid = "4e289a0a-7415-4d19-859d-a7e5c4648b56"
+version = "1.0.4"
 
 [[deps.EpollShim_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -633,10 +829,10 @@ git-tree-sha1 = "1c6317308b9dc757616f0b5cb379db10494443a7"
 uuid = "2e619515-83b5-522b-bb60-26c02a35a201"
 version = "2.6.2+0"
 
-[[deps.Extents]]
-git-tree-sha1 = "94997910aca72897524d2237c41eb852153b0f65"
-uuid = "411431e0-e8b7-467b-b5e0-f676ba4f2910"
-version = "0.1.3"
+[[deps.ExprTools]]
+git-tree-sha1 = "27415f162e6028e81c72b82ef756bf321213b6ec"
+uuid = "e2ba6199-217a-4e67-a87a-7c52f15ade04"
+version = "0.1.10"
 
 [[deps.FFMPEG]]
 deps = ["FFMPEG_jll"]
@@ -652,6 +848,18 @@ version = "4.4.4+1"
 
 [[deps.FileWatching]]
 uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
+
+[[deps.FillArrays]]
+deps = ["LinearAlgebra"]
+git-tree-sha1 = "0653c0a2396a6da5bc4766c43041ef5fd3efbe57"
+uuid = "1a297f60-69ca-5386-bcde-b61e274b549b"
+version = "1.11.0"
+weakdeps = ["PDMats", "SparseArrays", "Statistics"]
+
+    [deps.FillArrays.extensions]
+    FillArraysPDMatsExt = "PDMats"
+    FillArraysSparseArraysExt = "SparseArrays"
+    FillArraysStatisticsExt = "Statistics"
 
 [[deps.FixedPointNumbers]]
 deps = ["Statistics"]
@@ -692,11 +900,32 @@ git-tree-sha1 = "1ed150b39aebcc805c26b93a8d0122c940f64ce2"
 uuid = "559328eb-81f9-559d-9380-de523a88c83c"
 version = "1.0.14+0"
 
+[[deps.FunctionWrappers]]
+git-tree-sha1 = "d62485945ce5ae9c0c48f124a84998d755bae00e"
+uuid = "069b7b12-0de2-55c6-9aab-29f3d0a68a2e"
+version = "1.1.3"
+
+[[deps.FunctionWrappersWrappers]]
+deps = ["FunctionWrappers"]
+git-tree-sha1 = "b104d487b34566608f8b4e1c39fb0b10aa279ff8"
+uuid = "77dc65aa-8811-40c2-897b-53d922fa7daf"
+version = "0.1.3"
+
+[[deps.Future]]
+deps = ["Random"]
+uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
+
 [[deps.GLFW_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll"]
 git-tree-sha1 = "ff38ba61beff76b8f4acad8ab0c97ef73bb670cb"
 uuid = "0656b61e-2033-5cc2-a64a-77c0f6c09b89"
 version = "3.3.9+0"
+
+[[deps.GPUArraysCore]]
+deps = ["Adapt"]
+git-tree-sha1 = "ec632f177c0d990e64d955ccc1b8c04c485a0950"
+uuid = "46192b85-c4d5-4398-a991-12ede77f4527"
+version = "0.1.6"
 
 [[deps.GR]]
 deps = ["Artifacts", "Base64", "DelimitedFiles", "Downloads", "GR_jll", "HTTP", "JSON", "Libdl", "LinearAlgebra", "Preferences", "Printf", "Random", "Serialization", "Sockets", "TOML", "Tar", "Test", "p7zip_jll"]
@@ -709,24 +938,6 @@ deps = ["Artifacts", "Bzip2_jll", "Cairo_jll", "FFMPEG_jll", "Fontconfig_jll", "
 git-tree-sha1 = "182c478a179b267dd7a741b6f8f4c3e0803795d6"
 uuid = "d2c73de3-f751-5644-a686-071e5b155ba9"
 version = "0.73.6+0"
-
-[[deps.GenericLinearAlgebra]]
-deps = ["LinearAlgebra", "Printf", "Random", "libblastrampoline_jll"]
-git-tree-sha1 = "02be7066f936af6b04669f7c370a31af9036c440"
-uuid = "14197337-ba66-59df-a3e3-ca00e7dcff7a"
-version = "0.3.11"
-
-[[deps.GeoInterface]]
-deps = ["Extents"]
-git-tree-sha1 = "801aef8228f7f04972e596b09d4dba481807c913"
-uuid = "cf35fbd7-0cd7-5166-be24-54bfbe79505f"
-version = "1.3.4"
-
-[[deps.GeometryBasics]]
-deps = ["EarCut_jll", "Extents", "GeoInterface", "IterTools", "LinearAlgebra", "StaticArrays", "StructArrays", "Tables"]
-git-tree-sha1 = "b62f2b2d76cee0d61a2ef2b3118cd2a3215d3134"
-uuid = "5c1252a2-5f33-56bf-86c9-59e7332b4326"
-version = "0.4.11"
 
 [[deps.Gettext_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "Libdl", "Libiconv_jll", "Pkg", "XML2_jll"]
@@ -763,6 +974,12 @@ git-tree-sha1 = "129acf094d168394e80ee1dc4bc06ec835e510a3"
 uuid = "2e76f6c2-a576-52d4-95c1-20adfe4de566"
 version = "2.8.1+1"
 
+[[deps.HypergeometricFunctions]]
+deps = ["DualNumbers", "LinearAlgebra", "OpenLibm_jll", "SpecialFunctions"]
+git-tree-sha1 = "f218fe3736ddf977e0e772bc9a586b2383da2685"
+uuid = "34004b35-14d8-5ef3-9330-4cdb6864b03a"
+version = "0.3.23"
+
 [[deps.Hyperscript]]
 deps = ["Test"]
 git-tree-sha1 = "179267cfa5e712760cd43dcae385d7ea90cc25a4"
@@ -781,19 +998,40 @@ git-tree-sha1 = "b6d6bfdd7ce25b0f9b2f6b3dd56b2673a66c8770"
 uuid = "b5f81e59-6552-4d32-b1f0-c071b021bf89"
 version = "0.2.5"
 
+[[deps.IfElse]]
+git-tree-sha1 = "debdd00ffef04665ccbb3e150747a77560e8fad1"
+uuid = "615f187c-cbe4-4ef1-ba3b-2fcf58d6d173"
+version = "0.1.1"
+
 [[deps.InteractiveUtils]]
 deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+
+[[deps.IntervalSets]]
+git-tree-sha1 = "dba9ddf07f77f60450fe5d2e2beb9854d9a49bd0"
+uuid = "8197267c-284f-5f27-9208-e0e47529a953"
+version = "0.7.10"
+weakdeps = ["Random", "RecipesBase", "Statistics"]
+
+    [deps.IntervalSets.extensions]
+    IntervalSetsRandomExt = "Random"
+    IntervalSetsRecipesBaseExt = "RecipesBase"
+    IntervalSetsStatisticsExt = "Statistics"
+
+[[deps.InverseFunctions]]
+deps = ["Test"]
+git-tree-sha1 = "e7cbed5032c4c397a6ac23d1493f3289e01231c4"
+uuid = "3587e190-3f89-42d0-90ee-14403ec27112"
+version = "0.1.14"
+weakdeps = ["Dates"]
+
+    [deps.InverseFunctions.extensions]
+    DatesExt = "Dates"
 
 [[deps.IrrationalConstants]]
 git-tree-sha1 = "630b497eafcc20001bba38a4651b327dcfc491d2"
 uuid = "92d709cd-6900-40b7-9082-c6be49f344b6"
 version = "0.2.2"
-
-[[deps.IterTools]]
-git-tree-sha1 = "42d5f897009e7ff2cf88db414a389e5ed1bdd023"
-uuid = "c8e1da08-722c-5040-9ed9-7db0dc04731e"
-version = "1.10.0"
 
 [[deps.IteratorInterfaceExtensions]]
 git-tree-sha1 = "a3f24677c21f5bbe9d2a714f95dcd58337fb2856"
@@ -824,18 +1062,6 @@ git-tree-sha1 = "c84a835e1a09b289ffcd2271bf2a337bbdda6637"
 uuid = "aacddb02-875f-59d6-b918-886e6ef4fbf8"
 version = "3.0.3+0"
 
-[[deps.JuMP]]
-deps = ["LinearAlgebra", "MacroTools", "MathOptInterface", "MutableArithmetics", "OrderedCollections", "PrecompileTools", "Printf", "SparseArrays"]
-git-tree-sha1 = "7e10a0d8b534f2d8e9f712b33488584254624fb1"
-uuid = "4076af6c-e467-56ae-b986-b466b2749572"
-version = "1.22.2"
-
-    [deps.JuMP.extensions]
-    JuMPDimensionalDataExt = "DimensionalData"
-
-    [deps.JuMP.weakdeps]
-    DimensionalData = "0703355e-b756-11e9-17c0-8b28908087d0"
-
 [[deps.LAME_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
 git-tree-sha1 = "170b660facf5df5de098d866564877e119141cbd"
@@ -864,6 +1090,17 @@ version = "2.10.2+0"
 git-tree-sha1 = "50901ebc375ed41dbf8058da26f9de442febbbec"
 uuid = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
 version = "1.3.1"
+
+[[deps.LabelledArrays]]
+deps = ["ArrayInterface", "ChainRulesCore", "ForwardDiff", "LinearAlgebra", "MacroTools", "PreallocationTools", "RecursiveArrayTools", "StaticArrays"]
+git-tree-sha1 = "e459fda6b68ea8684b3fcd513d2fd1e5130c4402"
+uuid = "2ee39098-c373-598a-b85f-a56591580800"
+version = "1.16.0"
+
+[[deps.LambertW]]
+git-tree-sha1 = "c5ffc834de5d61d00d2b0e18c96267cffc21f648"
+uuid = "984bce1d-4616-540c-a9ee-88d1112d94c9"
+version = "0.4.6"
 
 [[deps.Latexify]]
 deps = ["Format", "InteractiveUtils", "LaTeXStrings", "MacroTools", "Markdown", "OrderedCollections", "Requires"]
@@ -998,12 +1235,6 @@ version = "0.5.13"
 deps = ["Base64"]
 uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 
-[[deps.MathOptInterface]]
-deps = ["BenchmarkTools", "CodecBzip2", "CodecZlib", "DataStructures", "ForwardDiff", "JSON", "LinearAlgebra", "MutableArithmetics", "NaNMath", "OrderedCollections", "PrecompileTools", "Printf", "SparseArrays", "SpecialFunctions", "Test", "Unicode"]
-git-tree-sha1 = "91b08d27a27d83cf1e63e50837403e7f53a0fd74"
-uuid = "b8f27783-ece8-5eb3-8dc8-9495eed66fee"
-version = "1.31.0"
-
 [[deps.MbedTLS]]
 deps = ["Dates", "MbedTLS_jll", "MozillaCACerts_jll", "NetworkOptions", "Random", "Sockets"]
 git-tree-sha1 = "c067a280ddc25f196b5e7df3877c6b226d390aaf"
@@ -1032,6 +1263,12 @@ uuid = "a63ad114-7e13-5084-954f-fe012c677804"
 [[deps.MozillaCACerts_jll]]
 uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
 version = "2023.1.10"
+
+[[deps.MultivariatePolynomials]]
+deps = ["ChainRulesCore", "DataStructures", "LinearAlgebra", "MutableArithmetics"]
+git-tree-sha1 = "5c1d1d9361e1417e5a065e1f84dc3686cbdaea21"
+uuid = "102ac46a-7ee4-5c85-9060-abc95bfdeaa3"
+version = "0.5.6"
 
 [[deps.MutableArithmetics]]
 deps = ["LinearAlgebra", "SparseArrays", "Test"]
@@ -1099,6 +1336,12 @@ deps = ["Artifacts", "Libdl"]
 uuid = "efcefdf7-47ab-520b-bdef-62a2eaa19f15"
 version = "10.42.0+1"
 
+[[deps.PDMats]]
+deps = ["LinearAlgebra", "SparseArrays", "SuiteSparse"]
+git-tree-sha1 = "949347156c25054de2db3b166c52ac4728cbad65"
+uuid = "90014a1f-27ba-587c-ab20-58faa44d9150"
+version = "0.11.31"
+
 [[deps.Parsers]]
 deps = ["Dates", "PrecompileTools", "UUIDs"]
 git-tree-sha1 = "8489905bcdbcfac64d1daa51ca07c0d8f0283821"
@@ -1159,11 +1402,17 @@ git-tree-sha1 = "ab55ee1510ad2af0ff674dbcced5e94921f867a9"
 uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 version = "0.7.59"
 
-[[deps.Polyhedra]]
-deps = ["GenericLinearAlgebra", "GeometryBasics", "JuMP", "LinearAlgebra", "MutableArithmetics", "RecipesBase", "SparseArrays", "StaticArrays"]
-git-tree-sha1 = "e2e81cdf047d2921d99f7ff0b6dece45b3195185"
-uuid = "67491407-f73d-577b-9b50-8179a7c68029"
-version = "0.7.8"
+[[deps.PreallocationTools]]
+deps = ["Adapt", "ArrayInterface", "ForwardDiff"]
+git-tree-sha1 = "406c29a7f46706d379a3bce45671b4e3a39ddfbc"
+uuid = "d236fae5-4411-538c-8e31-a6e3d9e00b46"
+version = "0.4.22"
+
+    [deps.PreallocationTools.extensions]
+    PreallocationToolsReverseDiffExt = "ReverseDiff"
+
+    [deps.PreallocationTools.weakdeps]
+    ReverseDiff = "37e2e3b7-166d-5795-8a7a-e32c996b4267"
 
 [[deps.PrecompileTools]]
 deps = ["Preferences"]
@@ -1181,15 +1430,22 @@ version = "1.4.3"
 deps = ["Unicode"]
 uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
-[[deps.Profile]]
-deps = ["Printf"]
-uuid = "9abbd945-dff8-562f-b5e8-e1ebf5ef1b79"
+[[deps.PtrArrays]]
+git-tree-sha1 = "f011fbb92c4d401059b2212c05c0601b70f8b759"
+uuid = "43287f4e-b6f4-7ad1-bb20-aadabca52c3d"
+version = "1.2.0"
 
 [[deps.Qt6Base_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Fontconfig_jll", "Glib_jll", "JLLWrappers", "Libdl", "Libglvnd_jll", "OpenSSL_jll", "Vulkan_Loader_jll", "Xorg_libSM_jll", "Xorg_libXext_jll", "Xorg_libXrender_jll", "Xorg_libxcb_jll", "Xorg_xcb_util_cursor_jll", "Xorg_xcb_util_image_jll", "Xorg_xcb_util_keysyms_jll", "Xorg_xcb_util_renderutil_jll", "Xorg_xcb_util_wm_jll", "Zlib_jll", "libinput_jll", "xkbcommon_jll"]
 git-tree-sha1 = "492601870742dcd38f233b23c3ec629628c1d724"
 uuid = "c0090381-4147-56d7-9ebc-da0b1113ec56"
 version = "6.7.1+1"
+
+[[deps.QuadGK]]
+deps = ["DataStructures", "LinearAlgebra"]
+git-tree-sha1 = "9b23c31e76e333e6fb4c1595ae6afa74966a729e"
+uuid = "1fd47b50-473d-5c70-9696-f719f8f3bcdc"
+version = "2.9.4"
 
 [[deps.REPL]]
 deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
@@ -1211,6 +1467,30 @@ git-tree-sha1 = "45cf9fd0ca5839d06ef333c8201714e888486342"
 uuid = "01d81517-befc-4cb6-b9ec-a95719d0359c"
 version = "0.6.12"
 
+[[deps.RecursiveArrayTools]]
+deps = ["Adapt", "ArrayInterface", "DocStringExtensions", "GPUArraysCore", "IteratorInterfaceExtensions", "LinearAlgebra", "RecipesBase", "SparseArrays", "StaticArraysCore", "Statistics", "SymbolicIndexingInterface", "Tables"]
+git-tree-sha1 = "3400ce27995422fb88ffcd3af9945565aad947f0"
+uuid = "731186ca-8d62-57ce-b412-fbd966d074cd"
+version = "3.23.1"
+
+    [deps.RecursiveArrayTools.extensions]
+    RecursiveArrayToolsFastBroadcastExt = "FastBroadcast"
+    RecursiveArrayToolsForwardDiffExt = "ForwardDiff"
+    RecursiveArrayToolsMeasurementsExt = "Measurements"
+    RecursiveArrayToolsMonteCarloMeasurementsExt = "MonteCarloMeasurements"
+    RecursiveArrayToolsReverseDiffExt = ["ReverseDiff", "Zygote"]
+    RecursiveArrayToolsTrackerExt = "Tracker"
+    RecursiveArrayToolsZygoteExt = "Zygote"
+
+    [deps.RecursiveArrayTools.weakdeps]
+    FastBroadcast = "7034ab61-46d4-4ed7-9d0f-46aef9175898"
+    ForwardDiff = "f6369f11-7733-5829-9624-2563aa707210"
+    Measurements = "eff96d63-e80a-5855-80a2-b1b0885c5ab7"
+    MonteCarloMeasurements = "0987c9cc-fe09-11e8-30f0-b96dd679fdca"
+    ReverseDiff = "37e2e3b7-166d-5795-8a7a-e32c996b4267"
+    Tracker = "9f7883ad-71c0-57eb-9f7f-b5c9e6d3789c"
+    Zygote = "e88e6eb3-aa80-5325-afca-941959d7151f"
+
 [[deps.Reexport]]
 git-tree-sha1 = "45e428421666073eab6f2da5c9d310d99bb12f9b"
 uuid = "189a3867-3050-52da-a836-e630ba90ab69"
@@ -1228,9 +1508,64 @@ git-tree-sha1 = "838a3a4188e2ded87a4f9f184b4b0d78a1e91cb7"
 uuid = "ae029012-a4dd-5104-9daa-d747884805df"
 version = "1.3.0"
 
+[[deps.Rmath]]
+deps = ["Random", "Rmath_jll"]
+git-tree-sha1 = "f65dcb5fa46aee0cf9ed6274ccbd597adc49aa7b"
+uuid = "79098fc4-a85e-5d69-aa6a-4863f24498fa"
+version = "0.7.1"
+
+[[deps.Rmath_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl"]
+git-tree-sha1 = "d483cd324ce5cf5d61b77930f0bbd6cb61927d21"
+uuid = "f50d1b31-88e8-58de-be2c-1cc44531875f"
+version = "0.4.2+0"
+
+[[deps.RuntimeGeneratedFunctions]]
+deps = ["ExprTools", "SHA", "Serialization"]
+git-tree-sha1 = "04c968137612c4a5629fa531334bb81ad5680f00"
+uuid = "7e49a35a-f44a-4d26-94aa-eba1b4ca6b47"
+version = "0.5.13"
+
 [[deps.SHA]]
 uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
 version = "0.7.0"
+
+[[deps.SciMLBase]]
+deps = ["ADTypes", "Accessors", "ArrayInterface", "CommonSolve", "ConstructionBase", "Distributed", "DocStringExtensions", "EnumX", "FunctionWrappersWrappers", "IteratorInterfaceExtensions", "LinearAlgebra", "Logging", "Markdown", "PrecompileTools", "Preferences", "Printf", "RecipesBase", "RecursiveArrayTools", "Reexport", "RuntimeGeneratedFunctions", "SciMLOperators", "SciMLStructures", "StaticArraysCore", "Statistics", "SymbolicIndexingInterface", "Tables"]
+git-tree-sha1 = "7a6c5c8c38d2e37f45d4686c3598c20c1aebf48e"
+uuid = "0bca4576-84f4-4d90-8ffe-ffa030f20462"
+version = "2.41.3"
+
+    [deps.SciMLBase.extensions]
+    SciMLBaseChainRulesCoreExt = "ChainRulesCore"
+    SciMLBaseMakieExt = "Makie"
+    SciMLBasePartialFunctionsExt = "PartialFunctions"
+    SciMLBasePyCallExt = "PyCall"
+    SciMLBasePythonCallExt = "PythonCall"
+    SciMLBaseRCallExt = "RCall"
+    SciMLBaseZygoteExt = "Zygote"
+
+    [deps.SciMLBase.weakdeps]
+    ChainRules = "082447d4-558c-5d27-93f4-14fc19e9eca2"
+    ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
+    Makie = "ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a"
+    PartialFunctions = "570af359-4316-4cb7-8c74-252c00c2016b"
+    PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
+    PythonCall = "6099a3de-0909-46bc-b1f4-468b9a2dfc0d"
+    RCall = "6f49c342-dc21-5d91-9882-a32aef131414"
+    Zygote = "e88e6eb3-aa80-5325-afca-941959d7151f"
+
+[[deps.SciMLOperators]]
+deps = ["ArrayInterface", "DocStringExtensions", "LinearAlgebra", "MacroTools", "Setfield", "SparseArrays", "StaticArraysCore"]
+git-tree-sha1 = "10499f619ef6e890f3f4a38914481cc868689cd5"
+uuid = "c0aeaf25-5076-4817-a8d5-81caf7dfa961"
+version = "0.3.8"
+
+[[deps.SciMLStructures]]
+deps = ["ArrayInterface"]
+git-tree-sha1 = "cfdd1200d150df1d3c055cc72ee6850742e982d7"
+uuid = "53ae85a6-f571-4167-b2af-e1d143709226"
+version = "1.4.1"
 
 [[deps.Scratch]]
 deps = ["Dates"]
@@ -1240,6 +1575,12 @@ version = "1.2.1"
 
 [[deps.Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
+
+[[deps.Setfield]]
+deps = ["ConstructionBase", "Future", "MacroTools", "StaticArraysCore"]
+git-tree-sha1 = "e2cc6d8c88613c05e1defb55170bf5ff211fbeac"
+uuid = "efcf1570-3423-57d1-acb7-fd33fddbac46"
+version = "1.1.1"
 
 [[deps.Showoff]]
 deps = ["Dates", "Grisu"]
@@ -1271,26 +1612,21 @@ deps = ["IrrationalConstants", "LogExpFunctions", "OpenLibm_jll", "OpenSpecFun_j
 git-tree-sha1 = "2f5d4697f21388cbe1ff299430dd169ef97d7e14"
 uuid = "276daf66-3868-5448-9aa4-cd146d93841b"
 version = "2.4.0"
+weakdeps = ["ChainRulesCore"]
 
     [deps.SpecialFunctions.extensions]
     SpecialFunctionsChainRulesCoreExt = "ChainRulesCore"
 
-    [deps.SpecialFunctions.weakdeps]
-    ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
-
 [[deps.StaticArrays]]
 deps = ["LinearAlgebra", "PrecompileTools", "Random", "StaticArraysCore"]
-git-tree-sha1 = "6e00379a24597be4ae1ee6b2d882e15392040132"
+git-tree-sha1 = "20833c5b7f7edf0e5026f23db7f268e4f23ec577"
 uuid = "90137ffa-7385-5640-81b9-e52037218182"
-version = "1.9.5"
+version = "1.9.6"
+weakdeps = ["ChainRulesCore", "Statistics"]
 
     [deps.StaticArrays.extensions]
     StaticArraysChainRulesCoreExt = "ChainRulesCore"
     StaticArraysStatisticsExt = "Statistics"
-
-    [deps.StaticArrays.weakdeps]
-    ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
-    Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 
 [[deps.StaticArraysCore]]
 git-tree-sha1 = "192954ef1208c7019899fbf8049e717f92959682"
@@ -1314,28 +1650,61 @@ git-tree-sha1 = "5cf7606d6cef84b543b483848d4ae08ad9832b21"
 uuid = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 version = "0.34.3"
 
-[[deps.StructArrays]]
-deps = ["ConstructionBase", "DataAPI", "Tables"]
-git-tree-sha1 = "f4dc295e983502292c4c3f951dbb4e985e35b3be"
-uuid = "09ab397b-f2b6-538f-b94a-2f83cf4a842a"
-version = "0.6.18"
+[[deps.StatsFuns]]
+deps = ["HypergeometricFunctions", "IrrationalConstants", "LogExpFunctions", "Reexport", "Rmath", "SpecialFunctions"]
+git-tree-sha1 = "cef0472124fab0695b58ca35a77c6fb942fdab8a"
+uuid = "4c63d2b9-4356-54db-8cca-17b64c39e42c"
+version = "1.3.1"
+weakdeps = ["ChainRulesCore", "InverseFunctions"]
 
-    [deps.StructArrays.extensions]
-    StructArraysAdaptExt = "Adapt"
-    StructArraysGPUArraysCoreExt = "GPUArraysCore"
-    StructArraysSparseArraysExt = "SparseArrays"
-    StructArraysStaticArraysExt = "StaticArrays"
+    [deps.StatsFuns.extensions]
+    StatsFunsChainRulesCoreExt = "ChainRulesCore"
+    StatsFunsInverseFunctionsExt = "InverseFunctions"
 
-    [deps.StructArrays.weakdeps]
-    Adapt = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
-    GPUArraysCore = "46192b85-c4d5-4398-a991-12ede77f4527"
-    SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
-    StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
+[[deps.SuiteSparse]]
+deps = ["Libdl", "LinearAlgebra", "Serialization", "SparseArrays"]
+uuid = "4607b0f0-06f3-5cda-b6b1-a6196a1729e9"
 
 [[deps.SuiteSparse_jll]]
 deps = ["Artifacts", "Libdl", "libblastrampoline_jll"]
 uuid = "bea87d4a-7f5b-5778-9afe-8cc45184846c"
 version = "7.2.1+1"
+
+[[deps.SymbolicIndexingInterface]]
+deps = ["Accessors", "ArrayInterface", "RuntimeGeneratedFunctions", "StaticArraysCore"]
+git-tree-sha1 = "a5f6f138b740c9d93d76f0feddd3092e6ef002b7"
+uuid = "2efcf032-c050-4f8e-a9bb-153293bab1f5"
+version = "0.3.22"
+
+[[deps.SymbolicLimits]]
+deps = ["SymbolicUtils"]
+git-tree-sha1 = "fb099adbd7504f1e68b4512828e9d94197a8b889"
+uuid = "19f23fe9-fdab-4a78-91af-e7b7767979c3"
+version = "0.2.1"
+
+[[deps.SymbolicUtils]]
+deps = ["AbstractTrees", "Bijections", "ChainRulesCore", "Combinatorics", "ConstructionBase", "DataStructures", "DocStringExtensions", "DynamicPolynomials", "IfElse", "LabelledArrays", "LinearAlgebra", "MultivariatePolynomials", "NaNMath", "Setfield", "SparseArrays", "SpecialFunctions", "StaticArrays", "SymbolicIndexingInterface", "TermInterface", "TimerOutputs", "Unityper"]
+git-tree-sha1 = "cc049913a449be8c7ac00979831f26891e01add2"
+uuid = "d1185830-fcd6-423d-90d6-eec64667417b"
+version = "2.1.0"
+
+[[deps.Symbolics]]
+deps = ["ADTypes", "ArrayInterface", "Bijections", "CommonWorldInvalidations", "ConstructionBase", "DataStructures", "DiffRules", "Distributions", "DocStringExtensions", "DomainSets", "DynamicPolynomials", "ForwardDiff", "IfElse", "LaTeXStrings", "LambertW", "Latexify", "Libdl", "LinearAlgebra", "LogExpFunctions", "MacroTools", "Markdown", "NaNMath", "PrecompileTools", "RecipesBase", "Reexport", "Requires", "RuntimeGeneratedFunctions", "SciMLBase", "Setfield", "SparseArrays", "SpecialFunctions", "StaticArraysCore", "SymbolicIndexingInterface", "SymbolicLimits", "SymbolicUtils", "TermInterface"]
+git-tree-sha1 = "8539a734b448ca27707709c62420b1bf115ed7d9"
+uuid = "0c5d862f-8b57-4792-8d23-62f2024744c7"
+version = "5.33.0"
+
+    [deps.Symbolics.extensions]
+    SymbolicsGroebnerExt = "Groebner"
+    SymbolicsLuxCoreExt = "LuxCore"
+    SymbolicsPreallocationToolsExt = "PreallocationTools"
+    SymbolicsSymPyExt = "SymPy"
+
+    [deps.Symbolics.weakdeps]
+    Groebner = "0b43b601-686d-58a3-8a1c-6623616c7cd4"
+    LuxCore = "bb33d45b-7691-41d6-9220-0943567d0623"
+    PreallocationTools = "d236fae5-4411-538c-8e31-a6e3d9e00b46"
+    SymPy = "24249f21-da20-56a4-8eb1-6a02cf4ae2e6"
 
 [[deps.TOML]]
 deps = ["Dates"]
@@ -1365,9 +1734,20 @@ git-tree-sha1 = "1feb45f88d133a655e001435632f019a9a1bcdb6"
 uuid = "62fd8b95-f654-4bbd-a8a5-9c27f68ccd50"
 version = "0.1.1"
 
+[[deps.TermInterface]]
+git-tree-sha1 = "6f0cee95e74d1f6891ba6b35b8b219fd3d11b567"
+uuid = "8ea1fca8-c5ef-4a55-8b96-4e9afe9c9a3c"
+version = "0.4.1"
+
 [[deps.Test]]
 deps = ["InteractiveUtils", "Logging", "Random", "Serialization"]
 uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[[deps.TimerOutputs]]
+deps = ["ExprTools", "Printf"]
+git-tree-sha1 = "5a13ae8a41237cff5ecf34f73eb1b8f42fff6531"
+uuid = "a759f4b9-e2f1-59dc-863e-4aeb61b1ea8f"
+version = "0.5.24"
 
 [[deps.TranscodingStreams]]
 git-tree-sha1 = "d73336d81cafdc277ff45558bb7eaa2b04a8e472"
@@ -1406,20 +1786,23 @@ deps = ["Dates", "LinearAlgebra", "Random"]
 git-tree-sha1 = "dd260903fdabea27d9b6021689b3cd5401a57748"
 uuid = "1986cc42-f94f-5a68-af5c-568840ba703d"
 version = "1.20.0"
+weakdeps = ["ConstructionBase", "InverseFunctions"]
 
     [deps.Unitful.extensions]
     ConstructionBaseUnitfulExt = "ConstructionBase"
     InverseFunctionsUnitfulExt = "InverseFunctions"
-
-    [deps.Unitful.weakdeps]
-    ConstructionBase = "187b0558-2788-49d3-abe0-74a17ed4e7c9"
-    InverseFunctions = "3587e190-3f89-42d0-90ee-14403ec27112"
 
 [[deps.UnitfulLatexify]]
 deps = ["LaTeXStrings", "Latexify", "Unitful"]
 git-tree-sha1 = "e2d817cc500e960fdbafcf988ac8436ba3208bfd"
 uuid = "45397f5d-5981-4c77-b2b3-fc36d6e9b728"
 version = "1.6.3"
+
+[[deps.Unityper]]
+deps = ["ConstructionBase"]
+git-tree-sha1 = "25008b734a03736c41e2a7dc314ecb95bd6bbdb0"
+uuid = "a7c27f48-0311-42f6-a7f8-2c11e75eb415"
+version = "0.1.6"
 
 [[deps.Unzip]]
 git-tree-sha1 = "ca0969166a028236229f63514992fc073799bb78"
@@ -1446,15 +1829,15 @@ version = "1.31.0+0"
 
 [[deps.XML2_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libiconv_jll", "Zlib_jll"]
-git-tree-sha1 = "52ff2af32e591541550bd753c0da8b9bc92bb9d9"
+git-tree-sha1 = "d9717ce3518dc68a99e6b96300813760d887a01d"
 uuid = "02c8fc9c-b97f-50b9-bbe4-9be30ff0a78a"
-version = "2.12.7+0"
+version = "2.13.1+0"
 
 [[deps.XSLT_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Libgcrypt_jll", "Libgpg_error_jll", "Libiconv_jll", "Pkg", "XML2_jll", "Zlib_jll"]
-git-tree-sha1 = "91844873c4085240b95e795f692c4cec4d805f8a"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Libgcrypt_jll", "Libgpg_error_jll", "Libiconv_jll", "XML2_jll", "Zlib_jll"]
+git-tree-sha1 = "a54ee957f4c86b526460a720dbc882fa5edcbefc"
 uuid = "aed1982a-8fda-507f-9586-7b0439959a61"
-version = "1.1.34+0"
+version = "1.1.41+0"
 
 [[deps.XZ_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1718,44 +2101,73 @@ version = "1.4.1+1"
 """
 
 # ╔═╡ Cell order:
-# ╟─9c4ff5a5-7516-4c40-a444-88a9166c9fcb
-# ╟─bb89e3fe-a074-45bd-8017-44b7bf44df31
-# ╟─0ba09c5c-5a29-4900-8f08-d345e8d623e9
-# ╟─a129e7d9-1cfe-43a1-b233-dfbacfa2b8ed
-# ╟─90ff7e59-c94e-45b1-87a5-315a99d3f206
-# ╠═e545f24f-4aa9-42b0-84e0-64796195d403
-# ╟─15b4fec3-5d33-4e84-8ee0-29f6209fd380
-# ╟─a4f8a0fb-656c-4620-b32b-4082e0169dd0
-# ╟─7cfd7b6a-8fb4-44ae-8742-ff44f7d837f2
-# ╟─2aaaa5ca-f237-4a53-b481-88109e631910
-# ╟─038cc7b7-92c6-4fff-b810-c49e5ae2b239
-# ╟─759e2e83-90f8-41b1-b413-720e61a496bd
-# ╟─648b2d01-c8a9-4012-a17e-1b81e7c7e116
-# ╟─51f67997-b13f-4a56-8e4b-c0f6c792311a
-# ╟─86b63a27-7af7-41b3-8238-12f5bb98701b
-# ╟─336cea97-d5b3-4bee-a504-242dabf45e25
-# ╟─b041cc88-49c8-4cc7-b748-edadee7aa81a
-# ╟─9104853c-1b84-41a6-8d5e-c5869c690ea5
-# ╠═8ea6d495-506d-4874-ae9b-1aef24f17993
-# ╟─bc179b8a-fb78-445c-ab37-ceea572380c6
-# ╟─0a822d29-6968-4763-a9db-160c933e5653
-# ╟─4498e0d8-fba4-4ce1-9044-15723520e310
-# ╠═e087ae82-f236-47a1-84ba-b4094fdf5a3e
-# ╟─953a57ce-556a-413d-a471-ad206efb9f9d
-# ╟─d0d7cd48-ab02-4bf7-82a2-81ff522afcaa
-# ╟─911d9cd5-34db-4133-bac5-aaf060e8a40e
-# ╟─12696be3-1dbc-4231-a1c3-864389245786
-# ╟─57f8b779-108d-4644-9e75-e1f2722c69d2
-# ╟─78076c96-79d6-443c-80f5-ebf82c7fa7f4
-# ╟─86ec8fde-0117-4957-b45f-d99132d4d618
-# ╟─1296cfbf-7eaf-4f21-8ea6-c90268b77b67
-# ╟─b547313d-9efd-496f-9267-883b40af177e
-# ╟─dcfb6eb3-8304-4c89-b052-bc1080630611
-# ╟─dca27211-b1a7-4693-8d67-ef67b0a25790
-# ╟─5268fd3f-4208-45f9-9a8f-ccd6dae2ff23
-# ╟─9ff91746-2ed7-4a91-ae49-bb9e17ab379a
-# ╟─9534e18e-8d6c-4c3b-914a-4f89302ab02f
-# ╟─ca4b70c5-49f4-404f-a7cd-a7079507b105
-# ╟─3afdecbe-a115-45cd-952d-55fa3f8d3a47
+# ╟─b763cd10-d1e7-4613-b738-9fb1c1cfa1e5
+# ╟─a7d3298e-0138-4149-a189-0b5a92cfa0e7
+# ╟─5d0d4c4e-b432-437e-9b8e-2f81c79f907e
+# ╟─c08f6550-5278-436d-96ec-408570476631
+# ╟─7b84db99-9375-4dc5-8a3e-414bc176648a
+# ╠═e2feba71-69cb-4f39-92d1-d1f4daefb4ec
+# ╟─fd74ea36-fa50-415c-b4a0-92f594178ab9
+# ╠═37e57a66-a785-45a1-90a0-3413e7f01898
+# ╠═d38e69a8-cbdb-4437-ad5b-64217f3e48d6
+# ╠═2cfc4a3a-91f3-416a-bcf5-89a2ecbb0a61
+# ╠═5ffb3f8c-d31d-4ed1-8a34-dbe13be57c42
+# ╠═c53b615f-b8ca-4427-a52e-ac2e69b54545
+# ╠═4bb033b7-02af-4f8d-be9c-62ee7c4fc554
+# ╠═3681e1d1-4e78-4026-9295-a67950dfd260
+# ╠═1681a1f7-3edd-46e5-8214-a2ac3ab6966d
+# ╟─4aeddca1-790a-41c6-a178-3a6369bd5fcc
+# ╠═36da1916-adb8-46de-ac90-f046974273f7
+# ╠═1b17b320-4d20-47d2-8da1-c34a7b35830b
+# ╟─f1bbb819-c83c-4b62-a376-a7a3ef82df04
+# ╠═2d843847-ef7e-47d0-a255-c5ec3cc5ec57
+# ╟─65543d5f-4d55-4dc5-917b-8a241e09fe86
+# ╠═4ffbafed-ca8d-443e-92ff-ec6a6d76f05d
+# ╟─1afd2287-6a84-4f16-ab6c-141fce1782cd
+# ╟─db2fc0fd-a234-490e-b3a0-936efd699b9c
+# ╠═d794e5ad-d893-41c3-a257-2ed0af0390dd
+# ╠═1bb97bb9-ef25-4a20-8d35-38b7caead7b9
+# ╟─722a5e69-c32d-4b62-be6f-3a1b1fc04486
+# ╠═2783c756-ae95-4112-b66c-927801c287e0
+# ╠═1f1253b4-f0d8-4a22-8eea-d0c57e3cff0c
+# ╠═649b75ff-e2a2-4b62-81a6-823d33ef330a
+# ╟─da416d35-d074-4e37-bff6-cd2f04510d0e
+# ╠═dcba3ba7-e801-4039-8a78-d1725aafa03e
+# ╟─4d0544dc-cc03-442b-8d87-1677501a1356
+# ╠═48c7168a-56b5-41bf-b493-ddec30da8fee
+# ╟─df0d1912-104d-432f-bb80-baad219e5e8b
+# ╠═75e4ccf1-d51f-45c2-9bf1-46d731e579e3
+# ╠═0f513283-82ad-47f3-84e2-b2d870a9a72d
+# ╠═70c242d4-7de4-49a0-b3eb-93b757e1cb86
+# ╠═eb6ab469-4830-4cea-a49a-9b901d5d9d2b
+# ╟─986889c7-2aa1-4ec2-ac1c-e9168eb1cd09
+# ╠═3e2df87d-960e-43a4-affd-3b020d9a7928
+# ╠═d9016efd-cc95-4ac5-bdc0-32f5e9282eeb
+# ╠═71d25ca2-7960-413a-8fad-e210fdd41a6b
+# ╟─8eb0cc2e-07e7-4c45-bde2-f53517004059
+# ╠═f274879e-93ca-409c-94a5-28b59556949f
+# ╠═0afa9453-b5af-494b-afba-4ddbeae5da8b
+# ╠═f35cd3c4-6433-4f3c-9422-23a9b6dbeade
+# ╠═e8846356-38b7-43a5-bb31-d5a7f4a8d63b
+# ╠═fc6ba034-1574-48ce-9780-31977607f8a6
+# ╠═2545e2be-d3eb-4b79-8d80-d06b302e13d4
+# ╠═8628081c-9db1-42ac-8ddd-a6283b59a0f8
+# ╠═23f33d5d-f32e-4328-b7e4-651f7cdcf345
+# ╟─966c5f92-8a7d-430e-b1e4-5450c5d4dff0
+# ╟─0510e6d0-2628-4ef8-a9ef-ae3f562b9d2d
+# ╟─a670f208-e006-47f5-89a7-9bebab429f44
+# ╠═1737d90d-2d20-4f2b-b256-aca34ff19b53
+# ╠═521da315-bd00-4fa0-958f-ca9ed9d7b81f
+# ╠═2c83c7d6-befa-4aae-813d-698eda707646
+# ╠═57ddf55f-5ca0-443b-abb2-42fe7615cb42
+# ╠═db5e8c5f-3122-4b43-97a8-09b94f35b2ad
+# ╠═fc8a0527-5ac0-43a1-a866-394f9265db5d
+# ╠═ddfa13d6-b42e-4a21-89e2-6bceea08b0e8
+# ╠═5b5ed004-a54f-4feb-b9ce-3e4a0ccbffee
+# ╠═495df1e1-c814-4dd9-97cf-c0d9b852834f
+# ╠═09119c27-56ee-4201-98b2-2dd0d5adfa64
+# ╟─3b0181ce-5038-4c34-9629-40adb5c585c2
+# ╟─818df822-2688-49c1-8ace-8494c7562800
+# ╠═dc6968ae-939a-4821-9072-853d0b5ff737
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
