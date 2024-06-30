@@ -115,7 +115,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/AlgebraLineal/MetodosDeDescenso/" class="button">Métodos de descenso</a>
+  <a href="https://labmatecc.github.io/Notebooks/Optimizacion/MetodosDeDescenso/" class="button">Métodos de descenso</a>
 </div>
 
 <div class="container">
