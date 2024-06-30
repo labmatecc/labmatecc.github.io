@@ -115,19 +115,13 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/AlgebraLineal/Vectores/" class="button">Vectores</a>
+  <a href="https://labmatecc.github.io/Notebooks/AlgebraLineal/ProblemasSinRestricciones/" class="button">Problemas sin restricciones</a>
 </div>
 
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>El cuaderno comienza explicando los vectores como conjuntos ordenados de números, resaltando su representación en Julia mediante el tipo de dato Array. Se exploran operaciones básicas, como la dimensión del arreglo. </p>
-
-        <p>Se detalla el acceso a elementos, introduciendo el uso de índices y la función 'end'. Se muestra cómo trabajar con subconjuntos de vectores mediante rangos. La comparación de vectores y la comparación de elementos individuales. </p>
-
-        <p>Se introducen vectores nulos, canónicos y de unos, mostrando cómo construir manualmente vectores canónicos en Julia. Se utiliza el paquete Plots.jl para generar gráficos de vectores y visualizar datos.</p>
-
-        <p>Las operaciones con vectores se abordan desde la suma componente a componente hasta la multiplicación y división por escalares, proporcionando ejemplos prácticos.</p>
+        <p>.</p>
       </div>
     </div>
   </div>
