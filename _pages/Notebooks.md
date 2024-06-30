@@ -116,7 +116,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/" class="button">Análisis Numérico</a>
+  <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/" class="button">Análisis Numérico</a>
 </div>
 
 <hr>
