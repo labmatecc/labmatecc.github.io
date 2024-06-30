@@ -115,13 +115,13 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/AlgebraLineal/ProblemasSinRestricciones/" class="button">Problemas sin restricciones</a>
+  <a href="https://labmatecc.github.io/Notebooks/AlgebraLineal/MetodosDeDescenso/" class="button">Métodos de descenso</a>
 </div>
 
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>.</p>
+        <p>Este cuaderno presenta varios métodos de optimización numérica, enfocándose en el descenso de gradiente y sus variantes. Comienza con una explicación del método de descenso, donde se busca minimizar una función iterativamente ajustando el tamaño de paso y la dirección de búsqueda. Se exploran métodos como el descenso de máximo pendiente en diferentes normas (euclidiana, cuadrática, y norma 1), así como el método de Newton, que utiliza la inversa de la matriz Hessiana para guiar la búsqueda. Se presentan implementaciones prácticas de estos métodos usando funciones matemáticas y visualizaciones gráficas para ilustrar los conceptos discutidos.</p>
       </div>
     </div>
   </div>

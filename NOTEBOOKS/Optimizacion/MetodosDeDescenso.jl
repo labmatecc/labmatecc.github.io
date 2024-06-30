@@ -26,7 +26,7 @@ begin
 end
 
 # ╔═╡ bbbefe27-eca3-4dbb-a6d8-6f9785cb5684
-PlutoUI.TableOfContents(title="Problemas sin restricciones", aside=true)
+PlutoUI.TableOfContents(title="Métodos de Descenso", aside=true)
 
 # ╔═╡ 61045997-8418-4663-a4d4-79827d266899
 md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
