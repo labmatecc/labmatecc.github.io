@@ -127,3 +127,17 @@ header-includes: |
   </div>
 
 <hr>
+
+<div class="button-container">
+  <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/FEM/" class="button">Método de elementos finitos</a>
+</div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>Este cuaderno se centra en el método de elementos finitos. En primer lugar, se estudia el comportamiento de la cuerda elástica en una dimensión. Aquí, discretizamos el dominio y resolvemos ecuaciones lineales con condiciones de frontera específicas. Observamos cómo los resultados varían según ajustamos los parámetros del problema. En la segunda parte, se muestra como resolver la ecuación de Poisson de manera numérica en un dominio bidimensional usando elementos finitos, esto con la ayuda de la librería Gridap. </p>
+      </div>
+    </div>
+  </div>
+
+<hr>
