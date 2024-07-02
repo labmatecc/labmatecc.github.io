@@ -33,8 +33,14 @@ md"""Usaremos las siguientes librerías:"""
 # ╔═╡ b7655028-28be-49bb-87b2-ee35adeeb9a4
 md"""# Introducción"""
 
+# ╔═╡ 39622889-6658-4938-8127-f16105b331e2
+md"""xd"""
+
+# ╔═╡ 35ffa09a-14a7-47fb-85b1-fe977607f406
+
+
 # ╔═╡ 4c98459c-1bd6-423c-8539-a85b104b6221
-md"""### Normas 
+md"""
 Los comandos para calcular normas de vectores y de matrices son presentados a continuación. 
 En Julia se distingen las normas subordinadas como normas de operadores. """
 
@@ -52,7 +58,7 @@ println("\nLa norma ",Inf," de x es ",nx)
 end
 
 # ╔═╡ 0e8ae2e3-933b-4cb9-87d2-49de76407e29
-md""" # Factorización $A=PLU$ y Cholesky
+md""" # Factorización $A=PLU$
 Presentamos algunos comandos relacionados con la solución de sistemas lineales por métodos directos. 
 Calculemos la factorización $A=PLU$ de una matriz $4\times 4$."""
 
@@ -125,6 +131,9 @@ luA₂.P
 # ╔═╡ 8e0575a3-966b-4de5-b83e-bea79430cbfa
 md"""Observe que eneste caso la matriz de permutación es la matriz identidad.  """
 
+# ╔═╡ 36dc58de-640a-4328-8ed8-08c5485ea749
+md"""# Cholesky"""
+
 # ╔═╡ d1107046-daa6-4b03-8020-670ac69d0194
 md"""Calculemos ahora la factorización de Cholesky de una matri de la forma $A^TA$ con $A$ aleatoria. """
 
@@ -148,7 +157,7 @@ typeof(cholA)
 typeof(cholA.L)
 
 # ╔═╡ da1ccf05-3e51-4750-8adf-2ca2be616115
-md""" ### Sistemas lineales"""
+md""" # Sistemas lineales"""
 
 # ╔═╡ 0f0c2889-6e79-4496-aceb-d1f0b156f9a1
 md""" Resolver un sistema lineal general usando "backslash" (notación de MatLab), """
@@ -767,26 +776,29 @@ version = "17.4.0+2"
 # ╟─7b84db99-9375-4dc5-8a3e-414bc176648a
 # ╠═e2feba71-69cb-4f39-92d1-d1f4daefb4ec
 # ╟─b7655028-28be-49bb-87b2-ee35adeeb9a4
-# ╠═4c98459c-1bd6-423c-8539-a85b104b6221
+# ╠═39622889-6658-4938-8127-f16105b331e2
+# ╠═35ffa09a-14a7-47fb-85b1-fe977607f406
+# ╟─4c98459c-1bd6-423c-8539-a85b104b6221
 # ╠═d3a307af-ee47-42cd-a6e5-49105c9bed09
 # ╠═69daeb44-c973-4b48-a646-d83fd7faf00d
-# ╠═0e8ae2e3-933b-4cb9-87d2-49de76407e29
+# ╟─0e8ae2e3-933b-4cb9-87d2-49de76407e29
 # ╠═7123f4ea-87d7-4549-9b4f-56547eb38bc5
 # ╠═6aef40cd-26e2-47f6-94c8-c6702709056f
-# ╠═e2373181-d738-4b5c-9974-d85849e44a77
+# ╟─e2373181-d738-4b5c-9974-d85849e44a77
 # ╠═b9a2366f-afb1-40ab-a9d0-96886782c43f
-# ╠═e837f218-1099-4bc4-b8a9-cd9a2ef3d014
+# ╟─e837f218-1099-4bc4-b8a9-cd9a2ef3d014
 # ╠═f4d510f5-0995-48c9-8940-1ab8e1eca805
-# ╠═74b36cc9-c28e-420c-bfe2-9e2b353d3cd5
-# ╠═4af21bbb-87a7-4b7d-b21d-e26782fc04fe
+# ╟─74b36cc9-c28e-420c-bfe2-9e2b353d3cd5
+# ╟─4af21bbb-87a7-4b7d-b21d-e26782fc04fe
 # ╠═f5cb28ec-1504-46fe-977a-5b11bd3ac0ea
 # ╠═da020f53-0110-43b8-8ecc-1413a9de776b
 # ╠═ecd9abc9-f2da-4655-80e4-3bca05424f6f
-# ╠═50fdd35a-de2a-4a75-acbc-5c337626d772
+# ╟─50fdd35a-de2a-4a75-acbc-5c337626d772
 # ╠═abd66ffe-97bf-44b9-8713-16a4041463b4
 # ╠═38605809-7063-48fe-9749-f70dbb141d2e
 # ╠═6264dbf0-0450-426b-9c99-2a9f5349eba9
 # ╟─8e0575a3-966b-4de5-b83e-bea79430cbfa
+# ╟─36dc58de-640a-4328-8ed8-08c5485ea749
 # ╟─d1107046-daa6-4b03-8020-670ac69d0194
 # ╠═b89e46e6-63f7-4f84-b7b9-958c3781a3e3
 # ╠═6ac7297a-28bf-47d4-92bd-39085471ab8d
@@ -795,13 +807,13 @@ version = "17.4.0+2"
 # ╟─da1ccf05-3e51-4750-8adf-2ca2be616115
 # ╟─0f0c2889-6e79-4496-aceb-d1f0b156f9a1
 # ╠═dcb2dc6e-9e4e-4493-945a-b797a0e346b8
-# ╠═27021196-5b97-41b6-b215-27889073aa23
+# ╟─27021196-5b97-41b6-b215-27889073aa23
 # ╠═0a81b3ea-8457-4d4e-809e-6c182557abef
-# ╠═19745c50-19c5-4af9-b70c-7f4c72b92148
+# ╟─19745c50-19c5-4af9-b70c-7f4c72b92148
 # ╠═79edfba2-fc76-40b0-8e6c-537a1951a9ec
-# ╠═babd81de-8495-4bcf-9d14-a875ad2fdaf6
+# ╟─babd81de-8495-4bcf-9d14-a875ad2fdaf6
 # ╠═9043e1a4-3833-4244-a282-77ac7cdb5e1c
-# ╠═0ef517b6-c948-4d6e-a5cd-afcbba786d33
+# ╟─0ef517b6-c948-4d6e-a5cd-afcbba786d33
 # ╠═1dba2908-0fbc-4e2e-9dcc-a91956f03178
 # ╠═5dec7367-8bd9-4831-b455-c3d077786504
 # ╠═3ffad7cd-0663-4c5c-96cf-efc18ea4908f
@@ -812,15 +824,15 @@ version = "17.4.0+2"
 # ╠═ceab82c1-1adc-4be5-a4c7-52d0587c5515
 # ╠═9a105022-3995-42ca-abee-e05665eff936
 # ╠═0c1e6291-aa8a-401b-a92f-44019a22ba32
-# ╠═f52ccc9e-7ba6-4bf5-90da-786cb761f9da
+# ╟─f52ccc9e-7ba6-4bf5-90da-786cb761f9da
 # ╠═0fc5eafe-e674-463b-851d-32204d79319c
-# ╠═ea549e65-148e-4ee9-aa7d-089269e6040f
+# ╟─ea549e65-148e-4ee9-aa7d-089269e6040f
 # ╠═74f6b1ba-bb93-4bbb-997a-4dbd50b7f302
-# ╠═33670717-ea48-44e5-bc58-5e27106b97bd
+# ╟─33670717-ea48-44e5-bc58-5e27106b97bd
 # ╠═d29f63bf-6733-40d0-89c4-3d00b0320b3a
-# ╠═4ad284bd-5544-4e76-b3e3-425dab6aea7a
-# ╠═b702876a-59e5-4b39-b39e-407230d008f2
+# ╟─4ad284bd-5544-4e76-b3e3-425dab6aea7a
+# ╟─b702876a-59e5-4b39-b39e-407230d008f2
 # ╠═0b40430f-3239-4d4f-ad06-a7d7f8e90348
-# ╠═84658bb2-be90-417f-b1d3-581f05181f1e
+# ╟─84658bb2-be90-417f-b1d3-581f05181f1e
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

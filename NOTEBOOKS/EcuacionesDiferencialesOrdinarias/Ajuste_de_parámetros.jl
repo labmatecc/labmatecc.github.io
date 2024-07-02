@@ -21,9 +21,10 @@ using SymPy;
 PlutoUI.TableOfContents(title="Ajuste de parámetros", aside=true)
 
 # ╔═╡ 9a904b84-2c70-444d-a673-4327560d1226
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**
 
-Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
+Tu participación es fundamental para hacer de este curso una experiencia aún mejor.
+"""
 
 # ╔═╡ 3db89cf8-58b3-42e5-a1a7-a5ac40a78fdb
 md"""Elaborado por Juan Galvis, Francisco Gómez, Carlos Nosa y Yessica Trujillo. 

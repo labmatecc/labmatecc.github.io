@@ -18,9 +18,10 @@ end
 PlutoUI.TableOfContents(title="Construcción de un tunel de hormigas", aside=true)
 
 # ╔═╡ 3c96e9bc-108b-498f-9ffd-88d1a60f7246
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**
 
-Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
+Tu participación es fundamental para hacer de este curso una experiencia aún mejor.
+"""
 
 # ╔═╡ cecd7473-8c60-43e1-909b-9a8acd988f7a
 md"""Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo. 

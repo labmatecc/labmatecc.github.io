@@ -24,9 +24,10 @@ using CalculusWithJulia, Plots, SymPy, Roots
 PlutoUI.TableOfContents(title="Crecimiento de poblaciones", aside=true)
 
 # ╔═╡ 8e76a38d-14f5-4400-8c2a-e14065d4a8f9
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**
 
-Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
+Tu participación es fundamental para hacer de este curso una experiencia aún mejor.
+"""
 
 # ╔═╡ 8beae7e8-43c5-4b22-8092-bc7bed00446b
 md"""Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo. 
