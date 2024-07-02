@@ -85,7 +85,7 @@ header-includes: |
   <div class="container">
     <div class="person">
       <div class="info">
-        <p>Este cuaderno muestra la representación de números enteros y de punto flotante. Comienza mostrando cómo se representan los enteros utilizando bits, proporcionando ejemplos prácticos y conversiones de enteros a cadenas de bits. Luego, se muestran los números de punto flotante, explicando su representación detallada, incluyendo el signo, el exponente y el significando, y cómo estas representaciones pueden afectar los cálculos numéricos debido a errores de redondeo y límites de precisión. También se muestra una introducción al cálculo simbólico utilizando la librería Symbolics, mostrando cómo realizar operaciones simbólicas que no dependen de valores numéricos específicos, </p>
+        <p>Este cuaderno muestra la representación de números enteros y de punto flotante. Comienza mostrando cómo se representan los enteros utilizando bits, proporcionando ejemplos prácticos y conversiones de enteros a cadenas de bits. Luego, se muestran los números de punto flotante, explicando su representación detallada, incluyendo el signo, el exponente y el significando, y cómo estas representaciones pueden afectar los cálculos numéricos debido a errores de redondeo y límites de precisión. También se muestra una introducción al cálculo simbólico utilizando la librería Symbolics, mostrando cómo realizar operaciones simbólicas que no dependen de valores numéricos específicos. </p>
       </div>
     </div>
   </div>
@@ -121,7 +121,7 @@ header-includes: |
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>En este cuaderno se estudian métodos de integración numérica como las sumas de Riemann, la regla del trapecio y la regla de Simpson. Estos métodos dividen un intervalo \([a,b]\) en subintervalos y aproximan el área bajo una curva utilizando rectángulos o trapecios. Se ejemplifica con las funciones \(y=x^2\) en \([0,3]\) y \(y=e^{x^2}\) en \([0,1]\), mostrando cómo estas técnicas convergen hacia el área exacta conforme se aumenta el número de subintervalos. Estos métodos son esenciales para calcular áreas bajo curvas cuando la integración analítica directa no es factible. </p>
+        <p>En este cuaderno se estudian métodos de integración numérica como las sumas de Riemann, la regla del trapecio y la regla de Simpson. Estos métodos dividen un intervalo \([a,b]\) en subintervalos y aproximan el área bajo una curva utilizando rectángulos o trapecios. Se ejemplifica con las funciones \(y=x^2\) en \([0,3]\) y \(y=e^{x^2}\) en \([0,1]\), mostrando cómo estas técnicas convergen hacia el área exacta conforme se aumenta el número de subintervalos. Estos métodos son esenciales para calcular áreas bajo curvas cuando la función no tiene una integral elemental. </p>
       </div>
     </div>
   </div>
