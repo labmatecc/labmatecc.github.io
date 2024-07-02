@@ -30,6 +30,9 @@ Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo.
 # ╔═╡ 7b84db99-9375-4dc5-8a3e-414bc176648a
 md"""Usaremos las siguientes librerías:"""
 
+# ╔═╡ b7655028-28be-49bb-87b2-ee35adeeb9a4
+md"""# Introducción"""
+
 # ╔═╡ 4c98459c-1bd6-423c-8539-a85b104b6221
 md"""### Normas 
 Los comandos para calcular normas de vectores y de matrices son presentados a continuación. 
@@ -49,7 +52,7 @@ println("\nLa norma ",Inf," de x es ",nx)
 end
 
 # ╔═╡ 0e8ae2e3-933b-4cb9-87d2-49de76407e29
-md""" ### Factorización $A=PLU$ y Cholesky
+md""" # Factorización $A=PLU$ y Cholesky
 Presentamos algunos comandos relacionados con la solución de sistemas lineales por métodos directos. 
 Calculemos la factorización $A=PLU$ de una matriz $4\times 4$."""
 
@@ -67,21 +70,23 @@ println("La norma subordinada Inf es = ", opnorm(A,Inf))
 end
 
 # ╔═╡ 6aef40cd-26e2-47f6-94c8-c6702709056f
-# ╠═╡ disabled = true
-#=╠═╡
 luA= lu(A);
-  ╠═╡ =#
 
 # ╔═╡ e2373181-d738-4b5c-9974-d85849e44a77
 md"""Las matrices $L$, $U$ y $P$ pueden ser desplegadas como sigue,  """
+
+# ╔═╡ b9a2366f-afb1-40ab-a9d0-96886782c43f
+begin
+	display(luA.U)
+display(luA.L)
+display(luA.P)
+end
 
 # ╔═╡ e837f218-1099-4bc4-b8a9-cd9a2ef3d014
 md""" Podemos calcular la norma del residuo de la factorización: $ ||| PA-LU|||$,"""
 
 # ╔═╡ f4d510f5-0995-48c9-8940-1ab8e1eca805
-#=╠═╡
 opnorm(luA.P*A-luA.L*luA.U)
-  ╠═╡ =#
 
 # ╔═╡ 74b36cc9-c28e-420c-bfe2-9e2b353d3cd5
 md"""Con el paquete SpecialMatrices podemos generar la matriz de Hilbert. """
@@ -270,15 +275,8 @@ md"""Notamos que las matrices dispersas (o ralas) necesitan tratamiento especial
 
 # ╔═╡ 0b40430f-3239-4d4f-ad06-a7d7f8e90348
 begin
-luA=lu(Array{Float64}(sparsA))
-sparse(luA.L)
-end
-
-# ╔═╡ b9a2366f-afb1-40ab-a9d0-96886782c43f
-begin
-	display(luA.U)
-display(luA.L)
-display(luA.P)
+luA1=lu(Array{Float64}(sparsA))
+sparse(luA1.L)
 end
 
 # ╔═╡ 84658bb2-be90-417f-b1d3-581f05181f1e
@@ -768,7 +766,8 @@ version = "17.4.0+2"
 # ╟─c08f6550-5278-436d-96ec-408570476631
 # ╟─7b84db99-9375-4dc5-8a3e-414bc176648a
 # ╠═e2feba71-69cb-4f39-92d1-d1f4daefb4ec
-# ╟─4c98459c-1bd6-423c-8539-a85b104b6221
+# ╟─b7655028-28be-49bb-87b2-ee35adeeb9a4
+# ╠═4c98459c-1bd6-423c-8539-a85b104b6221
 # ╠═d3a307af-ee47-42cd-a6e5-49105c9bed09
 # ╠═69daeb44-c973-4b48-a646-d83fd7faf00d
 # ╠═0e8ae2e3-933b-4cb9-87d2-49de76407e29
