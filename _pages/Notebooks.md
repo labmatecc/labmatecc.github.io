@@ -14,7 +14,6 @@ header-includes: |
 <html>
 <head>
     <style>
-        /* Estilos para centrar y cambiar el color del texto */
         h1 {
             text-align: center; /* Centra el texto horizontalmente */
             color: rgba(72, 133, 45, 0.76); /* Cambia el color del texto a verde */

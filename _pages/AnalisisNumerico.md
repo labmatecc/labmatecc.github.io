@@ -79,7 +79,7 @@ header-includes: |
 </html>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/EnterosYFlotante/" class="button">Enteros y de Punto Flotante</a>
+  <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/EnterosYFlotante/" class="button">Enteros y Punto Flotante</a>
 </div>
 
   <div class="container">
