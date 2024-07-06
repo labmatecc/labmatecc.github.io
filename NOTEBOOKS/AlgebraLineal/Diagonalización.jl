@@ -14,7 +14,7 @@ using LinearAlgebra
 PlutoUI.TableOfContents(title="Diagonalización", aside=true)
 
 # ╔═╡ 88991cf3-cb64-4196-884a-6eb736d81f6e
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
@@ -52,7 +52,7 @@ ii) Sean $\alpha\in\mathbb{R}$, entonces
 $T(\alpha A_1)=P^{-1}(\alpha A_1) P=\alpha P^{-1}A_1 P=\alpha T(A_1)$"""
 
 # ╔═╡ c6d98d5c-06ce-410c-97d5-2ba2e1a0aab1
-md"""Otra definición alternativa de semejanza es la siguiente. $A$ y $B$ son semejantes si y sólo si existe una matriz no singular $P$ tal que
+md"""Otra definición alternativa de semejanza es la siguiente. Se dice que $A$ y $B$ son semejantes si y sólo si existe una matriz no singular $P$ tal que
 
 $PB=AP.$"""
 

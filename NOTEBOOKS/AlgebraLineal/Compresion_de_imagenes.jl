@@ -23,9 +23,10 @@ end
 PlutoUI.TableOfContents(title="Compresión de imágenes", aside=true)
 
 # ╔═╡ bbdde380-96bd-4cec-9404-4a87e4ff20ad
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**.
 
-Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
+Tu participación es fundamental para hacer de este curso una experiencia aún mejor.
+"""
 
 # ╔═╡ 0bc7f753-b24c-40c7-b177-8643afbe56f3
 md"""Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo. """
@@ -39,134 +40,135 @@ md"""# Introducción"""
 # ╔═╡ 29c53f25-89b8-44a2-a081-cd3b5e15989a
 md"""Sea $T:V\to W$ una transformación lineal. En diversas aplicaciones resulta útil encontrar un vector $v$ en $V$ tal que $Tv$ y $v$ son paralelos, es decir, se busca un vector $v$ y un escalar $\lambda$ tal que $Tv=\lambda v$.
 
-Si $v\neq 0$ y $\lambda$ satisface lo anterior, entonces $\lambda$ se denomina un valor propio de $T$ y $v$ un vector propio de $T$ correspondiente al valor propio $\lambda$. Si $V$ tiene dimensión finita, entonces 
-$T$ se puede representar por una matriz $A_T$. Por esta razón se estudiarán los valores y los vectores propios de las matrices de $n\times n$."""
+Si $v \neq 0$ y $\lambda$ satisface lo anterior, entonces $\lambda$ se denomina un valor propio de $T$ y $v$ un vector propio de $T$ correspondiente al valor propio $\lambda$. Si $V$ tiene dimensión finita, entonces $T$ se puede representar por una matriz $A_T$. Por esta razón se estudiarán los valores y los vectores propios de las matrices de $n \times n$.
+"""
 
 # ╔═╡ 3c11d286-ede4-4b20-a021-1a21a8e39a47
-md""" ### Valor y vector propio (Autovalor y autovector)
-Sea $A$ una matriz de tamaño $n\times n$ con componentes reales $\mathcal{M}_{n}(\mathbb{R})$. El número $\lambda$ (real o complejo) se denomina valor propio (autovalor) de $A$ si existe un vector diferente de cero $v$ en $\mathbb{C}^n$ tal que
+md"""### Valor y vector propio (Autovalor y autovector)
 
-$Av=\lambda v.$
-El vector $v\neq 0$ se denomina vector propio (autovector) de $A$ correspondiente al valor propio $\lambda$."""
+Sea $A$ una matriz de tamaño $n \times n$ con componentes reales $\mathcal{M}_{n}(\mathbb{R})$. El número $\lambda$ (real o complejo) se denomina valor propio (autovalor) de $A$ si existe un vector diferente de cero $v$ en $\mathbb{C}^n$ tal que
+
+$Av = \lambda v.$
+
+El vector $v \neq 0$ se denomina vector propio (autovector) de $A$ correspondiente al valor propio $\lambda$.
+"""
 
 # ╔═╡ 89954279-80f0-4f8d-91a8-87cd35a7e50f
-md""" *Ejemplo*:
+md"""*Ejemplo*:
 
-Sea $A=\begin{equation}
-\begin{pmatrix}
-10 & -18\\
+Sea $A = \begin{pmatrix}
+10 & -18 \\
 6 & -11
-\end{pmatrix}
-\end{equation}$. Entonces 
+\end{pmatrix}$. Entonces 
 
-$A\begin{equation}
-\begin{pmatrix}
-2\\
+$A \begin{pmatrix}
+2 \\
 1
-\end{pmatrix}=
+\end{pmatrix} =
 \begin{pmatrix}
-10 & -18\\
+10 & -18 \\
 6 & -11
 \end{pmatrix}
 \begin{pmatrix}
-2\\
+2 \\
 1
-\end{pmatrix}=\begin{pmatrix}
-2\\
+\end{pmatrix} = \begin{pmatrix}
+2 \\
 1
-\end{pmatrix}.
-\end{equation}$
-Así, $\lambda_1=1$ es un valor propio de $A$ con el correspondiente vector propio $v_1=\begin{equation}\begin{pmatrix}
-2\\
+\end{pmatrix}.$
+
+Así, $\lambda_1 = 1$ es un valor propio de $A$ con el correspondiente vector propio $v_1 = \begin{pmatrix}
+2 \\
 1
-\end{pmatrix}
-\end{equation}$. De manera similar, $A\begin{equation}
-\begin{pmatrix}
-3\\
+\end{pmatrix}$. De manera similar,
+
+$A \begin{pmatrix}
+3 \\
 2
-\end{pmatrix}=
+\end{pmatrix} =
 \begin{pmatrix}
-10 & -18\\
+10 & -18 \\
 6 & -11
 \end{pmatrix}
 \begin{pmatrix}
-3\\
+3 \\
 2
-\end{pmatrix}=\begin{pmatrix}
--6\\
+\end{pmatrix} = \begin{pmatrix}
+-6 \\
 -4
-\end{pmatrix}=-2\begin{pmatrix}
-3\\
+\end{pmatrix} = -2 \begin{pmatrix}
+3 \\
 2
-\end{pmatrix},
-\end{equation}$ de modo que $\lambda_2=-2$ es un valor propio de $A$ con el correspondiente vector propio $v_2=\begin{equation}\begin{pmatrix}
-3\\
+\end{pmatrix},$
+
+de modo que $\lambda_2 = -2$ es un valor propio de $A$ con el correspondiente vector propio $v_2 = \begin{pmatrix}
+3 \\
 2
-\end{pmatrix}
-\end{equation}$. Éstos son los únicos valores propios de $A$."""
+\end{pmatrix}$. Éstos son los únicos valores propios de $A$.
+"""
 
 # ╔═╡ 4c660259-fc08-45ce-869d-aa308db9a381
 md"""**Teorema:**
 
-Sea $A$ una matriz de tamaño $n\times n$. Entonces $\lambda$ es un valor propio de $A$ si y sólo si
+Sea $A$ una matriz de tamaño $n \times n$. Entonces $\lambda$ es un valor propio de $A$ si y solo si
 
-$p(\lambda)=\text{det}(A-\lambda I)=0.$
+$p(\lambda) = \text{det}(A - \lambda I) = 0.$
 
 La anterior ecuación se denomina ecuación característica de $A$ y $p(\lambda)$ se denomina el polinomio característico de $A$."""
 
 # ╔═╡ 61e57d71-f1db-42fd-950e-1555e04dd25b
-md"""Contando multiplicidades, toda matriz de $n\times n$ tiene exactamente $n$ valores propios. Esto gracias al teorema fundamental del álgebra, cualquier polinomio de grado $n$ con coeficientes reales o complejos tiene exactamente $n$ raíces (contando multiplicidades)."""
+md"""Contando multiplicidades, toda matriz de $n \times n$ tiene exactamente $n$ valores propios. Esto se debe al teorema fundamental del álgebra, que establece que cualquier polinomio de grado $n$ con coeficientes reales o complejos tiene exactamente $n$ raíces (contando multiplicidades)."""
 
 # ╔═╡ f7c800a7-5fd2-427a-87e1-e6dc3025f2bb
 md"""*Ejemplo:*
 
 Sea $A$ la matriz
 $\begin{bmatrix}
-    4 & 2 \\
-    3 & 3
+4 & 2 \\
+3 & 3
 \end{bmatrix}.$
 Entonces, el polinomio característico de $A$ es
-$\text{det}(A - \lambda I) =\begin{equation}
+$\text{det}(A - \lambda I) =
 \begin{vmatrix}
-4-\lambda &2 \\
-    3 & 3-\lambda
+4-\lambda & 2 \\
+3 & 3-\lambda
 \end{vmatrix}
-\end{equation}= (4-\lambda)(3-\lambda)-6 =\lambda^2-7\lambda + 6=(\lambda - 1)(\lambda - 6),$
+= (4-\lambda)(3-\lambda) - 6 = \lambda^2 - 7\lambda + 6 = (\lambda - 1)(\lambda - 6)$,
 así $\lambda_1 = 1$ y $\lambda_2 = 6$. 
 
 Para $\lambda_1 = 1$, la ecuación $(A - \lambda I)v = 0$ se resuelve como
 $\begin{bmatrix}
-    3 & 2 \\
-    3 & 2 \\
+3 & 2 \\
+3 & 2
 \end{bmatrix}
 \begin{bmatrix}
-    x_1 \\
-    x_2 \\
+x_1 \\
+x_2
 \end{bmatrix}
 =
 \begin{bmatrix}
-    0 \\
-    0 \\
+0 \\
+0
 \end{bmatrix}.$
 Es claro que cualquier vector propio correspondiente a $\lambda_1 = 1$ satisface $3x_1 + 2x_2 = 0$. Un vector propio de este tipo es $v_1 = \begin{bmatrix} -2 \\ 3 \end{bmatrix}$. 
 
-De manera similar, para $\lambda_2 = 6$, la ecuación $(A - \lambda_2I)v = 0$ se resuelve como
+De manera similar, para $\lambda_2 = 6$, la ecuación $(A - \lambda_2 I)v = 0$ se resuelve como
 $\begin{bmatrix}
-    -2 & 2 \\
-    3 & -3 \\
+-2 & 2 \\
+3 & -3
 \end{bmatrix}
 \begin{bmatrix}
-    x_1 \\
-    x_2 \\
+x_1 \\
+x_2
 \end{bmatrix}
 =
 \begin{bmatrix}
-    0 \\
-    0 \\
+0 \\
+0
 \end{bmatrix}.$
 Entonces, $v_2 = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$ es un vector propio correspondiente a $\lambda_2 = 6$. 
 
-Observe que $v_1$ y $v_2$ son linealmente independientes ya que uno no es múltiplo del otro. Verifiquemos esto
+Observe que $v_1$ y $v_2$ son linealmente independientes ya que uno no es múltiplo del otro. Verifiquemos esto.
 """
 
 # ╔═╡ d719095e-5c31-47e1-80ac-ca7a4fe02268

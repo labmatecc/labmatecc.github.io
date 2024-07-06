@@ -33,7 +33,7 @@ end
 PlutoUI.TableOfContents(title="Clustering", aside=true)
 
 # ╔═╡ 061014c9-ac70-4007-bf5a-1829939d3833
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
@@ -49,14 +49,13 @@ md"""# Introducción"""
 # ╔═╡ 488b679d-deff-42c9-b533-be70bfe5e732
 md"""El clustering, dentro del campo del machine learning, es una técnica de aprendizaje no supervisado que se centra en la identificación y agrupación de patrones similares dentro de un conjunto de datos. A diferencia de los métodos supervisados que requieren etiquetas predefinidas, el clustering busca descubrir estructuras y relaciones en los datos sin la necesidad de guía externa.
 
+El objetivo principal del clustering es dividir el conjunto de datos en clústeres o grupos, donde las muestras dentro de un mismo clúster comparten similitudes entre sí, mientras que son distintas de las muestras en otros clústeres. Este enfoque permite identificar patrones subyacentes, facilitando la exploración y comprensión de la variabilidad presente en los datos. Las medidas de similitud, como la distancia euclidiana, son fundamentales para determinar la proximidad entre puntos de datos.
 
-El objetivo principal del clustering es dividir el conjunto de datos en clústeres o grupos, donde las muestras dentro de un mismo clúster comparten similitudes entre sí, mientras que son distintas de las muestras en otros clústeres. Este enfoque permite identificar patrones subyacentes, facilitando la exploración y comprensión de la variabilidad presente en los datos.Las medidas de similitud, como la distancia euclidiana, son fundamentales para determinar la proximidad entre puntos de datos.
-
-Recordemos como calcular la distancia euclidiana, la distancia euclidiana entre dos puntos $P(x_1, y_1)$ y $Q(x_2, y_2)$ en un espacio bidimensional se define de la siguiente forma
+Recordemos cómo calcular la distancia euclidiana. La distancia euclidiana entre dos puntos $P(x_1, y_1)$ y $Q(x_2, y_2)$ en un espacio bidimensional se define de la siguiente forma:
 
 $d(P,Q) = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$
 
-Más generalmente, en un espacio de $n$-dimensiones con puntos $P(p_1, p_2, \ldots, p_n)$ y $Q(q_1, q_2, \ldots, q_n)$, la distancia euclidiana se calcula como
+Más generalmente, en un espacio de $n$-dimensiones con puntos $P(p_1, p_2, \ldots, p_n)$ y $Q(q_1, q_2, \ldots, q_n)$, la distancia euclidiana se calcula como:
 
 $d(P,Q) = \sqrt{\sum_{i=1}^{n}(q_i - p_i)^2}$
 
@@ -64,17 +63,17 @@ Esta fórmula representa la longitud de la línea recta que conecta los dos punt
 """
 
 # ╔═╡ 0a336d8a-9b57-470c-aa88-341c47d98662
-md"""En el ámbito del clustering, la tarea de agrupar datos similares es esencial para descubrir patrones y estructuras inherentes en conjuntos de datos. Sin embargo, evaluar la calidad de los clusters resultantes es fundamental para comprender la eficacia de los algoritmos de agrupamiento. En este contexto, la siguiente función se presenta como una herramienta valiosa para medir la dispersión o error cuadrático medio entre los puntos de datos y sus representantes de clúster asignados."""
+md"""En el ámbito del clustering, la tarea de agrupar datos similares es esencial para descubrir patrones y estructuras en conjuntos de datos. Sin embargo, evaluar la calidad de los clústeres resultantes es fundamental para comprender la eficacia de los algoritmos de agrupamiento. En este contexto, la siguiente función se presenta como una herramienta valiosa para medir la dispersión o error cuadrático medio entre los puntos de datos y sus representantes de clúster asignados."""
 
 # ╔═╡ 85b618fa-b4fa-4d8a-823d-ecafa54e5cfb
 Jclust(x,reps,assignment) = mean([norm(x[i]-reps[assignment[i]])^2 for i=1:length(x)] )
 
 # ╔═╡ aeb76509-87ed-4400-a4e3-77b59f5e8654
-md"""La función $\texttt{Jclust}$ toma como entrada tres parámetros cruciales: el conjunto de datos $\texttt{x}$ representado como una lista de vectores, los representantes de clúster $\texttt{reps}$, y las asignaciones de clúster $\texttt{assignment}$ para cada punto en $\texttt{x}$. Su objetivo principal es calcular una medida cuantitativa que indique qué tan bien los puntos se ajustan a sus respectivos clusters.
+md"""La función $\texttt{Jclust}$ toma como entrada tres parámetros cruciales: el conjunto de datos $\texttt{x}$ representado como una lista de vectores, los representantes de clúster $\texttt{reps}$, y las asignaciones de clúster $\texttt{assignment}$ para cada punto en $\texttt{x}$. Su objetivo principal es calcular una medida cuantitativa que indique qué tan bien los puntos se ajustan a sus respectivos clústeres.
 
-La lógica subyacente implica calcular la distancia cuadrática entre cada punto y su representante de clúster asignado, ponderando estos valores por las asignaciones específicas. Posteriormente, se calcula un promedio de estas distancias cuadráticas, proporcionando una métrica cuantitativa de la coherencia y proximidad de los puntos dentro de sus clusters.
+La lógica subyacente implica calcular la distancia cuadrática entre cada punto y su representante de clúster asignado, ponderando estos valores por las asignaciones específicas. Posteriormente, se calcula un promedio de estas distancias cuadráticas, proporcionando una métrica cuantitativa de la coherencia y proximidad de los puntos dentro de sus clústeres.
 
-Esta función no solo es útil para la evaluación de la calidad de los clusters, sino que también puede desempeñar un papel crucial en la optimización de parámetros y ajuste de modelos de clustering. A través de la comprensión de cómo $\texttt{Jclust}$ responde a diferentes asignaciones y configuraciones de representantes, los practicantes de clustering pueden tomar decisiones informadas para mejorar la eficacia y precisión de sus análisis.
+Esta función no solo es útil para la evaluación de la calidad de los clústeres, sino que también puede desempeñar un papel crucial en la optimización de parámetros y ajuste de modelos de clustering. A través de la comprensión de cómo $\texttt{Jclust}$ responde a diferentes asignaciones y configuraciones de representantes, los practicantes de clustering pueden tomar decisiones informadas para mejorar la eficacia y precisión de sus análisis.
 
 Consideremos:
 """
@@ -108,7 +107,7 @@ Jclust(x,reps,assignment₂)
 md"""# Algoritmo de Clustering"""
 
 # ╔═╡ 6e7b812c-d63b-4624-9a8d-77408e1f9aba
-md"""El análisis de clustering ofrece diversas herramientas para revelar patrones intrínsecos y agrupar datos de manera significativa. En esta sección, mostraremos un  algoritmo de clustering destacados: K-Means."""
+md"""El análisis de clustering ofrece diversas herramientas para revelar patrones internos y agrupar datos de manera significativa. En esta sección, mostraremos un algoritmo de clustering destacado: K-Means."""
 
 # ╔═╡ 1b36505e-79dc-45de-a654-1c2f5053410c
 md"""## K-Means"""
@@ -124,7 +123,8 @@ En lugar de comenzar con una partición de todos los elementos en K grupos preli
 
 La asignación final de elementos a clústeres dependerá, en cierta medida, de la partición inicial o de la selección inicial de puntos semilla. La experiencia sugiere que la mayoría de los cambios importantes en la asignación ocurren con el primer paso de reasignación real.
 
-Creemos así la función kmeans, donde es posible ingresar los elementos, el número de clústers iniciales, el número máximo de iteraciones y la tolerancia, respectivamente.
+Creemos así la función kmeans, donde es posible ingresar los elementos, el número de clústeres iniciales, el número máximo de iteraciones y la tolerancia, respectivamente.
+
 """
 
 # ╔═╡ 326edf33-fe12-4815-a128-cb33f59c0281
@@ -219,7 +219,7 @@ md"""La normalización Min-Max es un método de preprocesamiento de datos que aj
 
 La fórmula general para la normalización Min-Max es la siguiente:
 
-$X_{\text{normalized}} = \frac{X - X_{\text{min}}}{X_{\text{max}} - X_{\text{min}}}$
+$X_{\text{normalizado}} = \frac{X - X_{\text{min}}}{X_{\text{max}} - X_{\text{min}}}$
 
 Donde:
 
@@ -229,7 +229,8 @@ X_{\text{min}} & \text{ es el valor mínimo de la característica en el conjunto
 X_{\text{max}} & \text{ es el valor máximo de la característica en el conjunto de datos.}
 \end{align*}$
 
-Esta fórmula ajusta cada valor de la característica para que esté en una escala relativa al rango completo de la característica en el conjunto de datos."""
+Esta fórmula ajusta cada valor de la característica para que esté en una escala relativa al rango completo de la característica en el conjunto de datos.
+"""
 
 # ╔═╡ 2ea9eacf-58f0-4993-b689-d7e8935f628b
 md"""La siguiente función normaliza los datos usando "min-máx". """
@@ -250,7 +251,7 @@ md"""Por ejemplo, consideremos el siguiente conjunto de datos"""
 x₁=1.5*rand(100)
 
 # ╔═╡ 51462f44-1829-4e9c-88dc-c9f09db4124b
-md"""Visualizándolos"""
+md"""La visualización de esto es la siguiente:"""
 
 # ╔═╡ 55f987bf-e708-45b8-a0f8-bc5840d4e119
 plot(scatter(x=1:100, x₁))
@@ -289,6 +290,7 @@ X & \text{ es el valor original de la característica.} \\
 \end{align*}$
 
 El resultado $Z$ indica cuántas desviaciones estándar el valor $X$ está por encima o por debajo de la media. Un $Z$-score positivo indica que el valor está por encima de la media, mientras que un $Z$-score negativo indica que está por debajo.
+
 """
 
 # ╔═╡ 2eef15d2-b351-4af1-aa50-50efe3a439ee

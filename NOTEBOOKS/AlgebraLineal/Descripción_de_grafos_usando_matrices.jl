@@ -20,9 +20,10 @@ end
 PlutoUI.TableOfContents(title="Descripción de grafos usando matrices", aside=true)
 
 # ╔═╡ 1bccd39f-e381-4f15-a012-f26345596335
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**.
 
-Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
+Tu participación es fundamental para hacer de este curso una experiencia aún mejor.
+"""
 
 # ╔═╡ 62d627c7-e12b-4037-80fd-8bf3664225b3
 md"""Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo."""
@@ -34,7 +35,7 @@ md"""Vamos a usar las siguientes librerías:"""
 md"""# Introducción"""
 
 # ╔═╡ fbf5bba4-ff73-47c2-8f50-bd0f42efce5a
-md"""Un grafo es una estructura matemática que representa relaciones entre objetos. Consiste en un conjunto de nodos (también llamados vértices) y un conjunto de aristas (también llamadas edges) que conectan estos nodos. Los grafos se utilizan para modelar una amplia variedad de situaciones del mundo real, como redes sociales, sistemas de transporte, circuitos eléctricos, entre otros."""
+md"""Un grafo es una estructura matemática que representa relaciones entre objetos. Consiste en un conjunto de nodos (también llamados vértices) y un conjunto de aristas (también llamadas arcos) que conectan estos nodos. Los grafos se utilizan para modelar una amplia variedad de situaciones del mundo real, como redes sociales, sistemas de transporte, circuitos eléctricos, entre otros."""
 
 # ╔═╡ 62521ab1-b157-45f2-a53c-5381b7d6952f
 md"""Los grafos fueron introducidos por primera vez por Leonhard Euler en 1736 en el contexto del problema de los puentes de Königsberg."""
@@ -52,7 +53,7 @@ md"""$\textit{Figura 1. Puentes de Königsberg. Imagen tomada de Wikipedia.}$"""
 # ╔═╡ 1cf5d9ba-b3ee-49e6-b9c2-5f650f93ef05
 md"""El Problema de los Puentes de Königsberg es un famoso problema matemático que surgió en la ciudad de Königsberg (hoy Kaliningrado, Rusia) en el siglo XVIII. La ciudad estaba ubicada en ambas orillas del río Pregel y tenía dos grandes islas conectadas por siete puentes. El problema consistía en determinar si era posible recorrer la ciudad cruzando cada puente una vez y solo una vez, regresando al punto de partida.
 
-El matemático suizo Leonhard Euler abordó este problema en 1736 y lo transformó en un problema abstracto de teoría de grafos. Euler representó la ciudad y los puentes mediante un grafo, donde los nodos representan las áreas de tierra y las aristas los puentes que los conectan. Euler demostró que no era posible encontrar un camino que cruzara cada puente una sola vez y regresara al punto de partida si algún nodo tenía un número impar de aristas conectadas a él.
+El matemático suizo Leonhard Euler abordó este problema en 1736 y lo transformó en un problema abstracto de teoría de grafos. Euler representó la ciudad y los puentes mediante un grafo, donde los nodos representan las áreas de tierra y las aristas representan los puentes que los conectan. Euler demostró que no era posible encontrar un camino que cruzara cada puente una sola vez y regresara al punto de partida si algún nodo tenía un número impar de aristas conectadas a él.
 
 En el caso de Königsberg, cada uno de los cuatro nodos (las dos orillas y las dos islas) estaba conectado por un número impar de puentes. Por lo tanto, según el teorema de Euler, no existía un recorrido que satisficiera las condiciones del problema."""
 
@@ -60,13 +61,15 @@ En el caso de Königsberg, cada uno de los cuatro nodos (las dos orillas y las d
 md"""# Conceptos básicos"""
 
 # ╔═╡ 2235d60e-4d49-483d-ae23-43121dc98b38
-md"""Formalmente, un grafo se define como un par ordenado $G=(V,E)$, donde: $V$ es un conjunto de nodos o vértices, $E\subseteq V\times V$ es un conjunto de aristas o conexiones que establecen relaciones entre los nodos.
+md"""Formalmente, un grafo se define como un par ordenado $G=(V,E)$, donde:
+- $V$ es un conjunto de nodos o vértices.
+- $E \subseteq V \times V$ es un conjunto de aristas o conexiones que establecen relaciones entre los nodos.
 
 Dos vértices se dicen adyacentes si están conectados por una arista.
 
 Una arista es incidente a los vértices que la forman.
 
-Los principales indicandores del tamaño de un grafo son la cardinalidad del conjunto de nodos $(|V|= \#(V))$ y la cardinalidad del conjunto de aristas $(|E|= \#(E))$.
+Los principales indicadores del tamaño de un grafo son la cardinalidad del conjunto de nodos $(|V| = \#(V))$ y la cardinalidad del conjunto de aristas $(|E| = \#(E))$.
 
 Los nodos y las aristas pueden tener diversas interpretaciones según el contexto en el que se aplique la teoría de grafos."""
 
@@ -78,15 +81,15 @@ md"""Los nodos, representados visualmente como puntos o círculos en un grafo, s
 
 En un grafo, los nodos pueden estar asociados con diversos atributos que describen características específicas. Estos atributos no necesariamente están relacionados con las aristas del grafo y pueden incluir información relevante para el contexto del problema, como la población de una ciudad o el tiempo de vuelo entre aeropuertos.
 
-Un aspecto clave es la flexibilidad para describir nodos mediante cualquier número de atributos, permitiendo una representación detallada y enriquecida."""
+Un aspecto clave es la flexibilidad para describir nodos mediante cualquier número de atributos, permitiendo una representación detallada."""
 
 # ╔═╡ 6cfa10d7-9e4a-4b2e-aa82-8b6723685eca
 md"""### Tipos de aristas"""
 
 # ╔═╡ 7324d6f8-24a7-4e65-ac9c-7407b86542ea
-md"""Las aristas en un grafo, visualizadas mediante segmentos de líneas rectas o curvas, son esenciales para conectar nodos y expresar relaciones. La apariencia de las aristas se puede personalizar con colores y grosor para resaltar atributos adicionales. Pueden ser sin dirección, simplemente conectando dos nodos, o dirigidas, indicando una relación específica y un sentido en el grafo dirigido
+md"""Las aristas en un grafo, visualizadas mediante segmentos de líneas rectas o curvas, son esenciales para conectar nodos y expresar relaciones. La apariencia de las aristas se puede personalizar con colores y grosor para resaltar atributos adicionales. Pueden ser sin dirección, simplemente conectando dos nodos, o dirigidas, indicando una relación específica y un sentido en el grafo dirigido.
 
-Las aristas pueden tener atributos como peso o información adicional, proporcionando detalles específicos para el análisis. Su representación visual y la asociación de atributos contribuyen a una modelización detallada"""
+Las aristas pueden tener atributos como peso o información adicional, proporcionando detalles específicos para el análisis. Su representación visual y la asociación de atributos contribuyen a una modelización detallada."""
 
 # ╔═╡ 133b1403-7d7b-44e4-b85e-454a43de28ea
 md"""Veamos algunos grafos y como construirlos"""
@@ -112,7 +115,7 @@ md"""El número de vértices del grafo anterior se obtiene de la siguiente maner
 nvertices = nv(G₁) # número de vértices
 
 # ╔═╡ bda0ba3d-71a3-4b37-9cce-cd2017926075
-md"""al igual que el número de aristas"""
+md"""Al igual que el número de aristas"""
 
 # ╔═╡ 57852c0d-05cf-4cc8-9579-c5d0c4a9b8cc
 nedges = ne(G₁)    #número de aristas
@@ -133,7 +136,7 @@ begin
 end
 
 # ╔═╡ 74a09aca-c4d0-4356-8ea1-4a97e9b5590f
-md"""Mostramos el grafo"""
+md"""Visualizamos el grafo"""
 
 # ╔═╡ a6d57d59-4f21-489d-a968-03e90d562fb8
 gplot(Gr, nodelabel=1:nv(Gr), edgelabel=1:ne(Gr))
@@ -151,7 +154,7 @@ end
 gplot(Gr, nodelabel=1:nv(Gr), edgelabel=1:ne(Gr))
 
 # ╔═╡ 8a4d4435-fb59-45b6-b31c-95e9880825f3
-md"""Sin embargo, eliminar un vértice no es una operación para conservar la etiqueta. Por razones de rendimiento, un vértice k se elimina del grafo intercambiando k con el último vértice nv(G). Este efecto secundario es particularmente relevante si los datos se almacenan externamente para cada vértice o borde del grafo:"""
+md"""Sin embargo, eliminar un vértice no es una operación para conservar la etiqueta. Por razones de rendimiento, un vértice $k$ se elimina del grafo intercambiando $k$ con el último vértice $\text{nv}(G)$. Este efecto secundario es particularmente relevante si los datos se almacenan externamente para cada vértice o borde del grafo."""
 
 # ╔═╡ 8f2b47c4-f3d0-4fbc-8e6d-5b1666235aa5
 rem_vertex!(Gr, 1)
@@ -215,7 +218,7 @@ gplot(G₆, nodelabel=1:6)
 adjacency_matrix(G₆)
 
 # ╔═╡ c490b85f-4dd1-4927-bc86-ca7ecb49a2be
-md"""Alternativamente, se puede construir un grafo a partir de su matriz de adyacencia:"""
+md"""También, se puede construir un grafo a partir de su matriz de adyacencia:"""
 
 # ╔═╡ b2690ecd-b721-466b-9067-20872443974b
 A₁ = [0 1 1 1; 1 0 1 1; 1 1 0 0; 1 1 0 0]
@@ -278,7 +281,7 @@ incidence_matrix(g₈)
 # ╔═╡ 1f72136a-d95f-4478-b9c3-83748ff19345
 md"""# Generadores
 
-Para mayor comodidad, Graphs.jl viene con un conjunto de funciones integradas para generar grafos famosos en la literatura o grafos que se asemejan a formas básicas de la vida real.
+Para mayor facilidad, Graphs.jl viene con un conjunto de funciones integradas para generar grafos famosos en la literatura o grafos que se asemejan a formas básicas de la vida real.
 
 Veamos algunos grafos pequeños con formas simples"""
 
@@ -298,7 +301,9 @@ G₁₀ = smallgraph("house")
 gplot(G₁₀)
 
 # ╔═╡ d2dc8cc6-8776-4a1c-b69c-632d71812de7
-md"""Se proporcionan muchos otros generadores que se pueden utilizar para construir grafos con propiedades específicas. Por ejemplo, un grafo con 4 bucles de 3 nodos conectados se puede dibujar rápidamente con:"""
+md"""Se proporcionan muchos otros generadores que se pueden utilizar para construir grafos con propiedades específicas.
+
+Por ejemplo, un grafo con 4 bucles de 3 nodos conectados se puede dibujar rápidamente con:"""
 
 # ╔═╡ 85bc0645-fd1b-4ea9-b55e-8f1a5a7e2125
 G₁₁ = CliqueGraph(3,4)
@@ -1875,7 +1880,7 @@ version = "1.4.1+1"
 # ╠═30e5731f-3026-448a-b308-eb0dbfbc86fa
 # ╟─bda0ba3d-71a3-4b37-9cce-cd2017926075
 # ╠═57852c0d-05cf-4cc8-9579-c5d0c4a9b8cc
-# ╠═95d3a9cc-fb96-4036-bf14-6d89e2149214
+# ╟─95d3a9cc-fb96-4036-bf14-6d89e2149214
 # ╠═a2eb3574-2041-479d-87e9-eba7684044b7
 # ╟─74a09aca-c4d0-4356-8ea1-4a97e9b5590f
 # ╠═a6d57d59-4f21-489d-a968-03e90d562fb8

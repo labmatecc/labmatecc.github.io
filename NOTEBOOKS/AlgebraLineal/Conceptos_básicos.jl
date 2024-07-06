@@ -24,9 +24,10 @@ using LinearAlgebra
 PlutoUI.TableOfContents(title="Conceptos básicos", aside=true)
 
 # ╔═╡ 771b490e-f0cb-435e-9f2e-29cbbcd7810d
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**.
 
-Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
+Tu participación es fundamental para hacer de este curso una experiencia aún mejor.
+"""
 
 # ╔═╡ 71f6b680-20cb-4ce2-9ae3-dbc1fbf96844
 md"""Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo."""
