@@ -84,7 +84,7 @@ $xy'' = - a  \frac{dt}{dx},$
 así
 
 $\frac{dt}{dx}=-\frac{xy''}{a}$
-Dado que tanto el conejo como el perro tienen la misma velocidad, entonces han recorrido la misma distancia $s$, que es la longitud de arco de la curva $y = f(x)$. Así que
+Por otro lado, observe que $s$ es la longitud de arco de la curva $y = f(x)$. Así
 
 $s = \int_{0}^{x} \sqrt{1 + (y')^2} \, dx \implies \frac{ds}{dx} = \sqrt{1 + (y')^2}.$
 Dado que $\frac{ds}{dt} = b$, tenemos

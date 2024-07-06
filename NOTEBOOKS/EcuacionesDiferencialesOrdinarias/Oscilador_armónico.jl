@@ -28,7 +28,7 @@ end
 PlutoUI.TableOfContents(title="Oscilador armónico", aside=true)
 
 # ╔═╡ c0cf1bc9-fe25-4536-a5a9-7df3e5b97c9b
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 

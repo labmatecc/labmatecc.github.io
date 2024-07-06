@@ -37,7 +37,7 @@ md"""Usaremos las siguientes librerías:"""
 md"""# Introducción  
 El ajuste de curvas o ajuste de datos consiste en buscar una relación entre ellos. Es decir, si tenemos datos correspondientes a dos variables, la idea es encontrar una relación que describa de manera precisa y concisa el comportamiento de dichos datos.
 
-Para optimizar los valores de los parámetros del modelo, creamos una función que calcule el tamaño del desajuste entre los datos observados y los generados por los posibles modelos. Esta función recibe los datos y los valores válidos de los parámetros del modelo, y devuelve la norma del residuo. Podemos utilizar, por ejemplo, la medida de desajuste de mínimos cuadrados (norma Euclidiana). Posteriormente, empleamos una biblioteca de optimización para calcular el valor del parámetro óptimo aproximado.
+Para optimizar los valores de los parámetros del modelo, creamos una función que calcule el tamaño del desajuste entre los datos observados y los generados por los posibles modelos. Esta función recibe los datos y los valores válidos de los parámetros del modelo, y devuelve la norma del residuo. Podemos utilizar, por ejemplo, la medida de desajuste de mínimos cuadrados (norma euclidiana). Posteriormente, empleamos una biblioteca de optimización para calcular el valor del parámetro óptimo aproximado.
 """
 
 # ╔═╡ 33842891-3dbb-4b08-8160-346ffafe8619
@@ -118,15 +118,15 @@ scatter(tiempo,volumen,ls=:dash,label="Volumen",lw=4, xlabel = "Tiempo",yaxis="V
 md"""## Modelo de von Bertalanffy"""
 
 # ╔═╡ 172eb728-c084-4311-b75a-6177a36fb847
-md"""
-Para ilustrar el procedimiento, ajustaremos los datos a un modelo de ecuaciones diferenciales, el Modelo de von Bertalanffy, dicho modelo es usado para mostrar el crecimiento de tumores en el cuerpo. En lugar de crecer de manera constante, este modelo dice que el crecimiento del tumor se desacelera a medida que se hace más grande. 
+md"""Para ilustrar el procedimiento, ajustaremos los datos a un modelo de ecuaciones diferenciales, el Modelo de von Bertalanffy. Este modelo se utiliza para mostrar el crecimiento de tumores en el cuerpo, donde el crecimiento del tumor se desacelera a medida que se hace más grande. 
 
-El modelo es el siguiente 
+El modelo es el siguiente:
 
-$$V'= aV^\frac{2}{3}-bV,$$
-donde $V$ es el tamaño del tumor en el tiempo $t$, $a$ es la velocidad máxima de crecimiento y $b$ es la tasa de muerte celular o retroceso del tumor.
+$$V' = aV^\frac{2}{3} - bV,$$
 
-Consideremos dicho modelo con la condición inicial $V_0=V(0)=0.0158$. Recordemos que deseamos hallar los valores óptimos de $a$ y $b$.
+donde $V$ es el tamaño del tumor en el tiempo $t$, $a$ es la velocidad máxima de crecimiento, y $b$ es la tasa de muerte celular o retroceso del tumor.
+
+Consideremos este modelo con la condición inicial $V_0 = V(0) = 0.0158$. Recordemos que buscamos hallar los valores óptimos de $a$ y $b$.
 """
 
 # ╔═╡ 519ca1e3-ea1b-4d1b-af2d-d074531b502b
@@ -136,9 +136,7 @@ md"""Creamos una función para el modelo de Bertalanffy:"""
 modeloBF(V,par,t)=par[1]*V.^(2/3)-par[2]*V
 
 # ╔═╡ 21b98c71-3aa2-4438-ba4f-c830cfc6d709
-md"""
-Si queremos resolver la EDO para determinados valores de los parámetros, usamos, 
-"""
+md"""Si queremos resolver la EDO para determinados valores de los parámetros, usamos:"""
 
 # ╔═╡ 64281d01-c1dd-4f11-8397-21d01ecadd5f
 begin
@@ -153,9 +151,7 @@ begin
 end
 
 # ╔═╡ 5ac22392-143f-4531-a611-d8533610d07c
-md"""
-Ahora podemos escribir la función residuo del modelo de EDO. Es decir, cacular la norma entre el pronostico de una EDO con parametros dados y los datos. 
-"""
+md"""Ahora podemos escribir la función de residuo del modelo de EDO. Es decir, calcular la norma entre el pronóstico de una EDO con parámetros dados y los datos."""
 
 # ╔═╡ 043dd8fc-da87-453b-ae29-10d72b933e06
 function residuoBF(par,V,t)
@@ -171,11 +167,10 @@ return nres
 end
 
 # ╔═╡ 7161401c-f87a-4939-9fa9-479c24931f06
-md"""La función residuo arriba mide el desajuste (o tamaño del residuo) de la simulación de la EDO con respecto a los datos usando mínimos cuadrados, es decir, la norma euclidiana de la diferencia o residuo. 
-**Asumimos que nuestro modelo de observación mide directamente el tamaño del tumor.  Es decir, el desajuste se mide directamente con la diferencia del modelo contra los datos.**
+md"""La función de residuo arriba mide el desajuste (o tamaño del residuo) de la simulación de la EDO con respecto a los datos usando mínimos cuadrados, es decir, la norma euclidiana de la diferencia o residuo. 
+**Asumimos que nuestro modelo de observación mide directamente el tamaño del tumor. Es decir, el desajuste se mide directamente con la diferencia del modelo contra los datos.**
 
-
-Por ejemplo el desajuste de usar $a=1$ y $b=1$ en el modelo es de:"""
+Por ejemplo, el desajuste al usar $a=1$ y $b=1$ en el modelo es:"""
 
 # ╔═╡ 1a3a16df-b51e-4125-a895-fcaa02ad2403
 residuoBF([1 1],volumen,tiempo)
@@ -200,31 +195,29 @@ oBF=Optim.optimize(rBF, [.01,.01], NelderMead())
 oBF.minimizer
 
 # ╔═╡ 3cf10c6c-05af-4508-b3f3-70de4d537acb
-md"""
-De esto se obtiene que da la EDO optima es
-$V'=  0.396V^\frac{2}{3}- 0.194V.$
+md"""De esto se obtiene que la EDO óptima es
+$$V' = 0.396V^\frac{2}{3} - 0.194V.$$
 
-Después de calcular el valor del parámetro óptimo podemos mostrar el ajuste final de nuestro modelo. Como antes, podemos visualizar el ajuste comparandolo con los datos. Para esto tenemos, 
-"""
+Después de calcular el valor del parámetro óptimo, podemos mostrar el ajuste final de nuestro modelo. Como antes, podemos visualizar el ajuste comparándolo con los datos. Para esto tenemos:"""
 
 # ╔═╡ 43eb9fc5-b762-4bd7-a540-ad35da34d7b9
 md"""## Modelo Logistic Growth
  
-Teniendo en cuenta los datos sobre el crecimiento de un tumor en ratones. Ajustemos dichos datos siguiendo el modelo Logistic Growth.
-El modelo es el siguiente
+Teniendo en cuenta los datos sobre el crecimiento de un tumor en ratones, ajustemos dichos datos siguiendo el modelo de crecimiento logístico.
+El modelo es el siguiente:
 
-$V'= aV\left(1-\frac{V}{b}\right),$
+$$V' = aV\left(1 - \frac{V}{b}\right),$$
 
-este modelo describe el crecimiento de poblaciones bajo ciertas condiciones. $V$ representa la población en el instante $t$, así $V'$ representa la tasa de cambio de la población con respecto al tiempo, $a$ es la tasa de crecimiento intrínseca de la población y $b$ es la capacidad de carga del entorno, es decir, el máximo tamaño de la población que el entorno puede soportar de manera sostenible. Así, la ecuación describe cómo la tasa de crecimiento de una población cambia a medida que la población se acerca a su capacidad máxima de carga en un entorno dado.
+este modelo describe el crecimiento de poblaciones bajo ciertas condiciones. $V$ representa la población en el instante $t$, donde $V'$ representa la tasa de cambio de la población con respecto al tiempo. $a$ es la tasa de crecimiento intrínseca de la población y $b$ es la capacidad de carga del entorno, es decir, el máximo tamaño de la población que el entorno puede soportar de manera sostenible. Así, la ecuación describe cómo la tasa de crecimiento de una población cambia a medida que la población se acerca a su capacidad máxima de carga en un entorno dado.
 
-Consideremos dicho modelo con la condición inicial $V_0=V(0)=0.0158$. Recordemos que deseamos hallar los valores óptimos de $a$ y $b$.
-"""
+Consideremos este modelo con la condición inicial $V_0 = V(0) = 0.0158$. Recordemos que buscamos hallar los valores óptimos de $a$ y $b$."""
 
 # ╔═╡ 79990d4e-08e1-4c75-896e-f4d9b9e7fefc
 modeloLG(V,par,t)=par[1]*V*(1-V/par[2])
 
 # ╔═╡ 280c6e4b-8db1-42c2-b157-dca7ed01965a
-md"""Si deseamos encontrar la solución de la ecuación diferencial ordinaria para ciertos valores específicos de los parámetros, empleamos"""
+md"""Si deseamos encontrar la solución de la ecuación diferencial ordinaria para ciertos valores específicos de los parámetros, empleamos:
+"""
 
 # ╔═╡ d0290ed3-64bc-4b8b-9e4f-665e33c33014
 begin
@@ -237,7 +230,7 @@ begin
 end
 
 # ╔═╡ 9cbe41df-cfd5-4e04-980e-c5bb60865a6d
-md"""La función residuo mide el desajuste (o tamaño del residuo) de la simulación de la ecuación diferencial ordinaria con respecto a los datos usando mínimos cuadrados, es decir, la norma euclidiana de la diferencia o residuo."""
+md"""La función de residuo mide el desajuste (o tamaño del residuo) de la simulación de la ecuación diferencial ordinaria con respecto a los datos usando mínimos cuadrados, es decir, la norma euclidiana de la diferencia o residuo."""
 
 # ╔═╡ 1bd9636d-5006-47db-835e-4bed32a33753
 function residuoLG(par₂,V₂,t₂)
@@ -252,7 +245,7 @@ function residuoLG(par₂,V₂,t₂)
 end
 
 # ╔═╡ 8ae541e7-951f-455e-8b33-f1966941a775
-md"""Por ejemplo el desajuste de usar $a=1$ y $b=1$ en el modelo es de:"""
+md"""Por ejemplo, el desajuste de usar $a=1$ y $b=1$ en el modelo es de:"""
 
 # ╔═╡ 471bd66e-5032-4de9-b99a-e38eb675f641
 residuoLG([1 1],volumen,tiempo)
@@ -294,20 +287,19 @@ md""" # Estimación de parámetros usando técnicas bayesianas"""
 # ╔═╡ b1c5a491-c18e-4f1c-af08-b9988813bebe
 md""" ## Introducción a la estimación de parámetros
 
+A continuación, se introducirán algunos conceptos importantes relacionados con probabilidad y estadística que son necesarios para entender los ejemplos realizados para el modelo logístico. Se supondrá que el lector tiene algunos conocimientos previos de probabilidad.
 
-A continuación, se introducirán algunos conceptos importantes relacionados con probabilidad y estadística que son necesarios para el entendimiento de los ejemplos realizados para  el modelo logístico. Para ello, se supondrá que el lector tiene ya algunos conocimientos previos de probabilidad.
+En primer lugar, recordemos algunas nociones básicas definidas en el curso de probabilidad. Estas se desarrollarán desde los eventos probabilísticos para dar una primera idea, y después se procederá a definirlas desde las variables aleatorias.
 
-En primer lugar, recordemos algunas de las nociones básicas definidas en el curso de probabilidad. Estas se desarrollarán desde los eventos probabilísticos para dar una primera idea, y después se procederá a dar su definición desde las variables aleatorias.
+**Probabilidad condicional:** Sea $(\Omega, \mathfrak{F}, P)$ un espacio de probabilidad, si $A, B \in \mathfrak{F}$ tales que $P(B) > 0$, entonces se define la probabilidad de $A$ bajo la condición de $B$ como:
 
-**$\bullet$ Probabilidad condicional:** Sea $(\Omega,\mathfrak{F},P)$ un espacio de probabilidad, si $A,B\in\mathfrak{F}$ tales que $P(B)>0$ entonces se define la probabilidad de $A$ bajo la condición de $B$ como:
-
-$$P(A|B):=\frac{P(A\cap B)}{P(B)}$$
+$$P(A \mid B) := \frac{P(A \cap B)}{P(B)}$$
 
 Es decir, se mide la probabilidad que tiene un evento $A$ dado que se ha observado la ocurrencia de un evento $B$.
 
 *Ejemplo:* 
 
-Suponga que se quiere estudiar la probabilidad de que una persona fume dado que tiene menos de 25 años, para ello se realiza lo siguiente: """
+Suponga que se quiere estudiar la probabilidad de que una persona fume dado que tiene menos de 25 años. Para ello, se realiza lo siguiente:"""
 
 # ╔═╡ 261d27e2-6240-4047-afa7-f2f9a4af396c
 begin
@@ -330,25 +322,25 @@ println("Entonces la probabilidad de que una persona fume dado que tiene menos d
 end
 
 # ╔═╡ 913ad931-b08c-47df-ae0d-5d1f6f216453
-md""" **$\bullet$ Regla de Bayes:** Sea $\{A_1,A_2,\cdots,A_n\}$ un conjunto de eventos mutuamente excluyentes que conforman una partición del conjunto $\Omega$, tales que $P(A_i)>0$ y sea $B$ un evento tal que $P(B)>0$, entonces se tiene que:
+md"""**Regla de Bayes:** Sea $\{A_1, A_2, \ldots, A_n\}$ un conjunto de eventos mutuamente excluyentes que conforman una partición del conjunto $\Omega$, tales que $P(A_i) > 0$, y sea $B$ un evento tal que $P(B) > 0$, entonces se tiene que:
 
-$$P(A_i|B):=\frac{P(A_i)\cdot P(B|A_i)}{\sum_{i=1}^{n}P(B|A_i)\cdot P(A_i)}$$
+$$P(A_i \mid B) := \frac{P(A_i) \cdot P(B \mid A_i)}{\sum_{i=1}^{n} P(B \mid A_i) \cdot P(A_i)}.$$
 
-En este punto, pasamos a definir lo que sigue basándonos en las variables aleatorias. Con este proposito, recordemos que un vector aleatorio es simplemente un vector de variables aleatorias definidas sobre el mismo espacio de probabilidad. Con esto en mente se define lo siguiente.
+En este punto, pasamos a definir lo siguiente basándonos en las variables aleatorias. Con este propósito, recordemos que un vector aleatorio es simplemente un vector de variables aleatorias definidas sobre el mismo espacio de probabilidad. Con esto en mente, se define lo siguiente.
 
-**$\bullet$ Función de densidad conjunta de un vector aleatorio (bajo independencia):**  Sea $\textbf{X}=(X_1,X_2,\cdots,X_n)$ un vector aleatorio, si dicho vector aleatorio está conformado por variables aleatorias independientes dos a dos, se tiene que su función de densidad conjunta está dada por:
+**Función de densidad conjunta de un vector aleatorio (bajo independencia):** Sea $\textbf{X}=(X_1, X_2, \ldots, X_n)$ un vector aleatorio. Si dicho vector aleatorio está conformado por variables aleatorias independientes dos a dos, su función de densidad conjunta está dada por:
 
-$$f_{\textbf{X}}(\textbf{x})=f_{X_1}(x_1)\cdot f_{X_2}(x_2)\cdots f_{X_n}(x_n)$$ 
+$$f_{\textbf{X}}(\textbf{x}) = f_{X_1}(x_1) \cdot f_{X_2}(x_2) \cdots f_{X_n}(x_n).$$ 
 
-En donde $f_{X_{i}}(x_i)$ denota la función de densidad  de la variables aleatorias $X_i$.
+donde $f_{X_i}(x_i)$ denota la función de densidad de la variable aleatoria $X_i$.
 
-En general, se notará a la función den densidad conjunta de un vector aleatorio discreto como $p_{\textbf{X}}(\textbf{x})$ y de un vector aleatorio continuo como $f_{\textbf{X}}(\textbf{x})$. Además, recuerde que la función de densidad conjunta no solo está definida para vectores con variables aleatorias independientes; sin embargo, para los propositos de este notebook, se realiza dicha suposición.
+En general, se denota la función de densidad conjunta de un vector aleatorio discreto como $p_{\textbf{X}}(\textbf{x})$ y de un vector aleatorio continuo como $f_{\textbf{X}}(\textbf{x})$. Además, recuerde que la función de densidad conjunta no solo está definida para vectores con variables aleatorias independientes; sin embargo, para los propósitos de este cuaderno, se realiza dicha suposición.
 
 *Ejemplo:* 
 
-Tome un vector aleatorio de $3$ variables que son independientes dos a dos, suponga que la primera variable se distribuye normal estandar, la segunda se distribuye de manera exponencial con parámetro $\lambda$ y la tercera tiene una distribución beta con parámetros $\alpha,\beta$.
+Tome un vector aleatorio de $3$ variables que son independientes dos a dos. Suponga que la primera variable se distribuye normal estándar, la segunda se distribuye de manera exponencial con parámetro $\lambda$, y la tercera tiene una distribución beta con parámetros $\alpha, \beta$.
 
-Entonces su función de densidad conjunta está dada por:
+Entonces, su función de densidad conjunta está dada por:
 """
 
 # ╔═╡ 10c4a587-b0db-4a73-b42f-14c9621815e0
@@ -374,44 +366,43 @@ latex_Ex=latexify(str1)
 end
 
 # ╔═╡ ab3bc822-3432-4598-8191-01e20f63ca1c
-md""" 
-Teniendo en cuenta las definiciones anteriores, podemos introducir la noción de función de densidad condicional para las  variables aleatorias $X$ y $Y$. Este concepto se fundamentará principalmente en lo previamente establecido sobre probabilidad condicional. Nótese así que, esta es solo una generalización a las variables aleatorias.
+md""" Teniendo en cuenta las definiciones anteriores, podemos introducir la noción de función de densidad condicional para las variables aleatorias $X$ y $Y$. Este concepto se fundamentará principalmente en lo previamente establecido sobre probabilidad condicional. Nótese que esta es solo una generalización a las variables aleatorias.
 
-**$\bullet$ Función de densidad condicional:** 
+**Función de densidad condicional:**
 
-Sean $X$ y $Y$ dos variables aleatorias, si estas son variables aleatorias discretas, se define la función de densidad condicional de $X$ dado $Y=y$ (claramente $y$ se encuentra dentro del rango de $Y$, es decir, $P(Y=y)>0$) como se sigue,
+Sean $X$ y $Y$ dos variables aleatorias. Si estas son variables aleatorias discretas, se define la función de densidad condicional de $X$ dado $Y=y$ (donde $y$ se encuentra dentro del rango de $Y$, es decir, $P(Y=y)>0$) como sigue:
 
-$$f_{X|Y}(x|y)=P(X=x|Y=y)=\frac{P(X=X,Y=y)}{P(Y=y)}$$
+$$f_{X|Y}(x|y) = P(X=x \mid Y=y) = \frac{P(X=x, Y=y)}{P(Y=y)}.$$
 
-Donde, se entiende que $P(X=x,Y=y)$ es la función de densidad conjunta de $X,Y$.
+Donde $P(X=x, Y=y)$ es la función de densidad conjunta de $X$ e $Y$.
 
-Ahora, para el caso en el que $X$ y $Y$ son variables aleatorias continuas, se define la función de densidad condicional de $X$ dado $Y=y$ como
+Para el caso en que $X$ y $Y$ son variables aleatorias continuas, se define la función de densidad condicional de $X$ dado $Y=y$ como:
 
-$$f_{X|Y}(x|y)=\frac{f(x,y)}{f_{Y}(y)}$$
+$$f_{X|Y}(x|y) = \frac{f(x,y)}{f_{Y}(y)}.$$
 
-En donde, se entiende que $f(x,y)$ es la función de densidad conjunta de $X,Y$ y $f_{Y}(y)$ es la función de densidad de la variable aleatoria $Y$.
+Donde $f(x,y)$ es la función de densidad conjunta de $X$ e $Y$, y $f_{Y}(y)$ es la función de densidad de la variable aleatoria $Y$.
 
-Siendo así, también se puede generalizar la regla de Bayes para funciones de densidad condicionales como se realizaba en el caso de los eventos probabilisticos.
+Se puede generalizar la regla de Bayes para funciones de densidad condicionales, similar a como se realiza para los eventos probabilísticos.
 
-**$\bullet$ Regla de Bayes:**
+**Regla de Bayes:**
 
-La función de densidad condicional de la variable aleatoria $Y$ dado $X=x$ está dada por 
+La función de densidad condicional de la variable aleatoria $Y$ dado $X=x$ está dada por:
 
-$$f_{X|Y}(x|y)=\frac{f(y,x)}{f_{Y}(y)}$$ 
+$$f_{Y|X}(y|x) = \frac{f(x,y)}{f_{X}(x)}.$$
 
-Pero, también se tiene que 
+Y también se puede expresar como:
 
-$$f_{Y|X}(y|x)=\frac{f(x,y)}{f_{X}(x)}\hspace{3mm}\Rightarrow \hspace{3mm} f(x,y)=f_{Y|X}(y|x)f_{X}(x)$$
+$$f(x,y) = f_{Y|X}(y|x) \cdot f_{X}(x).$$
 
-Adicionalmente, observe que $f_{Y}(y)$ se puede escribir como una función de densidad marginal mediante:
+Además, la función de densidad marginal de $Y$, $f_{Y}(y)$, se puede expresar como:
 
-$$f_{Y}(y)=\int_{-\infty}^{\infty} f(x,y)dx$$ 
+$$f_{Y}(y) = \int_{-\infty}^{\infty} f(x,y) \, dx.$$
 
-Por lo tanto, al reemplazar en la definición dada anteriormente, se obtiene que 
+Por lo tanto, al sustituir en la definición anterior, se obtiene:
 
-$$f_{X|Y}(x|y)=\frac{f_{Y|X}(y|x)f_{X}(x)}{\int_{-\infty}^{\infty}f_{Y|X}(y|x)f_{X}(x)}$$
+$$f_{X|Y}(x|y) = \frac{f_{Y|X}(y|x) \cdot f_{X}(x)}{\int_{-\infty}^{\infty} f_{Y|X}(y|x) \cdot f_{X}(x) \, dx}.$$
 
-Para visualizarlo de mejor manera, observe el siguiente ejemplo. Suponga que quiere hallar la función de densidad condicional  $P(X_1| X_2=0.4)$  en donde el vector aleatorio tiene función de densidad conjunta normal-bivariada.
+Para ilustrarlo mejor, consideremos el siguiente ejemplo. Supongamos que queremos encontrar la función de densidad condicional $P(X_1 \mid X_2 = 0.4)$ donde el vector aleatorio tiene una función de densidad conjunta normal-bivariada.
 """
 
 # ╔═╡ c8922fad-0123-42ea-94d7-81379b4ff3ad
@@ -467,7 +458,7 @@ Así;
 $$P(\theta|x)\propto L(x|\theta)\cdot P_{\Theta}(\theta)$$
 
 
-¡Ahora si! Se entra en el campo de la estimación. El siguiente método es bastante frecuente en la estadistica frecuentista, puesto que el estimador generado tiene unas propiedades bastante deseables, estas son; la consistencia, la eficiencia y una distribución normal asintótica. Esto quiere decir que a medida que aumenta el tamaño de la muestra, el estimador tiende a acercarse al valor verdadero del parámetro con una varianza mínima.
+¡Ahora si! Se entra en el campo de la estimación. El siguiente método es bastante frecuente en la estadística frecuentista, puesto que el estimador generado tiene unas propiedades bastante deseables, estas son; la consistencia, la eficiencia y una distribución normal asintótica. Esto quiere decir que a medida que aumenta el tamaño de la muestra, el estimador tiende a acercarse al valor verdadero del parámetro con una varianza mínima.
 
 **$\bullet$ Estimanción frecuentista (Máximo verosimil-MLE):** Se dice que un estimador $\hat{\theta}=\hat{\theta}(X_1,\cdots,X_n)$ del parámetro $\theta$ es el estimador máximo verosimil si $\hat{\theta}(x_1,\cdots,x_n)$ es el valor que máximiza a la función $L(\theta,x_1,\cdots,x_n)$. En este caso, por propiedades de la función logaritmo, se suele máximizar la log-verosimilitud, que es simplemente la aplicación del logaritmo a la función $L(\theta)$. 
 
@@ -520,17 +511,16 @@ println("Estimador MLE para la desviación estándar (sigma): ", sigma_mle)
 end
 
 # ╔═╡ c33e2bfb-798c-4e15-a9ba-0e1404f6eb34
-md"""
-Sin embargo, el enfoque utilizado en los ejemplos predecesores, no es unicamente el enfoque frecuentista de la estimación. De hecho también se realizan estimaciones con el enfoque Bayesiano, así se pasa a definir el segundo estimador.
-
+md"""Sin embargo, el enfoque utilizado en los ejemplos predecesores no es únicamente el enfoque frecuentista de la estimación. De hecho, también se realizan estimaciones con el enfoque Bayesiano. Así se pasa a definir el segundo estimador.
 
 **$\bullet$ Enfoque Bayesiano:**
 
-Sea $X_1,X_2,\cdots,X_n$ una muestra aleatoria de una población con función de densidad $f(X,\Theta)$ y función de densidad conocida (a priori) $f_{\Theta}(\theta)$. El estimador bayesiano para la imagen de $\theta$ bajo una función $g$, respecto a la función a priori de $\theta$ está dado por:
+Sea $X_1, X_2, \cdots, X_n$ una muestra aleatoria de una población con función de densidad $f(X, \Theta)$ y función de densidad conocida (a priori) $f_{\Theta}(\theta)$. El estimador bayesiano para la imagen de $\theta$ bajo una función $g$, respecto a la función a priori de $\theta$, está dado por:
 
-$$E[g(\theta)|X_1,\cdots,X_n]=\frac{\int_{-\infty}^{\infty}g(\theta)L(x|\theta)f_{\Theta}(\theta)}{\int_{-\infty}^{\infty}L(x|\theta)f_{\Theta}(\theta)}$$
+$$E[g(\theta) | X_1, \cdots, X_n] = \frac{\int_{-\infty}^{\infty} g(\theta) L(x | \theta) f_{\Theta}(\theta) \, d\theta}{\int_{-\infty}^{\infty} L(x | \theta) f_{\Theta}(\theta) \, d\theta}$$
 
 Finalizamos así esta pequeña introducción a la estimación de parámetros.
+
 """
 
 # ╔═╡ 97435cc8-95ca-45eb-abeb-8fee0db7d651

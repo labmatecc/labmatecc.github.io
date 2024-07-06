@@ -24,7 +24,7 @@ using DifferentialEquations, Plots, SymPy, CalculusWithJulia
 PlutoUI.TableOfContents(title="Introducción a las ecuaciones diferenciales", aside=true)
 
 # ╔═╡ a006d92d-5597-41f9-9322-811bc601a798
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 

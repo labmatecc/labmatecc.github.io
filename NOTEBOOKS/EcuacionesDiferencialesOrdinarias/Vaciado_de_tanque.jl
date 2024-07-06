@@ -14,7 +14,7 @@ using Plots, LinearAlgebra, Optim, DifferentialEquations, Distributions, Statist
 PlutoUI.TableOfContents(title="Vaciado de tanque", aside=true)
 
 # ╔═╡ 24244d99-613e-47fb-b53b-2dc21536a568
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
