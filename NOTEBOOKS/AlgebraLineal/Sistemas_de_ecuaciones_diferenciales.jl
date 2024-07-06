@@ -29,7 +29,7 @@ end
 PlutoUI.TableOfContents(title="Sistemas de ecuaciones diferenciales", aside=true)
 
 # ╔═╡ b719f24e-6851-4613-b99c-47c76a7dd7e4
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**.
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
@@ -47,15 +47,13 @@ md"""Una ecuación diferencial se define como una expresión que incluye una fun
 
 Por ejemplo, las ecuaciones diferenciales de primer orden tienen la siguiente forma:
 
-$\dfrac{dy}{dx}=f(x,y).$
+$\frac{dy}{dx}=f(x,y).$
 
 Un ejemplo sencillo de esto es
 
-$\frac{d}{dt}x(t)=a x(t),$
-donde $a$ es una constante. Es fácil ver que las soluciones de esta ecuación son de la forma 
+$\frac{d}{dt}x(t)=a x(t),$ donde $a$ es una constante. Es fácil ver que las soluciones de esta ecuación son de la forma 
 
-$x=Ce^{at},$
-donde $C$ es una constante que depende de las condiciones iniciales $x(0)=x_0$. Si consideramos $a=-0.1$ y $x_0=1$ se tiene el siguiente problema
+$x=Ce^{at},$ donde $C$ es una constante que depende de las condiciones iniciales $x(0)=x_0$. Si consideramos $a=-0.1$ y $x_0=1$, se tiene el siguiente problema
 
 $\frac{d}{dt}x(t)=-0.1 x(t),\hspace{1.5cm}x(0)=1.$
 Así, la solución de este problema es de la forma:
@@ -63,7 +61,8 @@ Así, la solución de este problema es de la forma:
 $x=Ce^{-0.1t},$
 y de la condición inicial se obtiene que $C=1$, por tanto
 
-$x=e^{-0.1t}.$"""
+$x=e^{-0.1t}.$
+"""
 
 # ╔═╡ 113be874-56cd-431b-b746-5c0e0a91d01c
 md"""Esto también lo podemos solucionar de la siguiente forma:"""
@@ -95,7 +94,7 @@ md"""# Sistemas lineales homogéneos"""
 # ╔═╡ eeb206c1-9159-4b11-8130-b77050f50d7c
 md"""Las ecuaciones diferenciales ordinarias simultáneas surgen de forma inherente en situaciones problemáticas que involucran múltiples variables dependientes. Cada una de estas variables es una función única de una sola variable independiente, representada como $t$. Las variables dependientes se denotan como $x_1, x_2, \cdots, x_n$. La derivación con respecto a $t$ se indica con $'$.
 
-Consideremos el sistema de ecuaciones diferenciales lineal homogéneo
+Consideremos el sistema de ecuaciones diferenciales lineal homogéneo:
 
 $\begin{align*}
 x_1(t) &= a_{11}x_1(t) + a_{12}x_2(t) + \ldots + a_{1n}x_n(t) \\
@@ -104,9 +103,9 @@ x_2(t) &= a_{21}x_1(t) + a_{22}x_2(t) + \ldots + a_{2n}x_n(t) \\
 x_n(t) &= a_{n1}x_1(t) + a_{n2}x_2(t) + \ldots + a_{nn}x_n(t)
 \end{align*}$
 
-donde las $a_{ij}$ representan constantes conocidas. Estamos interesados en encontrar funciones $x_1(t), x_2(t), \ldots, x_n(t)$ que estén definidas y sean diferenciables en el dominio de los números reales, y que satisfagan el sistema anterior. Dicho sistema se puede escribir de manera matricial como
+donde las $a_{ij}$ representan constantes conocidas. Estamos interesados en encontrar funciones $x_1(t), x_2(t), \ldots, x_n(t)$ que estén definidas y sean diferenciables en el dominio de los números reales, y que satisfagan el sistema anterior. Dicho sistema se puede escribir de manera matricial como:
 
-$x'(t)=Ax(t),$
+$x'(t)=Ax(t)$,
 o de manera más concisa $x'=Ax$, donde
 
 $x(t) = \begin{bmatrix}
@@ -129,8 +128,7 @@ x'_2(t) \\
 x'_n(t)
 \end{bmatrix}.$
 
-Estamos interesados en buscar $x(t)$, este vector es conocido como solución del sistema dado.
-"""
+Estamos interesados en buscar $x(t)$, este vector es conocido como solución del sistema dado."""
 
 # ╔═╡ 5b31ec95-585e-4b0b-aa39-fa48f3fe65f9
 md"""*Ejemplo:*
@@ -143,7 +141,7 @@ x_2(t) &= \quad\quad\quad\quad a_{22}x_2(t) \\
 &\vdots \\
 x_n(t) &= \quad\quad\quad\quad\quad\quad\quad\quad a_{nn}x_n(t)
 \end{align*}$
-es un sistema diagonal ya que la matriz $A$ es diagonal. Este sistema es fácil de resolver, ya que las ecuaciones pueden resolverse por separado (de la misma forma que el primer ejemplo), así obetenemos
+es un sistema diagonal ya que la matriz $A$ es diagonal. Este sistema es fácil de resolver, ya que las ecuaciones pueden resolverse por separado (de la misma forma que el primer ejemplo), así obtenemos
 
 $\begin{align*}
 x_1(t) &= C_1e^{a_{11}t} \\
@@ -163,22 +161,22 @@ $x(t) = \begin{bmatrix}
 # ╔═╡ b0da3218-177f-448b-867a-6a019f6f003a
 md"""Ahora, si el sistema dado no es diagonal, pero $A$ es diagonalizable y $P$ es una matriz no singular tal que
 
-$P^{-1}AP=D,$ donde $D$ es diagonal. Entonces multiplicando a la izquierda por $P^{-1}$ en el sistema $x'=Ax$, se tiene
+$P^{-1}AP=D$, donde $D$ es diagonal. Entonces, multiplicando a la izquierda por $P^{-1}$ en el sistema $x'=Ax$, se tiene
 
-$P^{-1}x'=P^{-1}Ax.$
-Ahora bien, si $u=P^{-1}x,$ entonces $u'=P^{-1}x'$. Si sustituimos eso en la ecuación anterior se tiene que
+$P^{-1}x'=P^{-1}Ax$.
 
-$u'=(P^{-1}AP)(P^{-1}x)=Du.$
+Ahora bien, si $u=P^{-1}x$, entonces $u'=P^{-1}x'$. Si sustituimos eso en la ecuación anterior se tiene que
+
+$u'=(P^{-1}AP)(P^{-1}x)=Du$.
 
 Este ya es un sistema diagonal que podemos resolver tal como lo mostramos anteriormente. Así,
-
 
 $u(t) = C_1u_1(t) + C_2u_2(t) + \ldots + C_nu_n(t) =
 \begin{bmatrix}
     C_1e^{\lambda_1 t} \\
     C_2e^{\lambda_2 t} \\
     \vdots \\
-    C_ne^{\lambda_nt}
+    C_ne^{\lambda_n t}
 \end{bmatrix}$
 
 donde
@@ -214,8 +212,7 @@ $x(t)=Pu(t) = C_1Pu_1(t) + C_2Pu_2(t) + \ldots + C_nPu_n(t).$
 
 Note que al realizar $Pu_i(t)$ con $0\leq i\leq n$ se obtienen los vectores propios de $A$ asociados a $\lambda_i$, respectivamente.
 
-De esto se tiene el siguiente teorema.
-"""
+De esto se tiene el siguiente teorema."""
 
 # ╔═╡ 256c25f8-babb-41b0-bffa-b106fc5c70a0
 md"""**Teorema:**

@@ -464,11 +464,35 @@ r, θ
 # ╔═╡ 4084ca08-1790-40cd-8e99-5ce7b7cad927
 md"""Así $z^2$ es el siguiente número complejo."""
 
+# ╔═╡ ee349ac2-9442-40c2-b20e-7e02abacb56e
+@bind m Slider(-10:1:10, show_value=true, default=2)
+
+# ╔═╡ 5851bdf2-cf91-45a1-a34d-34b1ef4588ea
+zn = r^m * cis(m * θ)
+
+# ╔═╡ 7280ebd8-7dd9-4961-8280-89925beabe94
+z₈^m
+
 # ╔═╡ 268f7dd9-c21a-425d-8562-cffd0e77033c
 md"""**Nota:** Note que el resultado no es exacto, es decir no es exactamente el mismo que al realizar $z^3$. Esto se debe a que estamos trabajando con números de punto flotante."""
 
+# ╔═╡ 38db4a8e-61b4-4ccd-896b-8d92b8acd332
+begin
+	scatter([real.(z₈)], [imag.(z₈)], color=:pink, label="z", aspect_ratio=:equal, xlabel="Parte Real", ylabel="Parte Imaginaria", title="Plano complejo")
+	scatter!([real.(zn)], [imag.(zn)], color=:red, label="z^$m")
+	scatter!([0], [0], color=:green, label="(0, 0)")
+	plot!([0, real.(z₈)], [0, imag.(z₈)], color=:gray, label="")
+	plot!([0, real.(zn)], [0, imag.(zn)], color=:gray, label="")
+end
+
 # ╔═╡ 1110da58-1c8e-420e-a9c3-d90f6787d219
 md"""Otra forma de graficar esto, es de la siguiente forma:"""
+
+# ╔═╡ 8c684d61-0015-44c3-9659-1dd151d6a2ed
+begin
+	plot([0,angle(zn)], [0,abs(zn)], proj = :polar, m = 2, legend=false, title="Plano complejo")
+	plot!([0,θ], [0,r], proj = :polar, m = 2, legend=false)
+end
 
 # ╔═╡ 64e9c3fc-a2de-4ea7-8d9a-5a8ab55cf1e4
 md"""# Raíces
@@ -569,26 +593,11 @@ end
 # ╔═╡ c5437c5b-038b-4774-a483-f910e179716d
 md"""Con 3 iteraciones en el intervalo $[0,1]$,"""
 
-# ╔═╡ 5851bdf2-cf91-45a1-a34d-34b1ef4588ea
-zn = r^m * cis(m * θ)
-
-# ╔═╡ 8c684d61-0015-44c3-9659-1dd151d6a2ed
-begin
-	plot([0,angle(zn)], [0,abs(zn)], proj = :polar, m = 2, legend=false, title="Plano complejo")
-	plot!([0,θ], [0,r], proj = :polar, m = 2, legend=false)
-end
-
-# ╔═╡ 7280ebd8-7dd9-4961-8280-89925beabe94
-z₈^m
-
-# ╔═╡ 38db4a8e-61b4-4ccd-896b-8d92b8acd332
-begin
-	scatter([real.(z₈)], [imag.(z₈)], color=:pink, label="z", aspect_ratio=:equal, xlabel="Parte Real", ylabel="Parte Imaginaria", title="Plano complejo")
-	scatter!([real.(zn)], [imag.(zn)], color=:red, label="z^$m")
-	scatter!([0], [0], color=:green, label="(0, 0)")
-	plot!([0, real.(z₈)], [0, imag.(z₈)], color=:gray, label="")
-	plot!([0, real.(zn)], [0, imag.(zn)], color=:gray, label="")
-end
+# ╔═╡ d82483d4-30ab-41a1-ad47-34b398055fb0
+# ╠═╡ disabled = true
+#=╠═╡
+@bind m Slider(0:1:10, show_value=true, default=3)
+  ╠═╡ =#
 
 # ╔═╡ 3fa547e2-8d56-40dc-9168-016fe1198508
 md"""se obtienen los siguientes puntos sobre el plano complejo"""
@@ -612,15 +621,6 @@ md"""# Referencias
 [3] Julia Documentation. (n.d.). Integers and floating-point numbers. Retrieved May 19, 2024, from https://web.mit.edu/julia_v0.6.2/julia/share/doc/julia/html/en/manual/integers-and-floating-point-numbers.html
 
 [4] Kigami, J. (2001). *Analysis on fractals* (Vol. 143). Cambridge University Press."""
-
-# ╔═╡ d82483d4-30ab-41a1-ad47-34b398055fb0
-# ╠═╡ disabled = true
-#=╠═╡
-@bind m Slider(0:1:10, show_value=true, default=3)
-  ╠═╡ =#
-
-# ╔═╡ ee349ac2-9442-40c2-b20e-7e02abacb56e
-@bind m Slider(-10:1:10, show_value=true, default=2)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1825,7 +1825,7 @@ version = "1.4.1+1"
 # ╔═╡ Cell order:
 # ╟─b763cd10-d1e7-4613-b738-9fb1c1cfa1e5
 # ╟─a7d3298e-0138-4149-a189-0b5a92cfa0e7
-# ╟─5a638263-06dd-4f61-b2af-40e5eeb2b9c6
+# ╠═5a638263-06dd-4f61-b2af-40e5eeb2b9c6
 # ╟─e34f8a45-6a22-45f8-b54e-8a15f96c89c9
 # ╟─fe274212-e2f3-4604-b746-109576d79f5e
 # ╠═d675dc10-eae6-11ee-096c-a184ec597d1f

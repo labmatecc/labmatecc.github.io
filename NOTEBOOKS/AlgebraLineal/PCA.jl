@@ -31,7 +31,7 @@ end
 PlutoUI.TableOfContents(title="PCA", aside=true)
 
 # ╔═╡ 7a3eb75b-6972-4c70-a1c5-bbd602a65c48
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**.
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 

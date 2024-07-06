@@ -29,9 +29,9 @@ md"""# Introducción
 
 La factorización $QR$ es una herramienta fundamental. Esta técnica se emplea para descomponer una matriz $A$ en el producto de dos matrices: una matriz ortogonal $Q$ y una matriz triangular superior $R$. La notación usual para esta factorización es $A = QR$. Veamos:
 
-Dada $A\in\mathbb{R}^{m\times n}$ con $A=[a_1,a_2,\dots,a_n]$, donde $a_i, i=1,2,\dots,n$ son las columnas de $A$, queremos escribir $A= QR$, con $Q\in\mathbb{R}^{m\times p}$ y $R\in\mathbb{R}^{p\times n}$, donde $Q$ es una matriz ortogonal. 
+Dada $A\in\mathbb{R}^{m\times n}$ con $A=[a_1,a_2,\dots,a_n]$, donde $a_i, i=1,2,\dots,n$ son las columnas de $A$, queremos escribir $A= QR$, con $Q\in\mathbb{R}^{m\times p}$ y $R\in\mathbb{R}^{p\times n}$, donde $Q$ es una matriz ortogonal.
 
-Observamos que $Q^TQ=I$, pero si $p<n$, entonces $QQ^T\neq I$. Además, $\text{Span}(A)=\text{Span}\{ a_i\}_{i=1}^n=\text{Span}\{q_j\}_{j=1}^p=\text{Span}(Q)$. 
+Observamos que $Q^TQ=I$, pero si $p<n$, entonces $QQ^T\neq I$. Además, $\text{Span}(A)=\text{Span}\{ a_i\}_{i=1}^n=\text{Span}\{q_j\}_{j=1}^p=\text{Span}(Q)$.
 
 Es común escribir la factorización **completa** $A=QR$ como:
 
@@ -39,11 +39,12 @@ $A= [ Q_1  \quad Q_2] \left[ \begin{matrix}R_1\\ 0\end{matrix} \right],$
 
 de donde se deduce que $\text{Span}(A)=\text{Span}(Q_1)$ y $\text{Span}(A^T)^\perp=\text{Span}(Q_2)$.
 
-Por último, si las columnas de $A$ son linealmente independientes, entonces $p=n$. 
+Por último, si las columnas de $A$ son linealmente independientes, entonces $p=n$.
 """
 
 # ╔═╡ bc320da0-1258-46f0-8f07-b8d36cdbcdc9
-md"""El el cuaderno titulado **Independencia Lineal I** vimos el proceso de Gram-Schmidt Clásico y Gram-Schmidt Modificado, en este cuaderno mostraremos las reflexiones de Householder y las rotaciones de Givens para realizar la factorización $QR.$"""
+md"""En el cuaderno titulado **Independencia Lineal I** vimos el proceso de Gram-Schmidt Clásico y Gram-Schmidt Modificado, en este cuaderno mostraremos las reflexiones de Householder y las rotaciones de Givens para realizar la factorización $QR.$"""
+
 
 # ╔═╡ a5733492-14dc-4dc8-a596-80a82010a53c
 md"""# Reflexiones de Householder"""
@@ -63,7 +64,8 @@ Para reflejar un vector $x$ respecto al hiperplano $v^\perp$, utilizamos la fór
 # ╔═╡ 4592e579-0c6c-4599-98fc-f3f11507f4ab
 md"""Dado $x,y \in \mathbb{R}^m$, nos preguntamos si ¿existe un vector $v$ tal que $H_v x = y$? Si $|x|_2 = |y|_2$, la respuesta es afirmativa y $v = \alpha (x - y)$.
 
-Para utilizar Householder en la ortogonalización, procedemos de la siguiente manera. Supongamos que deseamos ortogonalizar las columnas de $A = (a_1, a_2, \dots, a_n) \in \mathbb{R}^{m \times n}$. Consideremos inicialmente el caso de columnas linealmente independientes. Comenzamos la ortogonalización de Householder calculando el vector $v$ que transforma $a_1$ en un múltiplo del primer vector canónico $e_1 = (1, 0, \dots, 0)$. Es decir, $H_v a_1 = \sigma e_1$ con $\sigma = \pm \|x\|_2$."""
+Para utilizar Householder en la ortogonalización, procedemos de la siguiente manera. Supongamos que deseamos ortogonalizar las columnas de $A = (a_1, a_2, \dots, a_n) \in \mathbb{R}^{m \times n}$. Consideremos inicialmente el caso de columnas linealmente independientes. Comenzamos la ortogonalización de Householder calculando el vector $v$ que transforma $a_1$ en un múltiplo del primer vector canónico $e_1 = (1, 0, \dots, 0)$. Es decir, $H_v a_1 = \sigma e_1$ con $\sigma = \pm \|x\|_2$.
+"""
 
 # ╔═╡ 6193030e-3807-471c-aaf9-d3c8a3ac895e
 md"""Supongamos que $x \in \mathbb{R}^m$ y queremos calcular $v$ tal que $H_v x$ sea un múltiplo de $e_1$, digamos $\sigma e_1$ con $\sigma = \pm \|x\|_2$. En la resta $x_1 - \sigma$, puede ocurrir cancelación catastrófica. Para evitarla, consideramos las siguientes opciones:

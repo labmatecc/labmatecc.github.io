@@ -37,7 +37,7 @@ md"""# Matrices semejantes"""
 # ╔═╡ 22a4e785-1c8a-46cf-b355-4b4723d3a4b3
 md"""Se dice que dos matrices $A,B \in \mathcal{M}_n(\mathbb{R})$ son **semejantes** si existe una matriz invertible $P\in \mathcal{M}_n(\mathbb{R})$ tal que $B=P^{-1}AP$.
 
-**Nota:** La función definida por la igualdad anterior, que lleva la matriz $A$ en la matriz $B$ se denomina transformación de semejanza. Esta transformación lineal se puede escribir como 
+**Nota:** La función definida por la igualdad anterior, que lleva la matriz $A$ en la matriz $B$, se denomina transformación de semejanza. Esta transformación lineal se puede escribir como 
 
 $T(A)=P^{-1}AP.$
 
@@ -47,7 +47,7 @@ i) Sean $A_1, A_2 \in \mathcal{M}_n(\mathbb{R})$, entonces
 
 $T(A_1+A_2)=P^{-1}(A_1+A_2)P=P^{-1}A_1P+P^{-1}A_2P=T(A_1)+T(A_2)$
 
-ii) Sean $\alpha\in\mathbb{R}$, entonces
+ii) Sea $\alpha\in\mathbb{R}$, entonces
 
 $T(\alpha A_1)=P^{-1}(\alpha A_1) P=\alpha P^{-1}A_1 P=\alpha T(A_1)$"""
 
@@ -94,13 +94,13 @@ begin
 end
 
 # ╔═╡ 3f1350e8-1f77-4b0a-a6d5-dd65d7ccf9fa
-md"""La matriz $P$ es no singular, ya que det $P=3\neq 0$"""
+md"""La matriz $P$ es no singular, ya que $\text{det}(P)=3\neq 0$"""
 
 # ╔═╡ ad101ebd-7d08-4deb-9818-cc428c623111
 det(P₂)
 
 # ╔═╡ 62ba106f-7a9b-4279-a027-e96a486e3240
-md"""Ahora calculemos $PA$ y $DP$"""
+md"""Ahora, calculemos $PA$ y $DP$"""
 
 # ╔═╡ b5e086ea-11b6-46d4-ba92-08281255f561
 P₂*A₂
@@ -109,7 +109,7 @@ P₂*A₂
 D₂*P₂
 
 # ╔═╡ be9fbca4-0c56-4736-88ea-f88817c9e877
-md"""En efecto se verifica que $PA=DP$"""
+md"""En efecto, se verifica que $PA=DP$"""
 
 # ╔═╡ 476818e7-e13d-4ebf-8899-708ed39c3837
 P₂*A₂ == D₂*P₂
@@ -131,7 +131,7 @@ eigvals(A₂)
 eigvals(D₂)
 
 # ╔═╡ 432ec4a1-f98c-4ba7-9536-9c9804eb6380
-md"""En efecto se verifica que son los mismos."""
+md"""En efecto, se verifica que son los mismos."""
 
 # ╔═╡ 2aaf0e20-e9af-44c9-a992-d4297c47fb5f
 md"""# Matriz diagonalizable"""
@@ -259,61 +259,64 @@ md"""La sucesión de Fibonacci aparece en una amplia gama de aplicaciones, como 
 # ╔═╡ d09aca0b-4bb0-48e6-be09-aef8622e0862
 md"""Para calcular $F_n$ mediante la relación recursiva debemos calcular primero $F_0, F_1, \cdots, F_{n-1}$. Esto resultaría tedioso para $n$ grande. Desarrollaremos una fórmula que nos permita calcular $F_n$ directamente.
 
-Se tiene que el sitema de ecuaciones
+Se tiene que el sistema de ecuaciones
 
 $\begin{align*}
-F_n&=F_{n-1}+F_{n-2}\\
-F_{n-1}&=F_{n-1}
+F_n &= F_{n-1} + F_{n-2}\\
+F_{n-1} &= F_{n-1}
 \end{align*}$
+
 puede escribirse de forma matricial como
 
 $\begin{pmatrix}
     F_n \\
     F_{n-1}
-\end{pmatrix}=\begin{pmatrix}
+\end{pmatrix} = \begin{pmatrix}
     1 & 1 \\
     1 & 0
-\end{pmatrix}\begin{pmatrix}
+\end{pmatrix} \begin{pmatrix}
     F_{n-1} \\
     F_{n-2}
 \end{pmatrix}.$
 
 Definamos así
 
-$x_k=\begin{pmatrix}
+$x_k = \begin{pmatrix}
     F_{k+1} \\
     F_{k}
-\end{pmatrix} \hspace{0.2cm}\text{ y }\hspace{0.2cm}A=\begin{pmatrix}
+\end{pmatrix} \hspace{0.2cm}\text{ y }\hspace{0.2cm}A = \begin{pmatrix}
     1 & 1 \\
     1 & 0
-\end{pmatrix}\hspace{0.2cm}\text{ para }\hspace{0.2cm}0\leq k\leq n-1,$
+\end{pmatrix}\hspace{0.2cm}\text{ para }\hspace{0.2cm}0 \leq k \leq n-1,$
+
 así
 
 $\begin{align*}
-x_0&=\begin{pmatrix}
+x_0 &= \begin{pmatrix}
     F_1 \\
     F_{0}
-\end{pmatrix}=\begin{pmatrix}
+\end{pmatrix} = \begin{pmatrix}
     1 \\
     0
 \end{pmatrix},\\
-x_1&=\begin{pmatrix}
+x_1 &= \begin{pmatrix}
     F_2 \\
     F_1
-\end{pmatrix}=\begin{pmatrix}
+\end{pmatrix} = \begin{pmatrix}
     1 \\
     1
 \end{pmatrix},\\
 &\vdots\\
-x_{n-2}&=\begin{pmatrix}
+x_{n-2} &= \begin{pmatrix}
     F_{n-1} \\
     F_{n-2}
 \end{pmatrix},\\
-x_{n-1}&=\begin{pmatrix}
+x_{n-1} &= \begin{pmatrix}
     F_{n} \\
     F_{n-1}
 \end{pmatrix}
-\end{align*}$"""
+\end{align*}$
+"""
 
 # ╔═╡ 36fb92d9-b7f5-43b5-b18a-8804c957977d
 md"""Así, el anterior problema matricial se puede escribir como
@@ -343,7 +346,7 @@ md"""Con los valores propios de $A$ creamos la matriz $D$"""
 D = diagm(eigvals(A))
 
 # ╔═╡ 0e91727d-cf8e-487c-a9fb-c335327cd6d2
-md"""Y ahora con loos vectores propios correspondientes creamos la matriz $P$"""
+md"""Y ahora con los vectores propios correspondientes creamos la matriz $P$"""
 
 # ╔═╡ 25ef6979-8b17-4ba3-8a38-e655bbdbd0cc
 P = eigvecs(A)
@@ -355,26 +358,28 @@ md"""Así $A=PDP^{-1}$"""
 P*D*inv(P)
 
 # ╔═╡ 3433e168-b165-4f45-b354-68c31e46a154
-md"""Luego para cualquier $n\in\mathbb{N}^+$ se tiene que $A^{n-1}=PD^{n-1}P^{-1}$. Como $D$ es diagonal, $D^n$ se calcula fácilmente; sus entradas son las entradas de la diagonal de $D$, elevadas a la $n$-ésima potencia. Así, se tiene
+md"""Luego, para cualquier $n\in\mathbb{N}^+$ se tiene que $A^{n-1}=PD^{n-1}P^{-1}$. Como $D$ es diagonal, $D^n$ se calcula fácilmente; sus entradas son las entradas de la diagonal de $D$, elevadas a la $n$-ésima potencia. Así, se tiene
 
 $\begin{align*}
-x_{n-1}&=A^{n-1}x_0\\
-&=PD^{n-1}P^{-1}x_0,
+x_{n-1} &= A^{n-1}x_0\\
+       &= PD^{n-1}P^{-1}x_0,
 \end{align*}$
 
-de aquí que 
+de donde se sigue que
 
 $\begin{pmatrix}
     F_n \\
     F_{n-1}
-\end{pmatrix}=PD^{n-1}P^{-1}\begin{pmatrix}
+\end{pmatrix} = PD^{n-1}P^{-1} \begin{pmatrix}
     1 \\
     0
 \end{pmatrix}.$
-Por tanto $F_n$ es igual a la primer componente del vector $PD^{n-1}P^{-1}\begin{pmatrix}
+
+Por lo tanto, $F_n$ es igual a la primera componente del vector $PD^{n-1}P^{-1} \begin{pmatrix}
     1 \\
     0
-\end{pmatrix}$. Creemos así una función que nos ayude a calcular esto."""
+\end{pmatrix}$. Creemos así una función que nos ayude a calcular esto.
+"""
 
 # ╔═╡ e05d69e9-1a38-4ec4-af7e-a01aa4613b7a
 function fib(n)
@@ -388,12 +393,13 @@ md"""Observe que obtenemos lo mismo que usando la formula recursiva"""
 [fib(i) for i= 0:10] #Primeros 10 valores de la sucesión de Fibonacci
 
 # ╔═╡ ee55d839-5e6c-4d36-bacb-0929efb5fff9
-md"""Veamos más en detalle esto. Si realizamos cuidadosamente los calculos se obtiene que los valores propios de $A$ son $\lambda_1=\frac{1+\sqrt{5}}{2}$ y $\lambda_2=\frac{1-\sqrt{5}}{2}$, así
+md"""Veamos más en detalle esto. Si realizamos cuidadosamente los cálculos se obtiene que los valores propios de $A$ son $\lambda_1=\frac{1+\sqrt{5}}{2}$ y $\lambda_2=\frac{1-\sqrt{5}}{2}$, así
 
 $D=\begin{pmatrix}
     \frac{1+\sqrt{5}}{2} & 0\\
     0 & \frac{1-\sqrt{5}}{2}
 \end{pmatrix},$
+
 de aquí que los vectores propios correspondientes son 
 
 $\begin{pmatrix}
@@ -403,12 +409,14 @@ $\begin{pmatrix}
     \frac{1-\sqrt{5}}{2}\\
     1
 \end{pmatrix},$
+
 así
 
 $P=\begin{pmatrix}
     \frac{1+\sqrt{5}}{2} & \frac{1-\sqrt{5}}{2}\\
     1 & 1
 \end{pmatrix},$
+
 y 
 
 $P^{-1}=\begin{pmatrix}
@@ -416,9 +424,11 @@ $P^{-1}=\begin{pmatrix}
     -\frac{1}{\sqrt{5}} & \frac{1+\sqrt{5}}{2\sqrt{5}}
 \end{pmatrix}=\frac{1}{\sqrt{5}} \begin{pmatrix}
     1 & -\frac{1 - \sqrt{5}}{2} \\
-    -1 & \frac{1 + \sqrt{5}}{2}\end{pmatrix}.$
+    -1 & \frac{1 + \sqrt{5}}{2}
+\end{pmatrix}.$
 
-Así se tiene que $A^{n-1}=PD^{n-1}P^{-1}$. Luego"""
+Así se tiene que $A^{n-1}=PD^{n-1}P^{-1}$. Luego
+"""
 
 # ╔═╡ c3f4d4af-1de4-4c1c-8ef3-823ae1b44094
 md"""$\begin{align*}
@@ -493,7 +503,8 @@ end
 [fibo(i) for i= 0:10] #Primeros 10 valores de la sucesión de Fibonacci
 
 # ╔═╡ 06fa96c3-13a5-4f8d-b12f-88bef8b45a27
-md"""Esta es conocida como la fórmula de Binet, esta es una expresión analítica que nos da el $n$-ésimo número de Fibonacci en términos del número áureo $\left(\dfrac{1+\sqrt{5}}{2}\right)$ y su conjugado $\left(\dfrac{1-\sqrt{5}}{2}\right)$."""
+md"""Esta es conocida como la fórmula de Binet, esta es una expresión analítica que nos da el $n$-ésimo número de Fibonacci en términos del número áureo $\left(\frac{1+\sqrt{5}}{2}\right)$ y su conjugado $\left(\frac{1-\sqrt{5}}{2}\right)$.
+"""
 
 # ╔═╡ 7bffd265-4900-454e-b4dd-dfaac111a14b
 md"""# Referencias"""

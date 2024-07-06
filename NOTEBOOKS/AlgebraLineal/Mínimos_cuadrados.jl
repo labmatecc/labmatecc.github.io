@@ -17,7 +17,7 @@ end
 PlutoUI.TableOfContents(title="Mínimos cuadrados", aside=true)
 
 # ╔═╡ b81c330f-dcf7-4dfe-9b87-5cd802dde242
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**.
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
@@ -401,7 +401,7 @@ El objetivo del problema es determinar si el pupilo supera al maestro, en otras 
 
 # ╔═╡ ed0ea5b5-5150-4b85-8db0-7a1317d68db2
 begin
-	url1 = "https://github.com/laboratoriodealgebralineal/laboratoriodealgebralineal.github.io/blob/main/Im%C3%A1genes/angeles.jpg?raw=true"	
+	url1 = "https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/angeles.jpg?raw=true"	
 	fname1 = download(url1)
 	imag1 = load(fname1)
 end

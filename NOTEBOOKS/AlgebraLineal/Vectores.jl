@@ -27,7 +27,7 @@ using Plots
 PlutoUI.TableOfContents(title="Vectores", aside=true)
 
 # ╔═╡ 11190bac-6570-402e-b68f-17cb565b3b2f
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**.
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
@@ -51,8 +51,7 @@ x_1 \\
 x_2 \\
 \vdots \\
 x_n
-\end{bmatrix}.$
-Cada $x_i$, donde $i=1, 2, \ldots, n$ denota un elemento individual dentro del vector.
+\end{bmatrix}.$ Cada $x_i$, donde $i=1, 2, \ldots, n$, denota un elemento individual dentro del vector.
 
 En las definiciones anteriores, $x_1$ se denomina la primera componente del vector, $x_2$ es la segunda componente, y así sucesivamente. En términos generales, $x_k$ se denomina la $k$-ésima componente del vector."""
 

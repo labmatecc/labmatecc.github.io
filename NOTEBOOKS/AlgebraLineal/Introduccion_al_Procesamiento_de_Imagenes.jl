@@ -39,7 +39,7 @@ end
 PlutoUI.TableOfContents(title="Introducción al Procesamiento de Imágenes", aside=true)
 
 # ╔═╡ 20fd04ea-9d8d-45c5-b0ad-786d2bfa65ce
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**.
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
@@ -59,7 +59,7 @@ Para iniciar, definamos los elementos de las imágenes. Un píxel (unidad mínim
 
 Si tenemos una imagen en blanco y negro, esta imagen tiene $m$ filas y $n$ columnas. La representación de esta imagen será una matriz $A$ de tamaño $m \times n$, donde $a_{ij}$ representa la intensidad del píxel en la fila $i$ y columna $j$. Los valores son números enteros que van desde 0 (negro) hasta 255 (blanco).
 
-Ahora, si se tiene una imagen a color de tamaño $n \times m$, la imagen en color se representa utilizando tres matrices bidimensionales separadas para los canales de color rojo ($R$), verde ($G$) y azul ($B$). Las matrices $R$, $G$ y $B$ serán de tamaño $m \times n$. La representación completa de la imagen a color será una matriz tridimensional $A$ de tamaño $m \times n \times 3$, donde $R=A(i,j,1)$, $G=A(i,j,2)$ y $B=A(i,j,3)$ son las intensidades de rojo, verde y azul del píxel en la posición $(i,j)$, respectivamente.
+Ahora, si se tiene una imagen a color de tamaño $m \times n$, la imagen en color se representa utilizando tres matrices bidimensionales separadas para los canales de color rojo ($R$), verde ($G$) y azul ($B$). Las matrices $R$, $G$ y $B$ serán de tamaño $m \times n$. La representación completa de la imagen a color será una matriz tridimensional $A$ de tamaño $m \times n \times 3$, donde $R=A(i,j,1)$, $G=A(i,j,2)$ y $B=A(i,j,3)$ son las intensidades de rojo, verde y azul del píxel en la posición $(i,j)$, respectivamente.
 
 El valor de cada canal generalmente se mide en el rango de 0 a 255, donde 0 indica ausencia de color y 255 indica máxima intensidad.
 

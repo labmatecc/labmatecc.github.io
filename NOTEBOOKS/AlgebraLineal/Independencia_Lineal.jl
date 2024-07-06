@@ -28,7 +28,7 @@ md"""Usaremos esta librería"""
 md"""# Introducción"""
 
 # ╔═╡ f60001c4-b165-4ae3-a642-3d0464a6d2d7
-md"""La independencia lineal es un concepto esencial en álgebra lineal que destaca la relación entre vectores. Se refiere a la propiedad de un conjunto de vectores donde ninguno puede expresarse como combinación lineal de los demás de manera trivial. Esta noción, clave en la resolución de sistemas de ecuaciones y análisis estructural.
+md"""La independencia lineal es un concepto esencial en álgebra lineal que destaca la relación entre vectores. Se refiere a la propiedad de un conjunto de vectores donde ninguno puede expresarse como combinación lineal de los demás de manera trivial. Esta noción es clave en la resolución de sistemas de ecuaciones y análisis estructural.
 """
 
 # ╔═╡ 711861fd-da33-4f4c-9237-402139b704d2
@@ -46,7 +46,8 @@ md"""Para expresarlo de manera alternativa, $v_1, v_2, \ldots, v_n$ son linealme
 # ╔═╡ 370e0299-7477-4054-9224-632f5c3d2c90
 md"""**Teorema:**
 
-Dos vectores en un espacio vectorial son linealmente dependientes si y sólo si uno de ellos es un múltiplo escalar del otro."""
+Dos vectores en un espacio vectorial son linealmente dependientes si y solo si uno de ellos es un múltiplo escalar del otro.
+"""
 
 # ╔═╡ 7d5c788c-3a1d-4cf7-80ae-9aae5f4b0a95
 md"""*Ejemplo:*
@@ -67,7 +68,7 @@ md"""Verifiquemos la igualdad"""
 v₂==-3*v₁
 
 # ╔═╡ d168cd90-9578-49bf-abe9-90c2f562204e
-md""" Sea
+md"""Sea
 $A = \begin{pmatrix}
 a_{11} & a_{12} & a_{1n} \\
 a_{21} & a_{22} & a_{2n} \\
@@ -75,7 +76,8 @@ a_{21} & a_{22} & a_{2n} \\
 a_{m1} & a_{m2} & a_{mn} \\
 \end{pmatrix}$. Entonces las columnas de $A$ consideradas como vectores son linealmente dependientes si y sólo si el sistema, que se puede escribir como $Ac= 0$, tiene soluciones no triviales, donde $c=\begin{pmatrix}c_1\\c_2\\ \vdots\\c_n\end{pmatrix}$.
 
-Sea $A$ una matriz de $n\times n$. Entonces $\text{det} A\neq 0$ si y sólo si las columnas de $A$ son linealmente independientes."""
+Sea $A$ una matriz de $n \times n$. Entonces $\text{det} A \neq 0$ si y sólo si las columnas de $A$ son linealmente independientes.
+"""
 
 # ╔═╡ f659a285-b849-4c98-8783-e633feeaf8f8
 md"""*Ejemplo:*
@@ -151,7 +153,8 @@ ii) $\{v_1, v_2, \ldots, v_n\}$ genera a $V$.
 # ╔═╡ 3a6a24fe-f07b-4ad8-b951-45d36a73cef3
 md"""*Ejemplo:*
 
-Al considerar el conjunto de vectores $\left\{\begin{pmatrix} 1 \\ 0\\0\end{pmatrix}, \begin{pmatrix} 0 \\ 1\\ 0\end{pmatrix}, \begin{pmatrix} 0 \\ 0\\1\end{pmatrix}\right\}$, notamos que este es linealmente independiente, ya que el determinante de la matriz asociada es distinto de 0."""
+Al considerar el conjunto de vectores $\left\{\begin{pmatrix} 1 \\ 0\\0\end{pmatrix}, \begin{pmatrix} 0 \\ 1\\ 0\end{pmatrix}, \begin{pmatrix} 0 \\ 0\\1\end{pmatrix}\right\}$, notamos que este es linealmente independiente, ya que el determinante de la matriz asociada es distinto de 0.
+"""
 
 # ╔═╡ b1690ca3-7ee2-4d62-a39a-6b4727fd4b12
 A₄ = [1 0 0; 0 1 0; 0 0 1]
@@ -170,7 +173,8 @@ md"""Se dice que un conjunto de vectores $\{u_1, u_2, \ldots, u_k\}$ en $\mathbb
 
 $u_i \cdot u_j = 0 \quad \text{si } i \neq j$
 
-$u_i \cdot u_i = 1$"""
+$u_i \cdot u_i = 1$
+"""
 
 # ╔═╡ de51ac23-ab98-4f96-97d4-5de9c44167ee
 md"""*Ejemplo:*
@@ -196,17 +200,16 @@ a1'*a2, a1'*a3, a2'*a3
 md"""Como satisfacen las condiciones mencionadas, dicho conjunto de vectores es ortonormal."""
 
 # ╔═╡ 68590ad2-5fa5-4138-9fa3-a843be78be82
-md""" Podemos transformar un conjunto de vectores linealmente independientes en un conjunto de vectores ortonormales. Así cualquier base en $\mathbb{R}^n$ se puede “convertir” en una base ortonormal, esto se realiza con el proceso de ortonormalización de Gram-Schmidt.
+md"""Podemos transformar un conjunto de vectores linealmente independientes en un conjunto de vectores ortonormales. Así, cualquier base en $\mathbb{R}^n$ se puede "convertir" en una base ortonormal; esto se realiza con el proceso de ortonormalización de Gram-Schmidt.
 """
 
 # ╔═╡ b92bc7b3-f302-4099-b304-be5f12c8f737
 md"""### Proceso de ortonormalización de Gram-Schmidt Clásico"""
 
 # ╔═╡ fdce2ba9-da8e-4095-88ef-65e889b3703f
-md"""
-Sea $H$ un subespacio de dimensión $m$ de $\mathbb{R}^n$. Sea $S=\{v_1, v_2, \cdots, v_m\}$ una base de $H$, construyamos una base ortonormal a partir de los vectores en $S$.
+md"""Sea $H$ un subespacio de dimensión $m$ de $\mathbb{R}^n$. Sea $S=\{v_1, v_2, \cdots, v_m\}$ una base de $H$, construyamos una base ortonormal a partir de los vectores en $S$.
 
-Primero, vamos a definir $q_1=\frac{v_1}{\|v_1\|}$, ahora debemos elegir un segundo vector ortogonal a $q_1$. Tomemos $\hat{q}_2=v_2-(v_2\cdot  q_1)q_1$, entonces 
+Primero, vamos a definir $q_1=\frac{v_1}{\|v_1\|}$. Ahora debemos elegir un segundo vector ortogonal a $q_1$. Tomemos $\hat{q}_2=v_2-(v_2\cdot q_1)q_1$, entonces 
 
 $\hat{q}_2 \cdot q_1 = v_2\cdot q_1 - (v_2 \cdot q_1) \cdot (q_1\cdot q_1)= v_2\cdot q_1 -(v_2\cdot q_1)(1)=0$
 
@@ -214,21 +217,21 @@ así $\hat{q}_2$ es ortogonal a $q_1$, además es claro que $q_1$ y $\hat{q}_2$ 
 
 Entonces $\{q_1, q_2\}$ es un conjunto ortonormal.
 
-Supongamos que se han construido los vectores $q_1, q_2,\cdots, q_k (k< m)$ y que forman un conjunto ortonormal. Veamos ahora como construir $q_{k+1}$. Sea
+Supongamos que se han construido los vectores $q_1, q_2,\cdots, q_k$ (donde $k<m$) y que forman un conjunto ortonormal. Veamos ahora cómo construir $q_{k+1}$. Sea
 
-$\hat{q}_{k+1} = v_{k+1} - (v_{k+1} \cdot q_1) u_1 - (v_{k+1} \cdot q_2) q_2 - \ldots - (v_{k+1} \cdot q_k) q_k$
+$\hat{q}_{k+1} = v_{k+1} - (v_{k+1} \cdot q_1) q_1 - (v_{k+1} \cdot q_2) q_2 - \ldots - (v_{k+1} \cdot q_k) q_k$
 
 Entonces, para $i = 1, 2, \ldots, k$ se sigue que
 
-$\hat{q}_{k+1} \cdot q_i = v_{k+1} \cdot q_i - (v_{k+1} \cdot q_1) (u_1 \cdot q_i) - (v_{k+1} \cdot q_2) (q_2 \cdot q_i) - \ldots - (v_{k+1} \cdot q_i) (q_k \cdot q_i)-\ldots - (v_{k+1}\cdot q_k)(q_k\cdot q_i)$
+$\hat{q}_{k+1} \cdot q_i = v_{k+1} \cdot q_i - (v_{k+1} \cdot q_1) (q_1 \cdot q_i) - (v_{k+1} \cdot q_2) (q_2 \cdot q_i) - \ldots - (v_{k+1} \cdot q_k) (q_k \cdot q_i)$
 
 Pero $q_j \cdot q_i = 0$ si $j \neq i$ y $q_i \cdot q_i = 1$. Por lo tanto,
 
 $v'_{k+1} \cdot q_i = v_{k+1} \cdot q_i - v_{k+1} \cdot q_i = 0$
 
-Así, $\{q_1, q_2, \ldots, q_k, \hat{q}_{k+1}\}$ es un conjunto linealmente independiente, ortogonal y $\hat{q}_{k+1} \neq 0$.
+Así, $\{q_1, q_2, \ldots, q_k, \hat{q}_{k+1}\}$ es un conjunto linealmente independiente y ortogonal, donde $\hat{q}_{k+1} \neq 0$.
 
-Dado que $q_{k+1} = \frac{\hat{q}_{k+1}}{\|\hat{q}_{k+1}\|}$, es claro que $\{q_1, q_2, \ldots, q_k, q_{k+1}\}$ forma un conjunto ortonormal. Este proceso puede repetirse hasta que $k+1 = m$. Obteniendo así un conjunto ortonormal a partir de los vectores $\{v_1, v_2, \cdots, v_{m}\}$
+Dado que $q_{k+1} = \frac{\hat{q}_{k+1}}{\|\hat{q}_{k+1}\|}$, es claro que $\{q_1, q_2, \ldots, q_k, q_{k+1}\}$ forma un conjunto ortonormal. Este proceso puede repetirse hasta que $k+1 = m$, obteniendo así un conjunto ortonormal a partir de los vectores $\{v_1, v_2, \cdots, v_{m}\}$.
 """
 
 # ╔═╡ f395839e-21d0-4b31-85b6-9a6293c0eece
@@ -286,7 +289,7 @@ u = CGS(v) #Se genera el nuevo conjunto de vectores
 md"""### Proceso de ortonormalización de Gram-Schmidt Modificado"""
 
 # ╔═╡ 969d8800-1e8d-46b8-a3cb-2039f8cd2788
-md""" Existen formulaciones alternativas del algoritmo que tienen mejores propiedades numéricas. La más conocida de ellas es el algoritmo de Gram-Schmidt Modificado. Dicho algoritmo busca mejorar la estabilidad numérica al evitar la proyección sobre todos los vectores anteriores en cada paso, reduciendo así los errores de redondeo. Dicho algoritmo es el siguiente"""
+md""" Existen formulaciones alternativas del algoritmo que tienen mejores propiedades numéricas. La más conocida de ellas es el algoritmo de Gram-Schmidt Modificado. Dicho algoritmo busca mejorar la estabilidad numérica al evitar la proyección sobre todos los vectores anteriores en cada paso, reduciendo así los errores de redondeo. Dicho algoritmo es el siguiente:"""
 
 # ╔═╡ 19340c28-048d-4a05-89fa-22a9ec74c82e
 md"""**ALGORITMO Gram-Schmidt Modificado:**
@@ -353,7 +356,7 @@ Observe que si $Q^{-1}=Q^t$, entonces $Q^tQ=I$.
 # ╔═╡ 0b7a3178-c725-4888-89d6-f586bc4c8376
 md"""**Teorema:**
 
-La matriz $Q$ de $n\times n$ es ortogonal si y sólo si las columnas de $Q$ forman una base ortonormal para $\mathbb{R}^n$."""
+La matriz $Q$ de $n\times n$ es ortogonal si y solo si las columnas de $Q$ forman una base ortonormal para $\mathbb{R}^n$."""
 
 # ╔═╡ acbb988d-4878-4418-a8c4-e0afd04390e4
 md"""*Ejemplo:*
