@@ -24,7 +24,7 @@ using Plots, ComplexPlots, ComplexValues
 PlutoUI.TableOfContents(title="Conceptos básicos", aside=true)
 
 # ╔═╡ 5a638263-06dd-4f61-b2af-40e5eeb2b9c6
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**.
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
@@ -1825,7 +1825,7 @@ version = "1.4.1+1"
 # ╔═╡ Cell order:
 # ╟─b763cd10-d1e7-4613-b738-9fb1c1cfa1e5
 # ╟─a7d3298e-0138-4149-a189-0b5a92cfa0e7
-# ╠═5a638263-06dd-4f61-b2af-40e5eeb2b9c6
+# ╟─5a638263-06dd-4f61-b2af-40e5eeb2b9c6
 # ╟─e34f8a45-6a22-45f8-b54e-8a15f96c89c9
 # ╟─fe274212-e2f3-4604-b746-109576d79f5e
 # ╠═d675dc10-eae6-11ee-096c-a184ec597d1f

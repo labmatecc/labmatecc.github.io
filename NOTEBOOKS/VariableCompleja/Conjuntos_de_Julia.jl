@@ -24,7 +24,7 @@ using Plots, ComplexPlots, ComplexValues
 PlutoUI.TableOfContents(title="Conjuntos de Julia", aside=true)
 
 # ╔═╡ 5a638263-06dd-4f61-b2af-40e5eeb2b9c6
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**.
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
@@ -41,7 +41,7 @@ md"""# Introducción"""
 # ╔═╡ 98644ea3-71ce-4362-b901-20c706e4564e
 md"""Los fractales son estructuras geométricas que se caracterizan por ser auto-similares a diferentes escalas. Esto significa que, sin importar cuánto se amplíen, sus patrones se repiten infinitamente. Un ejemplo común de un fractal natural es la forma de una coliflor romanesca, donde cada florete es una copia más pequeña del todo.
 
-Los fractales son objetos geométricos que exhiben una estructura irregular y auto-similar en diferentes escalas, lo que significa que la forma del objeto se repite a diferentes niveles de magnificación. Los fractales tienen aplicaciones en muchos campos, tales como la física y la matemática y la biología. Los fractales se utilizan para modelar y describir fenómenos naturales y artificiales que tienen una estructura irregular y compleja, como las ramificaciones de los árboles, los patrones de crecimiento de copos de nieve, las formas de las montañas, las nubes, las costas y los ríos, la curva formada por las olas (esta es conocida como la curva de Koch), entre otros. Los fractales también se han utilizado para modelar sistemas biológicos, como la forma de los pulmones y los vasos sanguíneos, y para la generación de paisajes y texturas en gráficos por computadora."""
+Los fractales son objetos geométricos que exhiben una estructura irregular y auto-similar en diferentes escalas, lo que significa que la forma del objeto se repite a diferentes niveles de magnificación. Los fractales tienen aplicaciones en muchos campos, tales como la física, la matemática y la biología. Los fractales se utilizan para modelar y describir fenómenos naturales y artificiales que tienen una estructura irregular y compleja, como las ramificaciones de los árboles, los patrones de crecimiento de copos de nieve, las formas de las montañas, las nubes, las costas y los ríos, la curva formada por las olas (esta es conocida como la curva de Koch), entre otros. Los fractales también se han utilizado para modelar sistemas biológicos, como la forma de los pulmones y los vasos sanguíneos, y para la generación de paisajes y texturas en gráficos por computadora."""
 
 # ╔═╡ 30abdad7-ab61-48c0-b817-9f712f6da74e
 md"""# Conjunto de Mandelbrot"""
