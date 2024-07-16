@@ -13,7 +13,7 @@
 </html>
 <hr>
 <h1> Julia </h1>
-        <p> Julia es un lenguaje de programación de alto rendimiento, concebido en 2009. Este lenguaje de código abierto y gratuito destaca por su rapidez, versatilidad multiplataforma y una sintaxis de alto nivel que facilita su aprendizaje. Inicialmente reconocido en el ámbito del cálculo científico, Julia ha ganado creciente popularidad, extendiéndose también al ámbito del manejo de datos. Su capacidad para combinar velocidad y facilidad de uso lo convierte en una herramienta valiosa para aquellos que buscan un rendimiento eficiente en sus aplicaciones y análisis. </p>
+        <p> Julia es un lenguaje de programación de alto rendimiento, creado en 2009. Este lenguaje de código abierto y gratuito destaca por su rapidez, versatilidad multiplataforma y una sintaxis de alto nivel que facilita su aprendizaje. Inicialmente reconocido en el ámbito del cálculo científico, Julia ha ganado creciente popularidad, extendiéndose también al ámbito del manejo de datos. Su capacidad para combinar velocidad y facilidad de uso lo convierte en una herramienta valiosa para aquellos que buscan un rendimiento eficiente en sus aplicaciones y análisis. </p>
 
 <div class="button-container">
   <a href="https://julialang.org/downloads/" class="button">Descarga Julia!</a>

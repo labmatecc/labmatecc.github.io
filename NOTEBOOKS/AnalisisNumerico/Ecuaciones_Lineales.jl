@@ -33,12 +33,6 @@ md"""Usaremos las siguientes librerías:"""
 # ╔═╡ b7655028-28be-49bb-87b2-ee35adeeb9a4
 md"""# Introducción"""
 
-# ╔═╡ 39622889-6658-4938-8127-f16105b331e2
-md"""xd"""
-
-# ╔═╡ 35ffa09a-14a7-47fb-85b1-fe977607f406
-
-
 # ╔═╡ 4c98459c-1bd6-423c-8539-a85b104b6221
 md"""
 Los comandos para calcular normas de vectores y de matrices son presentados a continuación. 
@@ -56,6 +50,34 @@ end
 nx=norm(x,Inf)
 println("\nLa norma ",Inf," de x es ",nx)
 end
+
+# ╔═╡ 39622889-6658-4938-8127-f16105b331e2
+md"""Consideremos un sistema de ecuaciones lineales en $n$ incógnitas $x_1, x_2, \ldots, x_n$. Se puede escribir de la siguiente forma:
+
+$\begin{pmatrix}
+a_{11} & a_{12} & a_{13} & \cdots & a_{1n} \\
+a_{21} & a_{22} & a_{23} & \cdots & a_{2n} \\
+a_{31} & a_{32} & a_{33} & \cdots & a_{3n} \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+a_{n1} & a_{n2} & a_{n3} & \cdots & a_{nn} \\
+\end{pmatrix}
+\begin{pmatrix}
+x_1 \\
+x_2 \\
+x_3 \\
+\vdots \\
+x_n \\
+\end{pmatrix}
+=
+\begin{pmatrix}
+b_1 \\
+b_2 \\
+b_3 \\
+\vdots \\
+b_n \\
+\end{pmatrix}.$
+
+Las matrices en esta ecuación se denotan por $A$, $x$ y $b$. Así, nuestro sistema es simplemente $Ax = b$."""
 
 # ╔═╡ 0e8ae2e3-933b-4cb9-87d2-49de76407e29
 md""" # Factorización $A=PLU$
@@ -289,7 +311,8 @@ sparse(luA1.L)
 end
 
 # ╔═╡ 84658bb2-be90-417f-b1d3-581f05181f1e
-md"""# Referencias """
+md"""# Referencias 
+[1] Kincaid, D., & Cheney, W. (2009). Numerical analysis: Mathematics of scientific computing (3rd ed.). American Mathematical Society."""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -776,11 +799,10 @@ version = "17.4.0+2"
 # ╟─7b84db99-9375-4dc5-8a3e-414bc176648a
 # ╠═e2feba71-69cb-4f39-92d1-d1f4daefb4ec
 # ╟─b7655028-28be-49bb-87b2-ee35adeeb9a4
-# ╠═39622889-6658-4938-8127-f16105b331e2
-# ╠═35ffa09a-14a7-47fb-85b1-fe977607f406
 # ╟─4c98459c-1bd6-423c-8539-a85b104b6221
 # ╠═d3a307af-ee47-42cd-a6e5-49105c9bed09
 # ╠═69daeb44-c973-4b48-a646-d83fd7faf00d
+# ╟─39622889-6658-4938-8127-f16105b331e2
 # ╟─0e8ae2e3-933b-4cb9-87d2-49de76407e29
 # ╠═7123f4ea-87d7-4549-9b4f-56547eb38bc5
 # ╠═6aef40cd-26e2-47f6-94c8-c6702709056f
