@@ -725,7 +725,7 @@ begin
 end
 
 # ╔═╡ a0fe3393-d262-47a1-ab79-f2fd07c4da51
-begin
+let
 # Visualizar los resultados en Julia
 # Obtener los puntos de la malla y los valores de la solución
 cells = get_cell_coordinates(model)
