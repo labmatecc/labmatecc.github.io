@@ -115,6 +115,20 @@ header-includes: |
 <hr>
 
 <div class="button-container">
+  <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/Ajuste/" class="button">Ajuste de parámetros</a>
+</div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>El cuaderno aborda el ajuste de curvas y datos, explorando métodos para encontrar modelos que describan con precisión el comportamiento de datos observados, centrándose en el crecimiento de tumores en ratones. Se discuten varios enfoques, como el ajuste lineal, polinómico cúbico, redes neuronales artificiales y ecuaciones diferenciales, específicamente el modelo de Von Bertalanffy. El ajuste de curvas busca establecer relaciones entre dos variables optimizando los parámetros del modelo para minimizar el desajuste entre datos observados y generados, utilizando la técnica de mínimos cuadrados basada en la norma euclidiana. </p>
+      </div>
+    </div>
+  </div>
+
+<hr>
+
+<div class="button-container">
   <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/IntegracionNumericaI/" class="button">Integración Numérica I</a>
 </div>
 

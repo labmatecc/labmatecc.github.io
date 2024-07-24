@@ -30,21 +30,26 @@ md"""Usaremos las siguientes librerías:"""
 
 # ╔═╡ c66ecc8a-9dd4-4244-ada6-48e9ad85c305
 md"""
-# Introducción  
-Para optimizar el valor de los parámetros del modelo creamos una función que calcule el **tamaño** del desajuste a los datos de los posibles modelos. Esta función recive los datos y valores válidos de parámetros del modelo y retorna la norma del residuo. Podemos usar por ejemplo la medida de desajuste de mínimos cuadrados (norma Euclidiana). Luego usamos una librería de optimización para calcular el valor del parámetro óptimo aproximado.
- 
-Consideremos el ejemplo siguiente donde tenemos datos del crecimiento de un tumor en ratones. 
-Los datos son tomados (y mas información) se encuentran en: 
-Modeling Cancer Growth with Differential Equations de Jue Wang, Department of Mathematics
-Union College, Schenectady NY 12308 USA.
- 
-Para ilustrar el procedimiento, ajustaremos dos modelos:
-1. Un modelo polinomial de grado uno
-2. Un modelo polinomial cúbico
-3. Un modelo de redes neuronales artificiales
-4. Un modelo de ecuaciones diferenciales (Modelo de von Bertalanffy).
+# Introducción
 
+El ajuste de curvas o ajuste de datos consiste en buscar una relación entre ellos. Es decir, si tenemos datos correspondientes a dos variables, la idea es encontrar una relación que describa de manera precisa el comportamiento de dichos datos.
+
+Para optimizar los valores de los parámetros del modelo, creamos una función que calcule el tamaño del desajuste entre los datos observados y los generados por los posibles modelos. Esta función recibe los datos y los valores válidos de los parámetros del modelo, y devuelve la norma del residuo. Podemos utilizar, por ejemplo, la medida de desajuste de mínimos cuadrados (norma euclidiana). Posteriormente, empleamos una biblioteca de optimización para calcular el valor del parámetro óptimo aproximado.
 """
+
+# ╔═╡ 1a333ebc-4b2b-4ce0-bcbb-c930cea30310
+md"""# Ajuste mediante mínimos cuadrados
+
+Consideremos el siguiente ejemplo, donde tenemos datos del crecimiento de un tumor en ratones.
+Los datos son tomados (y más información) se encuentran en:
+Modeling Cancer Growth with Differential Equations de Jue Wang, Department of Mathematics
+Union College, Schenectady, NY 12308, USA.
+
+Para ilustrar el procedimiento, ajustaremos los datos a los siguientes modelos:
+1. Un modelo polinomial de grado uno.
+2. Un modelo polinomial cúbico.
+3. Un modelo de redes neuronales artificiales.
+4. Un modelo de ecuaciones diferenciales (Modelo de von Bertalanffy)."""
 
 # ╔═╡ 348388ef-c252-46f2-bd2c-083dc5eff287
 begin
@@ -106,17 +111,21 @@ begin
 	Datos
 end
 
+# ╔═╡ 3bfc84c5-53a8-4668-a26b-d8dc2a9586c9
+md"""Visualicemos dichos datos."""
+
 # ╔═╡ f83c3daa-84fa-4de6-a124-d9ab9fa3ddd2
 scatter(tiempo,volumen,ls=:dash,label="Volumen",lw=4, xlabel = "Tiempo",yaxis="Volumen")
 
 # ╔═╡ 5713dcac-379f-492c-abbf-a4fc85b28486
 md"""
-# Modelo polinomio grado 1
-El modelo cúbico asumimos que 
-$V(t) \approx a+bt$
-y queremos estimar $a,b,c$ y $d$.
+## Modelo lineal
+Asumamos que el modelo lineal tiene la siguiente forma
 
-Creamos una función que mida la norma del residuo, o sea, el tamaño del desajuste (o tamaño del residuo) del modelo polinomial cúbico con respecto a los datos usando, por ejemplo, mínimos cuadrados, es decir, la norma euclidiana de la diferencia o residuo.
+$V(t) \approx a+bt$
+y queremos estimar los parámetros $a$ y $b$.
+
+Para lograr esto, creamos una función que mida la norma del residuo, es decir, el tamaño del desajuste entre el modelo polinomial cúbico y los datos. Utilizaremos, por ejemplo, la metodología de mínimos cuadrados, que corresponde a la norma euclidiana de la diferencia o residuo.
 """
 
 # ╔═╡ aece21c4-d3d8-49d1-bb47-88dc8e6665fd
@@ -129,9 +138,12 @@ function residuoPL(par,V,tiempo)
 return nres
 end
 
+# ╔═╡ 0aacdaf9-2b76-4ff5-bdf1-7dfcc5b4e03e
+md"""La función de residuo arriba mide el desajuste (o tamaño del residuo) de la simulación del modelo lineal con respecto a los datos usando mínimos cuadrados, es decir, la norma euclidiana de la diferencia o residuo. Asumimos que nuestro modelo de observación mide directamente el tamaño del tumor. Es decir, el desajuste se mide directamente con la diferencia del modelo contra los datos."""
+
 # ╔═╡ 137872c4-e458-4390-a508-fee2cf9571a9
 md"""
-Por ejemplo, el desajuste de usar $a=1$ y $b=2$, es defir, aproximar $V(t)≈1+2t$ es $\approx 424.31$ que es calculado a continuación.
+Por ejemplo, el desajuste de usar $a=1$ y $b=2$, es decir, aproximar $V(t)≈1+2t$ es $\approx 424.31$ que es calculado a continuación.
 """
 
 # ╔═╡ 43890906-cf81-407a-babf-ed26c3a75c68
@@ -152,16 +164,14 @@ rPL(par) = residuoPL(par, volumen, tiempo)
 
 # ╔═╡ cc448211-7845-44ca-a9e5-194e12687c34
 md"""
-Procedemos a realizar la optimización. Usamos el comando optimize.
+Procedemos a realizar la optimización, para esto usamos el comando optimize.
 """
 
 # ╔═╡ 47c62712-d017-40b7-ba13-912edca02775
 oL =Optim.optimize(rPL, [3.0, 5.0], LBFGS())
 
 # ╔═╡ 3902945e-04b5-461c-bdce-53a04131e71f
-md"""
-Podemos obtener información sobre los valor optimo numérico encontrado y los puntos optimo de la siguiente forma. 
-"""
+md"""Podemos obtener información sobre los valores óptimos numéricos encontrados y los puntos óptimos de la siguiente manera."""
 
 # ╔═╡ ee0fb994-572e-47be-93ed-34c356d4bc5c
 oL.minimizer
@@ -169,42 +179,67 @@ oL.minimizer
 # ╔═╡ 97fb6c37-ad40-483e-ae61-63bf583af4db
 oL.minimum
 
+# ╔═╡ f86079ae-3f2c-490a-b500-eeb5029de176
+md"""De esto se tiene que la ecuación lineal óptima es $V(t)= -0.701959 + 0.16774t$.
+
+Después de determinar el valor del parámetro óptimo, podemos presentar el ajuste final de nuestro modelo. Podemos visualizar el ajuste comparándolo con los datos. Para ello, tenemos:"""
+
 # ╔═╡ 5b5e994d-e5dd-419f-b054-a61ca74684db
 begin
 	ts=0:0.1:60
 	oneaux=fill(1,size(ts))
 	
 	VolumenPL=oL.minimizer[1]*oneaux+oL.minimizer[2]*ts
-	plot(ts,VolumenPL,lw=5,label="Lineal optimo")
+	plot(ts,VolumenPL,lw=5,label="Modelo lineal óptimo")
 	scatter!(tiempo,volumen,ls=:dash,label="Volumen",lw=4, xlabel = "Tiempo",yaxis="Volumen",legend=:bottomright)
 end
 
 # ╔═╡ bd1947eb-e1fc-4e48-aef5-d1794c73a0d5
 md"""
-# Modelo polinomio cúbico 
+## Modelo polinomio cúbico 
 
-El modelo cúbico asumimos que 
+Asumamos que el modelo cúbico tiene la siguiente forma
+
 $V(t) \approx a+bt+ct^2+dt^3$
-y queremos estimar $a,b,c$ y $d$.
+y queremos estimar los parámetros $a,b,c$ y $d$.
 
-Creamos una función que mida la norma del residuo, o sea, el tamaño del desajuste (o tamaño del residuo) del modelo polinomial cúbico con respecto a los datos usando, por ejemplo, mínimos cuadrados, es decir, la norma euclidiana de la diferencia o residuo.
+Vamos a crear una función que calcule la norma del residuo, es decir, el tamaño del desajuste del modelo polinomial cúbico con respecto a los datos. Utilizaremos, por ejemplo, la metodología de mínimos cuadrados, que corresponde a la norma euclidiana de la diferencia o residuo.
 """
 
 # ╔═╡ 1a087240-b9e7-4220-bfdd-959ca34ef1ef
 function residuoPC(par,V,t)
   a,b,c,d=par
-  oneaux=fill(1,size(tiempo))
+  oneaux=fill(1,size(t))
   Vmodelo=a*oneaux+b*t+c*t.^2+d*t.^3
   res=V-Vmodelo
   nres=norm(res)
 return nres
 end
 
+# ╔═╡ 114eb703-ca96-4218-9de3-9c13e8aba5a8
+md"""Al igual que en el modelo lineal, la función anterior mide el desajuste de la simulación con respecto a los datos usando mínimos cuadrados.
+
+A continuación, definimos una función que dependa únicamente de la varible de desición de la optimización."""
+
 # ╔═╡ a8327be1-b069-4396-9e95-a4c6d37d0e06
 rPC(par) = residuoPC(par, volumen, tiempo)
 
+# ╔═╡ ad66f3b0-aad8-4ba6-8afc-acfd10e42d59
+md"""Ya con esto podemos realizar la optimización de los parámetros"""
+
 # ╔═╡ bb538b59-5a3c-459c-b469-48e34eeb3ace
 oC=Optim.optimize(rPC, [.1,.01,.01,0.001],NelderMead() )
+
+# ╔═╡ 3fe9240c-f9df-4e1a-b113-e621db75006c
+oC.minimizer
+
+# ╔═╡ 93c01f98-a876-4dc5-b188-39e3dbf42811
+md"""De esto se tiee que la ecuación cúbica que se ajusta a los datos dados es 
+
+$V(t)=-0.814806 + 0.0540683 t + 0.00836915 t^2 -0.000121103 t^3$"""
+
+# ╔═╡ 3224741a-5090-4ef2-8d6c-9fe76835f8f4
+md"""La visualización del ajuste y los datos es la que se muestra a continuación"""
 
 # ╔═╡ 5d056df3-3174-4cd7-b4ea-5f3433e1f95d
 begin
@@ -216,13 +251,13 @@ end
 
 # ╔═╡ 833fe291-990d-43fc-a08b-e0641de29167
 md"""
-# Modelo de redes neuronales artificiales
+## Modelo de redes neuronales artificiales
 
-El modelo cúbico asumimos que 
+En este modelo asumimos que 
 $V(t) \approx a\frac{1}{1+e^{bt+ c}}+d\frac{1}{1+e^{ft+g}}$
 y queremos estimar $a,b,c,d,f$ y $g$.
 
-Creamos una función que mida la norma del residuo, o sea, el tamaño del desajuste (o tamaño del residuo) del modelo polinomial cúbico con respecto a los datos usando, por ejemplo, mínimos cuadrados, es decir, la norma euclidiana de la diferencia o residuo."""
+Creamos una función que calcula la magnitud del residuo, es decir, el grado de desajuste del modelo polinomial cúbico en relación con los datos. Para esto, utilizamos mínimos cuadrados, calculando la norma euclidiana de la diferencia o residuo."""
 
 # ╔═╡ 295597d8-d01b-4deb-bac8-1a70e4b91105
 function residuoNN(par,V,t)
@@ -234,8 +269,16 @@ function residuoNN(par,V,t)
 return nres
 end
 
+# ╔═╡ a517f985-d704-4677-afcf-70fe802a04b1
+md"""Similar a los modelos anteriores, la función previa mide el desajuste de la simulación en comparación con los datos utilizando mínimos cuadrados.
+
+A continuación, definimos una función que depende exclusivamente de la variable de decisión de la optimización."""
+
 # ╔═╡ f01bd89d-311f-4a65-bee5-fd7b45097d92
 rNN(par) = residuoNN(par, volumen, tiempo)
+
+# ╔═╡ 8d7a5fae-a419-4d5d-bf28-84eaefd62238
+md"""Así, optimizando los parámetros se tiene lo siguiente"""
 
 # ╔═╡ beb4cf43-e988-4e5d-be3f-0809328618bd
 oN=Optim.optimize(rNN, [.01,.01,.01,0.001,0.001,0], BFGS())
@@ -247,7 +290,7 @@ oN.minimizer
 md"""
 Esto quiere decir, que el mejor modelo encontrado de redes neuronales artificales es
 
-$V(t) \approx 2.838\frac{1}{1+e^{0.540t+ 26.756}}+7.279\frac{1}{1+e^{-0.195t+ 4.680}}.$
+$V(t) \approx 2.872\frac{1}{1+e^{0.519t+ 25.399}}+7.279\frac{1}{1+e^{-0.195t+ 4.680}}.$
 Como antes, podemos visualizar el ajuste comparandolo con los datos. Para esto tenemos, 
 """
 
@@ -260,12 +303,23 @@ begin
 	scatter!(tiempo,volumen,ls=:dash,label="Volumen",lw=4, xlabel = "Tiempo",yaxis="Volumen",legend=:bottomright)
 end
 
+# ╔═╡ ac5e895b-1c95-498a-bec2-aa22bc1666b4
+md"""
+## Modelo de ecuaciones diferenciales"""
+
 # ╔═╡ c6077f79-36b7-479a-8512-716e8497bd16
 md"""
-# Modelo de ecuaciones diferenciales
-Considere el modelo de ecuaciones diferenciales, 
-$V'= aV^\frac{2}{3}-bV,$
-con $V_0=V(0)$ dado. La variable $V$ representa o aproxima el volumen del tumor en el tiempo $t$.
+### Modelo de von Bertalanffy
+Para ilustrar el procedimiento, ajustaremos los datos a un modelo de ecuaciones diferenciales, el Modelo de von Bertalanffy. Este modelo se utiliza para mostrar el crecimiento de tumores en el cuerpo, donde el crecimiento del tumor se desacelera a medida que se hace más grande.
+
+El modelo es el siguiente:
+
+$V'=aV^{\frac{2}{3}}-bV$
+donde $V$ es el tamaño del tumor en el tiempo $t$, $a$ es la velocidad máxima de crecimiento, y $b$ es la tasa de muerte celular o retroceso del tumor.
+
+Consideremos este modelo con la condición inicial $V_0=V(0)=0.0158$. Recordemos que buscamos hallar los valores óptimos de $a$ y $b$.
+
+Creamos una función para el modelo de Bertalanffy:
 """
 
 # ╔═╡ 8d644869-970c-42f9-a11a-354dd15b2c07
@@ -306,6 +360,11 @@ function residuoBF(par,V,t)
 return nres
 end
 
+# ╔═╡ 28697fcd-fadc-42e7-b9cd-e617db11c4a2
+md"""La función de residuo mencionada anteriormente evalúa el desajuste (o tamaño del residuo) de la simulación de la EDO en relación con los datos utilizando mínimos cuadrados, es decir, la norma euclidiana de la diferencia o residuo. Asumimos que nuestro modelo de observación mide directamente el tamaño del tumor, por lo que el desajuste se cuantifica directamente como la diferencia entre el modelo y los datos.
+
+Por ejemplo, el desajuste al usar $a=1$ y $b=1$ en el modelo es:"""
+
 # ╔═╡ e1967a4c-9006-4c79-b5df-03daabbbcaef
  residuoBF([1 1],volumen,tiempo)
 
@@ -330,10 +389,10 @@ oBF.minimizer
 
 # ╔═╡ 6b320826-efd4-4d43-bc81-9e44e4d14a6a
 md"""
-que da la EDO optima
+De esto se obtiene que la EDO optima
 $V'=  0.396V^\frac{2}{3}- 0.194V.$
 
-Como antes, podemos visualizar el ajuste comparandolo con los datos. Para esto tenemos, 
+Después de calcular el valor del parámetro óptimo, podemos mostrar el ajuste final de nuestro modelo. Como antes, podemos visualizar el ajuste comparándolo con los datos. Para esto tenemos:
 """
 
 # ╔═╡ af838792-96ab-4dec-af24-d00180452ec8
@@ -347,18 +406,103 @@ begin
 	scatter!(tiempo,volumen,ls=:dash,label="Volumen",lw=4, xlabel = "Tiempo",yaxis="Volumen",legend=:bottomright)
 end
 
+# ╔═╡ 559821cf-ab2a-444f-beaa-3f30972ef609
+md"""### Modelo Logistic Growth
+ 
+Teniendo en cuenta los datos sobre el crecimiento de un tumor en ratones, ajustemos dichos datos siguiendo el modelo de crecimiento logístico.
+El modelo es el siguiente:
+
+$$V' = aV\left(1 - \frac{V}{b}\right),$$
+
+este modelo describe el crecimiento de poblaciones bajo ciertas condiciones. $V$ representa la población en el instante $t$, donde $V'$ representa la tasa de cambio de la población con respecto al tiempo. $a$ es la tasa de crecimiento intrínseca de la población y $b$ es la capacidad de carga del entorno, es decir, el máximo tamaño de la población que el entorno puede soportar de manera sostenible. Así, la ecuación describe cómo la tasa de crecimiento de una población cambia a medida que la población se acerca a su capacidad máxima de carga en un entorno dado.
+
+Consideremos este modelo con la condición inicial $V_0 = V(0) = 0.0158$. Recordemos que buscamos hallar los valores óptimos de $a$ y $b$."""
+
+# ╔═╡ 4a80a6f8-3a06-48e5-877f-d2cd4460286a
+modeloLG(V,par,t)=par[1]*V*(1-V/par[2])
+
+# ╔═╡ 56be9865-8637-4065-9407-c33ac78b700c
+md"""Si deseamos encontrar la solución de la ecuación diferencial ordinaria para ciertos valores específicos de los parámetros, empleamos:
+"""
+
+# ╔═╡ 3779e0a8-5667-4b6e-9783-9d88866e2642
+begin
+	tspan₂=(3.26,80)
+	V0₂=0.0158
+	par₂=[1.0,1.0]
+	EDO₂=ODEProblem(modeloLG,V0₂,tspan₂,par₂)
+	V₂=solve(EDO₂)
+	plot(V₂)
+end
+
+# ╔═╡ 3b3ca8f1-65b9-41ff-9ded-f647ffe0dd4c
+md"""La función de residuo mide el desajuste (o tamaño del residuo) de la simulación de la ecuación diferencial ordinaria con respecto a los datos usando mínimos cuadrados, es decir, la norma euclidiana de la diferencia o residuo."""
+
+# ╔═╡ 585c0202-92d6-4ff2-b35e-43c5d9732912
+function residuoLG(par₂,V₂,t₂)
+   	tspan₂=(3.26,80)
+  	V0₂=0.0158
+ 	EDO₂=ODEProblem(modeloLG,V0₂,tspan₂,par₂)
+  	VSOL₂=solve(EDO₂)
+  	VI₂=[VSOL₂(t) for t in tiempo]
+  	res₂=V₂-VI₂
+  	nres₂=norm(res₂)
+	return nres₂
+end
+
+# ╔═╡ d4dbcc70-2052-40f7-b152-a9c1c0a39eed
+md"""Por ejemplo, el desajuste de usar $a=1$ y $b=1$ en el modelo es de:"""
+
+# ╔═╡ e7e03c34-35a1-45f1-bc9d-4afead70f60f
+residuoLG([1 1],volumen,tiempo)
+
+# ╔═╡ 7c28ae91-1153-4c68-81a8-1c2a393a5f7f
+md"""Ahora, usemos optimización para calcular el valor del parámetro óptimo aproximado. Para esto creamos una función solo del parámetro,"""
+
+# ╔═╡ 05e22346-e574-4d73-9fe6-3e0eed38f3c7
+rLG(par₂) = residuoLG(par₂, volumen, tiempo)
+
+# ╔═╡ a95afc0c-73eb-4532-8839-94672d5dbf7b
+md"""y, optimizamos su valor"""
+
+# ╔═╡ 4ad18c52-bbcd-4352-bb20-c990111c56f7
+oLG=Optim.optimize(rLG, [.01,.01], NelderMead())
+
+# ╔═╡ 217be13c-1f9e-489d-85c6-47981a183dd0
+oLG.minimizer
+
+# ╔═╡ 1e39d2d8-ba2f-4d13-bcb0-e5ffa60fd137
+md"""Obteniendo así que los valores optimos para $a$ y $b$ son $0.297$ y $7.012$, respectivamente. 
+
+Luego 
+$V'= 0.3V\left(1-\frac{V}{7.01}\right).$
+Después de calcular el valor del parámetro óptimo podemos mostrar el ajuste final de nuestro modelo. """
+
+# ╔═╡ 4a19d88f-b44d-462c-9bfd-e75ef06b1f6d
+begin
+	oLGm=oLG.minimizer
+	EDOoptima₂=ODEProblem(modeloLG,V0₂,tspan,oLGm)
+	VEDOoptima₂=solve(EDOoptima₂)
+	plot(VEDOoptima₂,lw=5,label="EDO optima")
+	scatter!(tiempo,volumen,ls=:dash,label="Volumen",lw=4, xlabel = "Tiempo",yaxis="Volumen",legend=:bottomright)
+end
+
 # ╔═╡ 0c176410-dcb5-42d0-80b0-904e9b5645ab
 md"""
 # Referencias
+[1] Driscoll, T. A., & Braun, R. J. (n.d.). Revisión del libro de texto *Fundamentals of Numerical Computation*. Adaptado a Julia. Recuperado de https://tobydriscoll.net/fnc-julia/frontmatter.html
 
-*   revision of the textbook Fundamentals of Numerical Computation by Tobin A. Driscoll and Richard J. Braun. The book was originally written for MATLAB, but this resource has been adapted to suit Julia. https://tobydriscoll.net/fnc-julia/frontmatter.html
-*   Sullivan, Eric. Numerical Methods: An Inquiry-Based Approach With Python. 2020.
-*   Bulirsch, Roland, Josef Stoer, and J. Stoer. Introduction to numerical analysis. Vol. 3. Heidelberg: Springer, 2002.
-*  Stewart, Gilbert W. Afternotes on numerical analysis. Society for Industrial and Applied Mathematics, 1996.
-*  Quarteroni, Alfio, Fausto Saleri, and Paola Gervasio. Scientific computing with MATLAB and Octave. Vol. 3. Berlin: Springer, 2006.
-* Machine Learning and Data Mining
-Lecture Notes, http://www.dgp.toronto.edu/~hertzman/411notes.pdf
-* Deep Learning, https://www.deeplearningbook.org/lecture_slides.html"""
+[2] Sullivan, E. (2020). *Numerical Methods: An Inquiry-Based Approach With Python*.
+
+[3] Bulirsch, R., Stoer, J., & Stoer, J. (2002). *Introduction to numerical analysis* (Vol. 3). Heidelberg: Springer.
+
+[4] Stewart, G. W. (1996). *Afternotes on numerical analysis*. Society for Industrial and Applied Mathematics.
+
+[5] Quarteroni, A., Saleri, F., & Gervasio, P. (2006). *Scientific computing with MATLAB and Octave* (Vol. 3). Berlín: Springer.
+
+[6] Hertzmann, A. (n.d.). *Machine Learning and Data Mining Lecture Notes*. Recuperado de http://www.dgp.toronto.edu/~hertzman/411notes.pdf
+
+[7] Goodfellow, I., Bengio, Y., & Courville, A. (n.d.). *Deep Learning*. Recuperado de https://www.deeplearningbook.org/lecture_slides.html"""
 
 # ╔═╡ 7eda9076-4ae4-4488-9cf9-beac334a3ff2
 md"""
@@ -2566,39 +2710,52 @@ version = "1.4.1+1"
 # ╟─228e6502-1dad-447b-8684-2bf4115bb6cf
 # ╠═1f07472c-99b1-448a-9fff-6d21c3a3653c
 # ╟─c66ecc8a-9dd4-4244-ada6-48e9ad85c305
+# ╟─1a333ebc-4b2b-4ce0-bcbb-c930cea30310
 # ╟─348388ef-c252-46f2-bd2c-083dc5eff287
-# ╠═f83c3daa-84fa-4de6-a124-d9ab9fa3ddd2
+# ╟─3bfc84c5-53a8-4668-a26b-d8dc2a9586c9
+# ╟─f83c3daa-84fa-4de6-a124-d9ab9fa3ddd2
 # ╟─5713dcac-379f-492c-abbf-a4fc85b28486
 # ╠═aece21c4-d3d8-49d1-bb47-88dc8e6665fd
+# ╟─0aacdaf9-2b76-4ff5-bdf1-7dfcc5b4e03e
 # ╟─137872c4-e458-4390-a508-fee2cf9571a9
 # ╠═43890906-cf81-407a-babf-ed26c3a75c68
 # ╟─e5ceca83-d9bd-4ed8-80d1-06ec7d218114
-# ╠═667e93d4-c6cc-453d-8897-a7f7cf2d2849
+# ╟─667e93d4-c6cc-453d-8897-a7f7cf2d2849
 # ╠═f53d8568-6914-4d0b-8cc9-c3ac8c817889
 # ╟─cc448211-7845-44ca-a9e5-194e12687c34
 # ╠═47c62712-d017-40b7-ba13-912edca02775
 # ╟─3902945e-04b5-461c-bdce-53a04131e71f
 # ╠═ee0fb994-572e-47be-93ed-34c356d4bc5c
 # ╠═97fb6c37-ad40-483e-ae61-63bf583af4db
-# ╠═5b5e994d-e5dd-419f-b054-a61ca74684db
+# ╟─f86079ae-3f2c-490a-b500-eeb5029de176
+# ╟─5b5e994d-e5dd-419f-b054-a61ca74684db
 # ╟─bd1947eb-e1fc-4e48-aef5-d1794c73a0d5
 # ╠═1a087240-b9e7-4220-bfdd-959ca34ef1ef
+# ╟─114eb703-ca96-4218-9de3-9c13e8aba5a8
 # ╠═a8327be1-b069-4396-9e95-a4c6d37d0e06
+# ╟─ad66f3b0-aad8-4ba6-8afc-acfd10e42d59
 # ╠═bb538b59-5a3c-459c-b469-48e34eeb3ace
-# ╠═5d056df3-3174-4cd7-b4ea-5f3433e1f95d
+# ╠═3fe9240c-f9df-4e1a-b113-e621db75006c
+# ╟─93c01f98-a876-4dc5-b188-39e3dbf42811
+# ╟─3224741a-5090-4ef2-8d6c-9fe76835f8f4
+# ╟─5d056df3-3174-4cd7-b4ea-5f3433e1f95d
 # ╟─833fe291-990d-43fc-a08b-e0641de29167
 # ╠═295597d8-d01b-4deb-bac8-1a70e4b91105
+# ╟─a517f985-d704-4677-afcf-70fe802a04b1
 # ╠═f01bd89d-311f-4a65-bee5-fd7b45097d92
+# ╟─8d7a5fae-a419-4d5d-bf28-84eaefd62238
 # ╠═beb4cf43-e988-4e5d-be3f-0809328618bd
 # ╠═80724d64-4951-4bd9-8c00-dc411af5bd09
 # ╟─4daea691-7444-4141-a2f1-86880d6b80d1
-# ╠═96fc3a1f-2344-42cd-aadf-69c9e7f26e5d
+# ╟─96fc3a1f-2344-42cd-aadf-69c9e7f26e5d
+# ╟─ac5e895b-1c95-498a-bec2-aa22bc1666b4
 # ╟─c6077f79-36b7-479a-8512-716e8497bd16
 # ╠═8d644869-970c-42f9-a11a-354dd15b2c07
 # ╟─c73eb0ee-4ce6-4cf3-81ff-b6cffb439739
-# ╠═b738ec4c-cb49-4fea-b38c-93932b2b8d62
+# ╟─b738ec4c-cb49-4fea-b38c-93932b2b8d62
 # ╟─45aae0fb-5a26-4f19-9ae9-b8c4fc8e1956
 # ╠═ee98ae6f-374b-4d40-9182-83cfbb02bb4b
+# ╟─28697fcd-fadc-42e7-b9cd-e617db11c4a2
 # ╠═e1967a4c-9006-4c79-b5df-03daabbbcaef
 # ╟─33542bf6-226f-465b-a9dc-e2f4beb42585
 # ╠═27909e0c-2647-4301-9ab4-f484effe72f3
@@ -2606,7 +2763,22 @@ version = "1.4.1+1"
 # ╠═ec055d40-e3f1-42b3-9845-57ee2eccd838
 # ╠═ccb2780e-5d68-4260-a483-159e1264a5d9
 # ╟─6b320826-efd4-4d43-bc81-9e44e4d14a6a
-# ╠═af838792-96ab-4dec-af24-d00180452ec8
+# ╟─af838792-96ab-4dec-af24-d00180452ec8
+# ╟─559821cf-ab2a-444f-beaa-3f30972ef609
+# ╠═4a80a6f8-3a06-48e5-877f-d2cd4460286a
+# ╟─56be9865-8637-4065-9407-c33ac78b700c
+# ╟─3779e0a8-5667-4b6e-9783-9d88866e2642
+# ╟─3b3ca8f1-65b9-41ff-9ded-f647ffe0dd4c
+# ╠═585c0202-92d6-4ff2-b35e-43c5d9732912
+# ╟─d4dbcc70-2052-40f7-b152-a9c1c0a39eed
+# ╠═e7e03c34-35a1-45f1-bc9d-4afead70f60f
+# ╟─7c28ae91-1153-4c68-81a8-1c2a393a5f7f
+# ╠═05e22346-e574-4d73-9fe6-3e0eed38f3c7
+# ╟─a95afc0c-73eb-4532-8839-94672d5dbf7b
+# ╠═4ad18c52-bbcd-4352-bb20-c990111c56f7
+# ╠═217be13c-1f9e-489d-85c6-47981a183dd0
+# ╟─1e39d2d8-ba2f-4d13-bcb0-e5ffa60fd137
+# ╟─4a19d88f-b44d-462c-9bfd-e75ef06b1f6d
 # ╟─0c176410-dcb5-42d0-80b0-904e9b5645ab
 # ╟─7eda9076-4ae4-4488-9cf9-beac334a3ff2
 # ╟─00000000-0000-0000-0000-000000000001
