@@ -28,16 +28,12 @@ Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo.
 md"""Usaremos las siguientes librerías:"""
 
 # ╔═╡ ca3c1725-cc36-4a4c-bc6d-850751eb2eab
-md"""# Introducción"""
+md"""# Comparación asintótica de sucesiones"""
 
 # ╔═╡ 39160d5c-babb-411d-b8ab-070879e39b17
-md"""Considere $\{x_n\}$ y $\{\alpha_n\}$ tale que $x_n\to 0$ and $\alpha_n\to 0$.
+md"""Consideremos las sucesiones ${x_n}$ y ${\alpha_n}$ tales que $x_n \to 0$ y $\alpha_n \to 0$.
 
-Decimos que $x_n=\mathcal{O}(\alpha_n)$ si existe $N_0$ y $C$ tal que $|{x_n}| \leq |{\alpha_n}|$ para todo $n\geq N_0$.
-
-Quiere decir que la sucesión   $\{\frac{x_n}{\alpha_n}\}$ permanece acotada (cuando $\alpha_n\not=0$). También que   $\{x_n\}$ converge a  $0$ al menos tan rápido como  $\{\alpha_n\}$.
-
-Adicionalmente, $x_n=\mathcal{o}(\alpha_n)$, significa  que $\displaystyle \lim_{n\to\infty} \frac{x_n}{\alpha_n}=0$. Quiere decir que   $\{x_n\}$  converge a  $0$    más rápido que  $\{\alpha_n\}$.
+Decimos que $x_n = \mathcal{O}(\alpha_n)$ si existen $N_0$ y $C$ tales que $|x_n| \leq C|\alpha_n|$ para todo $n \geq N_0$. Esto significa que la sucesión $\{\frac{x_n}{\alpha_n}\}$ permanece acotada (cuando $\alpha_n \ne 0$), y que ${x_n}$ converge a $0$ al menos tan rápido como ${\alpha_n}$. Adicionalmente, $x_n = \mathcal{o}(\alpha_n)$ significa que $\lim_{n \to \infty} \frac{x_n}{\alpha_n} = 0$, lo que indica que ${x_n}$ converge a $0$ más rápido que ${\alpha_n}$.
 """
 
 # ╔═╡ 0c35c99a-9288-4a7b-ac1a-cfb7d1123540
@@ -57,7 +53,7 @@ end
 # ╔═╡ 8fe9609f-e671-4382-80de-1b72cc5a6cc0
 md"""**Ejemplo:** 
 
-$\frac{1}{n\log(n)}=\mathcal{o}\left(\frac{1}{n}\right).$ Esto puede ser demostrado de forma simple. Podemos ilustrar esta afirmación con una gráfica de de los los cocientes de los valores de las dos sucesiones."""
+$\frac{1}{n\log(n)}=\mathcal{O}\left(\frac{1}{n}\right).$ Esto se puede demostrar de manera sencilla. Podemos ilustrar esta afirmación mediante un gráfico que muestre los cocientes entre los valores de las dos sucesiones."""
 
 # ╔═╡ dc5a1c2d-a048-44be-9a78-3d072f9fb4ee
 begin
@@ -70,7 +66,7 @@ end
 # ╔═╡ 5136a89e-a92f-430f-b731-87507e267367
 md"""**Ejemplo:** 
 
-$e^{-n}=\mathcal{o}\left(\frac{1}{n^k}\right)\text{ para }k=1,2,\dots.$ Esto puede ser demostrado de forma simple. Podemos ilustrar esta afirmación con una gráfica de de los los cocientes de los valores de las dos sucesiones."""
+$e^{-n}=\mathcal{O}\left(\frac{1}{n^k}\right)\text{ para }k=1,2,\dots.$ Esta afirmación puede ser probada de forma directa. Para ello, basta con representar gráficamente los cocientes entre los valores de ambas sucesiones."""
 
 # ╔═╡ 58a9d8a7-3320-48ba-940b-3fbfc12f339a
 begin
@@ -83,7 +79,7 @@ end
 # ╔═╡ 62234680-edd8-4a94-b11c-037dd9ad2f73
 md"""**Ejemplo:**
 
-$\sin(x)=x-\frac{x^3}{6}+\mathcal{O}(x^5)\text{ cuando }x\to0$ (puede pensar que se coman sucesiones $x_n\to 0$. Esto puede ser verificado fácilemente. Para una ilustración pomdemos gráficar la funcion $\sin(x)$ junto a la función $\frac{x^3}{6}-\mathcal{O}(x^5)$ la función $\sin(x)=x-\frac{x^3}{6}+\mathcal{O}(x^5)$ junto con la función $x^5/5!$."""
+$\sin(x)=x-\frac{x^3}{6}+\mathcal{O}(x^5)\text{ cuando }x\to0$ (puede pensar que se toman sucesiones $x_n\to 0$. Para verificar esta afirmación, se puede graficar la función $\sin(x)$ junto con la aproximación $x - \frac{x^3}{6}$. Además, incluir la función $\frac{x^5}{5!}$ en la gráfica permite visualizar la corrección adicional y apreciar cómo la diferencia entre $\sin(x)$ y la aproximación se reduce conforme $x$ se acerca a cero. """
 
 # ╔═╡ e27c6221-5911-4ab6-b1ed-a7eddfc26963
 begin
@@ -104,7 +100,10 @@ begin
 end
 
 # ╔═╡ d4b500a4-a4bc-43f7-8851-ad206771bc35
-md"""Decimos que $f(x)=\mathcal{O}(g(x))$ cuando $x\to \infty $ si para $x$ grande tenemos $|f(x)|\leq C |g(x)|$ for some positive constant $C$. De forma similar decimos que  $f(x)=\mathcal{O}(g(x))$ cuando $x\to a $ si existen $C$ y $r$ tales que $|f(x)| \leq C|g(x)|$ para todo $x$ con $|x-a|<r$. Se denota $|f(x)|\preceq |g(x)|$ para $x\approx a$."""
+md"""# Comparación asintótica de funciones
+Decimos que $f(x) = \mathcal{O}(g(x))$ cuando $x \to \infty$ si existe una constante positiva $C$ tal que, para valores grandes de $x$, se cumple $|f(x)| \leq C |g(x)|$. 
+
+De manera similar, decimos que $f(x) = \mathcal{O}(g(x))$ cuando $x \to a$ si existen una constante $C$ y un radio $r$ tales que $|f(x)| \leq C |g(x)|$ para todo $x$ con $|x - a| < r$. Se denota $|f(x)| \preceq |g(x)|$ cuando $x \approx a$."""
 
 # ╔═╡ 46fdee32-ae0c-4f90-bb60-d787c901ecc6
 md"""**Ejemplo:**
@@ -121,14 +120,14 @@ begin
 end
 
 # ╔═╡ 631eef63-4ba2-47c5-a3c4-e6797fd4984c
-md"""Decimos que $f(x)=\mathcal{o}(g(x))$ cuando $x\to a$ si $f(x)/g(x)\to 0$. Recuerede que $f(x)\to 0$ y $g(x)\to 0$. """
+md"""Decimos que $f(x)=\mathcal{O}(g(x))$ cuando $x\to a$ si $\displaystyle\lim_{x\to a}\dfrac{f(x)}{g(x)}\to 0$. Recuerde que $f(x)\to 0$ y $g(x)\to 0$. """
 
 # ╔═╡ 7bdc05b3-85d1-4657-b64e-277ad88f1a16
 md"""# Velocidad de convergencia
 
-Considere ${x_n}$ una sucesion con limite $a$, es decir, $x_n\to a$. 
+Considere la sucesión $\{x_n\}$ con límite $a$, es decir, $x_n \to a$.
 
-La convergencia es (por lo menos) lineal si existen $0< \alpha <1$  y $N$ tal  que ${|x_{n+1}-a|}\leq \alpha {|x_{n+1}-a|}$ para todo $n\geq N$. Informalmente hablando quiere decir que "necesitamos hacer (en promedio) siempre el mismo esfuerzo para ganar una determinada cantidad de decimales correctos"."""
+La convergencia se considera (al menos) lineal si existen $0 < \alpha < 1$ y $N$ tales que $|x_{n+1} - a| \leq \alpha |x_n - a|$ para todo $n \geq N$. En términos informales, esto significa que "se requiere el mismo esfuerzo (en promedio) para obtener una cantidad fija de decimales correctos en cada paso adicional de la sucesión"."""
 
 # ╔═╡ 0627a96c-6122-4672-8ab0-1dd5053eb6e2
 md"""**Ejemplo:** 
@@ -150,16 +149,26 @@ begin
 	end
 end
 
+# ╔═╡ 0156d271-aec9-4e66-8dce-d8d845d6506a
+md"""Visualicemos esto:"""
+
 # ╔═╡ 5a8fc633-be24-4e87-a9dd-ffdc66f8e8bb
 scatter(1:n₇,-log.(x₇), label="-log(x)")
 
+# ╔═╡ f56dc660-814f-4434-9de7-e14f039330aa
+md"""# Convergencia superlineal"""
+
 # ╔═╡ 7a8bcd91-f8ab-466b-a9e4-f4f51dc81a36
-md"""La convergencia es superlineal si existe $\epsilon_n\to 0$ tal que $|x_{n+1}-a| \leq \epsilon_n |x_n-a|$. Intuitivamente es cada vez es más fácil (menos iteraciones) ganar cierta cantidad de decimales correctos!"""
+md"""La convergencia es superlineal si existe $\epsilon_n\to 0$ tal que $|x_{n+1}-a| \leq \epsilon_n |x_n-a|$ para $n$ suficientemente grande. 
+
+Esto es equivalente a considerar
+
+$\lim_{n\to \infty} \frac{\mid x_{n+1}-a\mid}{\mid x_n-a\mid}=0$"""
 
 # ╔═╡ c153f605-f972-4d62-8498-494d43533783
 md"""**Ejemplo:**
 
-$x_n= 0.5^{n^2}.$ Podemos estimar los valores $\epsilon_n$ and ilustar este caso. """
+$x_n= 0.5^{n^2}.$ Podemos estimar los valores $\epsilon_n$ e ilustar este caso. """
 
 # ╔═╡ ceafae61-f471-424f-ba96-7a077d542fb1
 begin
@@ -178,10 +187,12 @@ end
 scatter(log.(x₈))
 
 # ╔═╡ 5e640ff4-e1fc-4e72-afca-42d34644815b
-md"""La convergencia es (al menos) cuadrática si existen $C$ y $N$ tales que para $n\geq N$ tenemos $|x_{n+1}-a|\leq C|x_n-a|^2$. Intuitivamente podemos decir que  asintóticamente, necesitamos hacer (en promedio) siempre el mismo esfuerzo para duplicar el número de  decimales correctos!!!"""
+md"""
+# Convergencia de orden $\alpha$
+La convergencia es (al menos) cuadrática si existen $C$ y $N$ tales que, para $n \geq N$, se cumple $|x_{n+1} - a| \leq C |x_n - a|^2$. Intuitivamente, esto significa que asintóticamente se requiere el mismo esfuerzo (en promedio) para duplicar el número de decimales correctos.
 
-# ╔═╡ b994d7ae-922e-4af7-94e0-6075cbf85b9a
-md"""En general la convergencia es de orden $\alpha$ si para $n$ grande tenemos  $|x_{n+1}-a|\leq C|x_n-a|^\alpha$."""
+En general, decimos que la convergencia es de orden $\alpha$ si existen $C$ y $N$ tales que, para $n \geq N$, se cumple $|x_{n+1} - a| \leq C |x_n - a|^\alpha$.
+"""
 
 # ╔═╡ bbf686cf-5565-42e1-9258-71c7f9571b06
 md"""**Ejemplo:**
@@ -198,30 +209,46 @@ end
 # ╔═╡ 1f40a7a2-0bb0-4c79-90bf-43797e6afe94
 md"""# Expansión de Taylor
 
-Suponga que $f\in C^n([a,b])$ y que $f^{n+1}$ existe en $(a,b)$. Entonces para todo $c,x\in[a,b]$ existe $\xi$ entre $c$ y $x$ tal que 
+Suponga que $f \in C^n([a,b])$ y que $f^{(n+1)}$ existe en $(a,b)$. Entonces, para todo $c, x \in [a,b]$, existe un $\xi$ entre $c$ y $x$ tal que
 
-$f(x)=f(c)+f'(c)(x-c)+\\+\frac{1}{2} f''(c)(x-c)^2+\cdots+\frac{1}{n!}f^{(n)}(c)(x-c)^n+E_n(x)$
-donde 
+$f(x) = f(c) + f'(c)(x - c) + \frac{1}{2} f''(c)(x - c)^2 + \cdots + \frac{1}{n!} f^{(n)}(c)(x - c)^n + E_n(x),$
 
-$E_n(x)=\frac{1}{(n+1)!}f^{(n+1)}(\zeta)(x-c)^{n+1}.$
-Suponga que $f\in C^{n+1}([a,b])$. Entonces para todo $c,x\in[a,b]$ vale 
-
-$f(x)=f(c)+f'(c)(x-c)+\\+\frac{1}{2} f''(c)(x-c)^2+\cdots+\frac{1}{n!}f^{(n)}(c)(x-c)^n+R_n(x)$
 donde
 
-$R_n(x)=\frac{1}{n!}\int_c^x f^{(n+1)}(t)(x-t)^ndt.$"""
+$E_n(x) = \frac{1}{(n+1)!} f^{(n+1)}(\xi) (x - c)^{n+1}.$
+
+Suponga que $f \in C^{n+1}([a,b])$. Entonces, para todo $c, x \in [a,b]$, se cumple
+
+$f(x) = f(c) + f'(c)(x - c) + \frac{1}{2} f''(c)(x - c)^2 + \cdots + \frac{1}{n!} f^{(n)}(c)(x - c)^n + R_n(x),$
+
+donde
+
+$R_n(x) = \frac{1}{n!} \int_c^x f^{(n+1)}(t) (x - t)^n \, dt.$
+"""
 
 # ╔═╡ cf98e3f6-a1c8-41a7-89d4-b13c65d2e729
-md"""Usamos el paquete [TaylorSerires](https://juliadiff.org/TaylorSeries.jl/v0.3/userguide/)."""
+md"""Usamos la librería [TaylorSerires](https://juliadiff.org/TaylorSeries.jl/v0.3/userguide/)."""
+
+# ╔═╡ 66413546-74bf-4789-a53c-d7c41d4b2eab
+md"""Con la siguiente función podemos hallar una representación del polinomio de Taylor alrededor del punto 0 con los coeficientes $[1,2,3]$ para los términos $1, x y x^2$, respectivamente, y el término $\mathcal{O}$ indica los términos de orden superior que no están explicitados en la expansión."""
 
 # ╔═╡ bac8d7b8-f82e-4f68-8d93-3cf3982a647f
 Taylor1([1,2,3])
 
+# ╔═╡ 3d72ec1d-bdd8-4d77-aa08-1cf20d349073
+md"""La función $\texttt{affine(a)}$ genera un polinomio de Taylor de orden 5 cuyo término constante es $a$."""
+
 # ╔═╡ 779f3557-6138-41ee-ac19-6b031b995503
 affine(a) = a + Taylor1(typeof(a),5)  ## a + taylor-polynomial of order 5
 
+# ╔═╡ 099aeb83-65a1-4b26-a8f4-238446ded7db
+md"""Un ejemplo de esto es"""
+
 # ╔═╡ 9a0b0936-ed6a-4fcf-8e79-5f776908aa7c
-t=affine(0.0)
+t=affine(0)
+
+# ╔═╡ 6e0cd22b-c079-4eda-9048-47ef3ec3646a
+md"""Realizando diversos ejemplos con $t$ se tiene:"""
 
 # ╔═╡ 08c2afdd-612b-4894-ab32-346d1466e450
 sin(t)-t
@@ -238,8 +265,14 @@ cos(sin(1/(1+t^2)))
 # ╔═╡ f3419bcf-e74c-4bf7-8756-7ad13bbd308c
 (1+t)^sin(t)
 
+# ╔═╡ 19b63882-8944-48b4-a1eb-596600be4d1a
+md"""Ahora, consideremos las siguientes variables representadas en expansión de Taylor"""
+
 # ╔═╡ d5685d0e-ff7b-4c1b-8ea6-d5e2afc11eea
 x, y = set_variables("x y")
+
+# ╔═╡ 5c1fa4fb-8c66-40b6-a9dc-c779af541687
+md"""Podemos hacer operaciones con ellas, por ejemplo:"""
 
 # ╔═╡ 1fd828be-d0e0-4e4f-be83-6055c8d94c37
 sin(x+cos(x+y))
@@ -1396,26 +1429,33 @@ version = "1.4.1+1"
 # ╟─7bdc05b3-85d1-4657-b64e-277ad88f1a16
 # ╟─0627a96c-6122-4672-8ab0-1dd5053eb6e2
 # ╟─8b26e7de-f070-4132-8764-8be67a9f6937
+# ╟─0156d271-aec9-4e66-8dce-d8d845d6506a
 # ╟─5a8fc633-be24-4e87-a9dd-ffdc66f8e8bb
+# ╟─f56dc660-814f-4434-9de7-e14f039330aa
 # ╟─7a8bcd91-f8ab-466b-a9e4-f4f51dc81a36
 # ╟─c153f605-f972-4d62-8498-494d43533783
 # ╟─ceafae61-f471-424f-ba96-7a077d542fb1
-# ╠═cac9f2af-6990-4c1b-84b0-1b2f6b7a1d43
+# ╟─cac9f2af-6990-4c1b-84b0-1b2f6b7a1d43
 # ╟─5e640ff4-e1fc-4e72-afca-42d34644815b
-# ╟─b994d7ae-922e-4af7-94e0-6075cbf85b9a
 # ╟─bbf686cf-5565-42e1-9258-71c7f9571b06
 # ╟─f5515b87-1e55-4ade-a851-99e03662b936
 # ╟─1f40a7a2-0bb0-4c79-90bf-43797e6afe94
 # ╟─cf98e3f6-a1c8-41a7-89d4-b13c65d2e729
+# ╟─66413546-74bf-4789-a53c-d7c41d4b2eab
 # ╠═bac8d7b8-f82e-4f68-8d93-3cf3982a647f
+# ╟─3d72ec1d-bdd8-4d77-aa08-1cf20d349073
 # ╠═779f3557-6138-41ee-ac19-6b031b995503
+# ╟─099aeb83-65a1-4b26-a8f4-238446ded7db
 # ╠═9a0b0936-ed6a-4fcf-8e79-5f776908aa7c
+# ╟─6e0cd22b-c079-4eda-9048-47ef3ec3646a
 # ╠═08c2afdd-612b-4894-ab32-346d1466e450
 # ╠═30f7b933-64f1-4374-9b21-bd3a3c431b59
 # ╠═7034aac1-3c8e-4684-b74a-43096b359b71
 # ╠═4d2799bf-0bd8-49d6-a881-53193817c394
 # ╠═f3419bcf-e74c-4bf7-8756-7ad13bbd308c
+# ╟─19b63882-8944-48b4-a1eb-596600be4d1a
 # ╠═d5685d0e-ff7b-4c1b-8ea6-d5e2afc11eea
+# ╟─5c1fa4fb-8c66-40b6-a9dc-c779af541687
 # ╠═1fd828be-d0e0-4e4f-be83-6055c8d94c37
 # ╟─535cf94d-d366-4e7f-9173-b75808bf1de0
 # ╟─00000000-0000-0000-0000-000000000001

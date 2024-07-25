@@ -115,6 +115,21 @@ header-includes: |
 <hr>
 
 <div class="button-container">
+  <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/ComparacionAsintotica/" class="button">Comparación asintótica</a>
+</div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>El cuaderno comienza definiendo los conceptos de orden asintótico para sucesiones, como \(x_n = \mathcal{O}(\alpha_n)\) y \(x_n = \mathcal{o}(\alpha_n)\), que indican cómo las sucesiones \(x_n\) y \(\alpha_n\) convergen hacia cero en comparación. Proporciona ejemplos gráficos para ilustrar estas comparaciones, como \(\frac{n+1}{n^2}\) en relación con \(\frac{1}{n}\), y \(\frac{1}{n \log(n)}\) también en relación con \(\frac{1}{n}\), entre otros. El cuaderno también explora la velocidad de convergencia, describiendo la convergencia lineal y superlineal con ejemplos como \(x_n = 0.5^n\) y \(x_n = 0.5^{n^2}\). Además, aborda la convergencia de orden y cómo se puede demostrar mediante gráficos, como el caso de \(x_n = 0.5^{2^n}\).</p>
+        <p>Finalmente, se introduce la expansión de Taylor, explicando cómo aproximar funciones mediante polinomios de Taylor y su error asociado. El cuaderno utiliza la librería `TaylorSeries` para generar y trabajar con estos polinomios. </p>
+      </div>
+    </div>
+  </div>
+
+<hr>
+
+<div class="button-container">
   <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/Ajuste/" class="button">Ajuste de parámetros</a>
 </div>
 
