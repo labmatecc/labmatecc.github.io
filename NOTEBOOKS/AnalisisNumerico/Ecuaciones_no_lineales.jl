@@ -33,18 +33,60 @@ Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo.
 # ╔═╡ 89fa214c-29e3-4b6c-be2a-27dea6108a7c
 md"""Usaremos las siguientes librerías:"""
 
+# ╔═╡ f39cdf3d-4df8-4b5f-a8aa-993959e8b3a7
+md"""# Introducción
+Dada una función $f:\mathbb{R}\to\mathbb{R}$, las raíces de la función 
+$f(x)$ son los valores de $x$ para los cuales $f(x)=0$.
+
+Existen varios métodos numéricos para encontrar estas raíces, cada uno con sus propias características, ventajas y desventajas. Entre los métodos más conocidos y utilizados se encuentran el método de bisección, el método de Newton, el método de la secante y el método del punto fijo, lo cuales se abordarán en este cuaderno."""
+
+# ╔═╡ 04659b96-16eb-44a2-a410-b2f784941b73
+md"""# Métodos para ecuaciones no lineales"""
+
 # ╔═╡ ec765514-563e-4745-8728-4647b0102c64
-md"""# Bisección"""
+md"""## Método de bisección
+
+Si $f$ es una función continua en el intervalo $[a, b]$ y se cumple que $f(a)f(b) < 0$, entonces debe existir al menos un punto donde $f$ se anule en el intervalo $(a, b)$. Esto es porque $f(a)f(b) < 0$ indica que la función cambia de signo dentro del intervalo $[a, b]$, garantizando al menos una raíz. Esto es consecuencia del teorema del valor intermedio para funciones continuas, que afirma que si $f$ es continua en $[a, b]$ y se cumple la desigualdad $f(a) < y < f(b)$, entonces existe algún $x \in (a, b)$ tal que $f(x) = y$.
+
+El método de bisección se basa en este principio de la siguiente manera: si $f(a)f(b) < 0$, se calcula el punto medio $c = \frac{a+b}{2}$ y se verifica si $f(a)f(c) < 0$. Si es así, entonces la función $f$ tiene una raíz en $[a, c]$. Luego, se redefine $c$ como $b$ y se repite el proceso con el nuevo intervalo $[a, b]$, cuyo tamaño es la mitad del intervalo original.
+"""
+
+# ╔═╡ 9397a936-09f3-4a98-9b3b-45504e8c9450
+md"""El algoritmo de bisección, ver [1], se puede escribir de la siguiente manera:"""
+
+# ╔═╡ 7b0c3510-cc80-4db7-97cd-ecef42d80ae8
+md"""**ALGORITMO de Bisección**:
+
+1. **input:** $a, b, M, \delta, \epsilon$
+2.   $\hspace{0.5cm}u= f(a)$
+3.   $\hspace{0.5cm}v= f(b)$
+4.   $\hspace{0.5cm}e=b-a$
+5.   $\hspace{0.5cm}$**if** $\text{sig}(u)\neq\text{sig}(v)$
+6.   $\hspace{1cm}$**for** $k=1,2,\cdots, M$ **do**
+7.   $\hspace{1.5cm}e=e/2$
+8.   $\hspace{1.5cm}c=a+e$
+9.   $\hspace{1.5cm}w=f(c)$
+10.   $\hspace{1.5cm}$**if** $|e|<\delta$ o $|w|<\epsilon$
+11.   $\hspace{2cm}$**stop**
+12.   $\hspace{1.5cm}$**if** $\text{sig}(w)\neq\text{sig}(u)$ **then**
+13.   $\hspace{2cm} b=c, v=w$
+14.   $\hspace{1.5cm}$ **else**
+15.   $\hspace{2cm} a=c, u=w$ 
+16.   $\hspace{1.5cm}$ **end if**
+17.   $\hspace{1cm}$ **end for**
+17.   $\hspace{0.5cm}$ **end if**
+18.   **output:** $a,b,c,e,w,k$
+"""
 
 # ╔═╡ 228d61ce-1c20-4ede-be3a-805dc1279f06
-md"""Presentaremos una implementación del pseudocódigo de bisección en el texto guía.  En particular resolvemos la ecuación $\exp(x)-\sin(x)=0$."""
+md"""Presentaremos una implementación del pseudocódigo de bisección en el texto guía. En particular resolvemos la ecuación $\exp(x)-\sin(x)=0$.
+
+Primero definimos una función para $\exp(x)-\sin(x)$, de la siguiente manera:"""
 
 # ╔═╡ de39af04-f7d0-478c-9029-d54876cd3fff
-begin
-	function mifun(x)
-  y=exp(x)-sin(x)
-  return y
-end
+function mifun(x)
+  	y=exp(x)-sin(x)
+  	return y
 end
 
 # ╔═╡ d3442470-c30d-4cd9-b502-c10e76dd0c94
@@ -53,59 +95,98 @@ md"""Podemos hacer una gráfica para tener una idea de los parámetros del méto
 # ╔═╡ 8bcd0bc7-67e3-4c5f-a245-b7066f35e450
 let
 	a,b=-20,2
-x = a:(b-a)/1000:b
-y= mifun.(x)
-plot(x, y*0,ls=:dash,label="y=0",lw=4)
-plot!(x, y, label="y=exp(x)-sin(x)",lw=5)
+	x = a:(b-a)/1000:b
+	y= mifun.(x)
+	plot(x, y*0,ls=:dash,label="y=0",lw=4)
+	plot!(x, y, label="y=exp(x)-sin(x)",lw=5)
 end
+
+# ╔═╡ 16c7778c-f6c8-43be-93aa-a87fe8ed0231
+md"""De lo anterior se observa que la función tiene varios ceros, centrémonos en el cero que se observa en el $[-4,-3]$."""
 
 # ╔═╡ 43a87dfe-7161-41d3-900b-1c6052424fd7
 let
 	a,b=-4,-3
-x = a:(b-a)/1000:b
-y= mifun.(x)
-plot(x, y*0,ls=:dash,label="Funcion",lw=4)
-plot!(x, y, label="Funcion",lw=5)
+	x = a:(b-a)/1000:b
+	y= mifun.(x)
+	plot(x, y*0,ls=:dash,label="y=0",lw=4)
+	plot!(x, y, label="Funcion",lw=5)
 end
 
 # ╔═╡ f7ab358b-6bd7-4e23-bfaf-71433a6c1529
-md"""El siguiente script implementa el método de bisección para la función arriba usando como datos de entrada $[-4,-3]$, con una tolerancia a la longitud del intervalo y al valor absoluto del residuo de $10^{-8}$."""
+md"""El siguiente código implementa el método de bisección para la función anterior usando como datos de entrada $[-4,-3]$, es decir, $a=-4, b=-3$, con una tolerancia a la longitud del intervalo y al valor absoluto del residuo de $10^{-8}$."""
 
 # ╔═╡ 56dda227-0d41-480a-b699-c4a23a9d473d
 begin
 	a,b,M,delb,epsb=-4,-3,100,1E-10,1E-10
-println("a=",a,", b=",b,", M=",M,", deltab=",delb,", epsb=",epsb)
-u=mifun(a)
-v=mifun(b)
-e=b-a
-k=1;
-c=a+e
-w=mifun(c)
-if sign(u)!=sign(v)
-    while (k <= M && abs(e)>delb && abs(w)>epsb )
-        e=e/2
-        println("c=",c)
-        if sign(w)!=sign(u)
-            b=c
-            v=w
-          else
-            a=c
-            u=w
-        end
-        k=k+1;
-        c=a+e
-        w=mifun(c)
-    end 
-end
-    
-println("k=",k,", w=f(c)=",w, ", e=",e)
+	println("a=",a,", b=",b,", M=",M,", deltab=",delb,", epsb=",epsb)
+	u=mifun(a)
+	v=mifun(b)
+	e=b-a
+	k=1;
+	c=a+e
+	w=mifun(c)
+	if sign(u)!=sign(v)
+    	while (k <= M && abs(e)>delb && abs(w)>epsb )
+        	e=e/2
+        	println("c=",c)
+        	if sign(w)!=sign(u)
+            	b=c
+            	v=w
+          	else
+            	a=c
+            	u=w
+        	end
+        	k=k+1;
+        	c=a+e
+        	w=mifun(c)
+    	end 
+	end
+    println("k=",k,", w=f(c)=",w, ", e=",e)
 end
 
 # ╔═╡ 38a66945-ace2-4237-bfe4-cbec75334d0c
-md"""Observamos que en la iteración 33 el programa termina con la aproximación $-3.1830630120821297$ con longitud del intervalo $|e|\approx 2.3\times 10^{-10}$ y con un residuo de $|w|\approx 8.7\times 10^{-11}$."""
+md"""Observamos que en la iteración 33 el programa finaliza con la aproximación $-3.1830630120821297$, con una longitud del intervalo de $|e|\approx 2.3\times 10^{-10}$ y un residuo de $|w|\approx 8.7\times 10^{-11}$.
+"""
 
 # ╔═╡ 353d752c-5f19-4b8d-937b-7957cd93187a
-md"""# Newton"""
+md"""## Método de Newton
+
+Nuevamente tenemos una función cuyos ceros deben determinarse numéricamente. Sea $r$ un cero de $f(x)$ y $x$ una aproximación a $r$. Si $f''(x)$ existe y es continua, el teorema de Taylor nos dice que:
+
+$0 = f(r) = f(x + h) = f(x) + h f'(x) + O(h^2)$
+
+donde $h = r - x$. Si $h$ es pequeño, es decir, si $x$ está cerca de $r$, es razonable ignorar el término $O(h^2)$ y resolver el resto de la ecuación para $h$. En consecuencia, se tiene que
+
+$h = -\frac{f(x)}{f'(x)}$
+
+Si $x$ está cerca de $r$, entonces $x - \frac{f(x)}{f'(x)}$ debería estar aún más cerca de $r$. El método de Newton comienza con una estimación $x_0$ de $r$ a partir de la cual se define una sucesión de aproximaciones:
+
+$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)} \quad (n \geq 0).$
+"""
+
+# ╔═╡ 005f3a2c-49af-4521-83f5-1326672e3cb1
+md"""El método de Newton, como se describe en [1], puede expresarse de la siguiente manera:"""
+
+# ╔═╡ 25f153d6-978e-4600-ad45-d3eeb177b0f5
+md"""**ALGORITMO de Newton**:
+
+1. **input:** $x_0, M, \delta, \epsilon, f, f'$
+2.   $\hspace{0.5cm}v= f(x_0)$
+5.   $\hspace{0.5cm}$**if** $|v|<\epsilon$
+4.   $\hspace{1cm}$**stop**
+6.   $\hspace{0.5cm}$**for** $k=1,2,\cdots, M$ **do**
+7.   $\hspace{1cm}w=f'(x_0)$
+8.   $\hspace{1cm}x_1=x_0-\frac{v}{w}$
+10.   $\hspace{1cm}$**if** $|x_1-x_2|<\delta$ o $|v|<\delta$
+11.   $\hspace{1.5cm}$**stop**
+12.   $\hspace{1cm} x_0=x_1$
+16.   $\hspace{0.5cm}$ **end for**
+18.   **output:** $x_0, v, k$
+"""
+
+# ╔═╡ 968e60ec-9a37-4f19-aa61-66dda6d476af
+md"""La siguiente función es la implementación del método de Newton."""
 
 # ╔═╡ 7944e30b-1027-4e2f-84d7-0f181a0ee3f2
 function minewton(f,fp,x0,myeps,mydel,max_iter)
@@ -146,57 +227,109 @@ function minewton(f,fp,x0,myeps,mydel,max_iter)
     return x0
 end
 
+# ╔═╡ 42a107a7-9580-4cf6-b5f4-e4eea839c347
+md"""Nuevamente, resolvamos la ecuación $\exp(x)-\sin(x)=0$.
 
-# ╔═╡ 980c0806-20ee-4e24-a4d0-381014629b84
-begin
+Primero definimos una función para $\exp(x)-\sin(x)$:"""
+
+# ╔═╡ 02cb42da-8f6b-4e5d-ba7d-4398fb6d3980
 function f(x)
     return exp(x)-sin(x)
 end
+
+# ╔═╡ 236bca72-777c-4af6-a774-52d62cad7f4b
+md"""A continuación se define una función para la primera derivada de $f(x).$"""
+
+# ╔═╡ 362ef2e9-a25e-4893-a1b9-5f0c48f2e654
 function fp(x)
     return exp(x)-cos(x)
 end
-minewton(f,fp,1.0,1e-10,1e-10,10)
-end
+
+# ╔═╡ 6c25997a-4416-4f44-953b-10317762308f
+md"""Considerando $x_0=-3.5$ se obtiene que una raíz de $f(x)$ es:"""
+
+# ╔═╡ 980c0806-20ee-4e24-a4d0-381014629b84
+minewton(f,fp,-3.5,1e-10,1e-10,10)
 
 # ╔═╡ 46951107-d3df-4c91-803b-c1c01a32ee85
-md"""# Punto Fijo"""
+md"""## Punto Fijo
+
+El método del punto fijo es una técnica iterativa para encontrar un punto fijo de una función $F(x)$. Un punto $x^*$ es un punto fijo de $F(x)$ si cumple la condición $F(x^*) = x^*$.
+
+Consideremos el método iterativo dado por
+
+$x_{n+1} = F(x_n).$
+Observe que si $F(x)$ es continua en el intervalo de interés, entonces el método convergerá al punto fijo $x^*$ bajo ciertas condiciones de convergencia, como la condición de contracción.
+
+Por ejemplo, si usamos la función $F(x)$ definida como
+
+$F(x) = x - \frac{f(x)}{f'(x)},$
+la iteración de punto fijo asociada es
+
+$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)},$
+que corresponde al método de Newton. En este caso, el método de Newton es un caso específico de iteración de punto fijo, donde la función $F(x)$ está diseñada para encontrar las raíces de la función $f(x)$ mediante la mejora sucesiva de la aproximación inicial $x_0$.
+"""
+
+# ╔═╡ dfb9a3f7-101a-43f8-a81c-6ee0c94d2817
+md"""**Teorema:**
+Sea $F:[a,b]\to [a,b]$ una aplicación contractiva, entonces $F$ tiene un único punto fijo y la sucesión definida por $x_{n+1} = F(x_n)$ converge al único punto fijo.
+
+La demostración de este Teorema se encuentra en [1].
+"""
+
+# ╔═╡ c4e84845-4856-46bf-9374-f999b9ed1000
+md"""Nuevamente, resolvamos la ecuación $\exp(x)-\sin(x)=0$.
+
+Primero definimos una función para $x + \exp(x)-\sin(x)$:"""
 
 # ╔═╡ 55d01383-5a2e-4a0b-9b75-d6a88dadeaff
-begin
 function miFpf(x)
   y=x+exp(x)-sin(x)
 end
-end
+
+# ╔═╡ 31ceae5c-0f34-460e-9948-8e65e2cbdd56
+md"""Ahora inciemos en el punto $(x_0, 0)=(-4,0)$, e iteremos 10 veces para hallar el cero de la función."""
 
 # ╔═╡ c162422f-01c5-4ace-b580-4a1f7a162af5
 begin
-x0=-4
-for n=1:10
-  x1=miFpf(x0)
-  x0=x1
-  println("x=",x1)
-end
+	x0=-4
+	for n=1:10
+  		x1=miFpf(x0)
+  		x0=x1
+  		println("x=",x1)
+	end
 end
 
 # ╔═╡ 329b7bfc-86dd-4312-8323-9627c9e9a17b
-md"""# Paquetes"""
+md"""# Paquetes
+
+En Julia, las librerías $\texttt{Roots}$ y $\texttt{NLsolve}$ son herramientas para resolver problemas numéricos relacionados con ecuaciones, como hallar ceros de ecuaciones lineales y no lineales.
+
+La librería $\texttt{Roots}$ está diseñada para encontrar las raíces (o ceros) de funciones de una sola variable. Se utiliza para resolver ecuaciones de la forma $f(x)=0$. Esta librería ofrece varios métodos numéricos para la búsqueda de raíces, incluyendo el método de Bisección, el método de Newton, el método de la Secante y el método de Regula Falsi: Un método que combina aspectos de la bisección y la secante, ver [2]."""
+
+# ╔═╡ 463422ed-d182-40d2-9b9c-a677c8486951
+md"""A continuación se presenta un ejemplo"""
 
 # ╔═╡ 674c9c17-db7c-4d37-b152-c0ef4eede8da
-f1(x)=exp(x)-sin(x)
+f1(x)=exp(x)-sin(x) #Definimos la función
 
 # ╔═╡ 9afb8fce-a3a4-4513-ab74-dac3d11fce35
-x=fzero(f1,-3,-4)
+x=fzero(f1,-4,-3) #Hallamos la raíz en el intervalo [-4,-3]
+
+# ╔═╡ e8caf112-73c6-4338-a625-0e365fd776ec
+md"""La librería $\texttt{NLsolve}$ se utiliza para resolver sistemas de ecuaciones no lineales. Es útil para problemas en los que se busca encontrar un vector $x$ tal que el sistema de ecuaciones no lineales $F(x)=0$ sea satisfecho, donde $F$ es una función vectorial que devuelve un vector de valores. Los principales métodos que usa son el método de Newton-Raphson y el método de Levenberg-Marquardt, ver [3]."""
+
+# ╔═╡ 5e0cc28f-6dfb-4c90-8979-418c93548084
+md"""A continuación se presenta un ejemplo"""
 
 # ╔═╡ ad0d9818-b39e-4134-93a8-4605d7f1923b
-begin
-	function fv(F,x)
-       F[1]=x[1]^2+x[2]^2-1
-       F[2]=(x[1]-2)^2+x[2]^2-1
-end
+function fv(F,x) #Definimos el sistema de ecuaciones no lineales
+    F[1]=x[1]^2+x[2]^2-1
+    F[2]=(x[1]-2)^2+x[2]^2-1
 end
 
 # ╔═╡ 41bc79c1-0f36-4d3e-a01f-d3145ff9d5b2
-nlsolve(fv,[0.0;0.0])
+nlsolve(fv,[0.0;0.0]) #Hallamos la solución considerando como punto inicial el punto (0,0)
 
 # ╔═╡ cb85dcf9-9239-4adb-945c-d1eef172350f
 md"""# Problemas"""
@@ -206,9 +339,9 @@ md"""**Problema (Kelley)** Considere el método de Shamanskii de orden $m$ defin
 
 $z_1=x_n-f(x_n)/f'(x_n)$
 
-$z_{j+1}=z_{j}-f(z_j)/f'(x_n)$, $1\leq j\leq m-1$
+$z_{j+1}=z_{j}-f(z_j)/f'(x_n), \hspace{0.5cm}1\leq j\leq m-1$
 
-$x_{n+1}=z_{m}$.
+$x_{n+1}=z_{m}.$
 
 Observe que se avanza m pasos sin actualiar la derivada en el punto. Implemente el método para un order $m$ definido por el usuario y verifique su código con una ecuación escalar. """
 
@@ -225,7 +358,7 @@ md"""**Problema (Kelley, Iterative methodos for linear and non linear equations)
 """
 
 # ╔═╡ 3be34b2a-3752-44a1-aaf2-3647896d9c9e
-md"""**Problema(Quarteroni, Saleri, Gervasio)** Considere un plano cuya pendiente varía con tasa constante $\omega$ y un punto de masa quieto en el tiempo $t=0$. En el tiempo $t>0$ su posición es dada por
+md"""**Problema (Quarteroni, Saleri, Gervasio)** Considere un plano cuya pendiente varía con tasa constante $\omega$ y un punto de masa quieto en el tiempo $t=0$. En el tiempo $t>0$ su posición es dada por
 $s(t,\omega)= \frac{g}{2\omega^2}\Big[ \sinh(\omega t)-\sin(\omega t) \Big]$
 donde $g=9.8 \frac{m}{s^2}$. Suponga que el objeto se ha movido 1 metro en un segundo, calcule el valor correspondiente de $\omega$ con 12 decimales exactos. """
 
@@ -244,6 +377,14 @@ md"""**Problema** Seleccione alguno de los métodos implementados en julia para 
 Si usa Python selecciones dos de los métodos en https://docs.scipy.org/doc/scipy-0.13.0/reference/optimize.html en la sección Root finding, diga cual es el método numerico implementado (e.g, similar a newton, usa derivadas, no usa derivadas, combina varios métodos, llama alguna otra subrutina conocida encontrada en netlib, cuales son las toleracias por defecto, etc)  y para cada uno de los métodos seleccionados implementar un ejemplo numérico con una ecuación escalar o una ecuación vectorial según sea el caso. Imprima la solución calculada asi como alguna informacion adicional (residuo, cantidad de iteraciones, etc). 
 
 Si usa MatLab seleccione dos de entre los métodos como fsolve, froot, fzero, roots, o similares (https://la.mathworks.com/help/optim/systems-of-nonlinear-equations.html). Análogamente para octave (https://octave.org/doc/v4.2.0/Solvers.html), julia, etc."""
+
+# ╔═╡ 6a857c08-ee35-4731-b2d2-1477f7cf7a90
+md"""# Referencias 
+[1] Kincaid, D., & Cheney, W. (2002). Numerical analysis: Mathematics of scientific computing. American Mathematical Society.
+
+[2] JuliaMath. (n.d.). Roots.jl (Version 0.10.0) [Software]. GitHub. https://github.com/JuliaMath/Roots.jl
+
+[3] JuliaNLSolvers. (n.d.). NLsolve.jl [Software]. GitHub. https://github.com/JuliaNLSolvers/NLsolve.jl"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1607,33 +1748,53 @@ version = "1.4.1+1"
 # ╟─d579e509-76e5-4fc1-a9c4-021cde3040b2
 # ╟─89fa214c-29e3-4b6c-be2a-27dea6108a7c
 # ╠═1206dd40-b43a-4a8f-896e-9e1716d331b5
-# ╠═ec765514-563e-4745-8728-4647b0102c64
-# ╠═228d61ce-1c20-4ede-be3a-805dc1279f06
+# ╟─f39cdf3d-4df8-4b5f-a8aa-993959e8b3a7
+# ╟─04659b96-16eb-44a2-a410-b2f784941b73
+# ╟─ec765514-563e-4745-8728-4647b0102c64
+# ╟─9397a936-09f3-4a98-9b3b-45504e8c9450
+# ╟─7b0c3510-cc80-4db7-97cd-ecef42d80ae8
+# ╟─228d61ce-1c20-4ede-be3a-805dc1279f06
 # ╠═de39af04-f7d0-478c-9029-d54876cd3fff
-# ╠═d3442470-c30d-4cd9-b502-c10e76dd0c94
-# ╠═8bcd0bc7-67e3-4c5f-a245-b7066f35e450
-# ╠═43a87dfe-7161-41d3-900b-1c6052424fd7
-# ╠═f7ab358b-6bd7-4e23-bfaf-71433a6c1529
-# ╠═56dda227-0d41-480a-b699-c4a23a9d473d
-# ╠═38a66945-ace2-4237-bfe4-cbec75334d0c
-# ╠═353d752c-5f19-4b8d-937b-7957cd93187a
+# ╟─d3442470-c30d-4cd9-b502-c10e76dd0c94
+# ╟─8bcd0bc7-67e3-4c5f-a245-b7066f35e450
+# ╟─16c7778c-f6c8-43be-93aa-a87fe8ed0231
+# ╟─43a87dfe-7161-41d3-900b-1c6052424fd7
+# ╟─f7ab358b-6bd7-4e23-bfaf-71433a6c1529
+# ╟─56dda227-0d41-480a-b699-c4a23a9d473d
+# ╟─38a66945-ace2-4237-bfe4-cbec75334d0c
+# ╟─353d752c-5f19-4b8d-937b-7957cd93187a
+# ╟─005f3a2c-49af-4521-83f5-1326672e3cb1
+# ╟─25f153d6-978e-4600-ad45-d3eeb177b0f5
+# ╟─968e60ec-9a37-4f19-aa61-66dda6d476af
 # ╠═7944e30b-1027-4e2f-84d7-0f181a0ee3f2
+# ╟─42a107a7-9580-4cf6-b5f4-e4eea839c347
+# ╠═02cb42da-8f6b-4e5d-ba7d-4398fb6d3980
+# ╟─236bca72-777c-4af6-a774-52d62cad7f4b
+# ╠═362ef2e9-a25e-4893-a1b9-5f0c48f2e654
+# ╟─6c25997a-4416-4f44-953b-10317762308f
 # ╠═980c0806-20ee-4e24-a4d0-381014629b84
-# ╠═46951107-d3df-4c91-803b-c1c01a32ee85
+# ╟─46951107-d3df-4c91-803b-c1c01a32ee85
+# ╟─dfb9a3f7-101a-43f8-a81c-6ee0c94d2817
+# ╟─c4e84845-4856-46bf-9374-f999b9ed1000
 # ╠═55d01383-5a2e-4a0b-9b75-d6a88dadeaff
+# ╟─31ceae5c-0f34-460e-9948-8e65e2cbdd56
 # ╠═c162422f-01c5-4ace-b580-4a1f7a162af5
-# ╠═329b7bfc-86dd-4312-8323-9627c9e9a17b
+# ╟─329b7bfc-86dd-4312-8323-9627c9e9a17b
 # ╠═14f13a96-92db-4ba1-9034-5d807edf30d2
+# ╟─463422ed-d182-40d2-9b9c-a677c8486951
 # ╠═674c9c17-db7c-4d37-b152-c0ef4eede8da
 # ╠═9afb8fce-a3a4-4513-ab74-dac3d11fce35
+# ╟─e8caf112-73c6-4338-a625-0e365fd776ec
 # ╠═e3856642-2109-49b6-b2fd-ce6524b2bbdc
+# ╟─5e0cc28f-6dfb-4c90-8979-418c93548084
 # ╠═ad0d9818-b39e-4134-93a8-4605d7f1923b
 # ╠═41bc79c1-0f36-4d3e-a01f-d3145ff9d5b2
-# ╠═cb85dcf9-9239-4adb-945c-d1eef172350f
-# ╠═d84f09c7-43b8-415f-92b5-6dff03a0392a
-# ╠═8fd0c8b2-3acd-4e3f-ac3b-7ee3794e0c81
-# ╠═3be34b2a-3752-44a1-aaf2-3647896d9c9e
-# ╠═547e2260-633e-4b63-9735-5bc11721bbf7
-# ╠═535082de-ea95-4a45-8f43-0016919e450c
+# ╟─cb85dcf9-9239-4adb-945c-d1eef172350f
+# ╟─d84f09c7-43b8-415f-92b5-6dff03a0392a
+# ╟─8fd0c8b2-3acd-4e3f-ac3b-7ee3794e0c81
+# ╟─3be34b2a-3752-44a1-aaf2-3647896d9c9e
+# ╟─547e2260-633e-4b63-9735-5bc11721bbf7
+# ╟─535082de-ea95-4a45-8f43-0016919e450c
+# ╟─6a857c08-ee35-4731-b2d2-1477f7cf7a90
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
