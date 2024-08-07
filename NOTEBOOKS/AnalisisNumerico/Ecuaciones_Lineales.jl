@@ -33,24 +33,6 @@ md"""Usaremos las siguientes librerías:"""
 # ╔═╡ b7655028-28be-49bb-87b2-ee35adeeb9a4
 md"""# Introducción"""
 
-# ╔═╡ 4c98459c-1bd6-423c-8539-a85b104b6221
-md"""
-Los comandos para calcular normas de vectores y de matrices son presentados a continuación. 
-En Julia se distingen las normas subordinadas como normas de operadores. """
-
-# ╔═╡ d3a307af-ee47-42cd-a6e5-49105c9bed09
-begin
-	x=[1,2,3,-4]
-println(x)
-nx=norm(x,1)
-for i=1:5:15
-    nx=norm(x,i)
-    println("La norma ",i," de x es ",nx)
-end
-nx=norm(x,Inf)
-println("\nLa norma ",Inf," de x es ",nx)
-end
-
 # ╔═╡ 39622889-6658-4938-8127-f16105b331e2
 md"""Consideremos un sistema de ecuaciones lineales en $n$ incógnitas $x_1, x_2, \ldots, x_n$. Se puede escribir de la siguiente forma:
 
@@ -79,8 +61,50 @@ b_n \\
 
 Las matrices en esta ecuación se denotan por $A$, $x$ y $b$. Así, nuestro sistema es simplemente $Ax = b$."""
 
+# ╔═╡ 4c98459c-1bd6-423c-8539-a85b104b6221
+md"""
+En Julia se distingen las normas subordinadas como normas de operadores. 
+
+Los comandos para calcular normas de vectores y de matrices son presentados a continuación. """
+
+# ╔═╡ 8ed7fb31-3db4-4647-81db-15cfd0a48974
+md"""Consideremos el siguiente vector"""
+
+# ╔═╡ 242b54ae-8c51-4d4c-b642-c02a57a9de34
+x=[1, 2, 3, -4]
+
+# ╔═╡ 2a3153f1-9553-441a-b30a-ae0936d6d676
+md"""Algunas normas de este son:"""
+
+# ╔═╡ d3a307af-ee47-42cd-a6e5-49105c9bed09
+begin
+	for i=1:5:15
+    	nx=norm(x,i)
+    	println("La norma ",i," de x es ",nx)
+	end
+	nx=norm(x,Inf)
+	println("La norma ",Inf," de x es ",nx)
+end
+
+# ╔═╡ 202b70c9-c7cf-452c-83ab-8eea3885b093
+md"""Ahora consideremos la siguiente matriz"""
+
+# ╔═╡ 4d07c792-9ae2-40cb-80b3-52728e9850a5
+A1=[0 0 1; -1  2  0; 1 2  1]
+
+# ╔═╡ 0ff22446-02cd-4c1a-868e-02b909ed6e80
+md"""Algunos valores de las normas de $A$ son:"""
+
+# ╔═╡ a01ee843-e60d-469a-8eb4-0abbabda7df4
+md"""# Factorizaciones"""
+
+# ╔═╡ a22de485-1e4d-41a3-aaa0-8edfbc5041a7
+md"""## Factorización $A=LU$
+
+Supongamos que podemos escribir la factorización $A=LU$, es decir, que $A$ se puede factorizar como el producto de una matriz triangular inferior $L$ con una matriz triangular superior $U$."""
+
 # ╔═╡ 0e8ae2e3-933b-4cb9-87d2-49de76407e29
-md""" # Factorización $A=PLU$
+md""" ## Factorización $A=PLU$
 Presentamos algunos comandos relacionados con la solución de sistemas lineales por métodos directos. 
 Calculemos la factorización $A=PLU$ de una matriz $4\times 4$."""
 
@@ -89,12 +113,10 @@ A =[2  5  8  7 ; 5  2  2  8 ; 7  5  6  6; 5 4 4 8]
 
 # ╔═╡ 69daeb44-c973-4b48-a646-d83fd7faf00d
 begin
-	A1=[0 0 1; -1  2  0; 1 2  1]
-println(A)
-println("La norma  2 de la matrix extendida a vector  es = ", norm(A)) #máximo valor singular
-println("La norma de Frobenious es = ",norm(A,2)) # Frobeniusln
-println("La norma subordinada 1 es = ",opnorm(A,1))
-println("La norma subordinada Inf es = ", opnorm(A,Inf))
+	println("La norma  2 de la matrix extendida a vector  es = ", norm(A))
+	println("La norma de Frobenious es = ",norm(A,2)) # Frobeniusln
+	println("La norma subordinada 1 es = ",opnorm(A,1))
+	println("La norma subordinada Inf es = ", opnorm(A,Inf))
 end
 
 # ╔═╡ 6aef40cd-26e2-47f6-94c8-c6702709056f
@@ -154,7 +176,7 @@ luA₂.P
 md"""Observe que eneste caso la matriz de permutación es la matriz identidad.  """
 
 # ╔═╡ 36dc58de-640a-4328-8ed8-08c5485ea749
-md"""# Cholesky"""
+md"""## Factorización de Cholesky"""
 
 # ╔═╡ d1107046-daa6-4b03-8020-670ac69d0194
 md"""Calculemos ahora la factorización de Cholesky de una matri de la forma $A^TA$ con $A$ aleatoria. """
@@ -799,11 +821,19 @@ version = "17.4.0+2"
 # ╟─7b84db99-9375-4dc5-8a3e-414bc176648a
 # ╠═e2feba71-69cb-4f39-92d1-d1f4daefb4ec
 # ╟─b7655028-28be-49bb-87b2-ee35adeeb9a4
-# ╟─4c98459c-1bd6-423c-8539-a85b104b6221
-# ╠═d3a307af-ee47-42cd-a6e5-49105c9bed09
-# ╠═69daeb44-c973-4b48-a646-d83fd7faf00d
 # ╟─39622889-6658-4938-8127-f16105b331e2
-# ╟─0e8ae2e3-933b-4cb9-87d2-49de76407e29
+# ╟─4c98459c-1bd6-423c-8539-a85b104b6221
+# ╟─8ed7fb31-3db4-4647-81db-15cfd0a48974
+# ╠═242b54ae-8c51-4d4c-b642-c02a57a9de34
+# ╟─2a3153f1-9553-441a-b30a-ae0936d6d676
+# ╟─d3a307af-ee47-42cd-a6e5-49105c9bed09
+# ╟─202b70c9-c7cf-452c-83ab-8eea3885b093
+# ╠═4d07c792-9ae2-40cb-80b3-52728e9850a5
+# ╟─0ff22446-02cd-4c1a-868e-02b909ed6e80
+# ╟─69daeb44-c973-4b48-a646-d83fd7faf00d
+# ╟─a01ee843-e60d-469a-8eb4-0abbabda7df4
+# ╠═a22de485-1e4d-41a3-aaa0-8edfbc5041a7
+# ╠═0e8ae2e3-933b-4cb9-87d2-49de76407e29
 # ╠═7123f4ea-87d7-4549-9b4f-56547eb38bc5
 # ╠═6aef40cd-26e2-47f6-94c8-c6702709056f
 # ╟─e2373181-d738-4b5c-9974-d85849e44a77
