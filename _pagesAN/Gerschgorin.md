@@ -67,6 +67,6 @@ header-includes: |
       color: #333;
     }
   </style>
-
+  
 <iframe src="https://labmatecc.github.io/HTML%20Lab/AN/Circulos_de_Gerschgorin.html"
  width="100%" height="600px"></iframe>

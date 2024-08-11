@@ -11,7 +11,7 @@ using PlutoUI
 using LinearAlgebra, Plots, Polynomials, SpecialMatrices
 
 # ╔═╡ 24c9f8a9-ad90-413a-9660-9da7a068f492
-PlutoUI.TableOfContents(title="Cículos de Greschgorin", aside=true)
+PlutoUI.TableOfContents(title="Cículos de Gerschgorin", aside=true)
 
 # ╔═╡ 1f760cdf-6171-4ed7-b06d-60bc6a52105b
 md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**
@@ -36,7 +36,7 @@ Para hallar los valores propios de una matriz, existen diversos métodos que per
 md"""# Localización de valores propios"""
 
 # ╔═╡ a7bed1fb-54c0-4708-9f44-0860bb6558a4
-md"""**Teorema 1: Discos de Greschgorin.** 
+md"""**Teorema 1: Discos de Gerschgorin.** 
 
 Todos los valores propios de una matriz $A\in\mathbb{R}^{d\times d}$ están localizados en el conjunto 
 
@@ -84,11 +84,11 @@ function allGreschdisksforA(A::Matrix{Float64}; r, k)
     E = eigen(A).values
 
 	p = plot(
-    scatter(real(resultadoG), imag(resultadoG), ms=2, ma=0.5, markerstrokecolor = :auto, color=:yellow, label="Greschgorin"),
+    scatter(real(resultadoG), imag(resultadoG), ms=2, ma=0.5, markerstrokecolor = :auto, color=:yellow, label="Gerschgorin"),
     xlims=(-r, r), ylims=(-r, r), aspect_ratio=1,         
     xlabel="Parte Real", 
     ylabel="Parte Imaginaria",
-    title="Discos de Greschgorin")
+    title="Discos de Gerschgorin")
 
 scatter!(p, real(E), imag(E), color=:black, markerstrokecolor = :auto, label="Eigenvalues")
 end
@@ -131,7 +131,7 @@ md"""Sus valores propios son:"""
 eigen(A₂).values
 
 # ╔═╡ b2dc7b74-eeef-4433-ba46-c805ae0b3004
-md"""Y los círculos de Greschgorin de la matriz anterior son:"""
+md"""Y los círculos de Gerschgorin de la matriz anterior son:"""
 
 # ╔═╡ 8a4a6c28-cc01-401b-97b3-0bbb3ec15192
 allGreschdisksforA(A₂, r=5, k=300)
@@ -155,7 +155,7 @@ donde
 $B_{ij} = \{z\in ℂ : |z-a_{ii}|\cdot|z-a_{jj}|\leq R_{i}R_{j}\}.$"""
 
 # ╔═╡ 66a95a94-8692-49be-b7f7-b75ad2792324
-md"""**Teorema 5: Discos generalizados de Greschgorin.** 
+md"""**Teorema 5: Discos generalizados de Gerschgorin.** 
 
 Todos los valores propios de una matriz $A\in\mathbb{R}^{d\times d}$ están contenidos en la unión de los siguientes conjuntos
 
@@ -291,16 +291,17 @@ Suponga que $z = x + iy \in ℂ$ y $x,y\in ℝ$,
 
 
 
-*   Discos de Greschgorin
+*   Discos de Gerschgorin
 1.   $|z- 1 |\leq 1 ⟼ (x-1)^2 +y^2\leq 1$
 2.   $|z- 2 |\leq 0 ⟼ (x,y) = (2,0)$
 3.   $|z|\leq 2 ⟼ x^2+y^2\leq 4$
+
 *   Conjuntos de Brauer
 4.   $|z- 1 ||z- 2 |\leq 0 ⟼(x,y) = (1,0),(2,0)$
 5.   $|z- 1 ||z|\leq 2 ⟼x^4+2x^2y^2+y^4-2x^3-2xy^2+x^2+y^2\leq 4$
 6.   $|z- 2 ||z|\leq 0 ⟼(x,y) = (0,0),(2,0)$
 
-*   Conjuntos de Greschgorin generalizado
+*   Conjuntos de Gerschgorin generalizado
 7.   $|(z- 1 )(z- 2 )|\leq|z- 2 | ⟼ (x-1)^2+y^2\leq 1 \quad (x,y) = (2,0)$
 8.   $|(z- 1 )(z)- 1 |\leq 1 ⟼ (x^2-y^2-x-1)^2 + (2xy-y)^2 \leq 1$
 9.   $|(z- 2 )(z- 1 )|\leq 0 ⟼ (x,y) = (1,0),(2,0)$
