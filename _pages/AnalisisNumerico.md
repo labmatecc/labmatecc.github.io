@@ -115,6 +115,21 @@ header-includes: |
 <hr>
 
 <div class="button-container">
+  <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/ComparacionAsintotica/" class="button">Comparación asintótica</a>
+</div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>El cuaderno comienza definiendo los conceptos de orden asintótico para sucesiones, como \(x_n = \mathcal{O}(\alpha_n)\) y \(x_n = \mathcal{o}(\alpha_n)\), que indican cómo las sucesiones \(x_n\) y \(\alpha_n\) convergen hacia cero en comparación. Proporciona ejemplos gráficos para ilustrar estas comparaciones, como \(\frac{n+1}{n^2}\) en relación con \(\frac{1}{n}\), y \(\frac{1}{n \log(n)}\) también en relación con \(\frac{1}{n}\), entre otros. El cuaderno también explora la velocidad de convergencia, describiendo la convergencia lineal y superlineal con ejemplos como \(x_n = 0.5^n\) y \(x_n = 0.5^{n^2}\). Además, aborda la convergencia de orden y cómo se puede demostrar mediante gráficos, como el caso de \(x_n = 0.5^{2^n}\).</p>
+        <p>Finalmente, se introduce la expansión de Taylor, explicando cómo aproximar funciones mediante polinomios de Taylor y su error asociado. El cuaderno utiliza la librería `TaylorSeries` para generar y trabajar con estos polinomios. </p>
+      </div>
+    </div>
+  </div>
+
+<hr>
+
+<div class="button-container">
   <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/EcuacionesNoLineales/" class="button">Ecuaciones No Lineales</a>
 </div>
 
@@ -129,14 +144,14 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/ComparacionAsintotica/" class="button">Comparación asintótica</a>
+  <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/EcuacionesLineales/" class="button">Ecuaciones Lineales</a>
 </div>
 
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>El cuaderno comienza definiendo los conceptos de orden asintótico para sucesiones, como \(x_n = \mathcal{O}(\alpha_n)\) y \(x_n = \mathcal{o}(\alpha_n)\), que indican cómo las sucesiones \(x_n\) y \(\alpha_n\) convergen hacia cero en comparación. Proporciona ejemplos gráficos para ilustrar estas comparaciones, como \(\frac{n+1}{n^2}\) en relación con \(\frac{1}{n}\), y \(\frac{1}{n \log(n)}\) también en relación con \(\frac{1}{n}\), entre otros. El cuaderno también explora la velocidad de convergencia, describiendo la convergencia lineal y superlineal con ejemplos como \(x_n = 0.5^n\) y \(x_n = 0.5^{n^2}\). Además, aborda la convergencia de orden y cómo se puede demostrar mediante gráficos, como el caso de \(x_n = 0.5^{2^n}\).</p>
-        <p>Finalmente, se introduce la expansión de Taylor, explicando cómo aproximar funciones mediante polinomios de Taylor y su error asociado. El cuaderno utiliza la librería `TaylorSeries` para generar y trabajar con estos polinomios. </p>
+        <p>El cuaderno comienza con una introducción al sistema de ecuaciones lineales representado por la ecuación \( A x = b,\) donde \( A \) es una matriz y \( x \) y \( b \) son vectores. Luego, explora cómo calcular diferentes normas de vectores y matrices en Julia, proporcionando ejemplos prácticos de cómo obtener normas subordinadas y de Frobenius. </p>
+        <p>Luego, se presenta la factorización LU, incluyendo un algoritmo para descomponer una matriz en productos de matrices triangulares y cómo implementarlo en Julia. Se presentan ejemplos de factorización LU con matrices específicas, incluyendo la verificación de la precisión de la factorización mediante normas. También se discute la factorización PA=LU con pivoteo, utilizando ejemplos adicionales como la matriz de Hilbert y matrices diagonales dominantes. Luego de esto, el cuaderno aborda la factorización de Cholesky para matrices simétricas y definidas positivas, y cómo resolver sistemas lineales en Julia usando el operador **backslash**.</p>
       </div>
     </div>
   </div>
