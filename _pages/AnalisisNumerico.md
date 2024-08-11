@@ -173,7 +173,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/Ajuste/" class="button">Ajuste de parámetros</a>
+  <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/AjusteDeCurvas/" class="button">Ajuste de curvas</a>
 </div>
 
 <div class="container">

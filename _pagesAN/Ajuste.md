@@ -1,6 +1,6 @@
 ---
-title: "Ajuste de parámetros"
-permalink: /Notebooks/AnalisisNumerico/Ajuste/
+title: "Ajuste de curvas"
+permalink: /Notebooks/AnalisisNumerico/AjusteDeCurvas/
 date: 2019-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}
@@ -23,7 +23,7 @@ header-includes: |
 </head>
 <body>
 
-<h1>Ajuste de parámetros</h1>
+<h1>Ajuste de curvas</h1>
 
 </body>
 </html>
