@@ -41,9 +41,9 @@ md"""Tomamos la funcion $f(x)=x(x-2\pi)e^{-x}$ en una muestra de varios puntos e
 
 # ╔═╡ ed34f014-7e23-452a-a76d-8b18c8343c82
 begin
-x=0:9
-y=x.*(x.-2*pi).*exp.(-x)
-[x y]
+	x=0:9
+	y=x.*(x.-2*pi).*exp.(-x)
+	[x y]
 end
 
 # ╔═╡ 836b01a5-44b7-4159-b71e-00d7aeacbcda
@@ -77,16 +77,20 @@ md"""Ahora queremos 'escanear' el siguiente tipo caligrafico."""
 
 # ╔═╡ 983ef21d-f31c-49b3-88cb-5d31326c4128
 begin
-	url = "https://upload.wikimedia.org/wikipedia/commons/5/5d/Konigsberg_bridges.png"
-	fname = download(url)
-	imag = load(fname)
+	url1 = "https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/Interpolacion1.png?raw=true"
+	fname1 = download(url1)
+	imag1 = load(fname1)
 end
 
 # ╔═╡ a1115c61-4310-4641-b9a6-65ffe43ef0a7
 md"""Introducimos coordenadas y puntos de control."""
 
 # ╔═╡ 14f0937b-4600-4834-b850-87b2a431f505
-md"""![index2.png](attachment:index2.png)"""
+begin
+	url2 = "https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/Interpolacion2.png?raw=true"
+	fname2 = download(url2)
+	imag2 = load(fname2)
+end
 
 # ╔═╡ ab56572e-cca4-4d1c-8e3a-c6940a7cf88a
 begin
@@ -151,6 +155,13 @@ Usando diferentes interpolaciones (ver arriba) estimar la temperatura a las 15:3
 # ╔═╡ c710a80e-54fa-4975-b366-c2529d02bf00
 md"""**2.(Kincay y Chiney)** Se ha diseñando la letra de la figura y se quiere reproducr (con ayuda de los puntos de control marcados) y usando splines. Use la interpolación por splines y depligue esta figura usando interpolación por splines evaluada en 10 puntos, 100 puntos y 1000 puntos. En el ejemplo arriba el numero de puntos desplegados es la dimension del vectro s. 
 """
+
+# ╔═╡ 7be3fe9c-5a48-42c5-93a3-711c6fdc481a
+begin
+	url3 = "https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/Interpolacion3.png?raw=true"
+	fname3 = download(url3)
+	imag3 = load(fname3)
+end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1562,14 +1573,15 @@ version = "1.4.1+1"
 # ╠═ed34f014-7e23-452a-a76d-8b18c8343c82
 # ╠═836b01a5-44b7-4159-b71e-00d7aeacbcda
 # ╠═da596a8e-6cb0-4e67-a25c-c4f37f6b076f
-# ╠═983ef21d-f31c-49b3-88cb-5d31326c4128
+# ╟─983ef21d-f31c-49b3-88cb-5d31326c4128
 # ╠═a1115c61-4310-4641-b9a6-65ffe43ef0a7
-# ╠═14f0937b-4600-4834-b850-87b2a431f505
+# ╟─14f0937b-4600-4834-b850-87b2a431f505
 # ╠═ab56572e-cca4-4d1c-8e3a-c6940a7cf88a
 # ╠═05271a3d-e6d5-47a3-bf67-26afe4aab16c
 # ╠═53cb4eef-0fe9-4612-a8ef-bcf98639ca07
 # ╟─4a8fb259-e48a-4f51-955d-9a7790e8b8ad
 # ╟─3c08d3d9-a8d5-4075-a362-7a1c1e347be5
 # ╟─c710a80e-54fa-4975-b366-c2529d02bf00
+# ╟─7be3fe9c-5a48-42c5-93a3-711c6fdc481a
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
