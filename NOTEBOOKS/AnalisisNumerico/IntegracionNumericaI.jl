@@ -24,7 +24,7 @@ using Plots, LaTeXStrings
 PlutoUI.TableOfContents(title="Integración numérica I", aside=true)
 
 # ╔═╡ 5a638263-06dd-4f61-b2af-40e5eeb2b9c6
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+md"""Este cuaderno esté en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 

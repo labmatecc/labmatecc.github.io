@@ -14,30 +14,30 @@ macro bind(def, element)
     end
 end
 
-# ╔═╡ b763cd10-d1e7-4613-b738-9fb1c1cfa1e5
+# ╔═╡ 98ab4786-cdc2-422c-b26a-a3fa6cab40ca
 using PlutoUI
 
-# ╔═╡ e2feba71-69cb-4f39-92d1-d1f4daefb4ec
-using Symbolics, Plots, LinearAlgebra
+# ╔═╡ feb15edc-8527-45f0-b209-2070f10cb438
+using Symbolics, Plots, LinearAlgebra, Printf
 
-# ╔═╡ a7d3298e-0138-4149-a189-0b5a92cfa0e7
-PlutoUI.TableOfContents(title="Números enteros y punto flotante", aside=true)
+# ╔═╡ 86e9dcb4-a96b-4a14-bc64-964ac0370fd0
+PlutoUI.TableOfContents(title="Números enteros y de punto flotante", aside=true)
 
-# ╔═╡ 5d0d4c4e-b432-437e-9b8e-2f81c79f907e
+# ╔═╡ 5a213ee2-64a0-49b6-a03c-b363a3b7dd2e
 md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
-# ╔═╡ c08f6550-5278-436d-96ec-408570476631
-md"""**Este cuaderno está basado en actividades del curso Análisis numérico I de la Universidad Nacional de Colombia, sede Bogotá, dictado por el profesor Juan Galvis en 2022-2.**
+# ╔═╡ f94874b9-72cd-4cd1-885b-fd43602d42f0
+md"""**Este cuaderno está basado en actividades del curso Introducción a las ciencias de la computación y la programación de la Universidad Nacional de Colombia, sede Bogotá, dictado por el profesor Juan Galvis en 2021-2.**
 
 Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo. 
 """
 
-# ╔═╡ 7b84db99-9375-4dc5-8a3e-414bc176648a
+# ╔═╡ 0f4c585a-93a3-42c2-a301-57a56895f359
 md"""Usaremos las siguientes librerías:"""
 
-# ╔═╡ fd74ea36-fa50-415c-b4a0-92f594178ab9
+# ╔═╡ c1f6eaf3-b3eb-42c8-bcce-dfc996f48c15
 md"""# Enteros 
 Presentamos ejemplos sencillos de la representación de los datos enteros en Julia.
 En particular, un entero de $k$ bits biene representado de la forma
@@ -48,55 +48,55 @@ Recuerde que $b_i\in\{0,1\}$.
 Vea los siguientes ejemplos.
 """
 
-# ╔═╡ 37e57a66-a785-45a1-90a0-3413e7f01898
+# ╔═╡ e72bc01c-0268-4fd3-8df3-73e031b4b5b8
 @bind n Slider(-50:50, show_value=true,default=0)
 
-# ╔═╡ d38e69a8-cbdb-4437-ad5b-64217f3e48d6
+# ╔═╡ edf88bf8-5441-4279-9d05-4f264b89c6fd
 typeof(n)
 
-# ╔═╡ 2cfc4a3a-91f3-416a-bcf5-89a2ecbb0a61
+# ╔═╡ 287c08cf-5e39-4216-9d0d-f7693e39a5aa
 bitstring(n)
 
-# ╔═╡ 5ffb3f8c-d31d-4ed1-8a34-dbe13be57c42
+# ╔═╡ fee16abe-743e-4726-9700-57be9db9de35
 1+2+4+8+16+32+64-128
 
-# ╔═╡ c53b615f-b8ca-4427-a52e-ac2e69b54545
+# ╔═╡ 0fe47332-5c7b-40f6-9aac-dcf8ebcad8ea
 @bind mint TextField(10, default="0")
 
-# ╔═╡ 4bb033b7-02af-4f8d-be9c-62ee7c4fc554
+# ╔═╡ 6f30c187-da2b-48d6-b2e0-482dc93faf24
 n8=parse(Int8,mint); bitstring(n8)
 
-# ╔═╡ 3681e1d1-4e78-4026-9295-a67950dfd260
+# ╔═╡ afd95229-ad71-4a29-9fbf-e26030df8ff6
 un8=parse(UInt8,mint); bitstring(un8)
 
-# ╔═╡ 1681a1f7-3edd-46e5-8214-a2ac3ab6966d
+# ╔═╡ 212df9f0-b963-4f0d-8c92-e9a6ca4afb14
 m16=parse(Int16,mint); bitstring(m16)
 
-# ╔═╡ 4aeddca1-790a-41c6-a178-3a6369bd5fcc
+# ╔═╡ 045e2cee-61e8-4099-8e61-f5c2b94df1de
 md"""Este tipo de representaciones tiene varias consecuencias como son la existencia de infinitos valores enteros que se pueden representar y consecuencias para los resultados de operaciones aritméticas las cuales son realizadas directamente en hardware en binario. Considere el siguiente ejemplo."""
 
-# ╔═╡ 36da1916-adb8-46de-ac90-f046974273f7
+# ╔═╡ 2aadc74f-f05f-46b3-bb1a-694f930330b0
 k=Int8(127); l=Int8(3)
 
-# ╔═╡ 1b17b320-4d20-47d2-8da1-c34a7b35830b
+# ╔═╡ fe268560-0ce4-452a-878d-29cf3d622175
 kplus=k+l
 
-# ╔═╡ f1bbb819-c83c-4b62-a376-a7a3ef82df04
+# ╔═╡ 81b8048a-771d-4eff-94dd-0a11893fd6bc
 md"""Observe también el siguiente ejemplo.
 """
 
-# ╔═╡ 2d843847-ef7e-47d0-a255-c5ec3cc5ec57
+# ╔═╡ cd40b185-8bc7-4084-a26f-3ce14822e659
 nb=10^100
 
-# ╔═╡ 65543d5f-4d55-4dc5-917b-8a241e09fe86
+# ╔═╡ f5f9843d-2dae-4295-9a9d-f1dbe1a6f77d
 md"""En Julia podemos ver explícitamente los límites para cada una de las representaciones."""
 
-# ╔═╡ 4ffbafed-ca8d-443e-92ff-ec6a6d76f05d
+# ╔═╡ 47f21c17-2946-416c-bfc8-8f625422b1e9
 for T in [Int8,Int16,Int32,Int64,Int128,UInt8,UInt16,UInt32,UInt64,UInt128]
            println("$(lpad(T,7)): [$(typemin(T)),$(typemax(T))]")
 end
 
-# ╔═╡ 1afd2287-6a84-4f16-ab6c-141fce1782cd
+# ╔═╡ ec90369a-b501-4c55-acb1-a387039d96cb
 md""" 
 # Punto Flotante
 Presentamos ilustraciones simples de cálculo con números de máquina y redondeo.
@@ -113,30 +113,30 @@ está dada por
 $x=s\times q\times 2^m.$
 """
 
-# ╔═╡ db2fc0fd-a234-490e-b3a0-936efd699b9c
+# ╔═╡ e3a0c47b-800b-4335-8cc4-6d6944de6d5f
 md"""**Ejemplo:** 
 
 Para $x=0.5$ tenemos en el formato Float32 tenemos bit par el signo 
 $s_0=0$, tenemos 8 bits para el exponente $m=(01111110)_{{\mbox{expfp}(8)}}=-1$ y 23 bits para el significando $q=(1.00000000000000000000000)_2$. Tenemos lo siguiente.
 """
 
-# ╔═╡ d794e5ad-d893-41c3-a257-2ed0af0390dd
+# ╔═╡ d8dbda21-888c-4ae7-9db0-2bb3f67e30c6
 bitstring(Float32(0.5))
 
-# ╔═╡ 1bb97bb9-ef25-4a20-8d35-38b7caead7b9
+# ╔═╡ c406547c-c093-49c7-976c-4397db35fb10
 begin
 	bs=bitstring(Float32(0.5));
 	println("signo=",bs[1],"\t exp=",bs[2:9],"\t significand=",bs[19:32])	     
 end
 
-# ╔═╡ bf4dadde-a191-494a-bd1f-9b7a6c27608c
+# ╔═╡ b76dc8c8-d564-4105-9852-742b9f14386e
 md"""Puede consultar cuántos bits usa cada uno de estos tipos de datos. 
 
 **Ejemplo:**
 
 Para $x=1.0$ se tiene lo siguiente"""
 
-# ╔═╡ 2783c756-ae95-4112-b66c-927801c287e0
+# ╔═╡ 0b6afa44-ab1a-4bbd-9fdd-e6ed253921f7
 begin
 	x16=Float16(1.0)
 	println("x16=\t",bitstring(x16))
@@ -146,10 +146,10 @@ begin
 	println("x64=\t",bitstring(x64))
 end
 
-# ╔═╡ 6e2e5c03-adfe-427d-9880-cfd38c64321a
+# ╔═╡ 54b16c62-3b92-4bb5-8471-1204433ca447
 md"""Para $x=0.1$ se sigue que"""
 
-# ╔═╡ 1f1253b4-f0d8-4a22-8eea-d0c57e3cff0c
+# ╔═╡ 34610964-a504-4f36-90e1-f714c196b5a8
 begin
 	z16=Float16(0.1)
 	println("x16=\t",bitstring(z16))
@@ -159,10 +159,10 @@ begin
 	println("x64=\t",bitstring(z64))
 end
 
-# ╔═╡ 6a1957f2-e862-4bb0-a0f3-68b2d300534f
+# ╔═╡ c25da692-a21b-4d57-8b6d-f7240895d4d4
 md"""Para $x=\pi$ se tiene lo siguiente"""
 
-# ╔═╡ 649b75ff-e2a2-4b62-81a6-823d33ef330a
+# ╔═╡ 16ce635a-1476-4447-ad79-6415263be9be
 begin
 	y16=Float16(π)
 	println("x16=\t",y16)
@@ -174,19 +174,18 @@ begin
 	println("xBig=\t", yBig)     
 end
 
-# ╔═╡ da416d35-d074-4e37-bff6-cd2f04510d0e
-md"""Podemos consultar por el 
- de la maquina y el rango representado. """
+# ╔═╡ b9d2ea95-b860-42a0-9f70-adc23a4c10a9
+md"""Podemos consultar por el de la máquina y el rango representado. """
 
-# ╔═╡ dcba3ba7-e801-4039-8a78-d1725aafa03e
+# ╔═╡ 1a0485f2-2b27-40a3-9745-f5f20c88fc09
 for Ft in [Float16,Float32,Float64,BigFloat]
            println("$(lpad(Ft,7)): [$(floatmin(Ft)),$(floatmax(Ft))]")
 end
 
-# ╔═╡ 4d0544dc-cc03-442b-8d87-1677501a1356
+# ╔═╡ da147743-83c8-4fa0-86e8-e917ba2125a9
 md"""Los campos son el signo, el significando y el exponente. Por ejemplo. """
 
-# ╔═╡ 48c7168a-56b5-41bf-b493-ddec30da8fee
+# ╔═╡ 7e25b46b-68b6-42b5-8757-1b6510d8eb2a
 begin
 	xeps=bitstring(eps(Float32));
 	println("signo=",xeps[1],"\t exp=",xeps[2:9],"\t significand=",xeps[19:32])
@@ -197,30 +196,29 @@ begin
 	     
 end
 
-# ╔═╡ df0d1912-104d-432f-bb80-baad219e5e8b
+# ╔═╡ 9b151c72-abb0-4136-a861-5cfba35b7fa5
 md"""Debemos tener cuidado al comparar dos variables de tipo float en condiciones para control condicional o control iterativo. Considere los siguientes ejemplos. """
 
-# ╔═╡ 75e4ccf1-d51f-45c2-9bf1-46d731e579e3
+# ╔═╡ ead20605-f528-466c-bbb4-24b7983d4bd1
 (0.1+0.1)==0.2
 
-# ╔═╡ 0f513283-82ad-47f3-84e2-b2d870a9a72d
+# ╔═╡ de7ce91c-4479-49b9-90c4-910ac177e6c9
 (0.1+0.1+0.1)==0.3
 
-# ╔═╡ 70c242d4-7de4-49a0-b3eb-93b757e1cb86
+# ╔═╡ 6fc31485-f15e-4f5f-b70d-d70dd0d03f30
 tol=1E-10; ((0.1+0.1+0.1)-0.3)< tol
 
-# ╔═╡ eb6ab469-4830-4cea-a49a-9b901d5d9d2b
+# ╔═╡ 1e9a8b62-4763-4d57-ad47-c33efaedd2fd
 (0.1+0.1+0.1)≈0.3
 
-# ╔═╡ 986889c7-2aa1-4ec2-ac1c-e9168eb1cd09
+# ╔═╡ 60940ba7-e0a9-4a4e-a246-fc7f0b3d37da
 md"""**Ejemplo:**
 
 Veamos que pasa si intentamos sumar x=1/10 varias veces, esto es, 
 $\displaystyle\sum_{i=1}^N 0.1$. Veamos las siguientes implementaciones. """
 
-# ╔═╡ 3e2df87d-960e-43a4-affd-3b020d9a7928
+# ╔═╡ fa9802de-e004-4996-9e0c-c5d413db0f4c
 begin
-	
 	suma64=0.0
 	N=10^6
 	for i=1:N
@@ -233,7 +231,7 @@ begin
 	     
 end
 
-# ╔═╡ d9016efd-cc95-4ac5-bdc0-32f5e9282eeb
+# ╔═╡ 8ed52425-fb1e-4951-a404-93214861bbcd
 begin
 	suma32=Float32(0.0)
 	for i=1:N
@@ -245,12 +243,12 @@ begin
 	println("El producto es : ",p32)
 end
 
-# ╔═╡ f46a70a5-e090-42d1-922c-7aefd85d8700
+# ╔═╡ b87fcbff-9f3b-4135-935a-59e8068f1fcc
 md"""**Ejemplo:**
 
 Veamos números de máquina positivos pequeños y algunas operaciones."""
 
-# ╔═╡ 71d25ca2-7960-413a-8fad-e210fdd41a6b
+# ╔═╡ 36e2c9f2-42fc-4126-9197-81fff837399e
 begin
 	xx=3E-324
 	yy=2E-324
@@ -259,34 +257,34 @@ begin
 	print("Note tambien que 1/x=\t",1/xx)
 end
 
-# ╔═╡ 8eb0cc2e-07e7-4c45-bde2-f53517004059
+# ╔═╡ 50250407-3fd3-43da-8d18-b8a53eddeaf4
 md""" Ahora veamos con números positivos grandes. """
 
-# ╔═╡ f274879e-93ca-409c-94a5-28b59556949f
+# ╔═╡ 09f917f6-7fc3-4977-9af0-25adebe0c118
 begin
 	xp=1.7E+308
 	#y=1.8E+308 # overflow in numeric constant 
 	print("x=",xp," es un numéro de maquina pero 'y' genera desbordamiento\n")
 end
 
-# ╔═╡ 97fc720c-cfb9-488f-92d4-96333dc35374
+# ╔═╡ eba86e53-615a-49fe-9e55-2ffe24e6402d
 md"""**Ejemplo:**
 
 Verificamos ahora la no-asociatividad de la suma en el siguiente ejemplo."""
 
-# ╔═╡ 0afa9453-b5af-494b-afba-4ddbeae5da8b
+# ╔═╡ 22b6acd3-a782-4986-bd1c-6e7afae9dbbf
 begin
 xr=1E+26-1E+26+1
 yr=1E+26+1-1E+26
 print("x= ",xr, " es diferente de y=",yr)
 end
 
-# ╔═╡ b654e0ec-fa6a-425c-b7b0-547e817da1a1
+# ╔═╡ bacd3120-7faa-4f41-9d94-6c311f081db8
 md"""**Ejemplo:**
 
 En el siguiente ejercicio también podemos verificar la no-asociatividad."""
 
-# ╔═╡ f35cd3c4-6433-4f3c-9422-23a9b6dbeade
+# ╔═╡ 3f86ca55-7ecb-4993-97ca-b3fa57375697
 begin
 	a=1E+308
 	b=1.1E+308
@@ -297,12 +295,12 @@ begin
 	print("x=",xs," que es diferente a  y=",ys)
 end
 
-# ╔═╡ f9ddce28-e503-4203-b02b-831f85a347ec
+# ╔═╡ e0c659f7-c2b6-4d99-9074-027db577a151
 md"""**Ejemplo:**
 
 Otro ejemplo es el de calcular $\sqrt{a^2+b^2}$ con $a=$1E+200 y $b=1$.."""
 
-# ╔═╡ e8846356-38b7-43a5-bb31-d5a7f4a8d63b
+# ╔═╡ 669cdb95-5cc9-40aa-8e52-439fd0b1d2dc
 begin
 	asq=1E+200
 	bsq=1
@@ -310,21 +308,21 @@ begin
 	print(ysqr)
 end
 
-# ╔═╡ dd240d3d-2e96-4a63-b85c-650705c0e288
+# ╔═╡ ae81bdd2-a1e9-492f-99bd-20b9691929f8
 md"""Podemos evitar el desbordamiento por exceso, considerando que
 
 $\sqrt{a^2+b^2} = a \sqrt{1+\frac{b^2}{a^2}},$
 tal como se muestra a continuación"""
 
-# ╔═╡ fc6ba034-1574-48ce-9780-31977607f8a6
+# ╔═╡ 35dd98b4-6abf-44f0-8f6f-1d8b9f909986
 z=asq*sqrt( 1+(bsq/asq)^2)
 
-# ╔═╡ 714fa522-158c-436a-ac0e-86b4b9bf243d
+# ╔═╡ 5a06e7a5-f73a-4a9e-886f-3dad4e7df3d3
 md"""**Ejemplo:**
 
 Se presentan algunas expresiones ideterminadas con las que se debe tener cuidado a la hora de calcular con punto flotante."""
 
-# ╔═╡ 2545e2be-d3eb-4b79-8d80-d06b302e13d4
+# ╔═╡ e0beb0df-ccdc-4e61-8e1d-7bb18323eac2
 begin
 	xt=1
 	yt=0
@@ -338,12 +336,57 @@ begin
 	println("sqrt(NaN)=",sqrt((wt/zt)),"\n")
 end
 
-# ╔═╡ 281296be-ed1a-48f0-81fc-a2e5016da55d
+# ╔═╡ 6315a490-f7d9-436f-8614-0b2dc9ea8b65
+md"""**Ejemplo:**
+
+El siguiente código muestra un código simple para aproximar el **epsilon de la máquina**  para precisión simple en esta máquina. """
+
+# ╔═╡ dca15f82-e2cf-4b21-b35e-1731344c6ab0
+let
+	diferencia = 0.0
+	t = 1.0
+	i = 0
+
+	while diferencia != 1.0
+    	i += 1
+    	t = Float32(t / 2)
+    	uno = Float32(1.0)
+    	diferencia = uno - t
+    	println("La resta de 1-t (", i, ") es ", @sprintf("%.15f", diferencia))
+	end
+
+	println("Epsilon de máquina es aproximadamente ", 2 * t)
+	println("La precisión en bits es ", -log2(2 * t), " bits.")
+	println("La precisión en decimales es ", -log10(2 * t), ".")
+end
+
+# ╔═╡ f6d92c8f-d74b-4a0f-afad-a7181e9e2b90
+md"""Vemos que, para esta máquina, el epsilon de la máquina es $\approx 1e-8$ (en base 10). Esto se puede interpretar como sigue: en esta máquina (en precisión float32) tenemos unos 6 o 7 decimales correctos al redondear. Si bien es cierto que esto genera un error relativo pequeño, en códigos complicados con muchos cálculos intermedios podemos acumular errores y terminar con menos decimales significativos."""
+
+# ╔═╡ 5cec0ece-bfa1-4db6-b3da-e394dc6756ff
+let
+	diferencia = 0.0
+	t = 1.0
+	i = 0
+
+	while diferencia != 1.0
+    	i += 1
+    	t /= 2
+    	diferencia = 1.0 - t
+    	println("La resta de 1-t (", i, ") es ", @sprintf("%.15f", diferencia))
+	end
+
+	println("Epsilon de máquina es aproximadamente ", 2 * t)
+	println("La precisión en bits es ", -log2(2 * t), " bits.")
+	println("La precisión en decimales es ", -log10(2 * t), ".")
+end
+
+# ╔═╡ 52c8a2d4-4f6e-48a7-9f8c-b6887e1f9336
 md"""**Ejemplo:**
 
 Un ejemplo de perdida de dígitos (o cancelación) es el siguiente. """
 
-# ╔═╡ 8628081c-9db1-42ac-8ddd-a6283b59a0f8
+# ╔═╡ a1b95969-6ba3-4fea-bf8e-77710a76b52d
 begin
 	xd=1E-15
 	yd=((1+xd)-1)/xd
@@ -351,7 +394,7 @@ begin
 	print("Con error relativo de ", 100*(yd-1),"%.")
 end
 
-# ╔═╡ 1880359e-f665-4628-98a7-ca7a35a78206
+# ╔═╡ cc26b914-4236-484f-90ff-23ea82af6d3e
 md"""**Ejemplo:**
 
 Un otro ejemplo común de cancelación es cuando se evaluan polinomios usando la expresión de potencias. Por ejemplo, evaluemos 
@@ -359,14 +402,14 @@ Un otro ejemplo común de cancelación es cuando se evaluan polinomios usando la
 $P(x)=(x-1)^7=x^7-7x^6+21x^5-35x^4+35x^3-21x^2+7x-1,$
 usando estás dos expresiones. """
 
-# ╔═╡ c3c091c7-637b-4335-89ac-aa8f16dd8c09
+# ╔═╡ 813b113b-fd0d-4bc3-9c96-73adef9f3424
 md"""Es un buen ejercicio hallar el esquema de Horner para calcular este polinomio y comparar. Observe que dicho esquema de Horner es el siguiente 
 
 $(x-1)^7=\left( \left( \left( \left( \left( \left( x - 7 \right) x + 21  \right) x - 35 \right) x + 35 \right) x - 21 \right) x + 7 \right) x - 1.$
 
 Ahora, grafiquemos estás 3 expresiones."""
 
-# ╔═╡ 23f33d5d-f32e-4328-b7e4-651f7cdcf345
+# ╔═╡ b6fba6dd-a237-4a5b-ad3c-304e79c384ce
 begin
 	aleft=1-12E-3
 	aright=1+12E-3
@@ -380,7 +423,7 @@ begin
 	plot!( xv, p3, label=["Horner"],lw=1)
 end
 
-# ╔═╡ 0510e6d0-2628-4ef8-a9ef-ae3f562b9d2d
+# ╔═╡ c583e199-e203-47e5-a79f-a0cdd47f68e1
 md""" 
 Por último notamos que, aunque el error de redondeo es pequeño al principio, en cálculos complejos puede acumular para ocasionar efectos catastróficos.
 
@@ -389,7 +432,29 @@ Por último notamos que, aunque el error de redondeo es pequeño al principio, e
 **EJEMPLO 2:** La falla de una misión de un misil American Patriot durante la guerra del Golfo en 1991 debido a errores de redondeo en el cálculo de la trayectoria a seguir. https://www.iro.umontreal.ca/~mignotte/IFT2425/Disasters.html
 """
 
-# ╔═╡ a670f208-e006-47f5-89a7-9bebab429f44
+# ╔═╡ a3ca9fa5-04c5-4a9a-b71d-e7e2ebf3ef28
+md"""**Ejemplo:**
+
+A continuación calculamos la recursión $x_0=1, x_1=1/3, x_{n+1}=\frac{13}{3}x_n-\frac{4}{3}x_{n-1}$ de dos formas diferentes. Una usando directamente la definición de la recursión. La otra a partir de la formula análitica de la misma, que es $x_n=\frac{1}{3^n}$."""
+
+# ╔═╡ 9dddb9fa-e402-40e6-b0ae-e8862dd77b78
+let
+	x0 = 1.0
+	x1 = 1/3
+
+	for n in 2:34
+    	x2 = (13/3) * x1 - (4/3) * x0
+    	exac = (1/3)^n
+    	println("Calculado=", @sprintf("%.15f", x2), "\t\tExacto ", exac)
+    	x0 = x1
+    	x1 = x2
+	end
+end
+
+# ╔═╡ 0b7451e6-b120-4d57-bef0-7afc4ddabefd
+md"""Observe que la columna de la izquierda, tiene hasta valore negativos y parece diverge a $-\infty$. Este es otro ejemplo de algoritmo inestable. """
+
+# ╔═╡ 38e773d8-d1b5-4b6d-a8f8-71754f81200c
 md"""
 # Cálculo simbólico
 
@@ -399,43 +464,43 @@ A continuación presentamos algunos comandos de cálculo simbólico.
 
 """
 
-# ╔═╡ 1737d90d-2d20-4f2b-b256-aca34ff19b53
+# ╔═╡ af926570-3b8e-4266-b59b-bb11756c5624
 @variables s t
 
-# ╔═╡ 521da315-bd00-4fa0-958f-ca9ed9d7b81f
+# ╔═╡ a46a458c-978d-474e-b430-c26af6b0f0f0
 r=s^2+t
 
-# ╔═╡ 2c83c7d6-befa-4aae-813d-698eda707646
+# ╔═╡ 77f96cee-bd1b-4ac7-8bcc-099cee207250
 expand(r^4)
 
-# ╔═╡ 57ddf55f-5ca0-443b-abb2-42fe7615cb42
+# ╔═╡ b38f08ed-2bce-4fae-bb8d-a53c48bbba89
 A = [s^2 + t s 2s
      0       t 2t
      t^2 + s s 0]
 
-# ╔═╡ db5e8c5f-3122-4b43-97a8-09b94f35b2ad
+# ╔═╡ 72b97967-dc88-4428-9c7e-f1d5df9eee07
 det(A)
 
-# ╔═╡ fc8a0527-5ac0-43a1-a866-394f9265db5d
+# ╔═╡ dd9d1c23-3ca2-4dbe-a7bc-d228b15bf37b
 D = Differential(t)
 
-# ╔═╡ ddfa13d6-b42e-4a21-89e2-6bceea08b0e8
+# ╔═╡ 5189059e-a40e-4a3f-a655-3f50e194188f
 D(r)
 
-# ╔═╡ 5b5ed004-a54f-4feb-b9ce-3e4a0ccbffee
+# ╔═╡ f96a1bf5-586d-46e1-8104-dadef3f281dc
 expand_derivatives(D(r))
 
-# ╔═╡ 495df1e1-c814-4dd9-97cf-c0d9b852834f
+# ╔═╡ 64eeca0c-5f17-440f-a4e7-ad2ebbcefd92
 B = simplify.([t + t^2 + t + t^2  2t + 4t
                s + s+2t     s^2 - 3s^2 + s^2])
 
-# ╔═╡ 09119c27-56ee-4201-98b2-2dd0d5adfa64
+# ╔═╡ 8538628e-91a6-4fe0-b31b-b1132df1faed
 simplify.(substitute.(B, (Dict(s => (t-1)^2),)))
 
-# ╔═╡ a4d427b5-ab98-43f8-8641-d743e578d456
+# ╔═╡ 73044925-57ee-49af-b306-00ea6152eb88
 md"""# Problemas"""
 
-# ╔═╡ 3b0181ce-5038-4c34-9629-40adb5c585c2
+# ╔═╡ a24e8af1-d969-4bd7-87fb-4d68a4ccd53a
 md"""
 **PROBLEMA 1** ¿Cuánta memoria requiere guardar 100.000 números de punto flotante de precisión doble?¿Cuánta memoria requiere guardar una matriz de números de punto flotante dimensión 100.000 x 100.000?
 
@@ -468,7 +533,7 @@ Use valores pequeños como $x=8^{-1},8^{-2},8^{-3},\dots$. Explique los resultad
 
 """
 
-# ╔═╡ 818df822-2688-49c1-8ace-8494c7562800
+# ╔═╡ d39ad433-1746-46ea-acfe-179073bc27ba
 md"""
 
 **PROBLEMA (Quarteroni,Saleri,Gervasio) 7** El lector puede implementar el calculo de la siguiente recurrencia que approxima $\pi$ (formula de Franc,ois Viète) y estudiar su estabilidad/instabilidad numérica, 
@@ -486,7 +551,7 @@ Verifique esta formula. Implemente y comente los resultados. Esta forma de calcu
 
 """
 
-# ╔═╡ dc6968ae-939a-4821-9072-853d0b5ff737
+# ╔═╡ 41711850-c9fc-4c4d-a32c-c67fdf2a86e5
 md""" # Referencias
 
 [1] Driscoll, T. A., & Braun, R. J. (n.d.). *Fundamentals of Numerical Computation*. Adapted for Julia. Retrieved from https://tobydriscoll.net/fnc-julia/frontmatter.html
@@ -515,11 +580,12 @@ PLUTO_PROJECT_TOML_CONTENTS = """
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 Symbolics = "0c5d862f-8b57-4792-8d23-62f2024744c7"
 
 [compat]
 Plots = "~1.40.4"
-PlutoUI = "~0.7.58"
+PlutoUI = "~0.7.59"
 Symbolics = "~5.33.0"
 """
 
@@ -529,12 +595,12 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.4"
 manifest_format = "2.0"
-project_hash = "89ab8ea32fc4664cef9385f22d89f2e1a86eff08"
+project_hash = "260d7d74b1db24c6370648b590ed88dd942ba3af"
 
 [[deps.ADTypes]]
-git-tree-sha1 = "ae44a0c3d68a420d4ac0fa1f7e0c034ccecb6dc5"
+git-tree-sha1 = "7a6b285f217ba92b5b474b783b4c2e8cf8218aaa"
 uuid = "47edcb42-4c32-4615-8424-f2b9edc5f35b"
-version = "1.5.2"
+version = "1.5.3"
 
     [deps.ADTypes.extensions]
     ADTypesChainRulesCoreExt = "ChainRulesCore"
@@ -977,10 +1043,10 @@ deps = ["Random"]
 uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
 
 [[deps.GLFW_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll"]
-git-tree-sha1 = "ff38ba61beff76b8f4acad8ab0c97ef73bb670cb"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll", "xkbcommon_jll"]
+git-tree-sha1 = "3f74912a156096bd8fdbef211eff66ab446e7297"
 uuid = "0656b61e-2033-5cc2-a64a-77c0f6c09b89"
-version = "3.3.9+0"
+version = "3.4.0+0"
 
 [[deps.GPUArraysCore]]
 deps = ["Adapt"]
@@ -1593,9 +1659,9 @@ version = "0.7.0"
 
 [[deps.SciMLBase]]
 deps = ["ADTypes", "Accessors", "ArrayInterface", "CommonSolve", "ConstructionBase", "Distributed", "DocStringExtensions", "EnumX", "FunctionWrappersWrappers", "IteratorInterfaceExtensions", "LinearAlgebra", "Logging", "Markdown", "PrecompileTools", "Preferences", "Printf", "RecipesBase", "RecursiveArrayTools", "Reexport", "RuntimeGeneratedFunctions", "SciMLOperators", "SciMLStructures", "StaticArraysCore", "Statistics", "SymbolicIndexingInterface", "Tables"]
-git-tree-sha1 = "7a6c5c8c38d2e37f45d4686c3598c20c1aebf48e"
+git-tree-sha1 = "281e82f2ae2b73262fed9e7a518711eb7feb7e59"
 uuid = "0bca4576-84f4-4d90-8ffe-ffa030f20462"
-version = "2.41.3"
+version = "2.42.0"
 
     [deps.SciMLBase.extensions]
     SciMLBaseChainRulesCoreExt = "ChainRulesCore"
@@ -2162,84 +2228,91 @@ version = "1.4.1+1"
 """
 
 # ╔═╡ Cell order:
-# ╟─b763cd10-d1e7-4613-b738-9fb1c1cfa1e5
-# ╟─a7d3298e-0138-4149-a189-0b5a92cfa0e7
-# ╟─5d0d4c4e-b432-437e-9b8e-2f81c79f907e
-# ╟─c08f6550-5278-436d-96ec-408570476631
-# ╟─7b84db99-9375-4dc5-8a3e-414bc176648a
-# ╠═e2feba71-69cb-4f39-92d1-d1f4daefb4ec
-# ╟─fd74ea36-fa50-415c-b4a0-92f594178ab9
-# ╠═37e57a66-a785-45a1-90a0-3413e7f01898
-# ╠═d38e69a8-cbdb-4437-ad5b-64217f3e48d6
-# ╠═2cfc4a3a-91f3-416a-bcf5-89a2ecbb0a61
-# ╠═5ffb3f8c-d31d-4ed1-8a34-dbe13be57c42
-# ╠═c53b615f-b8ca-4427-a52e-ac2e69b54545
-# ╠═4bb033b7-02af-4f8d-be9c-62ee7c4fc554
-# ╠═3681e1d1-4e78-4026-9295-a67950dfd260
-# ╠═1681a1f7-3edd-46e5-8214-a2ac3ab6966d
-# ╟─4aeddca1-790a-41c6-a178-3a6369bd5fcc
-# ╠═36da1916-adb8-46de-ac90-f046974273f7
-# ╠═1b17b320-4d20-47d2-8da1-c34a7b35830b
-# ╟─f1bbb819-c83c-4b62-a376-a7a3ef82df04
-# ╠═2d843847-ef7e-47d0-a255-c5ec3cc5ec57
-# ╟─65543d5f-4d55-4dc5-917b-8a241e09fe86
-# ╟─4ffbafed-ca8d-443e-92ff-ec6a6d76f05d
-# ╟─1afd2287-6a84-4f16-ab6c-141fce1782cd
-# ╟─db2fc0fd-a234-490e-b3a0-936efd699b9c
-# ╠═d794e5ad-d893-41c3-a257-2ed0af0390dd
-# ╟─1bb97bb9-ef25-4a20-8d35-38b7caead7b9
-# ╟─bf4dadde-a191-494a-bd1f-9b7a6c27608c
-# ╟─2783c756-ae95-4112-b66c-927801c287e0
-# ╟─6e2e5c03-adfe-427d-9880-cfd38c64321a
-# ╟─1f1253b4-f0d8-4a22-8eea-d0c57e3cff0c
-# ╟─6a1957f2-e862-4bb0-a0f3-68b2d300534f
-# ╟─649b75ff-e2a2-4b62-81a6-823d33ef330a
-# ╟─da416d35-d074-4e37-bff6-cd2f04510d0e
-# ╟─dcba3ba7-e801-4039-8a78-d1725aafa03e
-# ╟─4d0544dc-cc03-442b-8d87-1677501a1356
-# ╟─48c7168a-56b5-41bf-b493-ddec30da8fee
-# ╟─df0d1912-104d-432f-bb80-baad219e5e8b
-# ╠═75e4ccf1-d51f-45c2-9bf1-46d731e579e3
-# ╠═0f513283-82ad-47f3-84e2-b2d870a9a72d
-# ╠═70c242d4-7de4-49a0-b3eb-93b757e1cb86
-# ╠═eb6ab469-4830-4cea-a49a-9b901d5d9d2b
-# ╟─986889c7-2aa1-4ec2-ac1c-e9168eb1cd09
-# ╟─3e2df87d-960e-43a4-affd-3b020d9a7928
-# ╟─d9016efd-cc95-4ac5-bdc0-32f5e9282eeb
-# ╟─f46a70a5-e090-42d1-922c-7aefd85d8700
-# ╟─71d25ca2-7960-413a-8fad-e210fdd41a6b
-# ╟─8eb0cc2e-07e7-4c45-bde2-f53517004059
-# ╠═f274879e-93ca-409c-94a5-28b59556949f
-# ╟─97fc720c-cfb9-488f-92d4-96333dc35374
-# ╠═0afa9453-b5af-494b-afba-4ddbeae5da8b
-# ╟─b654e0ec-fa6a-425c-b7b0-547e817da1a1
-# ╠═f35cd3c4-6433-4f3c-9422-23a9b6dbeade
-# ╟─f9ddce28-e503-4203-b02b-831f85a347ec
-# ╠═e8846356-38b7-43a5-bb31-d5a7f4a8d63b
-# ╟─dd240d3d-2e96-4a63-b85c-650705c0e288
-# ╠═fc6ba034-1574-48ce-9780-31977607f8a6
-# ╟─714fa522-158c-436a-ac0e-86b4b9bf243d
-# ╠═2545e2be-d3eb-4b79-8d80-d06b302e13d4
-# ╟─281296be-ed1a-48f0-81fc-a2e5016da55d
-# ╠═8628081c-9db1-42ac-8ddd-a6283b59a0f8
-# ╟─1880359e-f665-4628-98a7-ca7a35a78206
-# ╟─c3c091c7-637b-4335-89ac-aa8f16dd8c09
-# ╟─23f33d5d-f32e-4328-b7e4-651f7cdcf345
-# ╟─0510e6d0-2628-4ef8-a9ef-ae3f562b9d2d
-# ╟─a670f208-e006-47f5-89a7-9bebab429f44
-# ╠═1737d90d-2d20-4f2b-b256-aca34ff19b53
-# ╠═521da315-bd00-4fa0-958f-ca9ed9d7b81f
-# ╠═2c83c7d6-befa-4aae-813d-698eda707646
-# ╠═57ddf55f-5ca0-443b-abb2-42fe7615cb42
-# ╠═db5e8c5f-3122-4b43-97a8-09b94f35b2ad
-# ╠═fc8a0527-5ac0-43a1-a866-394f9265db5d
-# ╠═ddfa13d6-b42e-4a21-89e2-6bceea08b0e8
-# ╠═5b5ed004-a54f-4feb-b9ce-3e4a0ccbffee
-# ╠═495df1e1-c814-4dd9-97cf-c0d9b852834f
-# ╠═09119c27-56ee-4201-98b2-2dd0d5adfa64
-# ╟─a4d427b5-ab98-43f8-8641-d743e578d456
-# ╟─3b0181ce-5038-4c34-9629-40adb5c585c2
-# ╟─818df822-2688-49c1-8ace-8494c7562800
-# ╟─dc6968ae-939a-4821-9072-853d0b5ff737
+# ╟─98ab4786-cdc2-422c-b26a-a3fa6cab40ca
+# ╟─86e9dcb4-a96b-4a14-bc64-964ac0370fd0
+# ╟─5a213ee2-64a0-49b6-a03c-b363a3b7dd2e
+# ╟─f94874b9-72cd-4cd1-885b-fd43602d42f0
+# ╟─0f4c585a-93a3-42c2-a301-57a56895f359
+# ╠═feb15edc-8527-45f0-b209-2070f10cb438
+# ╟─c1f6eaf3-b3eb-42c8-bcce-dfc996f48c15
+# ╠═e72bc01c-0268-4fd3-8df3-73e031b4b5b8
+# ╠═edf88bf8-5441-4279-9d05-4f264b89c6fd
+# ╠═287c08cf-5e39-4216-9d0d-f7693e39a5aa
+# ╠═fee16abe-743e-4726-9700-57be9db9de35
+# ╠═0fe47332-5c7b-40f6-9aac-dcf8ebcad8ea
+# ╠═6f30c187-da2b-48d6-b2e0-482dc93faf24
+# ╠═afd95229-ad71-4a29-9fbf-e26030df8ff6
+# ╠═212df9f0-b963-4f0d-8c92-e9a6ca4afb14
+# ╟─045e2cee-61e8-4099-8e61-f5c2b94df1de
+# ╠═2aadc74f-f05f-46b3-bb1a-694f930330b0
+# ╠═fe268560-0ce4-452a-878d-29cf3d622175
+# ╟─81b8048a-771d-4eff-94dd-0a11893fd6bc
+# ╠═cd40b185-8bc7-4084-a26f-3ce14822e659
+# ╟─f5f9843d-2dae-4295-9a9d-f1dbe1a6f77d
+# ╟─47f21c17-2946-416c-bfc8-8f625422b1e9
+# ╟─ec90369a-b501-4c55-acb1-a387039d96cb
+# ╟─e3a0c47b-800b-4335-8cc4-6d6944de6d5f
+# ╠═d8dbda21-888c-4ae7-9db0-2bb3f67e30c6
+# ╟─c406547c-c093-49c7-976c-4397db35fb10
+# ╟─b76dc8c8-d564-4105-9852-742b9f14386e
+# ╟─0b6afa44-ab1a-4bbd-9fdd-e6ed253921f7
+# ╟─54b16c62-3b92-4bb5-8471-1204433ca447
+# ╟─34610964-a504-4f36-90e1-f714c196b5a8
+# ╟─c25da692-a21b-4d57-8b6d-f7240895d4d4
+# ╟─16ce635a-1476-4447-ad79-6415263be9be
+# ╟─b9d2ea95-b860-42a0-9f70-adc23a4c10a9
+# ╟─1a0485f2-2b27-40a3-9745-f5f20c88fc09
+# ╟─da147743-83c8-4fa0-86e8-e917ba2125a9
+# ╟─7e25b46b-68b6-42b5-8757-1b6510d8eb2a
+# ╟─9b151c72-abb0-4136-a861-5cfba35b7fa5
+# ╠═ead20605-f528-466c-bbb4-24b7983d4bd1
+# ╠═de7ce91c-4479-49b9-90c4-910ac177e6c9
+# ╠═6fc31485-f15e-4f5f-b70d-d70dd0d03f30
+# ╠═1e9a8b62-4763-4d57-ad47-c33efaedd2fd
+# ╟─60940ba7-e0a9-4a4e-a246-fc7f0b3d37da
+# ╟─fa9802de-e004-4996-9e0c-c5d413db0f4c
+# ╟─8ed52425-fb1e-4951-a404-93214861bbcd
+# ╟─b87fcbff-9f3b-4135-935a-59e8068f1fcc
+# ╟─36e2c9f2-42fc-4126-9197-81fff837399e
+# ╟─50250407-3fd3-43da-8d18-b8a53eddeaf4
+# ╠═09f917f6-7fc3-4977-9af0-25adebe0c118
+# ╟─eba86e53-615a-49fe-9e55-2ffe24e6402d
+# ╠═22b6acd3-a782-4986-bd1c-6e7afae9dbbf
+# ╟─bacd3120-7faa-4f41-9d94-6c311f081db8
+# ╠═3f86ca55-7ecb-4993-97ca-b3fa57375697
+# ╟─e0c659f7-c2b6-4d99-9074-027db577a151
+# ╠═669cdb95-5cc9-40aa-8e52-439fd0b1d2dc
+# ╟─ae81bdd2-a1e9-492f-99bd-20b9691929f8
+# ╠═35dd98b4-6abf-44f0-8f6f-1d8b9f909986
+# ╟─5a06e7a5-f73a-4a9e-886f-3dad4e7df3d3
+# ╠═e0beb0df-ccdc-4e61-8e1d-7bb18323eac2
+# ╟─6315a490-f7d9-436f-8614-0b2dc9ea8b65
+# ╠═dca15f82-e2cf-4b21-b35e-1731344c6ab0
+# ╟─f6d92c8f-d74b-4a0f-afad-a7181e9e2b90
+# ╠═5cec0ece-bfa1-4db6-b3da-e394dc6756ff
+# ╟─52c8a2d4-4f6e-48a7-9f8c-b6887e1f9336
+# ╠═a1b95969-6ba3-4fea-bf8e-77710a76b52d
+# ╟─cc26b914-4236-484f-90ff-23ea82af6d3e
+# ╟─813b113b-fd0d-4bc3-9c96-73adef9f3424
+# ╟─b6fba6dd-a237-4a5b-ad3c-304e79c384ce
+# ╟─c583e199-e203-47e5-a79f-a0cdd47f68e1
+# ╟─a3ca9fa5-04c5-4a9a-b71d-e7e2ebf3ef28
+# ╠═9dddb9fa-e402-40e6-b0ae-e8862dd77b78
+# ╟─0b7451e6-b120-4d57-bef0-7afc4ddabefd
+# ╟─38e773d8-d1b5-4b6d-a8f8-71754f81200c
+# ╠═af926570-3b8e-4266-b59b-bb11756c5624
+# ╠═a46a458c-978d-474e-b430-c26af6b0f0f0
+# ╠═77f96cee-bd1b-4ac7-8bcc-099cee207250
+# ╠═b38f08ed-2bce-4fae-bb8d-a53c48bbba89
+# ╠═72b97967-dc88-4428-9c7e-f1d5df9eee07
+# ╠═dd9d1c23-3ca2-4dbe-a7bc-d228b15bf37b
+# ╠═5189059e-a40e-4a3f-a655-3f50e194188f
+# ╠═f96a1bf5-586d-46e1-8104-dadef3f281dc
+# ╠═64eeca0c-5f17-440f-a4e7-ad2ebbcefd92
+# ╠═8538628e-91a6-4fe0-b31b-b1132df1faed
+# ╟─73044925-57ee-49af-b306-00ea6152eb88
+# ╟─a24e8af1-d969-4bd7-87fb-4d68a4ccd53a
+# ╟─d39ad433-1746-46ea-acfe-179073bc27ba
+# ╠═41711850-c9fc-4c4d-a32c-c67fdf2a86e5
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
