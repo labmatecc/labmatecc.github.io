@@ -133,7 +133,7 @@ header-includes: |
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>Los cuadernos sobre ecuaciones diferenciales ordinarias abarcan una amplia gama de temas matemáticos y científicos. Desde la introducción a la modelación matemática y las ecuaciones diferenciales hasta la resolución de problemas específicos como el crecimiento de poblaciones, el movimiento de planetas o la dosificación de medicamentos, estos cuadernos ofrecen un panorama completo de cómo las ecuaciones diferenciales se aplican en diferentes contextos. Además, exploran técnicas numéricas y analíticas para resolver ecuaciones, ajustar modelos a datos experimentales y comprender fenómenos naturales y sociales.</p>
+        <p>Los cuadernos sobre ecuaciones diferenciales ordinarias abarcan una amplia gama de temas matemáticos y prácticos. Desde la introducción a la modelación matemática y las ecuaciones diferenciales hasta la resolución de problemas específicos como el crecimiento de poblaciones, el movimiento de planetas o la dosificación de medicamentos, estos cuadernos ofrecen un panorama completo de cómo las ecuaciones diferenciales se aplican en diferentes contextos. Además, exploran técnicas numéricas y analíticas para resolver ecuaciones, ajustar modelos a datos experimentales y comprender fenómenos naturales y sociales.</p>
       </div>
     </div>
   </div>
@@ -149,6 +149,14 @@ header-includes: |
 <div class="button-container">
   <a href="https://labmatecc.github.io/Notebooks/Optimizacion" class="button">Optimización</a>
 </div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>Los cuadernos sobre optimización muestran temas clave en la mejora de decisiones y procesos. En el problema de la dieta, se busca la combinación óptima de alimentos para satisfacer requisitos nutricionales a bajo costo, influenciados por el problema de Stigler, con implicaciones de seguridad alimentaria. El cuaderno de métodos de descenso explora técnicas de optimización numérica, incluyendo el descenso de gradiente y el método de Newton, con aplicaciones prácticas y visualizaciones para facilitar la comprensión.</p>
+      </div>
+    </div>
+  </div>
 
 <hr>
 
