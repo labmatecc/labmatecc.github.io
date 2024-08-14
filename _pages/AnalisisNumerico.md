@@ -173,6 +173,20 @@ header-includes: |
 <hr>
 
 <div class="button-container">
+  <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/Interpolacion" class="button">Interpolación</a>
+</div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p> </p>
+      </div>
+    </div>
+  </div>
+
+<hr>
+
+<div class="button-container">
   <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/AjusteDeCurvas/" class="button">Ajuste de curvas</a>
 </div>
 

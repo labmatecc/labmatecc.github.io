@@ -10,6 +10,7 @@ using PlutoUI
 # ╔═╡ cfd6ea8e-70ee-41af-85c6-b4712e3b9432
 begin
 	using Plots,Interpolations
+	using Polynomials
 	using Colors, ColorVectorSpace, ImageShow, FileIO, ImageIO
 end
 
@@ -30,14 +31,241 @@ Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo.
 # ╔═╡ d4a4f71b-4247-4475-b142-3ac64dea6506
 md"""Usaremos las siguientes librerías:"""
 
-# ╔═╡ aba8caea-9e85-4f46-ac8b-da0967237990
-md"""# Introducción"""
+# ╔═╡ baf62098-80d4-496c-bd52-828833ef3491
+md"""# Interpolación polinomial
+
+A continuación mostraremos la resolución del siguiente problema: se nos proporciona una tabla con $n + 1$ puntos $(x_i, y_i)$, los cuales representan pares de datos:
+
+| $x$ | $x_0$ | $x_1$ | $x_2$ | $\dots$ | $x_n$ |
+|-----|-------|-------|-------|---------|-------|
+| $y$ | $y_0$ | $y_1$ | $y_2$ | $\dots$ | $y_n$ |
+
+Se busca encontrar un polinomio $p$ de menor grado posible tal que $p(x_i) = y_i$ para cada $i$ en el intervalo $0 \leq i \leq n$. Este polinomio se conoce como un polinomio interpolador."""
+
+# ╔═╡ b1240502-6c4a-44a6-84ea-1e2b1d3aa17f
+md"""**Teorema:**
+
+Si $x_0, x_1, \dots, x_n$ son números reales distintos, entonces para valores arbitrarios $y_0, y_1, \dots, y_n$ existe un polinomio único $p_n$ de a lo sumo grado $n$, de manera que:
+
+$p_n(x_i) = y_i \quad \text{para } 0 \leq i \leq n.$
+
+Para detalles de la demostración ver [1].
+"""
+
+# ╔═╡ 69804133-7b6f-4390-bc60-b81b3924f551
+md"""## Forma de Newton del polinomio de interpolación"""
+
+# ╔═╡ 830eb270-6daf-4622-8549-8ac5cdfb4c75
+md"""El polinomio interpolador de Lagrange $P_k(x)$ tiene la forma
+
+$P_k(x) = c_0 + c_1(x - x_0) + c_2(x - x_0)(x - x_1) + \cdots + c_k(x - x_0) \cdots (x - x_{k-1}).$
+
+Es decir,
+
+$P_k(x) = \sum_{i=0}^{k} c_i \prod_{j=0}^{i-1} (x - x_j).$
+"""
+
+# ╔═╡ 96edc903-5828-4819-a529-6914ec6b076a
+md"""Podemos ahora escribir un algoritmo para calcular los coeficientes $c_i$ en la ecuación anterior. Observe que el coeficiente $c_k$ es:
+
+$c_k = \frac{y_k - p_{k-1}(x_k)}{(x_k - x_0)(x_k - x_1) \cdots (x_k - x_{k-1})}$
+
+Con el siguiente algoritmo podemos calcular $c_0, c_1, \dots, c_n$:
+"""
+
+# ╔═╡ 957552fc-b2ff-4ac6-a024-c2505d2a6959
+md"""**ALGORITMO**:
+
+1.   $c_0 \leftarrow y_0$
+2.   **for** $k = 1, 2, \dots, n$ **do**
+3.   $\hspace{0.5cm}d \leftarrow x_k - x_{k-1}$
+4.   $\hspace{0.5cm}u \leftarrow c_{k-1}$
+5.   $\hspace{0.5cm}$**for** $i = k-2, k-3, \dots, 0$ **do**
+6.   $\hspace{1cm}u \leftarrow u \cdot (x_k - x_i) + c_i$
+7.   $\hspace{1cm}d \leftarrow d \cdot (x_k - x_i)$
+8.   $\hspace{0.5cm}$**end for**
+9.   $\hspace{0.5cm} c_k \leftarrow \frac{y_k - u}{d}$
+10.   **end for**
+"""
+
+# ╔═╡ 06fba850-a56c-4e14-af07-909ad67f333d
+md"""La siguiente función calcula los coeficientes $c_i$."""
+
+# ╔═╡ dd53dde5-2815-406c-b288-c432a40b5a9c
+function coef_interpolador_newton(x::Vector{Float64}, y::Vector{Float64})
+    n = length(x)
+    c = zeros(Float64, n)
+    c[1] = y[1]  
+    for k in 2:n
+        d = x[k] - x[k-1]
+        u = c[k-1]
+        for i in k-2:-1:1
+            u = u * (x[k] - x[i]) + c[i]
+            d = d * (x[k] - x[i])
+        end
+        c[k] = (y[k] - u) / d
+    end
+	return c
+end
+
+# ╔═╡ a115b279-bd88-4ab9-a606-4c8f73e8f508
+md"""Una vez calculados los coeficientes $c_i$, podemos ensamblar el polinomio interpolador de Newton. Para esto se crea la siguiente función:"""
+
+# ╔═╡ ca3eb369-059d-4ced-90ea-3839a7cd1863
+function interpolador_newton(x::Vector{Float64}, y::Vector{Float64})
+	c = coef_interpolador_newton(x,y)
+	n = length(c)
+    P = Polynomial([c[1]])
+    for i in 2:n
+        term = Polynomial([1.0]) 
+        for j in 1:(i-1)
+            term *= Polynomial([-x[j], 1.0]) 
+        end
+        P += c[i] * term 
+    end
+	return P
+end
+
+# ╔═╡ b7d52b6b-f915-4569-847f-789dab4c78b5
+md"""**Ejemplo:**
+
+Hallemos el polinomio de menor grado que interpola el siguiente conjunto de datos:
+
+| $x$ | $3$ | $7$ | $1$ | $2$ 
+|-----|-------|-------|-------|-------|
+| $y$ | $10$ | $146$ | $2$ | $0$ |"""
+
+# ╔═╡ c2d4fbfa-335a-4c7a-aee2-3efb8919c248
+md"""Definimos los arreglos de los datos:"""
+
+# ╔═╡ a4d21cce-8e88-401b-9755-684e66a5dc8d
+begin
+	x₁ = [3.0, 7.0, 1.0, 2.0]
+	y₁ = [10.0, 146.0, 2.0, 0.0]
+end
+
+# ╔═╡ cd609723-261c-47b1-b10e-6914472e771f
+md"""Los coeficientes del polinomio interpolador de Newton son:"""
+
+# ╔═╡ 8e184ffc-b162-42bf-8523-8d452632d594
+coef = coef_interpolador_newton(x₁, y₁)
+
+# ╔═╡ 37687f31-fa26-465c-affc-485406522041
+md"""Así el polinomio de Newton es el siguiente"""
+
+# ╔═╡ 40beb0a4-32a2-45c9-83a0-2fa22814da05
+interpolador_newton(x₁, y₁)
+
+# ╔═╡ fa7ce6e1-4f7a-4b5e-9a66-6377ccd2c750
+begin
+	plot(interpolador_newton(x₁, y₁),xlims=(0, 8), ylims=(-3, 150), lw=3,c=:red)
+	scatter!(x₁, y₁,ms=4,c=:green)
+end
+
+# ╔═╡ 5e3a8e60-4ed4-46ec-901a-3624405af210
+md"""## Forma de Lagrange del polinomio de interpolación
+
+Otra forma de hallar el polinomio de interpolación $p$ asociado con una tabla de datos $(x_i, y_i)$, con $0 \leq i \leq n$ es con el polinomio de Lagrange. Con este método podemos expresar $p$ de la siguiente forma
+
+$p(x)=y_0\ell_0(x)+y_1\ell_1(x)+\cdots + y_n\ell_n(x)=\displaystyle\sum_{k=0}^ny_k\ell_k(x),$
+
+donde 
+
+$\ell_i(x) = \prod_{\substack{j=0 \\ j \neq i}}^{n} \frac{x - x_j}{x_i - x_j}, \quad (0 \leq i \leq n).$
+"""
+
+# ╔═╡ bc03b41b-0cee-49aa-80a1-fece4ad45fa8
+md"""La siguiente función nos ayuda a calcular las funciones $\ell_i$:"""
+
+# ╔═╡ e6a730ef-c5dd-4db7-b085-cc841cc6e24e
+function lagrange_ℓ(x::Vector{Float64}, i::Int)
+    n = length(x)
+    ℓ_i = Polynomial([1.0])
+    for j in 1:n
+        if j != i
+            ℓ_i *= Polynomial([-x[j], 1.0]) / (x[i] - x[j])
+        end
+    end
+    return ℓ_i
+end
+
+# ╔═╡ 711e4624-eeb8-4b0b-9d34-de385942f41c
+md"""Así, la siguiente función calcula el polinomio interpolador de Lagrange:"""
+
+# ╔═╡ 32f763c0-e029-4e42-a3e2-6a31c72d3653
+function lagrange_interpolation(x::Vector{Float64}, y::Vector{Float64})
+    p = Polynomial([0.0])
+    n = length(x)
+    for i in 1:n
+        p += y[i] * lagrange_ℓ(x, i)
+    end
+    return p
+end
+
+# ╔═╡ 46e57a15-6040-49ee-89ab-bf54d4d8e79e
+md"""**Ejemplo:**
+
+Hallemos el polinomio interpolador de Lagrange del siguiente conjunto de datos:
+
+| $x$ | $1.5$ | $2.7$ | $3.5$ | $-2.5$  
+|-----|-------|-------|-------|-------|
+| $y$ | $0.0$ | $0.0$ | $0.0$ | $1.0$ |"""
+
+# ╔═╡ a5c38183-c095-472d-851c-99d745b46ff3
+md"""Definimos los datos"""
+
+# ╔═╡ 44f4d54b-71ea-447f-8e23-413e51ffc118
+begin
+	x₂ = [1.5, 2.7, 3.5, -2.5]
+	y₂ = [0.0, 0.0, 0.0, 1.0]
+end
+
+# ╔═╡ 3541a161-c83b-41c4-857f-b7a2c3611fab
+md"""Así, el polinomio es el siguiente:"""
+
+# ╔═╡ 9c47612b-433d-40e7-ba07-0a7de060fe45
+lagrange_interpolation(x₂, y₂)
+
+# ╔═╡ e7aaa509-dda4-4452-8271-9d5d60101abe
+begin
+	plot(lagrange_interpolation(x₂, y₂),xlims=(-3, 4), ylims=(-1, 2),lw=3,c=:red)
+	scatter!(x₂, y₂,ms=4,c=:green)
+end
+
+# ╔═╡ 2e529993-f75f-452f-8910-bc8c51fabf5e
+md"""**Ejemplo:**
+
+Consideremos el conjunto de datos del ejemplo del polinomio de Newton y hallemos su polinomio interpolador de Lagrange. Recordemos que los datos los los siguientes:
+
+| $x$ | $3$ | $7$ | $1$ | $2$ 
+|-----|-------|-------|-------|-------|
+| $y$ | $10$ | $146$ | $2$ | $0$ |"""
+
+# ╔═╡ 60f146cd-7467-4bcd-8e00-70ae91f35557
+md"""Así, el polinomio interpolador de Lagrange es el siguiente:"""
+
+# ╔═╡ b57047c9-6928-4d37-a3e0-a4aea2c31500
+lagrange_interpolation(x₁, y₁)
+
+# ╔═╡ afd3fb07-f100-4f3e-8935-58e5e4fa19ff
+begin
+	plot(lagrange_interpolation(x₁, y₁),xlims=(0, 8), ylims=(-3, 150),lw=3,c=:red)
+	scatter!(x₁, y₁,ms=4,c=:green)
+end
 
 # ╔═╡ 001dac70-9eee-49ab-8e33-bf4e6c57c9dd
-md"""# Interpolación por splines"""
+md"""# Interpolación por splines
+
+Una función spline se compone de varios polinomios, cada uno definido en un subintervalo diferente, que se conectan entre sí cumpliendo ciertas condiciones de continuidad. Supongamos que se han especificado $n + 1$ puntos $t_0 < t_1 < \cdots < t_n$, conocidos como nudos. Además, consideremos que se ha fijado un entero $k \geq 0$. Una función spline de grado $k$ con nudos en $t_0, t_1, \dots, t_n$ es una función $S$ que cumple las siguientes condiciones:
+1.   En cada intervalo $[t_{i-1}, t_i)$, $S$ es un polinomio de grado $\leq k$.
+2.   $S$ tiene una derivada de orden $k-1$ continua en $[t_0, t_n]$.
+
+Para más detalles de esto, ver [1]."""
 
 # ╔═╡ 01aa524b-753a-4b87-9207-59d9b2aa5271
-md"""Tomamos la funcion $f(x)=x(x-2\pi)e^{-x}$ en una muestra de varios puntos e aplicuemos las diferentes interpolaciones."""
+md"""**Ejemplo:**
+
+Tomamos la funcion $f(x)=x(x-2\pi)e^{-x}$ en una muestra de varios puntos y apliquemos las diferentes interpolaciones."""
 
 # ╔═╡ ed34f014-7e23-452a-a76d-8b18c8343c82
 begin
@@ -48,32 +276,30 @@ end
 
 # ╔═╡ 836b01a5-44b7-4159-b71e-00d7aeacbcda
 begin
-	
-tplot=LinRange(0,9,100)
+	tplot=LinRange(0,9,100)
 
-#I_lineal  = interpolate([x';y'], BSpline(Linear()));
+	#Splines constantes
+	I_cst = Interpolations.ConstantInterpolation(x,y)
+	V_cst=I_cst(tplot)
+	plot(tplot,V_cst,lw=2,label="Constante")
 
-I_lineal = Interpolations.LinearInterpolation(x,y)
-V_lineal=I_lineal(tplot)
-plot(tplot,V_lineal,lw=5,label="Lineal")
+	#Splines lineales
+	I_lineal = Interpolations.LinearInterpolation(x,y)
+	V_lineal=I_lineal(tplot)
+	plot!(tplot,V_lineal,lw=2,label="Lineal")
 
-I_cst = Interpolations.ConstantInterpolation(x,y)
-V_cst=I_cst(tplot)
-plot!(tplot,V_cst,lw=5,label="Constant")
+	#Splines cubicos
+	I_s = Interpolations.CubicSplineInterpolation(x,y)
+	V_s=I_s(tplot)
+	plot!(tplot,V_s,lw=2,label="Cúbica")
 
-
-I_s = Interpolations.CubicSplineInterpolation(x,y)
-V_s=I_s(tplot)
-plot!(tplot,V_s,lw=5,label="cibic")
-
-
-
-
-scatter!(x,y,ms=7,label="Datos",legend=:bottomright)
+	scatter!(x,y,ms=7,label="Datos",legend=:bottomright)
 end
 
 # ╔═╡ da596a8e-6cb0-4e67-a25c-c4f37f6b076f
-md"""Ahora queremos 'escanear' el siguiente tipo caligrafico."""
+md"""**Ejemplo:**
+
+Supongamos que queremos "escanear" el siguiente tipo caligráfico."""
 
 # ╔═╡ 983ef21d-f31c-49b3-88cb-5d31326c4128
 begin
@@ -83,7 +309,7 @@ begin
 end
 
 # ╔═╡ a1115c61-4310-4641-b9a6-65ffe43ef0a7
-md"""Introducimos coordenadas y puntos de control."""
+md"""Introducimos coordenadas y puntos de control de la siguiente forma."""
 
 # ╔═╡ 14f0937b-4600-4834-b850-87b2a431f505
 begin
@@ -92,54 +318,58 @@ begin
 	imag2 = load(fname2)
 end
 
+# ╔═╡ 49fa51f7-e6b5-4930-9148-c3cab133097e
+md"""Las coordenadas de los datos escogidos son:"""
+
 # ╔═╡ ab56572e-cca4-4d1c-8e3a-c6940a7cf88a
 begin
 	t=1:14
-coorx=[1 ; 1.3;   2;    3.4;    4;    3.5;    2.4;   2.3;       2.6;   3.4;   4.3;   3.6;   2.6;   2]
-coory=[0 ;1;     2;     3;     2.6;   2;     2.8;   3.6;       4.2;  4.9;  4.5;  4.1;  4.2;  5.5]
-for i=1:14
-  println("|",t[i],"\t|",coorx[i],"\t|",coory[i],"|")
-end
+	coorx=[1 ; 1.3;   2;    3.4;    4;    3.5;    2.4;   2.3;       2.6;   3.4;   4.3;   3.6;   2.6;   2]
+	coory=[0 ;1;     2;     3;     2.6;   2;     2.8;   3.6;       4.2;  4.9;  4.5;  4.1;  4.2;  5.5]
+	for i=1:14
+  	println("|",t[i],"\t|",coorx[i],"\t|",coory[i],"|")
+	end
 end
 
-# ╔═╡ 05271a3d-e6d5-47a3-bf67-26afe4aab16c
-[t coorx]
+# ╔═╡ f2cf91c4-0ee8-4e82-a991-3475401e87af
+md"""Con estos datos realizamos una interpolación por splines cúbicos, obteniendo como resultado la siguiente gráfica."""
 
 # ╔═╡ 53cb4eef-0fe9-4612-a8ef-bcf98639ca07
 begin
-	
-s=LinRange(1,14,1000)
+	s=LinRange(1,14,1000)
 
-icx=Interpolations.CubicSplineInterpolation(t,coorx)
-curvex=icx(s)
+	icx=Interpolations.CubicSplineInterpolation(t,coorx)
+	curvex=icx(s)
 
-icy=Interpolations.CubicSplineInterpolation(t,coory)
-curvey=icy(s)
+	icy=Interpolations.CubicSplineInterpolation(t,coory)
+	curvey=icy(s)
 
-plot(curvex,curvey,lw=5,aspect_ratio = 1.,c=:red)
-scatter!(coorx,coory,ms=5,c=:green)
+	plot(curvex,curvey,lw=5,aspect_ratio = 1.,c=:red)
+	scatter!(coorx,coory,ms=5,c=:green)
 end
 
 # ╔═╡ 4a8fb259-e48a-4f51-955d-9a7790e8b8ad
 md"""# Referencias
-[1] Driscoll, T. A., & Braun, R. J. (n.d.). Fundamentals of Numerical Computation. Adapted to Julia. Retrieved from https://tobydriscoll.net/fnc-julia/frontmatter.html
+[1] Kincaid, D., & Cheney, W. (2002). Numerical analysis: Mathematics of scientific computing. American Mathematical Society.
 
-[2] Sullivan, E. (2020). Numerical Methods: An Inquiry-Based Approach With Python.
+[2] Driscoll, T. A., & Braun, R. J. (n.d.). Fundamentals of Numerical Computation. Adapted to Julia. Retrieved from https://tobydriscoll.net/fnc-julia/frontmatter.html
 
-[3] Bulirsch, R., Stoer, J., & Stoer, J. (2002). Introduction to Numerical Analysis (Vol. 3). Heidelberg: Springer.
+[3] Sullivan, E. (2020). Numerical Methods: An Inquiry-Based Approach With Python.
 
-[4] Stewart, G. W. (1996). Afternotes on Numerical Analysis. Society for Industrial and Applied Mathematics.
+[4] Bulirsch, R., Stoer, J., & Stoer, J. (2002). Introduction to Numerical Analysis (Vol. 3). Heidelberg: Springer.
 
-[5] Quarteroni, A., Saleri, F., & Gervasio, P. (2006). Scientific Computing with MATLAB and Octave (Vol. 3). Berlin: Springer.
+[5] Stewart, G. W. (1996). Afternotes on Numerical Analysis. Society for Industrial and Applied Mathematics.
 
-[6] Hertzmann, A. (n.d.). Machine Learning and Data Mining Lecture Notes. Retrieved from http://www.dgp.toronto.edu/~hertzman/411notes.pdf
+[6] Quarteroni, A., Saleri, F., & Gervasio, P. (2006). Scientific Computing with MATLAB and Octave (Vol. 3). Berlin: Springer.
 
-[7] Goodfellow, I., Bengio, Y., & Courville, A. (n.d.). Deep Learning. Retrieved from https://www.deeplearningbook.org/lecture_slides.html"""
+[7] Hertzmann, A. (n.d.). Machine Learning and Data Mining Lecture Notes. Retrieved from http://www.dgp.toronto.edu/~hertzman/411notes.pdf
+
+[8] Goodfellow, I., Bengio, Y., & Courville, A. (n.d.). Deep Learning. Retrieved from https://www.deeplearningbook.org/lecture_slides.html"""
 
 # ╔═╡ 3c08d3d9-a8d5-4075-a362-7a1c1e347be5
 md"""# Problemas
 
-**1.** Considere la tabla, 
+**Problema 1.** Considere la tabla, 
 
 | Hora      | Temperatura |
 | :---      |    :----:   |
@@ -153,7 +383,7 @@ md"""# Problemas
 Usando diferentes interpolaciones (ver arriba) estimar la temperatura a las 15:30 (15.5). Explique las diferencias de los resultados.¿Cuál  es la mejor respuesta?. Justifique. Puede graficar los resoutados de diferentes interpolaciones como en el ejemplo arriba. """
 
 # ╔═╡ c710a80e-54fa-4975-b366-c2529d02bf00
-md"""**2.(Kincay y Chiney)** Se ha diseñando la letra de la figura y se quiere reproducr (con ayuda de los puntos de control marcados) y usando splines. Use la interpolación por splines y depligue esta figura usando interpolación por splines evaluada en 10 puntos, 100 puntos y 1000 puntos. En el ejemplo arriba el numero de puntos desplegados es la dimension del vectro s. 
+md"""**Problema 2.(Kincay y Chiney)** Se ha diseñando la letra de la figura y se quiere reproducr (con ayuda de los puntos de control marcados) y usando splines. Use la interpolación por splines y depligue esta figura usando interpolación por splines evaluada en 10 puntos, 100 puntos y 1000 puntos. En el ejemplo arriba el numero de puntos desplegados es la dimension del vectro s. 
 """
 
 # ╔═╡ 7be3fe9c-5a48-42c5-93a3-711c6fdc481a
@@ -174,6 +404,7 @@ ImageShow = "4e3cecfd-b093-5904-9786-8bbb286a6a31"
 Interpolations = "a98d9a8b-a2ab-59e6-89dd-64a1c18fca59"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+Polynomials = "f27b6e38-b328-58d1-80ce-0feddd5e7a45"
 
 [compat]
 ColorVectorSpace = "~0.10.0"
@@ -184,6 +415,7 @@ ImageShow = "~0.3.8"
 Interpolations = "~0.15.1"
 Plots = "~1.40.4"
 PlutoUI = "~0.7.59"
+Polynomials = "~4.0.11"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -192,7 +424,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.4"
 manifest_format = "2.0"
-project_hash = "66e2c5df55e110cb960df5b7bb83891b32c86158"
+project_hash = "f829fe843a993cd1ad16e7989e3c7aeda0a85d22"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -321,6 +553,17 @@ git-tree-sha1 = "6cbbd4d241d7e6579ab354737f4dd95ca43946e1"
 uuid = "f0e56b4a-5159-44fe-b623-3e5288b988bb"
 version = "2.4.1"
 
+[[deps.ConstructionBase]]
+deps = ["LinearAlgebra"]
+git-tree-sha1 = "260fd2400ed2dab602a7c15cf10c1933c59930a2"
+uuid = "187b0558-2788-49d3-abe0-74a17ed4e7c9"
+version = "1.5.5"
+weakdeps = ["IntervalSets", "StaticArrays"]
+
+    [deps.ConstructionBase.extensions]
+    ConstructionBaseIntervalSetsExt = "IntervalSets"
+    ConstructionBaseStaticArraysExt = "StaticArrays"
+
 [[deps.Contour]]
 git-tree-sha1 = "439e35b0b36e2e5881738abc8857bd92ad6ff9a8"
 uuid = "d38c429a-6771-53c6-b99e-75d170b6e991"
@@ -429,6 +672,10 @@ deps = ["Artifacts", "JLLWrappers", "Libdl"]
 git-tree-sha1 = "1ed150b39aebcc805c26b93a8d0122c940f64ce2"
 uuid = "559328eb-81f9-559d-9380-de523a88c83c"
 version = "1.0.14+0"
+
+[[deps.Future]]
+deps = ["Random"]
+uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
 
 [[deps.GLFW_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll", "xkbcommon_jll"]
@@ -984,6 +1231,24 @@ git-tree-sha1 = "ab55ee1510ad2af0ff674dbcced5e94921f867a9"
 uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 version = "0.7.59"
 
+[[deps.Polynomials]]
+deps = ["LinearAlgebra", "RecipesBase", "Requires", "Setfield", "SparseArrays"]
+git-tree-sha1 = "1a9cfb2dc2c2f1bd63f1906d72af39a79b49b736"
+uuid = "f27b6e38-b328-58d1-80ce-0feddd5e7a45"
+version = "4.0.11"
+
+    [deps.Polynomials.extensions]
+    PolynomialsChainRulesCoreExt = "ChainRulesCore"
+    PolynomialsFFTWExt = "FFTW"
+    PolynomialsMakieCoreExt = "MakieCore"
+    PolynomialsMutableArithmeticsExt = "MutableArithmetics"
+
+    [deps.Polynomials.weakdeps]
+    ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
+    FFTW = "7a1cc6ca-52ef-59f5-83cd-3a7055c09341"
+    MakieCore = "20f20a25-4f0e-4fdf-b5d1-57303727442b"
+    MutableArithmetics = "d8a4904e-b15c-11e9-3269-09a3773c0cb0"
+
 [[deps.PrecompileTools]]
 deps = ["Preferences"]
 git-tree-sha1 = "5aa36f7049a63a1528fe8f7c3f2113413ffd4e1f"
@@ -1088,6 +1353,12 @@ version = "1.2.1"
 
 [[deps.Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
+
+[[deps.Setfield]]
+deps = ["ConstructionBase", "Future", "MacroTools", "StaticArraysCore"]
+git-tree-sha1 = "e2cc6d8c88613c05e1defb55170bf5ff211fbeac"
+uuid = "efcf1570-3423-57d1-acb7-fd33fddbac46"
+version = "1.1.1"
 
 [[deps.SharedArrays]]
 deps = ["Distributed", "Mmap", "Random", "Serialization"]
@@ -1567,18 +1838,51 @@ version = "1.4.1+1"
 # ╟─cedfdb79-6356-40fa-aa82-642c75be3e1c
 # ╟─d4a4f71b-4247-4475-b142-3ac64dea6506
 # ╠═cfd6ea8e-70ee-41af-85c6-b4712e3b9432
-# ╠═aba8caea-9e85-4f46-ac8b-da0967237990
-# ╠═001dac70-9eee-49ab-8e33-bf4e6c57c9dd
+# ╟─baf62098-80d4-496c-bd52-828833ef3491
+# ╟─b1240502-6c4a-44a6-84ea-1e2b1d3aa17f
+# ╟─69804133-7b6f-4390-bc60-b81b3924f551
+# ╟─830eb270-6daf-4622-8549-8ac5cdfb4c75
+# ╟─96edc903-5828-4819-a529-6914ec6b076a
+# ╟─957552fc-b2ff-4ac6-a024-c2505d2a6959
+# ╟─06fba850-a56c-4e14-af07-909ad67f333d
+# ╠═dd53dde5-2815-406c-b288-c432a40b5a9c
+# ╟─a115b279-bd88-4ab9-a606-4c8f73e8f508
+# ╠═ca3eb369-059d-4ced-90ea-3839a7cd1863
+# ╟─b7d52b6b-f915-4569-847f-789dab4c78b5
+# ╟─c2d4fbfa-335a-4c7a-aee2-3efb8919c248
+# ╠═a4d21cce-8e88-401b-9755-684e66a5dc8d
+# ╟─cd609723-261c-47b1-b10e-6914472e771f
+# ╠═8e184ffc-b162-42bf-8523-8d452632d594
+# ╟─37687f31-fa26-465c-affc-485406522041
+# ╠═40beb0a4-32a2-45c9-83a0-2fa22814da05
+# ╟─fa7ce6e1-4f7a-4b5e-9a66-6377ccd2c750
+# ╟─5e3a8e60-4ed4-46ec-901a-3624405af210
+# ╟─bc03b41b-0cee-49aa-80a1-fece4ad45fa8
+# ╠═e6a730ef-c5dd-4db7-b085-cc841cc6e24e
+# ╟─711e4624-eeb8-4b0b-9d34-de385942f41c
+# ╠═32f763c0-e029-4e42-a3e2-6a31c72d3653
+# ╟─46e57a15-6040-49ee-89ab-bf54d4d8e79e
+# ╟─a5c38183-c095-472d-851c-99d745b46ff3
+# ╠═44f4d54b-71ea-447f-8e23-413e51ffc118
+# ╟─3541a161-c83b-41c4-857f-b7a2c3611fab
+# ╠═9c47612b-433d-40e7-ba07-0a7de060fe45
+# ╟─e7aaa509-dda4-4452-8271-9d5d60101abe
+# ╟─2e529993-f75f-452f-8910-bc8c51fabf5e
+# ╟─60f146cd-7467-4bcd-8e00-70ae91f35557
+# ╠═b57047c9-6928-4d37-a3e0-a4aea2c31500
+# ╟─afd3fb07-f100-4f3e-8935-58e5e4fa19ff
+# ╟─001dac70-9eee-49ab-8e33-bf4e6c57c9dd
 # ╟─01aa524b-753a-4b87-9207-59d9b2aa5271
 # ╠═ed34f014-7e23-452a-a76d-8b18c8343c82
-# ╠═836b01a5-44b7-4159-b71e-00d7aeacbcda
-# ╠═da596a8e-6cb0-4e67-a25c-c4f37f6b076f
+# ╟─836b01a5-44b7-4159-b71e-00d7aeacbcda
+# ╟─da596a8e-6cb0-4e67-a25c-c4f37f6b076f
 # ╟─983ef21d-f31c-49b3-88cb-5d31326c4128
-# ╠═a1115c61-4310-4641-b9a6-65ffe43ef0a7
+# ╟─a1115c61-4310-4641-b9a6-65ffe43ef0a7
 # ╟─14f0937b-4600-4834-b850-87b2a431f505
-# ╠═ab56572e-cca4-4d1c-8e3a-c6940a7cf88a
-# ╠═05271a3d-e6d5-47a3-bf67-26afe4aab16c
-# ╠═53cb4eef-0fe9-4612-a8ef-bcf98639ca07
+# ╟─49fa51f7-e6b5-4930-9148-c3cab133097e
+# ╟─ab56572e-cca4-4d1c-8e3a-c6940a7cf88a
+# ╟─f2cf91c4-0ee8-4e82-a991-3475401e87af
+# ╟─53cb4eef-0fe9-4612-a8ef-bcf98639ca07
 # ╟─4a8fb259-e48a-4f51-955d-9a7790e8b8ad
 # ╟─3c08d3d9-a8d5-4075-a362-7a1c1e347be5
 # ╟─c710a80e-54fa-4975-b366-c2529d02bf00
