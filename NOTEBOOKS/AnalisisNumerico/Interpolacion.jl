@@ -393,6 +393,9 @@ begin
 	imag3 = load(fname3)
 end
 
+# ╔═╡ 85cda24e-2f1b-4c98-8f64-a1d6720c4ebd
+md"""*Figura 3. Letra script con 11 nudos. Elaboración propia, inspirado en [1].*"""
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
@@ -1883,9 +1886,10 @@ version = "1.4.1+1"
 # ╟─ab56572e-cca4-4d1c-8e3a-c6940a7cf88a
 # ╟─f2cf91c4-0ee8-4e82-a991-3475401e87af
 # ╟─53cb4eef-0fe9-4612-a8ef-bcf98639ca07
-# ╟─4a8fb259-e48a-4f51-955d-9a7790e8b8ad
 # ╟─3c08d3d9-a8d5-4075-a362-7a1c1e347be5
 # ╟─c710a80e-54fa-4975-b366-c2529d02bf00
-# ╠═7be3fe9c-5a48-42c5-93a3-711c6fdc481a
+# ╟─7be3fe9c-5a48-42c5-93a3-711c6fdc481a
+# ╟─85cda24e-2f1b-4c98-8f64-a1d6720c4ebd
+# ╟─4a8fb259-e48a-4f51-955d-9a7790e8b8ad
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
