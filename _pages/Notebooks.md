@@ -121,12 +121,6 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/" class="button">Cadenas de Markov</a>
-</div>
-
-<hr>
-
-<div class="button-container">
   <a href="https://labmatecc.github.io/Notebooks/EDO/" class="button">Ecuaciones Diferenciales Ordinarias</a>
 </div>
 
@@ -141,7 +135,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/" class="button">Introducción a las Ciencias de la Computación</a>
+  <a href="https://labmatecc.github.io/Notebooks/IntroCCyP" class="button">Introducción a las Ciencias de la Computación y la Programación</a>
 </div>
 
 <hr>
