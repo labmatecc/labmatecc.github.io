@@ -11,7 +11,7 @@ using PlutoUI
 using LinearAlgebra, Plots, Polynomials, SpecialMatrices
 
 # ╔═╡ 24c9f8a9-ad90-413a-9660-9da7a068f492
-PlutoUI.TableOfContents(title="Cículos de Gerschgorin", aside=true)
+PlutoUI.TableOfContents(title="Cículos de Gershgorin", aside=true)
 
 # ╔═╡ 1f760cdf-6171-4ed7-b06d-60bc6a52105b
 md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**
@@ -27,23 +27,23 @@ Elaborado por Juan Galvis, Francisco Gómez, Carlos Nosa y Yessica Trujillo.
 # ╔═╡ 2af1d5c5-5ea5-431a-a008-84419619e32c
 md"""Usaremos las siguientes librerías:"""
 
-# ╔═╡ 8b2829ba-4965-496f-b23a-70e284dc8663
+# ╔═╡ b1865cbd-9bdc-4cd9-999c-be7dfb673fd0
 md"""# Introducción
 
-Para hallar los valores propios de una matriz, existen diversos métodos que permiten localizarlos y estimarlos sin necesidad de calcularlos explícitamente. Entre estos métodos, los discos de Gerschgorin, los discos de Brauer y los discos generalizados de Gerschgorin proporcionan regiones en el plano complejo donde se pueden encontrar los valores propios de una matriz."""
+Para hallar los valores propios de una matriz, existen diversos métodos que permiten localizarlos y estimarlos sin necesidad de calcularlos explícitamente. Entre estos métodos, los discos de Gershgorin, los discos de Brauer y los discos generalizados de Gershgorin proporcionan regiones en el plano complejo donde se pueden encontrar los valores propios de una matriz."""
 
-# ╔═╡ 6a5aa821-9df8-4bed-838b-24c1a39a3abb
+# ╔═╡ feb108d5-f01d-4463-9671-9f82b7070e89
 md"""# Localización de valores propios"""
 
-# ╔═╡ a7bed1fb-54c0-4708-9f44-0860bb6558a4
-md"""**Teorema 1: Discos de Gerschgorin.** 
+# ╔═╡ 6e249b50-adb1-4900-ae47-d947e5c1277d
+md"""**Teorema 1: Discos de Gershgorin.** 
 
 Todos los valores propios de una matriz $A\in\mathbb{R}^{d\times d}$ están localizados en el conjunto 
 
 $\bigcup_{i=1}^{d}Γ_{i}$$ con $$Γ_{i}  = \{z\in ℂ : |z-a_{ii}|\leq R_{i}\}$
 y $a_{ii}$ es la entrada $(i,i)$ de la diagonal de la matriz $A$ y $R_i = \displaystyle\sum_{j=1 ,j\not=i}^{d}|a_{ij}|$."""
 
-# ╔═╡ f878ce12-250f-41f0-aac9-7655bb898092
+# ╔═╡ 24af59c8-44ed-4839-a62c-20d049b07ee9
 md"""**Demostración.** Para $λ$ un valor propio de $A$ considere un vector propio $x$ y sea $m$ el índice del componente del vector con norma mayor, ahora considere el vector $y = x/|x_m|$, así, $y$ también es un vector propio de $A$ asociado a $λ$ con $|y_m| = 1$ y $|y_i|\leq 1$ para todo $i$. Puesto que $Ay = \lambda y$ entonces
 
 $\sum^{d}_{k=1} a_{mk}y_k = λ y_m$
@@ -54,11 +54,11 @@ usando las propiedades del vector $y$, concluimos que
 
 $|\lambda - a_{mm}| \leq \sum^{d}_{k=1, ~ k\not=m} |a_{mk}||y_k| \leq  \sum^{d}_{k=1, ~ k\not=m} |a_{mk}| \text{.}$"""
 
-# ╔═╡ 85079ef4-8af6-4761-a171-a4d50de9d621
-md"""La siguiente función genera y visualiza los discos de Gerschgorin para una matriz dada."""
+# ╔═╡ 9c64c491-2368-43b5-87d1-96ecf4789b31
+md"""La siguiente función genera y visualiza los discos de Gershgorin para una matriz dada."""
 
-# ╔═╡ 19f3dc60-83f1-46e7-867f-0d4f87da1ebb
-function allGreschdisksforA(A::Matrix{Float64}; r, k)
+# ╔═╡ ae72712e-dab6-4319-a970-7de3f578ff09
+function allGershgorindisksforA(A::Matrix{Float64}; r, k)
     rango = LinRange(-r, r, k)
     n = size(A, 1)
     D = diag(A)
@@ -84,59 +84,59 @@ function allGreschdisksforA(A::Matrix{Float64}; r, k)
     E = eigen(A).values
 
 	p = plot(
-    scatter(real(resultadoG), imag(resultadoG), ms=2, ma=0.5, markerstrokecolor = :auto, color=:yellow, label="Gerschgorin"),
+    scatter(real(resultadoG), imag(resultadoG), ms=2, ma=0.5, markerstrokecolor = :auto, color=:yellow, label="Gershgorin"),
     xlims=(-r, r), ylims=(-r, r), aspect_ratio=1,         
     xlabel="Parte Real", 
     ylabel="Parte Imaginaria",
-    title="Discos de Gerschgorin")
+    title="Discos de Gershgorin")
 
 scatter!(p, real(E), imag(E), color=:black, markerstrokecolor = :auto, label="Eigenvalues")
 end
 
-# ╔═╡ f7c088b5-2995-44c2-85e4-45837625d22b
+# ╔═╡ df303479-f693-4ca6-9b8c-725f1c6139ba
 md"""**Ejemplo:**
 
 Consideremos la siguiente matriz aleatoria de tamaño $3\times 3$, y visualicemos sus discos."""
 
-# ╔═╡ 3109cfcf-f805-4ace-b5da-14b2e95d6d0c
+# ╔═╡ e757ecb6-7325-4d54-9a08-55e09c1f7f21
 A = 2 .* rand(3, 3) .- 1
 
-# ╔═╡ 096562cb-7b8d-41bb-8315-5200db361fc4
+# ╔═╡ 13ac47ba-0afd-499a-a5ca-a19389a8020a
 md"""Note que los valores propios de $A$ son los siguientes."""
 
-# ╔═╡ 48e64e4a-80d7-4735-971b-88dcf78ad3ab
+# ╔═╡ 508ddc96-1591-4add-b2e5-4f1e85633255
 eigen(A).values
 
-# ╔═╡ 2641c55d-8a81-4843-a537-e38f831e3eb4
-allGreschdisksforA(A, r=3, k=250)
+# ╔═╡ 4f697a44-944f-4c68-8dbc-c94eaa36cafa
+allGershgorindisksforA(A, r=3, k=250)
 
-# ╔═╡ 6860c636-08b9-4427-a47c-ebf7c106a2af
+# ╔═╡ 6285ea31-58de-4cdc-a094-df8a380a01bc
 md"""Un corolario del Teorema 1 es el siguiente."""
 
-# ╔═╡ dd0a5ff6-2e12-446f-945e-7fb6fb6e9c2b
+# ╔═╡ 839a1710-fcd2-4182-b609-c9236f5379ee
 md"""**Corolario 2.** Toda matriz estrictamente diagonal dominante es invertible."""
 
-# ╔═╡ c76aecbc-b1a1-4cff-a7ba-93e53865d403
+# ╔═╡ f302448b-bcbb-45d1-b766-d008d30b0e8e
 md"""**Ejemplo:**
 
 Consideremos la siguiente matriz diagonal dominante, que por corolario es invertible."""
 
-# ╔═╡ c14ea4fc-5d10-460c-af51-c3acb2486b3d
+# ╔═╡ 84c4eb5a-fa0d-415b-926b-06c91e69f04a
 A₂ = (2 .* rand(3, 3) .- 1) .+ 3 .* diagm([1, -1, 1])
 
-# ╔═╡ 7474cfb7-e594-4642-a35a-6a3848a14de4
+# ╔═╡ 2126aa08-4242-46bc-af6e-3f6a5210b089
 md"""Sus valores propios son:"""
 
-# ╔═╡ 82b91b19-07a7-4446-8996-3a5716be81e9
+# ╔═╡ 1d44bcde-d09f-446d-b0e5-5b847a249faa
 eigen(A₂).values
 
-# ╔═╡ b2dc7b74-eeef-4433-ba46-c805ae0b3004
-md"""Y los círculos de Gerschgorin de la matriz anterior son:"""
+# ╔═╡ a7e265d0-1a34-41e1-abbd-21471979123a
+md"""Y los círculos de Gershgorin de la matriz anterior son:"""
 
-# ╔═╡ 8a4a6c28-cc01-401b-97b3-0bbb3ec15192
-allGreschdisksforA(A₂, r=5, k=300)
+# ╔═╡ c442488b-6506-413c-a053-017c9e5ceb3a
+allGershgorindisksforA(A₂, r=5, k=300)
 
-# ╔═╡ 5a2e87ef-a8ba-4f6c-983d-efa48ad2f571
+# ╔═╡ d6d1e3ee-aee9-4c3f-a6a5-afb07b5e13fe
 md"""**Corolario 3.** 
 
 Si $\lambda \in ℂ$ es un valor propio de una matriz $A\in\mathbb{R}^{d\times d}$ entonces $\lambda$ pertenece al disco 
@@ -144,7 +144,7 @@ Si $\lambda \in ℂ$ es un valor propio de una matriz $A\in\mathbb{R}^{d\times d
 $D\left(0,\displaystyle\max_{1\leq i \leq d}(|a_{ii}|) + \displaystyle\max_{1\leq i \leq d}{\sum^{d}_{j=1 ~ j\not = i}}|a_{ij}|\right),$
 donde $a_{ij}$ es la entrada $(i,j)$ de la matriz $A$."""
 
-# ╔═╡ efd566af-d63b-496d-a358-2e2212867e54
+# ╔═╡ 542b70b4-d40b-411a-b47b-ec81804866e6
 md"""**Teorema 4: Discos de Brauer.** 
 
 Todos los valores propios de una matriz $A\in\mathbb{R}^{d\times d}$ están contenidos en la unión de $\binom{d}{2}$ conjuntos
@@ -154,18 +154,18 @@ donde
 
 $B_{ij} = \{z\in ℂ : |z-a_{ii}|\cdot|z-a_{jj}|\leq R_{i}R_{j}\}.$"""
 
-# ╔═╡ 66a95a94-8692-49be-b7f7-b75ad2792324
-md"""**Teorema 5: Discos generalizados de Gerschgorin.** 
+# ╔═╡ 622d0733-261c-4bbf-b703-8175130e94d6
+md"""**Teorema 5: Discos generalizados de Gershgorin.** 
 
 Todos los valores propios de una matriz $A\in\mathbb{R}^{d\times d}$ están contenidos en la unión de los siguientes conjuntos
 
 $\Omega_{ij} = \{z\in ℂ : |(z-a_{ii})(z-a_{jj})-a_{ij}a_{ji}|\leq |z-a_{jj}|R_{ij}+|a_{ij}|R_{ji}\},$
 donde $R_{ij} = \sum_{k=1, k\not=i,j}^{d}|a_{ik}|$."""
 
-# ╔═╡ ddd6bd2c-849e-4674-a50c-edce64fba21b
-md"""Teniendo en cuenta los Teoremas 4 y 5, vamos a construir una función que visualice los discos de Gerschgorin, los discos de Brauer y los discos generales de Gerschgorin."""
+# ╔═╡ 3a044287-92e3-4924-910c-a4a95305682d
+md"""Teniendo en cuenta los Teoremas 4 y 5, vamos a construir una función que visualice los discos de Gershgorin, los discos de Brauer y los discos generales de Gershgorin."""
 
-# ╔═╡ d97e44a0-60aa-4511-a25a-4e8c13747ab0
+# ╔═╡ a04aa521-9799-4f8a-958d-6ddc05255d87
 function alldisksforA(A; r, k)
     rango = LinRange(-r, r, k)
     n = size(A, 1)
@@ -219,7 +219,7 @@ function alldisksforA(A; r, k)
 
     p = plot(
     real(resultadoG), imag(resultadoG), seriestype=:scatter, 
-    markerstrokecolor=:auto, color=:blue, label="Gerschgorin",
+    markerstrokecolor=:auto, color=:blue, label="Gershgorin",
     xlims=(-r, r), ylims=(-r, r), aspect_ratio=1,
     xlabel="Parte Real",
     ylabel="Parte Imaginaria",
@@ -227,37 +227,37 @@ function alldisksforA(A; r, k)
 
 	plot!(p, real(resultadoB), imag(resultadoB), seriestype=:scatter, markerstrokecolor=:auto, color=:deepskyblue, label="Brauer")
 
-	plot!(p, real(resultadoO), imag(resultadoO), seriestype=:scatter, markerstrokecolor=:auto, color=:cyan, label="General Gerschgorin")
+	plot!(p, real(resultadoO), imag(resultadoO), seriestype=:scatter, markerstrokecolor=:auto, color=:cyan, label="General Gershgorin")
 
 	plot!(p, real(E), imag(E), seriestype=:scatter, color=:black, markerstrokecolor=:auto, label="Eigenvalues")
 end
 
-# ╔═╡ 47e2d763-86a5-468a-89fb-8deb26a071d6
+# ╔═╡ a9b0a665-f905-43e9-a877-5567ef3ea4c4
 md"""**Ejemplo:**
 
 Consideremos la siguiente matriz:"""
 
-# ╔═╡ fc2f79d8-f729-457d-b463-55a83a68a38d
+# ╔═╡ 386355b9-3ad3-4f90-8fcd-cdc465b4c8e7
 A₃ = 2 .* rand(3, 3) .- 1
 
-# ╔═╡ 0d78a9c2-6678-46ee-b99c-2056a74c1783
+# ╔═╡ 229eb2f6-70dc-4984-9048-ed7efba2987c
 md"""Visualicemos los discos en el plano complejo:"""
 
-# ╔═╡ 3fdc8489-7ca1-4b4f-adb2-6aca10c972e6
+# ╔═╡ 2a734e01-6332-4f6a-a4c9-75c086cb31ed
 alldisksforA(A₃, r=3.0, k=200)
 
-# ╔═╡ 0e80bf5f-cea1-4610-bc19-b7462f6218b5
+# ╔═╡ 775f02d7-946c-4fa5-8244-09a97effdec0
 md"""**Ejemplo:**
 
 Consideremos ahora una matriz con entradas enteras, y hallemos sus discos."""
 
-# ╔═╡ 74fe5c03-d0f6-438a-945a-63e20172e0ab
+# ╔═╡ 81eba9ea-4db6-4e0c-ac48-2a371b44353c
 A₄ = rand(-7:7, 7, 7)
 
-# ╔═╡ 82ff37ed-6e40-402a-a0d7-b10669965e2c
+# ╔═╡ b861cfad-c5f8-49d3-9524-011f38cb538f
 alldisksforA(A₄, r=60.0, k=250)
 
-# ╔═╡ 5877b0c9-d614-42be-818d-1ed413e6d579
+# ╔═╡ 49bc5223-fde4-4076-aa67-2472a1a5494d
 md"""**Ejemplo:**
 
 Hagamos el análisis para una matriz particular. Considere la siguiente matriz
@@ -269,29 +269,29 @@ $A = \begin{pmatrix}
 \end{pmatrix}$
 """
 
-# ╔═╡ 982cece7-c817-41e3-b9b7-3463b68e18d2
+# ╔═╡ add1c8b1-1640-4df1-8e36-b5f807a1c306
 A₅ = [1 0 1; 0 2 0; 1 1 0] #Definimos la matriz
 
-# ╔═╡ c0365e7c-6ec7-4b31-a10e-254bee5f47ad
+# ╔═╡ 0cf03353-e6c4-42c9-a50b-61478abae3e3
 md"""El polinomio característico es $p_{A}(λ) = -\lambda ^3 + 3 \lambda^2 -\lambda -2$ y sus valores propios son $\{\frac{1}{2}(1-\sqrt{5}),\frac{1}{2}(1+\sqrt{5}),2\}$, tal como se muestra a continuación."""
 
-# ╔═╡ 70b4c212-83ae-465e-9b21-5d513c60759e
+# ╔═╡ ccac524b-6958-4e13-a198-f8e4aaa019c1
 eigen(A₅).values
 
-# ╔═╡ cfd3a2a7-7e92-43cf-a0b4-fc519e9fc554
+# ╔═╡ 0a31a261-9654-4b55-86e6-97a90806ca89
 md"""Luego, los discos asociados a dicha matriz son:"""
 
-# ╔═╡ d51f0728-5dcb-4b28-a105-5f231bf9b692
+# ╔═╡ 192c61b8-fa45-400c-84a9-fcefda2f7a85
 alldisksforA(A₅, r=4, k=750)
 
-# ╔═╡ 3f82b093-cbca-4483-8ab0-a743a717a7f6
+# ╔═╡ 1e1b7eca-4ad2-4bea-bc18-dbbd29a4fc0e
 md"""Las desigualdades correspondientes a cada uno de los conjuntos que acotan los valores propios de la matriz $A$ son las siguientes:
 
 Suponga que $z = x + iy \in ℂ$ y $x,y\in ℝ$,
 
 
 
-*   Discos de Gerschgorin
+*   Discos de Gershgorin
 1.   $|z- 1 |\leq 1 ⟼ (x-1)^2 +y^2\leq 1$
 2.   $|z- 2 |\leq 0 ⟼ (x,y) = (2,0)$
 3.   $|z|\leq 2 ⟼ x^2+y^2\leq 4$
@@ -301,7 +301,7 @@ Suponga que $z = x + iy \in ℂ$ y $x,y\in ℝ$,
 5.   $|z- 1 ||z|\leq 2 ⟼x^4+2x^2y^2+y^4-2x^3-2xy^2+x^2+y^2\leq 4$
 6.   $|z- 2 ||z|\leq 0 ⟼(x,y) = (0,0),(2,0)$
 
-*   Conjuntos de Gerschgorin generalizado
+*   Conjuntos de Gershgorin generalizado
 7.   $|(z- 1 )(z- 2 )|\leq|z- 2 | ⟼ (x-1)^2+y^2\leq 1 \quad (x,y) = (2,0)$
 8.   $|(z- 1 )(z)- 1 |\leq 1 ⟼ (x^2-y^2-x-1)^2 + (2xy-y)^2 \leq 1$
 9.   $|(z- 2 )(z- 1 )|\leq 0 ⟼ (x,y) = (1,0),(2,0)$
@@ -310,7 +310,7 @@ Suponga que $z = x + iy \in ℂ$ y $x,y\in ℝ$,
 12.   $|(z )(z- 2 ) |\leq|z- 2 | ⟼ x^2+y^2\leq 1 \quad (x,y) = (2,0)$
 """
 
-# ╔═╡ 17f9eefc-c53c-41c8-8f6e-c38a463d0b80
+# ╔═╡ f148667d-bc71-49d1-a9f2-47d0dc83b4fa
 md"""# Ceros de polinomios
 
 Para todo polinomio se puede definir la matriz compañera de la siguiente manera: Sea $p(x) = c_0 + c_1 x + \ldots + c_{n-1}x^{n-1} + x^{n}$ un polinomio en $\mathbb{R}[x]$, la matriz compañera se define como
@@ -327,7 +327,7 @@ con $C(p(x)) \in \mathbb{R}^{n \times n}$. Con esta definición es fácil demost
 **Teorema 6.** El polinomio característico de $C(p(x))$ es el polinomio $p(x)$.
 """
 
-# ╔═╡ 593afb26-7254-4149-8ac5-63ce589aea45
+# ╔═╡ f0dabfbf-887a-490a-8430-b1c253f2e72d
 md"""**Ejemplo:**
 
 Para el polinomio $p(x) = (x-1)(x-2i)(x+2i) = x^3 - x^2 + 4x - 4$, la matriz de compañía es
@@ -338,42 +338,42 @@ $C(p(x)) = \begin{pmatrix}
 0 & 1 & 1
 \end{pmatrix}$"""
 
-# ╔═╡ 07bddafe-1832-4ffa-baf3-cae19486fc01
+# ╔═╡ 28c0ba45-66da-49d9-8b73-6b4990ac9510
 md"""La función $\texttt{Companion()}$ halla la matriz de compañia teniendo en cuenta los coeficientes del polinomio."""
 
-# ╔═╡ 8f800d74-74e8-4656-a7ae-17aba925d3bb
+# ╔═╡ dd02620b-d080-4255-9dce-6782ddb6679a
 md"""Definimos los coeficientes del polinomio:"""
 
-# ╔═╡ 194e3552-0a49-484d-9546-e9d6e0a752c7
+# ╔═╡ a7785c7b-3d72-4757-88a7-ee0e2b9ee28f
 coef = [-4.0, 4.0, -1.0, 1.0]
 
-# ╔═╡ 9cac67bf-9bb7-4b19-9bf8-14ac7bdf3871
+# ╔═╡ 11733a86-4235-474e-ac76-9d0deb7ff6c6
 md"""Definimos el polinomio,"""
 
-# ╔═╡ a7e87c4c-f182-4fa3-b18c-d37c1bf0cf87
+# ╔═╡ 2c645cb4-d33f-4024-b91d-fc8fa5be58ca
 P = Polynomial(coef)
 
-# ╔═╡ 7c4582e3-fd79-4a4b-9bfd-db2d8a7a89af
+# ╔═╡ bc5e281c-9e36-4a42-a30a-e75981ca34ba
 md"""Creamos la matriz de compañia:"""
 
-# ╔═╡ 938c19eb-ecde-42e3-bfaa-d78cc0588d2f
+# ╔═╡ ca2f96ba-a13e-4150-a7ea-c0b786814609
 B = Companion(P)
 
-# ╔═╡ 2f48671d-02a8-4299-a657-afaebc57b4a4
+# ╔═╡ 245470ed-7132-4396-b678-d169f4e56fdf
 md"""Se tiene así la siguiente región"""
 
-# ╔═╡ 23d8a8d1-07de-4836-9958-a70c774ced52
+# ╔═╡ 7239338a-606b-4c32-a555-fb51c7e7167e
 alldisksforA(B, r=7, k=500)
 
-# ╔═╡ 153a42bf-6a36-42f2-968f-3df3285f5ac7
+# ╔═╡ e619dccb-42fc-424c-a782-a1acaddeb934
 md"""Concluimos este análisis con el siguiente teorema."""
 
-# ╔═╡ d724e9a1-db47-4d51-9a96-d734d0afc7f7
+# ╔═╡ ce4f637c-839f-4b4f-a291-318e1b46a637
 md"""**Teorema 7.** 
 
 Un polinomio mónico de la forma $p(x) = c_0 + c_1 x + \ldots + c_{n-1}x^{n-1} + x^{n}$ con $p(x) \in ℂ[x]$ tiene todas sus raíces en el disco $D[0,1+|c_{n-1}|]$."""
 
-# ╔═╡ 01c70fd8-5173-4c61-9924-c19799188448
+# ╔═╡ 22d9f19e-a542-4afb-8485-a7d3b16b5b16
 md"""# Referencias
 
 [1] Melman, A. (2010). Generalizations of Gershgorin disks and polynomial zeros. Proceedings of the American Mathematical Society, 138(7). https://doi.org/10.1090/s0002-9939-10-10294-9
@@ -1520,57 +1520,57 @@ version = "1.4.1+1"
 # ╟─813d6c1c-07b8-46f3-8a80-59943b8f8182
 # ╟─2af1d5c5-5ea5-431a-a008-84419619e32c
 # ╠═200eba1e-10b6-41ae-a1ba-260201dcb08a
-# ╟─8b2829ba-4965-496f-b23a-70e284dc8663
-# ╟─6a5aa821-9df8-4bed-838b-24c1a39a3abb
-# ╟─a7bed1fb-54c0-4708-9f44-0860bb6558a4
-# ╟─f878ce12-250f-41f0-aac9-7655bb898092
-# ╟─85079ef4-8af6-4761-a171-a4d50de9d621
-# ╠═19f3dc60-83f1-46e7-867f-0d4f87da1ebb
-# ╟─f7c088b5-2995-44c2-85e4-45837625d22b
-# ╠═3109cfcf-f805-4ace-b5da-14b2e95d6d0c
-# ╟─096562cb-7b8d-41bb-8315-5200db361fc4
-# ╠═48e64e4a-80d7-4735-971b-88dcf78ad3ab
-# ╟─2641c55d-8a81-4843-a537-e38f831e3eb4
-# ╟─6860c636-08b9-4427-a47c-ebf7c106a2af
-# ╟─dd0a5ff6-2e12-446f-945e-7fb6fb6e9c2b
-# ╟─c76aecbc-b1a1-4cff-a7ba-93e53865d403
-# ╠═c14ea4fc-5d10-460c-af51-c3acb2486b3d
-# ╟─7474cfb7-e594-4642-a35a-6a3848a14de4
-# ╠═82b91b19-07a7-4446-8996-3a5716be81e9
-# ╟─b2dc7b74-eeef-4433-ba46-c805ae0b3004
-# ╟─8a4a6c28-cc01-401b-97b3-0bbb3ec15192
-# ╟─5a2e87ef-a8ba-4f6c-983d-efa48ad2f571
-# ╟─efd566af-d63b-496d-a358-2e2212867e54
-# ╟─66a95a94-8692-49be-b7f7-b75ad2792324
-# ╟─ddd6bd2c-849e-4674-a50c-edce64fba21b
-# ╠═d97e44a0-60aa-4511-a25a-4e8c13747ab0
-# ╟─47e2d763-86a5-468a-89fb-8deb26a071d6
-# ╠═fc2f79d8-f729-457d-b463-55a83a68a38d
-# ╟─0d78a9c2-6678-46ee-b99c-2056a74c1783
-# ╟─3fdc8489-7ca1-4b4f-adb2-6aca10c972e6
-# ╟─0e80bf5f-cea1-4610-bc19-b7462f6218b5
-# ╠═74fe5c03-d0f6-438a-945a-63e20172e0ab
-# ╟─82ff37ed-6e40-402a-a0d7-b10669965e2c
-# ╟─5877b0c9-d614-42be-818d-1ed413e6d579
-# ╠═982cece7-c817-41e3-b9b7-3463b68e18d2
-# ╟─c0365e7c-6ec7-4b31-a10e-254bee5f47ad
-# ╠═70b4c212-83ae-465e-9b21-5d513c60759e
-# ╟─cfd3a2a7-7e92-43cf-a0b4-fc519e9fc554
-# ╟─d51f0728-5dcb-4b28-a105-5f231bf9b692
-# ╟─3f82b093-cbca-4483-8ab0-a743a717a7f6
-# ╟─17f9eefc-c53c-41c8-8f6e-c38a463d0b80
-# ╟─593afb26-7254-4149-8ac5-63ce589aea45
-# ╟─07bddafe-1832-4ffa-baf3-cae19486fc01
-# ╟─8f800d74-74e8-4656-a7ae-17aba925d3bb
-# ╠═194e3552-0a49-484d-9546-e9d6e0a752c7
-# ╟─9cac67bf-9bb7-4b19-9bf8-14ac7bdf3871
-# ╠═a7e87c4c-f182-4fa3-b18c-d37c1bf0cf87
-# ╟─7c4582e3-fd79-4a4b-9bfd-db2d8a7a89af
-# ╠═938c19eb-ecde-42e3-bfaa-d78cc0588d2f
-# ╟─2f48671d-02a8-4299-a657-afaebc57b4a4
-# ╟─23d8a8d1-07de-4836-9958-a70c774ced52
-# ╟─153a42bf-6a36-42f2-968f-3df3285f5ac7
-# ╟─d724e9a1-db47-4d51-9a96-d734d0afc7f7
-# ╟─01c70fd8-5173-4c61-9924-c19799188448
+# ╟─b1865cbd-9bdc-4cd9-999c-be7dfb673fd0
+# ╟─feb108d5-f01d-4463-9671-9f82b7070e89
+# ╟─6e249b50-adb1-4900-ae47-d947e5c1277d
+# ╟─24af59c8-44ed-4839-a62c-20d049b07ee9
+# ╟─9c64c491-2368-43b5-87d1-96ecf4789b31
+# ╠═ae72712e-dab6-4319-a970-7de3f578ff09
+# ╟─df303479-f693-4ca6-9b8c-725f1c6139ba
+# ╠═e757ecb6-7325-4d54-9a08-55e09c1f7f21
+# ╟─13ac47ba-0afd-499a-a5ca-a19389a8020a
+# ╠═508ddc96-1591-4add-b2e5-4f1e85633255
+# ╟─4f697a44-944f-4c68-8dbc-c94eaa36cafa
+# ╟─6285ea31-58de-4cdc-a094-df8a380a01bc
+# ╟─839a1710-fcd2-4182-b609-c9236f5379ee
+# ╟─f302448b-bcbb-45d1-b766-d008d30b0e8e
+# ╠═84c4eb5a-fa0d-415b-926b-06c91e69f04a
+# ╟─2126aa08-4242-46bc-af6e-3f6a5210b089
+# ╠═1d44bcde-d09f-446d-b0e5-5b847a249faa
+# ╟─a7e265d0-1a34-41e1-abbd-21471979123a
+# ╟─c442488b-6506-413c-a053-017c9e5ceb3a
+# ╟─d6d1e3ee-aee9-4c3f-a6a5-afb07b5e13fe
+# ╟─542b70b4-d40b-411a-b47b-ec81804866e6
+# ╟─622d0733-261c-4bbf-b703-8175130e94d6
+# ╟─3a044287-92e3-4924-910c-a4a95305682d
+# ╠═a04aa521-9799-4f8a-958d-6ddc05255d87
+# ╟─a9b0a665-f905-43e9-a877-5567ef3ea4c4
+# ╠═386355b9-3ad3-4f90-8fcd-cdc465b4c8e7
+# ╟─229eb2f6-70dc-4984-9048-ed7efba2987c
+# ╟─2a734e01-6332-4f6a-a4c9-75c086cb31ed
+# ╟─775f02d7-946c-4fa5-8244-09a97effdec0
+# ╠═81eba9ea-4db6-4e0c-ac48-2a371b44353c
+# ╟─b861cfad-c5f8-49d3-9524-011f38cb538f
+# ╟─49bc5223-fde4-4076-aa67-2472a1a5494d
+# ╠═add1c8b1-1640-4df1-8e36-b5f807a1c306
+# ╟─0cf03353-e6c4-42c9-a50b-61478abae3e3
+# ╠═ccac524b-6958-4e13-a198-f8e4aaa019c1
+# ╟─0a31a261-9654-4b55-86e6-97a90806ca89
+# ╟─192c61b8-fa45-400c-84a9-fcefda2f7a85
+# ╟─1e1b7eca-4ad2-4bea-bc18-dbbd29a4fc0e
+# ╟─f148667d-bc71-49d1-a9f2-47d0dc83b4fa
+# ╟─f0dabfbf-887a-490a-8430-b1c253f2e72d
+# ╟─28c0ba45-66da-49d9-8b73-6b4990ac9510
+# ╟─dd02620b-d080-4255-9dce-6782ddb6679a
+# ╠═a7785c7b-3d72-4757-88a7-ee0e2b9ee28f
+# ╟─11733a86-4235-474e-ac76-9d0deb7ff6c6
+# ╠═2c645cb4-d33f-4024-b91d-fc8fa5be58ca
+# ╟─bc5e281c-9e36-4a42-a30a-e75981ca34ba
+# ╠═ca2f96ba-a13e-4150-a7ea-c0b786814609
+# ╟─245470ed-7132-4396-b678-d169f4e56fdf
+# ╟─7239338a-606b-4c32-a555-fb51c7e7167e
+# ╟─e619dccb-42fc-424c-a782-a1acaddeb934
+# ╟─ce4f637c-839f-4b4f-a291-318e1b46a637
+# ╟─22d9f19e-a542-4afb-8485-a7d3b16b5b16
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

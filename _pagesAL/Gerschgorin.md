@@ -1,6 +1,6 @@
 ---
-title: "Círculos de Gerschgorin"
-permalink: /Notebooks/AlgebraLineal/CirculosDeGerschgorin/
+title: "Círculos de Gershgorin"
+permalink: /Notebooks/AlgebraLineal/CirculosDeGershgorin/
 date: 2019-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}
@@ -23,7 +23,7 @@ header-includes: |
 </head>
 <body>
 
-<h1>Círculos de Gerschgorin</h1>
+<h1>Círculos de Gershgorin</h1>
 
 </body>
 </html>
@@ -68,5 +68,5 @@ header-includes: |
     }
   </style>
   
-<iframe src="https://labmatecc.github.io/HTML%20Lab/AL/Circulos_de_Gerschgorin.html"
+<iframe src="https://labmatecc.github.io/HTML%20Lab/AL/Circulos_de_Gershgorin.html"
  width="100%" height="600px"></iframe>

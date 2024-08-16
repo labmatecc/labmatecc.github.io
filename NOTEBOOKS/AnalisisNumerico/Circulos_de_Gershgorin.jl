@@ -11,7 +11,7 @@ using PlutoUI
 using LinearAlgebra, Plots, Polynomials, SpecialMatrices
 
 # ╔═╡ 24c9f8a9-ad90-413a-9660-9da7a068f492
-PlutoUI.TableOfContents(title="Cículos de Gerschgorin", aside=true)
+PlutoUI.TableOfContents(title="Cículos de Gershgorin", aside=true)
 
 # ╔═╡ 1f760cdf-6171-4ed7-b06d-60bc6a52105b
 md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**
@@ -30,13 +30,13 @@ md"""Usaremos las siguientes librerías:"""
 # ╔═╡ 8b2829ba-4965-496f-b23a-70e284dc8663
 md"""# Introducción
 
-Para hallar los valores propios de una matriz, existen diversos métodos que permiten localizarlos y estimarlos sin necesidad de calcularlos explícitamente. Entre estos métodos, los discos de Gerschgorin, los discos de Brauer y los discos generalizados de Gerschgorin proporcionan regiones en el plano complejo donde se pueden encontrar los valores propios de una matriz."""
+Para hallar los valores propios de una matriz, existen diversos métodos que permiten localizarlos y estimarlos sin necesidad de calcularlos explícitamente. Entre estos métodos, los discos de Gershgorin, los discos de Brauer y los discos generalizados de Gershgorin proporcionan regiones en el plano complejo donde se pueden encontrar los valores propios de una matriz."""
 
 # ╔═╡ 6a5aa821-9df8-4bed-838b-24c1a39a3abb
 md"""# Localización de valores propios"""
 
 # ╔═╡ a7bed1fb-54c0-4708-9f44-0860bb6558a4
-md"""**Teorema 1: Discos de Gerschgorin.** 
+md"""**Teorema 1: Discos de Gershgorin.** 
 
 Todos los valores propios de una matriz $A\in\mathbb{R}^{d\times d}$ están localizados en el conjunto 
 
@@ -55,10 +55,10 @@ usando las propiedades del vector $y$, concluimos que
 $|\lambda - a_{mm}| \leq \sum^{d}_{k=1, ~ k\not=m} |a_{mk}||y_k| \leq  \sum^{d}_{k=1, ~ k\not=m} |a_{mk}| \text{.}$"""
 
 # ╔═╡ 85079ef4-8af6-4761-a171-a4d50de9d621
-md"""La siguiente función genera y visualiza los discos de Gerschgorin para una matriz dada."""
+md"""La siguiente función genera y visualiza los discos de Gershgorin para una matriz dada."""
 
 # ╔═╡ 19f3dc60-83f1-46e7-867f-0d4f87da1ebb
-function allGreschdisksforA(A::Matrix{Float64}; r, k)
+function allGreshdisksforA(A::Matrix{Float64}; r, k)
     rango = LinRange(-r, r, k)
     n = size(A, 1)
     D = diag(A)
@@ -84,11 +84,11 @@ function allGreschdisksforA(A::Matrix{Float64}; r, k)
     E = eigen(A).values
 
 	p = plot(
-    scatter(real(resultadoG), imag(resultadoG), ms=2, ma=0.5, markerstrokecolor = :auto, color=:yellow, label="Gerschgorin"),
+    scatter(real(resultadoG), imag(resultadoG), ms=2, ma=0.5, markerstrokecolor = :auto, color=:yellow, label="Gershgorin"),
     xlims=(-r, r), ylims=(-r, r), aspect_ratio=1,         
     xlabel="Parte Real", 
     ylabel="Parte Imaginaria",
-    title="Discos de Gerschgorin")
+    title="Discos de Gershgorin")
 
 scatter!(p, real(E), imag(E), color=:black, markerstrokecolor = :auto, label="Eigenvalues")
 end
@@ -108,7 +108,7 @@ md"""Note que los valores propios de $A$ son los siguientes."""
 eigen(A).values
 
 # ╔═╡ 2641c55d-8a81-4843-a537-e38f831e3eb4
-allGreschdisksforA(A, r=3, k=250)
+allGreshdisksforA(A, r=3, k=250)
 
 # ╔═╡ 6860c636-08b9-4427-a47c-ebf7c106a2af
 md"""Un corolario del Teorema 1 es el siguiente."""
@@ -131,10 +131,10 @@ md"""Sus valores propios son:"""
 eigen(A₂).values
 
 # ╔═╡ b2dc7b74-eeef-4433-ba46-c805ae0b3004
-md"""Y los círculos de Gerschgorin de la matriz anterior son:"""
+md"""Y los círculos de Gershgorin de la matriz anterior son:"""
 
 # ╔═╡ 8a4a6c28-cc01-401b-97b3-0bbb3ec15192
-allGreschdisksforA(A₂, r=5, k=300)
+allGreshdisksforA(A₂, r=5, k=300)
 
 # ╔═╡ 5a2e87ef-a8ba-4f6c-983d-efa48ad2f571
 md"""**Corolario 3.** 
@@ -155,7 +155,7 @@ donde
 $B_{ij} = \{z\in ℂ : |z-a_{ii}|\cdot|z-a_{jj}|\leq R_{i}R_{j}\}.$"""
 
 # ╔═╡ 66a95a94-8692-49be-b7f7-b75ad2792324
-md"""**Teorema 5: Discos generalizados de Gerschgorin.** 
+md"""**Teorema 5: Discos generalizados de Gershgorin.** 
 
 Todos los valores propios de una matriz $A\in\mathbb{R}^{d\times d}$ están contenidos en la unión de los siguientes conjuntos
 
@@ -163,7 +163,7 @@ $\Omega_{ij} = \{z\in ℂ : |(z-a_{ii})(z-a_{jj})-a_{ij}a_{ji}|\leq |z-a_{jj}|R_
 donde $R_{ij} = \sum_{k=1, k\not=i,j}^{d}|a_{ik}|$."""
 
 # ╔═╡ ddd6bd2c-849e-4674-a50c-edce64fba21b
-md"""Teniendo en cuenta los Teoremas 4 y 5, vamos a construir una función que visualice los discos de Gerschgorin, los discos de Brauer y los discos generales de Gerschgorin."""
+md"""Teniendo en cuenta los Teoremas 4 y 5, vamos a construir una función que visualice los discos de Gershgorin, los discos de Brauer y los discos generales de Gershgorin."""
 
 # ╔═╡ d97e44a0-60aa-4511-a25a-4e8c13747ab0
 function alldisksforA(A; r, k)
@@ -219,7 +219,7 @@ function alldisksforA(A; r, k)
 
     p = plot(
     real(resultadoG), imag(resultadoG), seriestype=:scatter, 
-    markerstrokecolor=:auto, color=:blue, label="Gerschgorin",
+    markerstrokecolor=:auto, color=:blue, label="Gershgorin",
     xlims=(-r, r), ylims=(-r, r), aspect_ratio=1,
     xlabel="Parte Real",
     ylabel="Parte Imaginaria",
@@ -227,7 +227,7 @@ function alldisksforA(A; r, k)
 
 	plot!(p, real(resultadoB), imag(resultadoB), seriestype=:scatter, markerstrokecolor=:auto, color=:deepskyblue, label="Brauer")
 
-	plot!(p, real(resultadoO), imag(resultadoO), seriestype=:scatter, markerstrokecolor=:auto, color=:cyan, label="General Gerschgorin")
+	plot!(p, real(resultadoO), imag(resultadoO), seriestype=:scatter, markerstrokecolor=:auto, color=:cyan, label="General Gershgorin")
 
 	plot!(p, real(E), imag(E), seriestype=:scatter, color=:black, markerstrokecolor=:auto, label="Eigenvalues")
 end
@@ -291,7 +291,7 @@ Suponga que $z = x + iy \in ℂ$ y $x,y\in ℝ$,
 
 
 
-*   Discos de Gerschgorin
+*   Discos de Gershgorin
 1.   $|z- 1 |\leq 1 ⟼ (x-1)^2 +y^2\leq 1$
 2.   $|z- 2 |\leq 0 ⟼ (x,y) = (2,0)$
 3.   $|z|\leq 2 ⟼ x^2+y^2\leq 4$
@@ -301,7 +301,7 @@ Suponga que $z = x + iy \in ℂ$ y $x,y\in ℝ$,
 5.   $|z- 1 ||z|\leq 2 ⟼x^4+2x^2y^2+y^4-2x^3-2xy^2+x^2+y^2\leq 4$
 6.   $|z- 2 ||z|\leq 0 ⟼(x,y) = (0,0),(2,0)$
 
-*   Conjuntos de Gerschgorin generalizado
+*   Conjuntos de Gershgorin generalizado
 7.   $|(z- 1 )(z- 2 )|\leq|z- 2 | ⟼ (x-1)^2+y^2\leq 1 \quad (x,y) = (2,0)$
 8.   $|(z- 1 )(z)- 1 |\leq 1 ⟼ (x^2-y^2-x-1)^2 + (2xy-y)^2 \leq 1$
 9.   $|(z- 2 )(z- 1 )|\leq 0 ⟼ (x,y) = (1,0),(2,0)$
