@@ -308,6 +308,9 @@ begin
 	imag1 = load(fname1)
 end
 
+# ╔═╡ 73c8af9c-dbd2-4d29-8138-8fa17feac81c
+md"""*Figura 1. Curva en el plano. Elaboración propia.*"""
+
 # ╔═╡ a1115c61-4310-4641-b9a6-65ffe43ef0a7
 md"""Introducimos coordenadas y puntos de control de la siguiente forma."""
 
@@ -317,6 +320,9 @@ begin
 	fname2 = download(url2)
 	imag2 = load(fname2)
 end
+
+# ╔═╡ 55e1edbe-fd24-4505-8d99-73fe917577a2
+md"""*Figura 2. Curva con 14 nudos. Elaboración propia.*"""
 
 # ╔═╡ 49fa51f7-e6b5-4930-9148-c3cab133097e
 md"""Las coordenadas de los datos escogidos son:"""
@@ -348,6 +354,35 @@ begin
 	scatter!(coorx,coory,ms=5,c=:green)
 end
 
+# ╔═╡ 3c08d3d9-a8d5-4075-a362-7a1c1e347be5
+md"""# Problemas
+
+**Problema 1.** Considere la tabla, 
+
+| Hora      | Temperatura |
+| :---      |    :----:   |
+|13    |   18     |
+|14    |   18     |
+|15    |   17     |
+|16    |   16     |
+|17    |   15     |
+|18    |   14     |
+
+Usando diferentes interpolaciones (ver arriba), estima la temperatura a las 15:30 (15.5). Explica las diferencias entre los resultados. ¿Cuál es la mejor estimación? Justifica tu respuesta. Puedes graficar los resultados de las diferentes interpolaciones, como en el ejemplo anterior. """
+
+# ╔═╡ c710a80e-54fa-4975-b366-c2529d02bf00
+md"""**Problema 2. (Kincay y Chiney)** Se ha diseñado la letra de la figura y se quiere reproducir (con ayuda de los puntos de control marcados) usando splines. Utiliza la interpolación por splines y despliega esta figura usando interpolación por splines evaluada en 10 puntos, 100 puntos y 1000 puntos. En el ejemplo anterior, el número de puntos desplegados es la dimensión del vector."""
+
+# ╔═╡ 7be3fe9c-5a48-42c5-93a3-711c6fdc481a
+begin
+	url3 = "https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/Interpolacion3.png?raw=true"
+	fname3 = download(url3)
+	imag3 = load(fname3)
+end
+
+# ╔═╡ 85cda24e-2f1b-4c98-8f64-a1d6720c4ebd
+md"""*Figura 3. Letra script con 11 nudos. Elaboración propia, inspirado en [1].*"""
+
 # ╔═╡ 4a8fb259-e48a-4f51-955d-9a7790e8b8ad
 md"""# Referencias
 [1] Kincaid, D., & Cheney, W. (2002). Numerical analysis: Mathematics of scientific computing. American Mathematical Society.
@@ -365,36 +400,6 @@ md"""# Referencias
 [7] Hertzmann, A. (n.d.). Machine Learning and Data Mining Lecture Notes. Retrieved from http://www.dgp.toronto.edu/~hertzman/411notes.pdf
 
 [8] Goodfellow, I., Bengio, Y., & Courville, A. (n.d.). Deep Learning. Retrieved from https://www.deeplearningbook.org/lecture_slides.html"""
-
-# ╔═╡ 3c08d3d9-a8d5-4075-a362-7a1c1e347be5
-md"""# Problemas
-
-**Problema 1.** Considere la tabla, 
-
-| Hora      | Temperatura |
-| :---      |    :----:   |
-|13    |   18     |
-|14    |   18     |
-|15    |   17     |
-|16    |   16     |
-|17    |   15     |
-|18    |   14     |
-
-Usando diferentes interpolaciones (ver arriba) estimar la temperatura a las 15:30 (15.5). Explique las diferencias de los resultados.¿Cuál  es la mejor respuesta?. Justifique. Puede graficar los resoutados de diferentes interpolaciones como en el ejemplo arriba. """
-
-# ╔═╡ c710a80e-54fa-4975-b366-c2529d02bf00
-md"""**Problema 2.(Kincay y Chiney)** Se ha diseñando la letra de la figura y se quiere reproducr (con ayuda de los puntos de control marcados) y usando splines. Use la interpolación por splines y depligue esta figura usando interpolación por splines evaluada en 10 puntos, 100 puntos y 1000 puntos. En el ejemplo arriba el numero de puntos desplegados es la dimension del vectro s. 
-"""
-
-# ╔═╡ 7be3fe9c-5a48-42c5-93a3-711c6fdc481a
-begin
-	url3 = "https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/Interpolacion3.png?raw=true"
-	fname3 = download(url3)
-	imag3 = load(fname3)
-end
-
-# ╔═╡ 85cda24e-2f1b-4c98-8f64-a1d6720c4ebd
-md"""*Figura 3. Letra script con 11 nudos. Elaboración propia, inspirado en [1].*"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1880,8 +1885,10 @@ version = "1.4.1+1"
 # ╟─836b01a5-44b7-4159-b71e-00d7aeacbcda
 # ╟─da596a8e-6cb0-4e67-a25c-c4f37f6b076f
 # ╟─983ef21d-f31c-49b3-88cb-5d31326c4128
+# ╟─73c8af9c-dbd2-4d29-8138-8fa17feac81c
 # ╟─a1115c61-4310-4641-b9a6-65ffe43ef0a7
 # ╟─14f0937b-4600-4834-b850-87b2a431f505
+# ╟─55e1edbe-fd24-4505-8d99-73fe917577a2
 # ╟─49fa51f7-e6b5-4930-9148-c3cab133097e
 # ╟─ab56572e-cca4-4d1c-8e3a-c6940a7cf88a
 # ╟─f2cf91c4-0ee8-4e82-a991-3475401e87af
