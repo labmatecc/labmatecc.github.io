@@ -118,6 +118,15 @@ header-includes: |
   <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/" class="button">Análisis Numérico</a>
 </div>
 
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>Los cuadernos de Análisis Numérico comienzan mostrando la representación de números enteros y de punto flotante, mostrando cómo los errores de redondeo y los límites de precisión afectan los cálculos numéricos. También incluyen una introducción al cálculo simbólico con la librería Symbolics. En temas de comparación asintótica, se definen conceptos como el orden asintótico para sucesiones y se utilizan ejemplos gráficos para ilustrar la convergencia. Se abordan la convergencia lineal, superlineal y la expansión de Taylor para la aproximación de funciones. Los métodos numéricos para encontrar raíces de funciones, como bisección, Newton y punto fijo, son explorados con implementaciones prácticas en el cuaderno Ecuaciones No Lineales. También se discuten ecuaciones lineales, incluyendo la factorización LU y de Cholesky, con ejemplos en Julia. El cuaderno sobre Círculos de Gershgorin presenta métodos para localizar valores propios de matrices, extendiendo la teoría a discos de Brauer y discos generalizados de Gershgorin. La interpolación se aborda mediante polinomios y splines, mostrando cómo garantizar la suavidad en los puntos de unión y aplicaciones en datos caligráficos. El ajuste de curvas incluye enfoques como el ajuste lineal y polinómico cúbico, aplicados al crecimiento de tumores en ratones.
+        Finalmente, los métodos de integración numérica como las sumas de Riemann, la regla del trapecio y la regla de Simpson se ilustran con ejemplos prácticos. El método de elementos finitos se utiliza para resolver ecuaciones como la de Poisson, aplicando discretización y condiciones de frontera en dominios unidimensionales y bidimensionales.</p>
+      </div>
+    </div>
+  </div>
+
 <hr>
 
 <div class="button-container">
