@@ -147,6 +147,14 @@ header-includes: |
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP" class="button">Introducción a las Ciencias de la Computación y la Programación</a>
 </div>
 
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>Los cuadernos sobre el curso Introducción a las Ciencias de la Computación y la Programación están en contrucción.</p>
+      </div>
+    </div>
+  </div>
+
 <hr>
 
 <div class="button-container">
