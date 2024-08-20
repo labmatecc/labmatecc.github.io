@@ -150,7 +150,7 @@ header-includes: |
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>Los cuadernos sobre el curso Introducción a las Ciencias de la Computación y la Programación están en contrucción.</p>
+        <p>Los cuadernos sobre el curso Introducción a las Ciencias de la Computación y la Programación están en construcción.</p>
       </div>
     </div>
   </div>
