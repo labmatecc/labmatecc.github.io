@@ -4,6 +4,16 @@
 using Markdown
 using InteractiveUtils
 
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+end
+
 # ╔═╡ 1f07472c-99b1-448a-9fff-6d21c3a3653c
 begin
 	using Plots, LinearAlgebra, Optim, DifferentialEquations
@@ -149,6 +159,21 @@ Por ejemplo, el desajuste de usar $a=1$ y $b=2$, es decir, aproximar $V(t)≈1+2
 # ╔═╡ 43890906-cf81-407a-babf-ed26c3a75c68
 residuoPL([1,2],volumen,tiempo)
 
+# ╔═╡ 80535ffd-2463-4208-a309-075ea2cdf87b
+begin
+	aLins= @bind aLinv Slider(-2:.1:2, show_value=true, default=-0.7)
+	bLins= @bind bLinv Slider(-2:.1:2, show_value=true, default=0.16)
+end;
+
+# ╔═╡ 6cae0b88-f81a-49c5-b1aa-9ab6adc51e9c
+reslinaux=residuoPL([aLinv,bLinv],volumen,tiempo);
+
+# ╔═╡ 197c133e-618c-4c0f-8d8a-5958821b8bee
+md""" a = $aLins,  	b = $bLins\
+
+Residuo= $reslinaux
+"""
+
 # ╔═╡ e5ceca83-d9bd-4ed8-80d1-06ec7d218114
 md"""
 Ahora usamos una librería de optimización para calcular el valor del parámetro óptimo aproximado.
@@ -192,6 +217,17 @@ begin
 	VolumenPL=oL.minimizer[1]*oneaux+oL.minimizer[2]*ts
 	plot(ts,VolumenPL,lw=5,label="Modelo lineal óptimo")
 	scatter!(tiempo,volumen,ls=:dash,label="Volumen",lw=4, xlabel = "Tiempo",yaxis="Volumen",legend=:bottomright)
+end
+
+# ╔═╡ 52126899-69d0-441f-81aa-befbce4019d6
+begin
+#	ts=0:0.1:60
+#	oneaux=fill(1,size(ts))
+	
+	VolumenPLaux=aLinv*oneaux+bLinv*ts
+	plot(ts,VolumenPLaux,lw=5,label="Modelo lineal óptimo")
+	scatter!(tiempo,volumen,ls=:dash,label="Volumen",lw=4, xlabel = "Tiempo",yaxis="Volumen",legend=:bottomright)
+
 end
 
 # ╔═╡ bd1947eb-e1fc-4e48-aef5-d1794c73a0d5
@@ -330,14 +366,24 @@ md"""
 Si queremos resolver la EDO para determinados valores de los parámetros, usamos, 
 """
 
+# ╔═╡ d585c246-14ba-450a-abbb-40cd5cc3598f
+begin
+	aBerts= @bind aBertv Slider(0:.1:2, show_value=true, default=1.0)
+	bBerts= @bind bBertv Slider(0:.1:2, show_value=true, default=1.0)
+end;
+
+# ╔═╡ 8b233aef-c6c4-4d2c-9400-e1bb14938ffe
+md""" a = $aBerts,  	b = $bBerts
+"""
+
 # ╔═╡ b738ec4c-cb49-4fea-b38c-93932b2b8d62
 begin
 	tspan=(3.26,80)
 	V0=0.0158
-	par=[1.0,1.0]
+	par=[aBertv,bBertv]
 	EDO=ODEProblem(modeloBF,V0,tspan,par)
 	V=solve(EDO)
-	plot(V)
+	plot(V, linewidth=4)
 #	VI=[V(t) for t in tiempo] # Evaluación de la solución en los tiempos dados (datos)
 #	scatter!(tiempo,VI)
 end
@@ -425,14 +471,18 @@ modeloLG(V,par,t)=par[1]*V*(1-V/par[2])
 md"""Si deseamos encontrar la solución de la ecuación diferencial ordinaria para ciertos valores específicos de los parámetros, empleamos:
 """
 
+# ╔═╡ 8d3cda53-8325-42ef-8f5c-a2666c10376c
+md""" a = $aBerts,  	b = $bBerts
+"""
+
 # ╔═╡ 3779e0a8-5667-4b6e-9783-9d88866e2642
 begin
 	tspan₂=(3.26,80)
 	V0₂=0.0158
-	par₂=[1.0,1.0]
+	par₂=[aBertv,bBertv]
 	EDO₂=ODEProblem(modeloLG,V0₂,tspan₂,par₂)
 	V₂=solve(EDO₂)
-	plot(V₂)
+	plot(V₂, linewidth=4)
 end
 
 # ╔═╡ 3b3ca8f1-65b9-41ff-9ded-f647ffe0dd4c
@@ -2395,6 +2445,10 @@ version = "1.4.1+1"
 # ╟─0aacdaf9-2b76-4ff5-bdf1-7dfcc5b4e03e
 # ╟─137872c4-e458-4390-a508-fee2cf9571a9
 # ╠═43890906-cf81-407a-babf-ed26c3a75c68
+# ╟─80535ffd-2463-4208-a309-075ea2cdf87b
+# ╟─6cae0b88-f81a-49c5-b1aa-9ab6adc51e9c
+# ╟─197c133e-618c-4c0f-8d8a-5958821b8bee
+# ╟─52126899-69d0-441f-81aa-befbce4019d6
 # ╟─e5ceca83-d9bd-4ed8-80d1-06ec7d218114
 # ╟─667e93d4-c6cc-453d-8897-a7f7cf2d2849
 # ╠═f53d8568-6914-4d0b-8cc9-c3ac8c817889
@@ -2404,7 +2458,7 @@ version = "1.4.1+1"
 # ╠═ee0fb994-572e-47be-93ed-34c356d4bc5c
 # ╠═97fb6c37-ad40-483e-ae61-63bf583af4db
 # ╟─f86079ae-3f2c-490a-b500-eeb5029de176
-# ╟─5b5e994d-e5dd-419f-b054-a61ca74684db
+# ╠═5b5e994d-e5dd-419f-b054-a61ca74684db
 # ╟─bd1947eb-e1fc-4e48-aef5-d1794c73a0d5
 # ╠═1a087240-b9e7-4220-bfdd-959ca34ef1ef
 # ╟─114eb703-ca96-4218-9de3-9c13e8aba5a8
@@ -2428,6 +2482,8 @@ version = "1.4.1+1"
 # ╟─c6077f79-36b7-479a-8512-716e8497bd16
 # ╠═8d644869-970c-42f9-a11a-354dd15b2c07
 # ╟─c73eb0ee-4ce6-4cf3-81ff-b6cffb439739
+# ╠═d585c246-14ba-450a-abbb-40cd5cc3598f
+# ╠═8b233aef-c6c4-4d2c-9400-e1bb14938ffe
 # ╠═b738ec4c-cb49-4fea-b38c-93932b2b8d62
 # ╟─45aae0fb-5a26-4f19-9ae9-b8c4fc8e1956
 # ╠═ee98ae6f-374b-4d40-9182-83cfbb02bb4b
@@ -2443,7 +2499,8 @@ version = "1.4.1+1"
 # ╟─559821cf-ab2a-444f-beaa-3f30972ef609
 # ╠═4a80a6f8-3a06-48e5-877f-d2cd4460286a
 # ╟─56be9865-8637-4065-9407-c33ac78b700c
-# ╟─3779e0a8-5667-4b6e-9783-9d88866e2642
+# ╠═8d3cda53-8325-42ef-8f5c-a2666c10376c
+# ╠═3779e0a8-5667-4b6e-9783-9d88866e2642
 # ╟─3b3ca8f1-65b9-41ff-9ded-f647ffe0dd4c
 # ╠═585c0202-92d6-4ff2-b35e-43c5d9732912
 # ╟─d4dbcc70-2052-40f7-b152-a9c1c0a39eed
