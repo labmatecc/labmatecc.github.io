@@ -72,24 +72,40 @@ header-includes: |
       background-color: white;
     }
 
-    /* Centrado del texto de página en construcción */
-    .construction-message {
+    .construction-message1 {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 25vh; /* Ajusta la altura total del contenedor */
+        height: 100vh; /* Mantén la altura total de la vista */
+        padding-top: 45vh; /* Aumenta el espacio superior */
+        padding-bottom: 5vh; /* Reduce el espacio inferior */
         color: rgba(72, 133, 45, 0.76);
         text-align: center;
         font-size: 2em;
-        padding: 10px; /* Agrega un pequeño padding si es necesario */
+        box-sizing: border-box; /* Asegura que el padding se considere dentro de la altura total */
+    }
+
+    .construction-message2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Mantén la altura total de la vista */
+        padding-top: 5vh; /* Aumenta el espacio superior */
+        padding-bottom: 25vh; /* Reduce el espacio inferior */
+        color: rgba(72, 133, 45, 0.76);
+        text-align: center;
+        font-size: 2em;
+        box-sizing: border-box; /* Asegura que el padding se considere dentro de la altura total */
     }
 
   </style>
 
   <!-- Mensaje de página en construcción -->
-  <div class="construction-message">
+  <div class="construction-message1">
     <h1>Estamos Trabajando<br></h1>
-    <p> </p>
+  </div>
+  
+  <div class="construction-message2">
     <p>Esta página está en construcción. ¡Vuelve pronto!</p>
   </div>
 
