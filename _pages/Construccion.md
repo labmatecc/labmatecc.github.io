@@ -61,43 +61,34 @@ header-includes: |
     }
 
     hr {
-            border: none; /* Elimina el borde */
-            height: 1px; /* Altura de la línea */
-            background-color: #CCCCCC; /* Color de la línea */
-            margin: 20px 0; /* Margen superior e inferior */
-        }
+      border: none; /* Elimina el borde */
+      height: 1px; /* Altura de la línea */
+      background-color: #CCCCCC; /* Color de la línea */
+      margin: 20px 0; /* Margen superior e inferior */
+    }
+
+    /* Fondo verde translúcido */
+    body {
+      background-color: rgba(72, 133, 45, 0.76);
+    }
+
+    /* Centrado del texto de página en construcción */
+    .construction-message {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      text-align: center;
+      font-size: 2em;
+    }
+
   </style>
-  
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página en Construcción</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: rgba(72, 133, 45, 0.76);
-            font-family: Arial, sans-serif;
-            color: white;
-            text-align: center;
-        }
-        h1 {
-            font-size: 3em;
-        }
-        p {
-            font-size: 1.5em;
-        }
-    </style>
-</head>
-<body>
-    <div>
-        <h1>Estamos Trabajando</h1>
-        <p>Esta página está en construcción. ¡Vuelve pronto!</p>
-    </div>
+
+  <!-- Mensaje de página en construcción -->
+  <div class="construction-message">
+    <h1>Esta página está en construcción. ¡Vuelve pronto!</h1>
+  </div>
+
 </body>
 </html>
