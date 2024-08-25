@@ -67,9 +67,9 @@ header-includes: |
       margin: 20px 0; /* Margen superior e inferior */
     }
 
-    /* Fondo verde translúcido */
+    /* Fondo blanco */
     body {
-      background-color: rgba(72, 133, 45, 0.76);
+      background-color: white;
     }
 
     /* Centrado del texto de página en construcción */
@@ -78,7 +78,7 @@ header-includes: |
       justify-content: center;
       align-items: center;
       height: 100vh;
-      color: white;
+      color: rgba(72, 133, 45, 0.76);
       text-align: center;
       font-size: 2em;
     }
@@ -87,7 +87,8 @@ header-includes: |
 
   <!-- Mensaje de página en construcción -->
   <div class="construction-message">
-    <h1>Esta página está en construcción. ¡Vuelve pronto!</h1>
+    <h1>Estamos Trabajando</h1>
+    <p>Esta página está en construcción. ¡Vuelve pronto!</p>
   </div>
 
 </body>
