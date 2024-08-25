@@ -74,13 +74,14 @@ header-includes: |
 
     /* Centrado del texto de página en construcción */
     .construction-message {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      color: rgba(72, 133, 45, 0.76);
-      text-align: center;
-      font-size: 2em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50vh; /* Ajusta la altura total del contenedor */
+        color: rgba(72, 133, 45, 0.76);
+        text-align: center;
+        font-size: 2em;
+        padding: 10px; /* Agrega un pequeño padding si es necesario */
     }
 
   </style>
@@ -89,7 +90,7 @@ header-includes: |
   <div class="construction-message">
     <h1>Estamos Trabajando<br></h1>
   </div>
-  
+
   <div class="construction-message">
     <p>Esta página está en construcción. ¡Vuelve pronto!</p>
   </div>
