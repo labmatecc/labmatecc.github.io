@@ -76,7 +76,7 @@ header-includes: |
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh; /* Mantén la altura total de la vista */
+        height: 25vh; /* Mantén la altura total de la vista */
         padding-top: 45vh; /* Aumenta el espacio superior */
         padding-bottom: 5vh; /* Reduce el espacio inferior */
         color: rgba(72, 133, 45, 0.76);
@@ -89,7 +89,7 @@ header-includes: |
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh; /* Mantén la altura total de la vista */
+        height: 25vh; /* Mantén la altura total de la vista */
         padding-top: 5vh; /* Aumenta el espacio superior */
         padding-bottom: 25vh; /* Reduce el espacio inferior */
         color: rgba(72, 133, 45, 0.76);
@@ -102,7 +102,7 @@ header-includes: |
 
   <!-- Mensaje de página en construcción -->
   <div class="construction-message1">
-    <h1>Estamos Trabajando<br></h1>
+    <h1>Estamos Trabajando</h1>
   </div>
   
   <div class="construction-message2">
