@@ -412,7 +412,9 @@ md"""# Referencias
 
 [11] Towards Data Science. (n.d.). Maximizing profit using linear programming in Python. Recuperado de https://towardsdatascience.com/maximizing-profit-using-linear-programming-in-python-642520c43f6
 
-[12] Radzion. (n.d.). Introduction to linear programming. Recuperado de https://radzion.com/blog/operations/linearintro"""
+[12] Radzion. (n.d.). Introduction to linear programming. Recuperado de https://radzion.com/blog/operations/linearintro
+
+[13] Yamiyume. (s.f.). Knapsack Project - Optiet: Maximizando la Nutrición. Recuperado de https://yamiyume.github.io/knapsack-project/"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
