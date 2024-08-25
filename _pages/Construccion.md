@@ -77,7 +77,7 @@ header-includes: |
         justify-content: center;
         align-items: center;
         height: 25vh; /* Mantén la altura total de la vista */
-        padding-top: 45vh; /* Aumenta el espacio superior */
+        padding-top: 35vh; /* Aumenta el espacio superior */
         padding-bottom: 5vh; /* Reduce el espacio inferior */
         color: rgba(72, 133, 45, 0.76);
         text-align: center;
