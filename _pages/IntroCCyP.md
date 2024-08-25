@@ -157,6 +157,34 @@ header-includes: |
 <hr>
 
 <div class="button-container">
+  <a href="https://labmatecc.github.io/PaginaEnConstruccion/" class="button">Introducción a la criptografía</a>
+</div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>El cuaderno está en contrucción. </p>
+      </div>
+    </div>
+  </div>
+
+<hr>
+
+<div class="button-container">
+  <a href="https://labmatecc.github.io/PaginaEnConstruccion/" class="button">Introducción a los grafos</a>
+</div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>El cuaderno está en contrucción. </p>
+      </div>
+    </div>
+  </div>
+
+<hr>
+
+<div class="button-container">
   <a href="https://labmatecc.github.io/PaginaEnConstruccion/" class="button">Introducción a la optimización</a>
 </div>
 

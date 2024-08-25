@@ -47,7 +47,7 @@ md"""
 md"""El enfoque matemático para la solución de problemas usa herramientas específicas, entre ellas, la abstracción, generalización y, en muchos casos, métodos numéricos e implementación de algoritmos.
 
 
-Cuando se usa el enfoque matemático para resolver problemas se inicia de una pregunta o situación concreta y se desea responder esta pregunta o entender la situación considerada. A grosso modo para finalizar el ejercicio de modelado de manera exitosa debemos:
+Cuando se usa el enfoque matemático para resolver problemas se inicia a partir de una pregunta o situación concreta y se desea responder esta pregunta o entender la situación considerada. A grosso modo para finalizar el ejercicio de modelado de manera exitosa debemos:
 
 1. Modelar el problema o situación concreta: se debe abstraer el problema para poder escribirlo en lenguaje matemático preciso. Se requiere identificar los grados de libertad del modelo considerado, $p$, así como las cantidades u objetos que deben ser encontrados o calculados, $q$.   Con grados de libertad del modelo nos referimos a los parámetros (numéricos o de alguna otra naturaleza) que caracterizan completamente el modelo estudiado.
 
@@ -56,11 +56,11 @@ Cuando se usa el enfoque matemático para resolver problemas se inicia de una pr
 
 
     
-2. Escribir $q$ como algún tipo de función (o algoritmo de calculo a partir) de $p$ usando el modelo planteado; es decir, relacionar los parámetros que describen el modelo con las cantidades u objetos matemáticos que necesitamos encontrar. En muchas aplicaciones practicas obtener las cantidad de interés $q$ es imposible  solo usando el modelo planteado. Eh estos casos se puede calcular únicamente cantidades primales o principales, denotadas aquí por $v$.    Tendremos entonces que introducir una ley  o relación de la forma $q=F(v,\alpha)$ en donde $\alpha$ es un parámetro de la ley que relaciona $v$  y $q$.  El parámetro $\alpha$ puede ser de tipo numérico o algún otro objeto matemático.
+2. Escribir $q$ como algún tipo de función (o algoritmo de calculo a partir) de $p$ usando el modelo planteado; es decir, relacionar los parámetros que describen el modelo con las cantidades u objetos matemáticos que necesitamos encontrar. En muchas aplicaciones practicas obtener las cantidad de interés $q$ es imposible  solo usando el modelo planteado. Eh estos casos se puede calcular únicamente cantidades primales o principales, denotadas aquí por $v$.    Tendremos entonces que introducir una ley  o relación de la forma $q=F(v,\alpha)$ en donde $\alpha$ es un parámetro que relaciona $v$  y $q$.  El parámetro $\alpha$ puede ser de tipo numérico o algún otro objeto matemático.
 
 3. Proponer un método numérico  (asumiendo aritmética exacta) que permita usar la relación  obtenida para $q$  a partir de $p$ ya sea en un número finito de pasos o como limite de un método iterativo.
 
-4. Implementar en un sistema de computo el método numérico propuesto obtenido teniendo en cuenta aspectos de estabilidad, precisión y eficiencia. Además:
+4. Implementar en un sistema de cómputo el método numérico propuesto obtenido teniendo en cuenta aspectos de estabilidad, precisión y eficiencia. Además:
 
     $\cdot$ Se considera la calidad y cantidad de datos  disponibles $d$.
 
@@ -101,7 +101,7 @@ md"""Ahora declaramos la variable "imag", que corresponde a un tipo de dato que 
 imag = load(fname)[1:900,1:1300]
 
 # ╔═╡ d8be3494-4b1c-419b-a8ab-28c40cb18f99
-md"""$\textit{Figura 1. Midiendo una naranja. Imagen tomada de Wikipedia.}$"""
+md"""$\texttt{Figura 1. Midiendo una naranja. Imagen tomada de Wikipedia.}$"""
 
 # ╔═╡ 3d35a65c-3620-4a1f-adf3-1280eff4c597
 md"""## Modelo matemático
@@ -134,7 +134,7 @@ md"""
 
 Tenemos aquí la primera fuente de error de nuestro procedimiento, el error de modelado matemático. La naranja no es una esfera. Este error puede (y en algunos casos debe) ser cuantificado. Para esto se deben proponer medidas de error de modelado matemático. Es también claro que este error de modelado matemático está ligado a la complejidad del modelo y en particular al número de parámetros usados para describirlo, es decir, a la dimensión del modelo usado.
 
-Note que podemos medir el mayor círculo sobre la frontera de la bola, es decir, sobre la esfera, y así tener un dato a partir del cual hacer una estimación de $q$. En este caso, podemos tener,
+Note que podemos medir el mayor círculo sobre la frontera de la bola, es decir, sobre la esfera, y así tener un dato a partir del cual hacer una estimación de $q$, donde $q$ es la cantidad de jugo de naranja. En este caso, podemos tener,
 
 $d=\mbox{``diámetro del mayor círculo sobre la esfera''}$
 
@@ -146,7 +146,7 @@ Este error puede (y en algunos casos debe) ser cuantificado. Para ello se debe c
 
 En este caso, vemos que 
 
-$p= \frac{d}{2\pi}$
+$p= \frac{d}{2\pi},$
 es la relación que transforma datos en parámetros del modelo.
 """
 
@@ -164,7 +164,10 @@ $q=\mbox{``cantidad de jugo de naranja''}.$
 
 Para esto podemos proponer una relación de la forma 
 
-$q=F(v,\alpha).$
+$q=F(v,\alpha),$
+
+donde $\alpha$ es un parámetro que relaciona el volumen de la bola y la cantidad de jugo de naranja.
+
 
 Establecer esta relación necesita conocimiento del problema y del ejercicio de modelado matemático en curso. En este primer acercamiento y para simplificar podemos asumir una relación lineal del tipo
 
@@ -202,7 +205,7 @@ Tomemos como caso particular $\alpha=0.7$ y $d=21$ cm. En este caso, la aproxima
 
 $q\approx\widetilde{q}=\frac{0.7 (21)^3}{6 (3.14)^2} \approx \frac{6482.7}{59.16}\approx 109.58 \mbox{ cm}^3.$
 
-Note que $q$ es aproximado por $\widetilde{q}$ que tiene errores de redondeo. Dado que trabajamos con 2 decimales en base 10 ($\pi\approx 3.14$), en cada cálculo intermedio tenemos un error de redondeo.
+Note que $\widetilde{q}$ representa la aproximación del valor de $q$ que resulta de redondear todos los cálculos a dos dígitos decimales, es decir, trabajamos con 2 decimales en base 10 ($\pi\approx 3.14$). Es por esto que $q$ es aproximado por $\widetilde{q}$ tiene errores de redondeo ya que en cada cálculo intermedio tenemos un error de redondeo.
 
 Podemos implementar una aplicación o programa que, dados el diámetro $d$ y el valor $\alpha$, calcule la cantidad de jugo en la naranja. Con eso terminamos una primera etapa del ejercicio de modelado y estamos listos para la etapa de validación del modelo y, por último, la etapa de uso del modelo en donde los resultados se acoplan con otras herramientas para resolver un problema más interesante. 
 
