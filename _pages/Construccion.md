@@ -72,37 +72,41 @@ header-includes: |
       background-color: white;
     }
 
-    .construction-container {
+    .construction-message1 {
         display: flex;
-        align-items: center;
         justify-content: center;
+        align-items: center;
         height: 25vh; /* Mantén la altura total de la vista */
         padding-top: 35vh; /* Aumenta el espacio superior */
         padding-bottom: 5vh; /* Reduce el espacio inferior */
         color: rgba(72, 133, 45, 0.76);
+        text-align: center;
+        font-size: 2em;
         box-sizing: border-box; /* Asegura que el padding se considere dentro de la altura total */
     }
 
-    .construction-message {
+    .construction-message2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 25vh; /* Mantén la altura total de la vista */
+        padding-top: 5vh; /* Aumenta el espacio superior */
+        padding-bottom: 25vh; /* Reduce el espacio inferior */
+        color: rgba(72, 133, 45, 0.76);
         text-align: center;
         font-size: 2em;
-        margin-right: 20px; /* Espacio entre el texto y la imagen */
-    }
-
-    .construction-image {
-        max-width: 200px;
-        max-height: 200px;
+        box-sizing: border-box; /* Asegura que el padding se considere dentro de la altura total */
     }
 
   </style>
 
   <!-- Mensaje de página en construcción -->
-  <div class="construction-container">
-    <div class="construction-message">
-      <h1>Estamos Trabajando</h1>
-      <p>Esta página está en construcción. ¡Vuelve pronto!</p>
-    </div>
-    <img src="/assets/images/Bob.png" alt="Logotipo" class="construction-image">
+  <div class="construction-message1">
+    <h1>Estamos Trabajando</h1>
+  </div>
+  
+  <div class="construction-message2">
+    <p>Esta página está en construcción. ¡Vuelve pronto!</p>
   </div>
 
 </body>
