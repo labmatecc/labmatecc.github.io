@@ -89,9 +89,7 @@ header-includes: |
   <!-- Mensaje de página en construcción -->
   <div class="construction-message">
     <h1>Estamos Trabajando<br></h1>
-  </div>
-
-  <div class="construction-message">
+    <p> </p>
     <p>Esta página está en construcción. ¡Vuelve pronto!</p>
   </div>
 
