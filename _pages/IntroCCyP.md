@@ -163,7 +163,7 @@ header-includes: |
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>El cuaderno está en contrucción. </p>
+        <p>El cuaderno está en construcción. </p>
       </div>
     </div>
   </div>
@@ -177,7 +177,7 @@ header-includes: |
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>El cuaderno está en contrucción. </p>
+        <p>El cuaderno está en construcción. </p>
       </div>
     </div>
   </div>
@@ -191,7 +191,7 @@ header-includes: |
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>El cuaderno está en contrucción. </p>
+        <p>El cuaderno está en construcción. </p>
       </div>
     </div>
   </div>
