@@ -270,6 +270,20 @@ header-includes: |
 <hr>
 
 <div class="button-container">
+  <a href="https://labmatecc.github.io/Notebooks/AlgebraLineal/CirculosDeGershgorin/" class="button">Círculos de Gershgorin</a>
+</div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>Este cuaderno muestra los métodos de localización de valores propios, comenzando con el Teorema de Gershgorin, que establece que todos los valores propios de una matriz están contenidos en la unión de discos en el plano complejo. Luego, se extiende la teoría a los discos de Brauer y a los discos generalizados de Gershgorin, mostrando mejoras en las estimaciones sobre la ubicación de los valores propios. Además, se proporciona una serie de ejemplos prácticos que ilustran la aplicación de estos teoremas y métodos, mostrando cómo se pueden visualizar los discos correspondientes para diferentes matrices y cómo estos métodos pueden ser utilizados en la práctica para análisis y simulaciones.</p>
+      </div>
+    </div>
+  </div>
+
+<hr>
+
+<div class="button-container">
   <a href="https://labmatecc.github.io/Notebooks/AlgebraLineal/Minimoscuadrados/" class="button">Mínimos cuadrados</a>
 </div>
 

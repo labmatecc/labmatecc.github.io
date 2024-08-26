@@ -1,248 +1,405 @@
 ### A Pluto.jl notebook ###
-# v0.19.40
+# v0.19.39
 
 using Markdown
 using InteractiveUtils
 
-# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
-macro bind(def, element)
-    quote
-        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
-        local el = $(esc(element))
-        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
-        el
-    end
-end
-
-# ╔═╡ d882946c-aee6-43f9-8516-1c72ee946408
+# ╔═╡ ff142072-5fcd-4c47-a2d3-ffe0d69846c2
 using PlutoUI
 
-# ╔═╡ 3cbddb7c-e7d6-4f2c-b0bb-92a14ff55c65
+# ╔═╡ cfd6ea8e-70ee-41af-85c6-b4712e3b9432
 begin
+	using Plots,Interpolations
+	using Polynomials
 	using Colors, ColorVectorSpace, ImageShow, FileIO, ImageIO
-	using HypertextLiteral
-	using Plots
 end
 
-# ╔═╡ fed0c56f-fe3e-4b32-b4f0-dda5c269abfe
-PlutoUI.TableOfContents(title="Introducción a la modelación matemática", aside=true)
+# ╔═╡ 695cbd99-7aec-47e1-8639-767b0bda461a
+PlutoUI.TableOfContents(title="Interpolación", aside=true)
 
-# ╔═╡ 089cc976-124e-40f7-9aa1-ba4ca5089aef
-md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**.
+# ╔═╡ 2fb96d74-914d-453f-b4ba-1ce09117d436
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
-# ╔═╡ c48f0bd3-ecb4-4e44-8aa2-aebf32bb5b82
-md"""Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo. 
+# ╔═╡ cedfdb79-6356-40fa-aa82-642c75be3e1c
+md"""**Este cuaderno está basado en actividades del curso Análisis numérico I de la Universidad Nacional de Colombia, sede Bogotá, dictado por el profesor Juan Galvis en 2022-2.**
+
+Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo. 
 """
 
-# ╔═╡ 914ef67f-c856-433d-be13-009e17486c08
+# ╔═╡ d4a4f71b-4247-4475-b142-3ac64dea6506
 md"""Usaremos las siguientes librerías:"""
 
-# ╔═╡ 010bd77b-b5e6-4441-b4bd-739eb4f64b35
-md"""
-# Introducción"""
+# ╔═╡ baf62098-80d4-496c-bd52-828833ef3491
+md"""# Interpolación polinomial
 
-# ╔═╡ b0bb08ad-40c1-4944-a200-245a0ee9827d
-md"""El enfoque matemático para la solución de problemas usa herramientas específicas, entre ellas, la abstracción, generalización y, en muchos casos, métodos numéricos e implementación de algoritmos.
+A continuación mostraremos la resolución del siguiente problema: se nos proporciona una tabla con $n + 1$ puntos $(x_i, y_i)$, los cuales representan pares de datos:
 
+| $x$ | $x_0$ | $x_1$ | $x_2$ | $\dots$ | $x_n$ |
+|-----|-------|-------|-------|---------|-------|
+| $y$ | $y_0$ | $y_1$ | $y_2$ | $\dots$ | $y_n$ |
 
-Cuando se usa el enfoque matemático para resolver problemas se inicia a partir de una pregunta o situación concreta y se desea responder esta pregunta o entender la situación considerada. A grosso modo para finalizar el ejercicio de modelado de manera exitosa debemos:
+Se busca encontrar un polinomio $p$ de menor grado posible tal que $p(x_i) = y_i$ para cada $i$ en el intervalo $0 \leq i \leq n$. Este polinomio se conoce como un polinomio interpolador."""
 
-1. Modelar el problema o situación concreta: se debe abstraer el problema para poder escribirlo en lenguaje matemático preciso. Se requiere identificar los grados de libertad del modelo considerado, $p$, así como las cantidades u objetos que deben ser encontrados o calculados, $q$.   Con grados de libertad del modelo nos referimos a los parámetros (numéricos o de alguna otra naturaleza) que caracterizan completamente el modelo estudiado.
+# ╔═╡ b1240502-6c4a-44a6-84ea-1e2b1d3aa17f
+md"""**Teorema:**
 
-    $\cdot$ Como parte del ejercicio de modelado se identifican los datos, posibles mediciones  e información disponible a priori sobre el problema o pregunta. 
-        Denotemos esta información por $d$. Debe ser posible obtener el parámetro $p$ a partir de esta información.
+Si $x_0, x_1, \dots, x_n$ son números reales distintos, entonces para valores arbitrarios $y_0, y_1, \dots, y_n$ existe un polinomio único $p_n$ de a lo sumo grado $n$, de manera que:
 
+$p_n(x_i) = y_i \quad \text{para } 0 \leq i \leq n.$
 
-    
-2. Escribir $q$ como algún tipo de función (o algoritmo de calculo a partir) de $p$ usando el modelo planteado; es decir, relacionar los parámetros que describen el modelo con las cantidades u objetos matemáticos que necesitamos encontrar. En muchas aplicaciones practicas obtener las cantidad de interés $q$ es imposible  solo usando el modelo planteado. Eh estos casos se puede calcular únicamente cantidades primales o principales, denotadas aquí por $v$.    Tendremos entonces que introducir una ley  o relación de la forma $q=F(v,\alpha)$ en donde $\alpha$ es un parámetro que relaciona $v$  y $q$.  El parámetro $\alpha$ puede ser de tipo numérico o algún otro objeto matemático.
+Para detalles de la demostración ver [1].
+"""
 
-3. Proponer un método numérico  (asumiendo aritmética exacta) que permita usar la relación  obtenida para $q$  a partir de $p$ ya sea en un número finito de pasos o como limite de un método iterativo.
+# ╔═╡ 69804133-7b6f-4390-bc60-b81b3924f551
+md"""## Forma de Newton del polinomio de interpolación"""
 
-4. Implementar en un sistema de cómputo el método numérico propuesto obtenido teniendo en cuenta aspectos de estabilidad, precisión y eficiencia. Además:
+# ╔═╡ 830eb270-6daf-4622-8549-8ac5cdfb4c75
+md"""El polinomio interpolador de Lagrange $P_k(x)$ tiene la forma
 
-    $\cdot$ Se considera la calidad y cantidad de datos  disponibles $d$.
+$P_k(x) = c_0 + c_1(x - x_0) + c_2(x - x_0)(x - x_1) + \cdots + c_k(x - x_0) \cdots (x - x_{k-1}).$
 
-    $\cdot$ Se obtienen los parámetros del modelo y se calculan las cantidades de interés.
+Es decir,
 
+$P_k(x) = \sum_{i=0}^{k} c_i \prod_{j=0}^{i-1} (x - x_j).$
+"""
 
-5. Una vez se obtiene la respuesta a la pregunta o se obtiene el objeto matemático de interés, se debe verificar si en realidad se resolvió el problema planteado o si ajustes deben ser realizados.
+# ╔═╡ 96edc903-5828-4819-a529-6914ec6b076a
+md"""Podemos ahora escribir un algoritmo para calcular los coeficientes $c_i$ en la ecuación anterior. Observe que el coeficiente $c_k$ es:
 
-Notamos que los pasos 2. y 3. pueden no ser necesarios en algunos casos dependiendo del problema estudiado. En la actualidad es cada vez mas común la gran importancia y dificultad de los pasos 2. y 3.
+$c_k = \frac{y_k - p_{k-1}(x_k)}{(x_k - x_0)(x_k - x_1) \cdots (x_k - x_{k-1})}$
 
-En este trabajo ilustramos el proceso de modelación matemática  a través de un ejemplo sencillo."""
+Con el siguiente algoritmo podemos calcular $c_0, c_1, \dots, c_n$:
+"""
 
-# ╔═╡ c6cf6f44-9e09-4f7f-9509-168d329d9f31
-md"""# ¿Cuánto jugo hay en una naranja?
+# ╔═╡ 957552fc-b2ff-4ac6-a024-c2505d2a6959
+md"""**ALGORITMO**:
 
-El objetivo es estimar, de una manera no invasiva y con herramientas sencillas, la cantidad de jugo de naranja en una naranja.
+1.   $c_0 \leftarrow y_0$
+2.   **for** $k = 1, 2, \dots, n$ **do**
+3.   $\hspace{0.5cm}d \leftarrow x_k - x_{k-1}$
+4.   $\hspace{0.5cm}u \leftarrow c_{k-1}$
+5.   $\hspace{0.5cm}$**for** $i = k-2, k-3, \dots, 0$ **do**
+6.   $\hspace{1cm}u \leftarrow u \cdot (x_k - x_i) + c_i$
+7.   $\hspace{1cm}d \leftarrow d \cdot (x_k - x_i)$
+8.   $\hspace{0.5cm}$**end for**
+9.   $\hspace{0.5cm} c_k \leftarrow \frac{y_k - u}{d}$
+10.   **end for**
+"""
 
-Es claro que queremos usar el enfoque matemático para alcanzar nuestro objetivo. Supongamos que disponemos de una cuerda y una regla para hacer las mediciones que queramos. 
-Podemos asumir entonces que podemos contar con algunas medidas de diámetros de curvas al rededor de la naranja para así encontrar una respuesta en centímetros cúbicos. """
+# ╔═╡ 06fba850-a56c-4e14-af07-909ad67f333d
+md"""La siguiente función calcula los coeficientes $c_i$."""
 
-# ╔═╡ da3dff57-eacd-4e18-8439-41dbde4bab6f
-md"""A continuación se muestra una imagen de una naranja, dicha imagen está disponible en el URL indicado."""
-
-# ╔═╡ 3a962c19-ec0a-4758-9a0f-51804745a39c
-url = "https://c7.alamy.com/compes/2c0ywp4/cinta-metrica-con-naranja-aislada-2c0ywp4.jpg"
-
-# ╔═╡ e0616ea2-970e-4e9a-9622-a60c557bceec
-md"""Ahora bajamos la imagen a la máquina local."""
-
-# ╔═╡ 48cb2f10-4496-4dd7-aba4-a5be79cf06ff
-fname = download(url)
-
-# ╔═╡ 21bf9efa-69c5-40ed-90e0-4b7f51210e13
-md"""Ahora declaramos la variable "imag", que corresponde a un tipo de dato que representa imágenes. Recuerde que, además de asignar la variable en una expresión del tipo "
-", también se despliega la variable. En este caso, Pluto entiende que queremos ver la imagen representada por la variable."""
-
-# ╔═╡ 6eb930d2-c0e5-43d8-801f-024928705453
-imag = load(fname)[1:900,1:1300]
-
-# ╔═╡ d8be3494-4b1c-419b-a8ab-28c40cb18f99
-md"""$\texttt{Figura 1. Midiendo una naranja. Imagen tomada de Wikipedia.}$"""
-
-# ╔═╡ 3d35a65c-3620-4a1f-adf3-1280eff4c597
-md"""## Modelo matemático
-
-El modelo matemático más sencillo para la naranja es asumir que la naranja tiene una forma esférica (sólida) o de bola tridimensional. Esto, en realidad, quiere decir que en algún conjunto y noción de distancia adecuados, la naranja se encuentra a poca distancia de una bola (o esfera sólida). Observe que en este caso, podemos trasladar la esfera para colocar su centro en el origen y, por lo tanto, necesitamos un solo parámetro para describirla. En este caso, un parámetro que puede ser usado es el radio de la bola,
-
-$p=\mbox{ ``radio de la bola''}.$"""
-
-# ╔═╡ 354b94c8-20db-448f-b508-34963b4e3645
-@bind ρ Slider(1:10, show_value=true)
-
-# ╔═╡ 472d3cf7-9aa6-4eab-910d-3216426367ff
-let
-	# Crear un rango de valores para theta y phi
-	theta_range = range(0, 2π, length=100)
-	phi_range = range(0, π, length=100)
-
-	# Generar los puntos de la esfera
-	x = [ρ * sin(φ) * cos(θ) for φ in phi_range, θ in theta_range]
-	y = [ρ * sin(φ) * sin(θ) for φ in phi_range, θ in theta_range]
-	z = [ρ * cos(φ) for φ in phi_range, θ in theta_range]
-
-	# Graficar la esfera
-	surface(x, y, z, xlabel="X", ylabel="Y", zlabel="Z", title="Esfera de Radio p = $ρ")
+# ╔═╡ dd53dde5-2815-406c-b288-c432a40b5a9c
+function coef_interpolador_newton(x::Vector{Float64}, y::Vector{Float64})
+    n = length(x)
+    c = zeros(Float64, n)
+    c[1] = y[1]  
+    for k in 2:n
+        d = x[k] - x[k-1]
+        u = c[k-1]
+        for i in k-2:-1:1
+            u = u * (x[k] - x[i]) + c[i]
+            d = d * (x[k] - x[i])
+        end
+        c[k] = (y[k] - u) / d
+    end
+	return c
 end
 
-# ╔═╡ dd142f60-9e4f-4332-b1e5-1f5c065048b1
-md"""
-**Error del modelo matemático:**  
+# ╔═╡ a115b279-bd88-4ab9-a606-4c8f73e8f508
+md"""Una vez calculados los coeficientes $c_i$, podemos ensamblar el polinomio interpolador de Newton. Para esto se crea la siguiente función:"""
 
-Tenemos aquí la primera fuente de error de nuestro procedimiento, el error de modelado matemático. La naranja no es una esfera. Este error puede (y en algunos casos debe) ser cuantificado. Para esto se deben proponer medidas de error de modelado matemático. Es también claro que este error de modelado matemático está ligado a la complejidad del modelo y en particular al número de parámetros usados para describirlo, es decir, a la dimensión del modelo usado.
+# ╔═╡ ca3eb369-059d-4ced-90ea-3839a7cd1863
+function interpolador_newton(x::Vector{Float64}, y::Vector{Float64})
+	c = coef_interpolador_newton(x,y)
+	n = length(c)
+    P = Polynomial([c[1]])
+    for i in 2:n
+        term = Polynomial([1.0]) 
+        for j in 1:(i-1)
+            term *= Polynomial([-x[j], 1.0]) 
+        end
+        P += c[i] * term 
+    end
+	return P
+end
 
-Note que podemos medir el mayor círculo sobre la frontera de la bola, es decir, sobre la esfera, y así tener un dato a partir del cual hacer una estimación de $q$, donde $q$ es la cantidad de jugo de naranja. En este caso, podemos tener,
+# ╔═╡ b7d52b6b-f915-4569-847f-789dab4c78b5
+md"""**Ejemplo:**
 
-$d=\mbox{``diámetro del mayor círculo sobre la esfera''}$
+Hallemos el polinomio de menor grado que interpola el siguiente conjunto de datos:
 
+| $x$ | $3$ | $7$ | $1$ | $2$ 
+|-----|-------|-------|-------|-------|
+| $y$ | $10$ | $146$ | $2$ | $0$ |"""
 
-**Errores en los datos (errores de medición):**  
+# ╔═╡ c2d4fbfa-335a-4c7a-aee2-3efb8919c248
+md"""Definimos los arreglos de los datos:"""
 
-Tenemos aquí otra fuente de error de nuestro procedimiento, el error en la medición. Observe que no existe la noción de diámetro exacto, pues la naranja no es una esfera. De todos modos, se puede hacer una medición sobre la esfera ubicando la cuerda de manera adecuada para obtener una medición aproximada de la cantidad que podemos usar en nuestro modelo como $d$. 
-Este error puede (y en algunos casos debe) ser cuantificado. Para ello se debe conocer las especificaciones de las herramientas usadas o lidiar con la falta de ellas si no se conocen.
+# ╔═╡ a4d21cce-8e88-401b-9755-684e66a5dc8d
+begin
+	x₁ = [3.0, 7.0, 1.0, 2.0]
+	y₁ = [10.0, 146.0, 2.0, 0.0]
+end
 
-En este caso, vemos que 
+# ╔═╡ cd609723-261c-47b1-b10e-6914472e771f
+md"""Los coeficientes del polinomio interpolador de Newton son:"""
 
-$p= \frac{d}{2\pi},$
-es la relación que transforma datos en parámetros del modelo.
+# ╔═╡ 8e184ffc-b162-42bf-8523-8d452632d594
+coef = coef_interpolador_newton(x₁, y₁)
+
+# ╔═╡ 37687f31-fa26-465c-affc-485406522041
+md"""Así el polinomio de Newton es el siguiente"""
+
+# ╔═╡ 40beb0a4-32a2-45c9-83a0-2fa22814da05
+interpolador_newton(x₁, y₁)
+
+# ╔═╡ fa7ce6e1-4f7a-4b5e-9a66-6377ccd2c750
+begin
+	plot(interpolador_newton(x₁, y₁),xlims=(0, 8), ylims=(-3, 150), lw=3,c=:red)
+	scatter!(x₁, y₁,ms=4,c=:green)
+end
+
+# ╔═╡ 5e3a8e60-4ed4-46ec-901a-3624405af210
+md"""## Forma de Lagrange del polinomio de interpolación
+
+Otra forma de hallar el polinomio de interpolación $p$ asociado con una tabla de datos $(x_i, y_i)$, con $0 \leq i \leq n$ es con el polinomio de Lagrange. Con este método podemos expresar $p$ de la siguiente forma
+
+$p(x)=y_0\ell_0(x)+y_1\ell_1(x)+\cdots + y_n\ell_n(x)=\displaystyle\sum_{k=0}^ny_k\ell_k(x),$
+
+donde 
+
+$\ell_i(x) = \prod_{\substack{j=0 \\ j \neq i}}^{n} \frac{x - x_j}{x_i - x_j}, \quad (0 \leq i \leq n).$
 """
 
-# ╔═╡ 51be810f-2961-4d65-94f8-323bd29a9bd0
-md"""
-## Cantidad primal y relación con cantidades de interés
+# ╔═╡ bc03b41b-0cee-49aa-80a1-fece4ad45fa8
+md"""La siguiente función nos ayuda a calcular las funciones $\ell_i$:"""
 
-En este caso vemos que no es fácil, al menos no es obvio, calcular la cantidad de jugo de naranja en una naranja esférica a partir del radio de la misma. Podemos sospechar que el volumen de la esfera (que es más fácil de obtener) está relacionado con la cantidad de interés. En este caso introducimos:
+# ╔═╡ e6a730ef-c5dd-4db7-b085-cc841cc6e24e
+function lagrange_ℓ(x::Vector{Float64}, i::Int)
+    n = length(x)
+    ℓ_i = Polynomial([1.0])
+    for j in 1:n
+        if j != i
+            ℓ_i *= Polynomial([-x[j], 1.0]) / (x[i] - x[j])
+        end
+    end
+    return ℓ_i
+end
 
-$v=\mbox{``volumen de la bola''}.$
+# ╔═╡ 711e4624-eeb8-4b0b-9d34-de385942f41c
+md"""Así, la siguiente función calcula el polinomio interpolador de Lagrange:"""
 
-Queremos estimar,
+# ╔═╡ 32f763c0-e029-4e42-a3e2-6a31c72d3653
+function lagrange_interpolation(x::Vector{Float64}, y::Vector{Float64})
+    p = Polynomial([0.0])
+    n = length(x)
+    for i in 1:n
+        p += y[i] * lagrange_ℓ(x, i)
+    end
+    return p
+end
 
-$q=\mbox{``cantidad de jugo de naranja''}.$
+# ╔═╡ 46e57a15-6040-49ee-89ab-bf54d4d8e79e
+md"""**Ejemplo:**
 
-Para esto podemos proponer una relación de la forma 
+Hallemos el polinomio interpolador de Lagrange del siguiente conjunto de datos:
 
-$q=F(v,\alpha),$
+| $x$ | $1.5$ | $2.7$ | $3.5$ | $-2.5$  
+|-----|-------|-------|-------|-------|
+| $y$ | $0.0$ | $0.0$ | $0.0$ | $1.0$ |"""
 
-donde $\alpha$ es un parámetro que relaciona el volumen de la bola y la cantidad de jugo de naranja.
+# ╔═╡ a5c38183-c095-472d-851c-99d745b46ff3
+md"""Definimos los datos"""
 
+# ╔═╡ 44f4d54b-71ea-447f-8e23-413e51ffc118
+begin
+	x₂ = [1.5, 2.7, 3.5, -2.5]
+	y₂ = [0.0, 0.0, 0.0, 1.0]
+end
 
-Establecer esta relación necesita conocimiento del problema y del ejercicio de modelado matemático en curso. En este primer acercamiento y para simplificar podemos asumir una relación lineal del tipo
+# ╔═╡ 3541a161-c83b-41c4-857f-b7a2c3611fab
+md"""Así, el polinomio es el siguiente:"""
 
-$q=\alpha v,$
+# ╔═╡ 9c47612b-433d-40e7-ba07-0a7de060fe45
+lagrange_interpolation(x₂, y₂)
 
-donde $\alpha$ es una proporción (un parámetro). Es decir, asumimos que la cantidad de jugo de naranja (de una naranja perfectamente redonda) se puede estimar por una proporción de su volumen.
+# ╔═╡ e7aaa509-dda4-4452-8271-9d5d60101abe
+begin
+	plot(lagrange_interpolation(x₂, y₂),xlims=(-3, 4), ylims=(-1, 2),lw=3,c=:red)
+	scatter!(x₂, y₂,ms=4,c=:green)
+end
 
-**Error de aproximación de relaciones:** 
+# ╔═╡ 2e529993-f75f-452f-8910-bc8c51fabf5e
+md"""**Ejemplo:**
 
-Tenemos aquí otra fuente de error de nuestro procedimiento, el error en la aproximación de funciones que relacionan las variables primarias con las variables de interés. 
-Este error puede (y en algunos casos debe) ser cuantificado. Para eso, debemos estudiar (de alguna manera) la posible relación entre las variables. Podemos usar, por ejemplo, información a priori del problema y técnicas de aproximación de funciones para deducir o calcular esas relaciones.
+Consideremos el conjunto de datos del ejemplo del polinomio de Newton y hallemos su polinomio interpolador de Lagrange. Recordemos que los datos los los siguientes:
 
-**Error en determinación de parámetros:** 
+| $x$ | $3$ | $7$ | $1$ | $2$ 
+|-----|-------|-------|-------|-------|
+| $y$ | $10$ | $146$ | $2$ | $0$ |"""
 
-Tenemos aquí otra fuente de error de nuestro procedimiento, el error en los parámetros de las relaciones funcionales. En muchas aplicaciones reales no existe forma de verificar si la relación funcional es adecuada de manera teórica y muchas veces se usan diferentes criterios para la estimación de los parámetros de estas relaciones. En todo caso, se debe estudiar la sensibilidad de los resultados obtenidos a posibles variaciones de los parámetros de las relaciones funcionales.
-"""
+# ╔═╡ 60f146cd-7467-4bcd-8e00-70ae91f35557
+md"""Así, el polinomio interpolador de Lagrange es el siguiente:"""
 
-# ╔═╡ fabba741-1d31-434c-a111-302d63af0b75
-md"""## Método numérico
+# ╔═╡ b57047c9-6928-4d37-a3e0-a4aea2c31500
+lagrange_interpolation(x₁, y₁)
 
-Como $p$ representa el radio de la bola, y $p=\frac{d}{2\pi}$, así tenemos que
+# ╔═╡ afd3fb07-f100-4f3e-8935-58e5e4fa19ff
+begin
+	plot(lagrange_interpolation(x₁, y₁),xlims=(0, 8), ylims=(-3, 150),lw=3,c=:red)
+	scatter!(x₁, y₁,ms=4,c=:green)
+end
 
-$v=\frac{4}{3} \pi p^3
-=\frac{4}{3} \pi \left(\frac{d}{2\pi} \right)^3
-=\frac{d^3}{6\pi^2},$
-por lo tanto nuestra estimación está dada por 
+# ╔═╡ 001dac70-9eee-49ab-8e33-bf4e6c57c9dd
+md"""# Interpolación por splines
 
-$q=\alpha v= \frac{\alpha d^3}{6\pi^2}.$"""
+Una función spline se compone de varios polinomios, cada uno definido en un subintervalo diferente, que se conectan entre sí cumpliendo ciertas condiciones de continuidad. Supongamos que se han especificado $n + 1$ puntos $t_0 < t_1 < \cdots < t_n$, conocidos como nudos. Además, consideremos que se ha fijado un entero $k \geq 0$. Una función spline de grado $k$ con nudos en $t_0, t_1, \dots, t_n$ es una función $S$ que cumple las siguientes condiciones:
+1.   En cada intervalo $[t_{i-1}, t_i)$, $S$ es un polinomio de grado $\leq k$.
+2.   $S$ tiene una derivada de orden $k-1$ continua en $[t_0, t_n]$.
 
-# ╔═╡ ba35a0f6-6197-4b02-96c9-f68448e66770
-md"""## Implementación del método numérico
+Para más detalles de esto, ver [1]."""
 
-Imaginemos que decidimos implementar nuestro método numérico en una máquina que redondea todas las cantidades a 2 dígitos decimales (usando notación científica normalizada). 
-Tomemos como caso particular $\alpha=0.7$ y $d=21$ cm. En este caso, la aproximación de nuestra implementación es 
+# ╔═╡ 01aa524b-753a-4b87-9207-59d9b2aa5271
+md"""**Ejemplo:**
 
-$q\approx\widetilde{q}=\frac{0.7 (21)^3}{6 (3.14)^2} \approx \frac{6482.7}{59.16}\approx 109.58 \mbox{ cm}^3.$
+Tomamos la funcion $f(x)=x(x-2\pi)e^{-x}$ en una muestra de varios puntos y apliquemos las diferentes interpolaciones."""
 
-Note que $\widetilde{q}$ representa la aproximación del valor de $q$ que resulta de redondear todos los cálculos a dos dígitos decimales, es decir, trabajamos con 2 decimales en base 10 ($\pi\approx 3.14$). Es por esto que $q$ es aproximado por $\widetilde{q}$ tiene errores de redondeo ya que en cada cálculo intermedio tenemos un error de redondeo.
+# ╔═╡ ed34f014-7e23-452a-a76d-8b18c8343c82
+begin
+	x=0:9
+	y=x.*(x.-2*pi).*exp.(-x)
+	[x y]
+end
 
-Podemos implementar una aplicación o programa que, dados el diámetro $d$ y el valor $\alpha$, calcule la cantidad de jugo en la naranja. Con eso terminamos una primera etapa del ejercicio de modelado y estamos listos para la etapa de validación del modelo y, por último, la etapa de uso del modelo en donde los resultados se acoplan con otras herramientas para resolver un problema más interesante. 
+# ╔═╡ 836b01a5-44b7-4159-b71e-00d7aeacbcda
+begin
+	tplot=LinRange(0,9,100)
 
-**Error de redondeo:** 
+	#Splines constantes
+	I_cst = Interpolations.ConstantInterpolation(x,y)
+	V_cst=I_cst(tplot)
+	plot(tplot,V_cst,lw=2,label="Constante")
 
-Al implementar un método numérico en aritmética finita en un sistema de cómputo, cometemos errores de redondeo en cada cálculo intermedio que realicemos. Este error puede (y en algunos casos debe) ser cuantificado.
-"""
+	#Splines lineales
+	I_lineal = Interpolations.LinearInterpolation(x,y)
+	V_lineal=I_lineal(tplot)
+	plot!(tplot,V_lineal,lw=2,label="Lineal")
 
-# ╔═╡ 776dfee9-08b0-4424-967a-8d1b1b1d37ac
-md"""## Determinación de parámetros de leyes constitutivas
+	#Splines cubicos
+	I_s = Interpolations.CubicSplineInterpolation(x,y)
+	V_s=I_s(tplot)
+	plot!(tplot,V_s,lw=2,label="Cúbica")
 
-Notemos que el valor del parámetro $\alpha$ en la relación 
+	scatter!(x,y,ms=7,label="Datos",legend=:bottomright)
+end
 
-$\mbox{``cantidad de jugo''}=\alpha \cdot(\mbox{``volumen de la naranja''})$
-representa nuestro conocimiento previo de esta relación. En la practica, el valor de $\alpha$ puede ser determinado de diferentes formas: estudios previos, estudios estadísticos previos, mediciones previas invasivas, criterio de expertos, entre otros enfoques. Dicho parámetro puede ser hallado con metodos de optimización o estadisticos."""
+# ╔═╡ da596a8e-6cb0-4e67-a25c-c4f37f6b076f
+md"""**Ejemplo:**
 
-# ╔═╡ 9409857c-052e-4ac6-a99e-9285346161b5
-md"""## Validación del modelo
+Supongamos que queremos "escanear" el siguiente tipo caligráfico."""
 
-Después de obtener el modelo es necesario hacer el experimento con la naranja, si el modelo no cumple con lo esperado, se pueden tomar medidas para mejorarlo. Esto incluye revisar los datos, ajustar los parámetros y validar las mejoras. Una vez que el modelo esté listo y validado, se puede implementar para responder la pregunta original con mayor precisión."""
+# ╔═╡ 983ef21d-f31c-49b3-88cb-5d31326c4128
+begin
+	url1 = "https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/Interpolacion1.png?raw=true"
+	fname1 = download(url1)
+	imag1 = load(fname1)
+end
 
-# ╔═╡ e6509621-9ab6-45fe-aa0e-44eeb82ae497
-md"""## Balance de errores
+# ╔═╡ 73c8af9c-dbd2-4d29-8138-8fa17feac81c
+md"""*Figura 1. Curva en el plano. Elaboración propia.*"""
 
-Como hemos visto, son diversos los errores y simplificaciones de la realidad introducidos en diferentes etapas de la modelación matemática. Estos incluyen el error de modelación (las naranjas no son esferas, y debemos saber qué porcentaje de error existe en esto), el error de medición (debemos determinar qué porcentaje de error se produce al medir con una cinta métrica el diámetro de la naranja), errores de redondeo y errores de parámetros (en este caso, $\alpha$). Deseamos que nuestro modelo no sea sensible a este parámetro; es decir, si variamos un poco dicho parámetro, la solución no debería tener un cambio brusco.
+# ╔═╡ a1115c61-4310-4641-b9a6-65ffe43ef0a7
+md"""Introducimos coordenadas y puntos de control de la siguiente forma."""
 
-Es bastante obvio que no tiene sentido preocuparse por reducir este error únicamente en una de estas etapas. Por ejemplo, no tiene sentido práctico realizar el cálculo numérico asegurando una precisión de 14 cifras decimales si no puedo garantizar ese mismo orden de error en las otras etapas. Para esto, debo poder cuantificar el margen de error en todas las etapas del proceso."""
+# ╔═╡ 14f0937b-4600-4834-b850-87b2a431f505
+begin
+	url2 = "https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/Interpolacion2.png?raw=true"
+	fname2 = download(url2)
+	imag2 = load(fname2)
+end
 
-# ╔═╡ fbaaf968-b40d-4731-a947-240c8df50e21
-md"""
-# Referencias
-[1] Lin, C. C., & Segel, L. A. (1988). Mathematics Applied to Deterministic Problems in the Natural Sciences (Classics in Applied Mathematics, Series Number 1) (1st ed.). SIAM: Society for Industrial and Applied.
+# ╔═╡ 55e1edbe-fd24-4505-8d99-73fe917577a2
+md"""*Figura 2. Curva con 14 nudos. Elaboración propia.*"""
 
-[2] Kincaid, D. R., & Cheney, E. W. (1996). Numerical Analysis: Mathematics of Scientific Computing (2nd ed.). Brooks Cole.
+# ╔═╡ 49fa51f7-e6b5-4930-9148-c3cab133097e
+md"""Las coordenadas de los datos escogidos son:"""
 
-[3] Strang, G. (1986). Introduction to Applied Mathematics. Wellesley-Cambridge Press
-"""
+# ╔═╡ ab56572e-cca4-4d1c-8e3a-c6940a7cf88a
+begin
+	t=1:14
+	coorx=[1; 1.3; 2; 3.1; 3.7; 3.2; 2.2; 2.2; 2.6; 3.4; 4.05; 3.45; 2.6; 2]
+	coory=[0.1 ;1; 1.9; 2.8; 2.6; 2.1; 2.8; 3.45; 4.15; 4.6; 4.2; 4; 4.15; 5.3]
+	for i=1:14
+  	println("|",t[i],"\t|",coorx[i],"\t|",coory[i],"|")
+	end
+end
+
+# ╔═╡ f2cf91c4-0ee8-4e82-a991-3475401e87af
+md"""Con estos datos realizamos una interpolación por splines cúbicos, obteniendo como resultado la siguiente gráfica."""
+
+# ╔═╡ 53cb4eef-0fe9-4612-a8ef-bcf98639ca07
+begin
+	s=LinRange(1,14,1000)
+
+	icx=Interpolations.CubicSplineInterpolation(t,coorx)
+	curvex=icx(s)
+
+	icy=Interpolations.CubicSplineInterpolation(t,coory)
+	curvey=icy(s)
+
+	plot(curvex,curvey,lw=5,aspect_ratio = 1.,c=:red)
+	scatter!(coorx,coory,ms=5,c=:green)
+end
+
+# ╔═╡ 3c08d3d9-a8d5-4075-a362-7a1c1e347be5
+md"""# Problemas
+
+**Problema 1.** Considere la tabla, 
+
+| Hora      | Temperatura |
+| :---      |    :----:   |
+|13    |   18     |
+|14    |   18     |
+|15    |   17     |
+|16    |   16     |
+|17    |   15     |
+|18    |   14     |
+
+Usando diferentes interpolaciones (ver arriba), estima la temperatura a las 15:30 (15.5). Explica las diferencias entre los resultados. ¿Cuál es la mejor estimación? Justifica tu respuesta. Puedes graficar los resultados de las diferentes interpolaciones, como en el ejemplo anterior. """
+
+# ╔═╡ c710a80e-54fa-4975-b366-c2529d02bf00
+md"""**Problema 2. (Kincay y Chiney)** Se ha diseñado la letra de la figura y se quiere reproducir (con ayuda de los puntos de control marcados) usando splines. Utiliza la interpolación por splines y despliega esta figura usando interpolación por splines evaluada en 10 puntos, 100 puntos y 1000 puntos. En el ejemplo anterior, el número de puntos desplegados es la dimensión del vector."""
+
+# ╔═╡ 7be3fe9c-5a48-42c5-93a3-711c6fdc481a
+begin
+	url3 = "https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/Interpolacion3.png?raw=true"
+	fname3 = download(url3)
+	imag3 = load(fname3)
+end
+
+# ╔═╡ 85cda24e-2f1b-4c98-8f64-a1d6720c4ebd
+md"""*Figura 3. Letra script con 11 nudos. Elaboración propia, inspirado en [1].*"""
+
+# ╔═╡ 4a8fb259-e48a-4f51-955d-9a7790e8b8ad
+md"""# Referencias
+[1] Kincaid, D., & Cheney, W. (2002). Numerical analysis: Mathematics of scientific computing. American Mathematical Society.
+
+[2] Driscoll, T. A., & Braun, R. J. (n.d.). Fundamentals of Numerical Computation. Adapted to Julia. Retrieved from https://tobydriscoll.net/fnc-julia/frontmatter.html
+
+[3] Sullivan, E. (2020). Numerical Methods: An Inquiry-Based Approach With Python.
+
+[4] Bulirsch, R., Stoer, J., & Stoer, J. (2002). Introduction to Numerical Analysis (Vol. 3). Heidelberg: Springer.
+
+[5] Stewart, G. W. (1996). Afternotes on Numerical Analysis. Society for Industrial and Applied Mathematics.
+
+[6] Quarteroni, A., Saleri, F., & Gervasio, P. (2006). Scientific Computing with MATLAB and Octave (Vol. 3). Berlin: Springer.
+
+[7] Hertzmann, A. (n.d.). Machine Learning and Data Mining Lecture Notes. Retrieved from http://www.dgp.toronto.edu/~hertzman/411notes.pdf
+
+[8] Goodfellow, I., Bengio, Y., & Courville, A. (n.d.). Deep Learning. Retrieved from https://www.deeplearningbook.org/lecture_slides.html"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -250,30 +407,43 @@ PLUTO_PROJECT_TOML_CONTENTS = """
 ColorVectorSpace = "c3611d14-8923-5661-9e6a-0046d554d3a4"
 Colors = "5ae59095-9a9b-59fe-a467-6f913c188581"
 FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
-HypertextLiteral = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
 ImageIO = "82e4d734-157c-48bb-816b-45c225c6df19"
 ImageShow = "4e3cecfd-b093-5904-9786-8bbb286a6a31"
+Interpolations = "a98d9a8b-a2ab-59e6-89dd-64a1c18fca59"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+Polynomials = "f27b6e38-b328-58d1-80ce-0feddd5e7a45"
 
 [compat]
-ColorVectorSpace = "~0.10.0"
-Colors = "~0.12.10"
+ColorVectorSpace = "~0.9.10"
+Colors = "~0.12.11"
 FileIO = "~1.16.3"
-HypertextLiteral = "~0.9.5"
-ImageIO = "~0.6.7"
+ImageIO = "~0.6.8"
 ImageShow = "~0.3.8"
-Plots = "~1.40.3"
-PlutoUI = "~0.7.58"
+Interpolations = "~0.14.7"
+Plots = "~1.40.4"
+PlutoUI = "~0.7.59"
+Polynomials = "~4.0.11"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.2"
+julia_version = "1.10.4"
 manifest_format = "2.0"
-project_hash = "cef516209b5dec7b18cf7e7a33b410d403cfffef"
+project_hash = "8f7936ac757fdd8e9fbb801a66f8ec26181c2c80"
+
+[[deps.AbstractFFTs]]
+deps = ["LinearAlgebra"]
+git-tree-sha1 = "d92ad398961a3ed262d8bf04a1a2b8340f915fef"
+uuid = "621f4979-c628-5d54-868e-fcf4e3e8185c"
+version = "1.5.0"
+weakdeps = ["ChainRulesCore", "Test"]
+
+    [deps.AbstractFFTs.extensions]
+    AbstractFFTsChainRulesCoreExt = "ChainRulesCore"
+    AbstractFFTsTestExt = "Test"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -281,12 +451,28 @@ git-tree-sha1 = "6e1d2a35f2f90a4bc7c2ed98079b2ba09c35b83a"
 uuid = "6e696c72-6542-2067-7265-42206c756150"
 version = "1.3.2"
 
+[[deps.Adapt]]
+deps = ["LinearAlgebra", "Requires"]
+git-tree-sha1 = "cde29ddf7e5726c9fb511f340244ea3481267608"
+uuid = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
+version = "3.7.2"
+weakdeps = ["StaticArrays"]
+
+    [deps.Adapt.extensions]
+    AdaptStaticArraysExt = "StaticArrays"
+
 [[deps.ArgTools]]
 uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
 version = "1.1.1"
 
 [[deps.Artifacts]]
 uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
+
+[[deps.AxisAlgorithms]]
+deps = ["LinearAlgebra", "Random", "SparseArrays", "WoodburyMatrices"]
+git-tree-sha1 = "66771c8d21c8ff5e3a93379480a2307ac36863f7"
+uuid = "13072b0f-2c55-5437-9ae7-d433b7a33950"
+version = "1.0.1"
 
 [[deps.AxisArrays]]
 deps = ["Dates", "IntervalSets", "IterTools", "RangeArrays"]
@@ -319,6 +505,16 @@ git-tree-sha1 = "a2f1c8c668c8e3cb4cca4e57a8efdb09067bb3fd"
 uuid = "83423d85-b0ee-5818-9007-b63ccbeb887a"
 version = "1.18.0+2"
 
+[[deps.ChainRulesCore]]
+deps = ["Compat", "LinearAlgebra"]
+git-tree-sha1 = "71acdbf594aab5bbb2cec89b208c41b4c411e49f"
+uuid = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
+version = "1.24.0"
+weakdeps = ["SparseArrays"]
+
+    [deps.ChainRulesCore.extensions]
+    ChainRulesCoreSparseArraysExt = "SparseArrays"
+
 [[deps.CodecZlib]]
 deps = ["TranscodingStreams", "Zlib_jll"]
 git-tree-sha1 = "59939d8a997469ee05c4b4944560a820f9ba0d73"
@@ -338,16 +534,10 @@ uuid = "3da002f7-5984-5a60-b8a6-cbb66c0b333f"
 version = "0.11.5"
 
 [[deps.ColorVectorSpace]]
-deps = ["ColorTypes", "FixedPointNumbers", "LinearAlgebra", "Requires", "Statistics", "TensorCore"]
-git-tree-sha1 = "a1f44953f2382ebb937d60dafbe2deea4bd23249"
+deps = ["ColorTypes", "FixedPointNumbers", "LinearAlgebra", "SpecialFunctions", "Statistics", "TensorCore"]
+git-tree-sha1 = "600cc5508d66b78aae350f7accdb58763ac18589"
 uuid = "c3611d14-8923-5661-9e6a-0046d554d3a4"
-version = "0.10.0"
-
-    [deps.ColorVectorSpace.extensions]
-    SpecialFunctionsExt = "SpecialFunctions"
-
-    [deps.ColorVectorSpace.weakdeps]
-    SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
+version = "0.9.10"
 
 [[deps.Colors]]
 deps = ["ColorTypes", "FixedPointNumbers", "Reexport"]
@@ -368,13 +558,24 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.1.0+0"
+version = "1.1.1+0"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
 git-tree-sha1 = "6cbbd4d241d7e6579ab354737f4dd95ca43946e1"
 uuid = "f0e56b4a-5159-44fe-b623-3e5288b988bb"
 version = "2.4.1"
+
+[[deps.ConstructionBase]]
+deps = ["LinearAlgebra"]
+git-tree-sha1 = "260fd2400ed2dab602a7c15cf10c1933c59930a2"
+uuid = "187b0558-2788-49d3-abe0-74a17ed4e7c9"
+version = "1.5.5"
+weakdeps = ["IntervalSets", "StaticArrays"]
+
+    [deps.ConstructionBase.extensions]
+    ConstructionBaseIntervalSetsExt = "IntervalSets"
+    ConstructionBaseStaticArraysExt = "StaticArrays"
 
 [[deps.Contour]]
 git-tree-sha1 = "439e35b0b36e2e5881738abc8857bd92ad6ff9a8"
@@ -485,11 +686,15 @@ git-tree-sha1 = "1ed150b39aebcc805c26b93a8d0122c940f64ce2"
 uuid = "559328eb-81f9-559d-9380-de523a88c83c"
 version = "1.0.14+0"
 
+[[deps.Future]]
+deps = ["Random"]
+uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
+
 [[deps.GLFW_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll"]
-git-tree-sha1 = "ff38ba61beff76b8f4acad8ab0c97ef73bb670cb"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll", "xkbcommon_jll"]
+git-tree-sha1 = "3f74912a156096bd8fdbef211eff66ab446e7297"
 uuid = "0656b61e-2033-5cc2-a64a-77c0f6c09b89"
-version = "3.3.9+0"
+version = "3.4.0+0"
 
 [[deps.GR]]
 deps = ["Artifacts", "Base64", "DelimitedFiles", "Downloads", "GR_jll", "HTTP", "JSON", "Libdl", "LinearAlgebra", "Preferences", "Printf", "Random", "Serialization", "Sockets", "TOML", "Tar", "Test", "p7zip_jll"]
@@ -514,6 +719,12 @@ deps = ["Artifacts", "Gettext_jll", "JLLWrappers", "Libdl", "Libffi_jll", "Libic
 git-tree-sha1 = "7c82e6a6cd34e9d935e9aa4051b66c6ff3af59ba"
 uuid = "7746bdde-850d-59dc-9ae8-88ece973131d"
 version = "2.80.2+0"
+
+[[deps.Graphics]]
+deps = ["Colors", "LinearAlgebra", "NaNMath"]
+git-tree-sha1 = "d61890399bc535850c4bf08e4e0d3a7ad0f21cbd"
+uuid = "a2bd30eb-e257-5431-a919-1863eab51364"
+version = "1.1.2"
 
 [[deps.Graphite2_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -564,15 +775,15 @@ version = "0.6.11"
 
 [[deps.ImageBase]]
 deps = ["ImageCore", "Reexport"]
-git-tree-sha1 = "eb49b82c172811fd2c86759fa0553a2221feb909"
+git-tree-sha1 = "b51bb8cae22c66d0f6357e3bcb6363145ef20835"
 uuid = "c817782e-172a-44cc-b673-b171935fbb9e"
-version = "0.1.7"
+version = "0.1.5"
 
 [[deps.ImageCore]]
-deps = ["ColorVectorSpace", "Colors", "FixedPointNumbers", "MappedArrays", "MosaicViews", "OffsetArrays", "PaddedViews", "PrecompileTools", "Reexport"]
-git-tree-sha1 = "b2a7eaa169c13f5bcae8131a83bc30eff8f71be0"
+deps = ["AbstractFFTs", "ColorVectorSpace", "Colors", "FixedPointNumbers", "Graphics", "MappedArrays", "MosaicViews", "OffsetArrays", "PaddedViews", "Reexport"]
+git-tree-sha1 = "acf614720ef026d38400b3817614c45882d75500"
 uuid = "a09fc81d-aa75-5fe9-8630-4744c3626534"
-version = "0.10.2"
+version = "0.9.4"
 
 [[deps.ImageIO]]
 deps = ["FileIO", "IndirectArrays", "JpegTurbo", "LazyModules", "Netpbm", "OpenEXR", "PNGFiles", "QOI", "Sixel", "TiffImages", "UUIDs"]
@@ -611,6 +822,12 @@ version = "0.1.5"
 [[deps.InteractiveUtils]]
 deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+
+[[deps.Interpolations]]
+deps = ["Adapt", "AxisAlgorithms", "ChainRulesCore", "LinearAlgebra", "OffsetArrays", "Random", "Ratios", "Requires", "SharedArrays", "SparseArrays", "StaticArrays", "WoodburyMatrices"]
+git-tree-sha1 = "721ec2cf720536ad005cb38f50dbba7b02419a15"
+uuid = "a98d9a8b-a2ab-59e6-89dd-64a1c18fca59"
+version = "0.14.7"
 
 [[deps.IntervalSets]]
 git-tree-sha1 = "dba9ddf07f77f60450fe5d2e2beb9854d9a49bd0"
@@ -890,12 +1107,10 @@ version = "1.2.0"
 git-tree-sha1 = "e64b4f5ea6b7389f6f046d13d4896a8f9c1ba71e"
 uuid = "6fe1bfb0-de20-5000-8ca7-80f57d26f881"
 version = "1.14.0"
+weakdeps = ["Adapt"]
 
     [deps.OffsetArrays.extensions]
     OffsetArraysAdaptExt = "Adapt"
-
-    [deps.OffsetArrays.weakdeps]
-    Adapt = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
 
 [[deps.Ogg_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -936,6 +1151,12 @@ deps = ["Artifacts", "JLLWrappers", "Libdl"]
 git-tree-sha1 = "a028ee3cb5641cccc4c24e90c36b0a4f7707bdf5"
 uuid = "458c3c95-2e84-50aa-8efc-19380b2a3a95"
 version = "3.0.14+0"
+
+[[deps.OpenSpecFun_jll]]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "Libdl", "Pkg"]
+git-tree-sha1 = "13652491f6856acfd2db29360e1bbcd4565d04f1"
+uuid = "efe28fd5-8261-553b-a9e1-b2916fc3738e"
+version = "0.5.5+0"
 
 [[deps.Opus_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1031,6 +1252,24 @@ git-tree-sha1 = "ab55ee1510ad2af0ff674dbcced5e94921f867a9"
 uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 version = "0.7.59"
 
+[[deps.Polynomials]]
+deps = ["LinearAlgebra", "RecipesBase", "Requires", "Setfield", "SparseArrays"]
+git-tree-sha1 = "1a9cfb2dc2c2f1bd63f1906d72af39a79b49b736"
+uuid = "f27b6e38-b328-58d1-80ce-0feddd5e7a45"
+version = "4.0.11"
+
+    [deps.Polynomials.extensions]
+    PolynomialsChainRulesCoreExt = "ChainRulesCore"
+    PolynomialsFFTWExt = "FFTW"
+    PolynomialsMakieCoreExt = "MakieCore"
+    PolynomialsMutableArithmeticsExt = "MutableArithmetics"
+
+    [deps.Polynomials.weakdeps]
+    ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
+    FFTW = "7a1cc6ca-52ef-59f5-83cd-3a7055c09341"
+    MakieCore = "20f20a25-4f0e-4fdf-b5d1-57303727442b"
+    MutableArithmetics = "d8a4904e-b15c-11e9-3269-09a3773c0cb0"
+
 [[deps.PrecompileTools]]
 deps = ["Preferences"]
 git-tree-sha1 = "5aa36f7049a63a1528fe8f7c3f2113413ffd4e1f"
@@ -1077,6 +1316,16 @@ uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 git-tree-sha1 = "b9039e93773ddcfc828f12aadf7115b4b4d225f5"
 uuid = "b3c3ace0-ae52-54e7-9d0b-2c1406fd6b9d"
 version = "0.3.2"
+
+[[deps.Ratios]]
+deps = ["Requires"]
+git-tree-sha1 = "1342a47bf3260ee108163042310d26f2be5ec90b"
+uuid = "c84ed2f1-dad5-54f0-aa8e-dbefe2724439"
+version = "0.4.5"
+weakdeps = ["FixedPointNumbers"]
+
+    [deps.Ratios.extensions]
+    RatiosFixedPointNumbersExt = "FixedPointNumbers"
 
 [[deps.RecipesBase]]
 deps = ["PrecompileTools"]
@@ -1126,6 +1375,16 @@ version = "1.2.1"
 [[deps.Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
 
+[[deps.Setfield]]
+deps = ["ConstructionBase", "Future", "MacroTools", "StaticArraysCore"]
+git-tree-sha1 = "e2cc6d8c88613c05e1defb55170bf5ff211fbeac"
+uuid = "efcf1570-3423-57d1-acb7-fd33fddbac46"
+version = "1.1.1"
+
+[[deps.SharedArrays]]
+deps = ["Distributed", "Mmap", "Random", "Serialization"]
+uuid = "1a1011a3-84de-559e-8e89-a11a2f7dc383"
+
 [[deps.Showoff]]
 deps = ["Dates", "Grisu"]
 git-tree-sha1 = "91eddf657aca81df9ae6ceb20b959ae5653ad1de"
@@ -1163,11 +1422,37 @@ deps = ["Libdl", "LinearAlgebra", "Random", "Serialization", "SuiteSparse_jll"]
 uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 version = "1.10.0"
 
+[[deps.SpecialFunctions]]
+deps = ["IrrationalConstants", "LogExpFunctions", "OpenLibm_jll", "OpenSpecFun_jll"]
+git-tree-sha1 = "2f5d4697f21388cbe1ff299430dd169ef97d7e14"
+uuid = "276daf66-3868-5448-9aa4-cd146d93841b"
+version = "2.4.0"
+weakdeps = ["ChainRulesCore"]
+
+    [deps.SpecialFunctions.extensions]
+    SpecialFunctionsChainRulesCoreExt = "ChainRulesCore"
+
 [[deps.StackViews]]
 deps = ["OffsetArrays"]
 git-tree-sha1 = "46e589465204cd0c08b4bd97385e4fa79a0c770c"
 uuid = "cae243ae-269e-4f55-b966-ac2d0dc13c15"
 version = "0.1.1"
+
+[[deps.StaticArrays]]
+deps = ["LinearAlgebra", "PrecompileTools", "Random", "StaticArraysCore"]
+git-tree-sha1 = "20833c5b7f7edf0e5026f23db7f268e4f23ec577"
+uuid = "90137ffa-7385-5640-81b9-e52037218182"
+version = "1.9.6"
+weakdeps = ["ChainRulesCore", "Statistics"]
+
+    [deps.StaticArrays.extensions]
+    StaticArraysChainRulesCoreExt = "ChainRulesCore"
+    StaticArraysStatisticsExt = "Statistics"
+
+[[deps.StaticArraysCore]]
+git-tree-sha1 = "192954ef1208c7019899fbf8049e717f92959682"
+uuid = "1e83bf80-4336-4d27-bf5d-d5a4f845583c"
+version = "1.4.3"
 
 [[deps.Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
@@ -1292,17 +1577,23 @@ git-tree-sha1 = "93f43ab61b16ddfb2fd3bb13b3ce241cafb0e6c9"
 uuid = "2381bf8a-dfd0-557d-9999-79630e7b1b91"
 version = "1.31.0+0"
 
+[[deps.WoodburyMatrices]]
+deps = ["LinearAlgebra", "SparseArrays"]
+git-tree-sha1 = "5f24e158cf4cee437052371455fe361f526da062"
+uuid = "efce3f68-66dc-5838-9240-27a6d6f5f9b6"
+version = "0.5.6"
+
 [[deps.XML2_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libiconv_jll", "Zlib_jll"]
-git-tree-sha1 = "52ff2af32e591541550bd753c0da8b9bc92bb9d9"
+git-tree-sha1 = "d9717ce3518dc68a99e6b96300813760d887a01d"
 uuid = "02c8fc9c-b97f-50b9-bbe4-9be30ff0a78a"
-version = "2.12.7+0"
+version = "2.13.1+0"
 
 [[deps.XSLT_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Libgcrypt_jll", "Libgpg_error_jll", "Libiconv_jll", "Pkg", "XML2_jll", "Zlib_jll"]
-git-tree-sha1 = "91844873c4085240b95e795f692c4cec4d805f8a"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Libgcrypt_jll", "Libgpg_error_jll", "Libiconv_jll", "XML2_jll", "Zlib_jll"]
+git-tree-sha1 = "a54ee957f4c86b526460a720dbc882fa5edcbefc"
 uuid = "aed1982a-8fda-507f-9586-7b0439959a61"
-version = "1.1.34+0"
+version = "1.1.41+0"
 
 [[deps.XZ_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1572,32 +1863,63 @@ version = "1.4.1+1"
 """
 
 # ╔═╡ Cell order:
-# ╟─d882946c-aee6-43f9-8516-1c72ee946408
-# ╟─fed0c56f-fe3e-4b32-b4f0-dda5c269abfe
-# ╟─089cc976-124e-40f7-9aa1-ba4ca5089aef
-# ╟─c48f0bd3-ecb4-4e44-8aa2-aebf32bb5b82
-# ╟─914ef67f-c856-433d-be13-009e17486c08
-# ╠═3cbddb7c-e7d6-4f2c-b0bb-92a14ff55c65
-# ╟─010bd77b-b5e6-4441-b4bd-739eb4f64b35
-# ╟─b0bb08ad-40c1-4944-a200-245a0ee9827d
-# ╟─c6cf6f44-9e09-4f7f-9509-168d329d9f31
-# ╟─da3dff57-eacd-4e18-8439-41dbde4bab6f
-# ╟─3a962c19-ec0a-4758-9a0f-51804745a39c
-# ╟─e0616ea2-970e-4e9a-9622-a60c557bceec
-# ╠═48cb2f10-4496-4dd7-aba4-a5be79cf06ff
-# ╟─21bf9efa-69c5-40ed-90e0-4b7f51210e13
-# ╟─6eb930d2-c0e5-43d8-801f-024928705453
-# ╟─d8be3494-4b1c-419b-a8ab-28c40cb18f99
-# ╟─3d35a65c-3620-4a1f-adf3-1280eff4c597
-# ╠═354b94c8-20db-448f-b508-34963b4e3645
-# ╟─472d3cf7-9aa6-4eab-910d-3216426367ff
-# ╟─dd142f60-9e4f-4332-b1e5-1f5c065048b1
-# ╟─51be810f-2961-4d65-94f8-323bd29a9bd0
-# ╟─fabba741-1d31-434c-a111-302d63af0b75
-# ╟─ba35a0f6-6197-4b02-96c9-f68448e66770
-# ╟─776dfee9-08b0-4424-967a-8d1b1b1d37ac
-# ╟─9409857c-052e-4ac6-a99e-9285346161b5
-# ╟─e6509621-9ab6-45fe-aa0e-44eeb82ae497
-# ╟─fbaaf968-b40d-4731-a947-240c8df50e21
+# ╟─ff142072-5fcd-4c47-a2d3-ffe0d69846c2
+# ╟─695cbd99-7aec-47e1-8639-767b0bda461a
+# ╟─2fb96d74-914d-453f-b4ba-1ce09117d436
+# ╟─cedfdb79-6356-40fa-aa82-642c75be3e1c
+# ╟─d4a4f71b-4247-4475-b142-3ac64dea6506
+# ╠═cfd6ea8e-70ee-41af-85c6-b4712e3b9432
+# ╟─baf62098-80d4-496c-bd52-828833ef3491
+# ╟─b1240502-6c4a-44a6-84ea-1e2b1d3aa17f
+# ╟─69804133-7b6f-4390-bc60-b81b3924f551
+# ╟─830eb270-6daf-4622-8549-8ac5cdfb4c75
+# ╟─96edc903-5828-4819-a529-6914ec6b076a
+# ╟─957552fc-b2ff-4ac6-a024-c2505d2a6959
+# ╟─06fba850-a56c-4e14-af07-909ad67f333d
+# ╠═dd53dde5-2815-406c-b288-c432a40b5a9c
+# ╟─a115b279-bd88-4ab9-a606-4c8f73e8f508
+# ╠═ca3eb369-059d-4ced-90ea-3839a7cd1863
+# ╟─b7d52b6b-f915-4569-847f-789dab4c78b5
+# ╟─c2d4fbfa-335a-4c7a-aee2-3efb8919c248
+# ╠═a4d21cce-8e88-401b-9755-684e66a5dc8d
+# ╟─cd609723-261c-47b1-b10e-6914472e771f
+# ╠═8e184ffc-b162-42bf-8523-8d452632d594
+# ╟─37687f31-fa26-465c-affc-485406522041
+# ╠═40beb0a4-32a2-45c9-83a0-2fa22814da05
+# ╟─fa7ce6e1-4f7a-4b5e-9a66-6377ccd2c750
+# ╟─5e3a8e60-4ed4-46ec-901a-3624405af210
+# ╟─bc03b41b-0cee-49aa-80a1-fece4ad45fa8
+# ╠═e6a730ef-c5dd-4db7-b085-cc841cc6e24e
+# ╟─711e4624-eeb8-4b0b-9d34-de385942f41c
+# ╠═32f763c0-e029-4e42-a3e2-6a31c72d3653
+# ╟─46e57a15-6040-49ee-89ab-bf54d4d8e79e
+# ╟─a5c38183-c095-472d-851c-99d745b46ff3
+# ╠═44f4d54b-71ea-447f-8e23-413e51ffc118
+# ╟─3541a161-c83b-41c4-857f-b7a2c3611fab
+# ╠═9c47612b-433d-40e7-ba07-0a7de060fe45
+# ╟─e7aaa509-dda4-4452-8271-9d5d60101abe
+# ╟─2e529993-f75f-452f-8910-bc8c51fabf5e
+# ╟─60f146cd-7467-4bcd-8e00-70ae91f35557
+# ╠═b57047c9-6928-4d37-a3e0-a4aea2c31500
+# ╟─afd3fb07-f100-4f3e-8935-58e5e4fa19ff
+# ╟─001dac70-9eee-49ab-8e33-bf4e6c57c9dd
+# ╟─01aa524b-753a-4b87-9207-59d9b2aa5271
+# ╠═ed34f014-7e23-452a-a76d-8b18c8343c82
+# ╟─836b01a5-44b7-4159-b71e-00d7aeacbcda
+# ╟─da596a8e-6cb0-4e67-a25c-c4f37f6b076f
+# ╟─983ef21d-f31c-49b3-88cb-5d31326c4128
+# ╟─73c8af9c-dbd2-4d29-8138-8fa17feac81c
+# ╟─a1115c61-4310-4641-b9a6-65ffe43ef0a7
+# ╟─14f0937b-4600-4834-b850-87b2a431f505
+# ╟─55e1edbe-fd24-4505-8d99-73fe917577a2
+# ╟─49fa51f7-e6b5-4930-9148-c3cab133097e
+# ╟─ab56572e-cca4-4d1c-8e3a-c6940a7cf88a
+# ╟─f2cf91c4-0ee8-4e82-a991-3475401e87af
+# ╟─53cb4eef-0fe9-4612-a8ef-bcf98639ca07
+# ╟─3c08d3d9-a8d5-4075-a362-7a1c1e347be5
+# ╟─c710a80e-54fa-4975-b366-c2529d02bf00
+# ╟─7be3fe9c-5a48-42c5-93a3-711c6fdc481a
+# ╟─85cda24e-2f1b-4c98-8f64-a1d6720c4ebd
+# ╟─4a8fb259-e48a-4f51-955d-9a7790e8b8ad
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

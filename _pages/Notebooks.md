@@ -118,11 +118,14 @@ header-includes: |
   <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/" class="button">Análisis Numérico</a>
 </div>
 
-<hr>
-
-<div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/" class="button">Cadenas de Markov</a>
-</div>
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>Los cuadernos de Análisis Numérico comienzan mostrando la representación de números enteros y de punto flotante, mostrando cómo los errores de redondeo y los límites de precisión afectan los cálculos numéricos. También incluyen una introducción al cálculo simbólico con la librería Symbolics. En temas de comparación asintótica, se definen conceptos como el orden asintótico para sucesiones y se utilizan ejemplos gráficos para ilustrar la convergencia. Se abordan la convergencia lineal, superlineal y la expansión de Taylor para la aproximación de funciones. Los métodos numéricos para encontrar raíces de funciones, como bisección, Newton y punto fijo, son explorados con implementaciones prácticas en el cuaderno Ecuaciones No Lineales. También se discuten ecuaciones lineales, incluyendo la factorización LU y de Cholesky, con ejemplos en Julia. El cuaderno sobre Círculos de Gershgorin presenta métodos para localizar valores propios de matrices, extendiendo la teoría a discos de Brauer y discos generalizados de Gershgorin. La interpolación se aborda mediante polinomios y splines, mostrando cómo garantizar la suavidad en los puntos de unión y aplicaciones en datos caligráficos. El ajuste de curvas incluye enfoques como el ajuste lineal y polinómico cúbico, aplicados al crecimiento de tumores en ratones.
+        Finalmente, los métodos de integración numérica como las sumas de Riemann, la regla del trapecio y la regla de Simpson se ilustran con ejemplos prácticos. El método de elementos finitos se utiliza para resolver ecuaciones como la de Poisson, aplicando discretización y condiciones de frontera en dominios unidimensionales y bidimensionales.</p>
+      </div>
+    </div>
+  </div>
 
 <hr>
 
@@ -133,7 +136,7 @@ header-includes: |
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>Los cuadernos sobre ecuaciones diferenciales ordinarias abarcan una amplia gama de temas matemáticos y científicos. Desde la introducción a la modelación matemática y las ecuaciones diferenciales hasta la resolución de problemas específicos como el crecimiento de poblaciones, el movimiento de planetas o la dosificación de medicamentos, estos cuadernos ofrecen un panorama completo de cómo las ecuaciones diferenciales se aplican en diferentes contextos. Además, exploran técnicas numéricas y analíticas para resolver ecuaciones, ajustar modelos a datos experimentales y comprender fenómenos naturales y sociales.</p>
+        <p>Los cuadernos sobre ecuaciones diferenciales ordinarias abarcan una amplia gama de temas matemáticos y prácticos. Desde la introducción a la modelación matemática y las ecuaciones diferenciales hasta la resolución de problemas específicos como el crecimiento de poblaciones, el movimiento de planetas o la dosificación de medicamentos, estos cuadernos ofrecen un panorama completo de cómo las ecuaciones diferenciales se aplican en diferentes contextos. Además, exploran técnicas numéricas y analíticas para resolver ecuaciones, ajustar modelos a datos experimentales y comprender fenómenos naturales y sociales.</p>
       </div>
     </div>
   </div>
@@ -141,14 +144,30 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/" class="button">Introducción a las Ciencias de la Computación</a>
+  <a href="https://labmatecc.github.io/Notebooks/IntroCCyP" class="button">Introducción a las Ciencias de la Computación y la Programación</a>
 </div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>Los cuadernos sobre el curso Introducción a las Ciencias de la Computación y la Programación están en construcción.</p>
+      </div>
+    </div>
+  </div>
 
 <hr>
 
 <div class="button-container">
   <a href="https://labmatecc.github.io/Notebooks/Optimizacion" class="button">Optimización</a>
 </div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>Los cuadernos sobre optimización muestran temas clave en la mejora de decisiones y procesos. En el problema de la dieta, se busca la combinación óptima de alimentos para satisfacer requisitos nutricionales a bajo costo, influenciados por el problema de Stigler, con implicaciones de seguridad alimentaria. El cuaderno de métodos de descenso explora técnicas de optimización numérica, incluyendo el descenso de gradiente y el método de Newton, con aplicaciones prácticas y visualizaciones para facilitar la comprensión.</p>
+      </div>
+    </div>
+  </div>
 
 <hr>
 

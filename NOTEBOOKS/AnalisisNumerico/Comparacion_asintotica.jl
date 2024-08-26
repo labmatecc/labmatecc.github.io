@@ -1,279 +1,305 @@
 ### A Pluto.jl notebook ###
-# v0.19.40
+# v0.19.39
 
 using Markdown
 using InteractiveUtils
 
-# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
-macro bind(def, element)
-    quote
-        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
-        local el = $(esc(element))
-        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
-        el
-    end
-end
-
-# ╔═╡ d882946c-aee6-43f9-8516-1c72ee946408
+# ╔═╡ 810b4ca6-7c98-423d-8bec-e0565f414d84
 using PlutoUI
 
-# ╔═╡ 3cbddb7c-e7d6-4f2c-b0bb-92a14ff55c65
-begin
-	using Colors, ColorVectorSpace, ImageShow, FileIO, ImageIO
-	using HypertextLiteral
-	using Plots
-end
+# ╔═╡ a346def9-8c48-464b-824c-f8d37d16d31f
+using Plots, TaylorSeries
 
-# ╔═╡ fed0c56f-fe3e-4b32-b4f0-dda5c269abfe
-PlutoUI.TableOfContents(title="Introducción a la modelación matemática", aside=true)
+# ╔═╡ f5a2cf1e-32a6-491e-8361-f447da518d40
+PlutoUI.TableOfContents(title="Comparación asintótica", aside=true)
 
-# ╔═╡ 089cc976-124e-40f7-9aa1-ba4ca5089aef
-md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**.
+# ╔═╡ 2ef97d61-fdc2-4873-bf14-4aeefbbcd29a
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
-# ╔═╡ c48f0bd3-ecb4-4e44-8aa2-aebf32bb5b82
-md"""Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo. 
+# ╔═╡ ad6f3dff-f583-4701-b91b-933bffa5698e
+md"""**Este cuaderno está basado en actividades del curso Análisis numérico I de la Universidad Nacional de Colombia, sede Bogotá, dictado por el profesor Juan Galvis en 2022-2.**
+
+Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo. 
 """
 
-# ╔═╡ 914ef67f-c856-433d-be13-009e17486c08
+# ╔═╡ df61bd51-a481-4d9d-b8ab-300dc0e333c6
 md"""Usaremos las siguientes librerías:"""
 
-# ╔═╡ 010bd77b-b5e6-4441-b4bd-739eb4f64b35
-md"""
-# Introducción"""
+# ╔═╡ ca3c1725-cc36-4a4c-bc6d-850751eb2eab
+md"""# Comparación asintótica de sucesiones"""
 
-# ╔═╡ b0bb08ad-40c1-4944-a200-245a0ee9827d
-md"""El enfoque matemático para la solución de problemas usa herramientas específicas, entre ellas, la abstracción, generalización y, en muchos casos, métodos numéricos e implementación de algoritmos.
+# ╔═╡ 39160d5c-babb-411d-b8ab-070879e39b17
+md"""Consideremos las sucesiones ${x_n}$ y ${\alpha_n}$ tales que $x_n \to 0$ y $\alpha_n \to 0$.
 
+Decimos que $x_n = \mathcal{O}(\alpha_n)$ si existen $N_0$ y $C$ tales que $|x_n| \leq C|\alpha_n|$ para todo $n \geq N_0$. Esto significa que la sucesión $\{\frac{x_n}{\alpha_n}\}$ permanece acotada (cuando $\alpha_n \ne 0$), y que ${x_n}$ converge a $0$ al menos tan rápido como ${\alpha_n}$. Adicionalmente, $x_n = \mathcal{o}(\alpha_n)$ significa que $\lim_{n \to \infty} \frac{x_n}{\alpha_n} = 0$, lo que indica que ${x_n}$ converge a $0$ más rápido que ${\alpha_n}$.
+"""
 
-Cuando se usa el enfoque matemático para resolver problemas se inicia a partir de una pregunta o situación concreta y se desea responder esta pregunta o entender la situación considerada. A grosso modo para finalizar el ejercicio de modelado de manera exitosa debemos:
+# ╔═╡ 0c35c99a-9288-4a7b-ac1a-cfb7d1123540
+md"""**Ejemplo:** 
 
-1. Modelar el problema o situación concreta: se debe abstraer el problema para poder escribirlo en lenguaje matemático preciso. Se requiere identificar los grados de libertad del modelo considerado, $p$, así como las cantidades u objetos que deben ser encontrados o calculados, $q$.   Con grados de libertad del modelo nos referimos a los parámetros (numéricos o de alguna otra naturaleza) que caracterizan completamente el modelo estudiado.
+$\frac{n+1}{n^2}=\mathcal{O}\left(\frac{1}{n}\right).$ 
+Esto puede ser demostrado de forma simple. Podemos ilustrar esta afirmación con una gráfica de de los los cocientes de los valores de las dos sucesiones."""
 
-    $\cdot$ Como parte del ejercicio de modelado se identifican los datos, posibles mediciones  e información disponible a priori sobre el problema o pregunta. 
-        Denotemos esta información por $d$. Debe ser posible obtener el parámetro $p$ a partir de esta información.
-
-
-    
-2. Escribir $q$ como algún tipo de función (o algoritmo de calculo a partir) de $p$ usando el modelo planteado; es decir, relacionar los parámetros que describen el modelo con las cantidades u objetos matemáticos que necesitamos encontrar. En muchas aplicaciones practicas obtener las cantidad de interés $q$ es imposible  solo usando el modelo planteado. Eh estos casos se puede calcular únicamente cantidades primales o principales, denotadas aquí por $v$.    Tendremos entonces que introducir una ley  o relación de la forma $q=F(v,\alpha)$ en donde $\alpha$ es un parámetro que relaciona $v$  y $q$.  El parámetro $\alpha$ puede ser de tipo numérico o algún otro objeto matemático.
-
-3. Proponer un método numérico  (asumiendo aritmética exacta) que permita usar la relación  obtenida para $q$  a partir de $p$ ya sea en un número finito de pasos o como limite de un método iterativo.
-
-4. Implementar en un sistema de cómputo el método numérico propuesto obtenido teniendo en cuenta aspectos de estabilidad, precisión y eficiencia. Además:
-
-    $\cdot$ Se considera la calidad y cantidad de datos  disponibles $d$.
-
-    $\cdot$ Se obtienen los parámetros del modelo y se calculan las cantidades de interés.
-
-
-5. Una vez se obtiene la respuesta a la pregunta o se obtiene el objeto matemático de interés, se debe verificar si en realidad se resolvió el problema planteado o si ajustes deben ser realizados.
-
-Notamos que los pasos 2. y 3. pueden no ser necesarios en algunos casos dependiendo del problema estudiado. En la actualidad es cada vez mas común la gran importancia y dificultad de los pasos 2. y 3.
-
-En este trabajo ilustramos el proceso de modelación matemática  a través de un ejemplo sencillo."""
-
-# ╔═╡ c6cf6f44-9e09-4f7f-9509-168d329d9f31
-md"""# ¿Cuánto jugo hay en una naranja?
-
-El objetivo es estimar, de una manera no invasiva y con herramientas sencillas, la cantidad de jugo de naranja en una naranja.
-
-Es claro que queremos usar el enfoque matemático para alcanzar nuestro objetivo. Supongamos que disponemos de una cuerda y una regla para hacer las mediciones que queramos. 
-Podemos asumir entonces que podemos contar con algunas medidas de diámetros de curvas al rededor de la naranja para así encontrar una respuesta en centímetros cúbicos. """
-
-# ╔═╡ da3dff57-eacd-4e18-8439-41dbde4bab6f
-md"""A continuación se muestra una imagen de una naranja, dicha imagen está disponible en el URL indicado."""
-
-# ╔═╡ 3a962c19-ec0a-4758-9a0f-51804745a39c
-url = "https://c7.alamy.com/compes/2c0ywp4/cinta-metrica-con-naranja-aislada-2c0ywp4.jpg"
-
-# ╔═╡ e0616ea2-970e-4e9a-9622-a60c557bceec
-md"""Ahora bajamos la imagen a la máquina local."""
-
-# ╔═╡ 48cb2f10-4496-4dd7-aba4-a5be79cf06ff
-fname = download(url)
-
-# ╔═╡ 21bf9efa-69c5-40ed-90e0-4b7f51210e13
-md"""Ahora declaramos la variable "imag", que corresponde a un tipo de dato que representa imágenes. Recuerde que, además de asignar la variable en una expresión del tipo "
-", también se despliega la variable. En este caso, Pluto entiende que queremos ver la imagen representada por la variable."""
-
-# ╔═╡ 6eb930d2-c0e5-43d8-801f-024928705453
-imag = load(fname)[1:900,1:1300]
-
-# ╔═╡ d8be3494-4b1c-419b-a8ab-28c40cb18f99
-md"""$\texttt{Figura 1. Midiendo una naranja. Imagen tomada de Wikipedia.}$"""
-
-# ╔═╡ 3d35a65c-3620-4a1f-adf3-1280eff4c597
-md"""## Modelo matemático
-
-El modelo matemático más sencillo para la naranja es asumir que la naranja tiene una forma esférica (sólida) o de bola tridimensional. Esto, en realidad, quiere decir que en algún conjunto y noción de distancia adecuados, la naranja se encuentra a poca distancia de una bola (o esfera sólida). Observe que en este caso, podemos trasladar la esfera para colocar su centro en el origen y, por lo tanto, necesitamos un solo parámetro para describirla. En este caso, un parámetro que puede ser usado es el radio de la bola,
-
-$p=\mbox{ ``radio de la bola''}.$"""
-
-# ╔═╡ 354b94c8-20db-448f-b508-34963b4e3645
-@bind ρ Slider(1:10, show_value=true)
-
-# ╔═╡ 472d3cf7-9aa6-4eab-910d-3216426367ff
-let
-	# Crear un rango de valores para theta y phi
-	theta_range = range(0, 2π, length=100)
-	phi_range = range(0, π, length=100)
-
-	# Generar los puntos de la esfera
-	x = [ρ * sin(φ) * cos(θ) for φ in phi_range, θ in theta_range]
-	y = [ρ * sin(φ) * sin(θ) for φ in phi_range, θ in theta_range]
-	z = [ρ * cos(φ) for φ in phi_range, θ in theta_range]
-
-	# Graficar la esfera
-	surface(x, y, z, xlabel="X", ylabel="Y", zlabel="Z", title="Esfera de Radio p = $ρ")
+# ╔═╡ 7f8134ca-c565-41cf-9ff2-544d73ba7b49
+begin
+	n₁=1:50
+	x₁= (n₁.+1)./n₁.^2;
+	α₁= 1 ./n₁;
+	scatter(n₁, x₁./α₁, lw=1, label="x(n)/α(n)")
 end
 
-# ╔═╡ dd142f60-9e4f-4332-b1e5-1f5c065048b1
+# ╔═╡ 8fe9609f-e671-4382-80de-1b72cc5a6cc0
+md"""**Ejemplo:** 
+
+$\frac{1}{n\log(n)}=\mathcal{O}\left(\frac{1}{n}\right).$ Esto se puede demostrar de manera sencilla. Podemos ilustrar esta afirmación mediante un gráfico que muestre los cocientes entre los valores de las dos sucesiones."""
+
+# ╔═╡ dc5a1c2d-a048-44be-9a78-3d072f9fb4ee
+begin
+	n₂ = 1:100
+	x₂ = 1 ./(n₂.*log.(n₂));
+	α₂ = 1 ./n₂;
+	scatter(n₂, x₂./α₂, lw=5, label="x(n)/α(n)", ms=4)
+end
+
+# ╔═╡ 5136a89e-a92f-430f-b731-87507e267367
+md"""**Ejemplo:** 
+
+$e^{-n}=\mathcal{O}\left(\frac{1}{n^k}\right)\text{ para }k=1,2,\dots.$ Esta afirmación puede ser probada de forma directa. Para ello, basta con representar gráficamente los cocientes entre los valores de ambas sucesiones."""
+
+# ╔═╡ 58a9d8a7-3320-48ba-940b-3fbfc12f339a
+begin
+	n₃ = 1:50
+	x₃ = exp.(-n₃);
+	α₃ = 1 ./n₃.^4;
+	scatter(n₃, x₃./α₃, lw=5, label="x_n", ms=5)
+end
+
+# ╔═╡ 62234680-edd8-4a94-b11c-037dd9ad2f73
+md"""**Ejemplo:**
+
+$\sin(x)=x-\frac{x^3}{6}+\mathcal{O}(x^5)\text{ cuando }x\to0$ (puede pensar que se toman sucesiones $x_n\to 0$. Para verificar esta afirmación, se puede graficar la función $\sin(x)$ junto con la aproximación $x - \frac{x^3}{6}$. Además, incluir la función $\frac{x^5}{5!}$ en la gráfica permite visualizar la corrección adicional y apreciar cómo la diferencia entre $\sin(x)$ y la aproximación se reduce conforme $x$ se acerca a cero. """
+
+# ╔═╡ e27c6221-5911-4ab6-b1ed-a7eddfc26963
+begin
+	x₄ = -2:0.1:2
+	f₄ = sin.(x₄)
+	g₄ = x₄-x₄.^3 ./6
+	plot(x₄, f₄, lw=4, label="sin(x)")
+	plot!(x₄, g₄, lw=4, label="x-x^3/6",legend=:bottomright)
+end
+
+# ╔═╡ f97b7b88-a7f3-4922-96c9-04fc488a034b
+begin
+	x₅ = -0.2:0.01:0.2
+	f₅ = sin.(x₅)
+	g₅ = x₅-x₅.^3 ./6
+	plot(x₅, f₅-g₅, lw=4, label="sin(x)-x-x^3/6")
+	scatter!(x₅, x₅.^5/120, label="x^5/5!")
+end
+
+# ╔═╡ d4b500a4-a4bc-43f7-8851-ad206771bc35
+md"""# Comparación asintótica de funciones
+Decimos que $f(x) = \mathcal{O}(g(x))$ cuando $x \to \infty$ si existe una constante positiva $C$ tal que, para valores grandes de $x$, se cumple $|f(x)| \leq C |g(x)|$. 
+
+De manera similar, decimos que $f(x) = \mathcal{O}(g(x))$ cuando $x \to a$ si existen una constante $C$ y un radio $r$ tales que $|f(x)| \leq C |g(x)|$ para todo $x$ con $|x - a| < r$. Se denota $|f(x)| \preceq |g(x)|$ cuando $x \approx a$."""
+
+# ╔═╡ 46fdee32-ae0c-4f90-bb60-d787c901ecc6
+md"""**Ejemplo:**
+
+$\sqrt{x^2+1}=\mathcal{O}(x).$ Esto puede ser demostrado de forma simple. Podemos ilustrar esta afirmación con una gráfica de las dos funciones. """
+
+# ╔═╡ 59404fa3-dcd3-4a80-8386-31bd1620fc96
+begin
+	x₆ = 0:50:1000
+	f₆ = sqrt.( x₆.^2 .+1)
+	g₆ = x₆
+	plot(x₆, f₆)
+	scatter!(x₆, g₆)
+end
+
+# ╔═╡ 631eef63-4ba2-47c5-a3c4-e6797fd4984c
+md"""Decimos que $f(x)=\mathcal{O}(g(x))$ cuando $x\to a$ si $\displaystyle\lim_{x\to a}\dfrac{f(x)}{g(x)}\to 0$. Recuerde que $f(x)\to 0$ y $g(x)\to 0$. """
+
+# ╔═╡ 7bdc05b3-85d1-4657-b64e-277ad88f1a16
+md"""# Velocidad de convergencia
+
+Considere la sucesión $\{x_n\}$ con límite $a$, es decir, $x_n \to a$.
+
+La convergencia se considera (al menos) lineal si existen $0 < \alpha < 1$ y $N$ tales que $|x_{n+1} - a| \leq \alpha |x_n - a|$ para todo $n \geq N$. En términos informales, esto significa que "se requiere el mismo esfuerzo (en promedio) para obtener una cantidad fija de decimales correctos en cada paso adicional de la sucesión"."""
+
+# ╔═╡ 0627a96c-6122-4672-8ab0-1dd5053eb6e2
+md"""**Ejemplo:** 
+
+La sucesión $x_n=0.5^n$ es un ejemplo típico de convergencia lineal. """
+
+# ╔═╡ 8b26e7de-f070-4132-8764-8be67a9f6937
+begin
+	n₇ = 30;
+	ndc = 0;
+	x₇ = zeros(n₇, 1)
+	for i = 1:n₇
+    	x₇[i] = 0.5^i;
+    	if x₇[i] < 10.0^(-ndc-1)
+        	ndc = ndc+1;
+        	println("....Un decimal correcto más")
+    	end    
+    	println("x[", i, "]=",x₇[i])
+	end
+end
+
+# ╔═╡ 0156d271-aec9-4e66-8dce-d8d845d6506a
+md"""Visualicemos esto:"""
+
+# ╔═╡ 5a8fc633-be24-4e87-a9dd-ffdc66f8e8bb
+scatter(1:n₇,-log.(x₇), label="-log(x)")
+
+# ╔═╡ f56dc660-814f-4434-9de7-e14f039330aa
+md"""# Convergencia superlineal"""
+
+# ╔═╡ 7a8bcd91-f8ab-466b-a9e4-f4f51dc81a36
+md"""La convergencia es superlineal si existe $\epsilon_n\to 0$ tal que $|x_{n+1}-a| \leq \epsilon_n |x_n-a|$ para $n$ suficientemente grande. 
+
+Esto es equivalente a considerar
+
+$\lim_{n\to \infty} \frac{\mid x_{n+1}-a\mid}{\mid x_n-a\mid}=0$"""
+
+# ╔═╡ c153f605-f972-4d62-8498-494d43533783
+md"""**Ejemplo:**
+
+$x_n= 0.5^{n^2}.$ Podemos estimar los valores $\epsilon_n$ e ilustar este caso. """
+
+# ╔═╡ ceafae61-f471-424f-ba96-7a077d542fb1
+begin
+	n₈ = 20
+	x₈ = zeros(n₈, 1)
+	ϵ₈ = zeros(n₈, 1)
+	x₈[1] = 0.5;
+	for i=2:n₈
+    	x₈[i]=0.5^(i^2)
+    	ϵ₈[i-1]=abs(x₈[i]-0.0)/abs(x₈[i-1]-0.0)
+	end
+	scatter(ϵ₈)
+end
+
+# ╔═╡ cac9f2af-6990-4c1b-84b0-1b2f6b7a1d43
+scatter(log.(x₈))
+
+# ╔═╡ 5e640ff4-e1fc-4e72-afca-42d34644815b
 md"""
-**Error del modelo matemático:**  
+# Convergencia de orden $\alpha$
+La convergencia es (al menos) cuadrática si existen $C$ y $N$ tales que, para $n \geq N$, se cumple $|x_{n+1} - a| \leq C |x_n - a|^2$. Intuitivamente, esto significa que asintóticamente se requiere el mismo esfuerzo (en promedio) para duplicar el número de decimales correctos.
 
-Tenemos aquí la primera fuente de error de nuestro procedimiento, el error de modelado matemático. La naranja no es una esfera. Este error puede (y en algunos casos debe) ser cuantificado. Para esto se deben proponer medidas de error de modelado matemático. Es también claro que este error de modelado matemático está ligado a la complejidad del modelo y en particular al número de parámetros usados para describirlo, es decir, a la dimensión del modelo usado.
-
-Note que podemos medir el mayor círculo sobre la frontera de la bola, es decir, sobre la esfera, y así tener un dato a partir del cual hacer una estimación de $q$, donde $q$ es la cantidad de jugo de naranja. En este caso, podemos tener,
-
-$d=\mbox{``diámetro del mayor círculo sobre la esfera''}$
-
-
-**Errores en los datos (errores de medición):**  
-
-Tenemos aquí otra fuente de error de nuestro procedimiento, el error en la medición. Observe que no existe la noción de diámetro exacto, pues la naranja no es una esfera. De todos modos, se puede hacer una medición sobre la esfera ubicando la cuerda de manera adecuada para obtener una medición aproximada de la cantidad que podemos usar en nuestro modelo como $d$. 
-Este error puede (y en algunos casos debe) ser cuantificado. Para ello se debe conocer las especificaciones de las herramientas usadas o lidiar con la falta de ellas si no se conocen.
-
-En este caso, vemos que 
-
-$p= \frac{d}{2\pi},$
-es la relación que transforma datos en parámetros del modelo.
+En general, decimos que la convergencia es de orden $\alpha$ si existen $C$ y $N$ tales que, para $n \geq N$, se cumple $|x_{n+1} - a| \leq C |x_n - a|^\alpha$.
 """
 
-# ╔═╡ 51be810f-2961-4d65-94f8-323bd29a9bd0
-md"""
-## Cantidad primal y relación con cantidades de interés
+# ╔═╡ bbf686cf-5565-42e1-9258-71c7f9571b06
+md"""**Ejemplo:**
 
-En este caso vemos que no es fácil, al menos no es obvio, calcular la cantidad de jugo de naranja en una naranja esférica a partir del radio de la misma. Podemos sospechar que el volumen de la esfera (que es más fácil de obtener) está relacionado con la cantidad de interés. En este caso introducimos:
+$x_n= 0.5^{2^n}.$"""
 
-$v=\mbox{``volumen de la bola''}.$
+# ╔═╡ f5515b87-1e55-4ade-a851-99e03662b936
+begin
+	n₉ = 1:15
+	x₉ = 0.5 .^(2 .^n₉);
+	scatter(n₉, log.(x₉), lw=4, label="log(x(n))")
+end
 
-Queremos estimar,
+# ╔═╡ 1f40a7a2-0bb0-4c79-90bf-43797e6afe94
+md"""# Expansión de Taylor
 
-$q=\mbox{``cantidad de jugo de naranja''}.$
+Suponga que $f \in C^n([a,b])$ y que $f^{(n+1)}$ existe en $(a,b)$. Entonces, para todo $c, x \in [a,b]$, existe un $\xi$ entre $c$ y $x$ tal que
 
-Para esto podemos proponer una relación de la forma 
+$f(x) = f(c) + f'(c)(x - c) + \frac{1}{2} f''(c)(x - c)^2 + \cdots + \frac{1}{n!} f^{(n)}(c)(x - c)^n + E_n(x),$
 
-$q=F(v,\alpha),$
+donde
 
-donde $\alpha$ es un parámetro que relaciona el volumen de la bola y la cantidad de jugo de naranja.
+$E_n(x) = \frac{1}{(n+1)!} f^{(n+1)}(\xi) (x - c)^{n+1}.$
 
+Suponga que $f \in C^{n+1}([a,b])$. Entonces, para todo $c, x \in [a,b]$, se cumple
 
-Establecer esta relación necesita conocimiento del problema y del ejercicio de modelado matemático en curso. En este primer acercamiento y para simplificar podemos asumir una relación lineal del tipo
+$f(x) = f(c) + f'(c)(x - c) + \frac{1}{2} f''(c)(x - c)^2 + \cdots + \frac{1}{n!} f^{(n)}(c)(x - c)^n + R_n(x),$
 
-$q=\alpha v,$
+donde
 
-donde $\alpha$ es una proporción (un parámetro). Es decir, asumimos que la cantidad de jugo de naranja (de una naranja perfectamente redonda) se puede estimar por una proporción de su volumen.
-
-**Error de aproximación de relaciones:** 
-
-Tenemos aquí otra fuente de error de nuestro procedimiento, el error en la aproximación de funciones que relacionan las variables primarias con las variables de interés. 
-Este error puede (y en algunos casos debe) ser cuantificado. Para eso, debemos estudiar (de alguna manera) la posible relación entre las variables. Podemos usar, por ejemplo, información a priori del problema y técnicas de aproximación de funciones para deducir o calcular esas relaciones.
-
-**Error en determinación de parámetros:** 
-
-Tenemos aquí otra fuente de error de nuestro procedimiento, el error en los parámetros de las relaciones funcionales. En muchas aplicaciones reales no existe forma de verificar si la relación funcional es adecuada de manera teórica y muchas veces se usan diferentes criterios para la estimación de los parámetros de estas relaciones. En todo caso, se debe estudiar la sensibilidad de los resultados obtenidos a posibles variaciones de los parámetros de las relaciones funcionales.
+$R_n(x) = \frac{1}{n!} \int_c^x f^{(n+1)}(t) (x - t)^n \, dt.$
 """
 
-# ╔═╡ fabba741-1d31-434c-a111-302d63af0b75
-md"""## Método numérico
+# ╔═╡ cf98e3f6-a1c8-41a7-89d4-b13c65d2e729
+md"""Usamos la librería [TaylorSerires](https://juliadiff.org/TaylorSeries.jl/v0.3/userguide/)."""
 
-Como $p$ representa el radio de la bola, y $p=\frac{d}{2\pi}$, así tenemos que
+# ╔═╡ 66413546-74bf-4789-a53c-d7c41d4b2eab
+md"""Con la siguiente función podemos hallar una representación del polinomio de Taylor alrededor del punto 0 con los coeficientes $[1,2,3]$ para los términos $1, x y x^2$, respectivamente, y el término $\mathcal{O}$ indica los términos de orden superior que no están explicitados en la expansión."""
 
-$v=\frac{4}{3} \pi p^3
-=\frac{4}{3} \pi \left(\frac{d}{2\pi} \right)^3
-=\frac{d^3}{6\pi^2},$
-por lo tanto nuestra estimación está dada por 
+# ╔═╡ bac8d7b8-f82e-4f68-8d93-3cf3982a647f
+Taylor1([1,2,3])
 
-$q=\alpha v= \frac{\alpha d^3}{6\pi^2}.$"""
+# ╔═╡ 3d72ec1d-bdd8-4d77-aa08-1cf20d349073
+md"""La función $\texttt{affine(a)}$ genera un polinomio de Taylor de orden 5 cuyo término constante es $a$."""
 
-# ╔═╡ ba35a0f6-6197-4b02-96c9-f68448e66770
-md"""## Implementación del método numérico
+# ╔═╡ 779f3557-6138-41ee-ac19-6b031b995503
+affine(a) = a + Taylor1(typeof(a),5)  ## a + taylor-polynomial of order 5
 
-Imaginemos que decidimos implementar nuestro método numérico en una máquina que redondea todas las cantidades a 2 dígitos decimales (usando notación científica normalizada). 
-Tomemos como caso particular $\alpha=0.7$ y $d=21$ cm. En este caso, la aproximación de nuestra implementación es 
+# ╔═╡ 099aeb83-65a1-4b26-a8f4-238446ded7db
+md"""Un ejemplo de esto es"""
 
-$q\approx\widetilde{q}=\frac{0.7 (21)^3}{6 (3.14)^2} \approx \frac{6482.7}{59.16}\approx 109.58 \mbox{ cm}^3.$
+# ╔═╡ 9a0b0936-ed6a-4fcf-8e79-5f776908aa7c
+t=affine(0)
 
-Note que $\widetilde{q}$ representa la aproximación del valor de $q$ que resulta de redondear todos los cálculos a dos dígitos decimales, es decir, trabajamos con 2 decimales en base 10 ($\pi\approx 3.14$). Es por esto que $q$ es aproximado por $\widetilde{q}$ tiene errores de redondeo ya que en cada cálculo intermedio tenemos un error de redondeo.
+# ╔═╡ 6e0cd22b-c079-4eda-9048-47ef3ec3646a
+md"""Realizando diversos ejemplos con $t$ se tiene:"""
 
-Podemos implementar una aplicación o programa que, dados el diámetro $d$ y el valor $\alpha$, calcule la cantidad de jugo en la naranja. Con eso terminamos una primera etapa del ejercicio de modelado y estamos listos para la etapa de validación del modelo y, por último, la etapa de uso del modelo en donde los resultados se acoplan con otras herramientas para resolver un problema más interesante. 
+# ╔═╡ 08c2afdd-612b-4894-ab32-346d1466e450
+sin(t)-t
 
-**Error de redondeo:** 
+# ╔═╡ 30f7b933-64f1-4374-9b21-bd3a3c431b59
+sin(t)-t+t^3/6-t^5/120
 
-Al implementar un método numérico en aritmética finita en un sistema de cómputo, cometemos errores de redondeo en cada cálculo intermedio que realicemos. Este error puede (y en algunos casos debe) ser cuantificado.
-"""
+# ╔═╡ 7034aac1-3c8e-4684-b74a-43096b359b71
+cos(t)-1
 
-# ╔═╡ 776dfee9-08b0-4424-967a-8d1b1b1d37ac
-md"""## Determinación de parámetros de leyes constitutivas
+# ╔═╡ 4d2799bf-0bd8-49d6-a881-53193817c394
+cos(sin(1/(1+t^2)))
 
-Notemos que el valor del parámetro $\alpha$ en la relación 
+# ╔═╡ f3419bcf-e74c-4bf7-8756-7ad13bbd308c
+(1+t)^sin(t)
 
-$\mbox{``cantidad de jugo''}=\alpha \cdot(\mbox{``volumen de la naranja''})$
-representa nuestro conocimiento previo de esta relación. En la practica, el valor de $\alpha$ puede ser determinado de diferentes formas: estudios previos, estudios estadísticos previos, mediciones previas invasivas, criterio de expertos, entre otros enfoques. Dicho parámetro puede ser hallado con metodos de optimización o estadisticos."""
+# ╔═╡ 19b63882-8944-48b4-a1eb-596600be4d1a
+md"""Ahora, consideremos las siguientes variables representadas en expansión de Taylor"""
 
-# ╔═╡ 9409857c-052e-4ac6-a99e-9285346161b5
-md"""## Validación del modelo
+# ╔═╡ d5685d0e-ff7b-4c1b-8ea6-d5e2afc11eea
+x, y = set_variables("x y")
 
-Después de obtener el modelo es necesario hacer el experimento con la naranja, si el modelo no cumple con lo esperado, se pueden tomar medidas para mejorarlo. Esto incluye revisar los datos, ajustar los parámetros y validar las mejoras. Una vez que el modelo esté listo y validado, se puede implementar para responder la pregunta original con mayor precisión."""
+# ╔═╡ 5c1fa4fb-8c66-40b6-a9dc-c779af541687
+md"""Podemos hacer operaciones con ellas, por ejemplo:"""
 
-# ╔═╡ e6509621-9ab6-45fe-aa0e-44eeb82ae497
-md"""## Balance de errores
+# ╔═╡ 1fd828be-d0e0-4e4f-be83-6055c8d94c37
+sin(x+cos(x+y))
 
-Como hemos visto, son diversos los errores y simplificaciones de la realidad introducidos en diferentes etapas de la modelación matemática. Estos incluyen el error de modelación (las naranjas no son esferas, y debemos saber qué porcentaje de error existe en esto), el error de medición (debemos determinar qué porcentaje de error se produce al medir con una cinta métrica el diámetro de la naranja), errores de redondeo y errores de parámetros (en este caso, $\alpha$). Deseamos que nuestro modelo no sea sensible a este parámetro; es decir, si variamos un poco dicho parámetro, la solución no debería tener un cambio brusco.
-
-Es bastante obvio que no tiene sentido preocuparse por reducir este error únicamente en una de estas etapas. Por ejemplo, no tiene sentido práctico realizar el cálculo numérico asegurando una precisión de 14 cifras decimales si no puedo garantizar ese mismo orden de error en las otras etapas. Para esto, debo poder cuantificar el margen de error en todas las etapas del proceso."""
-
-# ╔═╡ fbaaf968-b40d-4731-a947-240c8df50e21
-md"""
-# Referencias
-[1] Lin, C. C., & Segel, L. A. (1988). Mathematics Applied to Deterministic Problems in the Natural Sciences (Classics in Applied Mathematics, Series Number 1) (1st ed.). SIAM: Society for Industrial and Applied.
-
-[2] Kincaid, D. R., & Cheney, E. W. (1996). Numerical Analysis: Mathematics of Scientific Computing (2nd ed.). Brooks Cole.
-
-[3] Strang, G. (1986). Introduction to Applied Mathematics. Wellesley-Cambridge Press
-"""
+# ╔═╡ 535cf94d-d366-4e7f-9173-b75808bf1de0
+md"""# Referencias"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
-ColorVectorSpace = "c3611d14-8923-5661-9e6a-0046d554d3a4"
-Colors = "5ae59095-9a9b-59fe-a467-6f913c188581"
-FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
-HypertextLiteral = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
-ImageIO = "82e4d734-157c-48bb-816b-45c225c6df19"
-ImageShow = "4e3cecfd-b093-5904-9786-8bbb286a6a31"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+TaylorSeries = "6aa5eb33-94cf-58f4-a9d0-e4b2c4fc25ea"
 
 [compat]
-ColorVectorSpace = "~0.10.0"
-Colors = "~0.12.10"
-FileIO = "~1.16.3"
-HypertextLiteral = "~0.9.5"
-ImageIO = "~0.6.7"
-ImageShow = "~0.3.8"
-Plots = "~1.40.3"
-PlutoUI = "~0.7.58"
+Plots = "~1.40.4"
+PlutoUI = "~0.7.59"
+TaylorSeries = "~0.17.8"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.2"
+julia_version = "1.10.4"
 manifest_format = "2.0"
-project_hash = "cef516209b5dec7b18cf7e7a33b410d403cfffef"
+project_hash = "c4e4de59a8079f23b199a00e761c19d20f4dd575"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -288,12 +314,6 @@ version = "1.1.1"
 [[deps.Artifacts]]
 uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
 
-[[deps.AxisArrays]]
-deps = ["Dates", "IntervalSets", "IterTools", "RangeArrays"]
-git-tree-sha1 = "16351be62963a67ac4083f748fdb3cca58bfd52f"
-uuid = "39de3d68-74b9-583c-8d2d-e117c070f3a9"
-version = "0.4.7"
-
 [[deps.Base64]]
 uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
 
@@ -307,11 +327,6 @@ deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "9e2a6b69137e6969bab0152632dcb3bc108c8bdd"
 uuid = "6e34b625-4abd-537c-b88f-471c36dfa7a0"
 version = "1.0.8+1"
-
-[[deps.CEnum]]
-git-tree-sha1 = "389ad5c84de1ae7cf0e28e381131c98ea87d54fc"
-uuid = "fa961155-64e5-5f13-b03f-caf6b980ea82"
-version = "0.5.0"
 
 [[deps.Cairo_jll]]
 deps = ["Artifacts", "Bzip2_jll", "CompilerSupportLibraries_jll", "Fontconfig_jll", "FreeType2_jll", "Glib_jll", "JLLWrappers", "LZO_jll", "Libdl", "Pixman_jll", "Xorg_libXext_jll", "Xorg_libXrender_jll", "Zlib_jll", "libpng_jll"]
@@ -368,7 +383,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.1.0+0"
+version = "1.1.1+0"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
@@ -401,10 +416,6 @@ deps = ["Mmap"]
 git-tree-sha1 = "9e2f36d3c96a820c678f2f1f1782582fcf685bae"
 uuid = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 version = "1.9.1"
-
-[[deps.Distributed]]
-deps = ["Random", "Serialization", "Sockets"]
-uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 
 [[deps.DocStringExtensions]]
 deps = ["LibGit2"]
@@ -447,12 +458,6 @@ git-tree-sha1 = "466d45dc38e15794ec7d5d63ec03d776a9aff36e"
 uuid = "b22a6f82-2f65-5046-a5b2-351ab43fb4e5"
 version = "4.4.4+1"
 
-[[deps.FileIO]]
-deps = ["Pkg", "Requires", "UUIDs"]
-git-tree-sha1 = "82d8afa92ecf4b52d78d869f038ebfb881267322"
-uuid = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
-version = "1.16.3"
-
 [[deps.FileWatching]]
 uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
 
@@ -486,10 +491,10 @@ uuid = "559328eb-81f9-559d-9380-de523a88c83c"
 version = "1.0.14+0"
 
 [[deps.GLFW_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll"]
-git-tree-sha1 = "ff38ba61beff76b8f4acad8ab0c97ef73bb670cb"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll", "xkbcommon_jll"]
+git-tree-sha1 = "3f74912a156096bd8fdbef211eff66ab446e7297"
 uuid = "0656b61e-2033-5cc2-a64a-77c0f6c09b89"
-version = "3.3.9+0"
+version = "3.4.0+0"
 
 [[deps.GR]]
 deps = ["Artifacts", "Base64", "DelimitedFiles", "Downloads", "GR_jll", "HTTP", "JSON", "Libdl", "LinearAlgebra", "Preferences", "Printf", "Random", "Serialization", "Sockets", "TOML", "Tar", "Test", "p7zip_jll"]
@@ -556,82 +561,14 @@ git-tree-sha1 = "b6d6bfdd7ce25b0f9b2f6b3dd56b2673a66c8770"
 uuid = "b5f81e59-6552-4d32-b1f0-c071b021bf89"
 version = "0.2.5"
 
-[[deps.ImageAxes]]
-deps = ["AxisArrays", "ImageBase", "ImageCore", "Reexport", "SimpleTraits"]
-git-tree-sha1 = "2e4520d67b0cef90865b3ef727594d2a58e0e1f8"
-uuid = "2803e5a7-5153-5ecf-9a86-9b4c37f5f5ac"
-version = "0.6.11"
-
-[[deps.ImageBase]]
-deps = ["ImageCore", "Reexport"]
-git-tree-sha1 = "eb49b82c172811fd2c86759fa0553a2221feb909"
-uuid = "c817782e-172a-44cc-b673-b171935fbb9e"
-version = "0.1.7"
-
-[[deps.ImageCore]]
-deps = ["ColorVectorSpace", "Colors", "FixedPointNumbers", "MappedArrays", "MosaicViews", "OffsetArrays", "PaddedViews", "PrecompileTools", "Reexport"]
-git-tree-sha1 = "b2a7eaa169c13f5bcae8131a83bc30eff8f71be0"
-uuid = "a09fc81d-aa75-5fe9-8630-4744c3626534"
-version = "0.10.2"
-
-[[deps.ImageIO]]
-deps = ["FileIO", "IndirectArrays", "JpegTurbo", "LazyModules", "Netpbm", "OpenEXR", "PNGFiles", "QOI", "Sixel", "TiffImages", "UUIDs"]
-git-tree-sha1 = "437abb322a41d527c197fa800455f79d414f0a3c"
-uuid = "82e4d734-157c-48bb-816b-45c225c6df19"
-version = "0.6.8"
-
-[[deps.ImageMetadata]]
-deps = ["AxisArrays", "ImageAxes", "ImageBase", "ImageCore"]
-git-tree-sha1 = "355e2b974f2e3212a75dfb60519de21361ad3cb7"
-uuid = "bc367c6b-8a6b-528e-b4bd-a4b897500b49"
-version = "0.9.9"
-
-[[deps.ImageShow]]
-deps = ["Base64", "ColorSchemes", "FileIO", "ImageBase", "ImageCore", "OffsetArrays", "StackViews"]
-git-tree-sha1 = "3b5344bcdbdc11ad58f3b1956709b5b9345355de"
-uuid = "4e3cecfd-b093-5904-9786-8bbb286a6a31"
-version = "0.3.8"
-
-[[deps.Imath_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "0936ba688c6d201805a83da835b55c61a180db52"
-uuid = "905a6f67-0a94-5f89-b386-d35d92009cd1"
-version = "3.1.11+0"
-
-[[deps.IndirectArrays]]
-git-tree-sha1 = "012e604e1c7458645cb8b436f8fba789a51b257f"
-uuid = "9b13fd28-a010-5f03-acff-a1bbcff69959"
-version = "1.0.0"
-
-[[deps.Inflate]]
-git-tree-sha1 = "d1b1b796e47d94588b3757fe84fbf65a5ec4a80d"
-uuid = "d25df0c9-e2be-5dd7-82c8-3ad0b3e990b9"
-version = "0.1.5"
-
 [[deps.InteractiveUtils]]
 deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
-
-[[deps.IntervalSets]]
-git-tree-sha1 = "dba9ddf07f77f60450fe5d2e2beb9854d9a49bd0"
-uuid = "8197267c-284f-5f27-9208-e0e47529a953"
-version = "0.7.10"
-weakdeps = ["Random", "RecipesBase", "Statistics"]
-
-    [deps.IntervalSets.extensions]
-    IntervalSetsRandomExt = "Random"
-    IntervalSetsRecipesBaseExt = "RecipesBase"
-    IntervalSetsStatisticsExt = "Statistics"
 
 [[deps.IrrationalConstants]]
 git-tree-sha1 = "630b497eafcc20001bba38a4651b327dcfc491d2"
 uuid = "92d709cd-6900-40b7-9082-c6be49f344b6"
 version = "0.2.2"
-
-[[deps.IterTools]]
-git-tree-sha1 = "42d5f897009e7ff2cf88db414a389e5ed1bdd023"
-uuid = "c8e1da08-722c-5040-9ed9-7db0dc04731e"
-version = "1.10.0"
 
 [[deps.JLFzf]]
 deps = ["Pipe", "REPL", "Random", "fzf_jll"]
@@ -650,12 +587,6 @@ deps = ["Dates", "Mmap", "Parsers", "Unicode"]
 git-tree-sha1 = "31e996f0a15c7b280ba9f76636b3ff9e2ae58c9a"
 uuid = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 version = "0.21.4"
-
-[[deps.JpegTurbo]]
-deps = ["CEnum", "FileIO", "ImageCore", "JpegTurbo_jll", "TOML"]
-git-tree-sha1 = "fa6d0bcff8583bac20f1ffa708c3913ca605c611"
-uuid = "b835a17e-a41a-41e7-81f0-2f016b05efe0"
-version = "0.1.5"
 
 [[deps.JpegTurbo_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -705,11 +636,6 @@ version = "0.16.3"
     [deps.Latexify.weakdeps]
     DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
     SymEngine = "123dc426-2d89-5057-bbad-38513e3affd8"
-
-[[deps.LazyModules]]
-git-tree-sha1 = "a560dd966b386ac9ae60bdd3a3d3a326062d3c3e"
-uuid = "8cdb02fc-e678-4876-92c5-9defec4f444e"
-version = "0.3.1"
 
 [[deps.LibCURL]]
 deps = ["LibCURL_jll", "MozillaCACerts_jll"]
@@ -826,11 +752,6 @@ git-tree-sha1 = "2fa9ee3e63fd3a4f7a9a4f4744a52f4856de82df"
 uuid = "1914dd2f-81c6-5fcd-8719-6d5c9610ff09"
 version = "0.5.13"
 
-[[deps.MappedArrays]]
-git-tree-sha1 = "2dab0221fe2b0f2cb6754eaa743cc266339f527e"
-uuid = "dbb5928d-eab1-5f90-85c2-b9b0edb7c900"
-version = "0.4.2"
-
 [[deps.Markdown]]
 deps = ["Base64"]
 uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
@@ -860,12 +781,6 @@ version = "1.2.0"
 [[deps.Mmap]]
 uuid = "a63ad114-7e13-5084-954f-fe012c677804"
 
-[[deps.MosaicViews]]
-deps = ["MappedArrays", "OffsetArrays", "PaddedViews", "StackViews"]
-git-tree-sha1 = "7b86a5d4d70a9f5cdf2dacb3cbe6d251d1a61dbe"
-uuid = "e94cdb99-869f-56ef-bcf0-1ae2bcbe0389"
-version = "0.3.4"
-
 [[deps.MozillaCACerts_jll]]
 uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
 version = "2023.1.10"
@@ -876,26 +791,9 @@ git-tree-sha1 = "0877504529a3e5c3343c6f8b4c0381e57e4387e4"
 uuid = "77ba4419-2d1f-58cd-9bb1-8ffee604a2e3"
 version = "1.0.2"
 
-[[deps.Netpbm]]
-deps = ["FileIO", "ImageCore", "ImageMetadata"]
-git-tree-sha1 = "d92b107dbb887293622df7697a2223f9f8176fcd"
-uuid = "f09324ee-3d7c-5217-9330-fc30815ba969"
-version = "1.1.1"
-
 [[deps.NetworkOptions]]
 uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
 version = "1.2.0"
-
-[[deps.OffsetArrays]]
-git-tree-sha1 = "e64b4f5ea6b7389f6f046d13d4896a8f9c1ba71e"
-uuid = "6fe1bfb0-de20-5000-8ca7-80f57d26f881"
-version = "1.14.0"
-
-    [deps.OffsetArrays.extensions]
-    OffsetArraysAdaptExt = "Adapt"
-
-    [deps.OffsetArrays.weakdeps]
-    Adapt = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
 
 [[deps.Ogg_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -907,18 +805,6 @@ version = "1.3.5+1"
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
 version = "0.3.23+4"
-
-[[deps.OpenEXR]]
-deps = ["Colors", "FileIO", "OpenEXR_jll"]
-git-tree-sha1 = "327f53360fdb54df7ecd01e96ef1983536d1e633"
-uuid = "52e1d378-f018-4a11-a4be-720524705ac7"
-version = "0.3.2"
-
-[[deps.OpenEXR_jll]]
-deps = ["Artifacts", "Imath_jll", "JLLWrappers", "Libdl", "Zlib_jll"]
-git-tree-sha1 = "8292dd5c8a38257111ada2174000a33745b06d4e"
-uuid = "18a262bb-aa17-5467-a713-aee519bc75cb"
-version = "3.2.4+0"
 
 [[deps.OpenLibm_jll]]
 deps = ["Artifacts", "Libdl"]
@@ -953,18 +839,6 @@ deps = ["Artifacts", "Libdl"]
 uuid = "efcefdf7-47ab-520b-bdef-62a2eaa19f15"
 version = "10.42.0+1"
 
-[[deps.PNGFiles]]
-deps = ["Base64", "CEnum", "ImageCore", "IndirectArrays", "OffsetArrays", "libpng_jll"]
-git-tree-sha1 = "67186a2bc9a90f9f85ff3cc8277868961fb57cbd"
-uuid = "f57f5aa1-a3ce-4bc8-8ab9-96f992907883"
-version = "0.4.3"
-
-[[deps.PaddedViews]]
-deps = ["OffsetArrays"]
-git-tree-sha1 = "0fac6313486baae819364c52b4f483450a9d793f"
-uuid = "5432bcbf-9aad-5242-b902-cca2824c8663"
-version = "0.5.12"
-
 [[deps.Parsers]]
 deps = ["Dates", "PrecompileTools", "UUIDs"]
 git-tree-sha1 = "8489905bcdbcfac64d1daa51ca07c0d8f0283821"
@@ -986,12 +860,6 @@ version = "0.43.4+0"
 deps = ["Artifacts", "Dates", "Downloads", "FileWatching", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 version = "1.10.0"
-
-[[deps.PkgVersion]]
-deps = ["Pkg"]
-git-tree-sha1 = "f9501cc0430a26bc3d156ae1b5b0c1b47af4d6da"
-uuid = "eebad327-c553-4316-9ea0-9fa01ccd7688"
-version = "0.3.3"
 
 [[deps.PlotThemes]]
 deps = ["PlotUtils", "Statistics"]
@@ -1047,18 +915,6 @@ version = "1.4.3"
 deps = ["Unicode"]
 uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
-[[deps.ProgressMeter]]
-deps = ["Distributed", "Printf"]
-git-tree-sha1 = "763a8ceb07833dd51bb9e3bbca372de32c0605ad"
-uuid = "92933f4c-e287-5a05-a399-4b506db050ca"
-version = "1.10.0"
-
-[[deps.QOI]]
-deps = ["ColorTypes", "FileIO", "FixedPointNumbers"]
-git-tree-sha1 = "18e8f4d1426e965c7b532ddd260599e1510d26ce"
-uuid = "4b34888f-f399-49d4-9bb3-47ed5cae4e65"
-version = "1.0.0"
-
 [[deps.Qt6Base_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Fontconfig_jll", "Glib_jll", "JLLWrappers", "Libdl", "Libglvnd_jll", "OpenSSL_jll", "Vulkan_Loader_jll", "Xorg_libSM_jll", "Xorg_libXext_jll", "Xorg_libXrender_jll", "Xorg_libxcb_jll", "Xorg_xcb_util_cursor_jll", "Xorg_xcb_util_image_jll", "Xorg_xcb_util_keysyms_jll", "Xorg_xcb_util_renderutil_jll", "Xorg_xcb_util_wm_jll", "Zlib_jll", "libinput_jll", "xkbcommon_jll"]
 git-tree-sha1 = "492601870742dcd38f233b23c3ec629628c1d724"
@@ -1072,11 +928,6 @@ uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 [[deps.Random]]
 deps = ["SHA"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
-
-[[deps.RangeArrays]]
-git-tree-sha1 = "b9039e93773ddcfc828f12aadf7115b4b4d225f5"
-uuid = "b3c3ace0-ae52-54e7-9d0b-2c1406fd6b9d"
-version = "0.3.2"
 
 [[deps.RecipesBase]]
 deps = ["PrecompileTools"]
@@ -1111,12 +962,6 @@ version = "1.3.0"
 uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
 version = "0.7.0"
 
-[[deps.SIMD]]
-deps = ["PrecompileTools"]
-git-tree-sha1 = "2803cab51702db743f3fda07dd1745aadfbf43bd"
-uuid = "fdea26ae-647d-5447-a871-4b548cad5224"
-version = "3.5.0"
-
 [[deps.Scratch]]
 deps = ["Dates"]
 git-tree-sha1 = "3bac05bc7e74a75fd9cba4295cde4045d9fe2386"
@@ -1137,18 +982,6 @@ git-tree-sha1 = "874e8867b33a00e784c8a7e4b60afe9e037b74e1"
 uuid = "777ac1f9-54b0-4bf8-805c-2214025038e7"
 version = "1.1.0"
 
-[[deps.SimpleTraits]]
-deps = ["InteractiveUtils", "MacroTools"]
-git-tree-sha1 = "5d7e3f4e11935503d3ecaf7186eac40602e7d231"
-uuid = "699a6c99-e7fa-54fc-8d76-47d257e15c1d"
-version = "0.9.4"
-
-[[deps.Sixel]]
-deps = ["Dates", "FileIO", "ImageCore", "IndirectArrays", "OffsetArrays", "REPL", "libsixel_jll"]
-git-tree-sha1 = "2da10356e31327c7096832eb9cd86307a50b1eb6"
-uuid = "45858cf5-a6b0-47a3-bbea-62219f50df47"
-version = "0.1.3"
-
 [[deps.Sockets]]
 uuid = "6462fe0b-24de-5631-8697-dd941f90decc"
 
@@ -1162,12 +995,6 @@ version = "1.2.1"
 deps = ["Libdl", "LinearAlgebra", "Random", "Serialization", "SuiteSparse_jll"]
 uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 version = "1.10.0"
-
-[[deps.StackViews]]
-deps = ["OffsetArrays"]
-git-tree-sha1 = "46e589465204cd0c08b4bd97385e4fa79a0c770c"
-uuid = "cae243ae-269e-4f55-b966-ac2d0dc13c15"
-version = "0.1.1"
 
 [[deps.Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
@@ -1201,6 +1028,24 @@ deps = ["ArgTools", "SHA"]
 uuid = "a4e569a6-e804-4fa4-b0f3-eef7a1d5b13e"
 version = "1.10.0"
 
+[[deps.TaylorSeries]]
+deps = ["LinearAlgebra", "Markdown", "Requires", "SparseArrays"]
+git-tree-sha1 = "90c9bc500f4c5cdd235c81503ec91b2048f06423"
+uuid = "6aa5eb33-94cf-58f4-a9d0-e4b2c4fc25ea"
+version = "0.17.8"
+
+    [deps.TaylorSeries.extensions]
+    TaylorSeriesIAExt = "IntervalArithmetic"
+    TaylorSeriesJLD2Ext = "JLD2"
+    TaylorSeriesRATExt = "RecursiveArrayTools"
+    TaylorSeriesSAExt = "StaticArrays"
+
+    [deps.TaylorSeries.weakdeps]
+    IntervalArithmetic = "d1acc4aa-44c8-5952-acd4-ba5d80a2a253"
+    JLD2 = "033835bb-8acc-5ee8-8aae-3f567f8a3819"
+    RecursiveArrayTools = "731186ca-8d62-57ce-b412-fbd966d074cd"
+    StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
+
 [[deps.TensorCore]]
 deps = ["LinearAlgebra"]
 git-tree-sha1 = "1feb45f88d133a655e001435632f019a9a1bcdb6"
@@ -1210,12 +1055,6 @@ version = "0.1.1"
 [[deps.Test]]
 deps = ["InteractiveUtils", "Logging", "Random", "Serialization"]
 uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
-
-[[deps.TiffImages]]
-deps = ["ColorTypes", "DataStructures", "DocStringExtensions", "FileIO", "FixedPointNumbers", "IndirectArrays", "Inflate", "Mmap", "OffsetArrays", "PkgVersion", "ProgressMeter", "SIMD", "UUIDs"]
-git-tree-sha1 = "bc7fd5c91041f44636b2c134041f7e5263ce58ae"
-uuid = "731e570b-9d59-4bfa-96dc-6df516fadf69"
-version = "0.10.0"
 
 [[deps.TranscodingStreams]]
 git-tree-sha1 = "d73336d81cafdc277ff45558bb7eaa2b04a8e472"
@@ -1294,15 +1133,15 @@ version = "1.31.0+0"
 
 [[deps.XML2_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libiconv_jll", "Zlib_jll"]
-git-tree-sha1 = "52ff2af32e591541550bd753c0da8b9bc92bb9d9"
+git-tree-sha1 = "d9717ce3518dc68a99e6b96300813760d887a01d"
 uuid = "02c8fc9c-b97f-50b9-bbe4-9be30ff0a78a"
-version = "2.12.7+0"
+version = "2.13.1+0"
 
 [[deps.XSLT_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Libgcrypt_jll", "Libgpg_error_jll", "Libiconv_jll", "Pkg", "XML2_jll", "Zlib_jll"]
-git-tree-sha1 = "91844873c4085240b95e795f692c4cec4d805f8a"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Libgcrypt_jll", "Libgpg_error_jll", "Libiconv_jll", "XML2_jll", "Zlib_jll"]
+git-tree-sha1 = "a54ee957f4c86b526460a720dbc882fa5edcbefc"
 uuid = "aed1982a-8fda-507f-9586-7b0439959a61"
-version = "1.1.34+0"
+version = "1.1.41+0"
 
 [[deps.XZ_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1524,12 +1363,6 @@ git-tree-sha1 = "d7015d2e18a5fd9a4f47de711837e980519781a4"
 uuid = "b53b4c65-9356-5827-b1ea-8c7a1a84506f"
 version = "1.6.43+1"
 
-[[deps.libsixel_jll]]
-deps = ["Artifacts", "JLLWrappers", "JpegTurbo_jll", "Libdl", "Pkg", "libpng_jll"]
-git-tree-sha1 = "d4f63314c8aa1e48cd22aa0c17ed76cd1ae48c3c"
-uuid = "075b6546-f08a-558a-be8f-8157d0f608a5"
-version = "1.10.3+0"
-
 [[deps.libvorbis_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Ogg_jll", "Pkg"]
 git-tree-sha1 = "b910cb81ef3fe6e78bf6acee440bda86fd6ae00c"
@@ -1572,32 +1405,58 @@ version = "1.4.1+1"
 """
 
 # ╔═╡ Cell order:
-# ╟─d882946c-aee6-43f9-8516-1c72ee946408
-# ╟─fed0c56f-fe3e-4b32-b4f0-dda5c269abfe
-# ╟─089cc976-124e-40f7-9aa1-ba4ca5089aef
-# ╟─c48f0bd3-ecb4-4e44-8aa2-aebf32bb5b82
-# ╟─914ef67f-c856-433d-be13-009e17486c08
-# ╠═3cbddb7c-e7d6-4f2c-b0bb-92a14ff55c65
-# ╟─010bd77b-b5e6-4441-b4bd-739eb4f64b35
-# ╟─b0bb08ad-40c1-4944-a200-245a0ee9827d
-# ╟─c6cf6f44-9e09-4f7f-9509-168d329d9f31
-# ╟─da3dff57-eacd-4e18-8439-41dbde4bab6f
-# ╟─3a962c19-ec0a-4758-9a0f-51804745a39c
-# ╟─e0616ea2-970e-4e9a-9622-a60c557bceec
-# ╠═48cb2f10-4496-4dd7-aba4-a5be79cf06ff
-# ╟─21bf9efa-69c5-40ed-90e0-4b7f51210e13
-# ╟─6eb930d2-c0e5-43d8-801f-024928705453
-# ╟─d8be3494-4b1c-419b-a8ab-28c40cb18f99
-# ╟─3d35a65c-3620-4a1f-adf3-1280eff4c597
-# ╠═354b94c8-20db-448f-b508-34963b4e3645
-# ╟─472d3cf7-9aa6-4eab-910d-3216426367ff
-# ╟─dd142f60-9e4f-4332-b1e5-1f5c065048b1
-# ╟─51be810f-2961-4d65-94f8-323bd29a9bd0
-# ╟─fabba741-1d31-434c-a111-302d63af0b75
-# ╟─ba35a0f6-6197-4b02-96c9-f68448e66770
-# ╟─776dfee9-08b0-4424-967a-8d1b1b1d37ac
-# ╟─9409857c-052e-4ac6-a99e-9285346161b5
-# ╟─e6509621-9ab6-45fe-aa0e-44eeb82ae497
-# ╟─fbaaf968-b40d-4731-a947-240c8df50e21
+# ╟─810b4ca6-7c98-423d-8bec-e0565f414d84
+# ╟─f5a2cf1e-32a6-491e-8361-f447da518d40
+# ╟─2ef97d61-fdc2-4873-bf14-4aeefbbcd29a
+# ╟─ad6f3dff-f583-4701-b91b-933bffa5698e
+# ╟─df61bd51-a481-4d9d-b8ab-300dc0e333c6
+# ╠═a346def9-8c48-464b-824c-f8d37d16d31f
+# ╟─ca3c1725-cc36-4a4c-bc6d-850751eb2eab
+# ╟─39160d5c-babb-411d-b8ab-070879e39b17
+# ╟─0c35c99a-9288-4a7b-ac1a-cfb7d1123540
+# ╟─7f8134ca-c565-41cf-9ff2-544d73ba7b49
+# ╟─8fe9609f-e671-4382-80de-1b72cc5a6cc0
+# ╟─dc5a1c2d-a048-44be-9a78-3d072f9fb4ee
+# ╟─5136a89e-a92f-430f-b731-87507e267367
+# ╟─58a9d8a7-3320-48ba-940b-3fbfc12f339a
+# ╟─62234680-edd8-4a94-b11c-037dd9ad2f73
+# ╟─e27c6221-5911-4ab6-b1ed-a7eddfc26963
+# ╟─f97b7b88-a7f3-4922-96c9-04fc488a034b
+# ╟─d4b500a4-a4bc-43f7-8851-ad206771bc35
+# ╟─46fdee32-ae0c-4f90-bb60-d787c901ecc6
+# ╟─59404fa3-dcd3-4a80-8386-31bd1620fc96
+# ╟─631eef63-4ba2-47c5-a3c4-e6797fd4984c
+# ╟─7bdc05b3-85d1-4657-b64e-277ad88f1a16
+# ╟─0627a96c-6122-4672-8ab0-1dd5053eb6e2
+# ╟─8b26e7de-f070-4132-8764-8be67a9f6937
+# ╟─0156d271-aec9-4e66-8dce-d8d845d6506a
+# ╟─5a8fc633-be24-4e87-a9dd-ffdc66f8e8bb
+# ╟─f56dc660-814f-4434-9de7-e14f039330aa
+# ╟─7a8bcd91-f8ab-466b-a9e4-f4f51dc81a36
+# ╟─c153f605-f972-4d62-8498-494d43533783
+# ╟─ceafae61-f471-424f-ba96-7a077d542fb1
+# ╟─cac9f2af-6990-4c1b-84b0-1b2f6b7a1d43
+# ╟─5e640ff4-e1fc-4e72-afca-42d34644815b
+# ╟─bbf686cf-5565-42e1-9258-71c7f9571b06
+# ╟─f5515b87-1e55-4ade-a851-99e03662b936
+# ╟─1f40a7a2-0bb0-4c79-90bf-43797e6afe94
+# ╟─cf98e3f6-a1c8-41a7-89d4-b13c65d2e729
+# ╟─66413546-74bf-4789-a53c-d7c41d4b2eab
+# ╠═bac8d7b8-f82e-4f68-8d93-3cf3982a647f
+# ╟─3d72ec1d-bdd8-4d77-aa08-1cf20d349073
+# ╠═779f3557-6138-41ee-ac19-6b031b995503
+# ╟─099aeb83-65a1-4b26-a8f4-238446ded7db
+# ╠═9a0b0936-ed6a-4fcf-8e79-5f776908aa7c
+# ╟─6e0cd22b-c079-4eda-9048-47ef3ec3646a
+# ╠═08c2afdd-612b-4894-ab32-346d1466e450
+# ╠═30f7b933-64f1-4374-9b21-bd3a3c431b59
+# ╠═7034aac1-3c8e-4684-b74a-43096b359b71
+# ╠═4d2799bf-0bd8-49d6-a881-53193817c394
+# ╠═f3419bcf-e74c-4bf7-8756-7ad13bbd308c
+# ╟─19b63882-8944-48b4-a1eb-596600be4d1a
+# ╠═d5685d0e-ff7b-4c1b-8ea6-d5e2afc11eea
+# ╟─5c1fa4fb-8c66-40b6-a9dc-c779af541687
+# ╠═1fd828be-d0e0-4e4f-be83-6055c8d94c37
+# ╟─535cf94d-d366-4e7f-9173-b75808bf1de0
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

@@ -1,279 +1,409 @@
 ### A Pluto.jl notebook ###
-# v0.19.40
+# v0.19.45
 
 using Markdown
 using InteractiveUtils
 
-# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
-macro bind(def, element)
-    quote
-        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
-        local el = $(esc(element))
-        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
-        el
-    end
-end
-
-# ╔═╡ d882946c-aee6-43f9-8516-1c72ee946408
+# ╔═╡ 93d437ba-979a-417f-ac1d-0e694d55c0e2
 using PlutoUI
 
-# ╔═╡ 3cbddb7c-e7d6-4f2c-b0bb-92a14ff55c65
-begin
-	using Colors, ColorVectorSpace, ImageShow, FileIO, ImageIO
-	using HypertextLiteral
-	using Plots
-end
+# ╔═╡ 200eba1e-10b6-41ae-a1ba-260201dcb08a
+using LinearAlgebra, Plots, Polynomials, SpecialMatrices
 
-# ╔═╡ fed0c56f-fe3e-4b32-b4f0-dda5c269abfe
-PlutoUI.TableOfContents(title="Introducción a la modelación matemática", aside=true)
+# ╔═╡ 24c9f8a9-ad90-413a-9660-9da7a068f492
+PlutoUI.TableOfContents(title="Cículos de Gershgorin", aside=true)
 
-# ╔═╡ 089cc976-124e-40f7-9aa1-ba4ca5089aef
-md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**.
+# ╔═╡ 1f760cdf-6171-4ed7-b06d-60bc6a52105b
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
-# ╔═╡ c48f0bd3-ecb4-4e44-8aa2-aebf32bb5b82
-md"""Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo. 
+# ╔═╡ 813d6c1c-07b8-46f3-8a80-59943b8f8182
+md"""**Este cuaderno está basado en actividades del curso Álgebra Lineal Numérica de la Universidad Nacional de Colombia, sede Bogotá, dictado por el profesor Juan Galvis en 2023-2.**
+
+Elaborado por Juan Galvis, Francisco Gómez, Carlos Nosa y Yessica Trujillo. 
 """
 
-# ╔═╡ 914ef67f-c856-433d-be13-009e17486c08
+# ╔═╡ 2af1d5c5-5ea5-431a-a008-84419619e32c
 md"""Usaremos las siguientes librerías:"""
 
-# ╔═╡ 010bd77b-b5e6-4441-b4bd-739eb4f64b35
-md"""
-# Introducción"""
+# ╔═╡ 8b2829ba-4965-496f-b23a-70e284dc8663
+md"""# Introducción
 
-# ╔═╡ b0bb08ad-40c1-4944-a200-245a0ee9827d
-md"""El enfoque matemático para la solución de problemas usa herramientas específicas, entre ellas, la abstracción, generalización y, en muchos casos, métodos numéricos e implementación de algoritmos.
+Para hallar los valores propios de una matriz, existen diversos métodos que permiten localizarlos y estimarlos sin necesidad de calcularlos explícitamente. Entre estos métodos, los discos de Gershgorin, los discos de Brauer y los discos generalizados de Gershgorin proporcionan regiones en el plano complejo donde se pueden encontrar los valores propios de una matriz."""
 
+# ╔═╡ 6a5aa821-9df8-4bed-838b-24c1a39a3abb
+md"""# Localización de valores propios"""
 
-Cuando se usa el enfoque matemático para resolver problemas se inicia a partir de una pregunta o situación concreta y se desea responder esta pregunta o entender la situación considerada. A grosso modo para finalizar el ejercicio de modelado de manera exitosa debemos:
+# ╔═╡ a7bed1fb-54c0-4708-9f44-0860bb6558a4
+md"""**Teorema 1: Discos de Gershgorin.** 
 
-1. Modelar el problema o situación concreta: se debe abstraer el problema para poder escribirlo en lenguaje matemático preciso. Se requiere identificar los grados de libertad del modelo considerado, $p$, así como las cantidades u objetos que deben ser encontrados o calculados, $q$.   Con grados de libertad del modelo nos referimos a los parámetros (numéricos o de alguna otra naturaleza) que caracterizan completamente el modelo estudiado.
+Todos los valores propios de una matriz $A\in\mathbb{R}^{d\times d}$ están localizados en el conjunto 
 
-    $\cdot$ Como parte del ejercicio de modelado se identifican los datos, posibles mediciones  e información disponible a priori sobre el problema o pregunta. 
-        Denotemos esta información por $d$. Debe ser posible obtener el parámetro $p$ a partir de esta información.
+$\bigcup_{i=1}^{d}Γ_{i}$$ con $$Γ_{i}  = \{z\in ℂ : |z-a_{ii}|\leq R_{i}\}$
+y $a_{ii}$ es la entrada $(i,i)$ de la diagonal de la matriz $A$ y $R_i = \displaystyle\sum_{j=1 ,j\not=i}^{d}|a_{ij}|$."""
 
+# ╔═╡ f878ce12-250f-41f0-aac9-7655bb898092
+md"""**Demostración.** Para $λ$ un valor propio de $A$ considere un vector propio $x$ y sea $m$ el índice del componente del vector con norma mayor, ahora considere el vector $y = x/|x_m|$, así, $y$ también es un vector propio de $A$ asociado a $λ$ con $|y_m| = 1$ y $|y_i|\leq 1$ para todo $i$. Puesto que $Ay = \lambda y$ entonces
 
-    
-2. Escribir $q$ como algún tipo de función (o algoritmo de calculo a partir) de $p$ usando el modelo planteado; es decir, relacionar los parámetros que describen el modelo con las cantidades u objetos matemáticos que necesitamos encontrar. En muchas aplicaciones practicas obtener las cantidad de interés $q$ es imposible  solo usando el modelo planteado. Eh estos casos se puede calcular únicamente cantidades primales o principales, denotadas aquí por $v$.    Tendremos entonces que introducir una ley  o relación de la forma $q=F(v,\alpha)$ en donde $\alpha$ es un parámetro que relaciona $v$  y $q$.  El parámetro $\alpha$ puede ser de tipo numérico o algún otro objeto matemático.
+$\sum^{d}_{k=1} a_{mk}y_k = λ y_m$
+luego
 
-3. Proponer un método numérico  (asumiendo aritmética exacta) que permita usar la relación  obtenida para $q$  a partir de $p$ ya sea en un número finito de pasos o como limite de un método iterativo.
+$y_{m}(\lambda - a_{mm}) =  \sum^{d}_{k=1, ~ k\not=m} a_{mk}y_k$
+usando las propiedades del vector $y$, concluimos que
 
-4. Implementar en un sistema de cómputo el método numérico propuesto obtenido teniendo en cuenta aspectos de estabilidad, precisión y eficiencia. Además:
+$|\lambda - a_{mm}| \leq \sum^{d}_{k=1, ~ k\not=m} |a_{mk}||y_k| \leq  \sum^{d}_{k=1, ~ k\not=m} |a_{mk}| \text{.}$"""
 
-    $\cdot$ Se considera la calidad y cantidad de datos  disponibles $d$.
+# ╔═╡ 85079ef4-8af6-4761-a171-a4d50de9d621
+md"""La siguiente función genera y visualiza los discos de Gershgorin para una matriz dada."""
 
-    $\cdot$ Se obtienen los parámetros del modelo y se calculan las cantidades de interés.
+# ╔═╡ 19f3dc60-83f1-46e7-867f-0d4f87da1ebb
+function allGreshdisksforA(A::Matrix{Float64}; r, k)
+    rango = LinRange(-r, r, k)
+    n = size(A, 1)
+    D = diag(A)
+    R = zeros(n)
+    for i in 1:n
+        R[i] = sum(abs.(A[i, :])) - abs(A[i, i])
+    end
 
+    valores = [x + y*im for y in rango, x in rango]
+    resultadoG = ComplexF64[]
 
-5. Una vez se obtiene la respuesta a la pregunta o se obtiene el objeto matemático de interés, se debe verificar si en realidad se resolvió el problema planteado o si ajustes deben ser realizados.
+    for p in 1:n
+        m = z -> (abs(z - A[p, p]) <= R[p])
+        for i in 1:k
+            for j in 1:k
+                if m(valores[i, j])
+                    push!(resultadoG, valores[i, j])
+                end
+            end
+        end
+    end
 
-Notamos que los pasos 2. y 3. pueden no ser necesarios en algunos casos dependiendo del problema estudiado. En la actualidad es cada vez mas común la gran importancia y dificultad de los pasos 2. y 3.
+    E = eigen(A).values
 
-En este trabajo ilustramos el proceso de modelación matemática  a través de un ejemplo sencillo."""
+	p = plot(
+    scatter(real(resultadoG), imag(resultadoG), ms=2, ma=0.5, markerstrokecolor = :auto, color=:yellow, label="Gershgorin"),
+    xlims=(-r, r), ylims=(-r, r), aspect_ratio=1,         
+    xlabel="Parte Real", 
+    ylabel="Parte Imaginaria",
+    title="Discos de Gershgorin")
 
-# ╔═╡ c6cf6f44-9e09-4f7f-9509-168d329d9f31
-md"""# ¿Cuánto jugo hay en una naranja?
-
-El objetivo es estimar, de una manera no invasiva y con herramientas sencillas, la cantidad de jugo de naranja en una naranja.
-
-Es claro que queremos usar el enfoque matemático para alcanzar nuestro objetivo. Supongamos que disponemos de una cuerda y una regla para hacer las mediciones que queramos. 
-Podemos asumir entonces que podemos contar con algunas medidas de diámetros de curvas al rededor de la naranja para así encontrar una respuesta en centímetros cúbicos. """
-
-# ╔═╡ da3dff57-eacd-4e18-8439-41dbde4bab6f
-md"""A continuación se muestra una imagen de una naranja, dicha imagen está disponible en el URL indicado."""
-
-# ╔═╡ 3a962c19-ec0a-4758-9a0f-51804745a39c
-url = "https://c7.alamy.com/compes/2c0ywp4/cinta-metrica-con-naranja-aislada-2c0ywp4.jpg"
-
-# ╔═╡ e0616ea2-970e-4e9a-9622-a60c557bceec
-md"""Ahora bajamos la imagen a la máquina local."""
-
-# ╔═╡ 48cb2f10-4496-4dd7-aba4-a5be79cf06ff
-fname = download(url)
-
-# ╔═╡ 21bf9efa-69c5-40ed-90e0-4b7f51210e13
-md"""Ahora declaramos la variable "imag", que corresponde a un tipo de dato que representa imágenes. Recuerde que, además de asignar la variable en una expresión del tipo "
-", también se despliega la variable. En este caso, Pluto entiende que queremos ver la imagen representada por la variable."""
-
-# ╔═╡ 6eb930d2-c0e5-43d8-801f-024928705453
-imag = load(fname)[1:900,1:1300]
-
-# ╔═╡ d8be3494-4b1c-419b-a8ab-28c40cb18f99
-md"""$\texttt{Figura 1. Midiendo una naranja. Imagen tomada de Wikipedia.}$"""
-
-# ╔═╡ 3d35a65c-3620-4a1f-adf3-1280eff4c597
-md"""## Modelo matemático
-
-El modelo matemático más sencillo para la naranja es asumir que la naranja tiene una forma esférica (sólida) o de bola tridimensional. Esto, en realidad, quiere decir que en algún conjunto y noción de distancia adecuados, la naranja se encuentra a poca distancia de una bola (o esfera sólida). Observe que en este caso, podemos trasladar la esfera para colocar su centro en el origen y, por lo tanto, necesitamos un solo parámetro para describirla. En este caso, un parámetro que puede ser usado es el radio de la bola,
-
-$p=\mbox{ ``radio de la bola''}.$"""
-
-# ╔═╡ 354b94c8-20db-448f-b508-34963b4e3645
-@bind ρ Slider(1:10, show_value=true)
-
-# ╔═╡ 472d3cf7-9aa6-4eab-910d-3216426367ff
-let
-	# Crear un rango de valores para theta y phi
-	theta_range = range(0, 2π, length=100)
-	phi_range = range(0, π, length=100)
-
-	# Generar los puntos de la esfera
-	x = [ρ * sin(φ) * cos(θ) for φ in phi_range, θ in theta_range]
-	y = [ρ * sin(φ) * sin(θ) for φ in phi_range, θ in theta_range]
-	z = [ρ * cos(φ) for φ in phi_range, θ in theta_range]
-
-	# Graficar la esfera
-	surface(x, y, z, xlabel="X", ylabel="Y", zlabel="Z", title="Esfera de Radio p = $ρ")
+scatter!(p, real(E), imag(E), color=:black, markerstrokecolor = :auto, label="Eigenvalues")
 end
 
-# ╔═╡ dd142f60-9e4f-4332-b1e5-1f5c065048b1
-md"""
-**Error del modelo matemático:**  
+# ╔═╡ f7c088b5-2995-44c2-85e4-45837625d22b
+md"""**Ejemplo:**
 
-Tenemos aquí la primera fuente de error de nuestro procedimiento, el error de modelado matemático. La naranja no es una esfera. Este error puede (y en algunos casos debe) ser cuantificado. Para esto se deben proponer medidas de error de modelado matemático. Es también claro que este error de modelado matemático está ligado a la complejidad del modelo y en particular al número de parámetros usados para describirlo, es decir, a la dimensión del modelo usado.
+Consideremos la siguiente matriz aleatoria de tamaño $3\times 3$, y visualicemos sus discos."""
 
-Note que podemos medir el mayor círculo sobre la frontera de la bola, es decir, sobre la esfera, y así tener un dato a partir del cual hacer una estimación de $q$, donde $q$ es la cantidad de jugo de naranja. En este caso, podemos tener,
+# ╔═╡ 3109cfcf-f805-4ace-b5da-14b2e95d6d0c
+A = 2 .* rand(3, 3) .- 1
 
-$d=\mbox{``diámetro del mayor círculo sobre la esfera''}$
+# ╔═╡ 096562cb-7b8d-41bb-8315-5200db361fc4
+md"""Note que los valores propios de $A$ son los siguientes."""
 
+# ╔═╡ 48e64e4a-80d7-4735-971b-88dcf78ad3ab
+eigen(A).values
 
-**Errores en los datos (errores de medición):**  
+# ╔═╡ 2641c55d-8a81-4843-a537-e38f831e3eb4
+allGreshdisksforA(A, r=3, k=250)
 
-Tenemos aquí otra fuente de error de nuestro procedimiento, el error en la medición. Observe que no existe la noción de diámetro exacto, pues la naranja no es una esfera. De todos modos, se puede hacer una medición sobre la esfera ubicando la cuerda de manera adecuada para obtener una medición aproximada de la cantidad que podemos usar en nuestro modelo como $d$. 
-Este error puede (y en algunos casos debe) ser cuantificado. Para ello se debe conocer las especificaciones de las herramientas usadas o lidiar con la falta de ellas si no se conocen.
+# ╔═╡ 6860c636-08b9-4427-a47c-ebf7c106a2af
+md"""Un corolario del Teorema 1 es el siguiente."""
 
-En este caso, vemos que 
+# ╔═╡ dd0a5ff6-2e12-446f-945e-7fb6fb6e9c2b
+md"""**Corolario 2.** Toda matriz estrictamente diagonal dominante es invertible."""
 
-$p= \frac{d}{2\pi},$
-es la relación que transforma datos en parámetros del modelo.
+# ╔═╡ c76aecbc-b1a1-4cff-a7ba-93e53865d403
+md"""**Ejemplo:**
+
+Consideremos la siguiente matriz diagonal dominante, que por corolario es invertible."""
+
+# ╔═╡ c14ea4fc-5d10-460c-af51-c3acb2486b3d
+A₂ = (2 .* rand(3, 3) .- 1) .+ 3 .* diagm([1, -1, 1])
+
+# ╔═╡ 7474cfb7-e594-4642-a35a-6a3848a14de4
+md"""Sus valores propios son:"""
+
+# ╔═╡ 82b91b19-07a7-4446-8996-3a5716be81e9
+eigen(A₂).values
+
+# ╔═╡ b2dc7b74-eeef-4433-ba46-c805ae0b3004
+md"""Y los círculos de Gershgorin de la matriz anterior son:"""
+
+# ╔═╡ 8a4a6c28-cc01-401b-97b3-0bbb3ec15192
+allGreshdisksforA(A₂, r=5, k=300)
+
+# ╔═╡ 5a2e87ef-a8ba-4f6c-983d-efa48ad2f571
+md"""**Corolario 3.** 
+
+Si $\lambda \in ℂ$ es un valor propio de una matriz $A\in\mathbb{R}^{d\times d}$ entonces $\lambda$ pertenece al disco 
+
+$D\left(0,\displaystyle\max_{1\leq i \leq d}(|a_{ii}|) + \displaystyle\max_{1\leq i \leq d}{\sum^{d}_{j=1 ~ j\not = i}}|a_{ij}|\right),$
+donde $a_{ij}$ es la entrada $(i,j)$ de la matriz $A$."""
+
+# ╔═╡ efd566af-d63b-496d-a358-2e2212867e54
+md"""**Teorema 4: Discos de Brauer.** 
+
+Todos los valores propios de una matriz $A\in\mathbb{R}^{d\times d}$ están contenidos en la unión de $\binom{d}{2}$ conjuntos
+
+$\bigcup_{i<j} B_{ij},$
+donde
+
+$B_{ij} = \{z\in ℂ : |z-a_{ii}|\cdot|z-a_{jj}|\leq R_{i}R_{j}\}.$"""
+
+# ╔═╡ 66a95a94-8692-49be-b7f7-b75ad2792324
+md"""**Teorema 5: Discos generalizados de Gershgorin.** 
+
+Todos los valores propios de una matriz $A\in\mathbb{R}^{d\times d}$ están contenidos en la unión de los siguientes conjuntos
+
+$\Omega_{ij} = \{z\in ℂ : |(z-a_{ii})(z-a_{jj})-a_{ij}a_{ji}|\leq |z-a_{jj}|R_{ij}+|a_{ij}|R_{ji}\},$
+donde $R_{ij} = \sum_{k=1, k\not=i,j}^{d}|a_{ik}|$."""
+
+# ╔═╡ ddd6bd2c-849e-4674-a50c-edce64fba21b
+md"""Teniendo en cuenta los Teoremas 4 y 5, vamos a construir una función que visualice los discos de Gershgorin, los discos de Brauer y los discos generales de Gershgorin."""
+
+# ╔═╡ d97e44a0-60aa-4511-a25a-4e8c13747ab0
+function alldisksforA(A; r, k)
+    rango = LinRange(-r, r, k)
+    n = size(A, 1)
+    R = zeros(n)
+    Rpp = zeros(n, n)
+    
+    for i in 1:n
+        R[i] = sum(abs.(A[i, :])) - abs(A[i, i])
+        for j in 1:n
+            Rpp[i, j] = sum(abs.(A[i, :])) - abs(A[i, i]) - abs(A[i, j])
+        end
+    end
+
+    valores = [x + y*im for y in rango, x in rango]
+
+    resultadoG = ComplexF64[]
+    resultadoB = ComplexF64[]
+    resultadoO = ComplexF64[]
+
+    for p in 1:n
+        m = z -> abs(z - A[p, p]) <= R[p]
+        for i in 1:k
+            for j in 1:k
+                if m(valores[i, j])
+                    push!(resultadoG, valores[i, j])
+                end
+            end
+        end
+    end
+
+    for u in 1:n
+        for v in 1:n
+            if u != v
+                m1 = z -> (abs(z - A[u, u]) * abs(z - A[v, v]) <= R[u] * R[v])
+                m2 = z -> abs((z - A[u, u]) * (z - A[v, v]) - A[u, v] * A[v, u]) <= Rpp[u, v] * abs(z - A[v, v]) + A[u, v] * Rpp[v, u]
+                for i in 1:k
+                    for j in 1:k
+                        if m1(valores[i, j])
+                            push!(resultadoB, valores[i, j])
+                        end
+                        if m2(valores[i, j])
+                            push!(resultadoO, valores[i, j])
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    E = eigen(A).values
+
+    p = plot(
+    real(resultadoG), imag(resultadoG), seriestype=:scatter, 
+    markerstrokecolor=:auto, color=:blue, label="Gershgorin",
+    xlims=(-r, r), ylims=(-r, r), aspect_ratio=1,
+    xlabel="Parte Real",
+    ylabel="Parte Imaginaria",
+    title="Región en el Plano Complejo")
+
+	plot!(p, real(resultadoB), imag(resultadoB), seriestype=:scatter, markerstrokecolor=:auto, color=:deepskyblue, label="Brauer")
+
+	plot!(p, real(resultadoO), imag(resultadoO), seriestype=:scatter, markerstrokecolor=:auto, color=:cyan, label="General Gershgorin")
+
+	plot!(p, real(E), imag(E), seriestype=:scatter, color=:black, markerstrokecolor=:auto, label="Eigenvalues")
+end
+
+# ╔═╡ 47e2d763-86a5-468a-89fb-8deb26a071d6
+md"""**Ejemplo:**
+
+Consideremos la siguiente matriz:"""
+
+# ╔═╡ fc2f79d8-f729-457d-b463-55a83a68a38d
+A₃ = 2 .* rand(3, 3) .- 1
+
+# ╔═╡ 0d78a9c2-6678-46ee-b99c-2056a74c1783
+md"""Visualicemos los discos en el plano complejo:"""
+
+# ╔═╡ 3fdc8489-7ca1-4b4f-adb2-6aca10c972e6
+alldisksforA(A₃, r=3.0, k=200)
+
+# ╔═╡ 0e80bf5f-cea1-4610-bc19-b7462f6218b5
+md"""**Ejemplo:**
+
+Consideremos ahora una matriz con entradas enteras, y hallemos sus discos."""
+
+# ╔═╡ 74fe5c03-d0f6-438a-945a-63e20172e0ab
+A₄ = rand(-7:7, 7, 7)
+
+# ╔═╡ 82ff37ed-6e40-402a-a0d7-b10669965e2c
+alldisksforA(A₄, r=60.0, k=250)
+
+# ╔═╡ 5877b0c9-d614-42be-818d-1ed413e6d579
+md"""**Ejemplo:**
+
+Hagamos el análisis para una matriz particular. Considere la siguiente matriz
+
+$A = \begin{pmatrix}
+1 & 0 & 1 \\
+0 & 2 & 0 \\
+1 & 1 & 0
+\end{pmatrix}$
 """
 
-# ╔═╡ 51be810f-2961-4d65-94f8-323bd29a9bd0
-md"""
-## Cantidad primal y relación con cantidades de interés
+# ╔═╡ 982cece7-c817-41e3-b9b7-3463b68e18d2
+A₅ = [1 0 1; 0 2 0; 1 1 0] #Definimos la matriz
 
-En este caso vemos que no es fácil, al menos no es obvio, calcular la cantidad de jugo de naranja en una naranja esférica a partir del radio de la misma. Podemos sospechar que el volumen de la esfera (que es más fácil de obtener) está relacionado con la cantidad de interés. En este caso introducimos:
+# ╔═╡ c0365e7c-6ec7-4b31-a10e-254bee5f47ad
+md"""El polinomio característico es $p_{A}(λ) = -\lambda ^3 + 3 \lambda^2 -\lambda -2$ y sus valores propios son $\{\frac{1}{2}(1-\sqrt{5}),\frac{1}{2}(1+\sqrt{5}),2\}$, tal como se muestra a continuación."""
 
-$v=\mbox{``volumen de la bola''}.$
+# ╔═╡ 70b4c212-83ae-465e-9b21-5d513c60759e
+eigen(A₅).values
 
-Queremos estimar,
+# ╔═╡ cfd3a2a7-7e92-43cf-a0b4-fc519e9fc554
+md"""Luego, los discos asociados a dicha matriz son:"""
 
-$q=\mbox{``cantidad de jugo de naranja''}.$
+# ╔═╡ d51f0728-5dcb-4b28-a105-5f231bf9b692
+alldisksforA(A₅, r=4, k=750)
 
-Para esto podemos proponer una relación de la forma 
+# ╔═╡ 3f82b093-cbca-4483-8ab0-a743a717a7f6
+md"""Las desigualdades correspondientes a cada uno de los conjuntos que acotan los valores propios de la matriz $A$ son las siguientes:
 
-$q=F(v,\alpha),$
-
-donde $\alpha$ es un parámetro que relaciona el volumen de la bola y la cantidad de jugo de naranja.
+Suponga que $z = x + iy \in ℂ$ y $x,y\in ℝ$,
 
 
-Establecer esta relación necesita conocimiento del problema y del ejercicio de modelado matemático en curso. En este primer acercamiento y para simplificar podemos asumir una relación lineal del tipo
 
-$q=\alpha v,$
+*   Discos de Gershgorin
+1.   $|z- 1 |\leq 1 ⟼ (x-1)^2 +y^2\leq 1$
+2.   $|z- 2 |\leq 0 ⟼ (x,y) = (2,0)$
+3.   $|z|\leq 2 ⟼ x^2+y^2\leq 4$
 
-donde $\alpha$ es una proporción (un parámetro). Es decir, asumimos que la cantidad de jugo de naranja (de una naranja perfectamente redonda) se puede estimar por una proporción de su volumen.
+*   Conjuntos de Brauer
+4.   $|z- 1 ||z- 2 |\leq 0 ⟼(x,y) = (1,0),(2,0)$
+5.   $|z- 1 ||z|\leq 2 ⟼x^4+2x^2y^2+y^4-2x^3-2xy^2+x^2+y^2\leq 4$
+6.   $|z- 2 ||z|\leq 0 ⟼(x,y) = (0,0),(2,0)$
 
-**Error de aproximación de relaciones:** 
-
-Tenemos aquí otra fuente de error de nuestro procedimiento, el error en la aproximación de funciones que relacionan las variables primarias con las variables de interés. 
-Este error puede (y en algunos casos debe) ser cuantificado. Para eso, debemos estudiar (de alguna manera) la posible relación entre las variables. Podemos usar, por ejemplo, información a priori del problema y técnicas de aproximación de funciones para deducir o calcular esas relaciones.
-
-**Error en determinación de parámetros:** 
-
-Tenemos aquí otra fuente de error de nuestro procedimiento, el error en los parámetros de las relaciones funcionales. En muchas aplicaciones reales no existe forma de verificar si la relación funcional es adecuada de manera teórica y muchas veces se usan diferentes criterios para la estimación de los parámetros de estas relaciones. En todo caso, se debe estudiar la sensibilidad de los resultados obtenidos a posibles variaciones de los parámetros de las relaciones funcionales.
+*   Conjuntos de Gershgorin generalizado
+7.   $|(z- 1 )(z- 2 )|\leq|z- 2 | ⟼ (x-1)^2+y^2\leq 1 \quad (x,y) = (2,0)$
+8.   $|(z- 1 )(z)- 1 |\leq 1 ⟼ (x^2-y^2-x-1)^2 + (2xy-y)^2 \leq 1$
+9.   $|(z- 2 )(z- 1 )|\leq 0 ⟼ (x,y) = (1,0),(2,0)$
+10.   $|(z- 2 )(z) |\leq 0 ⟼(x,y) = (0,0),(2,0)$
+11.   $|(z)(z- 1 )- 1 |\leq|z- 1 | ⟼ (x^2-y^2-x-1)^2 + (2xy-y)^2 \leq (x-1)^2+y^2$
+12.   $|(z )(z- 2 ) |\leq|z- 2 | ⟼ x^2+y^2\leq 1 \quad (x,y) = (2,0)$
 """
 
-# ╔═╡ fabba741-1d31-434c-a111-302d63af0b75
-md"""## Método numérico
+# ╔═╡ 17f9eefc-c53c-41c8-8f6e-c38a463d0b80
+md"""# Ceros de polinomios
 
-Como $p$ representa el radio de la bola, y $p=\frac{d}{2\pi}$, así tenemos que
+Para todo polinomio se puede definir la matriz compañera de la siguiente manera: Sea $p(x) = c_0 + c_1 x + \ldots + c_{n-1}x^{n-1} + x^{n}$ un polinomio en $\mathbb{R}[x]$, la matriz compañera se define como
 
-$v=\frac{4}{3} \pi p^3
-=\frac{4}{3} \pi \left(\frac{d}{2\pi} \right)^3
-=\frac{d^3}{6\pi^2},$
-por lo tanto nuestra estimación está dada por 
+$C(p(x)) = \begin{pmatrix}
+0 & 0 & \ldots & 0 & -c_0 \\
+1 & 0 & \ldots & 0 & -c_1 \\
+0 & 1 & \ldots & 0 & -c_2 \\
+\vdots & \vdots & \ddots & \vdots & \vdots \\
+0 & 0 & \ldots & 1 & -c_{n-1}
+\end{pmatrix}$
+con $C(p(x)) \in \mathbb{R}^{n \times n}$. Con esta definición es fácil demostrar el siguiente resultado.
 
-$q=\alpha v= \frac{\alpha d^3}{6\pi^2}.$"""
-
-# ╔═╡ ba35a0f6-6197-4b02-96c9-f68448e66770
-md"""## Implementación del método numérico
-
-Imaginemos que decidimos implementar nuestro método numérico en una máquina que redondea todas las cantidades a 2 dígitos decimales (usando notación científica normalizada). 
-Tomemos como caso particular $\alpha=0.7$ y $d=21$ cm. En este caso, la aproximación de nuestra implementación es 
-
-$q\approx\widetilde{q}=\frac{0.7 (21)^3}{6 (3.14)^2} \approx \frac{6482.7}{59.16}\approx 109.58 \mbox{ cm}^3.$
-
-Note que $\widetilde{q}$ representa la aproximación del valor de $q$ que resulta de redondear todos los cálculos a dos dígitos decimales, es decir, trabajamos con 2 decimales en base 10 ($\pi\approx 3.14$). Es por esto que $q$ es aproximado por $\widetilde{q}$ tiene errores de redondeo ya que en cada cálculo intermedio tenemos un error de redondeo.
-
-Podemos implementar una aplicación o programa que, dados el diámetro $d$ y el valor $\alpha$, calcule la cantidad de jugo en la naranja. Con eso terminamos una primera etapa del ejercicio de modelado y estamos listos para la etapa de validación del modelo y, por último, la etapa de uso del modelo en donde los resultados se acoplan con otras herramientas para resolver un problema más interesante. 
-
-**Error de redondeo:** 
-
-Al implementar un método numérico en aritmética finita en un sistema de cómputo, cometemos errores de redondeo en cada cálculo intermedio que realicemos. Este error puede (y en algunos casos debe) ser cuantificado.
+**Teorema 6.** El polinomio característico de $C(p(x))$ es el polinomio $p(x)$.
 """
 
-# ╔═╡ 776dfee9-08b0-4424-967a-8d1b1b1d37ac
-md"""## Determinación de parámetros de leyes constitutivas
+# ╔═╡ 593afb26-7254-4149-8ac5-63ce589aea45
+md"""**Ejemplo:**
 
-Notemos que el valor del parámetro $\alpha$ en la relación 
+Para el polinomio $p(x) = (x-1)(x-2i)(x+2i) = x^3 - x^2 + 4x - 4$, la matriz de compañía es
 
-$\mbox{``cantidad de jugo''}=\alpha \cdot(\mbox{``volumen de la naranja''})$
-representa nuestro conocimiento previo de esta relación. En la practica, el valor de $\alpha$ puede ser determinado de diferentes formas: estudios previos, estudios estadísticos previos, mediciones previas invasivas, criterio de expertos, entre otros enfoques. Dicho parámetro puede ser hallado con metodos de optimización o estadisticos."""
+$C(p(x)) = \begin{pmatrix}
+0 & 0 & 4 \\
+1 & 0 & -4 \\
+0 & 1 & 1
+\end{pmatrix}$"""
 
-# ╔═╡ 9409857c-052e-4ac6-a99e-9285346161b5
-md"""## Validación del modelo
+# ╔═╡ 07bddafe-1832-4ffa-baf3-cae19486fc01
+md"""La función $\texttt{Companion()}$ halla la matriz de compañia teniendo en cuenta los coeficientes del polinomio."""
 
-Después de obtener el modelo es necesario hacer el experimento con la naranja, si el modelo no cumple con lo esperado, se pueden tomar medidas para mejorarlo. Esto incluye revisar los datos, ajustar los parámetros y validar las mejoras. Una vez que el modelo esté listo y validado, se puede implementar para responder la pregunta original con mayor precisión."""
+# ╔═╡ 8f800d74-74e8-4656-a7ae-17aba925d3bb
+md"""Definimos los coeficientes del polinomio:"""
 
-# ╔═╡ e6509621-9ab6-45fe-aa0e-44eeb82ae497
-md"""## Balance de errores
+# ╔═╡ 194e3552-0a49-484d-9546-e9d6e0a752c7
+coef = [-4.0, 4.0, -1.0, 1.0]
 
-Como hemos visto, son diversos los errores y simplificaciones de la realidad introducidos en diferentes etapas de la modelación matemática. Estos incluyen el error de modelación (las naranjas no son esferas, y debemos saber qué porcentaje de error existe en esto), el error de medición (debemos determinar qué porcentaje de error se produce al medir con una cinta métrica el diámetro de la naranja), errores de redondeo y errores de parámetros (en este caso, $\alpha$). Deseamos que nuestro modelo no sea sensible a este parámetro; es decir, si variamos un poco dicho parámetro, la solución no debería tener un cambio brusco.
+# ╔═╡ 9cac67bf-9bb7-4b19-9bf8-14ac7bdf3871
+md"""Definimos el polinomio,"""
 
-Es bastante obvio que no tiene sentido preocuparse por reducir este error únicamente en una de estas etapas. Por ejemplo, no tiene sentido práctico realizar el cálculo numérico asegurando una precisión de 14 cifras decimales si no puedo garantizar ese mismo orden de error en las otras etapas. Para esto, debo poder cuantificar el margen de error en todas las etapas del proceso."""
+# ╔═╡ a7e87c4c-f182-4fa3-b18c-d37c1bf0cf87
+P = Polynomial(coef)
 
-# ╔═╡ fbaaf968-b40d-4731-a947-240c8df50e21
-md"""
-# Referencias
-[1] Lin, C. C., & Segel, L. A. (1988). Mathematics Applied to Deterministic Problems in the Natural Sciences (Classics in Applied Mathematics, Series Number 1) (1st ed.). SIAM: Society for Industrial and Applied.
+# ╔═╡ 7c4582e3-fd79-4a4b-9bfd-db2d8a7a89af
+md"""Creamos la matriz de compañia:"""
 
-[2] Kincaid, D. R., & Cheney, E. W. (1996). Numerical Analysis: Mathematics of Scientific Computing (2nd ed.). Brooks Cole.
+# ╔═╡ 938c19eb-ecde-42e3-bfaa-d78cc0588d2f
+B = Companion(P)
 
-[3] Strang, G. (1986). Introduction to Applied Mathematics. Wellesley-Cambridge Press
-"""
+# ╔═╡ 2f48671d-02a8-4299-a657-afaebc57b4a4
+md"""Se tiene así la siguiente región"""
+
+# ╔═╡ 23d8a8d1-07de-4836-9958-a70c774ced52
+alldisksforA(B, r=7, k=500)
+
+# ╔═╡ 153a42bf-6a36-42f2-968f-3df3285f5ac7
+md"""Concluimos este análisis con el siguiente teorema."""
+
+# ╔═╡ d724e9a1-db47-4d51-9a96-d734d0afc7f7
+md"""**Teorema 7.** 
+
+Un polinomio mónico de la forma $p(x) = c_0 + c_1 x + \ldots + c_{n-1}x^{n-1} + x^{n}$ con $p(x) \in ℂ[x]$ tiene todas sus raíces en el disco $D[0,1+|c_{n-1}|]$."""
+
+# ╔═╡ 01c70fd8-5173-4c61-9924-c19799188448
+md"""# Referencias
+
+[1] Melman, A. (2010). Generalizations of Gershgorin disks and polynomial zeros. Proceedings of the American Mathematical Society, 138(7). https://doi.org/10.1090/s0002-9939-10-10294-9
+
+[2] Saad, Y. (2003). Iterative methods for sparse linear systems (2nd ed.). Society for Industrial and Applied Mathematics. https://doi.org/10.1137/1.9780898718003
+
+[3] Kincaid, D., & Cheney, W. (2002). Numerical analysis: Mathematics of scientific computing. American Mathematical Society."""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
-ColorVectorSpace = "c3611d14-8923-5661-9e6a-0046d554d3a4"
-Colors = "5ae59095-9a9b-59fe-a467-6f913c188581"
-FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
-HypertextLiteral = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
-ImageIO = "82e4d734-157c-48bb-816b-45c225c6df19"
-ImageShow = "4e3cecfd-b093-5904-9786-8bbb286a6a31"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+Polynomials = "f27b6e38-b328-58d1-80ce-0feddd5e7a45"
+SpecialMatrices = "928aab9d-ef52-54ac-8ca1-acd7ca42c160"
 
 [compat]
-ColorVectorSpace = "~0.10.0"
-Colors = "~0.12.10"
-FileIO = "~1.16.3"
-HypertextLiteral = "~0.9.5"
-ImageIO = "~0.6.7"
-ImageShow = "~0.3.8"
-Plots = "~1.40.3"
-PlutoUI = "~0.7.58"
+Plots = "~1.40.4"
+PlutoUI = "~0.7.59"
+Polynomials = "~3.2.13"
+SpecialMatrices = "~3.0.0"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.2"
+julia_version = "1.7.2"
 manifest_format = "2.0"
-project_hash = "cef516209b5dec7b18cf7e7a33b410d403cfffef"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -283,16 +413,9 @@ version = "1.3.2"
 
 [[deps.ArgTools]]
 uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
-version = "1.1.1"
 
 [[deps.Artifacts]]
 uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
-
-[[deps.AxisArrays]]
-deps = ["Dates", "IntervalSets", "IterTools", "RangeArrays"]
-git-tree-sha1 = "16351be62963a67ac4083f748fdb3cca58bfd52f"
-uuid = "39de3d68-74b9-583c-8d2d-e117c070f3a9"
-version = "0.4.7"
 
 [[deps.Base64]]
 uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
@@ -308,28 +431,35 @@ git-tree-sha1 = "9e2a6b69137e6969bab0152632dcb3bc108c8bdd"
 uuid = "6e34b625-4abd-537c-b88f-471c36dfa7a0"
 version = "1.0.8+1"
 
-[[deps.CEnum]]
-git-tree-sha1 = "389ad5c84de1ae7cf0e28e381131c98ea87d54fc"
-uuid = "fa961155-64e5-5f13-b03f-caf6b980ea82"
-version = "0.5.0"
-
 [[deps.Cairo_jll]]
 deps = ["Artifacts", "Bzip2_jll", "CompilerSupportLibraries_jll", "Fontconfig_jll", "FreeType2_jll", "Glib_jll", "JLLWrappers", "LZO_jll", "Libdl", "Pixman_jll", "Xorg_libXext_jll", "Xorg_libXrender_jll", "Zlib_jll", "libpng_jll"]
 git-tree-sha1 = "a2f1c8c668c8e3cb4cca4e57a8efdb09067bb3fd"
 uuid = "83423d85-b0ee-5818-9007-b63ccbeb887a"
 version = "1.18.0+2"
 
+[[deps.ChainRulesCore]]
+deps = ["Compat", "LinearAlgebra", "SparseArrays"]
+git-tree-sha1 = "71acdbf594aab5bbb2cec89b208c41b4c411e49f"
+uuid = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
+version = "1.24.0"
+
+[[deps.ChangesOfVariables]]
+deps = ["InverseFunctions", "LinearAlgebra", "Test"]
+git-tree-sha1 = "2fba81a302a7be671aefe194f0525ef231104e7f"
+uuid = "9e997f8a-9a97-42d5-a9f1-ce6bfc15e2c0"
+version = "0.1.8"
+
 [[deps.CodecZlib]]
 deps = ["TranscodingStreams", "Zlib_jll"]
-git-tree-sha1 = "59939d8a997469ee05c4b4944560a820f9ba0d73"
+git-tree-sha1 = "b8fe8546d52ca154ac556809e10c75e6e7430ac8"
 uuid = "944b1d66-785c-5afd-91f1-9de20f533193"
-version = "0.7.4"
+version = "0.7.5"
 
 [[deps.ColorSchemes]]
 deps = ["ColorTypes", "ColorVectorSpace", "Colors", "FixedPointNumbers", "PrecompileTools", "Random"]
-git-tree-sha1 = "4b270d6465eb21ae89b732182c20dc165f8bf9f2"
+git-tree-sha1 = "b5278586822443594ff615963b0c09755771b3e0"
 uuid = "35d6a980-a343-548e-a6ea-1d62b119f2f4"
-version = "3.25.0"
+version = "3.26.0"
 
 [[deps.ColorTypes]]
 deps = ["FixedPointNumbers", "Random"]
@@ -343,12 +473,6 @@ git-tree-sha1 = "a1f44953f2382ebb937d60dafbe2deea4bd23249"
 uuid = "c3611d14-8923-5661-9e6a-0046d554d3a4"
 version = "0.10.0"
 
-    [deps.ColorVectorSpace.extensions]
-    SpecialFunctionsExt = "SpecialFunctions"
-
-    [deps.ColorVectorSpace.weakdeps]
-    SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
-
 [[deps.Colors]]
 deps = ["ColorTypes", "FixedPointNumbers", "Reexport"]
 git-tree-sha1 = "362a287c3aa50601b0bc359053d5c2468f0e7ce0"
@@ -356,25 +480,26 @@ uuid = "5ae59095-9a9b-59fe-a467-6f913c188581"
 version = "0.12.11"
 
 [[deps.Compat]]
-deps = ["TOML", "UUIDs"]
-git-tree-sha1 = "b1c55339b7c6c350ee89f2c1604299660525b248"
+deps = ["Dates", "LinearAlgebra", "TOML", "UUIDs"]
+git-tree-sha1 = "8ae8d32e09f0dcf42a36b90d4e17f5dd2e4c4215"
 uuid = "34da2185-b29b-5c13-b0c7-acf172513d20"
-version = "4.15.0"
-weakdeps = ["Dates", "LinearAlgebra"]
-
-    [deps.Compat.extensions]
-    CompatLinearAlgebraExt = "LinearAlgebra"
+version = "4.16.0"
 
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.1.0+0"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
-git-tree-sha1 = "6cbbd4d241d7e6579ab354737f4dd95ca43946e1"
+git-tree-sha1 = "ea32b83ca4fefa1768dc84e504cc0a94fb1ab8d1"
 uuid = "f0e56b4a-5159-44fe-b623-3e5288b988bb"
-version = "2.4.1"
+version = "2.4.2"
+
+[[deps.ConstructionBase]]
+deps = ["LinearAlgebra"]
+git-tree-sha1 = "d8a9c0b6ac2d9081bf76324b39c78ca3ce4f0c98"
+uuid = "187b0558-2788-49d3-abe0-74a17ed4e7c9"
+version = "1.5.6"
 
 [[deps.Contour]]
 git-tree-sha1 = "439e35b0b36e2e5881738abc8857bd92ad6ff9a8"
@@ -396,15 +521,15 @@ version = "0.18.20"
 deps = ["Printf"]
 uuid = "ade2ca70-3891-5945-98fb-dc099432e06a"
 
+[[deps.Dbus_jll]]
+deps = ["Artifacts", "Expat_jll", "JLLWrappers", "Libdl"]
+git-tree-sha1 = "fc173b380865f70627d7dd1190dc2fce6cc105af"
+uuid = "ee1fde0b-3d02-5ea6-8484-8dfef6360eab"
+version = "1.14.10+0"
+
 [[deps.DelimitedFiles]]
 deps = ["Mmap"]
-git-tree-sha1 = "9e2f36d3c96a820c678f2f1f1782582fcf685bae"
 uuid = "8bb1440f-4735-579b-a4ab-409b98df4dab"
-version = "1.9.1"
-
-[[deps.Distributed]]
-deps = ["Random", "Serialization", "Sockets"]
-uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 
 [[deps.DocStringExtensions]]
 deps = ["LibGit2"]
@@ -413,9 +538,8 @@ uuid = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
 version = "0.9.3"
 
 [[deps.Downloads]]
-deps = ["ArgTools", "FileWatching", "LibCURL", "NetworkOptions"]
+deps = ["ArgTools", "LibCURL", "NetworkOptions"]
 uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
-version = "1.6.0"
 
 [[deps.EpollShim_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -447,15 +571,6 @@ git-tree-sha1 = "466d45dc38e15794ec7d5d63ec03d776a9aff36e"
 uuid = "b22a6f82-2f65-5046-a5b2-351ab43fb4e5"
 version = "4.4.4+1"
 
-[[deps.FileIO]]
-deps = ["Pkg", "Requires", "UUIDs"]
-git-tree-sha1 = "82d8afa92ecf4b52d78d869f038ebfb881267322"
-uuid = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
-version = "1.16.3"
-
-[[deps.FileWatching]]
-uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
-
 [[deps.FixedPointNumbers]]
 deps = ["Statistics"]
 git-tree-sha1 = "05882d6995ae5c12bb5f36dd2ed3f61c98cbb172"
@@ -486,22 +601,22 @@ uuid = "559328eb-81f9-559d-9380-de523a88c83c"
 version = "1.0.14+0"
 
 [[deps.GLFW_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll"]
-git-tree-sha1 = "ff38ba61beff76b8f4acad8ab0c97ef73bb670cb"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll", "libdecor_jll", "xkbcommon_jll"]
+git-tree-sha1 = "532f9126ad901533af1d4f5c198867227a7bb077"
 uuid = "0656b61e-2033-5cc2-a64a-77c0f6c09b89"
-version = "3.3.9+0"
+version = "3.4.0+1"
 
 [[deps.GR]]
-deps = ["Artifacts", "Base64", "DelimitedFiles", "Downloads", "GR_jll", "HTTP", "JSON", "Libdl", "LinearAlgebra", "Preferences", "Printf", "Random", "Serialization", "Sockets", "TOML", "Tar", "Test", "p7zip_jll"]
-git-tree-sha1 = "3e527447a45901ea392fe12120783ad6ec222803"
+deps = ["Artifacts", "Base64", "DelimitedFiles", "Downloads", "GR_jll", "HTTP", "JSON", "Libdl", "LinearAlgebra", "Preferences", "Printf", "Qt6Wayland_jll", "Random", "Serialization", "Sockets", "TOML", "Tar", "Test", "p7zip_jll"]
+git-tree-sha1 = "629693584cef594c3f6f99e76e7a7ad17e60e8d5"
 uuid = "28b8d3ca-fb5f-59d9-8090-bfdbd6d07a71"
-version = "0.73.6"
+version = "0.73.7"
 
 [[deps.GR_jll]]
 deps = ["Artifacts", "Bzip2_jll", "Cairo_jll", "FFMPEG_jll", "Fontconfig_jll", "FreeType2_jll", "GLFW_jll", "JLLWrappers", "JpegTurbo_jll", "Libdl", "Libtiff_jll", "Pixman_jll", "Qt6Base_jll", "Zlib_jll", "libpng_jll"]
-git-tree-sha1 = "182c478a179b267dd7a741b6f8f4c3e0803795d6"
+git-tree-sha1 = "a8863b69c2a0859f2c2c87ebdc4c6712e88bdf0d"
 uuid = "d2c73de3-f751-5644-a686-071e5b155ba9"
-version = "0.73.6+0"
+version = "0.73.7+0"
 
 [[deps.Gettext_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "Libdl", "Libiconv_jll", "Pkg", "XML2_jll"]
@@ -556,82 +671,20 @@ git-tree-sha1 = "b6d6bfdd7ce25b0f9b2f6b3dd56b2673a66c8770"
 uuid = "b5f81e59-6552-4d32-b1f0-c071b021bf89"
 version = "0.2.5"
 
-[[deps.ImageAxes]]
-deps = ["AxisArrays", "ImageBase", "ImageCore", "Reexport", "SimpleTraits"]
-git-tree-sha1 = "2e4520d67b0cef90865b3ef727594d2a58e0e1f8"
-uuid = "2803e5a7-5153-5ecf-9a86-9b4c37f5f5ac"
-version = "0.6.11"
-
-[[deps.ImageBase]]
-deps = ["ImageCore", "Reexport"]
-git-tree-sha1 = "eb49b82c172811fd2c86759fa0553a2221feb909"
-uuid = "c817782e-172a-44cc-b673-b171935fbb9e"
-version = "0.1.7"
-
-[[deps.ImageCore]]
-deps = ["ColorVectorSpace", "Colors", "FixedPointNumbers", "MappedArrays", "MosaicViews", "OffsetArrays", "PaddedViews", "PrecompileTools", "Reexport"]
-git-tree-sha1 = "b2a7eaa169c13f5bcae8131a83bc30eff8f71be0"
-uuid = "a09fc81d-aa75-5fe9-8630-4744c3626534"
-version = "0.10.2"
-
-[[deps.ImageIO]]
-deps = ["FileIO", "IndirectArrays", "JpegTurbo", "LazyModules", "Netpbm", "OpenEXR", "PNGFiles", "QOI", "Sixel", "TiffImages", "UUIDs"]
-git-tree-sha1 = "437abb322a41d527c197fa800455f79d414f0a3c"
-uuid = "82e4d734-157c-48bb-816b-45c225c6df19"
-version = "0.6.8"
-
-[[deps.ImageMetadata]]
-deps = ["AxisArrays", "ImageAxes", "ImageBase", "ImageCore"]
-git-tree-sha1 = "355e2b974f2e3212a75dfb60519de21361ad3cb7"
-uuid = "bc367c6b-8a6b-528e-b4bd-a4b897500b49"
-version = "0.9.9"
-
-[[deps.ImageShow]]
-deps = ["Base64", "ColorSchemes", "FileIO", "ImageBase", "ImageCore", "OffsetArrays", "StackViews"]
-git-tree-sha1 = "3b5344bcdbdc11ad58f3b1956709b5b9345355de"
-uuid = "4e3cecfd-b093-5904-9786-8bbb286a6a31"
-version = "0.3.8"
-
-[[deps.Imath_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "0936ba688c6d201805a83da835b55c61a180db52"
-uuid = "905a6f67-0a94-5f89-b386-d35d92009cd1"
-version = "3.1.11+0"
-
-[[deps.IndirectArrays]]
-git-tree-sha1 = "012e604e1c7458645cb8b436f8fba789a51b257f"
-uuid = "9b13fd28-a010-5f03-acff-a1bbcff69959"
-version = "1.0.0"
-
-[[deps.Inflate]]
-git-tree-sha1 = "d1b1b796e47d94588b3757fe84fbf65a5ec4a80d"
-uuid = "d25df0c9-e2be-5dd7-82c8-3ad0b3e990b9"
-version = "0.1.5"
-
 [[deps.InteractiveUtils]]
 deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
 
-[[deps.IntervalSets]]
-git-tree-sha1 = "dba9ddf07f77f60450fe5d2e2beb9854d9a49bd0"
-uuid = "8197267c-284f-5f27-9208-e0e47529a953"
-version = "0.7.10"
-weakdeps = ["Random", "RecipesBase", "Statistics"]
-
-    [deps.IntervalSets.extensions]
-    IntervalSetsRandomExt = "Random"
-    IntervalSetsRecipesBaseExt = "RecipesBase"
-    IntervalSetsStatisticsExt = "Statistics"
+[[deps.InverseFunctions]]
+deps = ["Dates", "Test"]
+git-tree-sha1 = "18c59411ece4838b18cd7f537e56cf5e41ce5bfd"
+uuid = "3587e190-3f89-42d0-90ee-14403ec27112"
+version = "0.1.15"
 
 [[deps.IrrationalConstants]]
 git-tree-sha1 = "630b497eafcc20001bba38a4651b327dcfc491d2"
 uuid = "92d709cd-6900-40b7-9082-c6be49f344b6"
 version = "0.2.2"
-
-[[deps.IterTools]]
-git-tree-sha1 = "42d5f897009e7ff2cf88db414a389e5ed1bdd023"
-uuid = "c8e1da08-722c-5040-9ed9-7db0dc04731e"
-version = "1.10.0"
 
 [[deps.JLFzf]]
 deps = ["Pipe", "REPL", "Random", "fzf_jll"]
@@ -650,12 +703,6 @@ deps = ["Dates", "Mmap", "Parsers", "Unicode"]
 git-tree-sha1 = "31e996f0a15c7b280ba9f76636b3ff9e2ae58c9a"
 uuid = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 version = "0.21.4"
-
-[[deps.JpegTurbo]]
-deps = ["CEnum", "FileIO", "ImageCore", "JpegTurbo_jll", "TOML"]
-git-tree-sha1 = "fa6d0bcff8583bac20f1ffa708c3913ca605c611"
-uuid = "b835a17e-a41a-41e7-81f0-2f016b05efe0"
-version = "0.1.5"
 
 [[deps.JpegTurbo_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -694,46 +741,25 @@ version = "1.3.1"
 
 [[deps.Latexify]]
 deps = ["Format", "InteractiveUtils", "LaTeXStrings", "MacroTools", "Markdown", "OrderedCollections", "Requires"]
-git-tree-sha1 = "e0b5cd21dc1b44ec6e64f351976f961e6f31d6c4"
+git-tree-sha1 = "ce5f5621cac23a86011836badfedf664a612cee4"
 uuid = "23fbe1c1-3f47-55db-b15f-69d7ec21a316"
-version = "0.16.3"
-
-    [deps.Latexify.extensions]
-    DataFramesExt = "DataFrames"
-    SymEngineExt = "SymEngine"
-
-    [deps.Latexify.weakdeps]
-    DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
-    SymEngine = "123dc426-2d89-5057-bbad-38513e3affd8"
-
-[[deps.LazyModules]]
-git-tree-sha1 = "a560dd966b386ac9ae60bdd3a3d3a326062d3c3e"
-uuid = "8cdb02fc-e678-4876-92c5-9defec4f444e"
-version = "0.3.1"
+version = "0.16.5"
 
 [[deps.LibCURL]]
 deps = ["LibCURL_jll", "MozillaCACerts_jll"]
 uuid = "b27032c2-a3e7-50c8-80cd-2d36dbcbfd21"
-version = "0.6.4"
 
 [[deps.LibCURL_jll]]
 deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll", "Zlib_jll", "nghttp2_jll"]
 uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
-version = "8.4.0+0"
 
 [[deps.LibGit2]]
-deps = ["Base64", "LibGit2_jll", "NetworkOptions", "Printf", "SHA"]
+deps = ["Base64", "NetworkOptions", "Printf", "SHA"]
 uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
-
-[[deps.LibGit2_jll]]
-deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll"]
-uuid = "e37daf67-58a4-590a-8e99-b0245dd2ffc5"
-version = "1.6.4+0"
 
 [[deps.LibSSH2_jll]]
 deps = ["Artifacts", "Libdl", "MbedTLS_jll"]
 uuid = "29816b5a-b9ab-546f-933c-edad1886dfa8"
-version = "1.11.0+1"
 
 [[deps.Libdl]]
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
@@ -787,24 +813,14 @@ uuid = "38a345b3-de98-5d2b-a5d3-14cd9215e700"
 version = "2.40.1+0"
 
 [[deps.LinearAlgebra]]
-deps = ["Libdl", "OpenBLAS_jll", "libblastrampoline_jll"]
+deps = ["Libdl", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [[deps.LogExpFunctions]]
-deps = ["DocStringExtensions", "IrrationalConstants", "LinearAlgebra"]
+deps = ["ChainRulesCore", "ChangesOfVariables", "DocStringExtensions", "InverseFunctions", "IrrationalConstants", "LinearAlgebra"]
 git-tree-sha1 = "a2d09619db4e765091ee5c6ffe8872849de0feea"
 uuid = "2ab3a3ac-af41-5b50-aa03-7779005ae688"
 version = "0.3.28"
-
-    [deps.LogExpFunctions.extensions]
-    LogExpFunctionsChainRulesCoreExt = "ChainRulesCore"
-    LogExpFunctionsChangesOfVariablesExt = "ChangesOfVariables"
-    LogExpFunctionsInverseFunctionsExt = "InverseFunctions"
-
-    [deps.LogExpFunctions.weakdeps]
-    ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
-    ChangesOfVariables = "9e997f8a-9a97-42d5-a9f1-ce6bfc15e2c0"
-    InverseFunctions = "3587e190-3f89-42d0-90ee-14403ec27112"
 
 [[deps.Logging]]
 uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
@@ -826,10 +842,11 @@ git-tree-sha1 = "2fa9ee3e63fd3a4f7a9a4f4744a52f4856de82df"
 uuid = "1914dd2f-81c6-5fcd-8719-6d5c9610ff09"
 version = "0.5.13"
 
-[[deps.MappedArrays]]
-git-tree-sha1 = "2dab0221fe2b0f2cb6754eaa743cc266339f527e"
-uuid = "dbb5928d-eab1-5f90-85c2-b9b0edb7c900"
-version = "0.4.2"
+[[deps.MakieCore]]
+deps = ["Observables", "REPL"]
+git-tree-sha1 = "9b11acd07f21c4d035bd4156e789532e8ee2cc70"
+uuid = "20f20a25-4f0e-4fdf-b5d1-57303727442b"
+version = "0.6.9"
 
 [[deps.Markdown]]
 deps = ["Base64"]
@@ -844,7 +861,6 @@ version = "1.1.9"
 [[deps.MbedTLS_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
-version = "2.28.2+1"
 
 [[deps.Measures]]
 git-tree-sha1 = "c13304c81eec1ed3af7fc20e75fb6b26092a1102"
@@ -860,15 +876,14 @@ version = "1.2.0"
 [[deps.Mmap]]
 uuid = "a63ad114-7e13-5084-954f-fe012c677804"
 
-[[deps.MosaicViews]]
-deps = ["MappedArrays", "OffsetArrays", "PaddedViews", "StackViews"]
-git-tree-sha1 = "7b86a5d4d70a9f5cdf2dacb3cbe6d251d1a61dbe"
-uuid = "e94cdb99-869f-56ef-bcf0-1ae2bcbe0389"
-version = "0.3.4"
-
 [[deps.MozillaCACerts_jll]]
 uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
-version = "2023.1.10"
+
+[[deps.MutableArithmetics]]
+deps = ["LinearAlgebra", "SparseArrays", "Test"]
+git-tree-sha1 = "d0a6b1096b584a2b88efb70a92f8cb8c881eb38a"
+uuid = "d8a4904e-b15c-11e9-3269-09a3773c0cb0"
+version = "1.4.6"
 
 [[deps.NaNMath]]
 deps = ["OpenLibm_jll"]
@@ -876,26 +891,13 @@ git-tree-sha1 = "0877504529a3e5c3343c6f8b4c0381e57e4387e4"
 uuid = "77ba4419-2d1f-58cd-9bb1-8ffee604a2e3"
 version = "1.0.2"
 
-[[deps.Netpbm]]
-deps = ["FileIO", "ImageCore", "ImageMetadata"]
-git-tree-sha1 = "d92b107dbb887293622df7697a2223f9f8176fcd"
-uuid = "f09324ee-3d7c-5217-9330-fc30815ba969"
-version = "1.1.1"
-
 [[deps.NetworkOptions]]
 uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
-version = "1.2.0"
 
-[[deps.OffsetArrays]]
-git-tree-sha1 = "e64b4f5ea6b7389f6f046d13d4896a8f9c1ba71e"
-uuid = "6fe1bfb0-de20-5000-8ca7-80f57d26f881"
-version = "1.14.0"
-
-    [deps.OffsetArrays.extensions]
-    OffsetArraysAdaptExt = "Adapt"
-
-    [deps.OffsetArrays.weakdeps]
-    Adapt = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
+[[deps.Observables]]
+git-tree-sha1 = "7438a59546cf62428fc9d1bc94729146d37a7225"
+uuid = "510215fc-4207-5dde-b226-833fc4488ee2"
+version = "0.5.5"
 
 [[deps.Ogg_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -906,24 +908,10 @@ version = "1.3.5+1"
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.23+4"
-
-[[deps.OpenEXR]]
-deps = ["Colors", "FileIO", "OpenEXR_jll"]
-git-tree-sha1 = "327f53360fdb54df7ecd01e96ef1983536d1e633"
-uuid = "52e1d378-f018-4a11-a4be-720524705ac7"
-version = "0.3.2"
-
-[[deps.OpenEXR_jll]]
-deps = ["Artifacts", "Imath_jll", "JLLWrappers", "Libdl", "Zlib_jll"]
-git-tree-sha1 = "8292dd5c8a38257111ada2174000a33745b06d4e"
-uuid = "18a262bb-aa17-5467-a713-aee519bc75cb"
-version = "3.2.4+0"
 
 [[deps.OpenLibm_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "05823500-19ac-5b8b-9628-191a04bc5112"
-version = "0.8.1+2"
 
 [[deps.OpenSSL]]
 deps = ["BitFlags", "Dates", "MozillaCACerts_jll", "OpenSSL_jll", "Sockets"]
@@ -951,19 +939,12 @@ version = "1.6.3"
 [[deps.PCRE2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "efcefdf7-47ab-520b-bdef-62a2eaa19f15"
-version = "10.42.0+1"
 
-[[deps.PNGFiles]]
-deps = ["Base64", "CEnum", "ImageCore", "IndirectArrays", "OffsetArrays", "libpng_jll"]
-git-tree-sha1 = "67186a2bc9a90f9f85ff3cc8277868961fb57cbd"
-uuid = "f57f5aa1-a3ce-4bc8-8ab9-96f992907883"
-version = "0.4.3"
-
-[[deps.PaddedViews]]
-deps = ["OffsetArrays"]
-git-tree-sha1 = "0fac6313486baae819364c52b4f483450a9d793f"
-uuid = "5432bcbf-9aad-5242-b902-cca2824c8663"
-version = "0.5.12"
+[[deps.Pango_jll]]
+deps = ["Artifacts", "Cairo_jll", "Fontconfig_jll", "FreeType2_jll", "FriBidi_jll", "Glib_jll", "HarfBuzz_jll", "JLLWrappers", "Libdl"]
+git-tree-sha1 = "cb5a2ab6763464ae0f19c86c56c63d4a2b0f5bda"
+uuid = "36c8627f-9965-5494-a995-c6b170f724f3"
+version = "1.52.2+0"
 
 [[deps.Parsers]]
 deps = ["Dates", "PrecompileTools", "UUIDs"]
@@ -983,15 +964,8 @@ uuid = "30392449-352a-5448-841d-b1acce4e97dc"
 version = "0.43.4+0"
 
 [[deps.Pkg]]
-deps = ["Artifacts", "Dates", "Downloads", "FileWatching", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
+deps = ["Artifacts", "Dates", "Downloads", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
-version = "1.10.0"
-
-[[deps.PkgVersion]]
-deps = ["Pkg"]
-git-tree-sha1 = "f9501cc0430a26bc3d156ae1b5b0c1b47af4d6da"
-uuid = "eebad327-c553-4316-9ea0-9fa01ccd7688"
-version = "0.3.3"
 
 [[deps.PlotThemes]]
 deps = ["PlotUtils", "Statistics"]
@@ -1006,30 +980,22 @@ uuid = "995b91a9-d308-5afd-9ec6-746e21dbc043"
 version = "1.4.1"
 
 [[deps.Plots]]
-deps = ["Base64", "Contour", "Dates", "Downloads", "FFMPEG", "FixedPointNumbers", "GR", "JLFzf", "JSON", "LaTeXStrings", "Latexify", "LinearAlgebra", "Measures", "NaNMath", "Pkg", "PlotThemes", "PlotUtils", "PrecompileTools", "Printf", "REPL", "Random", "RecipesBase", "RecipesPipeline", "Reexport", "RelocatableFolders", "Requires", "Scratch", "Showoff", "SparseArrays", "Statistics", "StatsBase", "UUIDs", "UnicodeFun", "UnitfulLatexify", "Unzip"]
-git-tree-sha1 = "442e1e7ac27dd5ff8825c3fa62fbd1e86397974b"
+deps = ["Base64", "Contour", "Dates", "Downloads", "FFMPEG", "FixedPointNumbers", "GR", "JLFzf", "JSON", "LaTeXStrings", "Latexify", "LinearAlgebra", "Measures", "NaNMath", "Pkg", "PlotThemes", "PlotUtils", "PrecompileTools", "Printf", "REPL", "Random", "RecipesBase", "RecipesPipeline", "Reexport", "RelocatableFolders", "Requires", "Scratch", "Showoff", "SparseArrays", "Statistics", "StatsBase", "TOML", "UUIDs", "UnicodeFun", "UnitfulLatexify", "Unzip"]
+git-tree-sha1 = "082f0c4b70c202c37784ce4bfbc33c9f437685bf"
 uuid = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
-version = "1.40.4"
-
-    [deps.Plots.extensions]
-    FileIOExt = "FileIO"
-    GeometryBasicsExt = "GeometryBasics"
-    IJuliaExt = "IJulia"
-    ImageInTerminalExt = "ImageInTerminal"
-    UnitfulExt = "Unitful"
-
-    [deps.Plots.weakdeps]
-    FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
-    GeometryBasics = "5c1252a2-5f33-56bf-86c9-59e7332b4326"
-    IJulia = "7073ff75-c697-5162-941a-fcdaad2a7d2a"
-    ImageInTerminal = "d8c32880-2388-543b-8c61-d9f865259254"
-    Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
+version = "1.40.5"
 
 [[deps.PlutoUI]]
 deps = ["AbstractPlutoDingetjes", "Base64", "ColorTypes", "Dates", "FixedPointNumbers", "Hyperscript", "HypertextLiteral", "IOCapture", "InteractiveUtils", "JSON", "Logging", "MIMEs", "Markdown", "Random", "Reexport", "URIs", "UUIDs"]
 git-tree-sha1 = "ab55ee1510ad2af0ff674dbcced5e94921f867a9"
 uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 version = "0.7.59"
+
+[[deps.Polynomials]]
+deps = ["ChainRulesCore", "LinearAlgebra", "MakieCore", "MutableArithmetics", "RecipesBase"]
+git-tree-sha1 = "3aa2bb4982e575acd7583f01531f241af077b163"
+uuid = "f27b6e38-b328-58d1-80ce-0feddd5e7a45"
+version = "3.2.13"
 
 [[deps.PrecompileTools]]
 deps = ["Preferences"]
@@ -1047,22 +1013,28 @@ version = "1.4.3"
 deps = ["Unicode"]
 uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
-[[deps.ProgressMeter]]
-deps = ["Distributed", "Printf"]
-git-tree-sha1 = "763a8ceb07833dd51bb9e3bbca372de32c0605ad"
-uuid = "92933f4c-e287-5a05-a399-4b506db050ca"
-version = "1.10.0"
-
-[[deps.QOI]]
-deps = ["ColorTypes", "FileIO", "FixedPointNumbers"]
-git-tree-sha1 = "18e8f4d1426e965c7b532ddd260599e1510d26ce"
-uuid = "4b34888f-f399-49d4-9bb3-47ed5cae4e65"
-version = "1.0.0"
-
 [[deps.Qt6Base_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Fontconfig_jll", "Glib_jll", "JLLWrappers", "Libdl", "Libglvnd_jll", "OpenSSL_jll", "Vulkan_Loader_jll", "Xorg_libSM_jll", "Xorg_libXext_jll", "Xorg_libXrender_jll", "Xorg_libxcb_jll", "Xorg_xcb_util_cursor_jll", "Xorg_xcb_util_image_jll", "Xorg_xcb_util_keysyms_jll", "Xorg_xcb_util_renderutil_jll", "Xorg_xcb_util_wm_jll", "Zlib_jll", "libinput_jll", "xkbcommon_jll"]
 git-tree-sha1 = "492601870742dcd38f233b23c3ec629628c1d724"
 uuid = "c0090381-4147-56d7-9ebc-da0b1113ec56"
+version = "6.7.1+1"
+
+[[deps.Qt6Declarative_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Qt6Base_jll", "Qt6ShaderTools_jll"]
+git-tree-sha1 = "e5dd466bf2569fe08c91a2cc29c1003f4797ac3b"
+uuid = "629bc702-f1f5-5709-abd5-49b8460ea067"
+version = "6.7.1+2"
+
+[[deps.Qt6ShaderTools_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Qt6Base_jll"]
+git-tree-sha1 = "1a180aeced866700d4bebc3120ea1451201f16bc"
+uuid = "ce943373-25bb-56aa-8eca-768745ed7b5a"
+version = "6.7.1+1"
+
+[[deps.Qt6Wayland_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Qt6Base_jll", "Qt6Declarative_jll"]
+git-tree-sha1 = "729927532d48cf79f49070341e1d918a65aba6b0"
+uuid = "e99dba38-086e-5de3-a5b1-6e4c66e897c3"
 version = "6.7.1+1"
 
 [[deps.REPL]]
@@ -1070,13 +1042,8 @@ deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
 uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 
 [[deps.Random]]
-deps = ["SHA"]
+deps = ["SHA", "Serialization"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
-
-[[deps.RangeArrays]]
-git-tree-sha1 = "b9039e93773ddcfc828f12aadf7115b4b4d225f5"
-uuid = "b3c3ace0-ae52-54e7-9d0b-2c1406fd6b9d"
-version = "0.3.2"
 
 [[deps.RecipesBase]]
 deps = ["PrecompileTools"]
@@ -1109,13 +1076,6 @@ version = "1.3.0"
 
 [[deps.SHA]]
 uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
-version = "0.7.0"
-
-[[deps.SIMD]]
-deps = ["PrecompileTools"]
-git-tree-sha1 = "2803cab51702db743f3fda07dd1745aadfbf43bd"
-uuid = "fdea26ae-647d-5447-a871-4b548cad5224"
-version = "3.5.0"
 
 [[deps.Scratch]]
 deps = ["Dates"]
@@ -1137,18 +1097,6 @@ git-tree-sha1 = "874e8867b33a00e784c8a7e4b60afe9e037b74e1"
 uuid = "777ac1f9-54b0-4bf8-805c-2214025038e7"
 version = "1.1.0"
 
-[[deps.SimpleTraits]]
-deps = ["InteractiveUtils", "MacroTools"]
-git-tree-sha1 = "5d7e3f4e11935503d3ecaf7186eac40602e7d231"
-uuid = "699a6c99-e7fa-54fc-8d76-47d257e15c1d"
-version = "0.9.4"
-
-[[deps.Sixel]]
-deps = ["Dates", "FileIO", "ImageCore", "IndirectArrays", "OffsetArrays", "REPL", "libsixel_jll"]
-git-tree-sha1 = "2da10356e31327c7096832eb9cd86307a50b1eb6"
-uuid = "45858cf5-a6b0-47a3-bbea-62219f50df47"
-version = "0.1.3"
-
 [[deps.Sockets]]
 uuid = "6462fe0b-24de-5631-8697-dd941f90decc"
 
@@ -1159,20 +1107,18 @@ uuid = "a2af1166-a08f-5f64-846c-94a0d3cef48c"
 version = "1.2.1"
 
 [[deps.SparseArrays]]
-deps = ["Libdl", "LinearAlgebra", "Random", "Serialization", "SuiteSparse_jll"]
+deps = ["LinearAlgebra", "Random"]
 uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
-version = "1.10.0"
 
-[[deps.StackViews]]
-deps = ["OffsetArrays"]
-git-tree-sha1 = "46e589465204cd0c08b4bd97385e4fa79a0c770c"
-uuid = "cae243ae-269e-4f55-b966-ac2d0dc13c15"
-version = "0.1.1"
+[[deps.SpecialMatrices]]
+deps = ["LinearAlgebra", "Polynomials"]
+git-tree-sha1 = "8fd75ee3d16a83468a96fd29a1913fb170d2d2fd"
+uuid = "928aab9d-ef52-54ac-8ca1-acd7ca42c160"
+version = "3.0.0"
 
 [[deps.Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
 uuid = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
-version = "1.10.0"
 
 [[deps.StatsAPI]]
 deps = ["LinearAlgebra"]
@@ -1186,20 +1132,13 @@ git-tree-sha1 = "5cf7606d6cef84b543b483848d4ae08ad9832b21"
 uuid = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 version = "0.34.3"
 
-[[deps.SuiteSparse_jll]]
-deps = ["Artifacts", "Libdl", "libblastrampoline_jll"]
-uuid = "bea87d4a-7f5b-5778-9afe-8cc45184846c"
-version = "7.2.1+1"
-
 [[deps.TOML]]
 deps = ["Dates"]
 uuid = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
-version = "1.0.3"
 
 [[deps.Tar]]
 deps = ["ArgTools", "SHA"]
 uuid = "a4e569a6-e804-4fa4-b0f3-eef7a1d5b13e"
-version = "1.10.0"
 
 [[deps.TensorCore]]
 deps = ["LinearAlgebra"]
@@ -1211,25 +1150,16 @@ version = "0.1.1"
 deps = ["InteractiveUtils", "Logging", "Random", "Serialization"]
 uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
-[[deps.TiffImages]]
-deps = ["ColorTypes", "DataStructures", "DocStringExtensions", "FileIO", "FixedPointNumbers", "IndirectArrays", "Inflate", "Mmap", "OffsetArrays", "PkgVersion", "ProgressMeter", "SIMD", "UUIDs"]
-git-tree-sha1 = "bc7fd5c91041f44636b2c134041f7e5263ce58ae"
-uuid = "731e570b-9d59-4bfa-96dc-6df516fadf69"
-version = "0.10.0"
-
 [[deps.TranscodingStreams]]
-git-tree-sha1 = "d73336d81cafdc277ff45558bb7eaa2b04a8e472"
+deps = ["Random", "Test"]
+git-tree-sha1 = "96612ac5365777520c3c5396314c8cf7408f436a"
 uuid = "3bb67fe8-82b1-5028-8e26-92a6c54297fa"
-version = "0.10.10"
-weakdeps = ["Random", "Test"]
-
-    [deps.TranscodingStreams.extensions]
-    TestExt = ["Test", "Random"]
+version = "0.11.1"
 
 [[deps.Tricks]]
-git-tree-sha1 = "eae1bb484cd63b36999ee58be2de6c178105112f"
+git-tree-sha1 = "7822b97e99a1672bfb1b49b668a6d46d58d8cbcb"
 uuid = "410a4b4d-49e4-4fbc-ab6d-cb71b17b3775"
-version = "0.1.8"
+version = "0.1.9"
 
 [[deps.URIs]]
 git-tree-sha1 = "67db6cc7b3821e19ebe75791a9dd19c9b1188f2b"
@@ -1250,24 +1180,16 @@ uuid = "1cfade01-22cf-5700-b092-accc4b62d6e1"
 version = "0.4.1"
 
 [[deps.Unitful]]
-deps = ["Dates", "LinearAlgebra", "Random"]
-git-tree-sha1 = "dd260903fdabea27d9b6021689b3cd5401a57748"
+deps = ["ConstructionBase", "Dates", "InverseFunctions", "LinearAlgebra", "Random"]
+git-tree-sha1 = "d95fe458f26209c66a187b1114df96fd70839efd"
 uuid = "1986cc42-f94f-5a68-af5c-568840ba703d"
-version = "1.20.0"
-
-    [deps.Unitful.extensions]
-    ConstructionBaseUnitfulExt = "ConstructionBase"
-    InverseFunctionsUnitfulExt = "InverseFunctions"
-
-    [deps.Unitful.weakdeps]
-    ConstructionBase = "187b0558-2788-49d3-abe0-74a17ed4e7c9"
-    InverseFunctions = "3587e190-3f89-42d0-90ee-14403ec27112"
+version = "1.21.0"
 
 [[deps.UnitfulLatexify]]
 deps = ["LaTeXStrings", "Latexify", "Unitful"]
-git-tree-sha1 = "e2d817cc500e960fdbafcf988ac8436ba3208bfd"
+git-tree-sha1 = "975c354fcd5f7e1ddcc1f1a23e6e091d99e99bc8"
 uuid = "45397f5d-5981-4c77-b2b3-fc36d6e9b728"
-version = "1.6.3"
+version = "1.6.4"
 
 [[deps.Unzip]]
 git-tree-sha1 = "ca0969166a028236229f63514992fc073799bb78"
@@ -1294,15 +1216,15 @@ version = "1.31.0+0"
 
 [[deps.XML2_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libiconv_jll", "Zlib_jll"]
-git-tree-sha1 = "52ff2af32e591541550bd753c0da8b9bc92bb9d9"
+git-tree-sha1 = "d9717ce3518dc68a99e6b96300813760d887a01d"
 uuid = "02c8fc9c-b97f-50b9-bbe4-9be30ff0a78a"
-version = "2.12.7+0"
+version = "2.13.1+0"
 
 [[deps.XSLT_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Libgcrypt_jll", "Libgpg_error_jll", "Libiconv_jll", "Pkg", "XML2_jll", "Zlib_jll"]
-git-tree-sha1 = "91844873c4085240b95e795f692c4cec4d805f8a"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Libgcrypt_jll", "Libgpg_error_jll", "Libiconv_jll", "XML2_jll", "Zlib_jll"]
+git-tree-sha1 = "a54ee957f4c86b526460a720dbc882fa5edcbefc"
 uuid = "aed1982a-8fda-507f-9586-7b0439959a61"
-version = "1.1.34+0"
+version = "1.1.41+0"
 
 [[deps.XZ_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1457,7 +1379,6 @@ version = "1.5.0+0"
 [[deps.Zlib_jll]]
 deps = ["Libdl"]
 uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
-version = "1.2.13+1"
 
 [[deps.Zstd_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1496,9 +1417,14 @@ uuid = "0ac62f75-1d6f-5e53-bd7c-93b484bb37c0"
 version = "0.15.1+0"
 
 [[deps.libblastrampoline_jll]]
-deps = ["Artifacts", "Libdl"]
+deps = ["Artifacts", "Libdl", "OpenBLAS_jll"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+
+[[deps.libdecor_jll]]
+deps = ["Artifacts", "Dbus_jll", "JLLWrappers", "Libdl", "Libglvnd_jll", "Pango_jll", "Wayland_jll", "xkbcommon_jll"]
+git-tree-sha1 = "9bf7903af251d2050b467f76bdbe57ce541f7f4f"
+uuid = "1183f4f0-6f2a-5f1a-908b-139f9cdfea6f"
+version = "0.2.2+0"
 
 [[deps.libevdev_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1524,17 +1450,11 @@ git-tree-sha1 = "d7015d2e18a5fd9a4f47de711837e980519781a4"
 uuid = "b53b4c65-9356-5827-b1ea-8c7a1a84506f"
 version = "1.6.43+1"
 
-[[deps.libsixel_jll]]
-deps = ["Artifacts", "JLLWrappers", "JpegTurbo_jll", "Libdl", "Pkg", "libpng_jll"]
-git-tree-sha1 = "d4f63314c8aa1e48cd22aa0c17ed76cd1ae48c3c"
-uuid = "075b6546-f08a-558a-be8f-8157d0f608a5"
-version = "1.10.3+0"
-
 [[deps.libvorbis_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Ogg_jll", "Pkg"]
-git-tree-sha1 = "b910cb81ef3fe6e78bf6acee440bda86fd6ae00c"
+git-tree-sha1 = "490376214c4721cdaca654041f635213c6165cb3"
 uuid = "f27f6e37-5d2b-51aa-960f-b287f2bc3b7a"
-version = "1.3.7+1"
+version = "1.3.7+2"
 
 [[deps.mtdev_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1545,12 +1465,10 @@ version = "1.1.6+0"
 [[deps.nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850ede-7688-5339-a07c-302acd2aaf8d"
-version = "1.52.0+1"
 
 [[deps.p7zip_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
-version = "17.4.0+2"
 
 [[deps.x264_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1572,32 +1490,63 @@ version = "1.4.1+1"
 """
 
 # ╔═╡ Cell order:
-# ╟─d882946c-aee6-43f9-8516-1c72ee946408
-# ╟─fed0c56f-fe3e-4b32-b4f0-dda5c269abfe
-# ╟─089cc976-124e-40f7-9aa1-ba4ca5089aef
-# ╟─c48f0bd3-ecb4-4e44-8aa2-aebf32bb5b82
-# ╟─914ef67f-c856-433d-be13-009e17486c08
-# ╠═3cbddb7c-e7d6-4f2c-b0bb-92a14ff55c65
-# ╟─010bd77b-b5e6-4441-b4bd-739eb4f64b35
-# ╟─b0bb08ad-40c1-4944-a200-245a0ee9827d
-# ╟─c6cf6f44-9e09-4f7f-9509-168d329d9f31
-# ╟─da3dff57-eacd-4e18-8439-41dbde4bab6f
-# ╟─3a962c19-ec0a-4758-9a0f-51804745a39c
-# ╟─e0616ea2-970e-4e9a-9622-a60c557bceec
-# ╠═48cb2f10-4496-4dd7-aba4-a5be79cf06ff
-# ╟─21bf9efa-69c5-40ed-90e0-4b7f51210e13
-# ╟─6eb930d2-c0e5-43d8-801f-024928705453
-# ╟─d8be3494-4b1c-419b-a8ab-28c40cb18f99
-# ╟─3d35a65c-3620-4a1f-adf3-1280eff4c597
-# ╠═354b94c8-20db-448f-b508-34963b4e3645
-# ╟─472d3cf7-9aa6-4eab-910d-3216426367ff
-# ╟─dd142f60-9e4f-4332-b1e5-1f5c065048b1
-# ╟─51be810f-2961-4d65-94f8-323bd29a9bd0
-# ╟─fabba741-1d31-434c-a111-302d63af0b75
-# ╟─ba35a0f6-6197-4b02-96c9-f68448e66770
-# ╟─776dfee9-08b0-4424-967a-8d1b1b1d37ac
-# ╟─9409857c-052e-4ac6-a99e-9285346161b5
-# ╟─e6509621-9ab6-45fe-aa0e-44eeb82ae497
-# ╟─fbaaf968-b40d-4731-a947-240c8df50e21
+# ╟─93d437ba-979a-417f-ac1d-0e694d55c0e2
+# ╟─24c9f8a9-ad90-413a-9660-9da7a068f492
+# ╟─1f760cdf-6171-4ed7-b06d-60bc6a52105b
+# ╟─813d6c1c-07b8-46f3-8a80-59943b8f8182
+# ╟─2af1d5c5-5ea5-431a-a008-84419619e32c
+# ╠═200eba1e-10b6-41ae-a1ba-260201dcb08a
+# ╟─8b2829ba-4965-496f-b23a-70e284dc8663
+# ╟─6a5aa821-9df8-4bed-838b-24c1a39a3abb
+# ╟─a7bed1fb-54c0-4708-9f44-0860bb6558a4
+# ╟─f878ce12-250f-41f0-aac9-7655bb898092
+# ╟─85079ef4-8af6-4761-a171-a4d50de9d621
+# ╠═19f3dc60-83f1-46e7-867f-0d4f87da1ebb
+# ╟─f7c088b5-2995-44c2-85e4-45837625d22b
+# ╠═3109cfcf-f805-4ace-b5da-14b2e95d6d0c
+# ╟─096562cb-7b8d-41bb-8315-5200db361fc4
+# ╠═48e64e4a-80d7-4735-971b-88dcf78ad3ab
+# ╟─2641c55d-8a81-4843-a537-e38f831e3eb4
+# ╟─6860c636-08b9-4427-a47c-ebf7c106a2af
+# ╟─dd0a5ff6-2e12-446f-945e-7fb6fb6e9c2b
+# ╟─c76aecbc-b1a1-4cff-a7ba-93e53865d403
+# ╠═c14ea4fc-5d10-460c-af51-c3acb2486b3d
+# ╟─7474cfb7-e594-4642-a35a-6a3848a14de4
+# ╠═82b91b19-07a7-4446-8996-3a5716be81e9
+# ╟─b2dc7b74-eeef-4433-ba46-c805ae0b3004
+# ╟─8a4a6c28-cc01-401b-97b3-0bbb3ec15192
+# ╟─5a2e87ef-a8ba-4f6c-983d-efa48ad2f571
+# ╟─efd566af-d63b-496d-a358-2e2212867e54
+# ╟─66a95a94-8692-49be-b7f7-b75ad2792324
+# ╟─ddd6bd2c-849e-4674-a50c-edce64fba21b
+# ╠═d97e44a0-60aa-4511-a25a-4e8c13747ab0
+# ╟─47e2d763-86a5-468a-89fb-8deb26a071d6
+# ╠═fc2f79d8-f729-457d-b463-55a83a68a38d
+# ╟─0d78a9c2-6678-46ee-b99c-2056a74c1783
+# ╟─3fdc8489-7ca1-4b4f-adb2-6aca10c972e6
+# ╟─0e80bf5f-cea1-4610-bc19-b7462f6218b5
+# ╠═74fe5c03-d0f6-438a-945a-63e20172e0ab
+# ╟─82ff37ed-6e40-402a-a0d7-b10669965e2c
+# ╟─5877b0c9-d614-42be-818d-1ed413e6d579
+# ╠═982cece7-c817-41e3-b9b7-3463b68e18d2
+# ╟─c0365e7c-6ec7-4b31-a10e-254bee5f47ad
+# ╠═70b4c212-83ae-465e-9b21-5d513c60759e
+# ╟─cfd3a2a7-7e92-43cf-a0b4-fc519e9fc554
+# ╟─d51f0728-5dcb-4b28-a105-5f231bf9b692
+# ╟─3f82b093-cbca-4483-8ab0-a743a717a7f6
+# ╟─17f9eefc-c53c-41c8-8f6e-c38a463d0b80
+# ╟─593afb26-7254-4149-8ac5-63ce589aea45
+# ╟─07bddafe-1832-4ffa-baf3-cae19486fc01
+# ╟─8f800d74-74e8-4656-a7ae-17aba925d3bb
+# ╠═194e3552-0a49-484d-9546-e9d6e0a752c7
+# ╟─9cac67bf-9bb7-4b19-9bf8-14ac7bdf3871
+# ╠═a7e87c4c-f182-4fa3-b18c-d37c1bf0cf87
+# ╟─7c4582e3-fd79-4a4b-9bfd-db2d8a7a89af
+# ╠═938c19eb-ecde-42e3-bfaa-d78cc0588d2f
+# ╟─2f48671d-02a8-4299-a657-afaebc57b4a4
+# ╟─23d8a8d1-07de-4836-9958-a70c774ced52
+# ╟─153a42bf-6a36-42f2-968f-3df3285f5ac7
+# ╟─d724e9a1-db47-4d51-9a96-d734d0afc7f7
+# ╟─01c70fd8-5173-4c61-9924-c19799188448
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
