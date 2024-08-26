@@ -490,6 +490,10 @@ md"""# Referencias
 
 [1] Boyd, S., & Vandenberghe, L. (2004). [Convex optimization](https://stanford.edu/~boyd/cvxbook/). Cambridge university press.
 
+[2] Nocedal, J., & Wright, S. J. (Eds.). (1999). Numerical optimization. New York, NY: Springer New York.
+
+[3] Izmailov, A., & Solodov, M. (2007). Otimizaçao, volume i. Condições de Otimalidade, Elementos de Análise Convexa e de Dualidade. IMPA, Rio de Janeiro, 2.
+
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -1848,6 +1852,6 @@ version = "1.4.1+0"
 # ╟─a2784c8f-3141-4e17-8f98-0e7b91faccb1
 # ╠═cecc3464-92f6-40ed-be53-512dd1b2a916
 # ╟─6b0ab3f5-98d9-4af2-81a2-623a25ac0d80
-# ╠═c523431c-c009-47aa-8825-d3b63744d9cf
+# ╟─c523431c-c009-47aa-8825-d3b63744d9cf
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
