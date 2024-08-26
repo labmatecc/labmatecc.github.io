@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.39
+# v0.19.40
 
 using Markdown
 using InteractiveUtils
@@ -486,7 +486,11 @@ end
 pdnt(x₀,4)
 
 # ╔═╡ c523431c-c009-47aa-8825-d3b63744d9cf
-md"""# Referencias"""
+md"""# Referencias
+
+[1] Boyd, S., & Vandenberghe, L. (2004). [Convex optimization](https://stanford.edu/~boyd/cvxbook/). Cambridge university press.
+
+"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -516,7 +520,7 @@ PlutoUI = "~0.7.52"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.2"
 manifest_format = "2.0"
 project_hash = "9aebe5825c8f5846c91f70a0cb17a073a5a8c1e3"
 
@@ -633,7 +637,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.1.1+0"
+version = "1.1.0+0"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
@@ -1844,6 +1848,6 @@ version = "1.4.1+0"
 # ╟─a2784c8f-3141-4e17-8f98-0e7b91faccb1
 # ╠═cecc3464-92f6-40ed-be53-512dd1b2a916
 # ╟─6b0ab3f5-98d9-4af2-81a2-623a25ac0d80
-# ╟─c523431c-c009-47aa-8825-d3b63744d9cf
+# ╠═c523431c-c009-47aa-8825-d3b63744d9cf
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
