@@ -278,7 +278,9 @@ md"""Podemos hacer operaciones con ellas, por ejemplo:"""
 sin(x+cos(x+y))
 
 # ╔═╡ 535cf94d-d366-4e7f-9173-b75808bf1de0
-md"""# Referencias"""
+md"""# Referencias
+
+[1] Kincaid, D., & Cheney, W. (2002). Numerical analysis: Mathematics of scientific computing. American Mathematical Society."""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
