@@ -330,7 +330,7 @@ con $C(p(x)) \in \mathbb{R}^{n \times n}$. Con esta definición es fácil demost
 # ╔═╡ 593afb26-7254-4149-8ac5-63ce589aea45
 md"""**Ejemplo:**
 
-Para el polinomio $p(x) = (x-1)(x-2i)(x+2i) = x^3 - x^2 + 4x - 4$, la matriz de compañía es
+Para el polinomio $p(x) = (x-1)(x-2i)(x+2i) = x^3 - x^2 + 4x - 4$, la matriz de compañera es
 
 $C(p(x)) = \begin{pmatrix}
 0 & 0 & 4 \\
@@ -1535,7 +1535,7 @@ version = "1.4.1+1"
 # ╟─d51f0728-5dcb-4b28-a105-5f231bf9b692
 # ╟─3f82b093-cbca-4483-8ab0-a743a717a7f6
 # ╟─17f9eefc-c53c-41c8-8f6e-c38a463d0b80
-# ╟─593afb26-7254-4149-8ac5-63ce589aea45
+# ╠═593afb26-7254-4149-8ac5-63ce589aea45
 # ╟─07bddafe-1832-4ffa-baf3-cae19486fc01
 # ╟─8f800d74-74e8-4656-a7ae-17aba925d3bb
 # ╠═194e3552-0a49-484d-9546-e9d6e0a752c7
@@ -1544,7 +1544,7 @@ version = "1.4.1+1"
 # ╟─7c4582e3-fd79-4a4b-9bfd-db2d8a7a89af
 # ╠═938c19eb-ecde-42e3-bfaa-d78cc0588d2f
 # ╟─2f48671d-02a8-4299-a657-afaebc57b4a4
-# ╟─23d8a8d1-07de-4836-9958-a70c774ced52
+# ╠═23d8a8d1-07de-4836-9958-a70c774ced52
 # ╟─153a42bf-6a36-42f2-968f-3df3285f5ac7
 # ╟─d724e9a1-db47-4d51-9a96-d734d0afc7f7
 # ╟─01c70fd8-5173-4c61-9924-c19799188448
