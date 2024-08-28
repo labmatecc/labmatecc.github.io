@@ -71,7 +71,7 @@ header-includes: |
 
 <hr>
 
-<h1>INTRODUCCIÓN A LAS CIENCIAS DE LA COMPUTACIÓN Y LA PROGRAMACIÓN</h1>
+<h1>Introducción a las Ciencias de la Computación y la Programación</h1>
 
 <hr>
 

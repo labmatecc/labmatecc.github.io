@@ -179,7 +179,7 @@ header-includes: |
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>En el cuaderno muestra, primero el problema de encontrar un polinomio de menor grado que pase por un conjunto de puntos dados \((x_i, y_i)\), es decir, la interpolación polinomial, y se describen las formas de Newton y Lagrange para calcular este polinomio. Además, se explora la interpolación por splines, que utiliza polinomios de grado \(k\) en intervalos distintos, garantizando suavidad en las derivadas de orden \(k-1\) en los puntos de unión. Se muestran ejemplos de la aplicación de splines constantes, lineales y cúbicos en datos caligráficos.</p>
+        <p>El cuaderno muestra, primero el problema de encontrar un polinomio de menor grado que pase por un conjunto de puntos dados \((x_i, y_i)\), es decir, la interpolación polinomial, y se describen las formas de Newton y Lagrange para calcular este polinomio. Además, se explora la interpolación por splines, que utiliza polinomios de grado \(k\) en intervalos distintos, garantizando suavidad en las derivadas de orden \(k-1\) en los puntos de unión. Se muestran ejemplos de la aplicación de splines constantes, lineales y cúbicos en datos caligráficos.</p>
       </div>
     </div>
   </div>
