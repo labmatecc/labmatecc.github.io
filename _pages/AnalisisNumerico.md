@@ -71,7 +71,7 @@ header-includes: |
 
 <hr>
 
-<h1>ANÁLISIS NUMÉRICO</h1>
+<h1>Análisis Numérico</h1>
 
 <hr>
 

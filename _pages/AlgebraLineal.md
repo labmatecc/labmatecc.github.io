@@ -71,7 +71,7 @@ header-includes: |
 
 <hr>
 
-<h1>ÁLGEBRA LINEAL</h1>
+<h1>Álgebra Lineal</h1>
 
 <hr>
 
@@ -127,7 +127,7 @@ header-includes: |
       <div class="info">
         <p>El cuaderno comienza explicando los vectores como conjuntos ordenados de números, resaltando su representación en Julia mediante el tipo de dato Array. Se exploran operaciones básicas, como la dimensión del arreglo. </p>
 
-        <p>Se detalla el acceso a elementos, introduciendo el uso de índices y la función 'end'. Se muestra cómo trabajar con subconjuntos de vectores mediante rangos. La comparación de vectores y la comparación de elementos individuales. </p>
+        <p>Se detalla el acceso a elementos, introduciendo el uso de índices y la función \(\texttt{end}\). Se muestra cómo trabajar con subconjuntos de vectores mediante rangos. La comparación de vectores y la comparación de elementos individuales. </p>
 
         <p>Se introducen vectores nulos, canónicos y de unos, mostrando cómo construir manualmente vectores canónicos en Julia. Se utiliza el paquete Plots.jl para generar gráficos de vectores y visualizar datos.</p>
 
