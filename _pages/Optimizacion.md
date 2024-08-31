@@ -71,7 +71,7 @@ header-includes: |
 
 <hr>
 
-<h1>OPTIMIZACIÓN</h1>
+<h1>Optimización</h1>
 
 <hr>
 

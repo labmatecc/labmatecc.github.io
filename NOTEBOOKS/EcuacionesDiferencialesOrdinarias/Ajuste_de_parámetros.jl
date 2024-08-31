@@ -4,6 +4,16 @@
 using Markdown
 using InteractiveUtils
 
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+end
+
 # ╔═╡ 191f2f52-f7f5-4b1b-85d1-883d40afbc50
 using PlutoUI
 
@@ -27,7 +37,9 @@ Tu participación es fundamental para hacer de este curso una experiencia aún m
 """
 
 # ╔═╡ 3db89cf8-58b3-42e5-a1a7-a5ac40a78fdb
-md"""Elaborado por Juan Galvis, Francisco Gómez, Carlos Nosa y Yessica Trujillo. 
+md"""**Este cuaderno está basado en actividades del curso Análisis Numérico I de la Universidad Nacional de Colombia, sede Bogotá, dictado por el profesor Juan Galvis en 2022-2.**
+
+Elaborado por Juan Galvis, Francisco Gómez, Carlos Nosa y Yessica Trujillo. 
 """
 
 # ╔═╡ c96c27e6-efbb-4ae4-ad1f-71a19af1a971
@@ -45,7 +57,9 @@ md"""# Ajuste mediante mínimos cuadrados"""
 
 # ╔═╡ c4c29fc7-5611-4b30-b15e-90f3fb86450a
 md"""
-Consideremos el siguiente ejemplo, donde tenemos datos sobre el crecimiento de un tumor en ratones. Estos datos y más información se encuentran en el trabajo "Modeling Cancer Growth with Differential Equations" de Jue Wang, del Departamento de Matemáticas de Union College, Schenectady NY 12308, USA.
+Consideremos el siguiente ejemplo, donde tenemos datos sobre el crecimiento de un tumor en ratones. 
+
+Estos datos y más información se encuentran en el trabajo "Modeling Cancer Growth with Differential Equations" de Jue Wang, del Departamento de Matemáticas de Union College, Schenectady NY 12308, USA. Ver [12]. Se recomienda también consultar [13].
 """
 
 # ╔═╡ ba732df6-5923-4e4e-8b2d-35fe0d35e398
@@ -112,7 +126,7 @@ end
 md"""Visualicemos dichos datos."""
 
 # ╔═╡ 1394bd94-9e28-444a-b358-ea487ad06420
-scatter(tiempo,volumen,ls=:dash,label="Volumen",lw=4, xlabel = "Tiempo",yaxis="Volumen")
+scatter(tiempo,volumen,ls=:dash,label="Volumen",lw=4, xlabel = "Tiempo",yaxis="Volumen", title="Datos del crecimiento de un tumor en ratones")
 
 # ╔═╡ 1f0dba89-0aad-4ede-a4a6-d005aad2b897
 md"""## Modelo de von Bertalanffy"""
@@ -138,14 +152,24 @@ modeloBF(V,par,t)=par[1]*V.^(2/3)-par[2]*V
 # ╔═╡ 21b98c71-3aa2-4438-ba4f-c830cfc6d709
 md"""Si queremos resolver la EDO para determinados valores de los parámetros, usamos:"""
 
+# ╔═╡ 3cb0fdd2-ffec-42a5-bd72-a57d778df3a7
+begin
+	aBerts= @bind aBertv Slider(0:.1:2, show_value=true, default=1.0)
+	bBerts= @bind bBertv Slider(0:.1:2, show_value=true, default=1.0)
+end;
+
+# ╔═╡ b61f8cb2-680a-4f36-bd13-dc9849374967
+md""" a = $aBerts,  	b = $bBerts
+"""
+
 # ╔═╡ 64281d01-c1dd-4f11-8397-21d01ecadd5f
 begin
 	tspan=(3.26,80)
 	V₀=0.0158
-	par=[1.0,1.0]
+	par=[aBertv,bBertv]
 	EDO=ODEProblem(modeloBF,V₀,tspan,par)
 	V=solve(EDO)
-	plot(V)
+	plot(V, linewidth=4)
 #	VI=[V(t) for t in tiempo] # Evaluación de la solución en los tiempos dados (datos)
 #	scatter!(tiempo,VI)
 end
@@ -155,15 +179,14 @@ md"""Ahora podemos escribir la función de residuo del modelo de EDO. Es decir, 
 
 # ╔═╡ 043dd8fc-da87-453b-ae29-10d72b933e06
 function residuoBF(par,V,t)
-  
-  tspan=(3.26,80)
-  V₀=0.0158
-  EDO=ODEProblem(modeloBF,V₀,tspan,par)
-  VSOL=solve(EDO)
-  VI=[VSOL(t) for t in tiempo]
-  res=V-VI
-  nres=norm(res)
-return nres
+	tspan=(3.26,80)
+	V₀=0.0158
+	EDO=ODEProblem(modeloBF,V₀,tspan,par)
+	VSOL=solve(EDO)
+	VI=[VSOL(t) for t in tiempo]
+	res=V-VI
+	nres=norm(res)
+	return nres
 end
 
 # ╔═╡ 7161401c-f87a-4939-9fa9-479c24931f06
@@ -219,14 +242,24 @@ modeloLG(V,par,t)=par[1]*V*(1-V/par[2])
 md"""Si deseamos encontrar la solución de la ecuación diferencial ordinaria para ciertos valores específicos de los parámetros, empleamos:
 """
 
+# ╔═╡ a64b27d9-9e35-42f8-84bd-707f77535b9a
+begin
+	aLogistic= @bind aLogisticv Slider(0:.1:2, show_value=true, default=1.0)
+	bLogistic= @bind bLogisticv Slider(0:.1:2, show_value=true, default=1.0)
+end;
+
+# ╔═╡ 105fbf6e-261f-48da-855a-8f33bfcfcdc4
+md""" a = $aLogistic,  	b = $bLogistic
+"""
+
 # ╔═╡ d0290ed3-64bc-4b8b-9e4f-665e33c33014
 begin
 	tspan₂=(3.26,80)
 	V0₂=0.0158
-	par₂=[1.0,1.0]
+	par₂=[aLogisticv,bLogisticv]
 	EDO₂=ODEProblem(modeloLG,V0₂,tspan₂,par₂)
 	V₂=solve(EDO₂)
-	plot(V₂)
+	plot(V₂, linewidth=4)
 end
 
 # ╔═╡ 9cbe41df-cfd5-4e04-980e-c5bb60865a6d
@@ -278,7 +311,7 @@ begin
 	EDOoptima₂=ODEProblem(modeloLG,V0₂,tspan,oLGm)
 	VEDOoptima₂=solve(EDOoptima₂)
 	plot(VEDOoptima₂,lw=5,label="EDO optima")
-	scatter!(tiempo,volumen,ls=:dash,label="Volumen",lw=4, xlabel = "Tiempo",yaxis="Volumen",legend=:bottomright)
+	scatter!(tiempo,volumen,ls=:dash,label="Volumen",lw=4, xlabel = "Tiempo",yaxis="Volumen",legend=:bottomright, title="Ecuación diferencial ordinaria óptima")
 end
 
 # ╔═╡ 681946a2-a574-4a3d-aa94-87fad31aa6a8
@@ -432,7 +465,7 @@ rango_x1 = range(-5, stop=10, length=100)
 pdf_condicional = [densidad_condicional(x1) for x1 in rango_x1]
 
 # Graficar la función de densidad condicional
-plot(rango_x1, pdf_condicional, xlabel="X1", ylabel="f(X1 | X2=0.4)", label="Densidad condicional", legend=:topleft)
+plot(rango_x1, pdf_condicional, lw=4, xlabel="X1", ylabel="f(X1 | X2=0.4)", label="Densidad condicional", legend=:topleft)
 
 end
 
@@ -624,7 +657,7 @@ begin
 	EDOoptima=ODEProblem(modeloBF,V0,tspan,oBFm)
 	VEDOoptima=solve(EDOoptima)
 	plot(VEDOoptima,lw=5,label="EDO optima")
-	scatter!(tiempo,volumen,ls=:dash,label="Volumen",lw=4, xlabel = "Tiempo",yaxis="Volumen",legend=:bottomright)
+	scatter!(tiempo,volumen,ls=:dash,label="Volumen",lw=4, xlabel = "Tiempo",yaxis="Volumen",legend=:bottomright, title="Ecuación diferencial ordinaria óptima")
 end
 
 # ╔═╡ 04edbbc3-041d-45ea-b770-46eb127419aa
@@ -809,7 +842,11 @@ md"""
 
 [10] Kaipio, J., & Somesalo, E. (2004). Statistical and Computational Inverse Problems. Springer.
 
-[11] Häggström, O. (2002). Finite Markov Chains and Algorithmic Applications. Cambridge University Press."""
+[11] Häggström, O. (2002). Finite Markov Chains and Algorithmic Applications. Cambridge University Press.
+
+[12] Wang, J. (s.f.). Modeling Cancer Growth with Differential Equations. Department of Mathematics, Union College, Schenectady, NY, USA.
+
+[13] SIMIODE. (n.d.). SIMIODE: Systemic Initiative for Modeling Investigations and Opportunities with Differential Equations. QUBES. Recuperado de [https://qubeshub.org/community/groups/simiode](https://qubeshub.org/community/groups/simiode)"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -2983,6 +3020,8 @@ version = "1.4.1+1"
 # ╟─519ca1e3-ea1b-4d1b-af2d-d074531b502b
 # ╠═1358c859-a74e-4738-bf50-4e4aca06770d
 # ╟─21b98c71-3aa2-4438-ba4f-c830cfc6d709
+# ╟─3cb0fdd2-ffec-42a5-bd72-a57d778df3a7
+# ╟─b61f8cb2-680a-4f36-bd13-dc9849374967
 # ╟─64281d01-c1dd-4f11-8397-21d01ecadd5f
 # ╟─5ac22392-143f-4531-a611-d8533610d07c
 # ╠═043dd8fc-da87-453b-ae29-10d72b933e06
@@ -2998,6 +3037,8 @@ version = "1.4.1+1"
 # ╟─43eb9fc5-b762-4bd7-a540-ad35da34d7b9
 # ╠═79990d4e-08e1-4c75-896e-f4d9b9e7fefc
 # ╟─280c6e4b-8db1-42c2-b157-dca7ed01965a
+# ╟─a64b27d9-9e35-42f8-84bd-707f77535b9a
+# ╟─105fbf6e-261f-48da-855a-8f33bfcfcdc4
 # ╟─d0290ed3-64bc-4b8b-9e4f-665e33c33014
 # ╟─9cbe41df-cfd5-4e04-980e-c5bb60865a6d
 # ╠═1bd9636d-5006-47db-835e-4bed32a33753

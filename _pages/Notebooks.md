@@ -69,7 +69,7 @@ header-includes: |
   </style>
 <hr>
 
-<h1>NOTEBOOKS</h1>
+<h1>Notebooks</h1>
 
 <hr>
 

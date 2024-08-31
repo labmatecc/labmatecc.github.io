@@ -71,7 +71,7 @@ header-includes: |
 
 <hr>
 
-<h1>ÁLGEBRA LINEAL</h1>
+<h1>Álgebra Lineal</h1>
 
 <hr>
 
@@ -127,7 +127,7 @@ header-includes: |
       <div class="info">
         <p>El cuaderno comienza explicando los vectores como conjuntos ordenados de números, resaltando su representación en Julia mediante el tipo de dato Array. Se exploran operaciones básicas, como la dimensión del arreglo. </p>
 
-        <p>Se detalla el acceso a elementos, introduciendo el uso de índices y la función 'end'. Se muestra cómo trabajar con subconjuntos de vectores mediante rangos. La comparación de vectores y la comparación de elementos individuales. </p>
+        <p>Se detalla el acceso a elementos, introduciendo el uso de índices y la función \(\texttt{end}\). Se muestra cómo trabajar con subconjuntos de vectores mediante rangos. La comparación de vectores y la comparación de elementos individuales. </p>
 
         <p>Se introducen vectores nulos, canónicos y de unos, mostrando cómo construir manualmente vectores canónicos en Julia. Se utiliza el paquete Plots.jl para generar gráficos de vectores y visualizar datos.</p>
 
@@ -145,7 +145,7 @@ header-includes: |
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>Se inicia con la definición de imágenes en blanco y negro y a color, destacando las representaciones numéricas de intensidad y los canales RGB. Muestra la creación interactiva del notebook se realiza a través de Pluto.jl, aprovechando librerías como Colors e ImageShow. También muestra la exploración de píxeles y matrices de píxeles revela las propiedades RGB y demuestra la manipulación eficiente de imágenes. Se abordan operaciones básicas, como selección de subimágenes y ajuste de tamaños, junto con el operador de Broadcasting. Además, se ejemplifican operaciones de procesamiento, como reducción de tamaño e inversión, utilizando álgebra lineal para reescalar píxeles y realizar combinaciones lineales. Finaliza mostrando filtros y kernels para las imagenes. </p>
+        <p>Se inicia con la definición de imágenes en blanco y negro y a color, destacando las representaciones numéricas de intensidad y los canales RGB. Muestra la creación interactiva del notebook se realiza a través de Pluto.jl, aprovechando librerías como Colors e ImageShow. También muestra la exploración de píxeles y matrices de píxeles revela las propiedades RGB y demuestra la manipulación eficiente de imágenes. Se abordan operaciones básicas, como selección de subimágenes y ajuste de tamaños, junto con el operador de Broadcasting. Además, se ejemplifican operaciones de procesamiento, como reducción de tamaño e inversión, utilizando álgebra lineal para reescalar píxeles y realizar combinaciones lineales. Finaliza mostrando filtros y kernels para las imágenes. </p>
       </div>
     </div>
   </div>
@@ -203,7 +203,7 @@ header-includes: |
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>El notebook presenta una introducción a la factorización QR, un método clave para descomponer una matriz A en el producto de una matriz ortogonal Q y una matriz triangular superior R. La descomposición QR se utiliza para resolver sistemas de ecuaciones lineales y problemas de optimización. El cuaderno describe métodos para obtener la factorización QR, centrándose en las reflexiones de Householder y las rotaciones de Givens</p>
+        <p>Este notebook presenta una introducción a la factorización QR, un método clave para descomponer una matriz A en el producto de una matriz ortogonal Q y una matriz triangular superior R. La descomposición QR se utiliza para resolver sistemas de ecuaciones lineales y problemas de optimización. El cuaderno describe métodos para obtener la factorización QR, centrándose en las reflexiones de Householder y las rotaciones de Givens</p>
         <p>Primero, se explican las propiedades y el cálculo de las matrices de Householder, que se utilizan para transformar un vector en un múltiplo de un vector canónico, facilitando la ortogonalización de las columnas de una matriz. Se proporciona un algoritmo para calcular el vector y el coeficiente de Householder, junto con ejemplos prácticos. Luego, se muestra cómo usar las reflexiones de Householder para triangularizar una matriz y obtener la matriz R, así como la matriz Q mediante acumulación progresiva. Finalmente, se introducen las rotaciones de Givens, que son especialmente útiles para matrices dispersas, mostrando cómo aplicar estas rotaciones para lograr una factorización QR eficiente.</p>
       </div>
     </div>
@@ -233,7 +233,7 @@ header-includes: |
     <div class="person">
       <div class="info">
         <p>En este cuaderno, se presentan definiciones de valor y vector propio. Posteriormente, se muestra cómo hallar los valores singulares de una matriz. A continuación, se detalla la descomposición en valores singulares (SVD) con diversos ejemplos. Luego, nos enfocamos en la descomposición en valores singulares reducida, que es la que utiliza Julia, y se muestran ejemplos específicos.
-        Después de explorar la SVD, se muestra la compresión de imágenes. Este proceso implica realizar la SVD de la imagen y luego truncar dicha descomposición en \(k\) valores singulares (se realiza esto en cada canal de color para luego ensamblar nuevamente la imagen). Con este concepto presente, se presenta la creación de una marca de agua digital. Esta técnica permite personalizar imágenes sin que sea perceptible al ojo humano. La marca de agua se introduce mediante la creación de una perturbación en la matriz \(V\). Una vez que la imagen está marcada, se muestra cómo deducir y recuperar la marca de agua. </p>
+        Después de explorar la SVD, se muestra la compresión de imágenes. Este proceso implica realizar la SVD de la imagen y luego truncar dicha descomposición en \(k\) valores singulares (se realiza esto en cada canal de color para luego ensamblar nuevamente la imagen). Con este concepto presente, se presenta la creación de una marca de agua digital. Esta técnica permite personalizar imágenes sin que sea perceptible al ojo humano. La marca de agua se inserta creando una perturbación en la matriz \(V\). Una vez que la imagen está marcada, se muestra cómo deducir y recuperar la marca de agua. </p>
       </div>
     </div>
   </div>

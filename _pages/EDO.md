@@ -71,7 +71,7 @@ header-includes: |
 
 <hr>
 
-<h1>ECUACIONES DIFERENCIALES ORDINARIAS</h1>
+<h1>Ecuaciones Diferenciales Ordinarias</h1>
 
 <hr>
 
@@ -130,7 +130,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/EDO/TunelDehormigas/" class="button">Construcción de un tunel de hormigas</a>
+  <a href="https://labmatecc.github.io/Notebooks/EDO/TunelDehormigas/" class="button">Construcción de un túnel de hormigas</a>
 </div>
 
 <div class="container">
@@ -221,7 +221,7 @@ header-includes: |
     <div class="person">
       <div class="info">
         <p>El cuaderno muestra el ajuste de curvas o ajuste de datos, dicho ajuste consiste en buscar una relación entre ellos. Es decir, si tenemos datos correspondientes a dos variables, la idea es encontrar una relación que describa de manera precisa y concisa el comportamiento de dichos datos.
-        Para optimizar los valores de los parámetros del modelo, creamos una función que calcule el tamaño del desajuste entre los datos observados y los generados por los posibles modelos. Esta función recibe los datos y los valores válidos de los parámetros del modelo, y devuelve la norma del residuo. Podemos utilizar, por ejemplo, la medida de desajuste de mínimos cuadrados (norma Euclidiana). Posteriormente, empleamos una biblioteca de optimización para calcular el valor del parámetro óptimo aproximado. Otra manera de realizar la estimación de dichos parametros es usando técnicas bayesianas, para esto se introdujeron algunos conceptos importantes relacionados con probabilidad y estadística que son necesarios para el entendimiento de los ejemplos realizados para el modelo logístico.</p>
+        Para optimizar los valores de los parámetros del modelo, creamos una función que calcule el tamaño del desajuste entre los datos observados y los generados por los posibles modelos. Esta función recibe los datos y los valores válidos de los parámetros del modelo, y devuelve la norma del residuo. Podemos utilizar, por ejemplo, la medida de desajuste de mínimos cuadrados (norma Euclidiana). Posteriormente, empleamos una biblioteca de optimización para calcular el valor del parámetro óptimo aproximado. Otra manera de realizar la estimación de dichos parámetros es usando técnicas bayesianas, para esto se introdujeron algunos conceptos importantes relacionados con probabilidad y estadística que son necesarios para el entendimiento de los ejemplos realizados para el modelo logístico.</p>
       </div>
     </div>
   </div>
@@ -235,7 +235,7 @@ header-includes: |
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>El notebook recopila datos de dos videos que muestran el vaciado de tanques. Se presenta además el modelo de la ley de Torricelli que modela dicho fenómeno, deseamos ajustar los datos hallados a este modelo. Para  optimizar los valores de los parámetros del modelo, se crea una función que calcule el tamaño del desajuste entre los datos observados y los generados por los posibles modelos, luego calculamos el valor del parámetro óptimo aproximado. También, estimamos dichos parametros es usando técnicas bayesianas.</p>
+        <p>El notebook recopila datos de dos videos que muestran el vaciado de tanques. Se presenta además el modelo de la ley de Torricelli que modela dicho fenómeno, deseamos ajustar los datos hallados a este modelo. Para  optimizar los valores de los parámetros del modelo, se crea una función que calcule el tamaño del desajuste entre los datos observados y los generados por los posibles modelos, luego calculamos el valor del parámetro óptimo aproximado. También, estimamos dichos parámetros es usando técnicas bayesianas.</p>
       </div>
     </div>
   </div>
