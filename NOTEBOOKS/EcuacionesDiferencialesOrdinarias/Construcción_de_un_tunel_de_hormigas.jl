@@ -26,7 +26,7 @@ Tu participación es fundamental para hacer de este curso una experiencia aún m
 # ╔═╡ cecd7473-8c60-43e1-909b-9a8acd988f7a
 md"""Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo. El material aqui presentado es tomado de [SIMIODE](https://qubeshub.org/community/groups/simiode) (Systemic Initiative for Modeling Investigations and Opportunities with Differential Equations at SIMIODE), en particular del material 
 [ANT TUNNEL BUILDING](https://www.simiode.org/resources/5190/download/1-007-S-AntTunnelBuilding-StudentVersion.pdf?d7307279503b301a4265ff6dbdb92a60=1) de 
-Brian Winkel, SIMIODE director. 
+Brian Winkel,  director de SIMIODE. 
 
 """
 
