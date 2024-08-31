@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.39
+# v0.19.40
 
 using Markdown
 using InteractiveUtils
@@ -24,7 +24,10 @@ Tu participación es fundamental para hacer de este curso una experiencia aún m
 """
 
 # ╔═╡ cecd7473-8c60-43e1-909b-9a8acd988f7a
-md"""Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo. 
+md"""Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo. El material aqui presentado es tomado de [SIMIODE](https://qubeshub.org/community/groups/simiode) (Systemic Initiative for Modeling Investigations and Opportunities with Differential Equations at SIMIODE), en particular del material 
+[ANT TUNNEL BUILDING](https://www.simiode.org/resources/5190/download/1-007-S-AntTunnelBuilding-StudentVersion.pdf?d7307279503b301a4265ff6dbdb92a60=1) de 
+Brian Winkel, SIMIODE director. 
+
 """
 
 # ╔═╡ cf3bd1ef-030b-446a-9da2-a0a874b8cc93
@@ -199,12 +202,13 @@ Para evaluar dicho modelo necesitamos datos reales del problema. Para así consi
 # ╔═╡ 4156c7b9-efde-42f6-804a-1c716eb2ec31
 md"""
 # Referencias
+[1] Brian Winkel [ANT TUNNEL BUILDING](https://www.simiode.org/resources/5190/download/1-007-S-AntTunnelBuilding-StudentVersion.pdf?d7307279503b301a4265ff6dbdb92a60=1).
 
-[1] Bryan, K. (2021). Differential Equations: A Toolbox to Modeling the World. SIMIODE.
+[2] Bryan, K. (2021). Differential Equations: A Toolbox to Modeling the World. SIMIODE.
 
-[2] QUBES Hub. (s.f.). Simiode Starter Kit. Recuperado de https://qubeshub.org/community/groups/simiode/browse/starter-kit
+[3] QUBES Hub. (s.f.). Simiode Starter Kit. Recuperado de https://qubeshub.org/community/groups/simiode/browse/starter-kit
 
-[3] Boyce, W. E., & DiPrima, R. C. (2004). Elementary Differential Equations (8a ed.). Nueva York: John Wiley and Sons."""
+[4] Boyce, W. E., & DiPrima, R. C. (2004). Elementary Differential Equations (8a ed.). Nueva York: John Wiley and Sons."""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -237,7 +241,7 @@ SymPy = "~2.0.1"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.2"
 manifest_format = "2.0"
 project_hash = "7de09f4b26c0cad8b692cd061c772794d44112f3"
 
@@ -390,7 +394,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.1.1+0"
+version = "1.1.0+0"
 
 [[deps.CompositionsBase]]
 git-tree-sha1 = "802bb88cd69dfd1509f6670416bd4434015693ad"
