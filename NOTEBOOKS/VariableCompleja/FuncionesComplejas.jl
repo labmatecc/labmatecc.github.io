@@ -39,7 +39,7 @@ Para superar esta limitación, se han propuesto otras técnicas, como el Domain 
 La función $\texttt{zplot}$ utiliza el método de Domain Coloring para representar funciones de variable compleja. Se usan diferentes colores y niveles de brillo y saturación para codificar información sobre los valores de la función, lo que permite identificar rápidamente características importantes como singularidades y la estructura global de la función."""
 
 # ╔═╡ d2801310-a500-4836-80ce-741a7c2d59a3
-md"""# Graficas de funciones complejas
+md"""# Gráficas de funciones complejas
 
 Consideremos un conjunto $S$ de números complejos. Una función $f$ definida en $S$ es una regla que asigna a cada elemento $z$ en $S$ un número complejo $w$. A este número $w$ se le llama el valor de $f$ en $z$ y se denota como $f(z)$; es decir, $w = f(z)$.
 
@@ -55,7 +55,7 @@ md"""### Ejemplo 1
 
 Consideremos la función $f(z)=\sin{z}$, hallemos su parte real y su parte imaginaria.
 
-Para esto vamos a cosiderar las siguientes variables simbólicas."""
+Para esto vamos a considerar las siguientes variables simbólicas."""
 
 # ╔═╡ a46945e5-7437-45d7-a322-5a47db66deb7
 @syms x, y
@@ -122,7 +122,7 @@ md"""Así $Im(f(z))=$"""
 Im(f)
 
 # ╔═╡ 5cc9f1f2-0646-48f4-977e-1ec8229d9e4b
-md"""La visualización de la función $Im(f(z))$ es la que se muestra a continuación"""
+md"""La visualización de la función $Im(f(z))$ es la que se muestra a continuación:"""
 
 # ╔═╡ a4ceb7d3-ca49-4d91-a3ff-8421fceaa1cd
 begin
@@ -141,7 +141,7 @@ begin
 end
 
 # ╔═╡ 135db7ca-533a-47b9-ac9d-a1769875f8b7
-md"""Otra representación que podemos obtener de la función $f(z)$ en $\mathbb{R}^3$, es colocando el módulo en el eje independiente. $|f(z)|$ representa el módulo del número complejo $z$. Esto se muestra a continuación.
+md"""Otra representación que podemos obtener de la función $f(z)$ en $\mathbb{R}^3$, es colocando el módulo en el eje independiente. $|f(z)|$ representa el módulo del número complejo $z$. Esto se muestra a continuación,
 """
 
 # ╔═╡ 91def84f-c450-4f86-9fd4-0e43f206f4ba
@@ -161,7 +161,7 @@ begin
 end
 
 # ╔═╡ 452dcdd7-4a15-45b8-b5e3-c7af97dd473b
-md"""El gráfico de las curvas de contorno relleno es el siguiente"""
+md"""El gráfico de las curvas de contorno relleno es el siguiente:"""
 
 # ╔═╡ 25f66189-80d0-435e-8fef-fcd08d65723a
 begin
@@ -169,7 +169,7 @@ begin
 end
 
 # ╔═╡ a29b392f-3195-41f6-95b1-5f55fb2da564
-md"""Por último, veamos otra representación de la función $f(z)$ en $\mathbb{R}^3$, pero colocando el argumento en el eje independiente. $Arg(f(z))$ representa el argumento del número complejo $z$, y se halla con la función $\texttt{angle}$. Esto se muestra a continuación.
+md"""Por último, veamos otra representación de la función $f(z)$ en $\mathbb{R}^3$, pero colocando el argumento en el eje independiente. $Arg(f(z))$ representa el argumento del número complejo $z$, y se halla con la función $\texttt{angle}$. Esto se muestra a continuación,
 """
 
 # ╔═╡ 4675928d-d1ae-4c43-81f0-a6d3029fc95d
@@ -189,7 +189,7 @@ begin
 end
 
 # ╔═╡ 7d3525d8-ba29-486d-9bda-82657a853a33
-md"""El gráfico de las curvas de contorno relleno es el siguiente"""
+md"""El gráfico de las curvas de contorno relleno es el siguiente:"""
 
 # ╔═╡ 61e22180-bfa3-432a-a373-3e3ff60e7d57
 begin

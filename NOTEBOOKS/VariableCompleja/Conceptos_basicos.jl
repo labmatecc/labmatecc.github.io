@@ -43,13 +43,13 @@ A continuación se mostrará la representación de números enteros y de punto f
 # ╔═╡ 88181bfd-223d-4b2d-b913-bf3daad7baf2
 md"""## Enteros 
 Presentamos ejemplos sencillos de la representación de los datos enteros en Julia.
-En particular, un entero de $k$ bits biene representado de la forma
+En particular, un entero de $k$ bits viene representado de la forma
 
 $n=(b_{k-1}b_{k-2}\cdots b_2 b_1b_0)_2=b_0+b_1 2^1+b_22^2+\cdots+b_{k-2}2^{k-2}-b_{k-1}2^{k-1}.$ 
 
 Donde $b_i\in\{0,1\}$.
 
-Acontinuación se muestran ejemplos de esto.
+A continuación se muestran ejemplos de esto.
 """
 
 # ╔═╡ e4f9582a-9e9c-41e9-bb91-ef7aa5386235
@@ -445,7 +445,7 @@ r*cis(θ)
 md"""**Nota:** La función $\texttt{cis()}$ es equivalente a $\cos{\theta}+i\sin{\theta}$."""
 
 # ╔═╡ 8e46325a-8d9b-420b-9d2a-db68dbd515bf
-md"""## Formúla de De Moivre
+md"""## Fórmula de De Moivre
 
 Si $z = r(\cos \theta + i\sin \theta) = re^{i\theta}$ entonces $z^n = r^n(\cos(n\theta) + i\sin(n\theta)) = r^n e^{in\theta}$"""
 
