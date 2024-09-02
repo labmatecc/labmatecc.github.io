@@ -212,7 +212,7 @@ md"""## Normalización/Estandarización"""
 md"""La normalización y estandarización son técnicas comunes de preprocesamiento de datos que ayudan a poner todas las características en una escala común. Esto puede ser crucial para algoritmos sensibles a la escala, como K-Means, y puede mejorar la convergencia y el rendimiento del modelo."""
 
 # ╔═╡ 17b8ed28-a579-4fab-ad48-5bad655b2463
-md"""### Min-Máx"""
+md"""### Min-Max"""
 
 # ╔═╡ 27d00db4-a3e7-4a8a-adcd-84371da8ad6e
 md"""La normalización Min-Max es un método de preprocesamiento de datos que ajusta los valores de las características de un conjunto de datos para que estén dentro de un rango específico, generalmente entre 0 y 1. El propósito de esta normalización es asegurar que todas las características tengan la misma escala, lo que puede ser importante para ciertos algoritmos que son sensibles a la magnitud de las características.
@@ -233,7 +233,7 @@ Esta fórmula ajusta cada valor de la característica para que esté en una esca
 """
 
 # ╔═╡ 2ea9eacf-58f0-4993-b689-d7e8935f628b
-md"""La siguiente función normaliza los datos usando "min-máx". """
+md"""La siguiente función normaliza los datos usando "min-max". """
 
 # ╔═╡ 1faf0cff-2991-47d4-b84d-5ed0cc227733
 function minmax_normalize(data)
@@ -315,7 +315,7 @@ zscore_standardize(x₁)
 plot(scatter(x=1:100, zscore_standardize(x₁)))
 
 # ╔═╡ 90f3f183-bbc6-4c07-b270-fe980527012e
-md"""Al igual que con min-máx la distribución de los datos no se ve alterada, esta es una de las ventajas de normalizar los datos."""
+md"""Al igual que con min-max la distribución de los datos no se ve alterada, esta es una de las ventajas de normalizar los datos."""
 
 # ╔═╡ 2d5bf322-f095-4e93-bee3-5374e899362c
 md"""# Visualización"""
@@ -336,7 +336,7 @@ plot(scatter(a,b))
 datos=[vcat(a[i],b[i]) for i=1:1000]
 
 # ╔═╡ a094e975-08ec-4f98-be86-6feac5f472b7
-md"""Vamos a normalizar los datos con Min-Máx"""
+md"""Vamos a normalizar los datos con Min-Max"""
 
 # ╔═╡ f415835f-1587-4019-8eca-a5c2f37222c5
 datos_norm=[vcat(minmax_normalize(a)[i],minmax_normalize(b)[i]) for i=1:1000]
@@ -402,7 +402,7 @@ PlutoUI = "~0.7.59"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.5"
 manifest_format = "2.0"
 project_hash = "8bcdd743806fbb21b0875debe2bac3cf8e305c70"
 
@@ -1613,7 +1613,7 @@ version = "0.15.1+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.11.0+0"
 
 [[deps.libevdev_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1705,11 +1705,11 @@ version = "1.4.1+1"
 # ╟─19f37699-3a2e-4932-9aec-8969165e8fcf
 # ╠═326edf33-fe12-4815-a128-cb33f59c0281
 # ╟─d3abb069-8a6b-4253-a489-3cd56ddc89b5
-# ╠═aa09bbf6-7ef6-4359-8181-a8272a498cce
+# ╟─aa09bbf6-7ef6-4359-8181-a8272a498cce
 # ╟─acd5ba29-4e13-4ce9-98d3-7a62de7754b4
 # ╠═a6a58789-e4ee-488a-a08e-173779fd97ab
 # ╠═f40a0030-1830-4543-8259-a039e70a76ea
-# ╠═50f9f855-1daf-41d8-aeb2-195fe02f5dae
+# ╟─50f9f855-1daf-41d8-aeb2-195fe02f5dae
 # ╟─97f5fdff-4e5c-40d1-a4d4-6887d6ffd7fd
 # ╟─340273d2-bb12-469d-bf55-a77b03144799
 # ╠═30a70338-df77-4c05-bc25-ec4e463f700e
@@ -1723,11 +1723,11 @@ version = "1.4.1+1"
 # ╟─c5196e31-5095-4259-9a61-89afbfc8f808
 # ╠═bcc9197f-4d21-43fa-b2d5-40f567d15ab0
 # ╟─51462f44-1829-4e9c-88dc-c9f09db4124b
-# ╠═55f987bf-e708-45b8-a0f8-bc5840d4e119
+# ╟─55f987bf-e708-45b8-a0f8-bc5840d4e119
 # ╟─d400446c-6d89-418d-830f-3f0fefebfcb6
 # ╠═fc4cec7d-546a-47b8-8271-7322f57b9888
 # ╟─cd47b25a-cfe7-41e7-bc6f-15f3d5098cd7
-# ╠═22ae57f4-002c-4314-a2d8-9b47b0d01386
+# ╟─22ae57f4-002c-4314-a2d8-9b47b0d01386
 # ╟─1d5261ce-2f45-4e88-b6b9-462ea6c1897a
 # ╟─ed64ca57-26f3-420b-aae0-2c605340b072
 # ╟─81502e8e-ee6a-4abd-b822-cdaddfbd81f8
@@ -1735,17 +1735,17 @@ version = "1.4.1+1"
 # ╠═2227f54a-56be-4105-91b5-aa4e0ef907d7
 # ╟─c78301fa-7bbe-4abc-b1e6-f9f32a652fa9
 # ╠═660d640c-910b-4ab8-940b-daa15cda9721
-# ╠═4384266e-f8f7-4f42-bdc0-58c3c8761194
+# ╟─4384266e-f8f7-4f42-bdc0-58c3c8761194
 # ╟─90f3f183-bbc6-4c07-b270-fe980527012e
 # ╟─2d5bf322-f095-4e93-bee3-5374e899362c
 # ╟─71201a55-47c4-4a74-b54f-11a70c3d2cd0
 # ╠═5758c5dc-f6a6-4da5-ba71-6404f8001d27
 # ╠═eb0150c0-eec9-4b5f-8e9d-2353702784a6
-# ╠═1e32425b-4078-49d2-a502-7cb591a5669a
+# ╟─1e32425b-4078-49d2-a502-7cb591a5669a
 # ╠═cae655c3-8e89-4b08-b83a-e7ea578b5723
 # ╟─a094e975-08ec-4f98-be86-6feac5f472b7
 # ╠═f415835f-1587-4019-8eca-a5c2f37222c5
-# ╠═1ff000f0-a9a6-4f29-82c5-1b22cfb5f387
+# ╟─1ff000f0-a9a6-4f29-82c5-1b22cfb5f387
 # ╟─fbcd4e16-d49d-47a0-9805-ea41bad1ba3f
 # ╠═e0827d6d-4339-4161-94c8-311cec3f7f64
 # ╠═f0efd8b5-74d0-4490-bc5c-5ef40a2aea31

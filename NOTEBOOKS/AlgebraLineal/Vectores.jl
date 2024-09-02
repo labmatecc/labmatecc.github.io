@@ -572,7 +572,7 @@ end
 lincomb1((-0.5,1.5), ([1,2], [3,4]))
 
 # ╔═╡ 355220ea-0ed6-4189-8b0c-9acb4b52a43e
-md""" ### $\cdot$ Transpocisión de un vector
+md""" ### $\cdot$ Transposición de un vector
 
 Dado un vector $u$ de tamaño $n \times 1$, el transpuesto $u^T$ es otro vector $1 \times n$ donde cada elemento $(u^T)_{1i}$ es igual al elemento $u_{i1}$: $(u^T)_{1i} = u_{i1}$. Es decir, si
 
@@ -721,7 +721,7 @@ PlutoUI = "~0.7.54"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.5"
 manifest_format = "2.0"
 project_hash = "5111ea6a7e9342bcbea251f23f4c1d4ed4ede4f6"
 
@@ -1744,7 +1744,7 @@ version = "0.15.1+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.11.0+0"
 
 [[deps.libevdev_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]

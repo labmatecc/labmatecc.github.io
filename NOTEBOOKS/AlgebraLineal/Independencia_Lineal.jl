@@ -191,7 +191,7 @@ md"""Verifiquemos que los vectores tengan norma 1"""
 norm(a1), norm(a2), norm(a3)
 
 # ╔═╡ 0cb55c9b-1f62-44ad-8c79-af2a8d08be58
-md"""Por último veamos si son ortogonales entre si"""
+md"""Por último veamos si son ortogonales entre sí"""
 
 # ╔═╡ 6ae8c85f-8a1e-4510-a801-4f4591daf123
 a1'*a2, a1'*a3, a2'*a3
@@ -373,7 +373,7 @@ md"""forman una base ortonormal en $\mathbb{R}^3$. Así, la siguiente matriz es 
 Q=[u[1] u[2] u[3]]
 
 # ╔═╡ 49c416f3-ab47-441c-9f44-1d3e8b76a1fe
-md"""Esto se verifica facilmente, ya que $Q^tQ=I$"""
+md"""Esto se verifica fácilmente, ya que $Q^tQ=I$"""
 
 # ╔═╡ 08b5e338-b3f6-4377-801e-164dde541669
 Q'*Q
@@ -443,7 +443,7 @@ PlutoUI = "~0.7.54"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.5"
 manifest_format = "2.0"
 project_hash = "8802d0c0d39e0c61bb0c6cf53b57af949d7d6513"
 
@@ -1465,7 +1465,7 @@ version = "0.15.1+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.11.0+0"
 
 [[deps.libevdev_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]

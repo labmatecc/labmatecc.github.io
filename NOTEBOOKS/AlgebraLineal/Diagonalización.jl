@@ -230,7 +230,7 @@ $A^k = (PDP^{-1})^k = PDP^{-1} \cdot PDP^{-1} \cdot \ldots \cdot PDP^{-1} = PD^k
 md"""# La sucesión de Fibonacci"""
 
 # ╔═╡ d1d58b7f-eb59-472a-b928-ef22a6f175e1
-md"""La sucesión de Fibonacci se define de manera recursiva como: $F_0=0, F_1=1$, y para $n\geq 2$, $F_n = F_{n-1}+F_{n-2}$. Así, los primeros 10 numeros de Fibonacci son
+md"""La sucesión de Fibonacci se define de manera recursiva como: $F_0=0, F_1=1$, y para $n\geq 2$, $F_n = F_{n-1}+F_{n-2}$. Así, los primeros 10 números de Fibonacci son
 
 $0, \hspace{0.3cm} 1, \hspace{0.3cm}  1, \hspace{0.3cm} 2, \hspace{0.3cm} 3, \hspace{0.3cm} 5, \hspace{0.3cm} 8, \hspace{0.3cm} 13, \hspace{0.3cm} 21, \hspace{0.3cm} 34, \hspace{0.3cm} 55$"""
 
@@ -387,7 +387,7 @@ function fib(n)
 end
 
 # ╔═╡ 74dff67a-50ef-422b-bf05-ad28e1711676
-md"""Observe que obtenemos lo mismo que usando la formula recursiva"""
+md"""Observe que obtenemos lo mismo que usando la fórmula recursiva"""
 
 # ╔═╡ 31161ff5-913f-4846-9728-820e0d1d8e86
 [fib(i) for i= 0:10] #Primeros 10 valores de la sucesión de Fibonacci
@@ -530,7 +530,7 @@ PlutoUI = "~0.7.54"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.5"
 manifest_format = "2.0"
 project_hash = "df096654961dc96e3629b8ea2e427860c9eeccd0"
 
@@ -781,7 +781,7 @@ version = "1.2.13+1"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.11.0+0"
 
 [[deps.nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]

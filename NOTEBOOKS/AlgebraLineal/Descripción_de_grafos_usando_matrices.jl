@@ -92,14 +92,14 @@ md"""Las aristas en un grafo, visualizadas mediante segmentos de líneas rectas 
 Las aristas pueden tener atributos como peso o información adicional, proporcionando detalles específicos para el análisis. Su representación visual y la asociación de atributos contribuyen a una modelización detallada."""
 
 # ╔═╡ 133b1403-7d7b-44e4-b85e-454a43de28ea
-md"""Veamos algunos grafos y como construirlos"""
+md"""Veamos algunos grafos y cómo construirlos"""
 
 # ╔═╡ a7220029-9195-49c2-8392-3990400eca19
-G₁ = Graph(3)  # grafo con 3 vertices
+G₁ = Graph(3)  # grafo con 3 vértices
 
 # ╔═╡ a4f5b576-3854-4e49-8fd2-13c997f45cc1
 begin
-	#construimos un triangulo
+	#construimos un triángulo
 add_edge!(G₁, 1, 2) #conecta el nodo 1 con el 2
 add_edge!(G₁, 1, 3) #conecta el nodo 1 con el 3
 add_edge!(G₁, 2, 3) #conecta el nodo 2 con el 3
@@ -357,7 +357,7 @@ PlutoUI = "~0.7.54"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.5"
 manifest_format = "2.0"
 project_hash = "6fc89858ad65f3b86b39002c00fb4873b42d3b42"
 
@@ -1780,7 +1780,7 @@ version = "0.15.1+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.11.0+0"
 
 [[deps.libevdev_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]

@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.40
+# v0.19.39
 
 using Markdown
 using InteractiveUtils
@@ -108,7 +108,7 @@ md"""Ahora bajamos la imagen a la máquina local."""
 fname = download(url)
 
 # ╔═╡ de28d24a-e4ad-48e1-ae6d-498cf2fe0272
-md"""Ahora declaramos la variable "imag", que corresponde a un tipo de dato que representa imágenes. Recuerde que, además de asignar la variable en una expresión del tipo "$x=1$", también se despliega la variable. En este caso, Pluto entiende que queremos ver la imagen representada por la variable.
+md"""Ahora declaramos la variable "imag", que corresponde a un tipo de dato que representa imágenes. Recuerde que, además de asignar la variable en una expresión del tipo "$x=1$", también se muestra la variable. En este caso, Pluto entiende que queremos ver la imagen representada por la variable.
 """
 
 # ╔═╡ 7f12e071-36fb-4361-9986-dcd65ad9fd5f
@@ -122,21 +122,21 @@ md"""El formato usual de imágenes corresponde a un arreglo rectangular (o matri
 typeof(imag)
 
 # ╔═╡ b06a908b-12bc-467e-8fe9-665cc9149fc2
-md"""El tamaño de la imágen es:"""
+md"""El tamaño de la imagen es:"""
 
 # ╔═╡ e43c835f-8f8d-4204-8b6e-a4d414f7c85c
 imag_size = size(imag)
 
 # ╔═╡ 10883822-164f-440d-91a5-c85e89e4e607
 md"""
-El tipo de dato básico es un Píxel. Por ejemplo, el píxel en la fila 500 (hacia abajo) y el la columna 44 (hacia la derecha) puede ser accesado por:"""
+El tipo de dato básico es un Píxel. Por ejemplo, el píxel en la fila 500 (hacia abajo) y el la columna 44 (hacia la derecha) puede accederse por:"""
 
 # ╔═╡ a3366a95-687b-40c8-b5bd-6f9b8ab82ada
 a_pixel = imag[50, 44]
 
 # ╔═╡ f1c3470e-a196-447e-9393-7ba1fee20f9b
 md"""
-Observe que el tipo de datos de un píxel es RGB, que corresponde a una lista de tres números indicando los colores Red, Green y Blue, respectivamente. 
+Observe que el tipo de dato de un píxel es RGB, que corresponde a una lista de tres números indicando los colores Red, Green y Blue, respectivamente. 
 """
 
 # ╔═╡ 1ddadbb6-b0ff-4c44-957b-2610c0674deb
@@ -252,7 +252,7 @@ md""" ### Matriz de píxeles """
 
 # ╔═╡ 36b69109-522f-4e57-9656-722a78b609c8
 md""" 
-Podemos asignar manualmente valores expecificos a píxeles. Observe la siguiente imagen.
+Podemos asignar manualmente valores específicos a píxeles. Observe la siguiente imagen.
 """
 
 # ╔═╡ 62c930d1-4314-4df0-b180-11ec74a82c94
@@ -329,7 +329,7 @@ md"""También podemos aumentar el tamaño de una imagen usando el producto de Kr
 Para esto usaremos las siguientes librerías:"""
 
 # ╔═╡ 6c3cab02-b4d2-45ce-bdfd-ecb09bf0cf54
-md"""Escogemos es valor para $r$"""
+md"""Escogemos el valor para $r$:"""
 
 # ╔═╡ c78598b0-f814-4450-94d8-41ba0601a777
 @bind r Slider(1:40, default=10)
@@ -502,7 +502,7 @@ Unitful = "~1.19.0"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.2"
+julia_version = "1.10.5"
 manifest_format = "2.0"
 project_hash = "a93e4021cf5a6b3195783469fe8a0b628c95595b"
 
@@ -657,7 +657,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.1.0+0"
+version = "1.1.1+0"
 
 [[deps.ComputationalResources]]
 git-tree-sha1 = "52cb3ec90e8a8bea0e62e275ba577ad0f74821f7"
@@ -1838,7 +1838,7 @@ version = "0.15.1+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.11.0+0"
 
 [[deps.libfdk_aac_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]

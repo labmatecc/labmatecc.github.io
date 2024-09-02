@@ -92,7 +92,7 @@ D[1,3] #Se busca el elemento en la fila 1 y columna 3
 md"""La segunda columna de D 
 
 $\begin{bmatrix} 1 & \textcolor{red}{2} & 3 & 4 \\ -1 & \textcolor{red}{4} & 1 & 4 \\ 0 & \textcolor{red}{0} & 1 & -2 \end{bmatrix}$
-se puede vizualizar con el siguiente comando:"""
+se puede visualizar con el siguiente comando:"""
 
 # ╔═╡ b1478f42-2b47-425a-9e7a-f5f55bf3cdff
 D[:,2] #Muestra la segunda columna
@@ -104,7 +104,7 @@ $\begin{bmatrix} 1 & 2 & 3 & 4 \\ -1 & 4 & 1 & 4 \\ \textcolor{red}{0} & \textco
 se puede mostrar de la siguiente manera"""
 
 # ╔═╡ aeec8449-dfc8-4559-a811-130e553f716c
-D[3,:] #Muesta la tercera fila
+D[3,:] #Muestra la tercera fila
 
 # ╔═╡ 8c90caa6-0bca-43b3-84f5-0ffc864a0ced
 md"""También podemos simplemente mostrar submatrices contiguas de la matriz dada. Recordemos que una submatriz contigua es una matriz obtenida al seleccionar un conjunto rectangular de elementos de la matriz original sin interrumpir la secuencia natural de filas y columnas. Por ejemplo, podemos mostrar desde la fila 2 hasta la 3 y desde la columna 1 hasta la 3 de la matriz $D$:
@@ -656,7 +656,7 @@ PlutoUI = "~0.7.54"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.5"
 manifest_format = "2.0"
 project_hash = "df096654961dc96e3629b8ea2e427860c9eeccd0"
 
@@ -907,7 +907,7 @@ version = "1.2.13+1"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.11.0+0"
 
 [[deps.nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
