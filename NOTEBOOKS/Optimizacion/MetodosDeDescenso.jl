@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.40
+# v0.19.39
 
 using Markdown
 using InteractiveUtils
@@ -29,7 +29,7 @@ end
 PlutoUI.TableOfContents(title="Métodos de Descenso", aside=true)
 
 # ╔═╡ 61045997-8418-4663-a4d4-79827d266899
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
@@ -47,13 +47,13 @@ md"""# Métodos de descenso"""
 
 # ╔═╡ 880e413d-0aa8-42ee-87da-fe4de8d9a39e
 md"""
-Inicia con $x^{(0)}=x_0$ dado y debemos calcular $x^{(1)}, x^{(2)}, x^{(3)},\dots$, hasta satisfazer algun criterio de parada o de convergencia, con 
+Inicia con $x^{(0)}=x_0$ dado y debemos calcular $x^{(1)}, x^{(2)}, x^{(3)},\dots$, hasta satisfacer algún criterio de parada o de convergencia, con 
 
 $x^{(k+1)}=x^{(k)}+t^{(k)}\delta^{(k)}$
-donde $k$ es el ordden de iteración, $t^{(k)}$ es el tamaño de paso y 
-$\delta^{(k)}$ es paso o dirección de búsqueda. El método o iteración es descendiente si podemos garantizar $f(x^{(k+1)})<f(x^{(k)})$.
+donde $k$ es el orden de iteración, $t^{(k)}$ es el tamaño de paso y 
+$\delta^{(k)}$ es paso o dirección de búsqueda. El método o iteración es descendente si podemos garantizar $f(x^{(k+1)})<f(x^{(k)})$.
 
-La diección $\delta^{(k)}$ es una diección de descenso si $\nabla f(x^{(k)}) \cdot
+La dirección $\delta^{(k)}$ es una dirección de descenso si $\nabla f(x^{(k)}) \cdot
 \delta^{(k)}<0$.
 """
 
@@ -61,8 +61,8 @@ La diección $\delta^{(k)}$ es una diección de descenso si $\nabla f(x^{(k)}) \
 md"""Para la implementación de un algoritmo, dado $x^{(0)}$, se siguen los siguientes pasos
 
 1. Calcule la dirección de búsqueda $\delta$
-2. Búsqueda líneal (exacta o inexacta):  calcule el tamaño de paso $t>0$
-3. Actualize $x\mapsto x +t\delta$
+2. Búsqueda lineal (exacta o inexacta):  calcule el tamaño de paso $t>0$
+3. Actualice $x\mapsto x +t\delta$
 
 Hasta que se satisfaga algún criterio de parada, por ejemplo, 
 
@@ -81,7 +81,7 @@ $
 md""" # Búsqueda por retroceso (Backtracking) """
 
 # ╔═╡ 59eedf27-cc2c-48a5-adab-c3fd6006b9a9
-md"""Consideremos la siguiente función y su derivadad en dimension 2. """
+md"""Consideremos la siguiente función y su derivada en dimensión 2. """
 
 # ╔═╡ 5eefa24c-afa1-4f07-88ff-a24941a61cb4
 function fun(x)
@@ -122,7 +122,7 @@ function ddfun(x)
 end
 
 # ╔═╡ 5abab216-24e9-42f4-bd88-b1a25741c2bf
-md""" Recuerde que podemos explorar la función a lo largo de rectas. Considere la siguiente función restricció a una linea recta con base $x_0$ y dirección $v_0$."""
+md""" Recuerde que podemos explorar la función a lo largo de rectas. Considere la siguiente función restricción a una línea recta con base $x_0$ y dirección $v_0$."""
 
 # ╔═╡ df234ac9-a245-46d1-b5b8-5a31abb4865e
 function fun1d(t,x₀,v₀)
@@ -130,8 +130,8 @@ function fun1d(t,x₀,v₀)
 end
 
 # ╔═╡ bb73b695-343f-4bf4-a6a7-ff46ee129fa8
-md""" Por ejemplo, tenemos la siguiente restricción a un segemento iniciando en 
-un punto base en una dirección data. Para comparación y motivar el algoritmo de retroceso comparamos con la recta secante. Para comparación desplegamos la recta secante con pendiente proporcional al gradiente de la función en el punto base en la dirección de busqueda rescalado por un factor $\alpha_0$. Además, marcamos el valor de la función objetivo en los puntos de la forma $[\beta^n,\beta^{(n-1)}, \dots,\beta^2,\beta,1]$ que son los tiempos discretos de la busqueda del algoritmo de retroceso. """
+md""" Por ejemplo, tenemos la siguiente restricción a un segmento iniciando en 
+un punto base en una dirección data. Para comparación y motivar el algoritmo de retroceso comparamos con la recta secante. Para comparación desplegamos la recta secante con pendiente proporcional al gradiente de la función en el punto base en la dirección de busqueda re-escalado por un factor $\alpha_0$. Además, marcamos el valor de la función objetivo en los puntos de la forma $[\beta^n,\beta^{(n-1)}, \dots,\beta^2,\beta,1]$ que son los tiempos discretos de la busqueda del algoritmo de retroceso. """
 
 # ╔═╡ 810dc4b8-abac-476d-983a-8e90cb577812
 @bind α₀ Slider(0.0:0.05:0.9, show_value=true,default=0.5)
@@ -161,7 +161,7 @@ begin
 end
 
 # ╔═╡ 78177ab9-6e0d-47d3-b59a-91660d05de22
-md""" En el caso de dos simensiones podemos gráficar la función."""
+md""" En el caso de dos dimensiones podemos graficar la función."""
 
 # ╔═╡ f2366d4a-ae57-429f-ae67-7a9efcbe9eb3
 begin
@@ -186,7 +186,7 @@ begin
 end
 
 # ╔═╡ 68c31362-2090-4649-8a45-70a6112d1ddb
-md""" Dada una punto base $x_0$ y una dirección de descenso para la busqueda $\delta$ podemos usar el altorimos de retroceso para encontrar un nuevo punto con menor valor de la función objetivo. Una implementación simple del algorimos de retroceso es la siguiente."""
+md""" Dado un punto base $x_0$ y una dirección de descenso para la busqueda $\delta$ podemos usar el algoritmo de retroceso para encontrar un nuevo punto con menor valor de la función objetivo. Una implementación simple del algoritmo de retroceso es la siguiente."""
 
 # ╔═╡ a253852c-f980-4c88-b7d5-38a65151e4c5
 function backtracking(x₀,δ; M=1000, α=0.1,β=0.7 )
@@ -235,15 +235,15 @@ end
 
 # ╔═╡ d2d1260f-9dc0-4f1f-a5a4-3ec8fd33c2c7
 md"""
-# Método del gradiente descendiente
+# Método del gradiente descendente
 """
 
 # ╔═╡ 2601118d-3f3b-4c7e-a99e-f93f9878de85
-md""" En el método del gradiente descendiente la dirección de búsqueda es  $\delta^{(k)}=-\nabla f(x^{(k)})$ y el tamaño de paso se cálcula con el algotirmo de retroceso o backtracking po por búsqueda lineal exacta. Tenemos
+md""" En el método del gradiente descendente la dirección de búsqueda es  $\delta^{(k)}=-\nabla f(x^{(k)})$ y el tamaño de paso se calcula con el algoritmo de retroceso o backtracking por búsqueda lineal exacta. Tenemos
 
 $x^{(k+1)}=x^{(k)}-t^{(k)}\nabla f(x^{(k)}).$
 
-Ilustraremos algunos pasos del algoritmo de gradiente descendiente. Los criterios de parada serán implementados despues, por ahora solo calculemos algunas iteraciones de este método.
+Ilustraremos algunos pasos del algoritmo de gradiente descendente. Los criterios de parada serán implementados despues, por ahora solo calculemos algunas iteraciones de este método.
 """
 
 
@@ -314,7 +314,7 @@ Fije $x\in\mathbb{R}^n$. Considere  una dirección
 
 $
 \delta_{nsd}=\arg\min\{\nabla f(x)^T v : ||v||=1 \}=\arg\min\{\nabla f(x)^T v : ||v||=1 \}$
-donde $||\cdot||$ es una norma en $\mathbb{R}^n$. Teneos 
+donde $||\cdot||$ es una norma en $\mathbb{R}^n$. Tenemos 
 
 $
 \nabla f(x)^T\delta_{nsd}=\min_{||v||=1}f(x)^Tv$
@@ -352,7 +352,7 @@ md"""
 
 # ╔═╡ 301463ae-dfc8-4efa-91bd-567413626b5b
 md""" 
-Dada una matriz simetrica definida positiva $P$, considere ahora la norma $||z||_P=||P^\frac{1}{2}z||_2$, esto es, $||z||_P^2=z^TPz$. La norma dual viene dada por 
+Dada una matriz simétrica definida positiva $P$, considere ahora la norma $||z||_P=||P^\frac{1}{2}z||_2$, esto es, $||z||_P^2=z^TPz$. La norma dual viene dada por 
 $||u||_*=||u||_{P^{-1}}=||P^{-\frac{1}{2}}z||_2=\sqrt{u^TP^{-1}u}.$
 
 Tenemos que 
@@ -524,7 +524,7 @@ PlutoUI = "~0.7.52"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.2"
+julia_version = "1.10.4"
 manifest_format = "2.0"
 project_hash = "9aebe5825c8f5846c91f70a0cb17a073a5a8c1e3"
 
@@ -641,7 +641,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.1.0+0"
+version = "1.1.1+0"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]

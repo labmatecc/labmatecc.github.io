@@ -14,7 +14,7 @@ using Plots, Polyhedra
 PlutoUI.TableOfContents(title="El problema de la dieta", aside=true)
 
 # ╔═╡ 0ba09c5c-5a29-4900-8f08-d345e8d623e9
-md"""Este cuaderno esta en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias por favor escribir a **labmatecc_bog@unal.edu.co**
+md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
@@ -104,7 +104,7 @@ Un primer intento para resolver este problema puede ser usar el calculador para 
 | --- | --- | --- | --- |
 | 1000 | 44 | 0  | 35 |
 
-* *No puedes comer una cantidad infinita de comida*. También debemos recordar que incluso si tenemos mucho dinero, tenemos **restricciones biológicas** relacionadas con la **cantidad máxima** de alimentos que podemos comer. Supongamos que las personas comúnmente comen un máximo de 2000 gr [ref](https://www.precisionnutrition.com/what-are-your-4-lbs). Como queremos garantizar que las dietas no excedan la cantidad máxima de alimentos, llamamos a estas restricciones **restricciones máximas**.
+* *No puedes comer una cantidad infinita de comida*. También debemos recordar que incluso si tenemos mucho dinero, tenemos **restricciones biológicas** relacionadas con la **cantidad máxima** de alimentos que podemos comer. Supongamos que las personas comúnmente comen un máximo de 2000 gr, ver [14]. Como queremos garantizar que las dietas no excedan la cantidad máxima de alimentos, llamamos a estas restricciones **restricciones máximas**.
 
 Para tener alternativas *factibles* de dietas en nuestra búsqueda, debemos considerar *SOLO* las dietas que satisfacen *TODAS* las restricciones, a saber, no negatividad, mínima y máxima."""
 
@@ -414,7 +414,9 @@ md"""# Referencias
 
 [12] Radzion. (n.d.). Introduction to linear programming. Recuperado de https://radzion.com/blog/operations/linearintro
 
-[13] Yamiyume. (s.f.). Knapsack Project - Optiet: Maximizando la Nutrición. Recuperado de https://yamiyume.github.io/knapsack-project/"""
+[13] Yamiyume. (n.d.). Knapsack Project - Optiet: Maximizando la Nutrición. Recuperado de https://yamiyume.github.io/knapsack-project/
+
+[14] Precision Nutrition. (n.d.). What are your 4 pounds made of? Precision Nutrition. Recuperado de https://www.precisionnutrition.com/what-are-your-4-lbs"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
