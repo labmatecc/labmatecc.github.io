@@ -53,7 +53,9 @@ x_2 \\
 x_n
 \end{bmatrix}.$ Cada $x_i$, donde $i=1, 2, \ldots, n$, denota un elemento individual dentro del vector.
 
-En las definiciones anteriores, $x_1$ se denomina la primera componente del vector, $x_2$ es la segunda componente, y así sucesivamente. En términos generales, $x_k$ se denomina la $k$-ésima componente del vector."""
+En las definiciones anteriores, $x_1$ se denomina la primera componente del vector, $x_2$ es la segunda componente, y así sucesivamente. En términos generales, $x_k$ se denomina la $k$-ésima componente del vector.
+
+Para más detalles de esto ver $[3]$."""
 
 # ╔═╡ a9c0fc03-973c-4b9c-ae51-1db9cecab9c4
 md"""Ahora, cargamos la librería de álgebra lineal de Julia, que nos ayudará a visualizar algunos ejemplos y propiedades de los vectores."""
@@ -415,6 +417,9 @@ Ejemplo: A continuación se genera un vector de unos de tamaño $6$.
 # ╔═╡ b7a7c23f-e4ca-4b8d-9da4-817fe6631575
 ones(6)
 
+# ╔═╡ 8cab06c5-8de0-4b65-8c80-f1e306e9df5a
+md"""Para más detalle de los tipos de vectores, por favor consultar $[1, 3]$."""
+
 # ╔═╡ 42411343-8eeb-4cab-adf3-cc4fa2f73e56
 md"""# Gráficas de vectores 
 Un paquete para crear gráficas en Julia es Plots.jl, lo importamos de la siguiente forma
@@ -449,6 +454,9 @@ plot(s, marker = :star, legend = false, grid = true)
 
 # ╔═╡ 3c7ee2ab-3b8a-4678-962b-f3dfc7b6211f
 md"""# Operaciones con vectores"""
+
+# ╔═╡ 32e21a6a-a5a7-453a-b126-56df920d3827
+md"""El material aquí presente fue tomado y adaptado de $[1, 2, 3]$."""
 
 # ╔═╡ 3250c7cd-4091-40c8-9cae-5db185ff1d6c
 md""" ### $\cdot$ Suma de vectores
@@ -1900,18 +1908,20 @@ version = "1.4.1+1"
 # ╠═1801d0c8-77a6-4f08-a690-b784f84d2afe
 # ╟─dabc76fa-0b1c-413e-8eac-720bd607bf83
 # ╠═b7a7c23f-e4ca-4b8d-9da4-817fe6631575
+# ╟─8cab06c5-8de0-4b65-8c80-f1e306e9df5a
 # ╟─42411343-8eeb-4cab-adf3-cc4fa2f73e56
 # ╠═1b19c238-0208-422c-af30-1e50fc36632d
 # ╟─e86441e6-e225-4f05-bb7d-b3b92dced60b
 # ╠═e76a140d-c5a8-4a96-977d-13bab9b7c443
 # ╟─146f9bf8-cad2-4c38-adb8-3a4b13572c99
-# ╠═4df5b1d8-2d02-436b-86b6-585894b833ad
+# ╟─4df5b1d8-2d02-436b-86b6-585894b833ad
 # ╟─3779aae5-dee3-4840-b3f9-9cf6009a38bd
 # ╠═cd45633e-20a9-4df6-bcac-fd0da75d2a27
 # ╠═6829875c-c295-4495-bad8-09d83faebd58
 # ╟─181cad7f-b5d5-4b99-b1c6-234dc8c0c071
-# ╠═d43eb64b-da8b-434c-b72f-3d73d3c99736
+# ╟─d43eb64b-da8b-434c-b72f-3d73d3c99736
 # ╟─3c7ee2ab-3b8a-4678-962b-f3dfc7b6211f
+# ╟─32e21a6a-a5a7-453a-b126-56df920d3827
 # ╟─3250c7cd-4091-40c8-9cae-5db185ff1d6c
 # ╟─cc5ae8e8-536b-4b45-91d2-3f65ed87c684
 # ╠═01b4070b-cc0e-4bcd-8346-c484036c3609

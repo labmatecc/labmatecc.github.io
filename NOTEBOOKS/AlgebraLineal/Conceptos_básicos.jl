@@ -36,7 +36,7 @@ md"""Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo."""
 md"""# Introducción a las matrices"""
 
 # ╔═╡ b785eeba-828b-4bc2-a5bb-afba2b68a1cf
-md"""Una matriz es un conjunto rectangular de números, símbolos o expresiones, acomodados en filas y columnas. Se representa comúnmente con letras mayúsculas, y sus elementos se identifican mediante índices que indican la posición de cada elemento en la matriz. La dimensión de una matriz se expresa como el número de filas y columnas que contiene.
+md"""Una matriz es un conjunto rectangular de números, símbolos o expresiones, acomodados en filas y columnas. Se representa comúnmente con letras mayúsculas, y sus elementos se identifican mediante índices que indican la posición de cada elemento en la matriz. La dimensión de una matriz se expresa como el número de filas y columnas que contiene, ver $[1, 3, 4].$
 
 Por ejemplo, una matriz $A$ de dimensión $m \times n$ se denota como:
 
@@ -274,6 +274,9 @@ md"""# Tipos de matrices"""
 # ╔═╡ f450c7d8-29e0-47dd-9516-49306bf54450
 md"""Usaremos la siguiente librería para ejecutar los ejemplos presentados."""
 
+# ╔═╡ d78ccec4-a9df-44e6-a709-3bf9e3baa55e
+md"""El material presentado a continuación fue tomado de $[1, 2, 3, 4]$."""
+
 # ╔═╡ 6f4c7a27-1071-4979-9b6a-9eac50950e64
 md""" ### $\cdot$ Matriz cuadrada
 
@@ -335,6 +338,9 @@ A₅=zeros((2, 3)) #Matriz nula de tamaño 2x3
 
 # ╔═╡ f46ee269-bb92-4ce8-9305-53d36abd7cfc
 md"""# Operaciones con matrices"""
+
+# ╔═╡ 6d824b6e-fbba-4f45-ad44-eb25d5608fc3
+md"""Para más detalle de lo presentado a continuación, ver $[1, 4]$."""
 
 # ╔═╡ d2838702-dc29-4c40-aad7-32399f52582f
 md""" ### $\cdot$ Suma de matrices
@@ -974,6 +980,7 @@ version = "17.4.0+2"
 # ╟─413a74dd-39fe-44a9-99ae-9891af29d53d
 # ╟─f450c7d8-29e0-47dd-9516-49306bf54450
 # ╠═8afc9c45-0681-479e-b3f4-75dac7461d15
+# ╟─d78ccec4-a9df-44e6-a709-3bf9e3baa55e
 # ╟─6f4c7a27-1071-4979-9b6a-9eac50950e64
 # ╠═80550e96-8f59-4429-9dc6-b93f7b4706db
 # ╟─cff445ca-7554-47ee-b410-fbec0b552a7e
@@ -985,6 +992,7 @@ version = "17.4.0+2"
 # ╟─71823790-277a-4ef2-9e32-ca5e681b23e3
 # ╠═4056d2ed-2039-46aa-940b-b2fb120033df
 # ╟─f46ee269-bb92-4ce8-9305-53d36abd7cfc
+# ╟─6d824b6e-fbba-4f45-ad44-eb25d5608fc3
 # ╟─d2838702-dc29-4c40-aad7-32399f52582f
 # ╟─79acaf98-9774-4e59-8309-5ad204653255
 # ╠═7b374f89-adb1-4328-8bd8-5adb1531459e
