@@ -71,8 +71,11 @@ $G = \begin{bmatrix} g_{11} & g_{21} & \cdots & g_{m1} \\ g_{12} & g_{22} & \cdo
 
 $B = \begin{bmatrix} b_{11} & b_{21} & \cdots & b_{m1} \\ b_{12} & b_{22} & \cdots & b_{m2} \\ \vdots & \vdots & \ddots & \vdots \\ b_{1n} & b_{2n} & \cdots & b_{mn} \end{bmatrix}.$
 
-Donde $r_{ij}$, $g_{ij}$ y $b_{ij}$ representan los valores de los píxeles correspondientes a los canales de rojo, verde y azul, respectivamente, en la posición $(i,j)$.
+Donde $r_{ij}$, $g_{ij}$ y $b_{ij}$ representan los valores de los píxeles correspondientes a los canales de rojo, verde y azul, respectivamente, en la posición $(i,j)$. Para más detalles ver $[1,2,3,4].$
 """
+
+# ╔═╡ 61348cca-7e29-4c30-9e77-9bf0c627dd66
+md"""El material que se presenta a continuación fue tomado de $[1]$."""
 
 # ╔═╡ cf573a4e-1e80-4abc-a5a7-e815b1c16218
 md"""Aquí se tienen diferentes imágenes para probar el procesamiento de una imagen, dichas imágenes están disponibles en los URL indicados. Descomente la que desee trabajar."""
@@ -129,7 +132,7 @@ imag_size = size(imag)
 
 # ╔═╡ 10883822-164f-440d-91a5-c85e89e4e607
 md"""
-El tipo de dato básico es un Píxel. Por ejemplo, el píxel en la fila 500 (hacia abajo) y el la columna 44 (hacia la derecha) puede accederse por:"""
+El tipo de dato básico es un píxel. Por ejemplo, el píxel en la fila 500 (hacia abajo) y en la columna 44 (hacia la derecha) puede accederse por:"""
 
 # ╔═╡ a3366a95-687b-40c8-b5bd-6f9b8ab82ada
 a_pixel = imag[50, 44]
@@ -159,8 +162,14 @@ md"""
 Podemos así recorrer la imagen para ver cada uno de los píxeles y el color resultante.
 """
 
+# ╔═╡ a93bb954-0275-4183-8d75-29314de8e506
+md"""A continuación puede elegir las filas a visualizar"""
+
 # ╔═╡ c3295c74-7500-430e-9bcc-e0b09b55e997
 @bind row_i RangeSlider(1:size(imag)[1], show_value=true)
+
+# ╔═╡ 6a9193b4-6747-4905-bb50-6924c003a0b3
+md"""Y las columnas que desea ver"""
 
 # ╔═╡ 53a5aeb3-2f1c-4a2b-b6d9-bfd9901d1c65
 @bind col_i RangeSlider(1:size(imag)[2], show_value=true)
@@ -191,7 +200,7 @@ La sección con las primeras filas y primeras columnas es:
 subimag=imag[300:450,50:150]
 
 # ╔═╡ 005a02bf-56d5-4bd4-80c5-3f3adb4a0cd1
-md"""Además, podemos exhibir una porción específica de la imagen al seleccionar filas y columnas de manera deliberada:
+md"""Además, podemos exhibir una porción específica de la imagen al seleccionar filas y columnas, respectivamente, de manera deliberada:
 """
 
 # ╔═╡ 8f39eae5-b7b9-48d1-8430-f4dec5ca230a
@@ -1908,6 +1917,7 @@ version = "1.4.1+1"
 # ╠═ff25ae75-cbfe-485c-b168-4ce73cd555a8
 # ╟─ec869046-b176-4ae3-91dc-933866481384
 # ╟─0795b728-a5fd-4e2c-9a02-f927d235750e
+# ╟─61348cca-7e29-4c30-9e77-9bf0c627dd66
 # ╟─cf573a4e-1e80-4abc-a5a7-e815b1c16218
 # ╟─5bee3ec6-1426-4f70-93cb-e02ce59db646
 # ╠═b343dbbb-2b89-4571-8a23-d189f01dbac8
@@ -1934,9 +1944,11 @@ version = "1.4.1+1"
 # ╟─2412a413-b012-4623-a475-e29e82bcec03
 # ╠═4252c7e5-65a4-4422-8833-0eb561261342
 # ╟─eaab8fed-cd0e-4273-b1a9-ac64d8531bc9
-# ╠═c3295c74-7500-430e-9bcc-e0b09b55e997
-# ╠═53a5aeb3-2f1c-4a2b-b6d9-bfd9901d1c65
-# ╠═ec39f43a-b823-4706-810f-22f94c3ad347
+# ╟─a93bb954-0275-4183-8d75-29314de8e506
+# ╟─c3295c74-7500-430e-9bcc-e0b09b55e997
+# ╟─6a9193b4-6747-4905-bb50-6924c003a0b3
+# ╟─53a5aeb3-2f1c-4a2b-b6d9-bfd9901d1c65
+# ╟─ec39f43a-b823-4706-810f-22f94c3ad347
 # ╟─36287558-1328-4a82-9a34-80f1c40bfbc0
 # ╠═453ac3e4-f618-47cf-865b-d2b5f1d61680
 # ╟─ca176781-4430-401e-94b3-adc5b9d3a8e7
@@ -1944,9 +1956,9 @@ version = "1.4.1+1"
 # ╟─bf2e1f50-6dd1-4825-86ad-fdc2b87db54d
 # ╠═b476931c-1684-4b71-819d-a2c325a299a6
 # ╟─005a02bf-56d5-4bd4-80c5-3f3adb4a0cd1
-# ╠═8f39eae5-b7b9-48d1-8430-f4dec5ca230a
-# ╠═ccd8685f-9885-4d1b-8bf8-2a35030e7f46
-# ╠═d0b8b31d-928d-44e2-9aa8-87f9b6efbace
+# ╟─8f39eae5-b7b9-48d1-8430-f4dec5ca230a
+# ╟─ccd8685f-9885-4d1b-8bf8-2a35030e7f46
+# ╟─d0b8b31d-928d-44e2-9aa8-87f9b6efbace
 # ╟─cbdf69b5-e2ec-4db5-9cee-d48aeddcf0e7
 # ╠═178f5278-4b0c-4980-b32f-3722012032e4
 # ╟─08e4beea-7eb4-4aba-8890-744e78f881c8
@@ -1956,8 +1968,8 @@ version = "1.4.1+1"
 # ╟─2f0ec952-a992-41ae-bbba-a6a2c8b272c3
 # ╠═48cb182e-0c49-44a8-b0d7-fb7a317ef542
 # ╟─cf61fc97-f166-4aad-abcb-efee331b630f
-# ╠═603f584f-4945-4319-b3a7-bbe795bad6c4
 # ╠═e1df56ec-8f22-4bfc-9957-bc3679916a5e
+# ╠═603f584f-4945-4319-b3a7-bbe795bad6c4
 # ╟─88f134c6-ff5e-4efe-aac8-c6065f26900c
 # ╠═b3b1ff47-a5d7-42be-9a45-83151c9a1553
 # ╟─1f17f383-5886-4a1f-b901-d9275f07163c
