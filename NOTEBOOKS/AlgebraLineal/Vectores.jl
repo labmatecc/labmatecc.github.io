@@ -311,7 +311,7 @@ md"""Otra manera de ensamblar el vector es usando la función $\texttt{vcat}$. E
 vcat(z₁, z₂, z₃)
 
 # ╔═╡ 5cc3ce6a-e755-4849-9be1-d647067e115d
-md"""Una lista de n-vectores puede expresarse como $(\mathbf{v}_1, \mathbf{v}_2, \ldots, \mathbf{v}_n)$ o, como $[\mathbf{v}_1, \mathbf{v}_2, \ldots, \mathbf{v}_n]$. En Julia, existen diversas maneras de representar listas de vectores. Si proporcionamos los elementos de la lista, separándolos por comas y encerrándolos entre corchetes cuadrados, creamos un arreglo unidimensional de vectores. Por otro lado, al utilizar paréntesis como delimitadores, obtenemos una tupla o lista.
+md"""Una lista de $n$-vectores puede expresarse como $(\mathbf{v}_1, \mathbf{v}_2, \ldots, \mathbf{v}_n)$ o, como $[\mathbf{v}_1, \mathbf{v}_2, \ldots, \mathbf{v}_n]$. En Julia, existen diversas maneras de representar listas de vectores. Si proporcionamos los elementos de la lista, separándolos por comas y encerrándolos entre corchetes cuadrados, creamos un arreglo unidimensional de vectores. Por otro lado, al utilizar paréntesis como delimitadores, obtenemos una tupla o lista.
 """
 
 # ╔═╡ 93078b0c-c68a-437a-8a61-1da0d0f54607
@@ -343,10 +343,19 @@ md"""O incluso acceder a un elemento de uno de los vectores del arreglo, de la s
 list₁[2][1]
 
 # ╔═╡ b9bf9c52-20b6-49c7-97ca-3054ec9934a8
-md"""En Julia, la función $\texttt{rand(n)}$ genera un vector aleatorio de longitud $n$ con entradas entre 0 y 1. Cada vez que se llama o evalúa esta función, se obtiene un vector diferente."""
+md"""En Julia, la función $\texttt{rand(n)}$ genera un vector aleatorio de longitud $n$ con entradas entre $0$ y $1$. Cada vez que se llama o evalúa esta función, se obtiene un vector diferente."""
+
+# ╔═╡ 87c7e355-3c3b-48b7-a363-0e60504a1c02
+r₁= @bind r1 Slider(1:1:10, show_value=true, default=8)
 
 # ╔═╡ 10319b9c-488b-4c19-ad94-83d6aeeab81e
-rand(8) #Vector aleatorio de tamaño 8
+rand(r1) #Vector aleatorio de tamaño 8
+
+# ╔═╡ f86f678b-266f-42a1-8f18-ee0f6560efe6
+md"""Otro ejemplo de lo mencionado es:"""
+
+# ╔═╡ bec8ef83-86c4-4804-9ba4-b09f1b737e37
+r₂= @bind r2 Slider(1:1:10, show_value=true, default=3)
 
 # ╔═╡ 4bb4bffc-cbf9-4f79-81d8-a2cde0f0cc8d
 rand(3) #Vector aleatorio de tamaño 3
@@ -384,11 +393,20 @@ Estos vectores canónicos forman una base ortogonal estándar para $\mathbb{R}^n
 
 No hay una función incorporada en Julia para crear el $i$-ésimo vector canónico de longitud $n$. Pero con el siguiente código se puede crear el $i$-ésimo vector canónico, con $i = 2$ y $n = 4$."""
 
+# ╔═╡ 29213888-9d31-4976-9cd8-659b563e6eb4
+begin
+	i= @bind i₁ Slider(1:1:8, show_value=true, default=2)
+	n= @bind N₁ Slider(1:1:10, show_value=true, default=4)
+end;
+
+# ╔═╡ e43f6f0c-13b2-4212-bdca-f16ba811d310
+md""" i = $i,  	 n = $n\
+"""
+
 # ╔═╡ 38ad858d-6bf4-455d-886a-b257e962a3e6
 begin
-	i = 2; n = 4;
-	ei = zeros(n); #Crea un vector de ceros
-	ei[i] = 1; #Cambia la entrara i-ésima por 1
+	ei = zeros(N₁); #Crea un vector de ceros
+	ei[i₁] = 1; #Cambia la entrara i-ésima por 1
 	ei
 end
 
@@ -438,10 +456,10 @@ md"""Podemos graficar el vector de la siguiente manera:"""
 plot(t, seriestype=:scatter, legend = false, grid = true)
 
 # ╔═╡ 3779aae5-dee3-4840-b3f9-9cf6009a38bd
-md"""Consideremos ahora un vector de tamaño $m\times 1$, donde $m$ varia desde 1 hasta 50, generado de manera aleatoria."""
+md"""Consideremos ahora un vector de tamaño $m\times 1$, donde $m$ varia desde 1 hasta 500, generado de manera aleatoria."""
 
 # ╔═╡ cd45633e-20a9-4df6-bcac-fd0da75d2a27
-@bind m Slider(1:50, show_value=true)
+@bind m Slider(1:500, show_value=true)
 
 # ╔═╡ 6829875c-c295-4495-bad8-09d83faebd58
 s = rand(m)
@@ -1896,13 +1914,18 @@ version = "1.4.1+1"
 # ╟─63efff5c-17ce-465e-97fa-c6223677e65d
 # ╠═7b1f26b5-c056-469a-96b9-aeeebed2fd36
 # ╟─b9bf9c52-20b6-49c7-97ca-3054ec9934a8
+# ╟─87c7e355-3c3b-48b7-a363-0e60504a1c02
 # ╠═10319b9c-488b-4c19-ad94-83d6aeeab81e
+# ╟─f86f678b-266f-42a1-8f18-ee0f6560efe6
+# ╟─bec8ef83-86c4-4804-9ba4-b09f1b737e37
 # ╠═4bb4bffc-cbf9-4f79-81d8-a2cde0f0cc8d
 # ╟─d233a853-04f2-4e43-8ab6-79e461079a8a
 # ╟─4f3ca58e-b404-4731-b04e-1c726bd949e5
 # ╠═b60dd0bd-d397-4925-9917-8bbb79b0e29c
 # ╟─0a60051c-a26f-4abb-aa7c-4972347ffdf1
-# ╠═38ad858d-6bf4-455d-886a-b257e962a3e6
+# ╟─29213888-9d31-4976-9cd8-659b563e6eb4
+# ╟─e43f6f0c-13b2-4212-bdca-f16ba811d310
+# ╟─38ad858d-6bf4-455d-886a-b257e962a3e6
 # ╟─def16ddc-3710-41de-ad68-62b2642db717
 # ╠═72489742-7de3-4a0f-844b-ea4bac14d1e5
 # ╠═1801d0c8-77a6-4f08-a690-b784f84d2afe
@@ -1916,7 +1939,7 @@ version = "1.4.1+1"
 # ╟─146f9bf8-cad2-4c38-adb8-3a4b13572c99
 # ╟─4df5b1d8-2d02-436b-86b6-585894b833ad
 # ╟─3779aae5-dee3-4840-b3f9-9cf6009a38bd
-# ╠═cd45633e-20a9-4df6-bcac-fd0da75d2a27
+# ╟─cd45633e-20a9-4df6-bcac-fd0da75d2a27
 # ╠═6829875c-c295-4495-bad8-09d83faebd58
 # ╟─181cad7f-b5d5-4b99-b1c6-234dc8c0c071
 # ╟─d43eb64b-da8b-434c-b72f-3d73d3c99736
