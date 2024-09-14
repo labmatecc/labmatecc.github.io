@@ -4,6 +4,16 @@
 using Markdown
 using InteractiveUtils
 
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+end
+
 # ╔═╡ db207f03-6472-44fc-ba20-2d14499af15b
 using PlutoUI
 
@@ -27,7 +37,7 @@ md"""Usaremos esta librería"""
 # ╔═╡ ecff234d-eb13-4cd9-aaa5-7bbf88c14271
 md"""# Introducción
 
-La factorización $QR$ es una herramienta fundamental. Esta técnica se emplea para descomponer una matriz $A$ en el producto de dos matrices: una matriz ortogonal $Q$ y una matriz triangular superior $R$. La notación usual para esta factorización es $A = QR$. Veamos:
+La factorización $QR$ es una herramienta fundamental. Esta técnica se emplea para descomponer una matriz $A$ en el producto de dos matrices: una matriz ortogonal $Q$ y una matriz triangular superior $R$, ver $[1,2,4]$. La notación usual para esta factorización es $A = QR$. Veamos:
 
 Dada $A\in\mathbb{R}^{m\times n}$ con $A=[a_1,a_2,\dots,a_n]$, donde $a_i, i=1,2,\dots,n$ son las columnas de $A$, queremos escribir $A= QR$, con $Q\in\mathbb{R}^{m\times p}$ y $R\in\mathbb{R}^{p\times n}$, donde $Q$ es una matriz ortogonal.
 
@@ -43,7 +53,7 @@ Por último, si las columnas de $A$ son linealmente independientes, entonces $p=
 """
 
 # ╔═╡ bc320da0-1258-46f0-8f07-b8d36cdbcdc9
-md"""En el cuaderno titulado **Independencia Lineal I** vimos el proceso de Gram-Schmidt Clásico y Gram-Schmidt Modificado, en este cuaderno mostraremos las reflexiones de Householder y las rotaciones de Givens para realizar la factorización $QR.$"""
+md"""En el cuaderno titulado **Independencia Lineal I** vimos el proceso de Gram-Schmidt Clásico y Gram-Schmidt Modificado, en este cuaderno mostraremos las reflexiones de Householder y las rotaciones de Givens para realizar la factorización $QR.$ Ver $[7]$."""
 
 
 # ╔═╡ a5733492-14dc-4dc8-a596-80a82010a53c
@@ -120,6 +130,9 @@ md"""Dado $x \in \mathbb{R}^n$, esta función calcula $v \in \mathbb{R}^n$ con $
 14.   $\beta=\frac{2(1)^2}{\sigma+v(1)^2}$
 15.   $v = \frac{v}{v(1)}$
 16. **end**"""
+
+# ╔═╡ 2295fff5-1266-411a-9a77-b7483c488817
+md"""Para más detalles de esto ver $[1,2].$"""
 
 # ╔═╡ df902773-1bef-4bb4-a53c-c16b68c14fd0
 md"""Programando el algoritmo, se obtiene la siguiente función"""
@@ -215,6 +228,9 @@ md"""Consideremos el siguiente algoritmo
 3.   $A(j+1:m,j)=v(2:m-j+1)$
 
 Este algoritmo usa el algoritmo anterior para obtener la matriz $R$ de la factorización $QR$. Recuerde que asumimos que las columnas de $A$ son linealmente independientes."""
+
+# ╔═╡ a715a5f4-6754-4551-92b9-b91586c56616
+md"""Para más detalles de esto ver $[1,2].$ A continuación se crea una función para el algoritmo mostrado."""
 
 # ╔═╡ 11ce39a8-7b98-4ea5-bfe9-81c7bbfd9e8e
 function Rhouse(A)
@@ -342,11 +358,11 @@ r_m
 # ╔═╡ 29959f97-471f-4e2f-a124-eedea72fbab3
 md"""Si
 
-$x_i=||x||\cos(\phi), \quad x_k=||x||\sin(\phi)$
+$x_i=||x||\cos(\phi), \quad x_k=||x||\sin(\phi),$
 entonces
 
 $y_i=||x||\Big( \cos(\theta)\cos(\phi)-\sin(\theta)\sin(\phi) \Big) =||x||
-\cos(\theta+\phi)$
+\cos(\theta+\phi),$
 y
 
 $y_i=||x||\sin(\theta+\phi).$
@@ -354,8 +370,11 @@ Si queremos $y_k=0$ tenemos así dos alternativas, $\theta=-\phi$ o $\theta=\pi-
 Escogemos $\theta=-\phi$. De donde
 
 $c=\cos(\theta)=\frac{x_i}{\sqrt{x_i^2+x_k^2}}, \quad
-s=\sin(\theta)=-\frac{x_k}{\sqrt{x_i^2+x_k^2}}$
+s=\sin(\theta)=-\frac{x_k}{\sqrt{x_i^2+x_k^2}}.$
 """
+
+# ╔═╡ b1eabc55-366c-4994-9ede-c73747180268
+md"""Esto fue tomado de $[1,2].$"""
 
 # ╔═╡ ddf93e9b-5d73-410c-b3a0-ac39e1075746
 md"""Tenemos el siguiente algoritmo (que evita división por la menor componente y también evita división por norma pequeña."""
@@ -421,10 +440,18 @@ function Giv(A, i, k, c, s)
 end
 
 # ╔═╡ 7a3c3bf8-44d5-4d38-b73a-3d829f9bd2f6
-md""" *Ejemplo:*"""
+md""" *Ejemplo:*
+
+Consideremos la siguiente matriz aleatoria de tamaño $4\times 4.$"""
+
+# ╔═╡ 2e34f7cb-56b2-4651-a47c-aae2d547d4dc
+n= @bind N Slider(2:1:6, show_value=true, default=4)
 
 # ╔═╡ 03219844-9eb9-433f-acfd-525455fcf83a
-A₁₂ = floor.(10*rand( 3, 3))
+A₁₂ = floor.(10*rand(N, N))
+
+# ╔═╡ 6c45f477-7356-4c0e-82df-bf1d64518411
+md"""Realizamos la primera rotación de Givens (en las filas $2$ y $3$), se verifica si $a_{31}$ es distinto de $0$, si es así, se calcula la rotación de Givens volver dicha componente $0$."""
 
 # ╔═╡ 9464edf3-1096-4e77-b64b-ad15fd256b76
 begin
@@ -436,6 +463,9 @@ begin
     end
 	A₁₃
 end
+
+# ╔═╡ ae0d923f-40ba-413d-aef6-ba47d080eb5c
+md"""Ahora bien, realizamos la segunda rotación de Givens (en las filas $1$ y $2$) para volver $0$ la componente $a_{12}.$ Obteniendo la siguiente matriz."""
 
 # ╔═╡ 53cfcfd5-a41f-4518-8a2b-6b36d34efb54
 begin
@@ -543,7 +573,7 @@ $d^2=\prod_{\ell=1}^N\left(\frac{1}{1+\tau_\ell^2}\right)$
 md"""
 Se implementa la función FastGivens que define los valores de 
  $\alpha$ y $\beta$ 
- de la matriz que elimina la segunda entrada del vector $x$, La función modifica $d$.
+ de la matriz que elimina la segunda entrada del vector $x$, La función modifica $d$. Para más detalles, ver $[1,2].$
 """
 
 # ╔═╡ 083f1674-085f-4207-812c-6ce36b260a7e
@@ -701,7 +731,9 @@ md"""[1] Golub, G. H. (1996). Matrix computation and the theory of moments. Nume
 
 [5] Boyd, S., & Vandenberghe, L. (2021). Introduction to Applied Linear Algebra: Vectors, Matrices, and Least Squares - Julia Language Companion. Cambridge University Press.
 
-[6] Grossman, S. I., & Flores Godoy, J. J. (2012). Álgebra Lineal (7a ed.). McGraw-Hill."""
+[6] Grossman, S. I., & Flores Godoy, J. J. (2012). Álgebra Lineal (7a ed.). McGraw-Hill.
+
+[7] Labmatecc. Independencia lineal. Labmatecc. [https://labmatecc.github.io/Notebooks/AlgebraLineal/Independencialineal/](https://labmatecc.github.io/Notebooks/AlgebraLineal/Independencialineal/)"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -996,6 +1028,7 @@ version = "17.4.0+2"
 # ╟─6193030e-3807-471c-aaf9-d3c8a3ac895e
 # ╟─a5a2b67c-80ee-4f9b-a933-f3485a6cd892
 # ╟─26847907-9d04-4c9e-b2e7-64248258c0dd
+# ╟─2295fff5-1266-411a-9a77-b7483c488817
 # ╟─df902773-1bef-4bb4-a53c-c16b68c14fd0
 # ╠═9311ee53-94e6-49cc-8eaa-b5f2efcb9f16
 # ╟─3573d257-bf10-46d2-9549-dfedcd95bc82
@@ -1009,6 +1042,7 @@ version = "17.4.0+2"
 # ╟─eb6b82d9-2047-44e7-b104-a3ea8a977d3a
 # ╟─029f4ce6-87da-44be-afd4-776230245937
 # ╟─5a8f5d62-3f4e-48ab-aef7-8a9446e33f14
+# ╟─a715a5f4-6754-4551-92b9-b91586c56616
 # ╠═11ce39a8-7b98-4ea5-bfe9-81c7bbfd9e8e
 # ╟─575ae122-a70d-4c28-8c93-4213b72f5a6a
 # ╠═7bcc8c19-176b-4bec-9788-14bed749f920
@@ -1028,6 +1062,7 @@ version = "17.4.0+2"
 # ╟─99f54ca8-46a5-4c06-8164-38b648f27629
 # ╟─1b72085e-a0fd-4c17-aca4-56622a4a5bb3
 # ╟─29959f97-471f-4e2f-a124-eedea72fbab3
+# ╟─b1eabc55-366c-4994-9ede-c73747180268
 # ╟─ddf93e9b-5d73-410c-b3a0-ac39e1075746
 # ╠═06efe5f4-8f9a-411b-a63a-28280f579212
 # ╟─ca11ea3a-e4e7-4ad7-8a88-915e274539af
@@ -1040,8 +1075,11 @@ version = "17.4.0+2"
 # ╟─ee4c46a7-aeaf-4029-900b-56522d6a1963
 # ╠═e7691b15-f8ab-4f8f-95a7-d918c6d44057
 # ╟─7a3c3bf8-44d5-4d38-b73a-3d829f9bd2f6
+# ╟─2e34f7cb-56b2-4651-a47c-aae2d547d4dc
 # ╠═03219844-9eb9-433f-acfd-525455fcf83a
+# ╟─6c45f477-7356-4c0e-82df-bf1d64518411
 # ╠═9464edf3-1096-4e77-b64b-ad15fd256b76
+# ╟─ae0d923f-40ba-413d-aef6-ba47d080eb5c
 # ╠═53cfcfd5-a41f-4518-8a2b-6b36d34efb54
 # ╟─a4930f05-7401-4a3c-80b5-5ee906d19fda
 # ╟─7bb9ca37-7339-4e47-8831-caa6895f7dfc
@@ -1067,7 +1105,7 @@ version = "17.4.0+2"
 # ╠═e15d1205-1780-4d0d-a2d4-01edba895742
 # ╠═65e2781c-8851-4628-87b9-1aab7bb26b22
 # ╟─313d2c07-be5f-4579-a8f1-904b068a87b5
-# ╠═ef68b4f9-4bd3-4311-b8aa-0e1a5edaa049
+# ╟─ef68b4f9-4bd3-4311-b8aa-0e1a5edaa049
 # ╟─06b07e27-0781-434f-9e8c-04edcaba4f31
 # ╟─567004f4-77a1-4693-ba6e-017c4e84572e
 # ╟─00000000-0000-0000-0000-000000000001
