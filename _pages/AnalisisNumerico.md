@@ -150,7 +150,7 @@ header-includes: |
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>.</p>
+        <p>Este cuaderno aborda tres métodos para resolver ecuaciones no lineales y diferenciales: Newton, Euler y Picard. El Método de Newton aproxima raíces de funciones no lineales, Euler resuelve ecuaciones diferenciales ordinarias con variantes explícita e implícita, y Picard utiliza aproximaciones iterativas basadas en integrales para garantizar la convergencia.</p>
       </div>
     </div>
   </div>
