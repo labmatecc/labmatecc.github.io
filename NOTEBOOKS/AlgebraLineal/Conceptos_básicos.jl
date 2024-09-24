@@ -291,10 +291,20 @@ Se presenta una matriz cuadrada $A_1$ de tamaño $3\times 3$."""
 A₁=[1 2 3; 4 5 6; 7 8 9]
 
 # ╔═╡ cff445ca-7554-47ee-b410-fbec0b552a7e
-md"""Otro ejemplo de una matriz cuadrada es la que sigue a continuación (tamaño \(4 \times 4\)). Esta matriz es generada de manera aleatoria."""
+md"""Otro ejemplo de una matriz cuadrada es la que sigue a continuación (tamaño $4 \times 4$). Esta matriz es generada de manera aleatoria."""
+
+# ╔═╡ 12687339-e12d-41c4-8253-4fd780682e7f
+begin
+	N1= @bind n1 Slider(1:1:8, show_value=true, default=4)
+	N2= @bind n2 Slider(1:1:10, show_value=true, default=4)
+end;
+
+# ╔═╡ 914f8485-7f5b-4145-b553-8da9c1eda89f
+md""" n_1 = $N1,  	 n_2 = $N2\
+"""
 
 # ╔═╡ 06003fa7-8a62-4f5e-bf16-8e9d167193a6
-A₂=rand(4,4) #Genera aleatoriamente una matriz de tamaño 4x4
+A₂=rand(n1,n2) #Genera aleatoriamente una matriz de tamaño 4x4
 
 # ╔═╡ 446244b7-5043-4928-b82e-de2ee7fc95a1
 md""" ### $\cdot$ Matriz diagonal
@@ -320,8 +330,11 @@ $\begin{bmatrix}  1 & 0 & \cdots & 0 \\  0 & 1 & \cdots & 0 \\  \vdots & \vdots 
 
 Ejemplo:"""
 
+# ╔═╡ 043bae1d-788a-427f-ac5b-7bc61672ce47
+M1= @bind m1 Slider(1:1:8, show_value=true, default=4)
+
 # ╔═╡ b65e75d7-fba8-4648-9726-5be5f1b776af
-I₄=Matrix(I, 4, 4) #Se genera la matriz I₄
+I₄=Matrix(I, m1, m1) #Se genera la matriz I₄
 
 # ╔═╡ 71823790-277a-4ef2-9e32-ca5e681b23e3
 md""" ### $\cdot$ Matriz nula
@@ -333,8 +346,18 @@ $\mathbf{0}_{m \times n}=\begin{bmatrix}  0 & 0 & \cdots & 0 \\  0 & 0 & \cdots 
 
 Ejemplo: A continuación se genera una matriz nula de tamaño $2\times 3$."""
 
+# ╔═╡ f611499c-45c2-4e43-9995-5c1a86580d7b
+begin
+	P1= @bind p1 Slider(1:1:8, show_value=true, default=2)
+	P2= @bind p2 Slider(1:1:10, show_value=true, default=3)
+end;
+
+# ╔═╡ 6b5dd9a6-b989-40f6-98d4-3f9bb95489c2
+md""" p_1 = $P1,  	 p_2 = $P2\
+"""
+
 # ╔═╡ 4056d2ed-2039-46aa-940b-b2fb120033df
-A₅=zeros((2, 3)) #Matriz nula de tamaño 2x3
+A₅=zeros((p1, p2)) #Matriz nula de tamaño 2x3
 
 # ╔═╡ f46ee269-bb92-4ce8-9305-53d36abd7cfc
 md"""# Operaciones con matrices"""
@@ -398,8 +421,11 @@ Generemos una matriz aleatoria de tamaño $3\times 5$ y realicemos el producto c
 # ╔═╡ cd9ea07b-1bff-4f76-b6b8-722a7fe9d457
 A₉=rand(3,5)
 
+# ╔═╡ 71207522-3cc8-4fde-9b92-7cb5f401a9a8
+K=@bind K Slider(1:.1:8, show_value=true, default=2)
+
 # ╔═╡ 96a56893-71b2-4a63-b601-b77ac784998e
-B₉=2*A₉
+B₉=K*A₉
 
 # ╔═╡ 660f41ae-dfc8-4edd-9280-e00b721d255c
 md""" ### $\cdot$ Producto de una matriz con un vector
@@ -607,7 +633,7 @@ Si realizamos el producto de Kronecker con una matriz de unos, el resultado ser�
 A₁₄ #Mostramos A
 
 # ╔═╡ 8c8e4794-f46a-4d05-b182-485ad85b5e8f
-@bind r Slider(1:20, show_value=true) #elegimos r
+r =@bind r Slider(1:20, show_value=true) #elegimos r
 
 # ╔═╡ 31f9367a-88d3-466b-a3bf-299b5c6df316
 C₁₄ = ones(r, r) #Creamos la matriz de unos de tamaño rxr
@@ -984,12 +1010,17 @@ version = "17.4.0+2"
 # ╟─6f4c7a27-1071-4979-9b6a-9eac50950e64
 # ╠═80550e96-8f59-4429-9dc6-b93f7b4706db
 # ╟─cff445ca-7554-47ee-b410-fbec0b552a7e
+# ╟─12687339-e12d-41c4-8253-4fd780682e7f
+# ╟─914f8485-7f5b-4145-b553-8da9c1eda89f
 # ╠═06003fa7-8a62-4f5e-bf16-8e9d167193a6
 # ╟─446244b7-5043-4928-b82e-de2ee7fc95a1
 # ╠═18a3a569-8afc-4d7c-9a3b-126e436d5295
 # ╟─755968e9-e37c-49f5-a9cd-3b697f4a7870
+# ╟─043bae1d-788a-427f-ac5b-7bc61672ce47
 # ╠═b65e75d7-fba8-4648-9726-5be5f1b776af
 # ╟─71823790-277a-4ef2-9e32-ca5e681b23e3
+# ╟─f611499c-45c2-4e43-9995-5c1a86580d7b
+# ╟─6b5dd9a6-b989-40f6-98d4-3f9bb95489c2
 # ╠═4056d2ed-2039-46aa-940b-b2fb120033df
 # ╟─f46ee269-bb92-4ce8-9305-53d36abd7cfc
 # ╟─6d824b6e-fbba-4f45-ad44-eb25d5608fc3
@@ -1003,6 +1034,7 @@ version = "17.4.0+2"
 # ╟─da0b3214-9d7d-4b2a-9d18-980ba142d5d8
 # ╟─644ba732-24e1-4156-9c22-0dd3790b30e9
 # ╠═cd9ea07b-1bff-4f76-b6b8-722a7fe9d457
+# ╟─71207522-3cc8-4fde-9b92-7cb5f401a9a8
 # ╠═96a56893-71b2-4a63-b601-b77ac784998e
 # ╟─660f41ae-dfc8-4edd-9280-e00b721d255c
 # ╟─91f99851-9957-475f-8d80-c3c4c8e68adb
@@ -1030,7 +1062,7 @@ version = "17.4.0+2"
 # ╟─66cf788b-1ddc-41ab-a207-63febdfcfd42
 # ╟─93b7fbbf-f130-41f7-a126-26d2a423a3b2
 # ╠═6e4bc8fc-38fd-46f7-a31d-519f166c60f7
-# ╠═8c8e4794-f46a-4d05-b182-485ad85b5e8f
+# ╟─8c8e4794-f46a-4d05-b182-485ad85b5e8f
 # ╠═31f9367a-88d3-466b-a3bf-299b5c6df316
 # ╠═46617d7f-931a-4ce8-9f8a-05b726ef9a41
 # ╟─4b10de39-8878-4298-869b-f7ef6585a132

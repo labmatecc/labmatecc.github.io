@@ -4,6 +4,16 @@
 using Markdown
 using InteractiveUtils
 
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+end
+
 # ╔═╡ d4fd49f0-a4d6-11ee-2ed0-87bf49ac3dbe
 using PlutoUI
 
@@ -40,7 +50,7 @@ md"""# Introducción"""
 # ╔═╡ 29c53f25-89b8-44a2-a081-cd3b5e15989a
 md"""Sea $T:V\to W$ una transformación lineal. En diversas aplicaciones resulta útil encontrar un vector $v$ en $V$ tal que $Tv$ y $v$ son paralelos, es decir, se busca un vector $v$ y un escalar $\lambda$ tal que $Tv=\lambda v$.
 
-Si $v \neq 0$ y $\lambda$ satisface lo anterior, entonces $\lambda$ se denomina un valor propio de $T$ y $v$ un vector propio de $T$ correspondiente al valor propio $\lambda$. Si $V$ tiene dimensión finita, entonces $T$ se puede representar por una matriz $A_T$. Por esta razón se estudiarán los valores y los vectores propios de las matrices de $n \times n$.
+Si $v \neq 0$ y $\lambda$ satisface lo anterior, entonces $\lambda$ se denomina un valor propio de $T$ y $v$ un vector propio de $T$ correspondiente al valor propio $\lambda$. Si $V$ tiene dimensión finita, entonces $T$ se puede representar por una matriz $A_T$. Por esta razón se estudiarán los valores y los vectores propios de las matrices de $n \times n$, ver $[1-5]$.
 """
 
 # ╔═╡ 3c11d286-ede4-4b20-a021-1a21a8e39a47
@@ -471,6 +481,9 @@ V₆=SVD₆.V #Visualizamos V
 # ╔═╡ a8ca4dec-0d18-416b-a2ad-60112edc64e0
 U₆ * Diagonal(S₆) * transpose(V₆) #Realizamos el producto U*Σ*Vᵗ
 
+# ╔═╡ f7417595-9aa2-41f1-8512-053757880d04
+md"""Para más detalles de la descomposición en valores singulares, ver $[1,2].$"""
+
 # ╔═╡ b31f93c6-c2fa-41a4-8fd1-48f188deda48
 md"""# Compresión de imágenes
 
@@ -478,7 +491,7 @@ La compresión de imágenes mediante SVD busca reducir el número de valores sin
 """
 
 # ╔═╡ 277e2fe3-4413-4e14-8cb7-f590f18fb13e
-md"""Recordemos que una imagen se puede representar de manera matricial. Así podemos trabajar en cada canal de color de la imagen para comprimir la imagen. 
+md"""Recordemos que una imagen se puede representar de manera matricial, ver $[6,7]$. Así podemos trabajar en cada canal de color de la imagen para comprimir la imagen. 
 
 Para esto, vamos a considerar la matriz $A$ que representa uno de los tres canales de la imagen (R, G o B) y realizamos su descomposición en valores singulares $A=U\Sigma V^t$, y como, en la matriz $\Sigma$, los valores singulares se ordenan de mayor a menor, vamos a seleccionar solo los primeros $k$ valores singulares y truncaresmos las columnas de $U$ y $V$ correspondientes, esto reduce la dimensionalidad de la respresentación. Así, este canal quedara comprimido de la siguiente forma $A_k=U_k\Sigma_k V_k^t$. Este proceso lo repetimos para cada canal de color.
 
@@ -585,26 +598,26 @@ end
 # ╔═╡ d43420d5-e552-426b-88e6-60a7d4eb2b01
 md"""Definimos cuántos valores singulares vamos a usar:"""
 
-# ╔═╡ bbf4e5df-3649-4abd-a310-b884f69ecbcd
-k=10
+# ╔═╡ 3284ca43-d8f5-453e-856f-ecfff8af9b20
+K= @bind k Slider(1:1:size(Σg)[1], show_value=true, default=10)
 
 # ╔═╡ 3ecf24e3-b676-42f8-9f3b-4fdd2e1cc89c
 md"""y truncamos cada matriz"""
 
 # ╔═╡ aeabb688-7043-4227-8d12-81cc3427ce1f
-Mr = Ur[:, 1:k] * Diagonal(Σr[1:k]) * transpose(Vr[:, 1:k])
+Mr = Ur[:, 1:k] * Diagonal(Σr[1:k]) * transpose(Vr[:, 1:k]);
 
 # ╔═╡ 1c901f4b-123d-48dc-a713-e34178964264
 heatmap(rotar(Mr), color=:reds, axis=false, legend=false)
 
 # ╔═╡ ff4ea15f-1a01-421b-9076-6fc7df638fe9
-Mg = Ug[:, 1:k] * Diagonal(Σg[1:k]) * transpose(Vg[:, 1:k])
+Mg = Ug[:, 1:k] * Diagonal(Σg[1:k]) * transpose(Vg[:, 1:k]);
 
 # ╔═╡ 8250d63a-12c0-4f87-839f-c45ea54bb4a8
 heatmap(rotar(Mg), color=:greens, axis=false, legend=false)
 
 # ╔═╡ 6571e75b-fd06-4075-9c65-2a036be9c5b2
-Mb = Ub[:, 1:k] * Diagonal(Σb[1:k]) * transpose(Vb[:, 1:k])
+Mb = Ub[:, 1:k] * Diagonal(Σb[1:k]) * transpose(Vb[:, 1:k]);
 
 # ╔═╡ 3074097c-b8de-4301-beee-ebfa7cd46354
 heatmap(rotar(Mb), color=:blues, axis=false, legend=false)
@@ -613,7 +626,7 @@ heatmap(rotar(Mb), color=:blues, axis=false, legend=false)
 md"""Juntamos los tres canales, para obtener la imagen en formato RGB"""
 
 # ╔═╡ 8e489736-426d-489a-90ae-072d2e90a87a
-imagen_RGB = permutedims(cat(dims=3, Mr, Mg, Mb), [3, 1, 2])
+imagen_RGB = permutedims(cat(dims=3, Mr, Mg, Mb), [3, 1, 2]);
 
 # ╔═╡ 04a5cee1-67ee-41bb-9d98-4bfc9e2b7fe6
 colorview(RGB, imagen_RGB)
@@ -705,11 +718,22 @@ fname₂ = download(url₂)
 # ╔═╡ 587d2271-8f17-42c6-9112-668bba9665e2
 imag₂ = load(fname₂)
 
+# ╔═╡ 7601a463-0548-4e66-a1fe-4d8164b6146a
+begin
+	K₁= @bind k₁ Slider(1:1:size(imag₂)[1], show_value=true, default=2)
+	K₂= @bind k₂ Slider(1:1:size(imag₂)[1], show_value=true, default=20)
+	K₃= @bind k₃ Slider(1:1:size(imag₂)[1], show_value=true, default=100)
+end;
+
+# ╔═╡ a1537f49-9174-4d8b-83e6-2a80092c2e2e
+md""" k₁ = $K₁,  	k₂ = $K₂,  	k₃ = $K₃\
+"""
+
 # ╔═╡ 6f5f13d0-c4b4-4e41-9cdf-20d68132736d
-[compresion(imag₂, 5) compresion(imag₂, 20) compresion(imag₂, 100)]
+[compresion(imag₂, k₁) compresion(imag₂, k₂) compresion(imag₂, k₃)]
 
 # ╔═╡ 8cc3fde2-8b71-4655-8037-9878b30be723
-[porcentaje(imag₂, 5) porcentaje(imag₂, 20) porcentaje(imag₂, 100)]
+[porcentaje(imag₂, k₁) porcentaje(imag₂, k₂) porcentaje(imag₂, k₃)];
 
 # ╔═╡ 88a8bad8-456e-46a6-b7de-96e1b9337c6e
 md"""# Marca de agua digital utilizando SVD"""
@@ -792,7 +816,7 @@ begin
 		Ub₁=svdfactors₁[3].U
 		Σb₁=svdfactors₁[3].S
 		Vb₁=svdfactors₁[3].V
-end
+end;
 
 # ╔═╡ d2a374d8-b43f-4112-a00b-eaf1d4172ea8
 size(Vg₁)
@@ -805,7 +829,7 @@ begin
 	Ir₁=red.(imag₅)
 	Ig₁=green.(imag₅)
 	Ib₁=blue.(imag₅)
-end
+end;
 
 # ╔═╡ ad989a4a-dfb1-4964-be2e-51f5a125d57a
 size(Ir₁)
@@ -824,7 +848,7 @@ begin
 	VR=Vr₁+α*Ir₁'
 	VG=Vg₁+α*Ig₁'
 	VB=Vb₁+α*Ib₁'
-end
+end;
 
 # ╔═╡ bfa7cd3a-f9d9-4a8f-8d12-ec760a3e39e4
 md"""Así, cada canal de color con la marca de agua se ve de la siguiente forma"""
@@ -834,7 +858,7 @@ begin
 	MR = Ur₁ * Diagonal(Σr₁) * transpose(VR);
 	MG = Ug₁ * Diagonal(Σg₁) * transpose(VG);
 	MB = Ub₁ * Diagonal(Σb₁) * transpose(VB);
-end
+end;
 
 # ╔═╡ 646bfe90-87b3-4808-aa50-fa8abc62e6c7
 heatmap(rotar(MR), color=:reds, axis=false, legend=false)
@@ -885,9 +909,20 @@ end
 # ╔═╡ 4051a1ac-136a-4722-81d4-ad579becba8f
 md"""Realicemos ejemplos con diferentes valores de $\alpha$, obserev que entre más grande sea dicho valor, la imagen cambia y ya no se parece a la original"""
 
+# ╔═╡ 199a7aa6-4013-45f9-9da8-54ad8e81e490
+begin
+	α₂= @bind a₂ Slider(0:1e-10:1, show_value=true, default=1e-10)
+	α₃= @bind a₃ Slider(0:1e-10:1, show_value=true, default=1e-6)
+	α₄= @bind a₄ Slider(0:1e-10:1, show_value=true, default=0.01)
+end;
+
+# ╔═╡ 733da229-e2e0-415f-b97c-ab96e4e17841
+md""" a₂ = $α₂,  	a₃ = $α₃,  	a₄ = $α₄\
+"""
+
 # ╔═╡ c946776b-1549-400b-8da9-59781d659ab0
-[imag₃     cifrado(imag₃,imag₅, 1e-10)
-cifrado(imag₃,imag₅, 1e-6)     cifrado(imag₃,imag₅, 0.01)]
+[imag₃     cifrado(imag₃,imag₅, a₂)
+cifrado(imag₃,imag₅, a₃)     cifrado(imag₃,imag₅, a₄)]
 
 # ╔═╡ 25bce086-374e-42a3-9eea-4c7a973aeaa6
 md"""Con la siguiente función podemos hallar la diferencia (error) entre dos imagenes"""
@@ -901,14 +936,17 @@ function error(imagen1, imagen2)
 	println("$(round(Float64(error_tot), sigdigits=2))")
 end
 
+# ╔═╡ 78e948d0-0337-4cef-bcf6-b48106b7257e
+md"""Usando dicha función, obtenemos los siguientes errores:"""
+
 # ╔═╡ b9be03a4-9fb3-4b9a-8d59-9617310fc923
-error(imag₃, cifrado(imag₃,imag₅, 0.01))
+error(imag₃, cifrado(imag₃,imag₅, a₂))
 
 # ╔═╡ d9b34145-fefc-4201-9de0-7dd5fe9ce82c
-error(imag₃, cifrado(imag₃,imag₅, 1e-6))
+error(imag₃, cifrado(imag₃,imag₅, a₃))
 
 # ╔═╡ 8249ce67-9182-43f1-8ba5-f6a62de1ad0c
-error(imag₃, cifrado(imag₃,imag₅, 1e-10))
+error(imag₃, cifrado(imag₃,imag₅, a₄))
 
 # ╔═╡ 1fe751ec-42f0-416c-b4e9-4bbccdec613b
 md""" ### Recuperación de la marca de agua"""
@@ -976,11 +1014,15 @@ md"""[1] Strang, G. (2016). Introduction to Linear Algebra (5ta ed.). Wellesley-
 
 [2] Axler, S. (2014). Linear Algebra Done Right (3ra ed.). Springer.
 
-[4] Martínez R., H. J., & Sanabria R., A. M. (2014). Álgebra Lineal. Programa Editorial Universidad del Valle.
+[3] Martínez R., H. J., & Sanabria R., A. M. (2014). Álgebra Lineal. Programa Editorial Universidad del Valle.
 
-[5] Boyd, S., & Vandenberghe, L. (2021). Introduction to Applied Linear Algebra: Vectors, Matrices, and Least Squares - Julia Language Companion. Cambridge University Press.
+[4] Boyd, S., & Vandenberghe, L. (2021). Introduction to Applied Linear Algebra: Vectors, Matrices, and Least Squares - Julia Language Companion. Cambridge University Press.
 
-[6] Grossman, S. I., & Flores Godoy, J. J. (2012). Álgebra Lineal (7a ed.). McGraw-Hill."""
+[5] Grossman, S. I., & Flores Godoy, J. J. (2012). Álgebra Lineal (7a ed.). McGraw-Hill.
+
+[6] Labmatecc. Introducción al procesamiento de imágenes. Algebra Lineal. Recuperado de [https://labmatecc.github.io/Notebooks/AlgebraLineal/Introduccionalprocesamientodeimagenes/](https://labmatecc.github.io/Notebooks/AlgebraLineal/Introduccionalprocesamientodeimagenes/)
+
+[7] MIT Computational Thinking. (2023). Images Abstractions. Recuperado de [https://computationalthinking.mit.edu/Fall22/images_abstractions/images/](https://computationalthinking.mit.edu/Fall22/images_abstractions/images/)"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1016,7 +1058,7 @@ TestImages = "~1.8.0"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.5"
 manifest_format = "2.0"
 project_hash = "2dad98fdd432d57470d1973d1ee2acc9e2152558"
 
@@ -2677,7 +2719,7 @@ version = "0.15.1+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.11.0+0"
 
 [[deps.libfdk_aac_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -2811,6 +2853,7 @@ version = "1.4.1+1"
 # ╠═5bac1f4b-29d9-434b-8d77-c9858ed964cd
 # ╠═6330d14a-f619-4fa4-b006-7b0021bdfd15
 # ╠═a8ca4dec-0d18-416b-a2ad-60112edc64e0
+# ╟─f7417595-9aa2-41f1-8512-053757880d04
 # ╟─b31f93c6-c2fa-41a4-8fd1-48f188deda48
 # ╟─277e2fe3-4413-4e14-8cb7-f590f18fb13e
 # ╟─3aadd3a3-579a-4d92-b22e-66f6e116f614
@@ -2841,7 +2884,7 @@ version = "1.4.1+1"
 # ╟─142d7155-a438-4b58-aef1-d2d67368b1a1
 # ╠═7a759b90-1758-4173-bc33-c04e69e3c74f
 # ╟─d43420d5-e552-426b-88e6-60a7d4eb2b01
-# ╠═bbf4e5df-3649-4abd-a310-b884f69ecbcd
+# ╟─3284ca43-d8f5-453e-856f-ecfff8af9b20
 # ╟─3ecf24e3-b676-42f8-9f3b-4fdd2e1cc89c
 # ╠═aeabb688-7043-4227-8d12-81cc3427ce1f
 # ╠═1c901f4b-123d-48dc-a713-e34178964264
@@ -2869,8 +2912,10 @@ version = "1.4.1+1"
 # ╠═e3ba24c0-f01f-4889-9bba-08b1c747031d
 # ╠═62491b66-b441-49d8-b5ed-63162dd72449
 # ╠═587d2271-8f17-42c6-9112-668bba9665e2
+# ╟─7601a463-0548-4e66-a1fe-4d8164b6146a
+# ╟─a1537f49-9174-4d8b-83e6-2a80092c2e2e
 # ╠═6f5f13d0-c4b4-4e41-9cdf-20d68132736d
-# ╠═8cc3fde2-8b71-4655-8037-9878b30be723
+# ╟─8cc3fde2-8b71-4655-8037-9878b30be723
 # ╟─88a8bad8-456e-46a6-b7de-96e1b9337c6e
 # ╟─38f2cb06-1040-4a63-bab9-517f314d704e
 # ╟─6d4de4e0-f80a-4dd9-aedc-771ea3264db0
@@ -2910,9 +2955,12 @@ version = "1.4.1+1"
 # ╟─c0d4ff63-5b07-4353-8c20-e8edf71006cf
 # ╠═019b3f98-d94a-4418-bb99-f734c0c4cad2
 # ╟─4051a1ac-136a-4722-81d4-ad579becba8f
+# ╟─199a7aa6-4013-45f9-9da8-54ad8e81e490
+# ╟─733da229-e2e0-415f-b97c-ab96e4e17841
 # ╠═c946776b-1549-400b-8da9-59781d659ab0
 # ╟─25bce086-374e-42a3-9eea-4c7a973aeaa6
 # ╠═08bf2c08-5c67-4a3d-86dd-e4eedced16aa
+# ╟─78e948d0-0337-4cef-bcf6-b48106b7257e
 # ╠═b9be03a4-9fb3-4b9a-8d59-9617310fc923
 # ╠═d9b34145-fefc-4201-9de0-7dd5fe9ce82c
 # ╠═8249ce67-9182-43f1-8ba5-f6a62de1ad0c

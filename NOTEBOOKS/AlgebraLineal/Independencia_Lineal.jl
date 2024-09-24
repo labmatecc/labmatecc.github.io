@@ -4,6 +4,16 @@
 using Markdown
 using InteractiveUtils
 
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+end
+
 # ╔═╡ 35c0a300-abed-11ee-1816-3d6ab9b18487
 using PlutoUI
 
@@ -22,13 +32,15 @@ Tu participación es fundamental para hacer de este curso una experiencia aún m
 md"""Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo."""
 
 # ╔═╡ 4a709378-cf2c-4072-9e46-46b4c7237c1b
-md"""Usaremos esta librería"""
+md"""Usaremos las siguientes librerías."""
 
 # ╔═╡ 0097fe78-3013-4eaf-ae85-006d6c10c803
 md"""# Introducción"""
 
 # ╔═╡ f60001c4-b165-4ae3-a642-3d0464a6d2d7
-md"""La independencia lineal es un concepto esencial en álgebra lineal que destaca la relación entre vectores. Se refiere a la propiedad de un conjunto de vectores donde ninguno puede expresarse como combinación lineal de los demás de manera trivial. Esta noción es clave en la resolución de sistemas de ecuaciones y análisis estructural.
+md"""La independencia lineal es un concepto esencial en álgebra lineal que destaca la relación entre vectores. Ver $[1,2,3,4,5]$.
+
+Se refiere a la propiedad de un conjunto de vectores donde ninguno puede expresarse como combinación lineal de los demás de manera trivial. Esta noción es clave en la resolución de sistemas de ecuaciones y análisis estructural.
 """
 
 # ╔═╡ 711861fd-da33-4f4c-9237-402139b704d2
@@ -47,6 +59,8 @@ md"""Para expresarlo de manera alternativa, $v_1, v_2, \ldots, v_n$ son linealme
 md"""**Teorema:**
 
 Dos vectores en un espacio vectorial son linealmente dependientes si y solo si uno de ellos es un múltiplo escalar del otro.
+
+Para detalles de la demostración, ver $[4]$ o $[6].$
 """
 
 # ╔═╡ 7d5c788c-3a1d-4cf7-80ae-9aae5f4b0a95
@@ -148,6 +162,8 @@ Un conjunto finito de vectores $\{v_1, v_2, \ldots, v_n\}$ es una **base** para 
 i) $\{v_1, v_2, \ldots, v_n\}$ es linealmente independiente.
 
 ii) $\{v_1, v_2, \ldots, v_n\}$ genera a $V$.
+
+Para más detalles de esto ver $[4,6].$
 """
 
 # ╔═╡ 3a6a24fe-f07b-4ad8-b951-45d36a73cef3
@@ -235,7 +251,9 @@ Dado que $q_{k+1} = \frac{\hat{q}_{k+1}}{\|\hat{q}_{k+1}\|}$, es claro que $\{q_
 """
 
 # ╔═╡ f395839e-21d0-4b31-85b6-9a6293c0eece
-md"""De lo anterior se tiene el siguiente algoritmo:"""
+md"""Para más detalles y ejemplos ver $[1,2, 6]$.
+
+De lo anterior se tiene el siguiente algoritmo:"""
 
 # ╔═╡ 9f0f52c0-5858-4bed-9f66-fe86bde5c42b
 md"""**ALGORITMO Gram-Schmidt**:
@@ -289,7 +307,9 @@ u = CGS(v) #Se genera el nuevo conjunto de vectores
 md"""### Proceso de ortonormalización de Gram-Schmidt Modificado"""
 
 # ╔═╡ 969d8800-1e8d-46b8-a3cb-2039f8cd2788
-md""" Existen formulaciones alternativas del algoritmo que tienen mejores propiedades numéricas. La más conocida de ellas es el algoritmo de Gram-Schmidt Modificado. Dicho algoritmo busca mejorar la estabilidad numérica al evitar la proyección sobre todos los vectores anteriores en cada paso, reduciendo así los errores de redondeo. Dicho algoritmo es el siguiente:"""
+md""" Existen formulaciones alternativas del algoritmo que tienen mejores propiedades numéricas. La más conocida de ellas es el algoritmo de Gram-Schmidt Modificado. Dicho algoritmo busca mejorar la estabilidad numérica al evitar la proyección sobre todos los vectores anteriores en cada paso, reduciendo así los errores de redondeo. Ver $[1,2,6]$.
+
+Dicho algoritmo es el siguiente:"""
 
 # ╔═╡ 19340c28-048d-4a05-89fa-22a9ec74c82e
 md"""**ALGORITMO Gram-Schmidt Modificado:**
@@ -386,11 +406,14 @@ md"""
 A continuación se comparan los métodos CGS y MGS por su eficiencia en términos de tiempo. Vamos a realizar el proceso de ortogonormalización $100$ veces para vectores aleatorios con ambos algoritmos.
 """
 
+# ╔═╡ 0efb3405-821c-4f87-838d-fdbc3455a55c
+n= @bind N Slider(5:1:200, show_value=true, default=100)
+
 # ╔═╡ 6fe2f5bc-d71c-4189-b860-27215b38d22c
 begin
 	TC = [] #tiempo en ejecutar el alg. de Gram-Schmidt Clásico
 	TM = [] #tiempo en ejecutar el alg. de Gram-Schmidt Modificado
-	for i in collect(2:100)
+	for i in collect(2:N)
 		a=0
 		b=0
 		vector = [rand(i) for k in 1:i]
@@ -404,7 +427,7 @@ begin
 end
 
 # ╔═╡ 218cd115-bb63-4f66-8f7e-9b7ddc1ecc9e
-plot(collect(2:100),[TC,TM], label=["CGS" "MGS"], title="Comparación en tiempo", xlabel="Orden del vector", ylabel="Tiempo en segundos")
+plot(collect(2:N),[TC,TM], label=["CGS" "MGS"], title="Comparación en tiempo", xlabel="Orden del vector", ylabel="Tiempo en segundos")
 
 # ╔═╡ 3df3f4ab-1758-49b6-92b2-579e745e6940
 md"""
@@ -1611,6 +1634,7 @@ version = "1.4.1+1"
 # ╠═08b5e338-b3f6-4377-801e-164dde541669
 # ╟─95d1b33a-b0ed-4082-bd6c-fdf6e064751a
 # ╟─4ebd3b53-f5cb-41ad-b90a-b34c8ba5b8c5
+# ╟─0efb3405-821c-4f87-838d-fdbc3455a55c
 # ╠═6fe2f5bc-d71c-4189-b860-27215b38d22c
 # ╟─218cd115-bb63-4f66-8f7e-9b7ddc1ecc9e
 # ╟─3df3f4ab-1758-49b6-92b2-579e745e6940

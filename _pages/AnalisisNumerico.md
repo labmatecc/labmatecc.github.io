@@ -144,6 +144,20 @@ header-includes: |
 <hr>
 
 <div class="button-container">
+  <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/EcuacionesNoLinealesII/" class="button">Ecuaciones No Lineales II</a>
+</div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>Este cuaderno aborda tres métodos para resolver ecuaciones no lineales y diferenciales: Newton, Euler y Picard. El Método de Newton aproxima raíces de funciones no lineales, Euler resuelve ecuaciones diferenciales ordinarias con variantes explícita e implícita, y Picard utiliza aproximaciones iterativas basadas en integrales para garantizar la convergencia.</p>
+      </div>
+    </div>
+  </div>
+
+<hr>
+
+<div class="button-container">
   <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/EcuacionesLineales/" class="button">Ecuaciones Lineales</a>
 </div>
 

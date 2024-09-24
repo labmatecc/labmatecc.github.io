@@ -43,6 +43,9 @@ md"""Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo."""
 # ╔═╡ 99e2cc16-b2b7-436c-a1c1-9d26776c31aa
 md"""Usaremos las siguientes librerías:"""
 
+# ╔═╡ eef87960-9361-4944-89a8-f1db289145b7
+md"""El cuaderno está basado en el material presentado en $[2,3]$."""
+
 # ╔═╡ 7bd37955-2bfc-428b-b94a-e11f299842fb
 md"""# Introducción"""
 
@@ -92,7 +95,7 @@ md"""Se obtiene como resultado:"""
 Jclust(x,reps,assignment₁)
 
 # ╔═╡ d8d3019f-6e7a-4955-8766-5db54223a143
-md"""O si consideramos"""
+md"""O sí consideramos"""
 
 # ╔═╡ 6fb695f6-00d9-41ce-904c-b92e6a1ff51b
 assignment₂ = [1,1,2];
@@ -104,22 +107,22 @@ md"""De la función se obtiene:"""
 Jclust(x,reps,assignment₂)
 
 # ╔═╡ e3af430e-c5f4-4a91-941d-5f0720522aae
-md"""# Algoritmo de Clustering"""
+md"""# Algoritmos de Clustering"""
 
 # ╔═╡ 6e7b812c-d63b-4624-9a8d-77408e1f9aba
-md"""El análisis de clustering ofrece diversas herramientas para revelar patrones internos y agrupar datos de manera significativa. En esta sección, mostraremos un algoritmo de clustering destacado: K-Means."""
+md"""El análisis de clustering ofrece diversas herramientas para revelar patrones internos y agrupar datos de manera significativa. En esta sección, mostraremos un algoritmo de clustering destacado: $K$-Means. Para más detalles ver $[1,2,3]$."""
 
 # ╔═╡ 1b36505e-79dc-45de-a654-1c2f5053410c
-md"""## K-Means"""
+md"""## $K$-Means"""
 
 # ╔═╡ 19f37699-3a2e-4932-9aec-8969165e8fcf
-md"""El término K-means describe un algoritmo, el cual asigna cada elemento al clúster que tiene el centroide (media) más cercano. En su forma más sencilla, el proceso consta de estos tres pasos:
+md"""El término $K$-means describe un algoritmo, el cual asigna cada elemento al clúster que tiene el centroide (media) más cercano. En su forma más sencilla, el proceso consta de estos tres pasos:
 
-1. Particionar los elementos en K clústeres iniciales.
+1. Particionar los elementos en $K$ clústeres iniciales.
 2. Recorrer la lista de elementos, asignando cada elemento al clúster cuyo centroide (media) esté más cercano. La distancia se calcula generalmente utilizando la distancia euclidiana con observaciones estandarizadas o no estandarizadas. Recalcular el centroide para el clúster que recibe el nuevo elemento y para el clúster que pierde el elemento.
 3. Repetir el Paso 2 hasta que no haya más reasignaciones.
 
-En lugar de comenzar con una partición de todos los elementos en K grupos preliminares en el Paso 1, podríamos especificar K centroides iniciales (puntos semilla) y luego proceder al Paso 2.
+En lugar de comenzar con una partición de todos los elementos en $K$ grupos preliminares en el Paso 1, podríamos especificar $K$ centroides iniciales (puntos semilla) y luego proceder al Paso 2.
 
 La asignación final de elementos a clústeres dependerá, en cierta medida, de la partición inicial o de la selección inicial de puntos semilla. La experiencia sugiere que la mayoría de los cambios importantes en la asignación ocurren con el primer paso de reasignación real.
 
@@ -173,14 +176,14 @@ X = vcat( [ 0.3*randn(2) for i = 1:100 ],
 [ [1,1] + 0.3*randn(2) for i = 1:100 ],
 [ [1,-1] + 0.3*randn(2) for i = 1:100 ] )
 scatter([x[1] for x in X], [x[2] for x in X])
-plot!(legend = false, grid = false, size = (500,500), xlims = (-1.5,2.5), ylims = (-2,2))
+plot!(legend = false, grid = false, size = (500,500), xlims = (-1.5,2.5), ylims = (-2,2), title="Datos aleatorios")
 end
 
 # ╔═╡ acd5ba29-4e13-4ce9-98d3-7a62de7754b4
 md"""Aplicando el algoritmo anterior a los datos, para $k=3$ se obtiene lo siguiente"""
 
 # ╔═╡ a6a58789-e4ee-488a-a08e-173779fd97ab
-@bind k₁ Slider(2:1:5, show_value=true, default=3)
+k=@bind k₁ Slider(2:1:5, show_value=true, default=3)
 
 # ╔═╡ f40a0030-1830-4543-8259-a039e70a76ea
 assignment₃, reps₃ = kmeans(X, k₁)
@@ -193,14 +196,14 @@ begin
 	for k in 1:k₁
 		scatter!([c[1] for c in grps[k]], [c[2] for c in grps[k]])
 	end
-	plot!(legend = false, grid = false, size = (500,500), xlims = (-1.5,2.5), ylims = (-2,2))
+	plot!(legend = false, grid = false, size = (500,500), xlims = (-1.5,2.5), ylims = (-2,2), title="Clústeres de los datos")
 end
 
 # ╔═╡ 97f5fdff-4e5c-40d1-a4d4-6887d6ffd7fd
 md"""# Preprocesamiento de datos"""
 
 # ╔═╡ 340273d2-bb12-469d-bf55-a77b03144799
-md"""En Julia, se puede cargar datos de diversas maneras, por ejemplo archivos CSV o archivo de Excel, esto se puede realizar con las siguientes librerías."""
+md"""En Julia, se puede cargar datos de diversas maneras, por ejemplo archivos CSV o archivos de Excel, esto se puede realizar con las siguientes librerías."""
 
 # ╔═╡ 46bf3629-1c97-41ca-9d43-a1f80efe1401
 md"""O como ya sabemos, podemos generar datos aleatorios."""
@@ -209,7 +212,7 @@ md"""O como ya sabemos, podemos generar datos aleatorios."""
 md"""## Normalización/Estandarización"""
 
 # ╔═╡ be347a4e-50a8-4b98-ad57-eb4bbba8de23
-md"""La normalización y estandarización son técnicas comunes de preprocesamiento de datos que ayudan a poner todas las características en una escala común. Esto puede ser crucial para algoritmos sensibles a la escala, como K-Means, y puede mejorar la convergencia y el rendimiento del modelo."""
+md"""La normalización y estandarización son técnicas comunes de preprocesamiento de datos que ayudan a poner todas las características en una escala común. Esto puede ser crucial para algoritmos sensibles a la escala, como $K$-Means, y puede mejorar la convergencia y el rendimiento del modelo. Véase $[1]$."""
 
 # ╔═╡ 17b8ed28-a579-4fab-ad48-5bad655b2463
 md"""### Min-Max"""
@@ -245,16 +248,19 @@ function minmax_normalize(data)
 end
 
 # ╔═╡ c5196e31-5095-4259-9a61-89afbfc8f808
-md"""Por ejemplo, consideremos el siguiente conjunto de datos"""
+md"""Por ejemplo, consideremos el siguiente conjunto de $100$ datos"""
+
+# ╔═╡ a0e6f4bd-dd63-4775-9dab-a072b520caaa
+n_datos=@bind nd Slider(2:1:200, show_value=true, default=100)
 
 # ╔═╡ bcc9197f-4d21-43fa-b2d5-40f567d15ab0
-x₁=1.5*rand(100)
+x₁=1.5*rand(nd)
 
 # ╔═╡ 51462f44-1829-4e9c-88dc-c9f09db4124b
 md"""La visualización de esto es la siguiente:"""
 
 # ╔═╡ 55f987bf-e708-45b8-a0f8-bc5840d4e119
-plot(scatter(x=1:100, x₁))
+plot(scatter(x=1:100, x₁), grid = false,legend = false, title="$nd Datos aleatorios")
 
 # ╔═╡ d400446c-6d89-418d-830f-3f0fefebfcb6
 md"""Normalizando estos datos con la función anterior, se obtiene lo siguiente:"""
@@ -266,7 +272,7 @@ minmax_normalize(x₁)
 md"""Los podemos visualizar de la siguiente forma"""
 
 # ╔═╡ 22ae57f4-002c-4314-a2d8-9b47b0d01386
-plot(scatter(x=1:100, minmax_normalize(x₁)))
+plot(scatter(x=1:100, minmax_normalize(x₁)),grid = false, legend=false, title="Normalización de los datos con Min-Max")
 
 # ╔═╡ 1d5261ce-2f45-4e88-b6b9-462ea6c1897a
 md"""Note que la distribución de los datos no se ve alterada."""
@@ -312,7 +318,7 @@ md"""Para los mismos datos anteriores se tiene:"""
 zscore_standardize(x₁)
 
 # ╔═╡ 4384266e-f8f7-4f42-bdc0-58c3c8761194
-plot(scatter(x=1:100, zscore_standardize(x₁)))
+plot(scatter(x=1:100, zscore_standardize(x₁)), legend=false, grid = false,title="Normalización de los datos con Z-Score")
 
 # ╔═╡ 90f3f183-bbc6-4c07-b270-fe980527012e
 md"""Al igual que con min-max la distribución de los datos no se ve alterada, esta es una de las ventajas de normalizar los datos."""
@@ -330,7 +336,7 @@ a = vcat(1.7*randn(500), 0.3*randn(500))
 b = vcat(1.7*randn(150), -3.3*randn(175), 0.5*randn(325), -0.1*randn(350))
 
 # ╔═╡ 1e32425b-4078-49d2-a502-7cb591a5669a
-plot(scatter(a,b))
+plot(scatter(a,b), legend=false, grid = false,title="Datos aleatorios")
 
 # ╔═╡ cae655c3-8e89-4b08-b83a-e7ea578b5723
 datos=[vcat(a[i],b[i]) for i=1:1000]
@@ -342,13 +348,13 @@ md"""Vamos a normalizar los datos con Min-Max"""
 datos_norm=[vcat(minmax_normalize(a)[i],minmax_normalize(b)[i]) for i=1:1000]
 
 # ╔═╡ 1ff000f0-a9a6-4f29-82c5-1b22cfb5f387
-plot(scatter([x[1] for x in datos_norm], [x[2] for x in datos_norm]))
+plot(scatter([x[1] for x in datos_norm], [x[2] for x in datos_norm]),grid = false, legend=false, title="Normalización de los datos con Min-Max")
 
 # ╔═╡ fbcd4e16-d49d-47a0-9805-ea41bad1ba3f
-md"""Aplicando el algoritmo K-Means para $k=5$, se obtiene lo siguiente"""
+md"""Aplicando el algoritmo $K$-Means para $k=5$, se obtiene lo siguiente"""
 
 # ╔═╡ e0827d6d-4339-4161-94c8-311cec3f7f64
-@bind k₂ Slider(4:10, show_value=true, default= 5)
+k₂=@bind k₂ Slider(4:10, show_value=true, default= 5)
 
 # ╔═╡ f0efd8b5-74d0-4490-bc5c-5ef40a2aea31
 assignment₄, reps₄ = kmeans(datos_norm, k₂)
@@ -364,7 +370,7 @@ scatter([c[1] for c in grps1[1]], [c[2] for c in grps1[1]])
 	for k in 1:k₂
 		scatter!([c[1] for c in grps1[k]], [c[2] for c in grps1[k]])
 	end
-plot!(legend = false, grid = false, size = (500,500))
+plot!(legend = false, grid = false, size = (500,500), title="Clústeres de los datos")
 end
 
 # ╔═╡ f415ea7b-d19c-4714-bfdc-bf52e0bac815
@@ -373,9 +379,9 @@ md"""# Referencias"""
 # ╔═╡ 0635b3a0-652c-40ae-af64-3b4ad75836a8
 md"""[1] Johnson, R. A., & Wichern, D. (2007). Applied Multivariate Statistical Analysis. Pearson Prentice Hall.
 
-[3] Boyd, S., & Vandenberghe, L. (2018). Introduction to Applied Linear Algebra: Vectors, Matrices, and Least Squares. Cambridge University Press.
+[2] Bartlett, V. (2018). VMLS Julia, Ch.04 Clustering. VMLS Companions. [https://github.com/vbartle/VMLS-Companions/blob/master/VMLS%20Julia%20Companion/VMLS%20Julia%2C%20Ch.04%20Clustering.ipynb](https://github.com/vbartle/VMLS-Companions/blob/master/VMLS%20Julia%20Companion/VMLS%20Julia%2C%20Ch.04%20Clustering.ipynb)
 
-[2] Bartlett, V. (2018). VMLS Julia, Ch.04 Clustering. VMLS Companions. https://github.com/vbartle/VMLS-Companions/blob/master/VMLS%20Julia%20Companion/VMLS%20Julia%2C%20Ch.04%20Clustering.ipynb"""
+[3] Boyd, S., & Vandenberghe, L. (2018). Introduction to Applied Linear Algebra: Vectors, Matrices, and Least Squares. Cambridge University Press."""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1687,6 +1693,7 @@ version = "1.4.1+1"
 # ╟─e42bf648-7797-4fb8-a871-ec8953384813
 # ╟─99e2cc16-b2b7-436c-a1c1-9d26776c31aa
 # ╠═4bdbd2b9-1e4f-41cd-b29b-391d4e3f7b34
+# ╟─eef87960-9361-4944-89a8-f1db289145b7
 # ╟─7bd37955-2bfc-428b-b94a-e11f299842fb
 # ╟─488b679d-deff-42c9-b533-be70bfe5e732
 # ╟─0a336d8a-9b57-470c-aa88-341c47d98662
@@ -1707,7 +1714,7 @@ version = "1.4.1+1"
 # ╟─d3abb069-8a6b-4253-a489-3cd56ddc89b5
 # ╟─aa09bbf6-7ef6-4359-8181-a8272a498cce
 # ╟─acd5ba29-4e13-4ce9-98d3-7a62de7754b4
-# ╠═a6a58789-e4ee-488a-a08e-173779fd97ab
+# ╟─a6a58789-e4ee-488a-a08e-173779fd97ab
 # ╠═f40a0030-1830-4543-8259-a039e70a76ea
 # ╟─50f9f855-1daf-41d8-aeb2-195fe02f5dae
 # ╟─97f5fdff-4e5c-40d1-a4d4-6887d6ffd7fd
@@ -1721,6 +1728,7 @@ version = "1.4.1+1"
 # ╟─2ea9eacf-58f0-4993-b689-d7e8935f628b
 # ╠═1faf0cff-2991-47d4-b84d-5ed0cc227733
 # ╟─c5196e31-5095-4259-9a61-89afbfc8f808
+# ╟─a0e6f4bd-dd63-4775-9dab-a072b520caaa
 # ╠═bcc9197f-4d21-43fa-b2d5-40f567d15ab0
 # ╟─51462f44-1829-4e9c-88dc-c9f09db4124b
 # ╟─55f987bf-e708-45b8-a0f8-bc5840d4e119
@@ -1747,7 +1755,7 @@ version = "1.4.1+1"
 # ╠═f415835f-1587-4019-8eca-a5c2f37222c5
 # ╟─1ff000f0-a9a6-4f29-82c5-1b22cfb5f387
 # ╟─fbcd4e16-d49d-47a0-9805-ea41bad1ba3f
-# ╠═e0827d6d-4339-4161-94c8-311cec3f7f64
+# ╟─e0827d6d-4339-4161-94c8-311cec3f7f64
 # ╠═f0efd8b5-74d0-4490-bc5c-5ef40a2aea31
 # ╟─26a4fe64-ab46-4f10-8037-c0427f50322c
 # ╟─4093a818-cebb-40b1-b934-43a124dc1ca2

@@ -1,5 +1,5 @@
 ---
-title: "Compresión de imágenes"
+title: "Compresión de imágenes (SVD)"
 permalink: /Notebooks/AlgebraLineal/SVD/
 date: 2019-02-15
 header-includes: |
@@ -23,7 +23,7 @@ header-includes: |
 </head>
 <body>
 
-<h1>Compresión de imágenes</h1>
+<h1>Compresión de imágenes (SVD)</h1>
 
 </body>
 </html>

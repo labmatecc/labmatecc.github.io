@@ -4,6 +4,16 @@
 using Markdown
 using InteractiveUtils
 
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+end
+
 # ╔═╡ e86ad4f0-b18b-11ee-32d1-69d2b22ccc54
 using PlutoUI
 
@@ -27,7 +37,7 @@ md"""Usaremos la siguiente librería:"""
 # ╔═╡ e95d693c-e540-4ad4-8eb1-c270ff5a14d6
 md"""# Introducción
 
-En este cuaderno, mostraremos qué son las matrices semejantes, junto con algunos ejemplos para facilitar su comprensión. De igual forma, se mostrará la diagonalización de matrices, incluyendo ejemplos de ello. Se deducirá la fórmula de Binet para los números de Fibonacci, esto de manera matricial, con ayuda de la diagonalización.
+En este cuaderno, mostraremos qué son las matrices semejantes, junto con algunos ejemplos para facilitar su comprensión. De igual forma, se mostrará la diagonalización de matrices, incluyendo ejemplos de ello. Se deducirá la fórmula de Binet para los números de Fibonacci, esto de manera matricial, con ayuda de la diagonalización, ver $[1]$.
 
 La fórmula de Binet es una herramienta versátil que va más allá de los números de Fibonacci, encontrando aplicaciones en diversos campos, desde la teoría de números hasta la computación gráfica y el modelado matemático de fenómenos naturales."""
 
@@ -45,11 +55,11 @@ Note que se verifica fácilmente que esta es una transformación lineal:
 
 i) Sean $A_1, A_2 \in \mathcal{M}_n(\mathbb{R})$, entonces
 
-$T(A_1+A_2)=P^{-1}(A_1+A_2)P=P^{-1}A_1P+P^{-1}A_2P=T(A_1)+T(A_2)$
+$T(A_1+A_2)=P^{-1}(A_1+A_2)P=P^{-1}A_1P+P^{-1}A_2P=T(A_1)+T(A_2).$
 
 ii) Sea $\alpha\in\mathbb{R}$, entonces
 
-$T(\alpha A_1)=P^{-1}(\alpha A_1) P=\alpha P^{-1}A_1 P=\alpha T(A_1)$"""
+$T(\alpha A_1)=P^{-1}(\alpha A_1) P=\alpha P^{-1}A_1 P=\alpha T(A_1).$"""
 
 # ╔═╡ c6d98d5c-06ce-410c-97d5-2ba2e1a0aab1
 md"""Otra definición alternativa de semejanza es la siguiente. Se dice que $A$ y $B$ son semejantes si y sólo si existe una matriz no singular $P$ tal que
@@ -133,6 +143,9 @@ eigvals(D₂)
 # ╔═╡ 432ec4a1-f98c-4ba7-9536-9c9804eb6380
 md"""En efecto, se verifica que son los mismos."""
 
+# ╔═╡ 7ae7f625-18d7-4783-86fe-69d3b2cf2333
+md"""Para más detalles de matrices semejantes ver $[1,2,3]$."""
+
 # ╔═╡ 2aaf0e20-e9af-44c9-a992-d4297c47fb5f
 md"""# Matriz diagonalizable"""
 
@@ -149,11 +162,11 @@ $D = \begin{pmatrix}
     0 & \lambda_2 & \cdots & 0 \\
     \vdots & \vdots & \ddots & \vdots \\
     0 & 0 & \cdots & \lambda_n
-\end{pmatrix}=\text{diag} (\lambda_1, \lambda_2, \ldots, \lambda_n)$
+\end{pmatrix}=\text{diag} (\lambda_1, \lambda_2, \ldots, \lambda_n),$
 
 donde $\lambda_1, \lambda_2, \ldots, \lambda_n$ son los valores propios de $A$. Si $P$ es una matriz cuyas columnas son vectores propios linealmente independientes de $A$, entonces
 
-$D = P^{-1}AP$
+$D = P^{-1}AP.$
 """
 
 # ╔═╡ 85ab59bd-f543-476b-b7e7-ba8cef870512
@@ -224,7 +237,9 @@ md"""**Nota:**
 
 Sea $A$ una matriz diagonalizable, es decir, $D=P^{-1}AP$, esto es $A=PDP^{-1}$. Entonces la potencia $k$-ésima de $A$ es
 
-$A^k = (PDP^{-1})^k = PDP^{-1} \cdot PDP^{-1} \cdot \ldots \cdot PDP^{-1} = PD^kP^{-1}$"""
+$A^k = (PDP^{-1})^k = PDP^{-1} \cdot PDP^{-1} \cdot \ldots \cdot PDP^{-1} = PD^kP^{-1}.$
+
+Para más ejemplos y detalles de los teoremas, ver $[1,2,3].$"""
 
 # ╔═╡ 15516294-d366-400e-9441-0a32e93312c5
 md"""# La sucesión de Fibonacci"""
@@ -232,7 +247,7 @@ md"""# La sucesión de Fibonacci"""
 # ╔═╡ d1d58b7f-eb59-472a-b928-ef22a6f175e1
 md"""La sucesión de Fibonacci se define de manera recursiva como: $F_0=0, F_1=1$, y para $n\geq 2$, $F_n = F_{n-1}+F_{n-2}$. Así, los primeros 10 números de Fibonacci son
 
-$0, \hspace{0.3cm} 1, \hspace{0.3cm}  1, \hspace{0.3cm} 2, \hspace{0.3cm} 3, \hspace{0.3cm} 5, \hspace{0.3cm} 8, \hspace{0.3cm} 13, \hspace{0.3cm} 21, \hspace{0.3cm} 34, \hspace{0.3cm} 55$"""
+$0, \hspace{0.3cm} 1, \hspace{0.3cm}  1, \hspace{0.3cm} 2, \hspace{0.3cm} 3, \hspace{0.3cm} 5, \hspace{0.3cm} 8, \hspace{0.3cm} 13, \hspace{0.3cm} 21, \hspace{0.3cm} 34, \hspace{0.3cm} 55, \hspace{0.3cm}...$"""
 
 # ╔═╡ 8de8d8e6-cf14-4014-93b9-69a170c6ef6e
 md"""Con la siguiente función definida de manera recursiva podemos hallar el $n$-ésimo número de Fibonacci"""
@@ -248,13 +263,16 @@ function fibonacci(n)
 end
 
 # ╔═╡ 5eb23a85-f6ee-4bb2-b67d-1258f631430b
-md"""A continuación se muestran los primeros 10 números de la sucesión"""
+md"""A continuación se muestran los primeros $n$ números de la sucesión"""
+
+# ╔═╡ ce32624e-8af7-45ca-9f4e-18d973454b35
+n₁ = @bind N₁ Slider(0:1:200, show_value=true, default=10)
 
 # ╔═╡ 56527357-6b8f-4fd7-b224-177874baf193
-[fibonacci(i) for i= 0:10]
+[fibonacci(i) for i= 0:N₁] #Primeros n₁ valores de la sucesión de Fibonacci
 
 # ╔═╡ 0dc08c77-d62e-4373-9e90-a41bf2868c9c
-md"""La sucesión de Fibonacci aparece en una amplia gama de aplicaciones, como en la distribución de hojas en ciertos árboles, en el orden de las semillas de los girasoles, en las técnicas de búsqueda en análisis numérico, en la generación de números aleatorios en estadística, y en otros temas."""
+md"""La sucesión de Fibonacci aparece en una amplia gama de aplicaciones, como en la distribución de hojas en ciertos árboles, en el orden de las semillas de los girasoles, en las técnicas de búsqueda en análisis numérico, en la generación de números aleatorios en estadística, y en otros temas. Ver $[4].$"""
 
 # ╔═╡ d09aca0b-4bb0-48e6-be09-aef8622e0862
 md"""Para calcular $F_n$ mediante la relación recursiva debemos calcular primero $F_0, F_1, \cdots, F_{n-1}$. Esto resultaría tedioso para $n$ grande. Desarrollaremos una fórmula que nos permita calcular $F_n$ directamente.
@@ -389,8 +407,11 @@ end
 # ╔═╡ 74dff67a-50ef-422b-bf05-ad28e1711676
 md"""Observe que obtenemos lo mismo que usando la fórmula recursiva"""
 
+# ╔═╡ 5d6efad1-6558-48cc-8b86-2cd792973314
+n₂ = @bind N₂ Slider(0:1:200, show_value=true, default=10)
+
 # ╔═╡ 31161ff5-913f-4846-9728-820e0d1d8e86
-[fib(i) for i= 0:10] #Primeros 10 valores de la sucesión de Fibonacci
+[fib(i) for i= 0:N₂] #Primeros n₂ valores de la sucesión de Fibonacci
 
 # ╔═╡ ee55d839-5e6c-4d36-bacb-0929efb5fff9
 md"""Veamos más en detalle esto. Si realizamos cuidadosamente los cálculos se obtiene que los valores propios de $A$ son $\lambda_1=\frac{1+\sqrt{5}}{2}$ y $\lambda_2=\frac{1-\sqrt{5}}{2}$, así
@@ -499,12 +520,18 @@ function fibo(n)
 	return (1/sqrt(5))*(((1+sqrt(5))/2)^n - ((1-sqrt(5))/2)^n)
 end
 
+# ╔═╡ 48eba62a-661d-4e4e-8f86-62aacdccbe41
+n₃ = @bind N₃ Slider(0:1:200, show_value=true, default=10)
+
 # ╔═╡ 6f299c1e-0a51-4650-9694-860cfff03af1
-[fibo(i) for i= 0:10] #Primeros 10 valores de la sucesión de Fibonacci
+[fibo(i) for i= 0:N₃] #Primeros n₃ valores de la sucesión de Fibonacci
 
 # ╔═╡ 06fa96c3-13a5-4f8d-b12f-88bef8b45a27
 md"""Esta es conocida como la fórmula de Binet, esta es una expresión analítica que nos da el $n$-ésimo número de Fibonacci en términos del número áureo $\left(\frac{1+\sqrt{5}}{2}\right)$ y su conjugado $\left(\frac{1-\sqrt{5}}{2}\right)$.
 """
+
+# ╔═╡ 102f6b4f-10fe-4476-b2f0-bc4f21ab0854
+md"""La deducción matricial de la fórmula de Binet para los números de Fibonacci fue tomada de $[1]$."""
 
 # ╔═╡ 7bffd265-4900-454e-b4dd-dfaac111a14b
 md"""# Referencias"""
@@ -514,7 +541,9 @@ md"""[1] Kolman, B., & Hill, D. R. (2006). Álgebra Lineal (8a ed.). Pearson.
 
 [2] Horn, R. A., & Johnson, C. R. (2013). Matrix Analysis (2nd ed.). Cambridge University Press.
 
-[3] Grossman, S. I., & Flores Godoy, J. J. (2012). Álgebra Lineal (7a ed.). McGraw-Hill."""
+[3] Grossman, S. I., & Flores Godoy, J. J. (2012). Álgebra Lineal (7a ed.). McGraw-Hill.
+
+[4] Koshy, T. (2001). Fibonacci and Lucas numbers with applications. Wiley-Interscience."""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -824,6 +853,7 @@ version = "17.4.0+2"
 # ╠═482653a1-c40b-4433-ad73-ccfbf7d74cc6
 # ╠═5d8fec49-321d-4dda-9410-c19f9c9136a5
 # ╟─432ec4a1-f98c-4ba7-9536-9c9804eb6380
+# ╟─7ae7f625-18d7-4783-86fe-69d3b2cf2333
 # ╟─2aaf0e20-e9af-44c9-a992-d4297c47fb5f
 # ╟─150c5e47-3fad-47c8-aa2d-f82486c032e4
 # ╟─b563e812-2d6f-40cb-8061-e68c4cb79d1e
@@ -852,6 +882,7 @@ version = "17.4.0+2"
 # ╟─8de8d8e6-cf14-4014-93b9-69a170c6ef6e
 # ╠═c417caf7-e8f2-430b-af01-7958cc3dd40b
 # ╟─5eb23a85-f6ee-4bb2-b67d-1258f631430b
+# ╟─ce32624e-8af7-45ca-9f4e-18d973454b35
 # ╠═56527357-6b8f-4fd7-b224-177874baf193
 # ╟─0dc08c77-d62e-4373-9e90-a41bf2868c9c
 # ╟─d09aca0b-4bb0-48e6-be09-aef8622e0862
@@ -867,13 +898,16 @@ version = "17.4.0+2"
 # ╟─3433e168-b165-4f45-b354-68c31e46a154
 # ╠═e05d69e9-1a38-4ec4-af7e-a01aa4613b7a
 # ╟─74dff67a-50ef-422b-bf05-ad28e1711676
+# ╟─5d6efad1-6558-48cc-8b86-2cd792973314
 # ╠═31161ff5-913f-4846-9728-820e0d1d8e86
 # ╟─ee55d839-5e6c-4d36-bacb-0929efb5fff9
 # ╟─c3f4d4af-1de4-4c1c-8ef3-823ae1b44094
 # ╟─c91d815a-1cb4-4668-821c-ac0950742e3d
 # ╠═332e2d8e-7c8b-4a0a-a8df-2e50bc75ab68
+# ╟─48eba62a-661d-4e4e-8f86-62aacdccbe41
 # ╠═6f299c1e-0a51-4650-9694-860cfff03af1
 # ╟─06fa96c3-13a5-4f8d-b12f-88bef8b45a27
+# ╟─102f6b4f-10fe-4476-b2f0-bc4f21ab0854
 # ╟─7bffd265-4900-454e-b4dd-dfaac111a14b
 # ╟─604d7637-a793-48d3-8b12-30ccf5c01628
 # ╟─00000000-0000-0000-0000-000000000001

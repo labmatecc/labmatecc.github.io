@@ -38,7 +38,7 @@ md"""# Introducción"""
 md"""Un grafo es una estructura matemática que representa relaciones entre objetos. Consiste en un conjunto de nodos (también llamados vértices) y un conjunto de aristas (también llamadas arcos) que conectan estos nodos. Los grafos se utilizan para modelar una amplia variedad de situaciones del mundo real, como redes sociales, sistemas de transporte, circuitos eléctricos, entre otros."""
 
 # ╔═╡ 62521ab1-b157-45f2-a53c-5381b7d6952f
-md"""Los grafos fueron introducidos por primera vez por Leonhard Euler en 1736 en el contexto del problema de los puentes de Königsberg."""
+md"""Los grafos fueron introducidos por primera vez por Leonhard Euler en 1736 en el contexto del problema de los puentes de Königsberg. Véase $[1,2,3].$"""
 
 # ╔═╡ 42d36955-57e9-45a4-81d4-1069c22d0639
 begin
@@ -48,7 +48,7 @@ begin
 end
 
 # ╔═╡ 7fda0cae-0cdb-4d86-b74a-56a1552147a9
-md"""$\textit{Figura 1. Puentes de Königsberg. Imagen tomada de Wikipedia.}$"""
+md"""$\texttt{Figura 1. Puentes de Königsberg. Imagen tomada de Wikipedia.}$"""
 
 # ╔═╡ 1cf5d9ba-b3ee-49e6-b9c2-5f650f93ef05
 md"""El Problema de los Puentes de Königsberg es un famoso problema matemático que surgió en la ciudad de Königsberg (hoy Kaliningrado, Rusia) en el siglo XVIII. La ciudad estaba ubicada en ambas orillas del río Pregel y tenía dos grandes islas conectadas por siete puentes. El problema consistía en determinar si era posible recorrer la ciudad cruzando cada puente una vez y solo una vez, regresando al punto de partida.
@@ -62,8 +62,8 @@ md"""# Conceptos básicos"""
 
 # ╔═╡ 2235d60e-4d49-483d-ae23-43121dc98b38
 md"""Formalmente, un grafo se define como un par ordenado $G=(V,E)$, donde:
-- $V$ es un conjunto de nodos o vértices.
-- $E \subseteq V \times V$ es un conjunto de aristas o conexiones que establecen relaciones entre los nodos.
+-   $V$ es un conjunto de nodos o vértices.
+-   $E \subseteq V \times V$ es un conjunto de aristas o conexiones que establecen relaciones entre los nodos.
 
 Dos vértices se dicen adyacentes si están conectados por una arista.
 
@@ -92,7 +92,7 @@ md"""Las aristas en un grafo, visualizadas mediante segmentos de líneas rectas 
 Las aristas pueden tener atributos como peso o información adicional, proporcionando detalles específicos para el análisis. Su representación visual y la asociación de atributos contribuyen a una modelización detallada."""
 
 # ╔═╡ 133b1403-7d7b-44e4-b85e-454a43de28ea
-md"""Veamos algunos grafos y cómo construirlos"""
+md"""Veamos algunos grafos y cómo construirlos. El material aquí presente fue tomado de $[5]$."""
 
 # ╔═╡ a7220029-9195-49c2-8392-3990400eca19
 G₁ = Graph(3)  # grafo con 3 vértices
@@ -206,7 +206,9 @@ La diagonal principal contiene siempre ceros en un grafo simple (sin bucles).
 En grafos no dirigidos, la matriz es simétrica respecto a la diagonal principal."""
 
 # ╔═╡ 143ae10b-10ec-4aad-a85e-b4f91f04164d
-md"""Consideremos el siguiente grafo"""
+md"""Para más detalles de esto ver $[5]$.
+
+Consideremos el siguiente grafo"""
 
 # ╔═╡ eeed9be5-4307-4a92-89a4-8da5b345a7f4
 G₆ = Graph(6, 5)
@@ -246,7 +248,9 @@ md"""La matriz de incidencia es otra representación matricial de un grafo $G=(V
 
 $b_{ij}=1 \text{ si } v_i \text{ y } e_j \text{ son incidentes,}$
 
-$b_{ij} = 0 \text{ si no lo son}.$"""
+$b_{ij} = 0 \text{ si no lo son}.$
+
+Ver $[5]$ para más detalles."""
 
 # ╔═╡ fee391e2-90c4-4d5b-bcbd-7bdf5c1394c6
 md"""Consideremos el siguiente grafo"""
@@ -283,7 +287,7 @@ md"""# Generadores
 
 Para mayor facilidad, Graphs.jl viene con un conjunto de funciones integradas para generar grafos famosos en la literatura o grafos que se asemejan a formas básicas de la vida real.
 
-Veamos algunos grafos pequeños con formas simples"""
+Veamos algunos grafos pequeños con formas simples. Para más detalles ver $[5]$."""
 
 # ╔═╡ 3899ae0d-27c7-4da9-bdd2-05aab12900b2
 G₉ = smallgraph("bull")
@@ -321,7 +325,9 @@ md"""[1] Trudeau, R. (1994). Introduction to Graph Theory (2nd ed.). Dover Publi
 
 [3] West, D. B. (2000). Introduction to Graph Theory. Pearson College Div.
 
-[4] Boyd, S., & Vandenberghe, L. (2021). Introduction to Applied Linear Algebra: Vectors, Matrices, and Least Squares - Julia Language Companion. Cambridge University Press."""
+[4] Boyd, S., & Vandenberghe, L. (2021). Introduction to Applied Linear Algebra: Vectors, Matrices, and Least Squares - Julia Language Companion. Cambridge University Press.
+
+[5] JuliaPlots. GraphRecipes examples. JuliaPlots Documentation. Recuperado de [https://docs.juliaplots.org/latest/GraphRecipes/examples/](https://docs.juliaplots.org/latest/GraphRecipes/examples/)"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
