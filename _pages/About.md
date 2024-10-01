@@ -66,7 +66,6 @@ header-includes: |
             margin: 20px 0; /* Margen superior e inferior */
         }
   </style>
-<hr>
 
 <h1>Acerca del laboratorio</h1>
 
