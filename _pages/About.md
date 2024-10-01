@@ -66,7 +66,15 @@ header-includes: |
             margin: 20px 0; /* Margen superior e inferior */
         }
   </style>
+<hr>
 
 <h1>Acerca del laboratorio</h1>
 
 <hr>
+
+<section>
+  <h2>Acerca del Laboratorio Virtual</h2>
+  <p>El Laboratorio Virtual es una iniciativa de varios profesores del Departamento de Matemáticas y Ciencias de la Computación, creada con el objetivo de complementar los cursos del departamento a través de herramientas computacionales que faciliten la comprensión de conceptos matemáticos y su aplicación en problemas prácticos.</p>
+  <p>En esta fase inicial, se está recopilando material proporcionado por los docentes del departamento. Las versiones alfa (2024) y beta (2025) del Laboratorio Virtual fueron desarrolladas y editadas por Yessica Trujillo, Juan Galvis, Francisco Gómez y Freddy Hernández, con el apoyo de la coordinación curricular del Departamento de Matemáticas, bajo la dirección de la profesora Carolina Neira durante los años 2023 y 2024.</p>
+  <p>Para cualquier duda, sugerencia o comentario, pueden contactarnos en: <a href="mailto:labmatecc_bog@unal.edu.co">labmatecc_bog@unal.edu.co</a>.</p>
+</section>
