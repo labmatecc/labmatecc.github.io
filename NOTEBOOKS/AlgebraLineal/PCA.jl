@@ -28,7 +28,7 @@ begin
 end
 
 # ╔═╡ a2edb9ed-e3b2-42f5-a91a-f543a0f0eb42
-PlutoUI.TableOfContents(title="PCA", aside=true)
+PlutoUI.TableOfContents(title="Análisis de componentes principales (PCA)", aside=true)
 
 # ╔═╡ 7a3eb75b-6972-4c70-a1c5-bbd602a65c48
 md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**.
@@ -66,6 +66,9 @@ md"""La media es:"""
 
 # ╔═╡ 1fddf32c-45e0-46ec-b0e3-c15e91ffd542
 mean(datos)
+
+# ╔═╡ 8d56a6c1-2d98-4561-8b47-fd9017d80e79
+md"""Ahora """
 
 # ╔═╡ 22e3f2cd-1891-42d5-a469-578e622b60c9
 md"""**Varianza:**
@@ -435,7 +438,7 @@ TestImages = "~1.8.0"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.5"
 manifest_format = "2.0"
 project_hash = "c94d66f2ffb05c330afeed0a2b63c9dc46fa6fb8"
 
@@ -2096,7 +2099,7 @@ version = "0.15.1+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.11.0+0"
 
 [[deps.libfdk_aac_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -2164,6 +2167,7 @@ version = "1.4.1+1"
 # ╠═f2fcc147-bbb7-4469-99a2-9a2f2befb843
 # ╟─82edebdb-b7d3-4bee-9e63-da15640a1d25
 # ╠═1fddf32c-45e0-46ec-b0e3-c15e91ffd542
+# ╠═8d56a6c1-2d98-4561-8b47-fd9017d80e79
 # ╟─22e3f2cd-1891-42d5-a469-578e622b60c9
 # ╟─ee0e0df2-f08f-4f92-a0d1-eb826559c64b
 # ╠═a90a7865-47e4-47e8-9651-bcbfc11b0870
