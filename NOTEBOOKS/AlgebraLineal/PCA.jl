@@ -21,9 +21,7 @@ using PlutoUI
 begin
 	using LinearAlgebra,Statistics
 	using Colors, ColorVectorSpace, ImageShow, FileIO, ImageIO
-	using HypertextLiteral
-	using Images, ImageTransformations
-	using TestImages
+	using HypertextLiteral, Images, ImageTransformations, TestImages
 	using Plots
 end
 
@@ -68,7 +66,16 @@ md"""La media es:"""
 mean(datos)
 
 # ╔═╡ 8d56a6c1-2d98-4561-8b47-fd9017d80e79
-md"""Ahora """
+md"""Ahora consideremos un vector aleatorio de tamaño $k=5$ y hallemos su media."""
+
+# ╔═╡ 176d4f3b-01a9-4f83-9088-69fe90329a61
+k= @bind k Slider(0:1:10, show_value=true,default=5)
+
+# ╔═╡ 0aee0b04-1771-4e0e-81e3-215e1a2ab4bb
+x = rand(k)
+
+# ╔═╡ 8168faba-1eb5-4a3a-b9f4-ee56d9dd0e45
+mean(x)
 
 # ╔═╡ 22e3f2cd-1891-42d5-a469-578e622b60c9
 md"""**Varianza:**
@@ -96,7 +103,7 @@ var(datos)
 md"""**Covarianza**
 
 La covarianza es una medida que indica cómo dos variables cambian juntas. 
-Consideremos los conjuntos de datos $X=\{x_1,x_2,\cdots,x_n\}$ y $Y=\{y_1,y_2,\cdots,y_n\}$, y $\mu_X$, $\mu_Y$ las medias de cada conjunto de datos, respectivamente. Así la convarianza se calcula de la siguiente forma
+Consideremos los conjuntos de datos $X=\{x_1,x_2,\cdots,x_n\}$ y $Y=\{y_1,y_2,\cdots,y_n\}$, y $\mu_X$, $\mu_Y$ las medias de cada conjunto de datos, respectivamente. Así la covarianza se calcula de la siguiente forma
 
 $\text{Cov}(X, Y) = \frac{1}{n} \sum_{i=1}^n (x_i - \mu_X)(y_i - \mu_Y).$"""
 
@@ -132,7 +139,7 @@ $C = \begin{bmatrix}
 # ╔═╡ b856cf51-fe7e-4a16-9cfd-e6518794c874
 md"""*Ejemplo:*
 
-Si deseamos hallar la matriz de covariana de una matriz, el código $\texttt{cov}$ considera cada columna de la matriz como un conjunto de datos. Así si tenemos la siguiente matriz:"""
+Si deseamos hallar la matriz de covarianza de una matriz, el código $\texttt{cov}$ considera cada columna de la matriz como un conjunto de datos. Así si tenemos la siguiente matriz:"""
 
 # ╔═╡ 246edec1-35fe-4ab9-ab76-8b6950b5ecbe
 M = [3 5 4 2; 7 4 4 1]
@@ -142,6 +149,9 @@ md"""se tiene que su matriz de covarianza es:"""
 
 # ╔═╡ 544b5f93-be62-4677-b0d6-6321be1587a1
 cov(M)
+
+# ╔═╡ 00753e3f-0e59-4207-85c2-6fce9e88a1ee
+
 
 # ╔═╡ c4aa1560-aaeb-4891-94ee-add387befdfc
 md"""# Análisis de componentes principales
@@ -158,7 +168,7 @@ md"""Ahora hallamos la media de la matriz, esta se halla calculando la media $\m
 μ = mean(M, dims=1)
 
 # ╔═╡ 467db4ea-ad5d-432b-8152-96757ed9e1a0
-md"""Con la media y la desviación estandar $(\sigma)$, vamos a centralizar los datos de la matriz. Así
+md"""Con la media y la desviación estándar $(\sigma)$, vamos a centralizar los datos de la matriz. Así
 
 $M_{estandarizada} = M-\mu.$"""
 
@@ -199,7 +209,7 @@ md"""Ahora, transformamos los datos originales a las nuevas coordenadas de las c
 Mc = Me * aseleccionados
 
 # ╔═╡ 516ed1c9-daa9-4f25-9ce0-ea0af5048beb
-md"""Podemos recuperar la matriz original multiplicando la matriz comprimida con la matriz transpuesta de los vectores seleccionados, y luego sumandole $\mu$. De la siguiente forma:"""
+md"""Podemos recuperar la matriz original multiplicando la matriz comprimida con la matriz transpuesta de los vectores seleccionados, y luego sumándole $\mu$. De la siguiente forma:"""
 
 # ╔═╡ 698a51ac-f8bb-498e-86ca-8abb3402e104
 Mreconstruid = Mc * aseleccionados' .+ μ
@@ -2168,6 +2178,9 @@ version = "1.4.1+1"
 # ╟─82edebdb-b7d3-4bee-9e63-da15640a1d25
 # ╠═1fddf32c-45e0-46ec-b0e3-c15e91ffd542
 # ╠═8d56a6c1-2d98-4561-8b47-fd9017d80e79
+# ╟─176d4f3b-01a9-4f83-9088-69fe90329a61
+# ╠═0aee0b04-1771-4e0e-81e3-215e1a2ab4bb
+# ╠═8168faba-1eb5-4a3a-b9f4-ee56d9dd0e45
 # ╟─22e3f2cd-1891-42d5-a469-578e622b60c9
 # ╟─ee0e0df2-f08f-4f92-a0d1-eb826559c64b
 # ╠═a90a7865-47e4-47e8-9651-bcbfc11b0870
@@ -2184,6 +2197,7 @@ version = "1.4.1+1"
 # ╠═246edec1-35fe-4ab9-ab76-8b6950b5ecbe
 # ╟─b953821e-b0ed-4b59-9c28-eae8c7a7761d
 # ╠═544b5f93-be62-4677-b0d6-6321be1587a1
+# ╠═00753e3f-0e59-4207-85c2-6fce9e88a1ee
 # ╟─c4aa1560-aaeb-4891-94ee-add387befdfc
 # ╠═c8543faa-94a0-4700-ae3c-dc3a5fa50241
 # ╟─d545e484-7e55-409e-ad4a-878e4cf6dea9
@@ -2229,7 +2243,7 @@ version = "1.4.1+1"
 # ╟─1fd8f03e-80e4-4d5e-aa81-0d8dd726218c
 # ╠═269b5064-9d95-4976-b035-adfabe2df61f
 # ╟─2105ebaa-550b-4691-8caf-8c2454dee3fc
-# ╠═a5dfcfa4-6b13-4875-8bbf-f923e684590b
+# ╟─a5dfcfa4-6b13-4875-8bbf-f923e684590b
 # ╠═a1d98b25-2d77-45e8-b7ea-d6209d384416
 # ╟─11efcdf4-ddc2-4755-9257-16c1fee09246
 # ╠═43b4931b-4e88-431e-a0d2-2f8ce6759085
