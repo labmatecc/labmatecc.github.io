@@ -12,6 +12,20 @@
 </body>
 </html>
 <hr>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>El Laboratorio Virtual de Matemáticas es una iniciativa de varios profesores de los programas de Matemáticas y Ciencias de la Computación, creada con el objetivo de complementar los cursos del Departamento de Matemáticas a través de herramientas computacionales que faciliten la comprensión de conceptos matemáticos y su aplicación en problemas prácticos.</p>
+        <p>En esta fase inicial, se está recopilando material proporcionado por los docentes del Departamento de Matemáticas. Las versiones alfa (2024) y beta (2025) del Laboratorio Virtual fueron desarrolladas y editadas por Yessica Trujillo <a href="mailto:ytrujillol@unal.edu.co">(ytrujillol@unal.edu.co)</a>, <a href="https://sites.google.com/view/jgalvis/" target="_blank">Juan Galvis</a> <a href="mailto:jcgalvisa@unal.edu.co">(jcgalvisa@unal.edu.co)</a>, <a href="https://sites.google.com/site/fagomezj/" target="_blank">Francisco Gómez</a> <a href="mailto:fagomezj@unal.edu.co">(fagomezj@unal.edu.co)</a> y <a href="https://sites.google.com/unal.edu.co/fohernandezr" target="_blank">Freddy Hernández</a> <a href="mailto:fohernandezr@unal.edu.co">(fohernandezr@unal.edu.co)</a>, con el apoyo del Área Curricular de Matemáticas, bajo la dirección de la profesora Carolina Neira <a href="mailto:cneiraj@unal.edu.co">(cneiraj@unal.edu.co)</a> durante los años 2023 y 2024.</p>
+        <p>Para cualquier duda, sugerencia o comentario, pueden contactarnos en: <a href="mailto:labmatecc_bog@unal.edu.co">labmatecc_bog@unal.edu.co</a>.</p>
+      </div>
+    </div>
+  </div>
+  
+</body>
+</html>
+<hr>
 <h1> Julia </h1>
         <p> Julia es un lenguaje de programación de alto rendimiento, creado en 2009. Este lenguaje de código abierto y gratuito destaca por su rapidez, versatilidad multiplataforma y una sintaxis de alto nivel que facilita su aprendizaje. Inicialmente reconocido en el ámbito del cálculo científico, Julia ha ganado creciente popularidad, extendiéndose también al ámbito del manejo de datos. Su capacidad para combinar velocidad y facilidad de uso lo convierte en una herramienta valiosa para aquellos que buscan un rendimiento eficiente en sus aplicaciones y análisis. </p>
 
