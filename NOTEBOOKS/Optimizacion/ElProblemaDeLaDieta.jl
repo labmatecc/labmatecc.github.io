@@ -49,12 +49,12 @@ md"""## ¡Diferentes alimentos, diferentes nutrientes!
 
 Cada tipo de alimento tiene una contribución nutricional y un precio por unidad (una unidad puede ser un gramo (gr)). Por ejemplo, 100 gr de arroz aportan 120 calorías, 0.28 gr de grasa, 28.17 gr de carbohidratos y 2.69 gr de proteínas, mientras que 100 gr de carne aportan 287 calorías, 19.29 gr de grasa, 0 gr de carbohidratos y 26.41 gr de proteínas. (Esta información se puede obtener fácilmente de un sitio de nutrición, como por ejemplo [3]). Como es lógico, diferentes alimentos también tienen diferentes precios. Por ejemplo, en Colombia, 1000 gr de arroz cuestan 3,590 pesos colombianos (COP), mientras que 500 gr de carne cuestan 11,840 COP.
 
-La ingesta de una dieta particular, es decir, diferentes cantidades de alimentos, puede tener contribuciones nutricionales específicas con un precio específico. Por ejemplo, la ingesta diaria de 200 gr de arroz y 216 gr de carne resulta en aproximadamente 860 calorías, 42 gr de grasa, 56 gr de carbohidratos y 62 gr de proteínas, con un precio total diario de 5,833 COP. Como es de esperar, la ingesta de más alimentos (en gramos) puede proporcionar más nutrientes, pero impactar el presupuesto disponible para el precio. Por ejemplo, el doble de alimentos, digamos 400 gr de arroz y 432 gr de carne, puede proporcionar el doble de nutrientes, pero con el doble de precio, 11,666 COP."""
+La ingesta de una dieta particular, es decir, diferentes cantidades de alimentos, puede tener contribuciones nutricionales específicas con un precio específico. Por ejemplo, la ingesta diaria de 200 gr de arroz y 216 gr de carne resulta en aproximadamente 860 calorías, 42 gr de grasa, 56 gr de carbohidratos y 62 gr de proteínas, con un precio total diario de 5,833 COP. Como es de esperar, la ingesta de más alimentos (en gramos) puede proporcionar más nutrientes, pero afectar el presupuesto disponible para el precio. Por ejemplo, el doble de alimentos, digamos 400 gr de arroz y 432 gr de carne, puede proporcionar el doble de nutrientes, pero con el doble de precio, 11,666 COP."""
 
 # ╔═╡ 038cc7b7-92c6-4fff-b810-c49e5ae2b239
 md"""## Jugando con el presupuesto
 
-Como cualquiera que haya cocinado sabe, un hecho interesante de una dieta es que manteniendo casi el mismo presupuesto (en nuestro ejemplo, 5,833 COP), diferentes cantidades de alimentos pueden resultar en diferentes ingestas nutricionales. Por ejemplo, una dieta compuesta por 305 gr de arroz y 200 gr de carne con un presupuesto de 5,833 COP, puede resultar en 940 calorías, 39 gr de grasa, 86 gr de carbohidratos y 61 gr de proteínas. Notablemente, esta última dieta puede mejorar en casi un 50% los carbohidratos y un 9% las calorías, teniendo una pérdida en la grasa del 7% y una pérdida casi "marginal" en la cantidad de proteínas del 2% (**no es una mala selección si quieres perder peso**)."""
+Como cualquiera que haya cocinado sabe, un hecho interesante de una dieta es que manteniendo casi el mismo presupuesto (en nuestro ejemplo, 5,833 COP), diferentes cantidades de alimentos pueden resultar en diferentes ingestas nutricionales. Por ejemplo, una dieta compuesta por 305 gr de arroz y 200 gr de carne con un presupuesto de 5,833 COP, puede resultar en 940 calorías, 39 gr de grasa, 86 gr de carbohidratos y 61 gr de proteínas. Notablemente, esta última dieta puede mejorar en casi un 50% los carbohidratos y un 9% las calorías, teniendo una pérdida en la grasa del 7% y una pérdida casi "marginal" en la cantidad de proteínas del 2% (**no es una mala selección si se quiere perder peso**)."""
 
 # ╔═╡ 759e2e83-90f8-41b1-b413-720e61a496bd
 md"""## ¿Cuánto cuesta una dieta?
@@ -65,7 +65,7 @@ En este problema de la dieta, la **función objetivo** se puede expresar de mane
 
 $$f_0(x_1,x_2) = c_1 x_1 + c_2 x_2$$
 
-donde $c_1$ y $c_2$ son los costos de arroz y carne por gramo, respectivamente. La función objetivo $f_0(x_1,x_2)$ proporciona el costo de diferentes dietas al ponderar linealmente la cantidad seleccionada de alimentos por sus respectivos costos unitarios. Al evaluar esta función, podemos medir cuantitativamente el costo de cualquier dieta (ver calculador de dieta en línea [2]).
+donde $c_1$ y $c_2$ son los costos de arroz y carne por gramo, respectivamente. La función objetivo $f_0(x_1,x_2)$ proporciona el costo de diferentes dietas al ponderar linealmente la cantidad seleccionada de alimentos por sus respectivos costos unitarios. Al evaluar esta función, podemos medir cuantitativamente el costo de cualquier dieta (ver calculadora de dieta online [2]).
 
 Por ejemplo, $f_0(200,216) = 5833$ y $f_0(305,200) = 5831$. Una dieta compuesta por $(x_1,x_2)=(200,200)$ costará $f_0(200,200) = 5454$ COP.
 """
@@ -92,19 +92,19 @@ md"""En este caso, la función de costo vinculada al problema de la dieta está 
 
 # ╔═╡ 336cea97-d5b3-4bee-a504-242dabf45e25
 md"""
-Tener una función objetivo para costear cualquier 'dieta' particular $(x_1,x_2)$ es bastante útil. Usando el calculador (un evaluador de la función objetivo), podemos probar diferentes alternativas de 'dieta'. En este punto, debemos recordar que nuestro objetivo no es solo encontrar la 'dieta' con el costo mínimo, sino también encontrar una 'dieta' que un humano pueda consumir.
+Tener una función objetivo para costear cualquier 'dieta' particular $(x_1,x_2)$ es bastante útil. Usando la calculadora (un evaluador de la función objetivo), podemos probar diferentes alternativas de 'dieta'. En este punto, debemos recordar que nuestro objetivo no es solo encontrar la 'dieta' con el costo mínimo, sino también encontrar una 'dieta' que un humano pueda consumir.
 
-Un primer intento para resolver este problema puede ser usar el calculador para diferentes alternativas de dieta y luego elegir la de menor costo. Sin embargo, **no todas las 'dietas' válidas como entrada en nuestro calculador son aplicables para un humano**. Por lo tanto, enfoquémonos en algunas consideraciones naturales relacionadas con lo que hace que una dieta tenga sentido:
+Un primer intento para resolver este problema puede ser utilizar la calculadora para diferentes alternativas de dieta y luego elegir la de menor costo. Sin embargo, **no todas las 'dietas' válidas como entrada en nuestra calculadora son aplicables para un humano**. Por lo tanto, enfoquémonos en algunas consideraciones naturales relacionadas con lo que hace que una dieta tenga sentido:
 
-* *No comes cantidades negativas de comida*. Una dieta solo tiene sentido cuando comes algo o no comes nada de un tipo particular de alimento. Por lo tanto, para el problema de la dieta, la función de costo solo debe definirse para cantidades positivas de alimentos, es decir, $x_1 \geq 0$ y $x_2 \geq 0$. Estas dos condiciones **restringen** las posibles alternativas de dieta a elegir. Por esta razón, llamamos a las expresiones $x_1 \geq 0$ y $x_2 \geq 0$ **restricciones del problema** y en particular 'restricciones de no negatividad'. Las restricciones se modelan comúnmente mediante desigualdades o, en algunos casos, igualdades, que **limitan** el conjunto de valores que puede tomar una solución.
+* *No se pueden comer cantidades negativas de comida*. Una dieta solo tiene sentido cuando comes algo o no comes nada de un tipo particular de alimento. Por lo tanto, para el problema de la dieta, la función de costo solo debe definirse para cantidades no negativas de alimentos, es decir, $x_1 \geq 0$ y $x_2 \geq 0$. Estas dos condiciones **restringen** las posibles alternativas de dieta a elegir. Por esta razón, llamamos a las expresiones $x_1 \geq 0$ y $x_2 \geq 0$ **restricciones del problema** y en particular 'restricciones de no negatividad'. Las restricciones se modelan comúnmente mediante desigualdades o, en algunos casos, igualdades, que **limitan** el conjunto de valores que puede tomar una solución.
 
-* *Quieres vivir con tu dieta*. Debemos recordar que el papel principal de una dieta es proporcionar nutrientes para vivir. Entonces, necesitamos garantizar la **cantidad mínima** de nutrientes diarios para vivir saludablemente. La tabla a continuación muestra algunas estimaciones de las ingestas mínimas de nutrientes particulares necesarios para mantenerse saludable, ver [4]. Si consideramos solo las restricciones de no negatividad ($x_1 \geq 0$ y $x_2 \geq 0$), podríamos encontrar fácilmente una dieta de costo mínimo (en realidad un costo cero), con una dieta sin alimentos ($(x_1,x_2)=(0,0)$). Sin embargo, nuestros requisitos mínimos de nutrientes no se **cumplirían** y moriríamos de hambre. Como queremos garantizar la cantidad mínima de nutrientes, llamamos a estas restricciones **restricciones mínimas**.
+* *Se desea vivir con la dieta*. Debemos recordar que el papel principal de una dieta es proporcionar nutrientes para vivir. Entonces, necesitamos garantizar la **cantidad mínima** de nutrientes diarios para vivir saludablemente. La tabla a continuación muestra algunas estimaciones de las ingestas mínimas de nutrientes particulares necesarios para mantenerse saludable, ver [4]. Si consideramos solo las restricciones de no negatividad ($x_1 \geq 0$ y $x_2 \geq 0$), podríamos encontrar fácilmente una dieta de costo mínimo (en realidad un costo cero), con una dieta sin alimentos ($(x_1,x_2)=(0,0)$). Sin embargo, nuestros requisitos mínimos de nutrientes no se **cumplirían** y moriríamos de hambre. Como queremos garantizar la cantidad mínima de nutrientes, llamamos a estas restricciones **restricciones mínimas**.
 
 | Calorías | Grasa (gr) | Carbohidratos (gr) | Proteína (gr) | 
 | --- | --- | --- | --- |
 | 1000 | 44 | 0  | 35 |
 
-* *No puedes comer una cantidad infinita de comida*. También debemos recordar que incluso si tenemos mucho dinero, tenemos **restricciones biológicas** relacionadas con la **cantidad máxima** de alimentos que podemos comer. Supongamos que las personas comúnmente comen un máximo de 2000 gr, ver [14]. Como queremos garantizar que las dietas no excedan la cantidad máxima de alimentos, llamamos a estas restricciones **restricciones máximas**.
+* *No se puede comer una cantidad infinita de comida*. También debemos recordar que incluso si tenemos mucho dinero, tenemos **restricciones biológicas** relacionadas con la **cantidad máxima** de alimentos que podemos comer. Supongamos que las personas comúnmente comen un máximo de 2000 gr, ver [14]. Como queremos garantizar que las dietas no excedan la cantidad máxima de alimentos, llamamos a estas restricciones **restricciones máximas**.
 
 Para tener alternativas *factibles* de dietas en nuestra búsqueda, debemos considerar *SOLO* las dietas que satisfacen *TODAS* las restricciones, a saber, no negatividad, mínima y máxima."""
 
@@ -123,7 +123,7 @@ Podemos modelar las **restricciones mínimas y máximas** siguiendo la misma ide
 
 $$f_1(x_1,x_2) = a_{1,1}x_1 + a_{1,2}x_2$$
 
-donde $a_{1,1}$ y $a_{1,2}$ corresponden a la cantidad de calorías proporcionadas por un gramo de arroz y carne, respectivamente. En este caso, $a_{1,1}=1.2$ cal/gr y $a_{1,2}=2.87$ cal/gr. Usando $f_1(x_1,x2)$ podemos calcular la cantidad de calorías proporcionadas por una dieta particular, por ejemplo, la dieta de $(x_1,x2)=(200,216)$ proporciona $f_1(200,216)=860$ Cal, lo cual es insuficiente para cumplir con el requisito mínimo (verifique nuevamente el calculador de dieta, [2]). Por lo tanto, cualquier dieta válida debe cumplir:
+donde $a_{1,1}$ y $a_{1,2}$ corresponden a la cantidad de calorías proporcionadas por un gramo de arroz y carne, respectivamente. En este caso, $a_{1,1}=1.2$ cal/gr y $a_{1,2}=2.87$ cal/gr. Usando $f_1(x_1,x2)$ podemos calcular la cantidad de calorías proporcionadas por una dieta particular, por ejemplo, la dieta de $(x_1,x2)=(200,216)$ proporciona $f_1(200,216)=860$ Cal, lo cual es insuficiente para cumplir con el requisito mínimo (verifique nuevamente la calculadora de dieta, [2]). Por lo tanto, cualquier dieta válida debe cumplir:
 
 $$f_1(x_1,x_2) = a_{1,1} x_1 + a_{1,2} x_2 \geq 1000$$ (para calorías)
 
@@ -197,7 +197,7 @@ md"""La región azul indica todas las dietas posibles que cumplen con todas las 
 # ╔═╡ 4498e0d8-fba4-4ce1-9044-15723520e310
 md"""## Una justificación geek para comer mucho
 
-Supongamos que eres un atleta competitivo, por ejemplo, un ciclista de carreras. La cantidad de calorías consumidas por estos atletas en una etapa montañosa es de ¡alrededor de 7,000 calorías, ver [5]. Por lo tanto, si queremos usar nuestro modelo, deberíamos cambiar la primera restricción a:
+Supongamos que eres un atleta competitivo, por ejemplo, un ciclista de carreras. La cantidad de calorías consumidas por estos atletas en una etapa montañosa es de ¡alrededor de 7,000 calorías!, ver [5]. Por lo tanto, si queremos usar nuestro modelo, deberíamos cambiar la primera restricción a:
 
 $f_1(x_1,x_2) = a_{1,1} x_1 + a_{1,2} x_2 \geq 7000$ (para calorías)
 
@@ -222,7 +222,7 @@ yaxis!("meet (gr)")
 end
 
 # ╔═╡ 953a57ce-556a-413d-a471-ad206efb9f9d
-md"""En este caso, encontraremos que la región que contiene las soluciones está vacía (por eso es que la línea de código anterior arrroja un error). La razón es que con solo 2000 gr de comida no es posible alcanzar 7000 calorías. Nota que en este caso la combinación de estas dos restricciones resultó en ninguna solución candidata. Como no hay ninguna **solución factible**, decimos que el problema es **inviable**, porque no hay solución al problema que cumpla con las restricciones.
+md"""En este caso, encontraremos que la región que contiene las soluciones está vacía (por eso es que la línea de código anterior arroja un error). La razón es que con solo 2000 gr de comida no es posible alcanzar 7000 calorías. Nota que en este caso la combinación de estas dos restricciones resultó en ninguna solución candidata. Como no hay ninguna **solución factible**, decimos que el problema es **inviable**, porque no hay solución al problema que cumpla con las restricciones.
 
 Nota que, si queremos satisfacer la restricción de calorías, podemos aumentar la cantidad de comida que las personas pueden comer, por ejemplo, a 5000 gr (10 libras de comida).
 """
@@ -435,7 +435,7 @@ Polyhedra = "~0.7.8"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.5"
 manifest_format = "2.0"
 project_hash = "f3a136400e2b15681272ab4501b61f76bb7f1a81"
 
@@ -1654,7 +1654,7 @@ version = "0.15.1+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.11.0+0"
 
 [[deps.libevdev_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
