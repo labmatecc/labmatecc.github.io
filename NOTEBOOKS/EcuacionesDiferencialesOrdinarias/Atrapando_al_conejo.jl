@@ -48,6 +48,9 @@ Con conceptos como la derivada y la ecuación diferencial, podemos modelar y com
 
 En este análisis, exploraremos la relación entre la posición y la velocidad del conejo y el perro, derivando ecuaciones que describen la trayectoria del perro en función del tiempo y la distancia entre ambos animales."""
 
+# ╔═╡ a536b952-967d-4cca-b65a-ee196035da8c
+md"""El problema presentado a continuación fue tomado de $[1]$."""
+
 # ╔═╡ 4ebcac4e-97b7-4346-aad3-1b643c49fb29
 md"""# Problema"""
 
@@ -66,7 +69,7 @@ let
 end
 
 # ╔═╡ 31a016f5-97a8-4dcf-a11f-00261f178454
-md"""$\textit{Figura 1. Trayectoria de los animales. Elaboración propia, inspirado en [1].}$"""
+md"""$\texttt{Figura 1. Trayectoria de los animales. Elaboración propia, inspirado en [1].}$"""
 
 # ╔═╡ b4268232-f7c1-41d1-b7bc-cdc5c9adc07b
 md"""Dado que el segmento de recta $DR$ es tangente a la trayectoria, tenemos
@@ -110,13 +113,17 @@ con $p(c)=y'(c)=0$, ya que su pendiente en ese punto es horizontal."""
 md"""Vamos a suponer que $a=b$, es decir, que las velocidades de ambos animales es la misma, y veamos que tan cerca llega el perro al conejo."""
 
 # ╔═╡ 9462a547-f5c2-4dcb-8ad4-8a74640f1cfe
-@bind a Slider(0:0.5:5, show_value=true, default=1.5) #velocidad del conejo
+begin
+	ac = @bind a Slider(0:0.5:5, show_value=true, default=1.5) #velocidad del conejo
+	bp = @bind b Slider(0:0.5:5, show_value=true, default=2) #velocidad del perro
+end;
 
 # ╔═╡ 7c296620-39a3-4cd4-94bd-73139761afb1
-@bind b Slider(0:0.5:5, show_value=true, default=2) #velocidad del perro
+md""" a = $ac,  	b = $bp
+"""
 
 # ╔═╡ 739c896b-dd19-4704-839b-690f7ae82e22
-md"""Note que si $a\geq b$ el perro no podra alcanzar al conejo."""
+md"""Note que si $a\geq b$ el perro no podrá alcanzar al conejo."""
 
 # ╔═╡ a0f65e0d-9b27-4f5e-a8e6-93a633833bfa
 md"""Las variables simbólicas que se usarán son:"""
@@ -146,7 +153,7 @@ md"""Ahora, resolvamos el problema de valor inicial, primero hallemos $C_1$, rec
 md"""Note que acabamos de encontrar $y'(x)=p(x)$, hallemos $y(x)$, con $y(c)=0$, es decir la trayectoria del perro."""
 
 # ╔═╡ b0910e3f-0a8d-410f-b2d4-6beb5c592726
-@bind c Slider(0:0.5:10, show_value=true, default=3) #punto inicial del perro (c,0)
+c = @bind c Slider(0:0.5:10, show_value=true, default=3) #punto inicial del perro (c,0)
 
 # ╔═╡ 57fa221b-42a0-4311-b18b-5ddd8dcc476e
 begin
@@ -211,7 +218,7 @@ md"""Ahora bien, consideremos el escenario donde el conejo se desplaza a lo larg
 md"""Supongamos que la curva paramétrica que describe la trayectoria del conejo es $C(t)=(t\cos{(t)}, \sin{(t)})$, con $0\leq t\leq tf$, donde $tf$ es:"""
 
 # ╔═╡ 016c3b95-fa66-4373-9d5b-391d4050cd6d
-@bind tf Slider(0:0.1:10, show_value=true, default=8) #tf
+tf = @bind tf Slider(0:0.1:10, show_value=true, default=8) #tf
 
 # ╔═╡ 5d443e53-fcca-49f3-8113-f080651d7bb6
 md"""Definimos entonces la función de la curva paramétrica anterior."""
@@ -227,7 +234,7 @@ function conejo(t)
 end
 
 # ╔═╡ c3a7a7a6-ab5c-49cd-9fc5-c76887dd1eed
-md"""Dado que la velocidad del conejo esta dada por $v(t)=C'(t)=(x'(t),y'(t))$, la siguiente función define esto."""
+md"""Dado que la velocidad del conejo está dada por $v(t)=C'(t)=(x'(t),y'(t))$, la siguiente función define esto."""
 
 # ╔═╡ 786c0157-350c-40f0-b16a-68a45cdb6320
 # Define la velocidad del conejo
@@ -279,8 +286,14 @@ function perro!(du, u, p, t)
     du[2] = u_y / ((1 / vp) * norma_u)
 end
 
+# ╔═╡ 091f2525-5fdc-4801-8666-d55bf761496b
+md"""Posición inicial del perro eje x:"""
+
 # ╔═╡ 19a1112b-8a5f-4465-9226-76a571310e32
 @bind perro_x Slider(-10:1:10, show_value=true, default=2) #posición inicial del perro eje x
+
+# ╔═╡ 28b6ed37-7b13-4471-9ff5-7ffc07fd7902
+md"""Posición inicial del perro eje y:"""
 
 # ╔═╡ 19aa18fb-bbd8-476d-a706-fc81298ddf59
 @bind perro_y Slider(-10:1:10, show_value=true, default=0) #posición inicial del perro eje y
@@ -356,6 +369,9 @@ begin
 	end
 end
 
+# ╔═╡ 077e6497-d29f-44aa-a2f6-ab4e600f4177
+md"""Para obtener más detalles sobre la solución de las ecuaciones diferenciales ordinarias, consulte las referencias $[1, 2, 3]$."""
+
 # ╔═╡ b631844b-3eab-4eae-b850-d9441704791f
 md"""# Referencias
 
@@ -397,7 +413,7 @@ SymPy = "~2.0.1"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.5"
 manifest_format = "2.0"
 project_hash = "282558cea2961356a4c57e9bcceb2e52d7dc0d8f"
 
@@ -2642,7 +2658,7 @@ version = "0.15.1+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.11.0+0"
 
 [[deps.libevdev_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -2729,6 +2745,7 @@ version = "1.4.1+1"
 # ╟─c11ce2da-c7e5-4752-95da-881dfd1977ca
 # ╠═fa24bafe-6606-4ac2-9365-ed88c9fa8654
 # ╟─4b25186e-b286-46ca-ae61-88234b7a0576
+# ╟─a536b952-967d-4cca-b65a-ee196035da8c
 # ╟─4ebcac4e-97b7-4346-aad3-1b643c49fb29
 # ╟─7afcbd08-4b92-4e11-9e81-40ed27417e2c
 # ╟─51fe4228-8b1c-4b55-a0fd-5c20c9c6bcef
@@ -2736,8 +2753,8 @@ version = "1.4.1+1"
 # ╟─b4268232-f7c1-41d1-b7bc-cdc5c9adc07b
 # ╟─91be989c-67e9-4261-a9b0-67e9b5bfa582
 # ╟─d5901d7c-d94b-43d8-9899-85e8f72c739b
-# ╠═9462a547-f5c2-4dcb-8ad4-8a74640f1cfe
-# ╠═7c296620-39a3-4cd4-94bd-73139761afb1
+# ╟─9462a547-f5c2-4dcb-8ad4-8a74640f1cfe
+# ╟─7c296620-39a3-4cd4-94bd-73139761afb1
 # ╟─739c896b-dd19-4704-839b-690f7ae82e22
 # ╟─a0f65e0d-9b27-4f5e-a8e6-93a633833bfa
 # ╠═1adcc0ea-76f6-4f46-bffb-a8e6a9268621
@@ -2747,9 +2764,9 @@ version = "1.4.1+1"
 # ╠═582d584b-40fd-42f8-b149-061f4654460a
 # ╟─98700fd3-3589-48df-87b7-5f394bb541dd
 # ╠═57fa221b-42a0-4311-b18b-5ddd8dcc476e
-# ╠═7a091277-3f00-4130-bca5-ff1d9230d961
+# ╟─7a091277-3f00-4130-bca5-ff1d9230d961
 # ╟─ab00a1bb-417f-471f-8f10-2328ddf8cc3e
-# ╠═b0910e3f-0a8d-410f-b2d4-6beb5c592726
+# ╟─b0910e3f-0a8d-410f-b2d4-6beb5c592726
 # ╟─31c87aa9-8f66-4cee-90ff-1ea74eb05f08
 # ╠═2c8c05c7-b727-42f9-9eff-61e8cb86a0f4
 # ╟─8bf271ca-1746-42de-b709-132385d9ee2f
@@ -2763,7 +2780,7 @@ version = "1.4.1+1"
 # ╟─4fe19bd0-e1fa-4738-9ba9-d11d63bc3043
 # ╟─a4a0eec8-3d44-4fe6-a2b0-2e5a4850f707
 # ╟─9e5cc62f-9b6d-4436-8b12-085ba5214a96
-# ╠═016c3b95-fa66-4373-9d5b-391d4050cd6d
+# ╟─016c3b95-fa66-4373-9d5b-391d4050cd6d
 # ╟─5d443e53-fcca-49f3-8113-f080651d7bb6
 # ╠═2f6cf848-63a1-4931-8210-d4807f8ba08a
 # ╟─c3a7a7a6-ab5c-49cd-9fc5-c76887dd1eed
@@ -2774,15 +2791,18 @@ version = "1.4.1+1"
 # ╠═b7727cf0-b4fa-41ae-a08f-5ea0a60b5f4e
 # ╟─01db168a-b00b-4560-a124-dc4a630a518d
 # ╠═3fdd5c1d-b144-4d71-9ba8-0e798a6eefb2
-# ╠═19a1112b-8a5f-4465-9226-76a571310e32
-# ╠═19aa18fb-bbd8-476d-a706-fc81298ddf59
+# ╟─091f2525-5fdc-4801-8666-d55bf761496b
+# ╟─19a1112b-8a5f-4465-9226-76a571310e32
+# ╟─28b6ed37-7b13-4471-9ff5-7ffc07fd7902
+# ╟─19aa18fb-bbd8-476d-a706-fc81298ddf59
 # ╟─c123b8cc-a213-4409-976c-7a644a5275a5
-# ╠═ff1b6c07-7c09-4bd2-9bfe-f0ad92dda233
+# ╟─ff1b6c07-7c09-4bd2-9bfe-f0ad92dda233
 # ╠═be9563fb-a7ad-4932-8ad0-113febf1452b
 # ╟─61b12d0d-2bc1-47ea-a3fa-c0cd5913e15c
 # ╠═51b1da8a-662e-4470-9f68-bfc857f5b90a
 # ╟─7c7ee006-ae8a-467c-8296-32bfddad2eee
 # ╟─74453bd8-d698-4d1d-9a3d-ae07f620f66f
+# ╟─077e6497-d29f-44aa-a2f6-ab4e600f4177
 # ╟─b631844b-3eab-4eae-b850-d9441704791f
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

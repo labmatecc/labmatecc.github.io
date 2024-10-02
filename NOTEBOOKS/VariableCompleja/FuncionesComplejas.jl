@@ -361,7 +361,7 @@ SymPy = "~2.0.1"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.5"
 manifest_format = "2.0"
 project_hash = "01fd6e350675798c43923baeb25ad82752ba3d56"
 
@@ -1725,7 +1725,7 @@ version = "0.15.1+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.11.0+0"
 
 [[deps.libevdev_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1829,7 +1829,7 @@ version = "1.4.1+1"
 # ╟─a37c1e9a-7cac-438e-94a5-e342f5613c6b
 # ╟─41e778a4-b362-48ce-8ba2-5aba75128278
 # ╟─135db7ca-533a-47b9-ac9d-a1769875f8b7
-# ╟─91def84f-c450-4f86-9fd4-0e43f206f4ba
+# ╠═91def84f-c450-4f86-9fd4-0e43f206f4ba
 # ╟─452dcdd7-4a15-45b8-b5e3-c7af97dd473b
 # ╟─25f66189-80d0-435e-8fef-fcd08d65723a
 # ╟─a29b392f-3195-41f6-95b1-5f55fb2da564
