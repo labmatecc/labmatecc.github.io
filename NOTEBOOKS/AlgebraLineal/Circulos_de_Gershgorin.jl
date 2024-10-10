@@ -40,7 +40,7 @@ md"""Usaremos las siguientes librerías:"""
 # ╔═╡ b1865cbd-9bdc-4cd9-999c-be7dfb673fd0
 md"""# Introducción
 
-Para hallar los valores propios de una matriz, existen diversos métodos que permiten localizarlos y estimarlos sin necesidad de calcularlos explícitamente. Entre estos métodos, los discos de Gershgorin, los discos de Brauer y los discos generalizados de Gershgorin proporcionan regiones en el plano complejo donde se pueden encontrar los valores propios de una matriz."""
+Para hallar los valores propios de una matriz, existen diversos métodos que permiten localizarlos y estimarlos sin necesidad de calcularlos explícitamente, ver $[1,2,3]$. Entre estos métodos, los discos de Gershgorin, los discos de Brauer y los discos generalizados de Gershgorin proporcionan regiones en el plano complejo donde se pueden encontrar los valores propios de una matriz."""
 
 # ╔═╡ feb108d5-f01d-4463-9671-9f82b7070e89
 md"""# Localización de valores propios"""
@@ -63,6 +63,9 @@ $y_{m}(\lambda - a_{mm}) =  \sum^{d}_{k=1, ~ k\not=m} a_{mk}y_k$
 usando las propiedades del vector $y$, concluimos que
 
 $|\lambda - a_{mm}| \leq \sum^{d}_{k=1, ~ k\not=m} |a_{mk}||y_k| \leq  \sum^{d}_{k=1, ~ k\not=m} |a_{mk}| \text{.}$"""
+
+# ╔═╡ 25b9aa70-9c45-4712-ac71-3ff28c4d9f81
+md"""Para más detalles de la demostración ver $[3].$"""
 
 # ╔═╡ 9c64c491-2368-43b5-87d1-96ecf4789b31
 md"""La siguiente función genera y visualiza los discos de Gershgorin para una matriz dada."""
@@ -129,7 +132,7 @@ md"""**Corolario 2.** Toda matriz estrictamente diagonal dominante es invertible
 # ╔═╡ f302448b-bcbb-45d1-b766-d008d30b0e8e
 md"""**Ejemplo:**
 
-Consideremos la siguiente matriz diagonal dominante, que por corolario es invertible."""
+Consideremos la siguiente matriz diagonal dominante, que según el corolario es invertible."""
 
 # ╔═╡ 84c4eb5a-fa0d-415b-926b-06c91e69f04a
 A₂ = (2 .* rand(3, 3) .- 1) .+ 3 .* diagm([1, -1, 1])
@@ -335,7 +338,9 @@ $C(p(x)) = \begin{pmatrix}
 \vdots & \vdots & \ddots & \vdots & \vdots \\
 0 & 0 & \ldots & 1 & -c_{n-1}
 \end{pmatrix}$
-con $C(p(x)) \in \mathbb{R}^{n \times n}$. Con esta definición es fácil demostrar el siguiente resultado.
+con $C(p(x)) \in \mathbb{R}^{n \times n}$. Ver $[1,2].$
+
+Con esta definición es fácil demostrar el siguiente resultado.
 
 **Teorema 6.** El polinomio característico de $C(p(x))$ es el polinomio $p(x)$.
 """
@@ -352,7 +357,7 @@ $C(p(x)) = \begin{pmatrix}
 \end{pmatrix}$"""
 
 # ╔═╡ 28c0ba45-66da-49d9-8b73-6b4990ac9510
-md"""La función $\texttt{Companion()}$ halla la matriz de compañia teniendo en cuenta los coeficientes del polinomio."""
+md"""La función $\texttt{Companion()}$ halla la matriz de compañía teniendo en cuenta los coeficientes del polinomio."""
 
 # ╔═╡ dd02620b-d080-4255-9dce-6782ddb6679a
 md"""Definimos los coeficientes del polinomio:"""
@@ -367,7 +372,7 @@ md"""Definimos el polinomio,"""
 P = Polynomial(coef)
 
 # ╔═╡ bc5e281c-9e36-4a42-a30a-e75981ca34ba
-md"""Creamos la matriz de compañia:"""
+md"""Creamos la matriz de compañía:"""
 
 # ╔═╡ ca2f96ba-a13e-4150-a7ea-c0b786814609
 B = Companion(P)
@@ -389,9 +394,9 @@ Un polinomio mónico de la forma $p(x) = c_0 + c_1 x + \ldots + c_{n-1}x^{n-1} +
 # ╔═╡ 22d9f19e-a542-4afb-8485-a7d3b16b5b16
 md"""# Referencias
 
-[1] Melman, A. (2010). Generalizations of Gershgorin disks and polynomial zeros. Proceedings of the American Mathematical Society, 138(7). https://doi.org/10.1090/s0002-9939-10-10294-9
+[1] Melman, A. (2010). Generalizations of Gershgorin disks and polynomial zeros. Proceedings of the American Mathematical Society, 138(7). 
 
-[2] Saad, Y. (2003). Iterative methods for sparse linear systems (2nd ed.). Society for Industrial and Applied Mathematics. https://doi.org/10.1137/1.9780898718003
+[2] Saad, Y. (2003). Iterative methods for sparse linear systems (2nd ed.). Society for Industrial and Applied Mathematics.
 
 [3] Kincaid, D., & Cheney, W. (2002). Numerical analysis: Mathematics of scientific computing. American Mathematical Society."""
 
@@ -1555,6 +1560,7 @@ version = "1.4.1+1"
 # ╟─feb108d5-f01d-4463-9671-9f82b7070e89
 # ╟─6e249b50-adb1-4900-ae47-d947e5c1277d
 # ╟─24af59c8-44ed-4839-a62c-20d049b07ee9
+# ╟─25b9aa70-9c45-4712-ac71-3ff28c4d9f81
 # ╟─9c64c491-2368-43b5-87d1-96ecf4789b31
 # ╠═ae72712e-dab6-4319-a970-7de3f578ff09
 # ╟─df303479-f693-4ca6-9b8c-725f1c6139ba

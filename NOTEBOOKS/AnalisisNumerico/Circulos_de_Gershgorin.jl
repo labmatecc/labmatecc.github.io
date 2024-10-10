@@ -1,8 +1,18 @@
 ### A Pluto.jl notebook ###
-# v0.19.45
+# v0.19.39
 
 using Markdown
 using InteractiveUtils
+
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+end
 
 # ╔═╡ 93d437ba-979a-417f-ac1d-0e694d55c0e2
 using PlutoUI
@@ -27,15 +37,15 @@ Elaborado por Juan Galvis, Francisco Gómez, Carlos Nosa y Yessica Trujillo.
 # ╔═╡ 2af1d5c5-5ea5-431a-a008-84419619e32c
 md"""Usaremos las siguientes librerías:"""
 
-# ╔═╡ 8b2829ba-4965-496f-b23a-70e284dc8663
+# ╔═╡ 1e94a9bd-61fb-46c9-a16b-c6a6c5450af1
 md"""# Introducción
 
-Para hallar los valores propios de una matriz, existen diversos métodos que permiten localizarlos y estimarlos sin necesidad de calcularlos explícitamente. Entre estos métodos, los discos de Gershgorin, los discos de Brauer y los discos generalizados de Gershgorin proporcionan regiones en el plano complejo donde se pueden encontrar los valores propios de una matriz."""
+Para hallar los valores propios de una matriz, existen diversos métodos que permiten localizarlos y estimarlos sin necesidad de calcularlos explícitamente, ver $[1,2,3]$. Entre estos métodos, los discos de Gershgorin, los discos de Brauer y los discos generalizados de Gershgorin proporcionan regiones en el plano complejo donde se pueden encontrar los valores propios de una matriz."""
 
-# ╔═╡ 6a5aa821-9df8-4bed-838b-24c1a39a3abb
+# ╔═╡ 9f7cced8-eb1d-4c4f-b754-962b593961f5
 md"""# Localización de valores propios"""
 
-# ╔═╡ a7bed1fb-54c0-4708-9f44-0860bb6558a4
+# ╔═╡ 0bc7fa4d-5822-41b8-9737-a452cd257eec
 md"""**Teorema 1: Discos de Gershgorin.** 
 
 Todos los valores propios de una matriz $A\in\mathbb{R}^{d\times d}$ están localizados en el conjunto 
@@ -43,7 +53,7 @@ Todos los valores propios de una matriz $A\in\mathbb{R}^{d\times d}$ están loca
 $\bigcup_{i=1}^{d}Γ_{i}$$ con $$Γ_{i}  = \{z\in ℂ : |z-a_{ii}|\leq R_{i}\}$
 y $a_{ii}$ es la entrada $(i,i)$ de la diagonal de la matriz $A$ y $R_i = \displaystyle\sum_{j=1 ,j\not=i}^{d}|a_{ij}|$."""
 
-# ╔═╡ f878ce12-250f-41f0-aac9-7655bb898092
+# ╔═╡ 2eebe901-a2c8-4130-a313-35ca2f2f42d9
 md"""**Demostración.** Para $λ$ un valor propio de $A$ considere un vector propio $x$ y sea $m$ el índice del componente del vector con norma mayor, ahora considere el vector $y = x/|x_m|$, así, $y$ también es un vector propio de $A$ asociado a $λ$ con $|y_m| = 1$ y $|y_i|\leq 1$ para todo $i$. Puesto que $Ay = \lambda y$ entonces
 
 $\sum^{d}_{k=1} a_{mk}y_k = λ y_m$
@@ -54,11 +64,14 @@ usando las propiedades del vector $y$, concluimos que
 
 $|\lambda - a_{mm}| \leq \sum^{d}_{k=1, ~ k\not=m} |a_{mk}||y_k| \leq  \sum^{d}_{k=1, ~ k\not=m} |a_{mk}| \text{.}$"""
 
-# ╔═╡ 85079ef4-8af6-4761-a171-a4d50de9d621
+# ╔═╡ 1d9a24f5-b467-45eb-b17a-030d0aeffdd0
+md"""Para más detalles de la demostración ver $[3].$"""
+
+# ╔═╡ fc5a5192-fcc7-4ac4-be76-b183490e231b
 md"""La siguiente función genera y visualiza los discos de Gershgorin para una matriz dada."""
 
-# ╔═╡ 19f3dc60-83f1-46e7-867f-0d4f87da1ebb
-function allGreshdisksforA(A::Matrix{Float64}; r, k)
+# ╔═╡ 4b5bed51-6963-4a17-8480-3140681e7404
+function allGershgorindisksforA(A::Matrix{Float64}; r, k)
     rango = LinRange(-r, r, k)
     n = size(A, 1)
     D = diag(A)
@@ -93,50 +106,50 @@ function allGreshdisksforA(A::Matrix{Float64}; r, k)
 scatter!(p, real(E), imag(E), color=:black, markerstrokecolor = :auto, label="Eigenvalues")
 end
 
-# ╔═╡ f7c088b5-2995-44c2-85e4-45837625d22b
+# ╔═╡ 3cf1e6cc-8cfc-41a7-81c4-1c1823eda9de
 md"""**Ejemplo:**
 
 Consideremos la siguiente matriz aleatoria de tamaño $3\times 3$, y visualicemos sus discos."""
 
-# ╔═╡ 3109cfcf-f805-4ace-b5da-14b2e95d6d0c
+# ╔═╡ 18398ef5-f4af-4a28-95b7-64a4aa1d3628
 A = 2 .* rand(3, 3) .- 1
 
-# ╔═╡ 096562cb-7b8d-41bb-8315-5200db361fc4
+# ╔═╡ 4516858b-e637-4ebe-aff9-a65d091b7144
 md"""Note que los valores propios de $A$ son los siguientes."""
 
-# ╔═╡ 48e64e4a-80d7-4735-971b-88dcf78ad3ab
+# ╔═╡ 456705ee-cd37-43ec-b7db-272f03057326
 eigen(A).values
 
-# ╔═╡ 2641c55d-8a81-4843-a537-e38f831e3eb4
-allGreshdisksforA(A, r=3, k=250)
+# ╔═╡ ad283244-fe61-4631-b268-49dcb51aae81
+allGershgorindisksforA(A, r=3, k=250)
 
-# ╔═╡ 6860c636-08b9-4427-a47c-ebf7c106a2af
+# ╔═╡ 5b346e3c-ead4-4fc5-8952-961a5b40faa0
 md"""Un corolario del Teorema 1 es el siguiente."""
 
-# ╔═╡ dd0a5ff6-2e12-446f-945e-7fb6fb6e9c2b
+# ╔═╡ f8a1fded-edd2-4379-a811-4956f9aac7fc
 md"""**Corolario 2.** Toda matriz estrictamente diagonal dominante es invertible."""
 
-# ╔═╡ c76aecbc-b1a1-4cff-a7ba-93e53865d403
+# ╔═╡ 13d75b8f-1613-4b84-9ca2-bfb4958545a6
 md"""**Ejemplo:**
 
-Consideremos la siguiente matriz diagonal dominante, que por corolario es invertible."""
+Consideremos la siguiente matriz diagonal dominante, que según el corolario es invertible."""
 
-# ╔═╡ c14ea4fc-5d10-460c-af51-c3acb2486b3d
+# ╔═╡ b841fce3-1f19-4eb2-abce-f8a780bebca8
 A₂ = (2 .* rand(3, 3) .- 1) .+ 3 .* diagm([1, -1, 1])
 
-# ╔═╡ 7474cfb7-e594-4642-a35a-6a3848a14de4
+# ╔═╡ 1eb9c260-87c5-45cc-9ecc-4ad6c394aa2f
 md"""Sus valores propios son:"""
 
-# ╔═╡ 82b91b19-07a7-4446-8996-3a5716be81e9
+# ╔═╡ a808f93d-a68a-4e52-b0c3-93e36a6c3e26
 eigen(A₂).values
 
-# ╔═╡ b2dc7b74-eeef-4433-ba46-c805ae0b3004
+# ╔═╡ 0253d056-c81e-4be0-99db-d4ebf93c0cf3
 md"""Y los círculos de Gershgorin de la matriz anterior son:"""
 
-# ╔═╡ 8a4a6c28-cc01-401b-97b3-0bbb3ec15192
-allGreshdisksforA(A₂, r=5, k=300)
+# ╔═╡ dee3f7d9-f3a4-4da8-944f-1b06129aae85
+allGershgorindisksforA(A₂, r=5, k=300)
 
-# ╔═╡ 5a2e87ef-a8ba-4f6c-983d-efa48ad2f571
+# ╔═╡ e35d90c9-baf3-4f9a-b687-32c1fda0680b
 md"""**Corolario 3.** 
 
 Si $\lambda \in ℂ$ es un valor propio de una matriz $A\in\mathbb{R}^{d\times d}$ entonces $\lambda$ pertenece al disco 
@@ -144,7 +157,7 @@ Si $\lambda \in ℂ$ es un valor propio de una matriz $A\in\mathbb{R}^{d\times d
 $D\left(0,\displaystyle\max_{1\leq i \leq d}(|a_{ii}|) + \displaystyle\max_{1\leq i \leq d}{\sum^{d}_{j=1 ~ j\not = i}}|a_{ij}|\right),$
 donde $a_{ij}$ es la entrada $(i,j)$ de la matriz $A$."""
 
-# ╔═╡ efd566af-d63b-496d-a358-2e2212867e54
+# ╔═╡ 22fd07fd-d501-4460-9946-8dbd38164324
 md"""**Teorema 4: Discos de Brauer.** 
 
 Todos los valores propios de una matriz $A\in\mathbb{R}^{d\times d}$ están contenidos en la unión de $\binom{d}{2}$ conjuntos
@@ -154,7 +167,7 @@ donde
 
 $B_{ij} = \{z\in ℂ : |z-a_{ii}|\cdot|z-a_{jj}|\leq R_{i}R_{j}\}.$"""
 
-# ╔═╡ 66a95a94-8692-49be-b7f7-b75ad2792324
+# ╔═╡ a6af23d3-5539-48f0-a211-262d5b6ac74c
 md"""**Teorema 5: Discos generalizados de Gershgorin.** 
 
 Todos los valores propios de una matriz $A\in\mathbb{R}^{d\times d}$ están contenidos en la unión de los siguientes conjuntos
@@ -162,10 +175,10 @@ Todos los valores propios de una matriz $A\in\mathbb{R}^{d\times d}$ están cont
 $\Omega_{ij} = \{z\in ℂ : |(z-a_{ii})(z-a_{jj})-a_{ij}a_{ji}|\leq |z-a_{jj}|R_{ij}+|a_{ij}|R_{ji}\},$
 donde $R_{ij} = \sum_{k=1, k\not=i,j}^{d}|a_{ik}|$."""
 
-# ╔═╡ ddd6bd2c-849e-4674-a50c-edce64fba21b
-md"""Teniendo en cuenta los Teoremas 4 y 5, vamos a construir una función que visualice los discos de Gershgorin, los discos de Brauer y los discos generales de Gershgorin."""
+# ╔═╡ 2580b82d-1ab7-4f39-92f8-a79537c20796
+md"""Teniendo en cuenta los Teoremas 4 y 5, vamos a construir una función que visualice los discos de Gershgorin, los discos de Brauer y los discos generalizados de Gershgorin."""
 
-# ╔═╡ d97e44a0-60aa-4511-a25a-4e8c13747ab0
+# ╔═╡ 5fad4f0f-a637-41f3-b07a-7317b1bc6e17
 function alldisksforA(A; r, k)
     rango = LinRange(-r, r, k)
     n = size(A, 1)
@@ -232,32 +245,35 @@ function alldisksforA(A; r, k)
 	plot!(p, real(E), imag(E), seriestype=:scatter, color=:black, markerstrokecolor=:auto, label="Eigenvalues")
 end
 
-# ╔═╡ 47e2d763-86a5-468a-89fb-8deb26a071d6
+# ╔═╡ 3aa88c45-26d2-415b-b45f-6e7c6a8bbcd3
 md"""**Ejemplo:**
 
 Consideremos la siguiente matriz:"""
 
-# ╔═╡ fc2f79d8-f729-457d-b463-55a83a68a38d
+# ╔═╡ de6922a9-3957-4114-9441-201670019c3d
 A₃ = 2 .* rand(3, 3) .- 1
 
-# ╔═╡ 0d78a9c2-6678-46ee-b99c-2056a74c1783
+# ╔═╡ fc4fa374-4c57-4b33-8fa0-8f0532e30d5d
 md"""Visualicemos los discos en el plano complejo:"""
 
-# ╔═╡ 3fdc8489-7ca1-4b4f-adb2-6aca10c972e6
+# ╔═╡ 3fcf663b-c2af-49f4-bef9-c5fcec468bb4
 alldisksforA(A₃, r=3.0, k=200)
 
-# ╔═╡ 0e80bf5f-cea1-4610-bc19-b7462f6218b5
+# ╔═╡ b00f6674-fb6c-462d-b03e-e0928313ccc3
 md"""**Ejemplo:**
 
 Consideremos ahora una matriz con entradas enteras, y hallemos sus discos."""
 
-# ╔═╡ 74fe5c03-d0f6-438a-945a-63e20172e0ab
-A₄ = rand(-7:7, 7, 7)
+# ╔═╡ d5a524b2-cc9f-4923-89b1-5dca4d639816
+m_size = @bind m Slider(0:1:10, show_value=true, default=7)
 
-# ╔═╡ 82ff37ed-6e40-402a-a0d7-b10669965e2c
+# ╔═╡ d7a1c034-1d2c-4648-ac4b-32faa15b78bd
+A₄ = rand(-7:7, m, m)
+
+# ╔═╡ a8353e72-68d7-4d44-9ad6-62bf9cad84f1
 alldisksforA(A₄, r=60.0, k=250)
 
-# ╔═╡ 5877b0c9-d614-42be-818d-1ed413e6d579
+# ╔═╡ a4804e13-c6e8-4b2e-9557-a29c2921daf0
 md"""**Ejemplo:**
 
 Hagamos el análisis para una matriz particular. Considere la siguiente matriz
@@ -269,22 +285,22 @@ $A = \begin{pmatrix}
 \end{pmatrix}$
 """
 
-# ╔═╡ 982cece7-c817-41e3-b9b7-3463b68e18d2
+# ╔═╡ 07699b5b-97fd-4679-999a-7469097d1e3a
 A₅ = [1 0 1; 0 2 0; 1 1 0] #Definimos la matriz
 
-# ╔═╡ c0365e7c-6ec7-4b31-a10e-254bee5f47ad
+# ╔═╡ 8f8c001f-3982-48b5-ab9d-e0a6f985e018
 md"""El polinomio característico es $p_{A}(λ) = -\lambda ^3 + 3 \lambda^2 -\lambda -2$ y sus valores propios son $\{\frac{1}{2}(1-\sqrt{5}),\frac{1}{2}(1+\sqrt{5}),2\}$, tal como se muestra a continuación."""
 
-# ╔═╡ 70b4c212-83ae-465e-9b21-5d513c60759e
+# ╔═╡ a88d2677-24f8-42ef-8a05-ca151447eceb
 eigen(A₅).values
 
-# ╔═╡ cfd3a2a7-7e92-43cf-a0b4-fc519e9fc554
+# ╔═╡ d9740970-c298-4977-ae5b-6be01c351a29
 md"""Luego, los discos asociados a dicha matriz son:"""
 
-# ╔═╡ d51f0728-5dcb-4b28-a105-5f231bf9b692
+# ╔═╡ 91665074-1ffc-4642-a206-c60c03c75fe4
 alldisksforA(A₅, r=4, k=750)
 
-# ╔═╡ 3f82b093-cbca-4483-8ab0-a743a717a7f6
+# ╔═╡ 68c511d0-bd87-42ac-9e6c-71949605617b
 md"""Las desigualdades correspondientes a cada uno de los conjuntos que acotan los valores propios de la matriz $A$ son las siguientes:
 
 Suponga que $z = x + iy \in ℂ$ y $x,y\in ℝ$,
@@ -310,7 +326,7 @@ Suponga que $z = x + iy \in ℂ$ y $x,y\in ℝ$,
 12.   $|(z )(z- 2 ) |\leq|z- 2 | ⟼ x^2+y^2\leq 1 \quad (x,y) = (2,0)$
 """
 
-# ╔═╡ 17f9eefc-c53c-41c8-8f6e-c38a463d0b80
+# ╔═╡ ba2cbe46-38be-4835-a88f-378f9d9ef1ae
 md"""# Ceros de polinomios
 
 Para todo polinomio se puede definir la matriz compañera de la siguiente manera: Sea $p(x) = c_0 + c_1 x + \ldots + c_{n-1}x^{n-1} + x^{n}$ un polinomio en $\mathbb{R}[x]$, la matriz compañera se define como
@@ -322,15 +338,17 @@ $C(p(x)) = \begin{pmatrix}
 \vdots & \vdots & \ddots & \vdots & \vdots \\
 0 & 0 & \ldots & 1 & -c_{n-1}
 \end{pmatrix}$
-con $C(p(x)) \in \mathbb{R}^{n \times n}$. Con esta definición es fácil demostrar el siguiente resultado.
+con $C(p(x)) \in \mathbb{R}^{n \times n}$. Ver $[1,2].$
+
+Con esta definición es fácil demostrar el siguiente resultado.
 
 **Teorema 6.** El polinomio característico de $C(p(x))$ es el polinomio $p(x)$.
 """
 
-# ╔═╡ 593afb26-7254-4149-8ac5-63ce589aea45
+# ╔═╡ c3f0ca14-a645-4bec-8c5e-c12730e6006c
 md"""**Ejemplo:**
 
-Para el polinomio $p(x) = (x-1)(x-2i)(x+2i) = x^3 - x^2 + 4x - 4$, la matriz de compañera es
+Para el polinomio $p(x) = (x-1)(x-2i)(x+2i) = x^3 - x^2 + 4x - 4$, la matriz de compañía es
 
 $C(p(x)) = \begin{pmatrix}
 0 & 0 & 4 \\
@@ -338,47 +356,47 @@ $C(p(x)) = \begin{pmatrix}
 0 & 1 & 1
 \end{pmatrix}$"""
 
-# ╔═╡ 07bddafe-1832-4ffa-baf3-cae19486fc01
-md"""La función $\texttt{Companion()}$ halla la matriz de compañia teniendo en cuenta los coeficientes del polinomio."""
+# ╔═╡ a6033049-7a14-4f99-9837-ceb53e9a38d7
+md"""La función $\texttt{Companion()}$ halla la matriz de compañía teniendo en cuenta los coeficientes del polinomio."""
 
-# ╔═╡ 8f800d74-74e8-4656-a7ae-17aba925d3bb
+# ╔═╡ 2b17096d-12af-45d9-9f99-4c87cbfb2f52
 md"""Definimos los coeficientes del polinomio:"""
 
-# ╔═╡ 194e3552-0a49-484d-9546-e9d6e0a752c7
+# ╔═╡ 5c66aeee-6a33-43d6-a246-2a135d121ab8
 coef = [-4.0, 4.0, -1.0, 1.0]
 
-# ╔═╡ 9cac67bf-9bb7-4b19-9bf8-14ac7bdf3871
+# ╔═╡ c3a7adfe-3a65-440b-b24e-d2403bb7603c
 md"""Definimos el polinomio,"""
 
-# ╔═╡ a7e87c4c-f182-4fa3-b18c-d37c1bf0cf87
+# ╔═╡ 567c6305-b257-446d-85cb-0198e71cab59
 P = Polynomial(coef)
 
-# ╔═╡ 7c4582e3-fd79-4a4b-9bfd-db2d8a7a89af
-md"""Creamos la matriz de compañia:"""
+# ╔═╡ 66d4d2ad-70f0-4c6b-8e30-868a126dd2dd
+md"""Creamos la matriz de compañía:"""
 
-# ╔═╡ 938c19eb-ecde-42e3-bfaa-d78cc0588d2f
+# ╔═╡ 6054ebe7-bf0d-40b9-887e-4d67d4707625
 B = Companion(P)
 
-# ╔═╡ 2f48671d-02a8-4299-a657-afaebc57b4a4
+# ╔═╡ 51d1cf41-306c-49ad-9123-952beed524c6
 md"""Se tiene así la siguiente región"""
 
-# ╔═╡ 23d8a8d1-07de-4836-9958-a70c774ced52
+# ╔═╡ 6a682b4a-8c30-425e-bd8f-2a80999e666b
 alldisksforA(B, r=7, k=500)
 
-# ╔═╡ 153a42bf-6a36-42f2-968f-3df3285f5ac7
+# ╔═╡ 0c27aa35-3d51-4d3d-ba1b-70f21f78c761
 md"""Concluimos este análisis con el siguiente teorema."""
 
-# ╔═╡ d724e9a1-db47-4d51-9a96-d734d0afc7f7
+# ╔═╡ 4b36b9f7-efd4-4118-98d8-9a222a23eeb7
 md"""**Teorema 7.** 
 
 Un polinomio mónico de la forma $p(x) = c_0 + c_1 x + \ldots + c_{n-1}x^{n-1} + x^{n}$ con $p(x) \in ℂ[x]$ tiene todas sus raíces en el disco $D[0,1+|c_{n-1}|]$."""
 
-# ╔═╡ 01c70fd8-5173-4c61-9924-c19799188448
+# ╔═╡ 20656f27-e68a-4d46-a29b-31f0497ac481
 md"""# Referencias
 
-[1] Melman, A. (2010). Generalizations of Gershgorin disks and polynomial zeros. Proceedings of the American Mathematical Society, 138(7). https://doi.org/10.1090/s0002-9939-10-10294-9
+[1] Melman, A. (2010). Generalizations of Gershgorin disks and polynomial zeros. Proceedings of the American Mathematical Society, 138(7). 
 
-[2] Saad, Y. (2003). Iterative methods for sparse linear systems (2nd ed.). Society for Industrial and Applied Mathematics. https://doi.org/10.1137/1.9780898718003
+[2] Saad, Y. (2003). Iterative methods for sparse linear systems (2nd ed.). Society for Industrial and Applied Mathematics.
 
 [3] Kincaid, D., & Cheney, W. (2002). Numerical analysis: Mathematics of scientific computing. American Mathematical Society."""
 
@@ -402,8 +420,9 @@ SpecialMatrices = "~3.0.0"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.7.2"
+julia_version = "1.10.5"
 manifest_format = "2.0"
+project_hash = "654c6b4d19b5e78a8dc3a532f98b3d91eaf42011"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -413,6 +432,7 @@ version = "1.3.2"
 
 [[deps.ArgTools]]
 uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
+version = "1.1.1"
 
 [[deps.Artifacts]]
 uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
@@ -436,18 +456,6 @@ deps = ["Artifacts", "Bzip2_jll", "CompilerSupportLibraries_jll", "Fontconfig_jl
 git-tree-sha1 = "a2f1c8c668c8e3cb4cca4e57a8efdb09067bb3fd"
 uuid = "83423d85-b0ee-5818-9007-b63ccbeb887a"
 version = "1.18.0+2"
-
-[[deps.ChainRulesCore]]
-deps = ["Compat", "LinearAlgebra", "SparseArrays"]
-git-tree-sha1 = "71acdbf594aab5bbb2cec89b208c41b4c411e49f"
-uuid = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
-version = "1.24.0"
-
-[[deps.ChangesOfVariables]]
-deps = ["InverseFunctions", "LinearAlgebra", "Test"]
-git-tree-sha1 = "2fba81a302a7be671aefe194f0525ef231104e7f"
-uuid = "9e997f8a-9a97-42d5-a9f1-ce6bfc15e2c0"
-version = "0.1.8"
 
 [[deps.CodecZlib]]
 deps = ["TranscodingStreams", "Zlib_jll"]
@@ -473,6 +481,12 @@ git-tree-sha1 = "a1f44953f2382ebb937d60dafbe2deea4bd23249"
 uuid = "c3611d14-8923-5661-9e6a-0046d554d3a4"
 version = "0.10.0"
 
+    [deps.ColorVectorSpace.extensions]
+    SpecialFunctionsExt = "SpecialFunctions"
+
+    [deps.ColorVectorSpace.weakdeps]
+    SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
+
 [[deps.Colors]]
 deps = ["ColorTypes", "FixedPointNumbers", "Reexport"]
 git-tree-sha1 = "362a287c3aa50601b0bc359053d5c2468f0e7ce0"
@@ -480,26 +494,25 @@ uuid = "5ae59095-9a9b-59fe-a467-6f913c188581"
 version = "0.12.11"
 
 [[deps.Compat]]
-deps = ["Dates", "LinearAlgebra", "TOML", "UUIDs"]
+deps = ["TOML", "UUIDs"]
 git-tree-sha1 = "8ae8d32e09f0dcf42a36b90d4e17f5dd2e4c4215"
 uuid = "34da2185-b29b-5c13-b0c7-acf172513d20"
 version = "4.16.0"
+weakdeps = ["Dates", "LinearAlgebra"]
+
+    [deps.Compat.extensions]
+    CompatLinearAlgebraExt = "LinearAlgebra"
 
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
+version = "1.1.1+0"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
 git-tree-sha1 = "ea32b83ca4fefa1768dc84e504cc0a94fb1ab8d1"
 uuid = "f0e56b4a-5159-44fe-b623-3e5288b988bb"
 version = "2.4.2"
-
-[[deps.ConstructionBase]]
-deps = ["LinearAlgebra"]
-git-tree-sha1 = "d8a9c0b6ac2d9081bf76324b39c78ca3ce4f0c98"
-uuid = "187b0558-2788-49d3-abe0-74a17ed4e7c9"
-version = "1.5.6"
 
 [[deps.Contour]]
 git-tree-sha1 = "439e35b0b36e2e5881738abc8857bd92ad6ff9a8"
@@ -529,7 +542,9 @@ version = "1.14.10+0"
 
 [[deps.DelimitedFiles]]
 deps = ["Mmap"]
+git-tree-sha1 = "9e2f36d3c96a820c678f2f1f1782582fcf685bae"
 uuid = "8bb1440f-4735-579b-a4ab-409b98df4dab"
+version = "1.9.1"
 
 [[deps.DocStringExtensions]]
 deps = ["LibGit2"]
@@ -538,8 +553,9 @@ uuid = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
 version = "0.9.3"
 
 [[deps.Downloads]]
-deps = ["ArgTools", "LibCURL", "NetworkOptions"]
+deps = ["ArgTools", "FileWatching", "LibCURL", "NetworkOptions"]
 uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
+version = "1.6.0"
 
 [[deps.EpollShim_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -570,6 +586,9 @@ deps = ["Artifacts", "Bzip2_jll", "FreeType2_jll", "FriBidi_jll", "JLLWrappers",
 git-tree-sha1 = "466d45dc38e15794ec7d5d63ec03d776a9aff36e"
 uuid = "b22a6f82-2f65-5046-a5b2-351ab43fb4e5"
 version = "4.4.4+1"
+
+[[deps.FileWatching]]
+uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
 
 [[deps.FixedPointNumbers]]
 deps = ["Statistics"]
@@ -675,12 +694,6 @@ version = "0.2.5"
 deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
 
-[[deps.InverseFunctions]]
-deps = ["Dates", "Test"]
-git-tree-sha1 = "18c59411ece4838b18cd7f537e56cf5e41ce5bfd"
-uuid = "3587e190-3f89-42d0-90ee-14403ec27112"
-version = "0.1.15"
-
 [[deps.IrrationalConstants]]
 git-tree-sha1 = "630b497eafcc20001bba38a4651b327dcfc491d2"
 uuid = "92d709cd-6900-40b7-9082-c6be49f344b6"
@@ -745,21 +758,39 @@ git-tree-sha1 = "ce5f5621cac23a86011836badfedf664a612cee4"
 uuid = "23fbe1c1-3f47-55db-b15f-69d7ec21a316"
 version = "0.16.5"
 
+    [deps.Latexify.extensions]
+    DataFramesExt = "DataFrames"
+    SparseArraysExt = "SparseArrays"
+    SymEngineExt = "SymEngine"
+
+    [deps.Latexify.weakdeps]
+    DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+    SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
+    SymEngine = "123dc426-2d89-5057-bbad-38513e3affd8"
+
 [[deps.LibCURL]]
 deps = ["LibCURL_jll", "MozillaCACerts_jll"]
 uuid = "b27032c2-a3e7-50c8-80cd-2d36dbcbfd21"
+version = "0.6.4"
 
 [[deps.LibCURL_jll]]
 deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll", "Zlib_jll", "nghttp2_jll"]
 uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
+version = "8.4.0+0"
 
 [[deps.LibGit2]]
-deps = ["Base64", "NetworkOptions", "Printf", "SHA"]
+deps = ["Base64", "LibGit2_jll", "NetworkOptions", "Printf", "SHA"]
 uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
+
+[[deps.LibGit2_jll]]
+deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll"]
+uuid = "e37daf67-58a4-590a-8e99-b0245dd2ffc5"
+version = "1.6.4+0"
 
 [[deps.LibSSH2_jll]]
 deps = ["Artifacts", "Libdl", "MbedTLS_jll"]
 uuid = "29816b5a-b9ab-546f-933c-edad1886dfa8"
+version = "1.11.0+1"
 
 [[deps.Libdl]]
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
@@ -813,14 +844,24 @@ uuid = "38a345b3-de98-5d2b-a5d3-14cd9215e700"
 version = "2.40.1+0"
 
 [[deps.LinearAlgebra]]
-deps = ["Libdl", "libblastrampoline_jll"]
+deps = ["Libdl", "OpenBLAS_jll", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [[deps.LogExpFunctions]]
-deps = ["ChainRulesCore", "ChangesOfVariables", "DocStringExtensions", "InverseFunctions", "IrrationalConstants", "LinearAlgebra"]
+deps = ["DocStringExtensions", "IrrationalConstants", "LinearAlgebra"]
 git-tree-sha1 = "a2d09619db4e765091ee5c6ffe8872849de0feea"
 uuid = "2ab3a3ac-af41-5b50-aa03-7779005ae688"
 version = "0.3.28"
+
+    [deps.LogExpFunctions.extensions]
+    LogExpFunctionsChainRulesCoreExt = "ChainRulesCore"
+    LogExpFunctionsChangesOfVariablesExt = "ChangesOfVariables"
+    LogExpFunctionsInverseFunctionsExt = "InverseFunctions"
+
+    [deps.LogExpFunctions.weakdeps]
+    ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
+    ChangesOfVariables = "9e997f8a-9a97-42d5-a9f1-ce6bfc15e2c0"
+    InverseFunctions = "3587e190-3f89-42d0-90ee-14403ec27112"
 
 [[deps.Logging]]
 uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
@@ -842,12 +883,6 @@ git-tree-sha1 = "2fa9ee3e63fd3a4f7a9a4f4744a52f4856de82df"
 uuid = "1914dd2f-81c6-5fcd-8719-6d5c9610ff09"
 version = "0.5.13"
 
-[[deps.MakieCore]]
-deps = ["Observables", "REPL"]
-git-tree-sha1 = "9b11acd07f21c4d035bd4156e789532e8ee2cc70"
-uuid = "20f20a25-4f0e-4fdf-b5d1-57303727442b"
-version = "0.6.9"
-
 [[deps.Markdown]]
 deps = ["Base64"]
 uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
@@ -861,6 +896,7 @@ version = "1.1.9"
 [[deps.MbedTLS_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
+version = "2.28.2+1"
 
 [[deps.Measures]]
 git-tree-sha1 = "c13304c81eec1ed3af7fc20e75fb6b26092a1102"
@@ -878,12 +914,7 @@ uuid = "a63ad114-7e13-5084-954f-fe012c677804"
 
 [[deps.MozillaCACerts_jll]]
 uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
-
-[[deps.MutableArithmetics]]
-deps = ["LinearAlgebra", "SparseArrays", "Test"]
-git-tree-sha1 = "d0a6b1096b584a2b88efb70a92f8cb8c881eb38a"
-uuid = "d8a4904e-b15c-11e9-3269-09a3773c0cb0"
-version = "1.4.6"
+version = "2023.1.10"
 
 [[deps.NaNMath]]
 deps = ["OpenLibm_jll"]
@@ -893,11 +924,7 @@ version = "1.0.2"
 
 [[deps.NetworkOptions]]
 uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
-
-[[deps.Observables]]
-git-tree-sha1 = "7438a59546cf62428fc9d1bc94729146d37a7225"
-uuid = "510215fc-4207-5dde-b226-833fc4488ee2"
-version = "0.5.5"
+version = "1.2.0"
 
 [[deps.Ogg_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -908,10 +935,12 @@ version = "1.3.5+1"
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
+version = "0.3.23+4"
 
 [[deps.OpenLibm_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "05823500-19ac-5b8b-9628-191a04bc5112"
+version = "0.8.1+2"
 
 [[deps.OpenSSL]]
 deps = ["BitFlags", "Dates", "MozillaCACerts_jll", "OpenSSL_jll", "Sockets"]
@@ -939,6 +968,7 @@ version = "1.6.3"
 [[deps.PCRE2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "efcefdf7-47ab-520b-bdef-62a2eaa19f15"
+version = "10.42.0+1"
 
 [[deps.Pango_jll]]
 deps = ["Artifacts", "Cairo_jll", "Fontconfig_jll", "FreeType2_jll", "FriBidi_jll", "Glib_jll", "HarfBuzz_jll", "JLLWrappers", "Libdl"]
@@ -964,8 +994,9 @@ uuid = "30392449-352a-5448-841d-b1acce4e97dc"
 version = "0.43.4+0"
 
 [[deps.Pkg]]
-deps = ["Artifacts", "Dates", "Downloads", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
+deps = ["Artifacts", "Dates", "Downloads", "FileWatching", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
+version = "1.10.0"
 
 [[deps.PlotThemes]]
 deps = ["PlotUtils", "Statistics"]
@@ -985,6 +1016,20 @@ git-tree-sha1 = "082f0c4b70c202c37784ce4bfbc33c9f437685bf"
 uuid = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 version = "1.40.5"
 
+    [deps.Plots.extensions]
+    FileIOExt = "FileIO"
+    GeometryBasicsExt = "GeometryBasics"
+    IJuliaExt = "IJulia"
+    ImageInTerminalExt = "ImageInTerminal"
+    UnitfulExt = "Unitful"
+
+    [deps.Plots.weakdeps]
+    FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
+    GeometryBasics = "5c1252a2-5f33-56bf-86c9-59e7332b4326"
+    IJulia = "7073ff75-c697-5162-941a-fcdaad2a7d2a"
+    ImageInTerminal = "d8c32880-2388-543b-8c61-d9f865259254"
+    Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
+
 [[deps.PlutoUI]]
 deps = ["AbstractPlutoDingetjes", "Base64", "ColorTypes", "Dates", "FixedPointNumbers", "Hyperscript", "HypertextLiteral", "IOCapture", "InteractiveUtils", "JSON", "Logging", "MIMEs", "Markdown", "Random", "Reexport", "URIs", "UUIDs"]
 git-tree-sha1 = "ab55ee1510ad2af0ff674dbcced5e94921f867a9"
@@ -992,10 +1037,20 @@ uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 version = "0.7.59"
 
 [[deps.Polynomials]]
-deps = ["ChainRulesCore", "LinearAlgebra", "MakieCore", "MutableArithmetics", "RecipesBase"]
+deps = ["LinearAlgebra", "RecipesBase"]
 git-tree-sha1 = "3aa2bb4982e575acd7583f01531f241af077b163"
 uuid = "f27b6e38-b328-58d1-80ce-0feddd5e7a45"
 version = "3.2.13"
+
+    [deps.Polynomials.extensions]
+    PolynomialsChainRulesCoreExt = "ChainRulesCore"
+    PolynomialsMakieCoreExt = "MakieCore"
+    PolynomialsMutableArithmeticsExt = "MutableArithmetics"
+
+    [deps.Polynomials.weakdeps]
+    ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
+    MakieCore = "20f20a25-4f0e-4fdf-b5d1-57303727442b"
+    MutableArithmetics = "d8a4904e-b15c-11e9-3269-09a3773c0cb0"
 
 [[deps.PrecompileTools]]
 deps = ["Preferences"]
@@ -1042,7 +1097,7 @@ deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
 uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 
 [[deps.Random]]
-deps = ["SHA", "Serialization"]
+deps = ["SHA"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [[deps.RecipesBase]]
@@ -1076,6 +1131,7 @@ version = "1.3.0"
 
 [[deps.SHA]]
 uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
+version = "0.7.0"
 
 [[deps.Scratch]]
 deps = ["Dates"]
@@ -1107,8 +1163,9 @@ uuid = "a2af1166-a08f-5f64-846c-94a0d3cef48c"
 version = "1.2.1"
 
 [[deps.SparseArrays]]
-deps = ["LinearAlgebra", "Random"]
+deps = ["Libdl", "LinearAlgebra", "Random", "Serialization", "SuiteSparse_jll"]
 uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
+version = "1.10.0"
 
 [[deps.SpecialMatrices]]
 deps = ["LinearAlgebra", "Polynomials"]
@@ -1119,6 +1176,7 @@ version = "3.0.0"
 [[deps.Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
 uuid = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
+version = "1.10.0"
 
 [[deps.StatsAPI]]
 deps = ["LinearAlgebra"]
@@ -1132,13 +1190,20 @@ git-tree-sha1 = "5cf7606d6cef84b543b483848d4ae08ad9832b21"
 uuid = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 version = "0.34.3"
 
+[[deps.SuiteSparse_jll]]
+deps = ["Artifacts", "Libdl", "libblastrampoline_jll"]
+uuid = "bea87d4a-7f5b-5778-9afe-8cc45184846c"
+version = "7.2.1+1"
+
 [[deps.TOML]]
 deps = ["Dates"]
 uuid = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
+version = "1.0.3"
 
 [[deps.Tar]]
 deps = ["ArgTools", "SHA"]
 uuid = "a4e569a6-e804-4fa4-b0f3-eef7a1d5b13e"
+version = "1.10.0"
 
 [[deps.TensorCore]]
 deps = ["LinearAlgebra"]
@@ -1151,10 +1216,13 @@ deps = ["InteractiveUtils", "Logging", "Random", "Serialization"]
 uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [[deps.TranscodingStreams]]
-deps = ["Random", "Test"]
 git-tree-sha1 = "96612ac5365777520c3c5396314c8cf7408f436a"
 uuid = "3bb67fe8-82b1-5028-8e26-92a6c54297fa"
 version = "0.11.1"
+weakdeps = ["Random", "Test"]
+
+    [deps.TranscodingStreams.extensions]
+    TestExt = ["Test", "Random"]
 
 [[deps.Tricks]]
 git-tree-sha1 = "7822b97e99a1672bfb1b49b668a6d46d58d8cbcb"
@@ -1180,10 +1248,18 @@ uuid = "1cfade01-22cf-5700-b092-accc4b62d6e1"
 version = "0.4.1"
 
 [[deps.Unitful]]
-deps = ["ConstructionBase", "Dates", "InverseFunctions", "LinearAlgebra", "Random"]
+deps = ["Dates", "LinearAlgebra", "Random"]
 git-tree-sha1 = "d95fe458f26209c66a187b1114df96fd70839efd"
 uuid = "1986cc42-f94f-5a68-af5c-568840ba703d"
 version = "1.21.0"
+
+    [deps.Unitful.extensions]
+    ConstructionBaseUnitfulExt = "ConstructionBase"
+    InverseFunctionsUnitfulExt = "InverseFunctions"
+
+    [deps.Unitful.weakdeps]
+    ConstructionBase = "187b0558-2788-49d3-abe0-74a17ed4e7c9"
+    InverseFunctions = "3587e190-3f89-42d0-90ee-14403ec27112"
 
 [[deps.UnitfulLatexify]]
 deps = ["LaTeXStrings", "Latexify", "Unitful"]
@@ -1379,6 +1455,7 @@ version = "1.5.0+0"
 [[deps.Zlib_jll]]
 deps = ["Libdl"]
 uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
+version = "1.2.13+1"
 
 [[deps.Zstd_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1417,8 +1494,9 @@ uuid = "0ac62f75-1d6f-5e53-bd7c-93b484bb37c0"
 version = "0.15.1+0"
 
 [[deps.libblastrampoline_jll]]
-deps = ["Artifacts", "Libdl", "OpenBLAS_jll"]
+deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
+version = "5.11.0+0"
 
 [[deps.libdecor_jll]]
 deps = ["Artifacts", "Dbus_jll", "JLLWrappers", "Libdl", "Libglvnd_jll", "Pango_jll", "Wayland_jll", "xkbcommon_jll"]
@@ -1465,10 +1543,12 @@ version = "1.1.6+0"
 [[deps.nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850ede-7688-5339-a07c-302acd2aaf8d"
+version = "1.52.0+1"
 
 [[deps.p7zip_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
+version = "17.4.0+2"
 
 [[deps.x264_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1496,57 +1576,59 @@ version = "1.4.1+1"
 # ╟─813d6c1c-07b8-46f3-8a80-59943b8f8182
 # ╟─2af1d5c5-5ea5-431a-a008-84419619e32c
 # ╠═200eba1e-10b6-41ae-a1ba-260201dcb08a
-# ╟─8b2829ba-4965-496f-b23a-70e284dc8663
-# ╟─6a5aa821-9df8-4bed-838b-24c1a39a3abb
-# ╟─a7bed1fb-54c0-4708-9f44-0860bb6558a4
-# ╟─f878ce12-250f-41f0-aac9-7655bb898092
-# ╟─85079ef4-8af6-4761-a171-a4d50de9d621
-# ╠═19f3dc60-83f1-46e7-867f-0d4f87da1ebb
-# ╟─f7c088b5-2995-44c2-85e4-45837625d22b
-# ╠═3109cfcf-f805-4ace-b5da-14b2e95d6d0c
-# ╟─096562cb-7b8d-41bb-8315-5200db361fc4
-# ╠═48e64e4a-80d7-4735-971b-88dcf78ad3ab
-# ╟─2641c55d-8a81-4843-a537-e38f831e3eb4
-# ╟─6860c636-08b9-4427-a47c-ebf7c106a2af
-# ╟─dd0a5ff6-2e12-446f-945e-7fb6fb6e9c2b
-# ╟─c76aecbc-b1a1-4cff-a7ba-93e53865d403
-# ╠═c14ea4fc-5d10-460c-af51-c3acb2486b3d
-# ╟─7474cfb7-e594-4642-a35a-6a3848a14de4
-# ╠═82b91b19-07a7-4446-8996-3a5716be81e9
-# ╟─b2dc7b74-eeef-4433-ba46-c805ae0b3004
-# ╟─8a4a6c28-cc01-401b-97b3-0bbb3ec15192
-# ╟─5a2e87ef-a8ba-4f6c-983d-efa48ad2f571
-# ╟─efd566af-d63b-496d-a358-2e2212867e54
-# ╟─66a95a94-8692-49be-b7f7-b75ad2792324
-# ╟─ddd6bd2c-849e-4674-a50c-edce64fba21b
-# ╠═d97e44a0-60aa-4511-a25a-4e8c13747ab0
-# ╟─47e2d763-86a5-468a-89fb-8deb26a071d6
-# ╠═fc2f79d8-f729-457d-b463-55a83a68a38d
-# ╟─0d78a9c2-6678-46ee-b99c-2056a74c1783
-# ╟─3fdc8489-7ca1-4b4f-adb2-6aca10c972e6
-# ╟─0e80bf5f-cea1-4610-bc19-b7462f6218b5
-# ╠═74fe5c03-d0f6-438a-945a-63e20172e0ab
-# ╟─82ff37ed-6e40-402a-a0d7-b10669965e2c
-# ╟─5877b0c9-d614-42be-818d-1ed413e6d579
-# ╠═982cece7-c817-41e3-b9b7-3463b68e18d2
-# ╟─c0365e7c-6ec7-4b31-a10e-254bee5f47ad
-# ╠═70b4c212-83ae-465e-9b21-5d513c60759e
-# ╟─cfd3a2a7-7e92-43cf-a0b4-fc519e9fc554
-# ╟─d51f0728-5dcb-4b28-a105-5f231bf9b692
-# ╟─3f82b093-cbca-4483-8ab0-a743a717a7f6
-# ╟─17f9eefc-c53c-41c8-8f6e-c38a463d0b80
-# ╠═593afb26-7254-4149-8ac5-63ce589aea45
-# ╟─07bddafe-1832-4ffa-baf3-cae19486fc01
-# ╟─8f800d74-74e8-4656-a7ae-17aba925d3bb
-# ╠═194e3552-0a49-484d-9546-e9d6e0a752c7
-# ╟─9cac67bf-9bb7-4b19-9bf8-14ac7bdf3871
-# ╠═a7e87c4c-f182-4fa3-b18c-d37c1bf0cf87
-# ╟─7c4582e3-fd79-4a4b-9bfd-db2d8a7a89af
-# ╠═938c19eb-ecde-42e3-bfaa-d78cc0588d2f
-# ╟─2f48671d-02a8-4299-a657-afaebc57b4a4
-# ╠═23d8a8d1-07de-4836-9958-a70c774ced52
-# ╟─153a42bf-6a36-42f2-968f-3df3285f5ac7
-# ╟─d724e9a1-db47-4d51-9a96-d734d0afc7f7
-# ╟─01c70fd8-5173-4c61-9924-c19799188448
+# ╟─1e94a9bd-61fb-46c9-a16b-c6a6c5450af1
+# ╟─9f7cced8-eb1d-4c4f-b754-962b593961f5
+# ╟─0bc7fa4d-5822-41b8-9737-a452cd257eec
+# ╟─2eebe901-a2c8-4130-a313-35ca2f2f42d9
+# ╟─1d9a24f5-b467-45eb-b17a-030d0aeffdd0
+# ╟─fc5a5192-fcc7-4ac4-be76-b183490e231b
+# ╠═4b5bed51-6963-4a17-8480-3140681e7404
+# ╟─3cf1e6cc-8cfc-41a7-81c4-1c1823eda9de
+# ╠═18398ef5-f4af-4a28-95b7-64a4aa1d3628
+# ╟─4516858b-e637-4ebe-aff9-a65d091b7144
+# ╠═456705ee-cd37-43ec-b7db-272f03057326
+# ╟─ad283244-fe61-4631-b268-49dcb51aae81
+# ╟─5b346e3c-ead4-4fc5-8952-961a5b40faa0
+# ╟─f8a1fded-edd2-4379-a811-4956f9aac7fc
+# ╟─13d75b8f-1613-4b84-9ca2-bfb4958545a6
+# ╠═b841fce3-1f19-4eb2-abce-f8a780bebca8
+# ╟─1eb9c260-87c5-45cc-9ecc-4ad6c394aa2f
+# ╠═a808f93d-a68a-4e52-b0c3-93e36a6c3e26
+# ╟─0253d056-c81e-4be0-99db-d4ebf93c0cf3
+# ╟─dee3f7d9-f3a4-4da8-944f-1b06129aae85
+# ╟─e35d90c9-baf3-4f9a-b687-32c1fda0680b
+# ╟─22fd07fd-d501-4460-9946-8dbd38164324
+# ╟─a6af23d3-5539-48f0-a211-262d5b6ac74c
+# ╟─2580b82d-1ab7-4f39-92f8-a79537c20796
+# ╠═5fad4f0f-a637-41f3-b07a-7317b1bc6e17
+# ╟─3aa88c45-26d2-415b-b45f-6e7c6a8bbcd3
+# ╠═de6922a9-3957-4114-9441-201670019c3d
+# ╟─fc4fa374-4c57-4b33-8fa0-8f0532e30d5d
+# ╟─3fcf663b-c2af-49f4-bef9-c5fcec468bb4
+# ╟─b00f6674-fb6c-462d-b03e-e0928313ccc3
+# ╟─d5a524b2-cc9f-4923-89b1-5dca4d639816
+# ╠═d7a1c034-1d2c-4648-ac4b-32faa15b78bd
+# ╟─a8353e72-68d7-4d44-9ad6-62bf9cad84f1
+# ╟─a4804e13-c6e8-4b2e-9557-a29c2921daf0
+# ╠═07699b5b-97fd-4679-999a-7469097d1e3a
+# ╟─8f8c001f-3982-48b5-ab9d-e0a6f985e018
+# ╠═a88d2677-24f8-42ef-8a05-ca151447eceb
+# ╟─d9740970-c298-4977-ae5b-6be01c351a29
+# ╟─91665074-1ffc-4642-a206-c60c03c75fe4
+# ╟─68c511d0-bd87-42ac-9e6c-71949605617b
+# ╟─ba2cbe46-38be-4835-a88f-378f9d9ef1ae
+# ╟─c3f0ca14-a645-4bec-8c5e-c12730e6006c
+# ╟─a6033049-7a14-4f99-9837-ceb53e9a38d7
+# ╟─2b17096d-12af-45d9-9f99-4c87cbfb2f52
+# ╠═5c66aeee-6a33-43d6-a246-2a135d121ab8
+# ╟─c3a7adfe-3a65-440b-b24e-d2403bb7603c
+# ╠═567c6305-b257-446d-85cb-0198e71cab59
+# ╟─66d4d2ad-70f0-4c6b-8e30-868a126dd2dd
+# ╠═6054ebe7-bf0d-40b9-887e-4d67d4707625
+# ╟─51d1cf41-306c-49ad-9123-952beed524c6
+# ╟─6a682b4a-8c30-425e-bd8f-2a80999e666b
+# ╟─0c27aa35-3d51-4d3d-ba1b-70f21f78c761
+# ╟─4b36b9f7-efd4-4118-98d8-9a222a23eeb7
+# ╟─20656f27-e68a-4d46-a29b-31f0497ac481
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

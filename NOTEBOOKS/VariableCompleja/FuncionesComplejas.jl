@@ -34,9 +34,9 @@ md"""# Introducción"""
 # ╔═╡ 657093ea-e4e8-4e60-ac5c-8a33a93181d5
 md"""La visualización de funciones es una herramienta valiosa para identificar diversos comportamientos de estas. Generalmente, esto se logra mediante gráficos que permiten observar aspectos como la relación entre valores de entrada y salida, puntos de máximos y mínimos, y la concavidad o convexidad de la función. Sin embargo, esta técnica está limitada a espacios tridimensionales, dificultando la representación de funciones de variable compleja, que requerirían un espacio de cuatro dimensiones.
 
-Para superar esta limitación, se han propuesto otras técnicas, como el Domain Coloring. Este método utiliza tonos, brillo y saturación para codificar los valores de una función, proporcionando una visión general rápida y detalles significativos al observar más de cerca. Aunque útil, esta técnica también tiene sus restricciones, y su beneficio depende de los aspectos específicos de la función compleja que se desean estudiar.
+Para superar esta limitación, se han propuesto otras técnicas, como el Domain Coloring, ver $[2]$. Este método utiliza tonos, brillo y saturación para codificar los valores de una función, proporcionando una visión general rápida y detalles significativos al observar más de cerca. Aunque útil, esta técnica también tiene sus restricciones, y su beneficio depende de los aspectos específicos de la función compleja que se desean estudiar.
 
-La función $\texttt{zplot}$ utiliza el método de Domain Coloring para representar funciones de variable compleja. Se usan diferentes colores y niveles de brillo y saturación para codificar información sobre los valores de la función, lo que permite identificar rápidamente características importantes como singularidades y la estructura global de la función."""
+La función $\texttt{zplot}$ utiliza el método de Domain Coloring para representar funciones de variable compleja. Se usan diferentes colores y niveles de brillo y saturación para codificar información sobre los valores de la función, lo que permite identificar rápidamente características importantes como singularidades y la estructura global de la función. Para más detalles de estás funciones en Julia, ver $[2].$"""
 
 # ╔═╡ d2801310-a500-4836-80ce-741a7c2d59a3
 md"""# Gráficas de funciones complejas
@@ -48,6 +48,8 @@ Supongamos que $w = u + iv$ representa el valor de la función $f$ en $z = x + i
 Cada uno de los números reales $u$ y $v$ depende de las variables reales $x$ y $y$, lo que nos lleva a que $f(z)$ pueda expresarse en términos de un par de funciones de valores reales de las variables $x$ y $y$:
 
 $f(z) = u(x, y) + iv(x, y).$
+
+Para más detalles de las funciones complejas diríjase a $[1]$.
 """
 
 # ╔═╡ 5b97add9-e375-46f4-87bf-563ace0bba0c
@@ -197,7 +199,7 @@ begin
 end
 
 # ╔═╡ a022ee92-4023-4891-a5bf-c13dadfe179d
-md"""Ahora usaremos la función $\texttt{zplot}$ para graficar la función compleja. La función $\texttt{zplot}$ toma una función compleja y mapea su salida a colores, utilizando la magnitud y el argumento de un número complejo. Por ejemplo, la magnitud se representa por la luminosidad o la saturación de cada color, valores de magnitud grandes pueden ser más brillantes o más saturados, mientras que valores cercanos a cero son más oscuros.
+md"""Ahora usaremos la función $\texttt{zplot}$ para graficar la función compleja. La función $\texttt{zplot}$ toma una función compleja y mapea su salida a colores, utilizando la magnitud y el argumento de un número complejo. Por ejemplo, la magnitud se representa por la luminosidad o la saturación de cada color, valores de magnitud grandes pueden ser más brillantes o más saturados, mientras que valores cercanos a cero son más oscuros. Ver $[2]$.
 
 Esta técnica es conocida como $\textbf{color domain coloring}.$"""
 
@@ -1829,7 +1831,7 @@ version = "1.4.1+1"
 # ╟─a37c1e9a-7cac-438e-94a5-e342f5613c6b
 # ╟─41e778a4-b362-48ce-8ba2-5aba75128278
 # ╟─135db7ca-533a-47b9-ac9d-a1769875f8b7
-# ╠═91def84f-c450-4f86-9fd4-0e43f206f4ba
+# ╟─91def84f-c450-4f86-9fd4-0e43f206f4ba
 # ╟─452dcdd7-4a15-45b8-b5e3-c7af97dd473b
 # ╟─25f66189-80d0-435e-8fef-fcd08d65723a
 # ╟─a29b392f-3195-41f6-95b1-5f55fb2da564
