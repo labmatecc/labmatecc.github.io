@@ -74,7 +74,7 @@ un8=parse(UInt8,mint); bitstring(un8)
 m16=parse(Int16,mint); bitstring(m16)
 
 # ╔═╡ 045e2cee-61e8-4099-8e61-f5c2b94df1de
-md"""Este tipo de representaciones tiene varias consecuencias como son la existencia de infinitos valores enteros que se pueden representar y consecuencias para los resultados de operaciones aritméticas las cuales son realizadas directamente en hardware en binario. Considere el siguiente ejemplo."""
+md"""Este tipo de representaciones tiene varias consecuencias, como son la existencia de infinitos valores enteros que se pueden representar y consecuencias para los resultados de operaciones aritméticas las cuales son realizadas directamente en hardware en binario. Considere el siguiente ejemplo."""
 
 # ╔═╡ 2aadc74f-f05f-46b3-bb1a-694f930330b0
 k=Int8(127); l=Int8(3)
@@ -117,7 +117,7 @@ $x=s\times q\times 2^m.$
 # ╔═╡ e3a0c47b-800b-4335-8cc4-6d6944de6d5f
 md"""**Ejemplo:** 
 
-Para $x=0.5$ tenemos en el formato Float32 tenemos bit par el signo 
+Para $x=0.5$ tenemos en el formato Float32 tenemos bit para el signo 
 $s_0=0$, tenemos 8 bits para el exponente $m=(01111110)_{{\mbox{expfp}(8)}}=-1$ y 23 bits para el significando $q=(1.00000000000000000000000)_2$. Tenemos lo siguiente.
 """
 
