@@ -68,4 +68,4 @@ header-includes: |
     }
   </style>
 
-<iframe src="https://labmatecc.github.io/HTML%20Lab/IntroCCyP/Enteros_y_Flotante.html" width="100%" height="600px"></iframe>
+<iframe src="https://labmatecc.github.io/HTML%20Lab/IntroCCyP/Enteros_y_Punto_Flotante.html" width="100%" height="600px"></iframe>
