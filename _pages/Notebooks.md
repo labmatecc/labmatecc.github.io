@@ -202,7 +202,7 @@ header-includes: |
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
-            <img src="https://s3.amazonaws.com/codementor_content/2016-Aug/algorithmex1.png" 
+            <img src="https://linkurious.com/images/uploads/2023/03/Shortest-path-algorithm.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Introducción a las Ciencias de la Computación y la Programación</h2>
