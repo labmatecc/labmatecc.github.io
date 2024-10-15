@@ -80,15 +80,29 @@ header-includes: |
   <a href="https://labmatecc.github.io/Notebooks/AlgebraLineal/" class="button">Álgebra Lineal</a>
 </div>
 
-  <div class="container">
+<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
-      <div class="info">
-        <p>Los cuadernos de Álgebra Lineal abarcan tanto temas fundamentales como aplicaciones prácticas. Comienzan con una introducción a las matrices, donde se muestra su estructura y se explican las operaciones básicas. También incluyen un estudio detallado de los vectores, resaltando su representación en Julia y las operaciones básicas asociadas. </p>
-        <p>Además de estos conceptos básicos, los cuadernos contienen aplicaciones prácticas como el procesamiento de imágenes, donde se utiliza el álgebra lineal para manipular píxeles y aplicar filtros y kernels. También se exploran temas como la descripción de grafos mediante matrices, el clustering en machine learning y la independencia lineal de vectores y matrices.</p>
-        <p>Los cuadernos abordan temas avanzados como la diagonalización de matrices, ilustrando su aplicación a la sucesión de Fibonacci. También se cubre la compresión de imágenes mediante la descomposición en valores singulares (SVD) y técnicas de marca de agua digital. Además, se incluyen temas como el análisis de componentes principales (PCA), sistemas de ecuaciones diferenciales, mínimos cuadrados y ajuste polinomial.</p>
-      </div>
+        <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+            <!-- Imagen más grande y centrada con sombras -->
+            <img src="https://keepcoding.io/wp-content/uploads/2023/01/image-122-1024x663.png" 
+                 alt="Descripción de la imagen" 
+                 style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            <!-- Título destacado para hacer el texto más llamativo -->
+            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Cuadernos de Álgebra Lineal</h2>
+            <!-- Texto más llamativo con colores, espaciado y negrita -->
+            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+                <strong>Los cuadernos de Álgebra Lineal</strong> abarcan tanto temas fundamentales como aplicaciones prácticas. Comienzan con una introducción a las matrices, donde se muestra su estructura y se explican las operaciones básicas. También incluyen un estudio detallado de los vectores, resaltando su representación en Julia y las operaciones básicas asociadas.
+            </p>
+            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+                Además de estos conceptos básicos, los cuadernos contienen <strong>aplicaciones prácticas</strong> como el procesamiento de imágenes, donde se utiliza el álgebra lineal para manipular píxeles y aplicar filtros y kernels. También se exploran temas como la descripción de grafos mediante matrices, el clustering en machine learning y la independencia lineal de vectores y matrices.
+            </p>
+            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+                Los cuadernos abordan temas avanzados como la <strong>diagonalización de matrices</strong>, ilustrando su aplicación a la sucesión de Fibonacci. También se cubre la compresión de imágenes mediante la descomposición en valores singulares (SVD) y técnicas de marca de agua digital. Además, se incluyen temas como el análisis de componentes principales (PCA), sistemas de ecuaciones diferenciales, mínimos cuadrados y ajuste polinomial.
+            </p>
+        </div>
     </div>
-  </div>
+</div>
+
 
   <html>
 <head>
@@ -118,14 +132,37 @@ header-includes: |
   <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/" class="button">Análisis Numérico</a>
 </div>
 
-<div class="container">
+<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
-      <div class="info">
-        <p>Los cuadernos de Análisis Numérico comienzan mostrando la representación de números enteros y de punto flotante, mostrando cómo los errores de redondeo y los límites de precisión afectan los cálculos numéricos. También incluyen una introducción al cálculo simbólico con la librería Symbolics. En temas de comparación asintótica, se definen conceptos como el orden asintótico para sucesiones y se utilizan ejemplos gráficos para ilustrar la convergencia. Se abordan la convergencia lineal, superlineal y la expansión de Taylor para la aproximación de funciones. Los métodos numéricos para encontrar raíces de funciones, como bisección, Newton y punto fijo, son explorados con implementaciones prácticas en el cuaderno Ecuaciones No Lineales. También se discuten ecuaciones lineales, incluyendo la factorización LU y de Cholesky, con ejemplos en Julia. El cuaderno sobre Círculos de Gershgorin presenta métodos para localizar valores propios de matrices, extendiendo la teoría a discos de Brauer y discos generalizados de Gershgorin. La interpolación se aborda mediante polinomios y splines, mostrando cómo garantizar la suavidad en los puntos de unión y aplicaciones en datos caligráficos. El ajuste de curvas incluye enfoques como el ajuste lineal y polinómico cúbico, aplicados al crecimiento de tumores en ratones.
-        Finalmente, los métodos de integración numérica como las sumas de Riemann, la regla del trapecio y la regla de Simpson se ilustran con ejemplos prácticos. El método de elementos finitos se utiliza para resolver ecuaciones como la de Poisson, aplicando discretización y condiciones de frontera en dominios unidimensionales y bidimensionales.</p>
-      </div>
+        <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+            <!-- Imagen más grande y centrada con sombras -->
+            <img src="https://img1.wsimg.com/isteam/ip/8d767449-15bc-4e62-a794-e70427f7c7b3/Mallado-por-elementos-finitos.png" 
+                 alt="Descripción de la imagen" 
+                 style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            <!-- Título destacado para hacer el texto más llamativo -->
+            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Cuadernos de Análisis Numérico</h2>
+            <!-- Texto más llamativo con colores, espaciado y negrita -->
+            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+                Los cuadernos de Análisis Numérico comienzan mostrando la representación de números enteros y de punto flotante, mostrando cómo los <strong>errores de redondeo</strong> y los límites de precisión afectan los cálculos numéricos. También incluyen una introducción al <strong>cálculo simbólico</strong> con la librería Symbolics.
+            </p>
+            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+                En temas de comparación asintótica, se definen conceptos como el <strong>orden asintótico para sucesiones</strong> y se utilizan ejemplos gráficos para ilustrar la convergencia. Se abordan la <strong>convergencia lineal, superlineal</strong> y la <strong>expansión de Taylor</strong> para la aproximación de funciones.
+            </p>
+            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+                Los métodos numéricos para encontrar raíces de funciones, como <strong>bisección, Newton y punto fijo</strong>, son explorados con implementaciones prácticas en el cuaderno Ecuaciones No Lineales. También se discuten ecuaciones lineales, incluyendo la <strong>factorización LU y de Cholesky</strong>, con ejemplos en Julia.
+            </p>
+            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+                El cuaderno sobre <strong>Círculos de Gershgorin</strong> presenta métodos para localizar valores propios de matrices, extendiendo la teoría a <strong>discos de Brauer</strong> y <strong>discos generalizados de Gershgorin</strong>.
+            </p>
+            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+                La interpolación se aborda mediante <strong>polinomios y splines</strong>, mostrando cómo garantizar la suavidad en los puntos de unión y aplicaciones en datos caligráficos. El <strong>ajuste de curvas</strong> incluye enfoques como el ajuste lineal y polinómico cúbico, aplicados al crecimiento de tumores en ratones.
+            </p>
+            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+                Finalmente, los métodos de <strong>integración numérica</strong> como las sumas de Riemann, la regla del trapecio y la regla de Simpson se ilustran con ejemplos prácticos. El <strong>método de elementos finitos</strong> se utiliza para resolver ecuaciones como la de Poisson, aplicando discretización y condiciones de frontera en dominios unidimensionales y bidimensionales.
+            </p>
+        </div>
     </div>
-  </div>
+</div>
 
 <hr>
 
@@ -133,54 +170,92 @@ header-includes: |
   <a href="https://labmatecc.github.io/Notebooks/EDO/" class="button">Ecuaciones Diferenciales Ordinarias</a>
 </div>
 
-<div class="container">
+<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
-      <div class="info">
-        <p>Los cuadernos sobre ecuaciones diferenciales ordinarias abarcan una amplia gama de temas matemáticos y prácticos. Desde la introducción a la modelación matemática y las ecuaciones diferenciales hasta la resolución de problemas específicos como el crecimiento de poblaciones, el movimiento de planetas o la dosificación de medicamentos, estos cuadernos ofrecen un panorama completo de cómo las ecuaciones diferenciales se aplican en diferentes contextos. Además, exploran técnicas numéricas y analíticas para resolver ecuaciones, ajustar modelos a datos experimentales y comprender fenómenos naturales y sociales.</p>
-      </div>
+        <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+            <!-- Imagen más grande y centrada con sombras -->
+            <img src="https://bachilleratovirtual.com/aula/pluginfile.php/6562/mod_lesson/page_contents/2536/Fasorxva.gif" 
+                 alt="Descripción de la imagen" 
+                 style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            
+            <!-- Título destacado para hacer el texto más llamativo -->
+            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Cuadernos sobre Ecuaciones Diferenciales Ordinarias</h2>
+
+            <!-- Texto más llamativo con colores, espaciado y negrita -->
+            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+                Los cuadernos sobre <strong>ecuaciones diferenciales ordinarias</strong> abarcan una amplia gama de temas matemáticos y prácticos. Desde la <strong>introducción a la modelación matemática</strong> y las ecuaciones diferenciales hasta la resolución de problemas específicos como el <strong>crecimiento de poblaciones</strong>, el movimiento de planetas o la dosificación de medicamentos, estos cuadernos ofrecen un panorama completo de cómo las ecuaciones diferenciales se aplican en diferentes contextos.
+            </p>
+            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+                Además, exploran técnicas numéricas y analíticas para <strong>resolver ecuaciones</strong>, ajustar modelos a datos experimentales y comprender fenómenos naturales y sociales.
+            </p>
+        </div>
     </div>
-  </div>
+</div>
 
 <hr>
-
 <div class="button-container">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP" class="button">Introducción a las Ciencias de la Computación y la Programación</a>
 </div>
 
-<div class="container">
+<!-- Contenedor para el curso de Ciencias de la Computación y la Programación -->
+<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
-      <div class="info">
-        <p>Los cuadernos sobre el curso Introducción a las Ciencias de la Computación y la Programación están en construcción.</p>
-      </div>
+        <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+            <!-- Imagen centrada -->
+            <img src="https://s3.amazonaws.com/codementor_content/2016-Aug/algorithmex1.png" 
+                 alt="Descripción de la imagen" 
+                 style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Introducción a las Ciencias de la Computación y la Programación</h2>
+            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+                Los cuadernos sobre el curso <strong>Introducción a las Ciencias de la Computación y la Programación</strong> están en construcción.
+            </p>
+        </div>
     </div>
-  </div>
+</div>
 
 <hr>
 
-<div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/Optimizacion" class="button">Optimización</a>
+<div class="button-container" style="text-align: center; margin: 20px 0;">
+    <a href="https://labmatecc.github.io/Notebooks/Optimizacion" class="button" style="padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Optimización</a>
 </div>
 
-<div class="container">
+<!-- Contenedor para el curso de Optimización -->
+<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
-      <div class="info">
-        <p>Los cuadernos sobre optimización muestran temas clave en la mejora de decisiones y procesos. En el problema de la dieta, se busca la combinación óptima de alimentos para satisfacer requisitos nutricionales a bajo costo, influenciados por el problema de Stigler, con implicaciones de seguridad alimentaria. El cuaderno de métodos de descenso explora técnicas de optimización numérica, incluyendo el descenso de gradiente y el método de Newton, con aplicaciones prácticas y visualizaciones para facilitar la comprensión.</p>
-      </div>
+        <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+            <!-- Imagen centrada -->
+            <img src="https://chalmersindustriteknik.se/app/uploads/Optimering_overgripande.jpg" 
+                 alt="Descripción de la imagen" 
+                 style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Cuadernos sobre Optimización</h2>
+            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+                Los cuadernos sobre <strong>optimización</strong> muestran temas clave en la mejora de decisiones y procesos. En el problema de la dieta, se busca la combinación óptima de alimentos para satisfacer requisitos nutricionales a bajo costo, influenciados por el problema de Stigler, con implicaciones de seguridad alimentaria. El cuaderno de métodos de descenso explora técnicas de optimización numérica, incluyendo el descenso de gradiente y el método de Newton, con aplicaciones prácticas y visualizaciones para facilitar la comprensión.
+            </p>
+        </div>
     </div>
-  </div>
+</div>
 
 <hr>
 
-<div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/VariableCompleja/" class="button">Variable Compleja</a>
+<div class="button-container" style="text-align: center; margin: 20px 0;">
+    <a href="https://labmatecc.github.io/Notebooks/VariableCompleja/" class="button" style="padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Variable Compleja</a>
 </div>
 
-<div class="container">
+<!-- Contenedor para el curso de Variable Compleja -->
+<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
-      <div class="info">
-        <p>Los cuadernos sobre variable compleja se enfocan en diversos temas. Desde la introducción a la representación y operaciones básicas con números complejos hasta la visualización de funciones complejas y la exploración de conjuntos de Julia utilizando técnicas iterativas y de graficación en el plano complejo, estos cuadernos ofrecen un completo panorama de cómo se estudian y aplican los conceptos de variable compleja en Julia.</p>
-      </div>
+        <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+            <!-- Imagen centrada -->
+            <img src="https://math.libretexts.org/@api/deki/files/11996/fig_2.5.1.jpg?revision=1" 
+                 alt="Descripción de la imagen" 
+                 style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Cuadernos sobre Variable Compleja</h2>
+            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+                Los cuadernos sobre <strong>variable compleja</strong> se enfocan en diversos temas. Desde la introducción a la representación y operaciones básicas con números complejos hasta la visualización de funciones complejas y la exploración de conjuntos de Julia utilizando técnicas iterativas y de graficación en el plano complejo, estos cuadernos ofrecen un completo panorama de cómo se estudian y aplican los conceptos de variable compleja en Julia.
+            </p>
+        </div>
     </div>
-  </div>
+</div>
+
 
 <hr>
