@@ -64,8 +64,8 @@ header-includes: |
 
     h2 {
       text-align: center;
-      color: #333;
+      color: #F8F8F8;
     }
   </style>
 
-<iframe src="https://labmatecc.github.io/HTML%20Lab/AL/Conceptos_b%C3%A1sicos.html" width="100%" height="600px"></iframe>
+<iframe src="https://labmatecc.github.io/HTML%20Lab/AL/Conceptos_b%C3%A1sicos.html" width="100%" height="1000px"></iframe>
