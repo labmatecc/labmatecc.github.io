@@ -21,11 +21,8 @@ using PlutoUI
 begin
 	using Plots, LinearAlgebra, Optim, DifferentialEquations
 	using HypertextLiteral, Distributions, Latexify, SpecialFunctions
-	using Random, Roots,Statistics
-end
-
-# ╔═╡ 3d867eb9-6348-4f3b-813d-029884312c36
-using SymPy;
+	using Random, Roots, Statistics, SymPy
+end;
 
 # ╔═╡ 2cc6c5db-dae9-4056-8e86-c2cdd5413fd2
 PlutoUI.TableOfContents(title="Ajuste de parámetros", aside=true)
@@ -299,7 +296,7 @@ oLG=Optim.optimize(rLG, [.01,.01], NelderMead())
 oLG.minimizer
 
 # ╔═╡ 819d0789-c0c2-40ab-87ab-c9ad7c87538d
-md"""Obteniendo así que los valores optimos para $a$ y $b$ son $0.297$ y $7.012$, respectivamente. 
+md"""Obteniendo así que los valores óptimos para $a$ y $b$ son $0.297$ y $7.012$, respectivamente. 
 
 Luego 
 $V'= 0.3V\left(1-\frac{V}{7.01}\right).$
@@ -875,16 +872,16 @@ Plots = "~1.39.0"
 PlutoUI = "~0.7.58"
 Roots = "~2.1.2"
 SpecialFunctions = "~2.3.1"
-SymPy = "~2.0.1"
+SymPy = "~2.2.0"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.5"
 manifest_format = "2.0"
-project_hash = "71cbc2c94e0fa561dc05d106344f1ca650cc8a54"
+project_hash = "3915f8fe694fb080b26206de07159aad60a976b5"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "016833eb52ba2d6bea9fcb50ca295980e728ee24"
@@ -2550,21 +2547,21 @@ version = "5.2.2+0"
 
 [[deps.SymPy]]
 deps = ["CommonEq", "CommonSolve", "LinearAlgebra", "PyCall", "SpecialFunctions", "SymPyCore"]
-git-tree-sha1 = "8d727c118eb31ffad73cce569b7bb29eef5fb9ad"
+git-tree-sha1 = "d35b297be048dfac05bcff29e55d6106808e3c5a"
 uuid = "24249f21-da20-56a4-8eb1-6a02cf4ae2e6"
-version = "2.0.1"
+version = "2.2.0"
 
 [[deps.SymPyCore]]
 deps = ["CommonEq", "CommonSolve", "Latexify", "LinearAlgebra", "Markdown", "RecipesBase", "SpecialFunctions"]
-git-tree-sha1 = "d2e8b52c18ad76cc8827eb134b9ba4bb7699ec59"
+git-tree-sha1 = "bef92ec4c31804bdc9c44cb00eaf0348eac383fb"
 uuid = "458b697b-88f0-4a86-b56b-78b75cfb3531"
-version = "0.1.18"
+version = "0.2.5"
 
     [deps.SymPyCore.extensions]
-    SymPyCoreSymbolicUtilsExt = "SymbolicUtils"
+    SymPyCoreTermInterfaceExt = "TermInterface"
 
     [deps.SymPyCore.weakdeps]
-    SymbolicUtils = "d1185830-fcd6-423d-90d6-eec64667417b"
+    TermInterface = "8ea1fca8-c5ef-4a55-8b96-4e9afe9c9a3c"
 
 [[deps.SymbolicIndexingInterface]]
 deps = ["DocStringExtensions"]
@@ -2928,7 +2925,7 @@ version = "0.15.1+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.11.0+0"
 
 [[deps.libevdev_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -3008,7 +3005,6 @@ version = "1.4.1+1"
 # ╟─3db89cf8-58b3-42e5-a1a7-a5ac40a78fdb
 # ╟─c96c27e6-efbb-4ae4-ad1f-71a19af1a971
 # ╠═39ed3381-b89d-40a0-ab27-764982180e55
-# ╠═3d867eb9-6348-4f3b-813d-029884312c36
 # ╟─e263bad6-deb8-4dca-b147-57a9d4dd39bb
 # ╟─33842891-3dbb-4b08-8160-346ffafe8619
 # ╟─c4c29fc7-5611-4b30-b15e-90f3fb86450a

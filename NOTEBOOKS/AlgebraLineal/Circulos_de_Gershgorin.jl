@@ -4,6 +4,16 @@
 using Markdown
 using InteractiveUtils
 
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+end
+
 # ╔═╡ 93d437ba-979a-417f-ac1d-0e694d55c0e2
 using PlutoUI
 
@@ -11,7 +21,7 @@ using PlutoUI
 using LinearAlgebra, Plots, Polynomials, SpecialMatrices
 
 # ╔═╡ 24c9f8a9-ad90-413a-9660-9da7a068f492
-PlutoUI.TableOfContents(title="Cículos de Gershgorin", aside=true)
+PlutoUI.TableOfContents(title="Círculos de Gershgorin", aside=true)
 
 # ╔═╡ 1f760cdf-6171-4ed7-b06d-60bc6a52105b
 md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**
@@ -30,7 +40,7 @@ md"""Usaremos las siguientes librerías:"""
 # ╔═╡ b1865cbd-9bdc-4cd9-999c-be7dfb673fd0
 md"""# Introducción
 
-Para hallar los valores propios de una matriz, existen diversos métodos que permiten localizarlos y estimarlos sin necesidad de calcularlos explícitamente. Entre estos métodos, los discos de Gershgorin, los discos de Brauer y los discos generalizados de Gershgorin proporcionan regiones en el plano complejo donde se pueden encontrar los valores propios de una matriz."""
+Para hallar los valores propios de una matriz, existen diversos métodos que permiten localizarlos y estimarlos sin necesidad de calcularlos explícitamente, ver $[1,2,3]$. Entre estos métodos, los discos de Gershgorin, los discos de Brauer y los discos generalizados de Gershgorin proporcionan regiones en el plano complejo donde se pueden encontrar los valores propios de una matriz."""
 
 # ╔═╡ feb108d5-f01d-4463-9671-9f82b7070e89
 md"""# Localización de valores propios"""
@@ -53,6 +63,9 @@ $y_{m}(\lambda - a_{mm}) =  \sum^{d}_{k=1, ~ k\not=m} a_{mk}y_k$
 usando las propiedades del vector $y$, concluimos que
 
 $|\lambda - a_{mm}| \leq \sum^{d}_{k=1, ~ k\not=m} |a_{mk}||y_k| \leq  \sum^{d}_{k=1, ~ k\not=m} |a_{mk}| \text{.}$"""
+
+# ╔═╡ 25b9aa70-9c45-4712-ac71-3ff28c4d9f81
+md"""Para más detalles de la demostración ver $[3].$"""
 
 # ╔═╡ 9c64c491-2368-43b5-87d1-96ecf4789b31
 md"""La siguiente función genera y visualiza los discos de Gershgorin para una matriz dada."""
@@ -119,7 +132,7 @@ md"""**Corolario 2.** Toda matriz estrictamente diagonal dominante es invertible
 # ╔═╡ f302448b-bcbb-45d1-b766-d008d30b0e8e
 md"""**Ejemplo:**
 
-Consideremos la siguiente matriz diagonal dominante, que por corolario es invertible."""
+Consideremos la siguiente matriz diagonal dominante, que según el corolario es invertible."""
 
 # ╔═╡ 84c4eb5a-fa0d-415b-926b-06c91e69f04a
 A₂ = (2 .* rand(3, 3) .- 1) .+ 3 .* diagm([1, -1, 1])
@@ -163,7 +176,7 @@ $\Omega_{ij} = \{z\in ℂ : |(z-a_{ii})(z-a_{jj})-a_{ij}a_{ji}|\leq |z-a_{jj}|R_
 donde $R_{ij} = \sum_{k=1, k\not=i,j}^{d}|a_{ik}|$."""
 
 # ╔═╡ 3a044287-92e3-4924-910c-a4a95305682d
-md"""Teniendo en cuenta los Teoremas 4 y 5, vamos a construir una función que visualice los discos de Gershgorin, los discos de Brauer y los discos generales de Gershgorin."""
+md"""Teniendo en cuenta los Teoremas 4 y 5, vamos a construir una función que visualice los discos de Gershgorin, los discos de Brauer y los discos generalizados de Gershgorin."""
 
 # ╔═╡ a04aa521-9799-4f8a-958d-6ddc05255d87
 function alldisksforA(A; r, k)
@@ -251,8 +264,11 @@ md"""**Ejemplo:**
 
 Consideremos ahora una matriz con entradas enteras, y hallemos sus discos."""
 
+# ╔═╡ 418b4c70-461a-4716-a8c1-3be611a6f619
+m_size = @bind m Slider(0:1:10, show_value=true, default=7)
+
 # ╔═╡ 81eba9ea-4db6-4e0c-ac48-2a371b44353c
-A₄ = rand(-7:7, 7, 7)
+A₄ = rand(-7:7, m, m)
 
 # ╔═╡ b861cfad-c5f8-49d3-9524-011f38cb538f
 alldisksforA(A₄, r=60.0, k=250)
@@ -322,7 +338,9 @@ $C(p(x)) = \begin{pmatrix}
 \vdots & \vdots & \ddots & \vdots & \vdots \\
 0 & 0 & \ldots & 1 & -c_{n-1}
 \end{pmatrix}$
-con $C(p(x)) \in \mathbb{R}^{n \times n}$. Con esta definición es fácil demostrar el siguiente resultado.
+con $C(p(x)) \in \mathbb{R}^{n \times n}$. Ver $[1,2].$
+
+Con esta definición es fácil demostrar el siguiente resultado.
 
 **Teorema 6.** El polinomio característico de $C(p(x))$ es el polinomio $p(x)$.
 """
@@ -339,7 +357,7 @@ $C(p(x)) = \begin{pmatrix}
 \end{pmatrix}$"""
 
 # ╔═╡ 28c0ba45-66da-49d9-8b73-6b4990ac9510
-md"""La función $\texttt{Companion()}$ halla la matriz de compañia teniendo en cuenta los coeficientes del polinomio."""
+md"""La función $\texttt{Companion()}$ halla la matriz de compañía teniendo en cuenta los coeficientes del polinomio."""
 
 # ╔═╡ dd02620b-d080-4255-9dce-6782ddb6679a
 md"""Definimos los coeficientes del polinomio:"""
@@ -354,7 +372,7 @@ md"""Definimos el polinomio,"""
 P = Polynomial(coef)
 
 # ╔═╡ bc5e281c-9e36-4a42-a30a-e75981ca34ba
-md"""Creamos la matriz de compañia:"""
+md"""Creamos la matriz de compañía:"""
 
 # ╔═╡ ca2f96ba-a13e-4150-a7ea-c0b786814609
 B = Companion(P)
@@ -376,9 +394,9 @@ Un polinomio mónico de la forma $p(x) = c_0 + c_1 x + \ldots + c_{n-1}x^{n-1} +
 # ╔═╡ 22d9f19e-a542-4afb-8485-a7d3b16b5b16
 md"""# Referencias
 
-[1] Melman, A. (2010). Generalizations of Gershgorin disks and polynomial zeros. Proceedings of the American Mathematical Society, 138(7). https://doi.org/10.1090/s0002-9939-10-10294-9
+[1] Melman, A. (2010). Generalizations of Gershgorin disks and polynomial zeros. Proceedings of the American Mathematical Society, 138(7). 
 
-[2] Saad, Y. (2003). Iterative methods for sparse linear systems (2nd ed.). Society for Industrial and Applied Mathematics. https://doi.org/10.1137/1.9780898718003
+[2] Saad, Y. (2003). Iterative methods for sparse linear systems (2nd ed.). Society for Industrial and Applied Mathematics.
 
 [3] Kincaid, D., & Cheney, W. (2002). Numerical analysis: Mathematics of scientific computing. American Mathematical Society."""
 
@@ -402,7 +420,7 @@ SpecialMatrices = "~3.0.0"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.5"
 manifest_format = "2.0"
 project_hash = "654c6b4d19b5e78a8dc3a532f98b3d91eaf42011"
 
@@ -516,6 +534,12 @@ version = "0.18.20"
 deps = ["Printf"]
 uuid = "ade2ca70-3891-5945-98fb-dc099432e06a"
 
+[[deps.Dbus_jll]]
+deps = ["Artifacts", "Expat_jll", "JLLWrappers", "Libdl"]
+git-tree-sha1 = "fc173b380865f70627d7dd1190dc2fce6cc105af"
+uuid = "ee1fde0b-3d02-5ea6-8484-8dfef6360eab"
+version = "1.14.10+0"
+
 [[deps.DelimitedFiles]]
 deps = ["Mmap"]
 git-tree-sha1 = "9e2f36d3c96a820c678f2f1f1782582fcf685bae"
@@ -596,7 +620,7 @@ uuid = "559328eb-81f9-559d-9380-de523a88c83c"
 version = "1.0.14+0"
 
 [[deps.GLFW_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll", "xkbcommon_jll"]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll", "libdecor_jll", "xkbcommon_jll"]
 git-tree-sha1 = "3f74912a156096bd8fdbef211eff66ab446e7297"
 uuid = "0656b61e-2033-5cc2-a64a-77c0f6c09b89"
 version = "3.4.0+0"
@@ -943,6 +967,12 @@ version = "1.6.3"
 deps = ["Artifacts", "Libdl"]
 uuid = "efcefdf7-47ab-520b-bdef-62a2eaa19f15"
 version = "10.42.0+1"
+
+[[deps.Pango_jll]]
+deps = ["Artifacts", "Cairo_jll", "Fontconfig_jll", "FreeType2_jll", "FriBidi_jll", "Glib_jll", "HarfBuzz_jll", "JLLWrappers", "Libdl"]
+git-tree-sha1 = "9dd97171646850ee607593965ce1f55063d8d3f9"
+uuid = "36c8627f-9965-5494-a995-c6b170f724f3"
+version = "1.54.0+0"
 
 [[deps.Parsers]]
 deps = ["Dates", "PrecompileTools", "UUIDs"]
@@ -1446,7 +1476,13 @@ version = "0.15.1+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.11.0+0"
+
+[[deps.libdecor_jll]]
+deps = ["Artifacts", "Dbus_jll", "JLLWrappers", "Libdl", "Libglvnd_jll", "Pango_jll", "Wayland_jll", "xkbcommon_jll"]
+git-tree-sha1 = "9bf7903af251d2050b467f76bdbe57ce541f7f4f"
+uuid = "1183f4f0-6f2a-5f1a-908b-139f9cdfea6f"
+version = "0.2.2+0"
 
 [[deps.libevdev_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1524,6 +1560,7 @@ version = "1.4.1+1"
 # ╟─feb108d5-f01d-4463-9671-9f82b7070e89
 # ╟─6e249b50-adb1-4900-ae47-d947e5c1277d
 # ╟─24af59c8-44ed-4839-a62c-20d049b07ee9
+# ╟─25b9aa70-9c45-4712-ac71-3ff28c4d9f81
 # ╟─9c64c491-2368-43b5-87d1-96ecf4789b31
 # ╠═ae72712e-dab6-4319-a970-7de3f578ff09
 # ╟─df303479-f693-4ca6-9b8c-725f1c6139ba
@@ -1549,6 +1586,7 @@ version = "1.4.1+1"
 # ╟─229eb2f6-70dc-4984-9048-ed7efba2987c
 # ╟─2a734e01-6332-4f6a-a4c9-75c086cb31ed
 # ╟─775f02d7-946c-4fa5-8244-09a97effdec0
+# ╟─418b4c70-461a-4716-a8c1-3be611a6f619
 # ╠═81eba9ea-4db6-4e0c-ac48-2a371b44353c
 # ╟─b861cfad-c5f8-49d3-9524-011f38cb538f
 # ╟─49bc5223-fde4-4076-aa67-2472a1a5494d

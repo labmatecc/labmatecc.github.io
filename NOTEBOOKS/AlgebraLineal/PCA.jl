@@ -150,8 +150,27 @@ md"""se tiene que su matriz de covarianza es:"""
 # ╔═╡ 544b5f93-be62-4677-b0d6-6321be1587a1
 cov(M)
 
-# ╔═╡ 00753e3f-0e59-4207-85c2-6fce9e88a1ee
+# ╔═╡ 23185b38-2c9f-4977-9f30-b355593afade
+md"""Ahora consideremos una matriz aleatoria de tamaño $n\times m$."""
 
+# ╔═╡ 00753e3f-0e59-4207-85c2-6fce9e88a1ee
+begin
+	N₁= @bind mn Slider(1:1:10, show_value=true, default=5)
+	M₁= @bind mm Slider(1:1:10, show_value=true, default=4)
+end;
+
+# ╔═╡ 7892242a-70b6-4172-a499-3597c0d6fb83
+md""" n = $N₁,  	m = $M₁
+"""
+
+# ╔═╡ ca41b54d-edff-4621-a0a4-6d8b1bc97b86
+M₂ = rand(mn, mm)
+
+# ╔═╡ af5ce522-1205-4b80-8c21-76a2e660f69d
+md"""así, su matriz de covarianza es:"""
+
+# ╔═╡ 0b3bffab-201c-4b25-b95c-fb3da1ba9988
+cov(M₂)
 
 # ╔═╡ c4aa1560-aaeb-4891-94ee-add387befdfc
 md"""# Análisis de componentes principales
@@ -2177,7 +2196,7 @@ version = "1.4.1+1"
 # ╠═f2fcc147-bbb7-4469-99a2-9a2f2befb843
 # ╟─82edebdb-b7d3-4bee-9e63-da15640a1d25
 # ╠═1fddf32c-45e0-46ec-b0e3-c15e91ffd542
-# ╠═8d56a6c1-2d98-4561-8b47-fd9017d80e79
+# ╟─8d56a6c1-2d98-4561-8b47-fd9017d80e79
 # ╟─176d4f3b-01a9-4f83-9088-69fe90329a61
 # ╠═0aee0b04-1771-4e0e-81e3-215e1a2ab4bb
 # ╠═8168faba-1eb5-4a3a-b9f4-ee56d9dd0e45
@@ -2195,9 +2214,14 @@ version = "1.4.1+1"
 # ╟─3691294d-92b9-4885-921c-deedff3d0c92
 # ╟─b856cf51-fe7e-4a16-9cfd-e6518794c874
 # ╠═246edec1-35fe-4ab9-ab76-8b6950b5ecbe
-# ╟─b953821e-b0ed-4b59-9c28-eae8c7a7761d
+# ╠═b953821e-b0ed-4b59-9c28-eae8c7a7761d
 # ╠═544b5f93-be62-4677-b0d6-6321be1587a1
-# ╠═00753e3f-0e59-4207-85c2-6fce9e88a1ee
+# ╟─23185b38-2c9f-4977-9f30-b355593afade
+# ╟─00753e3f-0e59-4207-85c2-6fce9e88a1ee
+# ╟─7892242a-70b6-4172-a499-3597c0d6fb83
+# ╠═ca41b54d-edff-4621-a0a4-6d8b1bc97b86
+# ╟─af5ce522-1205-4b80-8c21-76a2e660f69d
+# ╠═0b3bffab-201c-4b25-b95c-fb3da1ba9988
 # ╟─c4aa1560-aaeb-4891-94ee-add387befdfc
 # ╠═c8543faa-94a0-4700-ae3c-dc3a5fa50241
 # ╟─d545e484-7e55-409e-ad4a-878e4cf6dea9

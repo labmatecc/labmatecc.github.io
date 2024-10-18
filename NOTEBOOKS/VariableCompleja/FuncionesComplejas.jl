@@ -34,9 +34,9 @@ md"""# Introducción"""
 # ╔═╡ 657093ea-e4e8-4e60-ac5c-8a33a93181d5
 md"""La visualización de funciones es una herramienta valiosa para identificar diversos comportamientos de estas. Generalmente, esto se logra mediante gráficos que permiten observar aspectos como la relación entre valores de entrada y salida, puntos de máximos y mínimos, y la concavidad o convexidad de la función. Sin embargo, esta técnica está limitada a espacios tridimensionales, dificultando la representación de funciones de variable compleja, que requerirían un espacio de cuatro dimensiones.
 
-Para superar esta limitación, se han propuesto otras técnicas, como el Domain Coloring. Este método utiliza tonos, brillo y saturación para codificar los valores de una función, proporcionando una visión general rápida y detalles significativos al observar más de cerca. Aunque útil, esta técnica también tiene sus restricciones, y su beneficio depende de los aspectos específicos de la función compleja que se desean estudiar.
+Para superar esta limitación, se han propuesto otras técnicas, como el Domain Coloring, ver $[2]$. Este método utiliza tonos, brillo y saturación para codificar los valores de una función, proporcionando una visión general rápida y detalles significativos al observar más de cerca. Aunque útil, esta técnica también tiene sus restricciones, y su beneficio depende de los aspectos específicos de la función compleja que se desean estudiar.
 
-La función $\texttt{zplot}$ utiliza el método de Domain Coloring para representar funciones de variable compleja. Se usan diferentes colores y niveles de brillo y saturación para codificar información sobre los valores de la función, lo que permite identificar rápidamente características importantes como singularidades y la estructura global de la función."""
+La función $\texttt{zplot}$ utiliza el método de Domain Coloring para representar funciones de variable compleja. Se usan diferentes colores y niveles de brillo y saturación para codificar información sobre los valores de la función, lo que permite identificar rápidamente características importantes como singularidades y la estructura global de la función. Para más detalles de estás funciones en Julia, ver $[2].$"""
 
 # ╔═╡ d2801310-a500-4836-80ce-741a7c2d59a3
 md"""# Gráficas de funciones complejas
@@ -48,6 +48,8 @@ Supongamos que $w = u + iv$ representa el valor de la función $f$ en $z = x + i
 Cada uno de los números reales $u$ y $v$ depende de las variables reales $x$ y $y$, lo que nos lleva a que $f(z)$ pueda expresarse en términos de un par de funciones de valores reales de las variables $x$ y $y$:
 
 $f(z) = u(x, y) + iv(x, y).$
+
+Para más detalles de las funciones complejas diríjase a $[1]$.
 """
 
 # ╔═╡ 5b97add9-e375-46f4-87bf-563ace0bba0c
@@ -197,7 +199,7 @@ begin
 end
 
 # ╔═╡ a022ee92-4023-4891-a5bf-c13dadfe179d
-md"""Ahora usaremos la función $\texttt{zplot}$ para graficar la función compleja. La función $\texttt{zplot}$ toma una función compleja y mapea su salida a colores, utilizando la magnitud y el argumento de un número complejo. Por ejemplo, la magnitud se representa por la luminosidad o la saturación de cada color, valores de magnitud grandes pueden ser más brillantes o más saturados, mientras que valores cercanos a cero son más oscuros.
+md"""Ahora usaremos la función $\texttt{zplot}$ para graficar la función compleja. La función $\texttt{zplot}$ toma una función compleja y mapea su salida a colores, utilizando la magnitud y el argumento de un número complejo. Por ejemplo, la magnitud se representa por la luminosidad o la saturación de cada color, valores de magnitud grandes pueden ser más brillantes o más saturados, mientras que valores cercanos a cero son más oscuros. Ver $[2]$.
 
 Esta técnica es conocida como $\textbf{color domain coloring}.$"""
 
@@ -361,7 +363,7 @@ SymPy = "~2.0.1"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.5"
 manifest_format = "2.0"
 project_hash = "01fd6e350675798c43923baeb25ad82752ba3d56"
 
@@ -1725,7 +1727,7 @@ version = "0.15.1+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.11.0+0"
 
 [[deps.libevdev_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
