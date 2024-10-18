@@ -77,7 +77,9 @@ header-includes: |
 </html>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/AlgebraLineal/" class="button">Álgebra Lineal</a>
+  <a href="https://labmatecc.github.io/Notebooks/AlgebraLineal/" class="button"
+  style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;"
+  >Álgebra Lineal</a>
 </div>
 
 <div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
@@ -129,7 +131,9 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/" class="button">Análisis Numérico</a>
+  <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/" class="button"
+  style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;"
+  >Análisis Numérico</a>
 </div>
 
 <div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
@@ -167,7 +171,9 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/EDO/" class="button">Ecuaciones Diferenciales Ordinarias</a>
+  <a href="https://labmatecc.github.io/Notebooks/EDO/" class="button"
+  style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;"
+  >Ecuaciones Diferenciales Ordinarias</a>
 </div>
 
 <div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
@@ -177,10 +183,8 @@ header-includes: |
             <img src="https://bachilleratovirtual.com/aula/pluginfile.php/6562/mod_lesson/page_contents/2536/Fasorxva.gif" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            
             <!-- Título destacado para hacer el texto más llamativo -->
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Cuadernos sobre Ecuaciones Diferenciales Ordinarias</h2>
-
             <!-- Texto más llamativo con colores, espaciado y negrita -->
             <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
                 Los cuadernos sobre <strong>ecuaciones diferenciales ordinarias</strong> abarcan una amplia gama de temas matemáticos y prácticos. Desde la <strong>introducción a la modelación matemática</strong> y las ecuaciones diferenciales hasta la resolución de problemas específicos como el <strong>crecimiento de poblaciones</strong>, el movimiento de planetas o la dosificación de medicamentos, estos cuadernos ofrecen un panorama completo de cómo las ecuaciones diferenciales se aplican en diferentes contextos.
@@ -194,7 +198,9 @@ header-includes: |
 
 <hr>
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/IntroCCyP" class="button">Introducción a las Ciencias de la Computación y la Programación</a>
+  <a href="https://labmatecc.github.io/Notebooks/IntroCCyP" class="button"
+  style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;"
+  >Introducción a las Ciencias de la Computación y la Programación</a>
 </div>
 
 <!-- Contenedor para el curso de Ciencias de la Computación y la Programación -->
@@ -216,7 +222,7 @@ header-includes: |
 <hr>
 
 <div class="button-container" style="text-align: center; margin: 20px 0;">
-    <a href="https://labmatecc.github.io/Notebooks/Optimizacion" class="button" style="padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Optimización</a>
+    <a href="https://labmatecc.github.io/Notebooks/Optimizacion" class="button" style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Optimización</a>
 </div>
 
 <!-- Contenedor para el curso de Optimización -->
@@ -238,7 +244,7 @@ header-includes: |
 <hr>
 
 <div class="button-container" style="text-align: center; margin: 20px 0;">
-    <a href="https://labmatecc.github.io/Notebooks/VariableCompleja/" class="button" style="padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Variable Compleja</a>
+    <a href="https://labmatecc.github.io/Notebooks/VariableCompleja/" class="button" style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Variable Compleja</a>
 </div>
 
 <!-- Contenedor para el curso de Variable Compleja -->
