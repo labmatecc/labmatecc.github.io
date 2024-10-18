@@ -263,5 +263,37 @@ header-includes: |
     </div>
 </div>
 
+<hr>
+<!-- Contenedor para referencias de imágenes -->
+<!-- Contenedor para referencias de imágenes -->
+<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-top: 20px;">
+    <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+        <!-- Imagen centrada y más pequeña -->
+        <img src="https://apastyle.apa.org/images/references-page-category_tcm11-282727_w1024_n.jpg" 
+             alt="Descripción de la imagen" 
+             style="max-width: 50%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+        <!-- Título más grande -->
+        <h2 style="font-family: 'Arial', sans-serif; font-size: 28px; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">
+            Referencias de las imágenes
+        </h2>
+        <div class="references" style="text-align: start; max-width: 900px; margin: 0 auto; font-size: 16px; color: #34495e;">
+            <p style="font-family: 'Arial', sans-serif; line-height: 1.6;">
+                1. <a href="https://keepcoding.io/wp-content/uploads/2023/01/image-122-1024x663.png" target="_blank" style="color: #3498db; text-decoration: none;">Algebra Lineal</a><br>
+                2. <a href="https://img1.wsimg.com/isteam/ip/8d767449-15bc-4e62-a794-e70427f7c7b3/Mallado-por-elementos-finitos.png" target="_blank" style="color: #3498db; text-decoration: none;">Analisis Numerico</a><br>
+                3. <a href="https://bachilleratovirtual.com/aula/pluginfile.php/6562/mod_lesson/page_contents/2536/Fasorxva.gif" target="_blank" style="color: #3498db; text-decoration: none;">Ecuaciones Diferenciales Ordinarias</a><br>
+                4. <a href="https://linkurious.com/images/uploads/2023/03/Shortest-path-algorithm.png" target="_blank" style="color: #3498db; text-decoration: none;">Introducción a las Ciencias de la Computación y la Programación</a><br>
+                5. <a href="https://chalmersindustriteknik.se/app/uploads/Optimering_overgripande.jpg" target="_blank" style="color: #3498db; text-decoration: none;">Optimización</a><br>
+                6. <a href="https://math.libretexts.org/@api/deki/files/11996/fig_2.5.1.jpg?revision=1" target="_blank" style="color: #3498db; text-decoration: none;">Variable Compleja</a><br>
+                7. <a href="https://apastyle.apa.org/images/references-page-category_tcm11-282727_w1024_n.jpg" target="_blank" style="color: #3498db; text-decoration: none;">Referencias</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 
 <hr>
+
