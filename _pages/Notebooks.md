@@ -87,8 +87,12 @@ header-includes: |
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen más grande y centrada con sombras -->
             <img src="https://keepcoding.io/wp-content/uploads/2023/01/image-122-1024x663.png" 
-                 alt="Descripción de la imagen" 
+                 alt="Espacio Euclídeo" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            <!-- Pie de página -->
+            <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
+                Espacio Euclídeo
+            </footer>
             <!-- Título destacado para hacer el texto más llamativo -->
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Cuadernos de Álgebra Lineal</h2>
             <!-- Texto más llamativo con colores, espaciado y negrita -->
@@ -103,7 +107,9 @@ header-includes: |
             </p>
         </div>
     </div>
+    
 </div>
+
 
 
   <html>
@@ -112,6 +118,7 @@ header-includes: |
         .button-container {
             text-align: center; /* Centra el contenido horizontalmente */
         }
+
 
         .button {
             display: inline-block;
@@ -143,6 +150,10 @@ header-includes: |
             <img src="https://img1.wsimg.com/isteam/ip/8d767449-15bc-4e62-a794-e70427f7c7b3/Mallado-por-elementos-finitos.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            <!-- Pie de página -->
+            <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
+                Malla en diferencias finitas
+            </footer>
             <!-- Título destacado para hacer el texto más llamativo -->
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Cuadernos de Análisis Numérico</h2>
             <!-- Texto más llamativo con colores, espaciado y negrita -->
@@ -183,6 +194,10 @@ header-includes: |
             <img src="https://bachilleratovirtual.com/aula/pluginfile.php/6562/mod_lesson/page_contents/2536/Fasorxva.gif" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            <!-- Pie de página -->
+            <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
+                Movimiento armónico simple
+            </footer>
             <!-- Título destacado para hacer el texto más llamativo -->
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Cuadernos sobre Ecuaciones Diferenciales Ordinarias</h2>
             <!-- Texto más llamativo con colores, espaciado y negrita -->
@@ -211,6 +226,10 @@ header-includes: |
             <img src="https://i.ytimg.com/vi/CxGSnA-RTsA/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLB81zDsfTaH6F6crVu5J-kDJDouAQ" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            <!-- Pie de página -->
+            <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
+                ¿Que son las Ciencias de la Computación?
+            </footer>
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Introducción a las Ciencias de la Computación y la Programación</h2>
             <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
                 Los cuadernos sobre el curso <strong>Introducción a las Ciencias de la Computación y la Programación</strong> están en construcción.
@@ -233,6 +252,10 @@ header-includes: |
             <img src="https://chalmersindustriteknik.se/app/uploads/Optimering_overgripande.jpg" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            <!-- Pie de página -->
+            <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
+                Mathematical optimization models
+            </footer>
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Cuadernos sobre Optimización</h2>
             <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
                 Los cuadernos sobre <strong>optimización</strong> muestran temas clave en la mejora de decisiones y procesos. En el problema de la dieta, se busca la combinación óptima de alimentos para satisfacer requisitos nutricionales a bajo costo, influenciados por el problema de Stigler, con implicaciones de seguridad alimentaria. El cuaderno de métodos de descenso explora técnicas de optimización numérica, incluyendo el descenso de gradiente y el método de Newton, con aplicaciones prácticas y visualizaciones para facilitar la comprensión.
@@ -255,6 +278,9 @@ header-includes: |
             <img src="https://xciencia.wordpress.com/wp-content/uploads/2013/07/conjunto-de-mandelbrot-wikimedia-commons.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
+                Conjunto de Mandelbrot
+            </footer>
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Cuadernos sobre Variable Compleja</h2>
             <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
                 Los cuadernos sobre <strong>variable compleja</strong> se enfocan en diversos temas. Desde la introducción a la representación y operaciones básicas con números complejos hasta la visualización de funciones complejas y la exploración de conjuntos de Julia utilizando técnicas iterativas y de graficación en el plano complejo, estos cuadernos ofrecen un completo panorama de cómo se estudian y aplican los conceptos de variable compleja en Julia.
@@ -271,6 +297,9 @@ header-includes: |
         <img src="https://apastyle.apa.org/images/references-page-category_tcm11-282727_w1024_n.jpg" 
              alt="Descripción de la imagen" 
              style="max-width: 50%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+        <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
+                Créditos de las imagenes
+            </footer>
         <!-- Título más grande -->
         <h2 style="font-family: 'Arial', sans-serif; font-size: 28px; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">
             Imágenes tomadas de
