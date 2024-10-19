@@ -208,7 +208,7 @@ header-includes: |
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
-            <img src="https://linkurious.com/images/uploads/2023/03/Shortest-path-algorithm.png" 
+            <img src="https://i.ytimg.com/vi/CxGSnA-RTsA/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLB81zDsfTaH6F6crVu5J-kDJDouAQ" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Introducción a las Ciencias de la Computación y la Programación</h2>
@@ -252,7 +252,7 @@ header-includes: |
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
-            <img src="https://math.libretexts.org/@api/deki/files/11996/fig_2.5.1.jpg?revision=1" 
+            <img src="https://xciencia.wordpress.com/wp-content/uploads/2013/07/conjunto-de-mandelbrot-wikimedia-commons.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Cuadernos sobre Variable Compleja</h2>
@@ -265,7 +265,6 @@ header-includes: |
 
 <hr>
 <!-- Contenedor para referencias de imágenes -->
-<!-- Contenedor para referencias de imágenes -->
 <div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-top: 20px;">
     <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
         <!-- Imagen centrada y más pequeña -->
@@ -274,17 +273,39 @@ header-includes: |
              style="max-width: 50%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
         <!-- Título más grande -->
         <h2 style="font-family: 'Arial', sans-serif; font-size: 28px; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">
-            Referencias de las imágenes
+            Imágenes tomadas de
         </h2>
         <div class="references" style="text-align: start; max-width: 900px; margin: 0 auto; font-size: 16px; color: #34495e;">
+            <!-- Uso de flex para alinear el texto y el enlace -->
             <p style="font-family: 'Arial', sans-serif; line-height: 1.6;">
-                1. <a href="https://keepcoding.io/wp-content/uploads/2023/01/image-122-1024x663.png" target="_blank" style="color: #3498db; text-decoration: none;">Algebra Lineal</a><br>
-                2. <a href="https://img1.wsimg.com/isteam/ip/8d767449-15bc-4e62-a794-e70427f7c7b3/Mallado-por-elementos-finitos.png" target="_blank" style="color: #3498db; text-decoration: none;">Analisis Numerico</a><br>
-                3. <a href="https://bachilleratovirtual.com/aula/pluginfile.php/6562/mod_lesson/page_contents/2536/Fasorxva.gif" target="_blank" style="color: #3498db; text-decoration: none;">Ecuaciones Diferenciales Ordinarias</a><br>
-                4. <a href="https://linkurious.com/images/uploads/2023/03/Shortest-path-algorithm.png" target="_blank" style="color: #3498db; text-decoration: none;">Introducción a las Ciencias de la Computación y la Programación</a><br>
-                5. <a href="https://chalmersindustriteknik.se/app/uploads/Optimering_overgripande.jpg" target="_blank" style="color: #3498db; text-decoration: none;">Optimización</a><br>
-                6. <a href="https://math.libretexts.org/@api/deki/files/11996/fig_2.5.1.jpg?revision=1" target="_blank" style="color: #3498db; text-decoration: none;">Variable Compleja</a><br>
-                7. <a href="https://apastyle.apa.org/images/references-page-category_tcm11-282727_w1024_n.jpg" target="_blank" style="color: #3498db; text-decoration: none;">Referencias</a>
+                <span style="display: flex; justify-content: space-between;">
+                    <span>1. Álgebra Lineal</span> 
+                    <a href="https://es.wikipedia.org/wiki/%C3%81lgebra_lineal" target="_blank" style="color: #3498db; text-decoration: none;">Espacio Euclídeo</a>
+                </span>
+                <span style="display: flex; justify-content: space-between;">
+                    <span>2. Análisis Numérico</span> 
+                    <a href="https://mastercad.com.mx/blog/f/m%C3%A9todo-de-elementos-finitos-con-catia-v5?blogcategory=Desafios+masterCAD" target="_blank" style="color: #3498db; text-decoration: none;">Malla en diferencias finitas</a>
+                </span>
+                <span style="display: flex; justify-content: space-between;">
+                    <span>3. Ecuaciones Diferenciales Ordinarias</span> 
+                    <a href="https://bachilleratovirtual.com/aula/mod/lesson/view.php?id=5804" target="_blank" style="color: #3498db; text-decoration: none;">Movimiento armónico simple</a>
+                </span>
+                <span style="display: flex; justify-content: space-between;">
+                    <span>4. Introducción a las Ciencias de la Computación y la Programación</span> 
+                    <a href="https://www.youtube.com/watch?app=desktop&v=CxGSnA-RTsA" target="_blank" style="color: #3498db; text-decoration: none;">Computer Science</a>
+                </span>
+                <span style="display: flex; justify-content: space-between;">
+                    <span>5. Optimización</span> 
+                    <a href="https://chalmersindustriteknik.se/en/expertise/applied-ai/applied-mathematics-and-optimization/" target="_blank" style="color: #3498db; text-decoration: none;">Mathematical optimization models</a>
+                </span>
+                <span style="display: flex; justify-content: space-between;">
+                    <span>6. Variable Compleja</span> 
+                    <a href="https://xciencia.wordpress.com/tag/benoit-mandelbrot/" target="_blank" style="color: #3498db; text-decoration: none;">Conjunto de Mandelbrot</a>
+                </span>
+                <span style="display: flex; justify-content: space-between;">
+                    <span>7. Referencias</span> 
+                    <a href="https://apastyle.apa.org/style-grammar-guidelines/references" target="_blank" style="color: #3498db; text-decoration: none;">References</a>
+                </span>
             </p>
         </div>
     </div>
