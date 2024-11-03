@@ -152,7 +152,7 @@ header-includes: |
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen representativa centrada con sombras (opcional) -->
-            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20240329121436/big-o-analysis-banner.webp" 
+            <img src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/mypic.png" 
                  alt="Comparación asintótica" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <!-- Pie de página -->
