@@ -401,7 +401,7 @@ md"""
 
 # ╔═╡ e17cf578-cdaa-4acc-9aa6-255b0671ee40
 md"""
-Considere ahora la norma $||z||_1=\sum_{\ell=1}^n|z_\ell|$. Dado que la norma dual de la norma $||\cdot||_1$ es la norma $||\cdot||_\infy$ dode $||z||_\infty=\max_{1\leq \ell \leq n}|z_\ell|=|z_{i_0}|$, tenemos que 
+Considere ahora la norma $||z||_1=\sum_{\ell=1}^n|z_\ell|$. Dado que la norma dual de la norma $||\cdot||_1$ es la norma $||\cdot||_\infty$ dode $||z||_\infty=\max_{1\leq \ell \leq n}|z_\ell|=|z_{i_0}|$, tenemos que 
 
 $
 \delta_{sd}=-\partial_{i_0} f(x)e_{i_o}.$
