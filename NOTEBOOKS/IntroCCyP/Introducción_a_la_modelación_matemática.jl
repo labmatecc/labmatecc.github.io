@@ -106,7 +106,7 @@ md"""$\texttt{Figura 1. Midiendo una naranja. Imagen tomada de Wikipedia.}$"""
 # ╔═╡ 3d35a65c-3620-4a1f-adf3-1280eff4c597
 md"""## Modelo matemático
 
-El modelo matemático más sencillo para la naranja es asumir que la naranja tiene una forma esférica (sólida) o de bola tridimensional. Esto, en realidad, quiere decir que en algún conjunto y noción de distancia adecuados, la naranja se encuentra a poca distancia de una bola (o esfera sólida). Observe que en este caso, podemos trasladar la esfera para colocar su centro en el origen y, por lo tanto, necesitamos un solo parámetro para describirla. En este caso, un parámetro que puede ser usado es el radio de la bola,
+El modelo matemático más sencillo para la naranja es asumir que tiene una forma esférica (sólida) o de bola tridimensional. Esto, en realidad, quiere decir que en algún conjunto y noción de distancia adecuados, la naranja se encuentra a poca distancia de una bola (o esfera sólida). Observe que en este caso, podemos trasladar la esfera para colocar su centro en el origen; por lo tanto, necesitamos un solo parámetro para describirla. En este caso, un parámetro que puede ser usado es el radio de la bola,
 
 $p=\mbox{ ``radio de la bola''}.$
 
@@ -228,14 +228,28 @@ representa nuestro conocimiento previo de esta relación. En la practica, el val
 # ╔═╡ 9409857c-052e-4ac6-a99e-9285346161b5
 md"""## Validación del modelo
 
-Después de obtener el modelo es necesario hacer el experimento con la naranja, si el modelo no cumple con lo esperado, se pueden tomar medidas para mejorarlo. Esto incluye revisar los datos, ajustar los parámetros y validar las mejoras. Una vez que el modelo esté listo y validado, se puede implementar para responder la pregunta original con mayor precisión."""
+Después de obtener el modelo es necesario validar el modelo. En este caso se pueden hacer experimentos con naranjas reales. Se deben definir médidas o indicadores para discriminar el buen o mal desempeño del modelo, en este caso puede ser la diferencia entre la predicción realizada con el modeloy la cantidad optenida de jugo de naranja al hacer el experimento. De esta manera si el modelo no cumple con lo esperado, se pueden tomar medidas para mejorarlo. Esto incluye revisar los datos, ajustar los parámetros y validar las mejoras. Una vez que el modelo esté listo y validado, se puede implementar para responder la pregunta original."""
 
 # ╔═╡ e6509621-9ab6-45fe-aa0e-44eeb82ae497
 md"""## Balance de errores
 
-Como hemos visto, son diversos los errores y simplificaciones de la realidad introducidos en diferentes etapas de la modelación matemática. Estos incluyen el error de modelación (las naranjas no son esferas, y debemos saber qué porcentaje de error existe en esto), el error de medición (debemos determinar qué porcentaje de error se produce al medir con una cinta métrica el diámetro de la naranja), errores de redondeo y errores de parámetros (en este caso, $\alpha$). Deseamos que nuestro modelo no sea sensible a este parámetro; es decir, si variamos un poco dicho parámetro, la solución no debería tener un cambio brusco.
+Como hemos visto, son diversos los errores y simplificaciones de la realidad introducidos en diferentes etapas de la modelación matemática. Estos incluyen el error de modelación (las naranjas no son esferas, y debemos saber qué porcentaje de error existe en esta aproximación), el error de medición (debemos determinar qué porcentaje de error se produce al medir con una cinta métrica el diámetro de la naranja), errores de redondeo y errores de parámetros (en este caso, $\alpha$). Deseamos que nuestro modelo no sea sensible a este parámetro; es decir, si variamos un poco dicho parámetro, la solución no debería tener un cambio brusco.
 
-Es bastante obvio que no tiene sentido preocuparse por reducir este error únicamente en una de estas etapas. Por ejemplo, no tiene sentido práctico realizar el cálculo numérico asegurando una precisión de 14 cifras decimales si no puedo garantizar ese mismo orden de error en las otras etapas. Para esto, debo poder cuantificar el margen de error en todas las etapas del proceso."""
+Es bastante obvio que no tiene sentido preocuparse por reducir el error únicamente en una de estas etapas. Por ejemplo, no tiene sentido práctico realizar el cálculo numérico asegurando una precisión de 14 cifras decimales si no puedo garantizar ese mismo orden de error en las otras etapas. Para esto, debo poder cuantificar el margen de error en todas las etapas del proceso."""
+
+# ╔═╡ 1af243a8-ca0e-4cbe-8c16-316f78c5e6fd
+md"""
+# Mejoras del modelo 
+En cada etapa descrita arriba se pueden proponer mejoras (para las cuales se debe tener en cuenta el balance de errores).
+
+-Datos: se pueden obtener más y mejores mediciones (realizadas con mejores herramientas). Por ejemplo, medidas de circunferencias a diferentes alturas de la naranja, o medidas calculadas a partir de fotografías de la naranja desde diferentes ángulos, etc.
+
+-Modelo matemático: se pueden considerar diferentes modelos, tales como elipsoides (solidos), sólidos de revolución, o modelado 3D, etc.
+
+-Relaciones funcionales:  se pueden proponer funciones que representen mejor las relaciones entre las variables consideradas. Por ejemplo, la relación entre el volumen y la cantidad de jugo en una naranja pueden depender del tipo de naranja, la fecha de cosecha, las condiciones climáticas, puede depender del tamaño de la naranja, entre otras posibles consideraciones. Es de esperar que entre más parámetros se involucren, más y mejores datos son necesarios para estimar valores de los mismos. 
+
+-Método numérico e implementación numérica: Se pueden implementar mejores aproximaciones que traten de prevenir la ocurrencia y acumulación de errores de redondeo, así como favorecer la eficiencia computacional (usando técnicas de análisis numérico y cálculo científico)
+"""
 
 # ╔═╡ fbaaf968-b40d-4731-a947-240c8df50e21
 md"""
@@ -912,9 +926,9 @@ version = "1.4.3"
 
 [[deps.OpenSSL_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "1b35263570443fdd9e76c76b7062116e2f374ab8"
+git-tree-sha1 = "7493f61f55a6cce7325f197443aa80d32554ba10"
 uuid = "458c3c95-2e84-50aa-8efc-19380b2a3a95"
-version = "3.0.15+0"
+version = "3.0.15+1"
 
 [[deps.Opus_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1565,6 +1579,7 @@ version = "1.4.1+1"
 # ╟─776dfee9-08b0-4424-967a-8d1b1b1d37ac
 # ╟─9409857c-052e-4ac6-a99e-9285346161b5
 # ╟─e6509621-9ab6-45fe-aa0e-44eeb82ae497
+# ╟─1af243a8-ca0e-4cbe-8c16-316f78c5e6fd
 # ╟─fbaaf968-b40d-4731-a947-240c8df50e21
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
