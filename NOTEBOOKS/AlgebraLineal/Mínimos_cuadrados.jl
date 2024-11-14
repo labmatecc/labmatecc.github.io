@@ -157,7 +157,7 @@ entonces, una solución del sistema normal $A^TAx = A^Tb$ proporciona una soluci
 # ╔═╡ 68fb33db-7f68-4ab5-bb03-c0dd919091de
 md""" *Ejemplo:*
 
-Consideremos loa siguientes datos:
+Consideremos los siguientes datos:
 
 | $x_i$ | $y_i$|
 | -------- | -------- |
@@ -168,7 +168,7 @@ Consideremos loa siguientes datos:
 | 3 | 0.7 |
 | 3.5 | -0.2 |
 
-Grafiquémos estos datos:
+Grafiquemos estos datos:
 """
 
 # ╔═╡ 6e95ca33-6e68-422e-99a2-53dabb333f03
@@ -235,7 +235,7 @@ x₂ = A₂\b₂ #Resolvemos el sistema
 println("Por tanto, el polinomio cuadrático que ajusta los datos es: ", x₂[1], "x^2 + ", x₂[2], "x + ", x₂[3])
 
 # ╔═╡ 5a72baac-2d77-407d-9322-a46b99a44c8c
-md"""Vizualicemos la gráfica de este junto a los datos."""
+md"""Visualicemos la gráfica de este junto a los datos."""
 
 # ╔═╡ cc7369b7-d0bb-4e63-9402-bf8aa7b4dc93
 let
@@ -255,10 +255,10 @@ end
 md"""## Ajuste por ecuaciones cuadráticas"""
 
 # ╔═╡ 005e3d8f-b411-4088-936e-59473fb00f6d
-md"""El ajuste se puede realizar no solo con funciones como cuadráticas, exponenciales, etc, sino tambien con ecuaciones cuadraticas en las variables $x$ e $y$, estás son de la siguiente forma:
+md"""El ajuste se puede realizar no solo con funciones como cuadráticas, exponenciales, etc, sino también con ecuaciones cuadráticas en las variables $x$ e $y$, estás son de la siguiente forma:
 
 $a'x^2+2b'xy+c'y^2+d'x+e'y+f'=0,$
-donde $a',b',c',d',e'$ y $f'$ son números reales. La gráfica de la ecuación anterior es una sección cónica, se llama así ya que se obtiene al interecar un plano con un cono circular recto de dos hojas, ver la siguiente Figura."""
+donde $a',b',c',d',e'$ y $f'$ son números reales. La gráfica de la ecuación anterior es una sección cónica, se llama así ya que se obtiene al intersecar un plano con un cono circular recto de dos hojas, ver la siguiente Figura."""
 
 # ╔═╡ 925a3293-94a3-4e25-b0af-4d57f87812f0
 begin
@@ -268,7 +268,7 @@ begin
 end
 
 # ╔═╡ 222ce78d-40d2-4c6a-b692-322c680b90bc
-md"""$\textit{Figura 1. Secciones cónicas. Imagen tomada de Wikipedia.}$"""
+md"""$\texttt{Figura 1. Secciones cónicas. Imagen tomada de Wikipedia.}$"""
 
 # ╔═╡ abc2a459-9dd8-4cfe-9c51-82d493574da2
 md"""Una formulación alternativa de la ecuación anterior es
@@ -294,7 +294,7 @@ Consideremos loa siguientes datos:
 | 4.78 | -0.49 |
 | 4.81 | 0.18 |
 
-Grafiquémos:
+Grafiquemos:
 """
 
 # ╔═╡ 8c079ee9-dafc-4101-b6d2-8181fa9c0b76
@@ -372,7 +372,7 @@ b₃ = ones(10) #definimos b
 solution = A₃\b₃
 
 # ╔═╡ 1e6eafa1-6509-4e9c-bf1e-72b770820ad0
-md"""Esto último son los coeficientes de la ecuación. Realizemos la gráfica."""
+md"""Esto último son los coeficientes de la ecuación. Realicemos la gráfica."""
 
 # ╔═╡ c5760b4d-c784-4a70-8990-608a3edbe36b
 begin
@@ -391,7 +391,7 @@ begin
 end
 
 # ╔═╡ c227c241-ce0b-4fe2-adba-8825648917fd
-md"""# La genialidad de Davinci
+md"""# La genialidad de Da Vinci
 
 En el contexto de la iconografía medieval, las figuras sagradas eran comúnmente representadas con una aureola circular que se ubicaba detrás de sus cabezas. Sin embargo, con el advenimiento del Renacimiento y el avance de la ciencia, estas aureolas evolucionaron de simples círculos a formas más elípticas y detalladas.
 
@@ -407,7 +407,7 @@ begin
 end
 
 # ╔═╡ 1dd7a5b7-50ea-49cc-a8f9-4fe9022b1547
-md"""$\textit{Figura 2. El Bautismo de Cristo. Imagen tomada de Wikipedia.}$"""
+md"""$\texttt{Figura 2. El Bautismo de Cristo. Imagen tomada de Wikipedia.}$"""
 
 # ╔═╡ be342e4a-0086-4dc6-b623-7e0760265356
 md"""Vamos a seleccionar $n$ puntos que delineen cada elipse."""
@@ -603,7 +603,7 @@ PlutoUI = "~0.7.59"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.5"
 manifest_format = "2.0"
 project_hash = "c32cc438667f766efe2f98f3faa1f641b5a9bfd1"
 
@@ -2018,7 +2018,7 @@ version = "0.15.1+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.11.0+0"
 
 [[deps.libfdk_aac_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -2111,34 +2111,34 @@ version = "3.5.0+0"
 # ╟─222ce78d-40d2-4c6a-b692-322c680b90bc
 # ╟─abc2a459-9dd8-4cfe-9c51-82d493574da2
 # ╟─ea01b6cc-e60f-406a-bf7c-323df4c3d44e
-# ╠═8c079ee9-dafc-4101-b6d2-8181fa9c0b76
+# ╟─8c079ee9-dafc-4101-b6d2-8181fa9c0b76
 # ╟─6bb2ec6f-0e17-45e7-b4dc-171c91426582
 # ╠═94e3dd2e-857f-43ed-a5c9-3432f55a62c8
 # ╠═efe8b15d-3248-4cee-ba43-a73f9e36dd4e
 # ╠═7438fd4d-5517-454c-b84c-461285df4eb3
 # ╟─1e6eafa1-6509-4e9c-bf1e-72b770820ad0
-# ╠═c5760b4d-c784-4a70-8990-608a3edbe36b
+# ╟─c5760b4d-c784-4a70-8990-608a3edbe36b
 # ╟─c227c241-ce0b-4fe2-adba-8825648917fd
 # ╟─ed0ea5b5-5150-4b85-8db0-7a1317d68db2
 # ╟─1dd7a5b7-50ea-49cc-a8f9-4fe9022b1547
 # ╟─be342e4a-0086-4dc6-b623-7e0760265356
 # ╠═ca3f7f44-fa66-44e5-b34c-7bfda72edb19
 # ╠═8abf8ea9-5d7e-43d6-9f81-4714dd30c9d4
-# ╠═ced48584-9f65-4a7d-9549-7970b4a6115d
+# ╟─ced48584-9f65-4a7d-9549-7970b4a6115d
 # ╟─e2037336-3de2-477d-a6b3-f8d47d5b0562
 # ╠═5607de4d-baec-4e86-96a0-90b8c038ed30
 # ╟─a108f864-bb92-405c-9de0-6dadd76e3eff
 # ╠═e5afb156-c8f6-4310-8026-932b09b95cc2
 # ╠═1d1b4639-08a3-43c3-b155-bbc2e3a9f4f1
 # ╟─7107c68b-4eeb-4067-89e5-570fe8ecf79e
-# ╠═ceb7a964-4577-4716-8c44-21c055c051a1
+# ╟─ceb7a964-4577-4716-8c44-21c055c051a1
 # ╟─a42235b5-4663-46b2-9d46-d439ca53dac8
-# ╠═c8d4b02e-0dd9-456a-be1e-9eb1af1ce001
+# ╟─c8d4b02e-0dd9-456a-be1e-9eb1af1ce001
 # ╟─8159c518-24e5-4db1-8c02-614e3b52a193
 # ╟─79b04142-c6e7-4189-b4f8-3250934045ae
 # ╠═7c22c28d-4e93-4ee8-a9bb-f26eeee1a472
 # ╠═5c7b50d8-af99-4742-9462-6560ad628bb3
-# ╠═52150af2-1352-4016-a355-e42e38977d96
+# ╟─52150af2-1352-4016-a355-e42e38977d96
 # ╟─d8b99b55-410d-4af9-af8c-d2ba6f89243b
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

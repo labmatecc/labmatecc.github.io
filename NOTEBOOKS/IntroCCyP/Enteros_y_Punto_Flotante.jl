@@ -37,19 +37,20 @@ Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo.
 # ╔═╡ 0f4c585a-93a3-42c2-a301-57a56895f359
 md"""Usaremos las siguientes librerías:"""
 
-# ╔═╡ c1f6eaf3-b3eb-42c8-bcce-dfc996f48c15
+# ╔═╡ 4c299fc2-221b-4122-bf85-a46e6b4c03de
 md"""# Enteros 
 Presentamos ejemplos sencillos de la representación de los datos enteros en Julia.
-En particular, un entero de $k$ bits biene representado de la forma
-$n=(b_{k-1}b_{k-2}\cdots b_2 b_1b_0)_2=b_0+b_1 2^1+b_22^2+\cdots+b_{k-2}2^{k-2}-b_{k-1}2^{k-1}$. 
+En particular, un entero de $k$ bits es representado de la forma
 
-Recuerde que $b_i\in\{0,1\}$.
+$n=(b_{k-1}b_{k-2}\cdots b_2 b_1b_0)_2=b_0+b_1 2^1+b_22^2+\cdots+b_{k-2}2^{k-2}-b_{k-1}2^{k-1}.$ 
+
+Recuerde que $b_i\in\{0,1\}$. 
 
 Vea los siguientes ejemplos.
 """
 
-# ╔═╡ e72bc01c-0268-4fd3-8df3-73e031b4b5b8
-@bind n Slider(-50:50, show_value=true,default=0)
+# ╔═╡ c20b7028-66b5-4276-9f78-fd67fce55cfd
+n = @bind n Slider(-50:50, show_value=true,default=0)
 
 # ╔═╡ edf88bf8-5441-4279-9d05-4f264b89c6fd
 typeof(n)
@@ -73,7 +74,7 @@ un8=parse(UInt8,mint); bitstring(un8)
 m16=parse(Int16,mint); bitstring(m16)
 
 # ╔═╡ 045e2cee-61e8-4099-8e61-f5c2b94df1de
-md"""Este tipo de representaciones tiene varias consecuencias como son la existencia de infinitos valores enteros que se pueden representar y consecuencias para los resultados de operaciones aritméticas las cuales son realizadas directamente en hardware en binario. Considere el siguiente ejemplo."""
+md"""Este tipo de representaciones tiene varias consecuencias, como son la existencia de infinitos valores enteros que se pueden representar y consecuencias para los resultados de operaciones aritméticas las cuales son realizadas directamente en hardware en binario. Considere el siguiente ejemplo."""
 
 # ╔═╡ 2aadc74f-f05f-46b3-bb1a-694f930330b0
 k=Int8(127); l=Int8(3)
@@ -104,7 +105,7 @@ En particular, la representación usando un bit para el signo, $s_0\in \{0,1\}$,
 $s=(-1)^{1-s_0}$, 
 $k$ bits para el exponente
 
-$m=(b_{k-1}b_{k-2}\dots b_1b_0)_{\mbox{expfp}(k)} = b_0+b_1 2^1+b_22^2+\cdots+b_{k-1}2^{k-1}-(2^{k-1}-1).$  
+$m=(b_{k-1}b_{k-2}\dots b_1b_0)_{\mbox{expfp}(k)} = b_0+b_1 2^1+b_22^2+\cdots+b_{k-1}2^{k-1}-(2^{k-1}-1),$  
 con $e_i\in\{0,1\}$, y $p$ bits de precisión para el significando 
 
 $q=(1. a_1a_2\dots a_p)_2 = 1 + a_12^{-1}+a_22^{-2}+\dots+a_p2^{-p},$ 
@@ -116,7 +117,7 @@ $x=s\times q\times 2^m.$
 # ╔═╡ e3a0c47b-800b-4335-8cc4-6d6944de6d5f
 md"""**Ejemplo:** 
 
-Para $x=0.5$ tenemos en el formato Float32 tenemos bit par el signo 
+Para $x=0.5$ tenemos en el formato Float32 tenemos bit para el signo 
 $s_0=0$, tenemos 8 bits para el exponente $m=(01111110)_{{\mbox{expfp}(8)}}=-1$ y 23 bits para el significando $q=(1.00000000000000000000000)_2$. Tenemos lo siguiente.
 """
 
@@ -397,17 +398,17 @@ end
 # ╔═╡ cc26b914-4236-484f-90ff-23ea82af6d3e
 md"""**Ejemplo:**
 
-Un otro ejemplo común de cancelación es cuando se evaluan polinomios usando la expresión de potencias. Por ejemplo, evaluemos 
+Otro ejemplo común de cancelación es cuando se evalúan polinomios usando la expresión de potencias. Por ejemplo, evaluemos 
 
 $P(x)=(x-1)^7=x^7-7x^6+21x^5-35x^4+35x^3-21x^2+7x-1,$
-usando estás dos expresiones. """
+usando estas dos expresiones. """
 
 # ╔═╡ 813b113b-fd0d-4bc3-9c96-73adef9f3424
-md"""Es un buen ejercicio hallar el esquema de Horner para calcular este polinomio y comparar. Observe que dicho esquema de Horner es el siguiente 
+md"""Es un buen ejercicio hallar el esquema de Horner para calcular este polinomio y comparar. Observe que el esquema de Horner es el siguiente 
 
 $(x-1)^7=\left( \left( \left( \left( \left( \left( x - 7 \right) x + 21  \right) x - 35 \right) x + 35 \right) x - 21 \right) x + 7 \right) x - 1.$
 
-Ahora, grafiquemos estás 3 expresiones."""
+Ahora, grafiquemos estas 3 expresiones."""
 
 # ╔═╡ b6fba6dd-a237-4a5b-ad3c-304e79c384ce
 begin
@@ -427,9 +428,9 @@ end
 md""" 
 Por último notamos que, aunque el error de redondeo es pequeño al principio, en cálculos complejos puede acumular para ocasionar efectos catastróficos.
 
-**EJEMPLO 1:** Explosión del misil Ariane en Junio de 1996 por un desbordamiento por exceso en el computador del mismo. https://www.bugsnag.com/blog/bug-day-ariane-5-disaster
+**EJEMPLO 1:** Explosión del [misil Ariane](https://www.bugsnag.com/blog/bug-day-ariane-5-disaster) en Junio de 1996 por un desbordamiento por exceso en el computador del mismo. 
 
-**EJEMPLO 2:** La falla de una misión de un misil American Patriot durante la guerra del Golfo en 1991 debido a errores de redondeo en el cálculo de la trayectoria a seguir. https://www.iro.umontreal.ca/~mignotte/IFT2425/Disasters.html
+**EJEMPLO 2:** La falla de una misión de un [misil American Patriot](https://www.iro.umontreal.ca/~mignotte/IFT2425/Disasters.html) durante la guerra del Golfo en 1991 debido a errores de redondeo en el cálculo de la trayectoria a seguir. 
 """
 
 # ╔═╡ a3ca9fa5-04c5-4a9a-b71d-e7e2ebf3ef28
@@ -458,7 +459,7 @@ md"""Observe que la columna de la izquierda, tiene hasta valore negativos y pare
 md"""
 # Cálculo simbólico
 
-Para terminar mencionaremos la librería sympy que permite realizar cálculo simbólico en lugar de cálculo numérico. Recuerden que en el cálculo numérico las variables en todo momento tiene valores particulares asignados los cuales corresponden a números de máquina que dependen del formato que se esté usando: precisión simple, precisión doble, e.t.c. En los cálculos simbólicos las variables no tienen que tomar valores particulares y se pueden manipular solo restringiendo su comportamiento a reglas que aplican a conjuntos numéricos como por ejemplo: enteros, reales, complejos, matrices, e.t.c. 
+Para terminar mencionaremos la librería  	`Symbolics` que permite realizar cálculo simbólico en lugar de cálculo numérico. Recuerden que en el cálculo numérico las variables en todo momento tiene valores particulares asignados los cuales corresponden a números de máquina que dependen del formato que se esté usando: precisión simple, precisión doble, etc. En los cálculos simbólicos las variables no tienen que tomar valores particulares y se pueden manipular solo restringiendo su comportamiento a reglas que aplican a conjuntos numéricos como por ejemplo: enteros, reales, complejos, matrices, e.t.c. 
 
 A continuación presentamos algunos comandos de cálculo simbólico. 
 
@@ -554,23 +555,25 @@ Verifique esta formula. Implemente y comente los resultados. Esta forma de calcu
 # ╔═╡ 41711850-c9fc-4c4d-a32c-c67fdf2a86e5
 md""" # Referencias
 
-[1] Driscoll, T. A., & Braun, R. J. (n.d.). *Fundamentals of Numerical Computation*. Adapted for Julia. Retrieved from https://tobydriscoll.net/fnc-julia/frontmatter.html
+[1] Kincaid, D., & Cheney, W. (2009). Numerical analysis: Mathematics of scientific computing (3rd ed.). American Mathematical Society.
 
-[2] Sullivan, E. (2020). *Numerical Methods: An Inquiry-Based Approach With Python*.
+[2] Driscoll, T. A., & Braun, R. J. (n.d.). *Fundamentals of Numerical Computation*. Adapted for Julia. Recuperado de [https://tobydriscoll.net/fnc-julia/frontmatter.html](https://tobydriscoll.net/fnc-julia/frontmatter.html)
 
-[3] Bulirsch, R., Stoer, J., & Stoer, J. (2002). *Introduction to Numerical Analysis* (Vol. 3). Springer.
+[3] Sullivan, E. (2020). *Numerical Methods: An Inquiry-Based Approach With Python*.
 
-[4] Stewart, G. W. (1996). *Afternotes on Numerical Analysis*. Society for Industrial and Applied Mathematics.
+[4] Bulirsch, R., Stoer, J., & Stoer, J. (2002). *Introduction to Numerical Analysis* (Vol. 3). Springer.
 
-[5] Quarteroni, A., Saleri, F., & Gervasio, P. (2006). *Scientific Computing with MATLAB and Octave* (Vol. 3). Springer.
+[5] Stewart, G. W. (1996). *Afternotes on Numerical Analysis*. Society for Industrial and Applied Mathematics.
 
-[6] IEEE Standards Association. (n.d.). *IEEE Standard*.
+[6] Quarteroni, A., Saleri, F., & Gervasio, P. (2006). *Scientific Computing with MATLAB and Octave* (Vol. 3). Springer.
 
-[7] Sinews. (n.d.). *Low Precision Floating-Point Formats: The Wild West of Computer Arithmetic*. Retrieved from https://sinews.siam.org/Details-Page/low-precision-floating-point-formats-the-wild-west-of-computer-arithmetic
+[7] IEEE Standards Association. (n.d.). *IEEE Standard*.
 
-[8] Goldberg, D. (1991). *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. *Computing Surveys, 23*(1), 5-48. 
+[8] Sinews. (n.d.). *Low Precision Floating-Point Formats: The Wild West of Computer Arithmetic*. Recuperado de [https://sinews.siam.org/Details-Page/low-precision-floating-point-formats-the-wild-west-of-computer-arithmetic](https://sinews.siam.org/Details-Page/low-precision-floating-point-formats-the-wild-west-of-computer-arithmetic)
 
-[9] Brent, R. P., & Zimmermann, P. (n.d.). *Modern Computer Arithmetic*. Retrieved from https://docs.oracle.com/cd/E19957-01/806-3568/ncgTOC.html
+[9] Goldberg, D. (1991). *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. *Computing Surveys, 23*(1), 5-48. 
+
+[10] Brent, R. P., & Zimmermann, P. (n.d.). *Modern Computer Arithmetic*. Recuperado de [https://docs.oracle.com/cd/E19957-01/806-3568/ncgTOC.html](https://docs.oracle.com/cd/E19957-01/806-3568/ncgTOC.html)
 
 """
 
@@ -593,7 +596,7 @@ Symbolics = "~5.33.0"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.5"
 manifest_format = "2.0"
 project_hash = "260d7d74b1db24c6370648b590ed88dd942ba3af"
 
@@ -860,6 +863,12 @@ version = "1.0.0"
 deps = ["Printf"]
 uuid = "ade2ca70-3891-5945-98fb-dc099432e06a"
 
+[[deps.Dbus_jll]]
+deps = ["Artifacts", "Expat_jll", "JLLWrappers", "Libdl"]
+git-tree-sha1 = "fc173b380865f70627d7dd1190dc2fce6cc105af"
+uuid = "ee1fde0b-3d02-5ea6-8484-8dfef6360eab"
+version = "1.14.10+0"
+
 [[deps.DelimitedFiles]]
 deps = ["Mmap"]
 git-tree-sha1 = "9e2f36d3c96a820c678f2f1f1782582fcf685bae"
@@ -1043,7 +1052,7 @@ deps = ["Random"]
 uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
 
 [[deps.GLFW_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll", "xkbcommon_jll"]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll", "libdecor_jll", "xkbcommon_jll"]
 git-tree-sha1 = "3f74912a156096bd8fdbef211eff66ab446e7297"
 uuid = "0656b61e-2033-5cc2-a64a-77c0f6c09b89"
 version = "3.4.0+0"
@@ -1468,6 +1477,12 @@ deps = ["LinearAlgebra", "SparseArrays", "SuiteSparse"]
 git-tree-sha1 = "949347156c25054de2db3b166c52ac4728cbad65"
 uuid = "90014a1f-27ba-587c-ab20-58faa44d9150"
 version = "0.11.31"
+
+[[deps.Pango_jll]]
+deps = ["Artifacts", "Cairo_jll", "Fontconfig_jll", "FreeType2_jll", "FriBidi_jll", "Glib_jll", "HarfBuzz_jll", "JLLWrappers", "Libdl"]
+git-tree-sha1 = "9dd97171646850ee607593965ce1f55063d8d3f9"
+uuid = "36c8627f-9965-5494-a995-c6b170f724f3"
+version = "1.54.0+0"
 
 [[deps.Parsers]]
 deps = ["Dates", "PrecompileTools", "UUIDs"]
@@ -2160,7 +2175,13 @@ version = "0.15.1+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.11.0+0"
+
+[[deps.libdecor_jll]]
+deps = ["Artifacts", "Dbus_jll", "JLLWrappers", "Libdl", "Libglvnd_jll", "Pango_jll", "Wayland_jll", "xkbcommon_jll"]
+git-tree-sha1 = "9bf7903af251d2050b467f76bdbe57ce541f7f4f"
+uuid = "1183f4f0-6f2a-5f1a-908b-139f9cdfea6f"
+version = "0.2.2+0"
 
 [[deps.libevdev_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -2234,8 +2255,8 @@ version = "1.4.1+1"
 # ╟─f94874b9-72cd-4cd1-885b-fd43602d42f0
 # ╟─0f4c585a-93a3-42c2-a301-57a56895f359
 # ╠═feb15edc-8527-45f0-b209-2070f10cb438
-# ╟─c1f6eaf3-b3eb-42c8-bcce-dfc996f48c15
-# ╠═e72bc01c-0268-4fd3-8df3-73e031b4b5b8
+# ╟─4c299fc2-221b-4122-bf85-a46e6b4c03de
+# ╟─c20b7028-66b5-4276-9f78-fd67fce55cfd
 # ╠═edf88bf8-5441-4279-9d05-4f264b89c6fd
 # ╠═287c08cf-5e39-4216-9d0d-f7693e39a5aa
 # ╠═fee16abe-743e-4726-9700-57be9db9de35
@@ -2313,6 +2334,6 @@ version = "1.4.1+1"
 # ╟─73044925-57ee-49af-b306-00ea6152eb88
 # ╟─a24e8af1-d969-4bd7-87fb-4d68a4ccd53a
 # ╟─d39ad433-1746-46ea-acfe-179073bc27ba
-# ╠═41711850-c9fc-4c4d-a32c-c67fdf2a86e5
+# ╟─41711850-c9fc-4c4d-a32c-c67fdf2a86e5
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

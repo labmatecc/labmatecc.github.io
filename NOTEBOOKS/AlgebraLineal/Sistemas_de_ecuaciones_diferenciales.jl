@@ -18,12 +18,7 @@ end
 using PlutoUI
 
 # ╔═╡ 3ee8574b-f556-499e-9b1c-a5932a0ffb81
-begin
-	using LinearAlgebra
-	using DifferentialEquations
-	using Plots
-	using LinearSolve
-end
+using LinearAlgebra, DifferentialEquations, Plots, LinearSolve
 
 # ╔═╡ 2c50603c-0802-4ddf-be9a-ab7c1b5345c7
 PlutoUI.TableOfContents(title="Sistemas de ecuaciones diferenciales", aside=true)
@@ -70,11 +65,11 @@ md"""Esto también lo podemos solucionar de la siguiente forma:"""
 # ╔═╡ 0025f64e-7270-4ee6-8dca-8274b9f0bd5a
 f(x,p,t) = -0.1 * x #Definimos la ecuación diferencial
 
+# ╔═╡ f096c550-551c-4e00-ae1f-3bce5874aa8f
+u₀= @bind u0 Slider(-5:.1:5, show_value=true, default=1) # Condición inicial
+
 # ╔═╡ cbbd4b9a-3410-4efc-b8fd-1bf21f2566ed
-begin
-	u0 = 1 # Condición inicial
-	tspan = (0.0, 10.0); #intervalo a motrar [0, 10]
-end
+tspan = (0.0, 10.0); #intervalo a motrar [0, 10]
 
 # ╔═╡ e263fcd3-42a7-48d2-b931-378abf338c91
 begin
@@ -323,17 +318,19 @@ $P\begin{bmatrix}
 Esto es equivalente a resolver un sistema de ecuaciones lineales:"""
 
 # ╔═╡ 045ac79d-0df9-4b30-b82c-436d37f8103c
-@bind b₁ Slider(0:0.5:10, show_value=true, default=0)
+begin
+	b1=@bind b₁ Slider(0:0.5:10, show_value=true, default=0)
+	b2=@bind b₂ Slider(-10:0.5:10, show_value=true, default=-1)
+	b3=@bind b₃ Slider(0:0.5:10, show_value=true, default=1)
+end;
 
-# ╔═╡ 4a5eb925-e11b-4293-a512-548f2db6c3ac
-@bind b₂ Slider(-10:0.5:10, show_value=true, default=-1)
-
-# ╔═╡ 8b4b0e8d-386b-40de-9c93-a5259ca39941
-@bind b₃ Slider(0:0.5:10, show_value=true, default=1)
+# ╔═╡ 085d14b4-4627-4adc-9cb4-0942f58ee525
+md""" b₁ = $b1,  	b₂ = $b2,  	b₃ = $b3\
+"""
 
 # ╔═╡ 90ae6e89-6bd5-42a8-b06c-3742d3d04f19
 begin
-	b = [b₁, b₂, b₃]
+	b = [b₁, b₂, b₃] #condiciones iniciales
 	C = P\b
 end
 
@@ -429,7 +426,7 @@ PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.5"
 manifest_format = "2.0"
 project_hash = "a51071a794269c95fdf0b5990fa5f6b5778493c2"
 
@@ -2490,7 +2487,7 @@ version = "0.15.1+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.11.0+0"
 
 [[deps.libevdev_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -2568,10 +2565,11 @@ version = "1.4.1+1"
 # ╟─611ce7bb-547e-4db8-93db-99d44d81f478
 # ╟─113be874-56cd-431b-b746-5c0e0a91d01c
 # ╠═0025f64e-7270-4ee6-8dca-8274b9f0bd5a
+# ╟─f096c550-551c-4e00-ae1f-3bce5874aa8f
 # ╠═cbbd4b9a-3410-4efc-b8fd-1bf21f2566ed
 # ╠═e263fcd3-42a7-48d2-b931-378abf338c91
 # ╟─21fc6cca-e1f1-4df3-8241-bd0f0e0e51f5
-# ╠═f70724a6-0505-40ee-8287-9eec6d42cccc
+# ╟─f70724a6-0505-40ee-8287-9eec6d42cccc
 # ╟─ee7d2737-343d-40c2-a03d-281d31d3d49d
 # ╟─eeb206c1-9159-4b11-8130-b77050f50d7c
 # ╟─5b31ec95-585e-4b0b-aa39-fa48f3fe65f9
@@ -2582,18 +2580,17 @@ version = "1.4.1+1"
 # ╠═27025785-a7ef-4689-bb82-526a4baebe61
 # ╠═c955c7a8-1d46-4e80-99ce-772ea45670fa
 # ╟─4078721d-874a-4076-b0b0-d5732be36cba
-# ╠═7de540ca-2edd-4517-ad19-e448fc1065e8
+# ╟─7de540ca-2edd-4517-ad19-e448fc1065e8
 # ╟─ef7984dc-581c-4ce8-bb74-b7cdef97a1ee
-# ╠═bcc1f654-37d8-4c77-ad06-326c1a8943d8
+# ╟─bcc1f654-37d8-4c77-ad06-326c1a8943d8
 # ╟─08924507-7389-4ad6-b91b-68a9a051d27c
 # ╠═8f2d135e-fff9-43b5-a756-736edb88810b
 # ╠═32d51274-5c7c-4834-8e3f-64a9b785ecce
 # ╠═b1e51091-06ef-49b6-a57b-3b6b0365e8d2
 # ╟─064ee58f-1d33-464d-af62-3550c86cb10e
 # ╟─625312f7-937c-4a50-9853-58a3a5c1d848
-# ╠═045ac79d-0df9-4b30-b82c-436d37f8103c
-# ╠═4a5eb925-e11b-4293-a512-548f2db6c3ac
-# ╠═8b4b0e8d-386b-40de-9c93-a5259ca39941
+# ╟─045ac79d-0df9-4b30-b82c-436d37f8103c
+# ╟─085d14b4-4627-4adc-9cb4-0942f58ee525
 # ╠═90ae6e89-6bd5-42a8-b06c-3742d3d04f19
 # ╟─39d890a4-43ea-45cc-87aa-2e1951418a45
 # ╠═b0ed98c6-f31b-4081-8f16-b83f67a6b391

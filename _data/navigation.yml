@@ -3,3 +3,5 @@ main:
     url: /
   - title: "Notebooks"
     url: /Notebooks/
+  - title: "Acerca del laboratorio"
+    url: /About/

@@ -42,6 +42,9 @@ Elaborado por Juan Galvis, Francisco Gómez y Yessica Trujillo.
 # ╔═╡ d0a74529-8e62-4eae-83df-51c1ca0ecc37
 md"""Usaremos las siguientes librerías:"""
 
+# ╔═╡ f5a8db2c-ab36-4508-8c22-76a759fc3fc6
+md"""El siguiente contenido ha sido elaborado tomando como referencia las fuentes citadas en $[1,2,3].$ Para obtener más información, consulte las Referencias. """
+
 # ╔═╡ f6c7bb66-a0f6-4ce8-a717-9b2db59411eb
 md"""# Métodos de descenso""" 
 
@@ -131,7 +134,7 @@ end
 
 # ╔═╡ bb73b695-343f-4bf4-a6a7-ff46ee129fa8
 md""" Por ejemplo, tenemos la siguiente restricción a un segmento iniciando en 
-un punto base en una dirección data. Para comparación y motivar el algoritmo de retroceso comparamos con la recta secante. Para comparación desplegamos la recta secante con pendiente proporcional al gradiente de la función en el punto base en la dirección de busqueda re-escalado por un factor $\alpha_0$. Además, marcamos el valor de la función objetivo en los puntos de la forma $[\beta^n,\beta^{(n-1)}, \dots,\beta^2,\beta,1]$ que son los tiempos discretos de la busqueda del algoritmo de retroceso. """
+un punto base en una dirección dada. Para comparación y motivar el algoritmo de retroceso comparamos con la recta secante. Para comparación desplegamos la recta secante con pendiente proporcional al gradiente de la función en el punto base en la dirección de busqueda re-escalado por un factor $\alpha_0$. Además, marcamos el valor de la función objetivo en los puntos de la forma $[\beta^n,\beta^{(n-1)}, \dots,\beta^2,\beta,1]$ que son los tiempos discretos de la busqueda del algoritmo de retroceso. """
 
 # ╔═╡ 810dc4b8-abac-476d-983a-8e90cb577812
 @bind α₀ Slider(0.0:0.05:0.9, show_value=true,default=0.5)
@@ -197,7 +200,7 @@ function backtracking(x₀,δ; M=1000, α=0.1,β=0.7 )
 	df₀=dfun(x₀)
 	q=dot(df₀,δ) # producto interno entre la direccion delta y el gradiente
 	if q>=0
-		println(" No es direccion de descenso") 
+		println(" No es dirección de descenso") 
 		return x₀,f₀,df₀,1,x₀
 	end
 	t=1
@@ -398,7 +401,7 @@ md"""
 
 # ╔═╡ e17cf578-cdaa-4acc-9aa6-255b0671ee40
 md"""
-Considere ahora la norma $||z||_1=\sum_{\ell=1}^n|z_\ell|$. Dado que la norma dual de la norma $||\cdot||_1$ es la norma $||\cdot||_\infy$ dode $||z||_\infty=\max_{1\leq \ell \leq n}|z_\ell|=|z_{i_0}|$, tenemos que 
+Considere ahora la norma $||z||_1=\sum_{\ell=1}^n|z_\ell|$. Dado que la norma dual de la norma $||\cdot||_1$ es la norma $||\cdot||_\infty$ dode $||z||_\infty=\max_{1\leq \ell \leq n}|z_\ell|=|z_{i_0}|$, tenemos que 
 
 $
 \delta_{sd}=-\partial_{i_0} f(x)e_{i_o}.$
@@ -451,7 +454,7 @@ $\delta_{nt}=-\nabla^2f(x)^{-1}\nabla f(x)$
 
 Corresponde a la mininización de la aproximación cuadrática en $x$. También corresponde al método de máximo descenso en la norma de la matriz Hessiana y a la aproximación por lienalización de la condición $\nabla f(x)=0$.
 
-El tamaño de paso es $t=1$ para el método clásico de Newton o se puede usar busqueda inexact para el método de Newton amortiguado.
+El tamaño de paso es $t=1$ para el método clásico de Newton o se puede usar búsqueda inexact para el método de Newton amortiguado.
 """
 
 # ╔═╡ cecc3464-92f6-40ed-be53-512dd1b2a916
@@ -524,7 +527,7 @@ PlutoUI = "~0.7.52"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.10.5"
 manifest_format = "2.0"
 project_hash = "9aebe5825c8f5846c91f70a0cb17a073a5a8c1e3"
 
@@ -1745,7 +1748,7 @@ version = "0.15.1+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.11.0+0"
 
 [[deps.libfdk_aac_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1807,6 +1810,7 @@ version = "1.4.1+0"
 # ╟─3de48cc6-9f3a-4fc8-b7a9-37a622f9227b
 # ╟─d0a74529-8e62-4eae-83df-51c1ca0ecc37
 # ╠═9f36496a-0e7d-4a81-91e6-97b76c0feeb7
+# ╟─f5a8db2c-ab36-4508-8c22-76a759fc3fc6
 # ╟─f6c7bb66-a0f6-4ce8-a717-9b2db59411eb
 # ╟─880e413d-0aa8-42ee-87da-fe4de8d9a39e
 # ╟─fe248070-c234-4f81-95d2-d36cb60e6b68
