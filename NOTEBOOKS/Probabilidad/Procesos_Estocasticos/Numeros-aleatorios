@@ -1,0 +1,245 @@
+### A Pluto.jl notebook ###
+# v0.20.3
+
+using Markdown
+using InteractiveUtils
+
+# ╔═╡ fa051a74-8dcf-43f9-bcba-b28051b1d356
+using Random  # Cargar el módulo Random para trabajar con números aleatorios
+
+# Fijar la semilla
+
+# ╔═╡ 40b2527a-ab17-46aa-8d1a-55ee93d852ad
+md"
+# Introducción a los números aleatorios en Julia
+
+En este notebook, exploraremos los números aleatorios, un concepto fundamental en matemáticas, estadística y computación. Antes de comenzar, reflexionemos:
+
+**¿Qué significa que algo sea aleatorio?**  
+Para muchas personas, algo aleatorio es simplemente algo sin patrón o impredecible. Pero, ¿cómo podemos definirlo formalmente? ¿Y cómo lo implementa una computadora, que es esencialmente un sistema determinista?
+
+---
+
+## **1. ¿Qué es un número aleatorio?**
+
+Un número aleatorio es un valor seleccionado de un conjunto posible de resultados, donde cada resultado tiene una cierta probabilidad asociada. Formalmente, podemos describirlo usando el lenguaje de la probabilidad:
+
+- Un número aleatorio ``X`` es una **variable aleatoria** definida en un espacio probabilístico ``(\Omega, \mathcal{F}, P)``, donde:
+  - ``\Omega``: Conjunto de todos los resultados posibles.
+  - ``\mathcal{F}``: Colección de subconjuntos de ``\Omega``, llamada **σ-álgebra**.
+  - ``P``: Función de probabilidad que asigna una probabilidad a cada evento en ``\mathcal{F}``.
+
+Por ejemplo, si lanzamos un dado, el conjunto de resultados posibles es ``\Omega = \{1, 2, 3, 4, 5, 6\}``, y cada número tiene una probabilidad ``P = \frac{1}{6}``.
+
+**Pregunta para reflexionar:**  
+- ¿Qué diferencias puedes notar entre aleatorio en el sentido cotidiano y aleatorio en términos matemáticos?
+
+---
+
+## **2. Pseudoaleatoriedad en la computación**
+
+En el mundo real, podemos generar números aleatorios verdaderos midiendo fenómenos físicos impredecibles, como **ruido térmico o radiación**. Sin embargo, las computadoras son **sistemas deterministas**, lo que significa que no pueden generar números verdaderamente aleatorios sin ayuda externa.
+
+En su lugar, las computadoras utilizan **generadores de números pseudoaleatorios (PRNGs)**, que son algoritmos matemáticos diseñados para producir secuencias de números que parecen aleatorios pero que en realidad son completamente predecibles si conocemos el algoritmo y su estado inicial (la **semilla**).
+
+Un PRNG utiliza fórmulas como esta para generar números:
+``X_{n+1} = (aX_n + c) \mod m``
+Donde:
+- ``a, c, m`` son constantes elegidas cuidadosamente.
+- ``X_n`` es el número generado en el paso ``n``.
+- ``X_{n+1}`` es el siguiente número de la secuencia.
+
+Este es un ejemplo de un **generador congruencial lineal (LCG)**, uno de los PRNGs más simples.
+
+**Preguntas para reflexionar:**  
+1. Si cambiamos la semilla ``X_0``, ¿cómo afecta esto a la secuencia generada?  
+2. ¿Por qué crees que se necesita el módulo ``m`` en el cálculo?
+
+---
+
+## **3. Diferencias clave: Aleatorio vs. Pseudoaleatorio**
+
+| Característica              | Aleatorio verdadero                  | Pseudoaleatorio                  |
+|-----------------------------|----------------------------------------|----------------------------------|
+| **Definición**              | Basado en fenómenos físicos impredecibles. | Generado por un algoritmo determinista. |
+| **Reproducibilidad**        | No es reproducible.                   | Es reproducible si se conoce la semilla. |
+| **Uso común**               | Criptografía, simulaciones físicas.   | Simulaciones, estadística, videojuegos. |
+
+En Julia, el módulo `Random` permite generar números pseudoaleatorios utilizando PRNGs como `MersenneTwister`, que es el generador predeterminado.
+
+**Actividad sugerida:**  
+- Usa el comando `Random.seed!(1234)` para establecer una semilla. Genera algunos números con `rand()` y repite el proceso. ¿Qué observas?
+
+---
+
+## **4. Una definición formal de pseudoaleatoriedad**
+
+Un generador de números pseudoaleatorios es una función ``G`` tal que:
+1. Recibe una semilla ``s`` y produce una secuencia ``x_1, x_2, \ldots, x_n``.
+2. La secuencia es estadísticamente indistinguible de una verdadera secuencia aleatoria para un observador sin conocimiento de ``G`` o ``s``.
+3. Es determinista: dado ``s``, siempre produce la misma secuencia.
+
+Esto implica que los PRNGs son útiles en muchos contextos, pero no en criptografía, donde la seguridad depende de la imprevisibilidad.
+
+**Pregunta avanzada:**  
+- Si un PRNG es estadísticamente indistinguible de una fuente aleatoria, ¿qué tipo de problemas prácticos pueden surgir de usarlo?
+
+---
+
+**Próximo paso:**  
+¡Pasa a las celdas de código para experimentar con los números aleatorios por ti mismo! 😊
+"
+
+
+# ╔═╡ 0c617c1a-bd04-4fb8-b673-d1fe738a8e3d
+md"
+### Generar un número aleatorio uniforme entre 0 y 1
+"
+
+# ╔═╡ b0a599a0-9e31-490c-a764-21d712799f9c
+rand()
+
+# ╔═╡ f872e583-1f02-48a2-bd67-83dd6369e9cc
+md"
+### Generar un vector de 10 números aleatorios
+"
+
+# ╔═╡ 8c374387-e63e-40d8-9c36-efee0d34518c
+rand(10)
+
+# ╔═╡ 00c4e436-b126-431e-944d-4c7d7b8cc983
+md"
+### Generar un número entero aleatorio entre 1 y 6 (simulación de un dado)
+"
+
+# ╔═╡ f947afd9-8f1f-4a27-91c3-8962445deb0b
+rand(1:6)
+
+# ╔═╡ 899528bb-7841-4c43-8f5f-166424bb7b1e
+md"
+### Usar una semilla para reproducibilidad
+"
+
+
+# ╔═╡ e58f803f-5629-43c8-9a9d-ccf606b932e7
+# ╠═╡ disabled = true
+#=╠═╡
+using Random
+
+# Establecer una semilla
+  ╠═╡ =#
+
+# ╔═╡ a08a342a-8ee7-4867-ac22-328ad52b8542
+Random.seed!(1234);
+
+# Generar números aleatorios
+
+# ╔═╡ 7bf584eb-458a-44cc-8cc5-bfa2ce7938c7
+num1 = rand(2)  
+
+# ╔═╡ f88c883a-0bef-49f3-9613-ebe8d8783f17
+num2 = rand(2) 
+
+# ╔═╡ 4a9cc2f7-5000-46cd-a6d9-d5bc8b3ea8bf
+println("Primer número aleatorio: $num1")
+
+# ╔═╡ 53fbdc9b-4c9b-4042-baf1-8bc3a33eb3b8
+println("Segundo número aleatorio: $num2")
+
+# Reiniciar la semilla para demostrar que la secuencia se repite
+
+# ╔═╡ b88989d2-699c-4063-84a0-57181d71a581
+Random.seed!(1234);
+
+# Generar los mismos números aleatorios nuevamente
+
+# ╔═╡ f6b625d9-a5f5-450c-bcf8-6cf41a6acfb9
+num1_repeat = rand(2)
+
+# ╔═╡ 079fc173-9e91-426d-ae4f-df76c21e14eb
+num2_repeat = rand(2)
+
+# ╔═╡ 111e3894-f6fa-43a0-ad50-989091c930f7
+println("Repetición del primer número aleatorio: $num1_repeat")
+
+# ╔═╡ 647015de-b0d2-41eb-80b4-d27aa5500238
+println("Repetición del segundo número aleatorio: $num2_repeat")
+
+# ╔═╡ 1d5417ec-bf85-4a7c-a2df-1158fa55d33b
+md"""
+!!! info "¿Que hace la semilla? "
+	La semilla controla el estado inicial del generador pseudoaleatorio. Esto asegura que los resultados sean reproducibles.
+	
+	Actividad sugerida:
+	
+	Cambia la semilla y observa cómo cambia la secuencia generada.
+"""
+
+# ╔═╡ f3cbe278-030b-495f-9b45-23f60d2efdef
+
+
+# ╔═╡ 0cdf1772-370e-440d-bc09-67cae0e5bc87
+
+
+# ╔═╡ 9a7f8cc1-c9f2-40f4-abf1-0ae3b169416c
+
+
+# ╔═╡ 57f9ac91-7fc0-46c2-ae27-d2c96a70212a
+
+
+# ╔═╡ 1b8bd3a8-e866-4714-b2cb-d3483647031c
+
+
+# ╔═╡ 00000000-0000-0000-0000-000000000001
+PLUTO_PROJECT_TOML_CONTENTS = """
+[deps]
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+"""
+
+# ╔═╡ 00000000-0000-0000-0000-000000000002
+PLUTO_MANIFEST_TOML_CONTENTS = """
+# This file is machine-generated - editing it directly is not advised
+
+julia_version = "1.11.1"
+manifest_format = "2.0"
+project_hash = "fa3e19418881bf344f5796e1504923a7c80ab1ed"
+
+[[deps.Random]]
+deps = ["SHA"]
+uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+version = "1.11.0"
+
+[[deps.SHA]]
+uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
+version = "0.7.0"
+"""
+
+# ╔═╡ Cell order:
+# ╟─40b2527a-ab17-46aa-8d1a-55ee93d852ad
+# ╠═0c617c1a-bd04-4fb8-b673-d1fe738a8e3d
+# ╠═b0a599a0-9e31-490c-a764-21d712799f9c
+# ╠═f872e583-1f02-48a2-bd67-83dd6369e9cc
+# ╠═8c374387-e63e-40d8-9c36-efee0d34518c
+# ╠═00c4e436-b126-431e-944d-4c7d7b8cc983
+# ╠═f947afd9-8f1f-4a27-91c3-8962445deb0b
+# ╠═899528bb-7841-4c43-8f5f-166424bb7b1e
+# ╠═e58f803f-5629-43c8-9a9d-ccf606b932e7
+# ╠═fa051a74-8dcf-43f9-bcba-b28051b1d356
+# ╠═a08a342a-8ee7-4867-ac22-328ad52b8542
+# ╠═7bf584eb-458a-44cc-8cc5-bfa2ce7938c7
+# ╠═f88c883a-0bef-49f3-9613-ebe8d8783f17
+# ╠═4a9cc2f7-5000-46cd-a6d9-d5bc8b3ea8bf
+# ╠═53fbdc9b-4c9b-4042-baf1-8bc3a33eb3b8
+# ╠═b88989d2-699c-4063-84a0-57181d71a581
+# ╠═f6b625d9-a5f5-450c-bcf8-6cf41a6acfb9
+# ╠═079fc173-9e91-426d-ae4f-df76c21e14eb
+# ╠═111e3894-f6fa-43a0-ad50-989091c930f7
+# ╠═647015de-b0d2-41eb-80b4-d27aa5500238
+# ╟─1d5417ec-bf85-4a7c-a2df-1158fa55d33b
+# ╠═f3cbe278-030b-495f-9b45-23f60d2efdef
+# ╠═0cdf1772-370e-440d-bc09-67cae0e5bc87
+# ╠═9a7f8cc1-c9f2-40f4-abf1-0ae3b169416c
+# ╠═57f9ac91-7fc0-46c2-ae27-d2c96a70212a
+# ╠═1b8bd3a8-e866-4714-b2cb-d3483647031c
+# ╟─00000000-0000-0000-0000-000000000001
+# ╟─00000000-0000-0000-0000-000000000002
