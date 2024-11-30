@@ -22,6 +22,10 @@ using PlutoUI
 # ╔═╡ 5295a88f-076c-4581-b9b1-3be54aaafde7
 using Plots
 
+# ╔═╡ 057a80d3-db81-42ed-bac9-4dd6da93683a
+using Primes  # Para generar números primos
+
+
 # ╔═╡ 61f725df-b692-4101-956c-1e8c824cbf86
 md"
 # Introducción a los números aleatorios en Julia
@@ -122,32 +126,119 @@ end
 # ╔═╡ d5deca64-2907-4934-9163-617589218d72
 @bind c Slider(0:1:50, show_value=true)
 
-# ╔═╡ 1c3e21a8-28b4-444c-8fb4-df9e4f2c18bf
-@bind m Slider(1:1:100, show_value=true)
-
 # ╔═╡ bcbfdb50-906a-4615-83d3-1760ef0440a8
 @bind seed Slider(0:1:50, show_value=true)
-
-# ╔═╡ f4db214c-5807-4f5e-aa8d-3c544a8ec9ec
-data_lcg = congruential_generator(a, c, m, seed, 100)
-
-# ╔═╡ de2bf35f-c285-4b18-8efb-0661a181c2cb
-scatter(data_lcg, title="Números generados por un LCG", xlabel="Índice", ylabel="Valor")
 
 # ╔═╡ 57f9ac91-7fc0-46c2-ae27-d2c96a70212a
 md"""
 > 🐤 Con este experimento, esperamos que puedas responder las preguntas planteadas anteriormente. Utilizando los sliders, podrás experimentar de forma rápida y dinámica
 """
 
+# ╔═╡ a9521007-0be9-4ab6-95f8-49ea1c815459
+md"""
+> Lehmer
+"""
+
+# ╔═╡ 0cc363e8-3144-4c1a-a9dd-a3bc15b89053
+primos = collect(Primes.primes(500))  # Números primos hasta 100
+
+# Crear el slider que permite seleccionar solo números primos
+
+# ╔═╡ 3f97d39c-9571-40b5-80b0-cf8a6e8f9ea8
+@bind m_2 Slider(primos, show_value=true)
+
+# ╔═╡ f2a3fd21-6626-4a7f-8cea-fa148f5a180b
+data_lehmer = congruential_generator(a, 0, m_2, seed, 500)
+
+# ╔═╡ 3c36bffa-88d9-4cbc-a9b1-ef6688e43395
+scatter(data_lehmer, title="Números generados por un LCG", xlabel="Índice", ylabel="Valor")
+
+# ╔═╡ 7e08c292-717e-4d56-a19f-aac03c853484
+md"""
+> Fibo
+"""
+
+# ╔═╡ 255d43a9-1898-4cec-b722-2ea37d67e397
+function lagged_fibonacci_generator(j, k, m, seeds, n)
+    """
+    Lagged Fibonacci Generator (LFG).
+    
+    Args:
+        j::Int: First lag parameter (j < k).
+        k::Int: Second lag parameter.
+        m::Int: Modulus for the generator.
+        seeds::Vector{Int}: Initial seeds (length >= k).
+        n::Int: Number of random numbers to generate.
+
+    Returns:
+        Vector{Int}: Sequence of n generated numbers.
+    """
+    if length(seeds) < k
+        throw(ArgumentError("The length of seeds must be at least k."))
+    end
+    
+    X = zeros(Int, n)
+    X[1:k] .= seeds[1:k] # Initialize the first k values with the seeds
+    
+    for i in (k + 1):n
+        X[i] = (X[i - j] + X[i - k]) % m
+    end
+    
+    return X
+end
+
+
+# ╔═╡ b358e57a-4cf3-4b91-87e7-e65b96a42c38
+# Parámetros
+j = 5            # Primer desfase
+
+# ╔═╡ fab0bbef-36a4-438e-a2c3-9e441dd949ae
+k = 17           # Segundo desfase
+
+# ╔═╡ f4db214c-5807-4f5e-aa8d-3c544a8ec9ec
+data_lcg = congruential_generator(a, c, m, seed, 500)
+
+# ╔═╡ de2bf35f-c285-4b18-8efb-0661a181c2cb
+scatter(data_lcg, title="Números generados por un LCG", xlabel="Índice", ylabel="Valor")
+
+# ╔═╡ 7c35d57d-a1eb-4739-8033-5232e127d78d
+seeds = rand(1:100, k)  # Semillas iniciales aleatorias (tamaño k)
+
+# ╔═╡ 7afdfac0-a602-4268-8f51-ce982e8267a0
+n = 30           # Número de números a generar
+
+# Generar números pseudoaleatorios
+
+# ╔═╡ 4b370e6c-fc38-48b9-9999-2a50af299594
+X = lagged_fibonacci_generator(j, k, m, seeds, n)
+
+# ╔═╡ 8f901c8d-9c23-4f70-bf22-ebf394efe222
+println("Semillas iniciales: ", seeds)
+
+# ╔═╡ 8732b5dc-2380-4c3f-a576-dfc637cf4df3
+println("Números generados: ", X)
+
+# ╔═╡ 1af6a6b8-a363-4e09-abd1-3f25a4b32ff1
+m = 100          # Módulo
+
+# ╔═╡ 3e2b78b9-3105-4799-8e9a-97ee216a5f9b
+# ╠═╡ disabled = true
+#=╠═╡
+@bind m Slider(1:1:100, show_value=true)
+
+  ╠═╡ =#
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+Primes = "27ebfcd6-29c5-5fa9-bf4b-fb8fc14df3ae"
 
 [compat]
 Plots = "~1.40.9"
 PlutoUI = "~0.7.60"
+Primes = "~0.5.6"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -156,7 +247,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.11.1"
 manifest_format = "2.0"
-project_hash = "d5a16573bd99918e0319a62afd437a859fb80972"
+project_hash = "bb0d3189a4535e4eb2d433638515e5bacdec54ff"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -427,6 +518,11 @@ deps = ["Logging", "Random"]
 git-tree-sha1 = "b6d6bfdd7ce25b0f9b2f6b3dd56b2673a66c8770"
 uuid = "b5f81e59-6552-4d32-b1f0-c071b021bf89"
 version = "0.2.5"
+
+[[deps.IntegerMathUtils]]
+git-tree-sha1 = "b8ffb903da9f7b8cf695a8bead8e01814aa24b30"
+uuid = "18e54dd8-cb9d-406c-a71d-865a43cbb235"
+version = "0.1.2"
 
 [[deps.InteractiveUtils]]
 deps = ["Markdown"]
@@ -796,6 +892,12 @@ deps = ["TOML"]
 git-tree-sha1 = "9306f6085165d270f7e3db02af26a400d580f5c6"
 uuid = "21216c6a-2e73-6563-6e65-726566657250"
 version = "1.4.3"
+
+[[deps.Primes]]
+deps = ["IntegerMathUtils"]
+git-tree-sha1 = "cb420f77dc474d23ee47ca8d14c90810cafe69e7"
+uuid = "27ebfcd6-29c5-5fa9-bf4b-fb8fc14df3ae"
+version = "0.5.6"
 
 [[deps.Printf]]
 deps = ["Unicode"]
@@ -1318,15 +1420,31 @@ version = "1.4.1+1"
 # ╔═╡ Cell order:
 # ╠═1284ab86-8cf4-4a2b-a939-4ea7c40a1f7f
 # ╠═5295a88f-076c-4581-b9b1-3be54aaafde7
+# ╠═057a80d3-db81-42ed-bac9-4dd6da93683a
 # ╟─61f725df-b692-4101-956c-1e8c824cbf86
 # ╠═58d1222c-90f5-4172-ab1f-1f10010454d3
 # ╠═351b4a4e-8d3b-4a2b-aed1-cf3d8639165a
 # ╠═8a5fb2d7-6045-4e57-a44d-2f675bf565e2
 # ╠═d5deca64-2907-4934-9163-617589218d72
-# ╠═1c3e21a8-28b4-444c-8fb4-df9e4f2c18bf
+# ╠═3e2b78b9-3105-4799-8e9a-97ee216a5f9b
 # ╠═bcbfdb50-906a-4615-83d3-1760ef0440a8
 # ╠═f4db214c-5807-4f5e-aa8d-3c544a8ec9ec
 # ╠═de2bf35f-c285-4b18-8efb-0661a181c2cb
 # ╟─57f9ac91-7fc0-46c2-ae27-d2c96a70212a
+# ╠═a9521007-0be9-4ab6-95f8-49ea1c815459
+# ╠═0cc363e8-3144-4c1a-a9dd-a3bc15b89053
+# ╠═3f97d39c-9571-40b5-80b0-cf8a6e8f9ea8
+# ╠═f2a3fd21-6626-4a7f-8cea-fa148f5a180b
+# ╠═3c36bffa-88d9-4cbc-a9b1-ef6688e43395
+# ╠═7e08c292-717e-4d56-a19f-aac03c853484
+# ╠═255d43a9-1898-4cec-b722-2ea37d67e397
+# ╠═b358e57a-4cf3-4b91-87e7-e65b96a42c38
+# ╠═fab0bbef-36a4-438e-a2c3-9e441dd949ae
+# ╠═1af6a6b8-a363-4e09-abd1-3f25a4b32ff1
+# ╠═7c35d57d-a1eb-4739-8033-5232e127d78d
+# ╠═7afdfac0-a602-4268-8f51-ce982e8267a0
+# ╠═4b370e6c-fc38-48b9-9999-2a50af299594
+# ╠═8f901c8d-9c23-4f70-bf22-ebf394efe222
+# ╠═8732b5dc-2380-4c3f-a576-dfc637cf4df3
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
