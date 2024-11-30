@@ -126,17 +126,91 @@ end
 # ╔═╡ d5deca64-2907-4934-9163-617589218d72
 @bind c Slider(0:1:50, show_value=true)
 
+# ╔═╡ d55834c2-991c-4412-af37-d26bf525b071
+@bind m Slider(1:1:100, show_value=true)
+
+
 # ╔═╡ bcbfdb50-906a-4615-83d3-1760ef0440a8
 @bind seed Slider(0:1:50, show_value=true)
+
+# ╔═╡ f4db214c-5807-4f5e-aa8d-3c544a8ec9ec
+data_lcg = congruential_generator(a, c, m, seed, 500)
+
+# ╔═╡ de2bf35f-c285-4b18-8efb-0661a181c2cb
+scatter(data_lcg, title="Números generados por un LCG", xlabel="Índice", ylabel="Valor")
 
 # ╔═╡ 57f9ac91-7fc0-46c2-ae27-d2c96a70212a
 md"""
 > 🐤 Con este experimento, esperamos que puedas responder las preguntas planteadas anteriormente. Utilizando los sliders, podrás experimentar de forma rápida y dinámica
 """
 
-# ╔═╡ a9521007-0be9-4ab6-95f8-49ea1c815459
+# ╔═╡ 6ccd9919-b401-436e-956a-704a4b6c3a04
+md"
+---
+
+## **1. ¿Qué es el Generador de Lehmer?**
+
+El **Generador de Lehmer**, también conocido como **Multiplicador Lineal**, es un tipo de **Generador Congruencial Multiplicativo** que produce números pseudoaleatorios utilizando aritmética modular. Fue introducido por D. H. Lehmer en 1949 y se utiliza debido a su simplicidad y eficiencia.
+
+La fórmula básica del generador de Lehmer es:
+
+
+---
+"
+
+# ╔═╡ 76390892-4158-42e4-aee2-20671090ef85
 md"""
-> Lehmer
+
+Donde:
+- `` X_n `` es el estado actual o número generado en la posición `` n ``.
+- `` a  `` es el multiplicador, un número entero positivo cuidadosamente elegido.
+- `` m `` es el módulo, generalmente un número primo grande.
+- `` X_{n+1} `` es el siguiente número pseudoaleatorio en la secuencia.
+
+---
+
+## **2. Propiedades Importantes**
+
+### **2.1. Módulo `` m ``**
+El valor de `` m `` determina el rango de números generados. En el generador de Lehmer, típicamente:
+- `` m `` se elige como un número primo grande.
+- Esto asegura que el período máximo de la secuencia sea `` m-1 ``, evitando ciclos cortos.
+
+### **2.2. Multiplicador `` a ``**
+El valor de `` a `` afecta directamente la calidad de los números generados. Para obtener un período máximo y buena distribución:
+- `` a `` debe ser un **generador primitivo módulo `` m ``**.
+- Un ejemplo típico es `` a = 48271 ``.
+
+### **2.3. Semilla `` X_0 ``**
+La semilla inicial debe ser un valor positivo menor que `` m ``. Si `` X_0 = 0 ``, todos los números generados serán 0, lo cual estanca el generador.
+
+---
+
+## **3. Ventajas del Generador de Lehmer**
+
+1. **Simplicidad**: 
+   - Su implementación es sencilla y rápida.
+2. **Período Largo**: 
+   - Con un buen `` m ``, el generador puede tener un período de `` m-1 ``, lo que significa que los números no se repiten hasta después de `` m-1 `` iteraciones.
+3. **Propiedades Estadísticas**:
+   - Produce números distribuidos uniformemente en el rango ``[0, \( m-1 \)]`` si los parámetros se eligen correctamente.
+
+---
+
+## **4. Limitaciones del Generador de Lehmer**
+
+1. **Correlaciones**:
+   - Los números pueden mostrar correlaciones si se proyectan en dimensiones altas.
+2. **No Criptográficamente Seguro**:
+   - No es adecuado para aplicaciones criptográficas, ya que su funcionamiento es determinista y puede ser invertido fácilmente.
+3. **Elección de Parámetros**:
+   - Si ``a `` y `` m `` no se eligen correctamente, el generador puede tener ciclos cortos y patrones predecibles.
+
+"""
+
+# ╔═╡ 29fac509-27b4-47b3-9ea8-afbf04db89ef
+md"""
+> 🐤Este método es igual al anterior, solo que ahora el multiplicador utiliza un número primo. Esperamos que pueda observar cómo varía el método al usar números primos.
 """
 
 # ╔═╡ 0cc363e8-3144-4c1a-a9dd-a3bc15b89053
@@ -151,11 +225,76 @@ primos = collect(Primes.primes(500))  # Números primos hasta 100
 data_lehmer = congruential_generator(a, 0, m_2, seed, 500)
 
 # ╔═╡ 3c36bffa-88d9-4cbc-a9b1-ef6688e43395
-scatter(data_lehmer, title="Números generados por un LCG", xlabel="Índice", ylabel="Valor")
+scatter(data_lehmer, title="Números generados por un Lehmer", xlabel="Índice", ylabel="Valor")
 
 # ╔═╡ 7e08c292-717e-4d56-a19f-aac03c853484
 md"""
-> Fibo
+# Introducción al Generador de Fibonacci Modificado
+
+---
+
+## **1. ¿Qué es el Generador de Fibonacci Modificado?**
+
+El **Generador de Fibonacci Modificado**, también conocido como **Lagged Fibonacci Generator (LFG)**, es un algoritmo para generar números pseudoaleatorios que se basa en la famosa secuencia de Fibonacci. En lugar de seguir la fórmula tradicional de Fibonacci, introduce modificaciones para aumentar la aleatoriedad.
+
+En la secuencia clásica de Fibonacci, cada número se calcula como:
+`` F_n = F_{n-1} + F_{n-2} ``
+
+En el caso del Generador de Fibonacci Modificado, la fórmula general es:
+`` X_n = (X_{n-j} \circ X_{n-k}) \mod m ``
+
+Donde:
+- `` j `` y `` k `` son índices de retardo (`` j > k ``), es decir, el generador utiliza valores anteriores en la secuencia para calcular el nuevo número.
+- `` \circ `` es una operación aritmética o lógica, como suma (`` + ``), resta (`` - ``), multiplicación (`` * ``) o XOR (`` \oplus ``).
+- `` m `` es el módulo, utilizado para mantener los números dentro de un rango determinado.
+- `` X_n `` es el número pseudoaleatorio generado en la posición `` n ``.
+
+---
+
+## **2. Propiedades Clave del Generador de Fibonacci Modificado**
+
+### **2.1. Operación `` \circ ``**
+La operación que se utiliza entre `` X_{n-j} `` y `` X_{n-k} `` afecta directamente las propiedades del generador. Algunas opciones comunes incluyen:
+- **Suma** (`` + ``): Genera secuencias con una buena distribución básica.
+- **Resta** (`` - ``): Similar a la suma, pero con propiedades ligeramente diferentes.
+- **XOR** (`` \oplus ``): Ayuda a eliminar correlaciones entre los números generados.
+
+### **2.2. Período**
+El período máximo del generador depende de los valores de `` j ``, `` k ``, `` m ``, y la operación utilizada. Si los parámetros son adecuados, puede generar secuencias con un período muy largo.
+
+### **2.3. Semilla Inicial**
+El generador necesita `` j `` valores iniciales para comenzar. Estos valores iniciales forman la "semilla" del generador y determinan la secuencia producida.
+
+---
+
+## **3. Ventajas del Generador de Fibonacci Modificado**
+
+1. **Período Largo**:
+   - Comparado con generadores congruenciales, puede producir secuencias mucho más largas antes de repetir.
+2. **Flexibilidad**:
+   - Permite ajustar `` j, k, m, `` y `` \circ `` para adaptarse a diferentes aplicaciones.
+3. **Mejor Aleatoriedad**:
+   - En general, produce números con menos correlaciones que los generadores congruenciales simples.
+4. **Aplicaciones Científicas**:
+   - Muy útil en simulaciones Monte Carlo y otros modelos que requieren números pseudoaleatorios de alta calidad.
+
+---
+
+## **4. Desventajas del Generador de Fibonacci Modificado**
+
+1. **Complejidad de Inicialización**:
+   - Necesita `` j `` valores iniciales, lo que puede ser más complicado que otros generadores.
+2. **Correlaciones Potenciales**:
+   - Si los parámetros no se eligen correctamente, puede haber correlaciones entre los números generados.
+3. **No Criptográficamente Seguro**:
+   - Aunque útil para simulaciones y tareas generales, no es adecuado para aplicaciones donde se requiere seguridad.
+
+---
+"""
+
+# ╔═╡ c00c6eb7-9a29-4941-a63d-1a636999e652
+md"""
+> 🐤Veamos la implementación de esto para poder experimentar.
 """
 
 # ╔═╡ 255d43a9-1898-4cec-b722-2ea37d67e397
@@ -189,44 +328,30 @@ end
 
 
 # ╔═╡ b358e57a-4cf3-4b91-87e7-e65b96a42c38
-# Parámetros
-j = 5            # Primer desfase
+@bind j Slider(0:1:50, show_value=true)
 
 # ╔═╡ fab0bbef-36a4-438e-a2c3-9e441dd949ae
-k = 17           # Segundo desfase
+@bind k Slider(0:1:50, show_value=true)
 
-# ╔═╡ f4db214c-5807-4f5e-aa8d-3c544a8ec9ec
-data_lcg = congruential_generator(a, c, m, seed, 500)
-
-# ╔═╡ de2bf35f-c285-4b18-8efb-0661a181c2cb
-scatter(data_lcg, title="Números generados por un LCG", xlabel="Índice", ylabel="Valor")
+# ╔═╡ 1af6a6b8-a363-4e09-abd1-3f25a4b32ff1
+@bind m_f Slider(0:1:500, show_value=true)
 
 # ╔═╡ 7c35d57d-a1eb-4739-8033-5232e127d78d
 seeds = rand(1:100, k)  # Semillas iniciales aleatorias (tamaño k)
 
 # ╔═╡ 7afdfac0-a602-4268-8f51-ce982e8267a0
-n = 30           # Número de números a generar
+n = 500           # Número de números a generar
 
 # Generar números pseudoaleatorios
 
 # ╔═╡ 4b370e6c-fc38-48b9-9999-2a50af299594
-X = lagged_fibonacci_generator(j, k, m, seeds, n)
+X = lagged_fibonacci_generator(j, k, m_f, seeds, n)
 
 # ╔═╡ 8f901c8d-9c23-4f70-bf22-ebf394efe222
 println("Semillas iniciales: ", seeds)
 
-# ╔═╡ 8732b5dc-2380-4c3f-a576-dfc637cf4df3
-println("Números generados: ", X)
-
-# ╔═╡ 1af6a6b8-a363-4e09-abd1-3f25a4b32ff1
-m = 100          # Módulo
-
-# ╔═╡ 3e2b78b9-3105-4799-8e9a-97ee216a5f9b
-# ╠═╡ disabled = true
-#=╠═╡
-@bind m Slider(1:1:100, show_value=true)
-
-  ╠═╡ =#
+# ╔═╡ c18fc69e-5e31-4441-b770-61f307b9b359
+scatter(X, title="Números generados por un Lehmer", xlabel="Índice", ylabel="Valor")
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1418,26 +1543,29 @@ version = "1.4.1+1"
 """
 
 # ╔═╡ Cell order:
-# ╠═1284ab86-8cf4-4a2b-a939-4ea7c40a1f7f
-# ╠═5295a88f-076c-4581-b9b1-3be54aaafde7
-# ╠═057a80d3-db81-42ed-bac9-4dd6da93683a
+# ╟─1284ab86-8cf4-4a2b-a939-4ea7c40a1f7f
+# ╟─5295a88f-076c-4581-b9b1-3be54aaafde7
+# ╟─057a80d3-db81-42ed-bac9-4dd6da93683a
 # ╟─61f725df-b692-4101-956c-1e8c824cbf86
 # ╠═58d1222c-90f5-4172-ab1f-1f10010454d3
 # ╠═351b4a4e-8d3b-4a2b-aed1-cf3d8639165a
 # ╠═8a5fb2d7-6045-4e57-a44d-2f675bf565e2
 # ╠═d5deca64-2907-4934-9163-617589218d72
-# ╠═3e2b78b9-3105-4799-8e9a-97ee216a5f9b
+# ╠═d55834c2-991c-4412-af37-d26bf525b071
 # ╠═bcbfdb50-906a-4615-83d3-1760ef0440a8
 # ╠═f4db214c-5807-4f5e-aa8d-3c544a8ec9ec
 # ╠═de2bf35f-c285-4b18-8efb-0661a181c2cb
 # ╟─57f9ac91-7fc0-46c2-ae27-d2c96a70212a
-# ╠═a9521007-0be9-4ab6-95f8-49ea1c815459
+# ╟─6ccd9919-b401-436e-956a-704a4b6c3a04
+# ╟─76390892-4158-42e4-aee2-20671090ef85
+# ╟─29fac509-27b4-47b3-9ea8-afbf04db89ef
 # ╠═0cc363e8-3144-4c1a-a9dd-a3bc15b89053
 # ╠═3f97d39c-9571-40b5-80b0-cf8a6e8f9ea8
 # ╠═f2a3fd21-6626-4a7f-8cea-fa148f5a180b
 # ╠═3c36bffa-88d9-4cbc-a9b1-ef6688e43395
-# ╠═7e08c292-717e-4d56-a19f-aac03c853484
-# ╠═255d43a9-1898-4cec-b722-2ea37d67e397
+# ╟─7e08c292-717e-4d56-a19f-aac03c853484
+# ╟─c00c6eb7-9a29-4941-a63d-1a636999e652
+# ╟─255d43a9-1898-4cec-b722-2ea37d67e397
 # ╠═b358e57a-4cf3-4b91-87e7-e65b96a42c38
 # ╠═fab0bbef-36a4-438e-a2c3-9e441dd949ae
 # ╠═1af6a6b8-a363-4e09-abd1-3f25a4b32ff1
@@ -1445,6 +1573,6 @@ version = "1.4.1+1"
 # ╠═7afdfac0-a602-4268-8f51-ce982e8267a0
 # ╠═4b370e6c-fc38-48b9-9999-2a50af299594
 # ╠═8f901c8d-9c23-4f70-bf22-ebf394efe222
-# ╠═8732b5dc-2380-4c3f-a576-dfc637cf4df3
+# ╠═c18fc69e-5e31-4441-b770-61f307b9b359
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
