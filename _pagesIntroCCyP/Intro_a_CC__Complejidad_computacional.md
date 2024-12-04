@@ -1,7 +1,7 @@
 ---
-title: "Introducción a la modelación matemática"
-permalink: /Notebooks/IntroCCyP/ModelacionMatematica/
-date: 2019-02-15
+title: "Complejidad Computacional"
+permalink: /Notebooks/IntroCCyP/Complejidad_computacional/
+date: 2024-12-04
 header-includes: |
     \usepackage{amsmath,mathtools}
 ---
@@ -23,7 +23,7 @@ header-includes: |
 </head>
 <body>
 
-<h1>Introducción a la modelación matemática</h1>
+<h1>Complejidad Computacional</h1>
 
 </body>
 </html>
@@ -68,4 +68,4 @@ header-includes: |
     }
   </style>
 
-<iframe src="https://labmatecc.github.io/HTML%20Lab/IntroCCyP/Introducci%C3%B3n_a_la_modelaci%C3%B3n_matem%C3%A1tica.html" width="100%" height="600px"></iframe>
+<iframe src="https://labmatecc.github.io/HTML%20Lab/IntroCCyP/Intro_a_CC__Complejidad_computacional.html" width="100%" height="600px"></iframe>

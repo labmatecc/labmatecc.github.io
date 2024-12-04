@@ -1,7 +1,7 @@
 ---
-title: #Agregar Título del cuaderno entre comillas " "
-permalink: #/Notebooks/Asignatura/NombreDelCuaderno/
-date: 2019-02-15
+title: #Agregar Título del cuaderno entre comillas " Análisis Bidimensional "
+permalink: #/Notebooks/EDO/Analisis_bidimensional/
+date: 2024-12-04
 header-includes: |
     \usepackage{amsmath,mathtools}
 ---
@@ -24,7 +24,7 @@ header-includes: |
 <body>
 
 <!-- Abajo colocar el título (nombre del cuaderno) -->
-<h1>NOMBRE DEL CUADERNO</h1>
+<h1>Análisis Bidimensional</h1>
 
 </body>
 </html>
@@ -70,4 +70,4 @@ header-includes: |
   </style>
 
 <!-- Abajo colocar el enlace del archivo html del cuaderno-->
-<iframe src="enlace del archivo html" width="100%" height="600px"></iframe>
+<iframe src="https://labmatecc.github.io/HTML%20Lab/EDO/Analisis_Bidimensional.html" width="100%" height="600px"></iframe>
