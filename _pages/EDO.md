@@ -267,3 +267,23 @@ header-includes: |
       </div>
     </div>
   </div>
+
+<hr>
+
+<div class="button-container">
+  <a href="https://labmatecc.github.io/Notebooks/EDO/Teorema_de_existencia_y_unicidad/" class="button">Teorema de existencia y unicidad</a>
+</div>
+
+<hr>
+
+<div class="button-container">
+  <a href="https://labmatecc.github.io/Notebooks/EDO/Analisis_unidimensional/" class="button">Análisis cualitativo unidimensional</a>
+</div>
+
+<hr>
+
+<div class="button-container">
+  <a href="https://labmatecc.github.io/Notebooks/EDO/Analisis_bidimensional/" class="button">Análisis cualitativo unidimensional</a>
+</div>
+
+<hr>

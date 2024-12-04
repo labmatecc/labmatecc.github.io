@@ -157,13 +157,13 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/PaginaEnConstruccion/" class="button">Introducción a la criptografía</a>
+  <a href="https://labmatecc.github.io/HTML%20Lab/IntroCCyP/Intro_a_CC__Datos_Variables_Expresiones/" class="button">Datos, variables y expresiones</a>
 </div>
 
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>El cuaderno está en construcción. </p>
+        <p>La descripción está en construcción. </p>
       </div>
     </div>
   </div>
@@ -171,13 +171,13 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/PaginaEnConstruccion/" class="button">Introducción a los grafos</a>
+  <a href="https://labmatecc.github.io/HTML%20Lab/IntroCCyP/Intro_a_CC__Estructuras_de_control/" class="button">Estructuras de control</a>
 </div>
 
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>El cuaderno está en construcción. </p>
+        <p>La descripción está en construcción. </p>
       </div>
     </div>
   </div>
@@ -185,15 +185,102 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/PaginaEnConstruccion/" class="button">Introducción a la optimización</a>
+  <a href="https://labmatecc.github.io/HTML%20Lab/IntroCCyP/Intro_a_CC__Listas_secuencias_arreglos/" class="button">Listas, secuencias y arreglos</a>
 </div>
 
 <div class="container">
     <div class="person">
       <div class="info">
-        <p>El cuaderno está en construcción. </p>
+        <p>La descripción está en construcción.</p>
       </div>
     </div>
-  </div>
+</div>
+
+<hr>
+
+<div class="button-container">
+  <a href="https://labmatecc.github.io/HTML%20Lab/IntroCCyP/Intro_a_CC__Funciones/" class="button">Funciones</a>
+</div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>La descripción está en construcción.</p>
+      </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="button-container">
+  <a href="https://labmatecc.github.io/HTML%20Lab/IntroCCyP/Intro_a_CC__Clases_y_Objetos/" class="button">Clases y Objetivos</a>
+</div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>La descripción está en construcción.</p>
+      </div>
+    </div>
+</div>
+
+<hr>
+
+
+<div class="button-container">
+  <a href="https://labmatecc.github.io/HTML%20Lab/IntroCCyP/Intro_a_CC__Recursion/" class="button">Recursión</a>
+</div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>La descripción está en construcción.</p>
+      </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="button-container">
+  <a href="https://labmatecc.github.io/HTML%20Lab/IntroCCyP/Intro_a_CC__Grafos/" class="button">Grafos</a>
+</div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>La descripción está en construcción.</p>
+      </div>
+    </div>
+</div>
+
+<hr>
+
+
+<div class="button-container">
+  <a href="https://labmatecc.github.io/HTML%20Lab/IntroCCyP/Intro_a_CC__Optimizacion/" class="button">Optimización</a>
+</div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>La descripción está en construcción.</p>
+      </div>
+    </div>
+</div>
+
+<hr>
+
+
+<div class="button-container">
+  <a href="https://labmatecc.github.io/HTML%20Lab/IntroCCyP/Intro_a_CC__Complejidad_computacional/" class="button">Complejidad computacional</a>
+</div>
+
+<div class="container">
+    <div class="person">
+      <div class="info">
+        <p>La descripción está en construcción.</p>
+      </div>
+    </div>
+</div>
 
 <hr>
