@@ -266,6 +266,43 @@ header-includes: |
 
 <hr>
 
+
+<div class="button-container" style="text-align: center; margin: 20px 0;">
+    <a href="https://labmatecc.github.io/Notebooks/Probabilidad/" class="button" style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Probabilidad</a>
+</div>
+
+<!-- Contenedor para el curso de Probabilidad-->
+<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="person">
+        <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+            <!-- Imagen centrada -->
+            <img src="https://labmatecc.github.io/Imágenes/Gif_de_movimiento_browniano.gif" 
+                 alt="Descripción de la imagen" 
+                 style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
+                Movimiento Browniano
+            </footer>
+            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Cuadernos sobre Probabilidad</h2>
+            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+                Los cuadernos sobre <strong>probabilidad</strong> se enfocan en diversos temas. Descripción en curso.
+            </p>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+
+<div class="button-container" style="text-align: center; margin: 20px 0;">
+    <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/" class="button" style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Procesamiento de Imágenes</a>
+</div>
+
+<!-- Contenedor para el curso de Procesamiento de imagenes-->
+
+
+
+<hr>
+
 <div class="button-container" style="text-align: center; margin: 20px 0;">
     <a href="https://labmatecc.github.io/Notebooks/VariableCompleja/" class="button" style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Variable Compleja</a>
 </div>
@@ -291,35 +328,6 @@ header-includes: |
 
 
 
-
-
-
-
-<hr>
-
-
-<div class="button-container" style="text-align: center; margin: 20px 0;">
-    <a href="https://labmatecc.github.io/Notebooks/Probabilidad/" class="button" style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Probabilidad</a>
-</div>
-
-<!-- Contenedor para el curso de Probabilidad-->
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
-        <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
-            <!-- Imagen centrada -->
-            <img src="https://labmatecc.github.io/Imágenes/Gif_de_movimiento_browniano.gif" 
-                 alt="Descripción de la imagen" 
-                 style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
-                Movimiento Browniano
-            </footer>
-            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Cuadernos sobre Probabilidad</h2>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
-                Los cuadernos sobre <strong>probabilidad</strong> se enfocan en diversos temas. Descripción en curso.
-            </p>
-        </div>
-    </div>
-</div>
 
 <hr>
 <!-- Contenedor para referencias de imágenes -->
