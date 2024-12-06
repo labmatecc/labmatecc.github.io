@@ -115,7 +115,7 @@ header-includes: |
   <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/FuncionesElementales/" 
      class="button" 
      style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
-    Vectores
+    Aplicaciones y funciones elementales
   </a>
 </div>
 
@@ -125,7 +125,7 @@ header-includes: |
   <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/TranformacionesLineales/" 
      class="button" 
      style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
-    Vectores
+    Transformaciones lineales y automatización del proceso
   </a>
 </div>
 
@@ -135,7 +135,7 @@ header-includes: |
   <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/Probabilidad/" 
      class="button" 
      style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
-    Vectores
+    Probabilidad en el procesamiento de imágenes
   </a>
 </div>
 
@@ -145,7 +145,7 @@ header-includes: |
   <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/Matrices/" 
      class="button" 
      style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
-    Vectores
+    Matrices y transformaciones lineales
   </a>
 </div>
 
@@ -155,7 +155,7 @@ header-includes: |
   <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/Difuminado-Ruido/" 
      class="button" 
      style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
-    Vectores
+    Difuminado y ruido
   </a>
 </div>
 
@@ -165,7 +165,7 @@ header-includes: |
   <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/Convolucion/" 
      class="button" 
      style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
-    Vectores
+    Convolución y filtros
   </a>
 </div>
 
