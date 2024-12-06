@@ -1,6 +1,6 @@
 ---
-title: #Agregar Título del cuaderno entre comillas " Teorema de existencia y unicidad "
-permalink: #/Notebooks/EDO/Teorema_de_existencia_y_unicidad/
+title: "Teorema de existencia y unicidad"
+permalink: /Notebooks/EDO/Teorema_de_existencia_y_unicidad/
 date: 2024-12-04
 header-includes: |
     \usepackage{amsmath,mathtools}

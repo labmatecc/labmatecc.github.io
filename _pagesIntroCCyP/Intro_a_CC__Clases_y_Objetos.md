@@ -68,4 +68,4 @@ header-includes: |
     }
   </style>
 
-<iframe src="https://labmatecc.github.io/HTML%20Lab/IntroCCyP/Clases_y_Objetos.html" width="100%" height="600px"></iframe>
+<iframe src="https://labmatecc.github.io/HTML%20Lab/IntroCCyP/Intro_a_CC__Clases_y_Objetos.html" width="100%" height="600px"></iframe>

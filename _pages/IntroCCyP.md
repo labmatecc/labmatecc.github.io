@@ -272,7 +272,7 @@ header-includes: |
 
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Complejidad_computacional/" class="button">Complejidad computacional</a>
+  <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Complejidad_computacional/" class="button">Complejidad computacional</a>
 </div>
 
 <div class="container">

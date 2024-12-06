@@ -1,6 +1,6 @@
 ---
-title: #Agregar Título del cuaderno entre comillas " Análisis Unidimensional "
-permalink: #/Notebooks/EDO/Analisis_unidimensional/
+title: "Análisis Unidimensional "
+permalink: /Notebooks/EDO/Analisis_unidimensional/
 date: 2024-12-04
 header-includes: |
     \usepackage{amsmath,mathtools}
