@@ -283,7 +283,7 @@ header-includes: |
 <hr>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/EDO/Analisis_bidimensional/" class="button">Análisis cualitativo unidimensional</a>
+  <a href="https://labmatecc.github.io/Notebooks/EDO/Analisis_bidimensional/" class="button">Análisis cualitativo bidimensional</a>
 </div>
 
 <hr>
