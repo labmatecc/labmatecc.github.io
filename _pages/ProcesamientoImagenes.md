@@ -1,5 +1,5 @@
 ---
-title: "Álgebra Lineal"
+title: "Procesamiento de Imágenes"
 permalink: /Notebooks/ProcesamientoDeImagenes/
 date: 2024-02-15
 header-includes: |
@@ -71,7 +71,7 @@ header-includes: |
 
 <hr>
 
-<h1>Álgebra Lineal</h1>
+<h1>Procesamiento de Imágenes</h1>
 
 <hr>
 
