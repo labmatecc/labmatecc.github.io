@@ -1,6 +1,6 @@
 ---
-title: "Métodos de descenso"
-permalink: /Notebooks/Optimizacion/MetodosDeDescenso/
+title: "Generacion de numeros aleatorios"
+permalink: /Notebooks/Probabilidad/Numeros_aleatorios/
 date: 2019-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}
@@ -23,7 +23,7 @@ header-includes: |
 </head>
 <body>
 
-<h1>Métodos de descenso</h1>
+<h1>Numeros Aleatorios</h1>
 
 </body>
 </html>
@@ -68,4 +68,4 @@ header-includes: |
     }
   </style>
 
-<iframe src="https://labmatecc.github.io/HTML%20Lab/Optimizacion/MetodosDeDescenso.html" width="100%" height="600px"></iframe>
+<iframe src="https://labmatecc.github.io/HTML%20Lab/Probabilidad/Numeros_aleatorios.html" width="100%" height="600px"></iframe>

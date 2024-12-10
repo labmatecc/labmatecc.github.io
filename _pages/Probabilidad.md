@@ -79,7 +79,7 @@ header-includes: |
 </html>
 
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/Probabilidad/Numeros_Aleatorios/" class="button">Números Aleatorios</a>
+  <a href="https://labmatecc.github.io/Notebooks/Probabilidad/Numeros_aleatorios" class="button">Números Aleatorios</a>
 </div>
 
   <div class="container">
