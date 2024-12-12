@@ -299,8 +299,6 @@ header-includes: |
 
 <!-- Contenedor para el curso de Procesamiento de imagenes-->
 
-
-
 <hr>
 
 <div class="button-container" style="text-align: center; margin: 20px 0;">
