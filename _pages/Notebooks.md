@@ -297,9 +297,27 @@ header-includes: |
     <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/" class="button" style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Procesamiento de Imágenes</a>
 </div>
 
-<!-- Contenedor para el curso de Procesamiento de imagenes-->
+<!-- Contenedor para el curso de Procesamiento de imágenes -->
+<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="person">
+        <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+            <!-- Imagen centrada -->
+            <img src="https://www.wolfram.com/language/12/new-in-image-processing/assets.en/featuredimage.png.en" 
+                 alt="Descripción de la imagen" 
+                 style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
+                Procesamiento de Imágenes
+            </footer>
+            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Cuadernos sobre Procesamiento de Imágenes</h2>
+            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+                Los cuadernos sobre <strong>procesamiento de imágenes</strong> exploran conceptos fundamentales y avanzados. Descripción en curso.
+            </p>
+        </div>
+    </div>
+</div>
 
 <hr>
+
 
 <div class="button-container" style="text-align: center; margin: 20px 0;">
     <a href="https://labmatecc.github.io/Notebooks/VariableCompleja/" class="button" style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Variable Compleja</a>
@@ -366,11 +384,15 @@ header-includes: |
                     <a href="https://chalmersindustriteknik.se/en/expertise/applied-ai/applied-mathematics-and-optimization/" target="_blank" style="color: #3498db; text-decoration: none;">Mathematical optimization models</a>
                 </span>
                 <span style="display: flex; justify-content: space-between;">
-                    <span>6. Variable Compleja</span> 
+                    <span>6. Procesamiento de Imágenes</span> 
+                    <a href="https://www.wolfram.com/language/12/new-in-image-processing/" target="_blank" style="color: #3498db; text-decoration: none;">Procesamiento de Imágenes </a>
+                </span>
+                <span style="display: flex; justify-content: space-between;">
+                    <span>7. Variable Compleja</span> 
                     <a href="https://xciencia.wordpress.com/tag/benoit-mandelbrot/" target="_blank" style="color: #3498db; text-decoration: none;">Conjunto de Mandelbrot</a>
                 </span>
                 <span style="display: flex; justify-content: space-between;">
-                    <span>7. Referencias</span> 
+                    <span>8. Referencias</span> 
                     <a href="https://apastyle.apa.org/style-grammar-guidelines/references" target="_blank" style="color: #3498db; text-decoration: none;">References</a>
                 </span>
             </p>
