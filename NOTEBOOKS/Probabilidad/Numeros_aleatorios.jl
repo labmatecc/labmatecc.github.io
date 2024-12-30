@@ -26,6 +26,15 @@ using Plots
 using Primes  # Para generar números primos
 
 
+# ╔═╡ 13e5c44c-5c8b-4cff-8a01-caca9598043a
+md"
+Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**.
+
+Tu participación es fundamental para hacer de este curso una experiencia aún mejor.
+
+Elaborado por Juan Galvis, Eduards Chipatecua"
+
+
 # ╔═╡ 61f725df-b692-4101-956c-1e8c824cbf86
 md"
 # Introducción a los números aleatorios en Julia
@@ -1543,10 +1552,11 @@ version = "1.4.1+1"
 """
 
 # ╔═╡ Cell order:
-# ╟─1284ab86-8cf4-4a2b-a939-4ea7c40a1f7f
-# ╟─5295a88f-076c-4581-b9b1-3be54aaafde7
-# ╟─057a80d3-db81-42ed-bac9-4dd6da93683a
-# ╟─61f725df-b692-4101-956c-1e8c824cbf86
+# ╠═13e5c44c-5c8b-4cff-8a01-caca9598043a
+# ╠═1284ab86-8cf4-4a2b-a939-4ea7c40a1f7f
+# ╠═5295a88f-076c-4581-b9b1-3be54aaafde7
+# ╠═057a80d3-db81-42ed-bac9-4dd6da93683a
+# ╠═61f725df-b692-4101-956c-1e8c824cbf86
 # ╠═58d1222c-90f5-4172-ab1f-1f10010454d3
 # ╠═351b4a4e-8d3b-4a2b-aed1-cf3d8639165a
 # ╠═8a5fb2d7-6045-4e57-a44d-2f675bf565e2
