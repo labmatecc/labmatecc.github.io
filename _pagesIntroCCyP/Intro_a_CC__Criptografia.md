@@ -1,6 +1,6 @@
 ---
 title: "Introducción a la criptografía"
-permalink: /Notebooks/IntroCCyP/Intro_a_CC__Criptografia/
+permalink: /Notebooks/IntroCCyP/Introduccion_a_la_criptografia/
 date: 2025-01-12
 header-includes: |
     \usepackage{amsmath,mathtools}
