@@ -83,7 +83,13 @@ header-includes: |
 <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Datos_Variables_Expresiones/" 
      class="button" 
-     style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+     style="padding: 10px 20px; 
+            color: white; 
+            background-color: rgb(127, 161, 105); 
+            border: none; 
+            border-radius: 5px; 
+            text-decoration: none; 
+            font-weight: bold;">
     Datos, variables y expresiones
   </a>
 </div>
@@ -109,7 +115,13 @@ header-includes: |
 <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Estructuras_de_control/" 
      class="button" 
-     style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+     style="padding: 10px 20px; 
+            color: white; 
+            background-color: rgb(127, 161, 105); 
+            border: none; 
+            border-radius: 5px; 
+            text-decoration: none; 
+            font-weight: bold;">
     Estructuras de control
   </a>
 </div>
@@ -139,7 +151,13 @@ header-includes: |
 <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Listas_secuencias_arreglos/" 
      class="button" 
-     style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+     style="padding: 10px 20px; 
+            color: white; 
+            background-color: rgb(127, 161, 105); 
+            border: none; 
+            border-radius: 5px; 
+            text-decoration: none; 
+            font-weight: bold;">
     Listas, secuencias y arreglos
   </a>
 </div>
@@ -171,7 +189,13 @@ header-includes: |
 <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Funciones/" 
      class="button" 
-     style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+     style="padding: 10px 20px; 
+            color: white; 
+            background-color: rgb(127, 161, 105); 
+            border: none; 
+            border-radius: 5px; 
+            text-decoration: none; 
+            font-weight: bold;">
     Funciones
   </a>
 </div>
@@ -201,7 +225,13 @@ header-includes: |
 <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Clases_y_Objetos/" 
      class="button" 
-     style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+     style="padding: 10px 20px; 
+            color: white; 
+            background-color: rgb(127, 161, 105); 
+            border: none; 
+            border-radius: 5px; 
+            text-decoration: none; 
+            font-weight: bold;">
     Clases y Objetos
   </a>
 </div>
@@ -232,7 +262,13 @@ header-includes: |
 <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Recursion/" 
      class="button" 
-     style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+     style="padding: 10px 20px; 
+            color: white; 
+            background-color: rgb(127, 161, 105); 
+            border: none; 
+            border-radius: 5px; 
+            text-decoration: none; 
+            font-weight: bold;">
     Recursión
   </a>
 </div>
@@ -262,7 +298,13 @@ header-includes: |
 <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Grafos/" 
      class="button" 
-     style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+     style="padding: 10px 20px; 
+            color: white; 
+            background-color: rgb(127, 161, 105); 
+            border: none; 
+            border-radius: 5px; 
+            text-decoration: none; 
+            font-weight: bold;">
     Grafos
   </a>
 </div>
@@ -292,7 +334,13 @@ header-includes: |
 <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Optimizacion/" 
      class="button" 
-     style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+     style="padding: 10px 20px; 
+            color: white; 
+            background-color: rgb(127, 161, 105); 
+            border: none; 
+            border-radius: 5px; 
+            text-decoration: none; 
+            font-weight: bold;">
     Optimización
   </a>
 </div>
@@ -323,7 +371,13 @@ header-includes: |
 <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Complejidad_computacional/" 
      class="button" 
-     style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+     style="padding: 10px 20px; 
+            color: white; 
+            background-color: rgb(127, 161, 105); 
+            border: none; 
+            border-radius: 5px; 
+            text-decoration: none; 
+            font-weight: bold;">
     Complejidad computacional
   </a>
 </div>
@@ -355,7 +409,13 @@ header-includes: |
 <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Introduccion_a_la_criptografia/" 
      class="button" 
-     style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+     style="padding: 10px 20px; 
+            color: white; 
+            background-color: rgb(127, 161, 105); 
+            border: none; 
+            border-radius: 5px; 
+            text-decoration: none; 
+            font-weight: bold;">
     Introducción a la criptografía
   </a>
 </div>
@@ -393,7 +453,13 @@ header-includes: |
 <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Modelamiento3D/" 
      class="button" 
-     style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+     style="padding: 10px 20px; 
+            color: white; 
+            background-color: rgb(127, 161, 105); 
+            border: none; 
+            border-radius: 5px; 
+            text-decoration: none; 
+            font-weight: bold;">
     Introducción al modelamiento 3D
   </a>
 </div>
