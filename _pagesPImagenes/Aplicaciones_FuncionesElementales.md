@@ -67,4 +67,4 @@ header-includes: |
       color: #333;
     }
   </style>
-<iframe src="https://github.com/ytrujillol/Procesamiento-de-imagenes/blob/main/HTML/Aplicaciones_de_Funciones_Elementales.html" width="100%" height="600px"></iframe>
+<iframe src="https://labmatecc.github.io/HTML%20Lab/P_Imagenes/Aplicaciones_de_Funciones_Elementales.html" width="100%" height="600px"></iframe>

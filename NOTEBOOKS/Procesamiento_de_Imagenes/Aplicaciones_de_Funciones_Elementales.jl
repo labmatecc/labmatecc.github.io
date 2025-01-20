@@ -38,7 +38,7 @@ md"""Este cuaderno está en construcción y puede ser modificado en el futuro pa
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
 # ╔═╡ 51ff090b-3527-4ee1-a325-4f6f65621ada
-md"""**Este cuaderno está basado en actividades del seminario Procesamiento de Imágenes de la Universidad Nacional de Colombia, sede Bogotá, dirigido por el profesor Jorge Mauricio Ruiz en 2024-2.**
+md"""**Este cuaderno está basado en actividades del seminario Procesamiento de Imágenes de la Universidad Nacional de Colombia, sede Bogotá, dirigido por el profesor Jorge Mauricio Ruíz en 2024-2.**
 
 Elaborado por Juan Galvis, Carlos Nosa, Jorge Mauricio Ruíz y Yessica Trujillo."""
 
@@ -3012,7 +3012,7 @@ version = "1.4.1+1"
 # ╟─f13cc879-42f4-4bba-844e-4f95b236b336
 # ╟─312da3e0-4d10-4831-bf83-e6bcb7007ec7
 # ╟─54d39189-d5ba-410b-a713-b3ca66491e66
-# ╠═f4b417db-1066-47cc-8055-be70b1a53c67
+# ╟─f4b417db-1066-47cc-8055-be70b1a53c67
 # ╟─bfa7d58d-1aa0-4b38-9686-3e5d836b2a68
 # ╟─b64bc307-1d06-4772-ade3-c4364483a0a9
 # ╟─57ea7045-6411-493f-93cf-810b277bb1fd
