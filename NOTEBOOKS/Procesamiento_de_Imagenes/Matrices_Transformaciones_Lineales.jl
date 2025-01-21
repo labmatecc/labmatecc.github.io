@@ -28,7 +28,7 @@ md"""Este cuaderno está en construcción y puede ser modificado en el futuro pa
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
 # ╔═╡ ecbeadd0-14ba-47ae-826a-d97f0695ef1e
-md"""**Este cuaderno está basado en actividades del seminario Procesamiento de Imágenes de la Universidad Nacional de Colombia, sede Bogotá, dirigido por el profesor Jorge Mauricio Ruiz en 2024-2.**
+md"""**Este cuaderno está basado en actividades del seminario Procesamiento de Imágenes de la Universidad Nacional de Colombia, sede Bogotá, dirigido por el profesor Jorge Mauricio Ruíz en 2024-2.**
 
 Elaborado por Juan Galvis, Carlos Nosa, Jorge Mauricio Ruíz y Yessica Trujillo."""
 
@@ -42,7 +42,7 @@ md"""
 
 # ╔═╡ 8992f9b8-3660-490e-aed3-8be32742183d
 md"""
-En este cuaderno se descubrirá que diversas transformaciones de imágenes, como el mezclado, el enmascarado, la rotación y el cambio de perspectiva, pueden realizarse mediante el uso de aritmética matricial, transformaciones lineales y coordenadas homogéneas.
+En este cuaderno se descubrirá que diversas transformaciones de imágenes, como el mezclado, el enmascarado, la rotación y el cambio de perspectiva, pueden realizarse mediante el uso de aritmética matricial y transformaciones lineales.
 """
 
 # ╔═╡ 7806626e-81e1-4b48-9756-b8277213d268
@@ -192,8 +192,6 @@ function Sobreposicion(image1, image2)
 	B = channelview(image2)
 	n = min(size(A)[1], size(B)[1])
 	m = min(size(A)[2], size(B)[2])
-	#Sum = A[1:n,1:m] + B[1:n,1:m]
-	#Image_sobre = (Sum .- minimum(Sum))/(maximum(Sum)-minimum(Sum))
 	Image_sobre = 0.5*A[1:n,1:m] + 0.5*B[1:n,1:m]
 	return Gray.(Image_sobre)
 end
@@ -446,22 +444,54 @@ md"""
 ## Cambio de coordenadas
 """
 
-# ╔═╡ c63131b0-fc8a-4fc5-991b-25eff5950aef
-function circulo(n)
-	img = fill(0,n,n)
-	for i in 1:n, j in 1:n
-		if abs(i-n/2)^(1/2) + abs(j-n/2)^(1/2) <= (n/3)^(1/2)
-			img[i,j] = 1
-		end
-	end
-	return Gray.(img)
-end
+# ╔═╡ 0151b512-3281-4e9d-99ce-e13b9d64d75d
+md"""Para realizar la rotación a través del ángulo \( \theta \) en dirección antihoraria, el punto \( (1, 0) \) debe mapearse al punto \( (\cos \theta, \sin \theta) \), y el punto \( (0, 1) \) al punto \( (-\sin \theta, \cos \theta) \). Por lo tanto, la matriz de transformación estándar es:
+
+$A =
+\begin{bmatrix}
+\cos \theta & -\sin \theta \\
+\sin \theta & \cos \theta
+\end{bmatrix}.$
+
+Así, las “nuevas” coordenadas del punto \( (x, y) \) pueden calcularse usando:
+
+$\begin{bmatrix}
+x' \\
+y'
+\end{bmatrix}
+=
+\begin{bmatrix}
+\cos \theta & -\sin \theta \\
+\sin \theta & \cos \theta
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y
+\end{bmatrix}.$"""
+
+# ╔═╡ 5174e068-4b35-4189-82a3-67bf7a331d7b
+md"""**Nota:** En el caso de Julia, para que la transformación sea en sentido antihorario se va a considerar la siguiente matriz de transformación:
+
+$A =
+\begin{bmatrix}
+\cos (-\theta) & -\sin (-\theta) \\
+\sin (-\theta) & \cos (-\theta)
+\end{bmatrix} =
+\begin{bmatrix}
+\cos \theta & \sin \theta \\
+-\sin \theta & \cos \theta
+\end{bmatrix}.$
+"""
+
+# ╔═╡ da818437-dcb2-48fe-8b4e-b23d74f4d0bf
+md"""A continuación se implementa dicha transformación."""
 
 # ╔═╡ 8a9438fc-4754-4ece-8601-d3f075681db1
 function rotate_image_no_interp(image, angle)
     θ = deg2rad(angle)
     M, N = size(image)
-    A = [cos(θ) -sin(θ); sin(θ) cos(θ)]
+    #A = [cos(-θ) -sin(-θ); sin(-θ) cos(-θ)]
+	A = [cos(θ) sin(θ); -sin(θ) cos(θ)]
     rotated_image = zeros(eltype(image), M, N)
    
     for m in 1:M, n in 1:N
@@ -480,32 +510,14 @@ function rotate_image_no_interp(image, angle)
     return rotated_image
 end
 
-# ╔═╡ df624514-b98c-4f4d-8348-96577a54167e
-L = Gray.([0 0 0 0 0 0 0 0 0 0; 
-	0 0 0 0 0 0 0 0 0 0;
-	0 0 0 0 0 0 0 0 0 0;
-	0 0 0 1 1 1 1 1 1 1;
-	0 0 0 1 1 1 1 1 1 1;
-	0 0 0 1 1 1 1 1 1 1;
-	0 0 0 1 1 1 1 1 1 1;
-	0 0 0 1 1 1 1 1 1 1;
-	0 0 0 1 1 1 1 1 1 1;
-	0 0 0 1 1 1 1 1 1 1])
-
-# ╔═╡ 0de7918c-fa71-4523-a314-653e1e190288
-rotate_image_no_interp(L, 90)
-
-# ╔═╡ 225bbc0a-205f-4221-b945-ebc0aeaeae63
-rotate_image_no_interp(L, -90)
-
-# ╔═╡ 0307bca1-6358-4181-92b4-6d7fbeb50bf5
-[circulo(100) rotate_image_no_interp(circulo(100), 20)]
-
 # ╔═╡ eb9116f9-2aa8-4f55-9c4f-f27891f46e30
-[imag1 rotate_image_no_interp(imag1, 90) rotate_image_no_interp(imag1, -90)]
+[imag1 rotate_image_no_interp(imag1, 90) rotate_image_no_interp(imag1, 30)]
 
-# ╔═╡ 4c39f6db-6d97-431e-97cf-1a7e400b71de
+# ╔═╡ 51cc850a-c4e7-4330-8696-0602ef8447f8
+md"""$\texttt{Figura 11. Rotaciones de la Figura 2.}$"""
 
+# ╔═╡ b64f48d4-02bf-4ce8-998e-188e0ed0d20b
+md"""Dado que la imagen rotada podría presentar “huecos”. Esto se debe al hecho de que la transformación lineal no es sobreyectiva cuando su dominio y rango consisten en pares de enteros (a diferencia de los números reales). Como resultado, es muy probable que algunos píxeles en la imagen rotada no hayan sido asignados a ningún valor por la transformación. Estos píxeles deben ser interpolados utilizando los píxeles vecinos que sí han sido asignados con nuevos valores. Usando la librería $\texttt{Interpolations}$ se modificará esto."""
 
 # ╔═╡ 809054ff-58bd-46eb-bbe1-65fe353da582
 function rotate_image(image, angle)
@@ -513,7 +525,7 @@ function rotate_image(image, angle)
     M, N = size(image)
     cx = N / 2
     cy = M / 2
-    A = [cos(θ) -sin(θ); sin(θ) cos(θ)]
+    A = [cos(θ) sin(θ); -sin(θ) cos(θ)]
     rotated_image = zeros(eltype(image), M, N)
 
     for m in 1:M, n in 1:N
@@ -533,13 +545,27 @@ function rotate_image(image, angle)
 end
 
 # ╔═╡ 4756613f-dec2-4145-ab57-de24776ab9e4
-[imag1 rotate_image(imag1, 90)]
+[imag1 rotate_image(imag1, 45)]
 
-# ╔═╡ 225ea01f-243a-49fe-a22f-a85fc5c78a9b
-rotate_image(imag1, 180)
+# ╔═╡ 59aff8cf-2972-411f-bf58-e87e1cab553e
+md"""$\texttt{Figura 12. Rotación de la Figura 2.}$"""
 
-# ╔═╡ 6e02907a-678c-4d4f-a3f7-92eddc878baf
-rotate_image(imag1, 01)
+# ╔═╡ 26250b0b-09c1-49ea-9b8c-02774fc64fde
+md"""**Un procedimiento paso a paso para la implementación de la transformación de cambio de perspectiva (que se aplicará a cada píxel)**
+
+1. Calcular las coordenadas cartesianas $(x, y)$ de un píxel con índices $(m, n)$ pueden calcularse usando las siguientes fórmulas de conversión:
+
+$x = n - \frac{N}{2} \quad \text{y} \quad y = \frac{M}{2} - m.$
+2. Aplicar la rotación para calcular las “nuevas” coordenadas cartesianas $(x', y')$ a las que debe moverse el píxel en $(m, n)$ (si es necesario, deberemos redondear \( m' \) y \( n' \) al entero más cercano).
+
+3. Convertir las “nuevas” coordenadas cartesianas $(x', y')$ en los “nuevos” índices $(m', n')$ usando las fórmulas de conversión:
+
+$m' = \frac{M}{2} - y' \quad \text{y} \quad n' = x' + \frac{N}{2}.$
+
+4. El valor del píxel con los “anteriores” índices $(m, n)$ ahora puede asignarse al píxel con los “nuevos” índices $(m', n')$."""
+
+# ╔═╡ 3826f6f1-ccd4-43d5-b3f7-8e24a2630ff0
+md"""## Otras transformaciones"""
 
 # ╔═╡ 44bac7a6-5e6c-4e8d-a221-90d6c1173f38
 md"""
@@ -578,6 +604,9 @@ end
 # ╔═╡ 4f7059b3-41ce-4e43-a14e-f64de7f6e514
 [imag1 dilatation_x(imag1, 0.5)]
 
+# ╔═╡ 903d6150-461a-4aeb-a7d7-fae582caf3e1
+md"""$\texttt{Figura 13. Dilatación en el eje x de la Figura 2.}$"""
+
 # ╔═╡ 2e45b58f-fcde-4de4-a485-72940d7da6ac
 md"""
 **Estiramiento/compresión** por un factor $b$ en la dirección del eje $y$.
@@ -609,6 +638,9 @@ end
 
 # ╔═╡ f72a702d-af26-4876-8d64-77582825fcc9
 [imag1 dilatation_y(imag1, 0.5)]
+
+# ╔═╡ 4e2d48fb-56dc-4d57-b7d8-f3a2b78c83d5
+md"""$\texttt{Figura 14. Dilatación en el eje y de la Figura 2.}$"""
 
 # ╔═╡ 6c97e63b-9ab5-4966-ae37-d1c5dcb2ab52
 md"""
@@ -642,6 +674,9 @@ end
 # ╔═╡ 29b2fdae-6a13-4057-a75c-412a5a3c17ad
 [imag1 dilatation_ch(imag1, 0.5)]
 
+# ╔═╡ 2bc97ca8-30fc-4e37-946c-d3057572a39b
+md"""$\texttt{Figura 15. Cizalladura horizontal de la Figura 2.}$"""
+
 # ╔═╡ 0356097c-9c73-432c-b94f-d1143fcdfc34
 md"""
 **Cizalladura vertical** que deja el punto $(0, 1)$ sin cambios y mapea el punto $(1, 0)$ en $(1, b)$.  
@@ -673,6 +708,9 @@ end
 
 # ╔═╡ 8cd9c33b-079e-4984-ac3f-a73fc6fa1178
 [imag1 dilatation_cv(imag1, 0.5)]
+
+# ╔═╡ 032b7f9e-9131-4032-ab45-a85cfe991a7d
+md"""$\texttt{Figura 16. Cizalladura vertical de la Figura 2.}$"""
 
 # ╔═╡ 304b82b3-cfa1-4c94-a2c8-b4e8e2d3d6e7
 md"""
@@ -706,6 +744,9 @@ end
 # ╔═╡ 36cc24eb-c6bb-4fcd-ac9d-befddac22da8
 [imag1 reflexion_x(imag1)]
 
+# ╔═╡ a9b0da79-53a4-4888-9d56-1d9cb2c7bfbd
+md"""$\texttt{Figura 17. Reflexión a través del eje x de la Figura 2.}$"""
+
 # ╔═╡ 3ba6dfae-931a-48d6-b90c-8bc612c4076e
 md"""
 **Reflexión** a través del eje $y$.
@@ -737,6 +778,9 @@ end
 
 # ╔═╡ 9f9497d0-f42d-45f6-a250-b5f1f49952d0
 [imag1 reflexion_y(imag1)]
+
+# ╔═╡ ba930fb5-ba36-453d-8bf5-60f9139598ae
+md"""$\texttt{Figura 18. Reflexión a través del eje y de la Figura 2.}$"""
 
 # ╔═╡ fb92541f-4fa9-4329-a8ac-d22d8389ff4b
 md"""
@@ -770,6 +814,9 @@ end
 # ╔═╡ a43d7c96-120b-4894-a454-e517551cf84a
 [imag1 reflexion_y_x(imag1)]
 
+# ╔═╡ 4abb1f6d-9801-48aa-a9fe-0f87bb5548fd
+md"""$\texttt{Figura 19. Reflexión a través de la recta y=x de la Figura 2.}$"""
+
 # ╔═╡ a79b0ccd-5b9f-41c3-b277-b554403b5002
 md"""
 **Reflexión** a través de la línea $y = -x$.  
@@ -802,6 +849,9 @@ end
 # ╔═╡ f41ea8ef-045d-4a3d-b095-8d9514d09d24
 [imag1 reflexion_y_minus_x(imag1)]
 
+# ╔═╡ 22d49fd5-e0ee-4e83-b868-94cf2b578442
+md"""$\texttt{Figura 20. Reflexión a través de la recta y=-x de la Figura 2.}$"""
+
 # ╔═╡ 871510fa-dfce-43d4-b063-fb036e907458
 md"""
 **Reflexión** a través del origen. 
@@ -812,7 +862,7 @@ function reflexion_origin(image)
     M, N = size(image)
     cx = N / 2
     cy = M / 2
-    A = [-1 0; 0 -1]
+    A = [0 -1; -1 0]
     new_image = zeros(eltype(image), M, N)
 
     for m in 1:M, n in 1:N
@@ -834,249 +884,8 @@ end
 # ╔═╡ 5218f6e3-51d2-46e8-9afa-e52598e02175
 [imag1 reflexion_origin(imag1)]
 
-# ╔═╡ db9272d9-aad3-4819-b518-997e00fbfb5f
-md"""
-# Coordenadas homogéneas y transformaciones proyectivas
-"""
-
-# ╔═╡ f6bd2f0e-46ba-48ac-87c4-514640aa39d6
-md"""
-Si recordamos, la dificultad de combinar los tres primeros pasos del procedimiento de rotación de imágenes en un solo paso radica en el molesto hecho de que la traslación no es una transformación lineal. Entonces, ¿qué dimensión adicional podemos introducir para hacerla lineal?
-
-Resulta que lo único que debemos hacer es mover el origen del sistema de coordenadas lejos del centro de la imagen y colocarlo donde estamos, a una unidad de distancia de la pantalla de la computadora. De esta manera, cualquier punto con coordenadas $(x, y)$ se asignará a las coordenadas $(x, y, 1)$, conocidas como coordenadas homogéneas.
-"""
-
-# ╔═╡ 60f7d827-3afb-4cb8-a004-597a72b3aa93
-md"""
-Por ejemplo, supongamos que la imagen mostrada a continuación proviene de nuestra cámara de seguridad, y nos gustaría obtener una buena vista frontal de la placa delantera en el parachoques del vehículo. ¿Cómo podemos "girar" digitalmente la imagen para obtener una vista desde un punto de vista diferente? ¿Pueden las coordenadas homogéneas ayudarnos en esto?
-"""
-
-# ╔═╡ 4607bb45-1b1e-4727-8e66-b729edb717fa
-begin
-	urlp="https://github.com/ytrujillol/Procesamiento-de-imagenes/blob/main/Images/Placa_coordenadas_homo.png?raw=true"
-	fnamep = download(urlp)
-	imagplaca = Gray.(load(fnamep))
-end
-
-# ╔═╡ 461a4468-eb0e-440e-a8e6-5b4a9583d338
-md"""$\texttt{Figura x.}$"""
-
-# ╔═╡ fed4b0f2-2e58-4f0f-9d18-fcf2756e990e
-size(imagplaca)
-
-# ╔═╡ 8a8838ec-92a7-4663-8a2b-592f9376d20b
-imagplaca[50:200,100:200]
-
-# ╔═╡ 2952a243-dcce-41d6-900b-3ced15e97194
-imagplaca[50:150,100:200]
-
-# ╔═╡ 90bec4f5-f77f-4184-a274-e5b93e968a70
-md"""
--  $M = 238$
--  $N = 330$
-
-
--  $(m_1,n_1)=(50,100)$
--  $(m_2,n_2)=(50,200)$
--  $(m_3,n_3)=(200,100)$
--  $(m_4,n_4)=(150,200)$
-
-
--  $(x_1,y_1)=(-65,69)$
--  $(x_2,y_2)=(35,69)$
--  $(x_3,y_3)=(-65,35)$
--  $(x_4,y_4)=(35,-31)$
-
-
--  $(m'_1,n'_1)=(1,1)$
--  $(m'_2,n'_2)=(1,330)$
--  $(m'_3,n'_3)=(238,1)$
--  $(m'_4,n'_4)=(238,330)$
-
-
--  $(x'_1,y'_1)=(-164,118)$
--  $(x'_2,y'_2)=(165,118)$
--  $(x'_3,y'_3)=(-164,-119)$
--  $(x'_4,y'_4)=(165,-119)$
-"""
-
-# ╔═╡ 07507b03-ce49-40e0-9ba6-ecc209ab9ada
-[0 1; -1 0]*[1 1 238 238; 1 330 1 330].+[-165; 119]
-
-# ╔═╡ 3989d5f6-cb52-4d33-8eac-2e94322cf24a
-md"""
-Geométricamente, el problema se reduce a diseñar la transformación $T$ que mapea las cuatro esquinas (en $(x_1, y_1)$, $(x_2, y_2)$, $(x_3, y_3)$ y $(x_4, y_4)$) de la placa a las cuatro esquinas $(x'_1, y'_1)$, $(x'_2, y'_2)$, $(x'_3, y'_3)$ y $(x'_4, y'_4)$ del rectángulo deseado. Algebraicamente, necesitamos diseñar la matriz:
-
-$A =
-\begin{bmatrix}
-a_{11} & a_{12} & a_{13} \\
-a_{21} & a_{22} & a_{23} \\
-a_{31} & a_{32} & a_{33}
-\end{bmatrix}$
-
-para la transformación $T$, de forma que se pueda expresar como:
-
-$\lambda 
-\begin{bmatrix}
-x'_1 & x'_2 & x'_3 & x'_4 \\
-y'_1 & y'_2 & y'_3 & y'_4 \\
-1 & 1 & 1 & 1
-\end{bmatrix}
-=
-\begin{bmatrix}
-a_{11} & a_{12} & a_{13} \\
-a_{21} & a_{22} & a_{23} \\
-a_{31} & a_{32} & a_{33}
-\end{bmatrix}
-\begin{bmatrix}
-x_1 & x_2 & x_3 & x_4 \\
-y_1 & y_2 & y_3 & y_4 \\
-1 & 1 & 1 & 1
-\end{bmatrix}$
-
-Antes de proceder, es necesario explicar la razón para introducir el múltiplo escalar $\lambda$. Es fácil ver que las coordenadas homogéneas $(x, y, 1)$ del punto $(x, y)$ pueden ser identificadas con la recta $L$ que pasa a través del origen y el punto $(x, y, 1)$. Como tanto $(x, y, 1)$ como $(\lambda x, \lambda y, \lambda)$ están en $L$, representan el mismo punto $(x, y)$.
-"""
-
-# ╔═╡ a3ef0853-0751-44b1-82de-6c66bea67503
-md"""
-¿Cómo determinamos las entradas desconocidas de la matriz de transformación $A$? No es fácil, pero perseveraremos. Para cada par $(x_k, y_k)$ y $(x'_k, y'_k)$ de puntos correspondientes, la ecuación anterior implica:
-
-$\lambda x'_k = a_{11} x_k + a_{12} y_k + a_{13}$
-
-$\lambda y'_k = a_{21} x_k + a_{22} y_k + a_{23}$
-
-$\lambda = a_{31} x_k + a_{32} y_k + a_{33}.$
-
-
-Sustituyendo el valor del factor de escala $\lambda$ en las primeras dos ecuaciones, obtenemos el sistema:
-
-$(a_{31}x_k + a_{32}y_k + a_{33}) x'_k = a_{11}x_k + a_{12}y_k + a_{13}$
-
-$(a_{31}x_k + a_{32}y_k + a_{33}) y'_k = a_{21}x_k + a_{22}y_k + a_{23}.$
-
-Lo cual, después de reorganizar los términos, se convierte en:
-
-$-a_{11}x_k - a_{12}y_k - a_{13} + a_{31}x_kx'_k + a_{32}y_kx'_k + a_{33}x'_k = 0$
-
-$-a_{21}x_k - a_{22}y_k - a_{23} + a_{31}x_ky'_k + a_{32}y_ky'_k + a_{33}y'_k = 0.$
-
-El problema de determinar las entradas de la matriz de transformación $A$ se reduce, por tanto, al de resolver el sistema lineal homogéneo:
-
-$H a = 0,$
-
-donde
-
-$H =
-\begin{bmatrix}
--x_1 & -y_1 & -1 & 0 & 0 & 0 & x'_1x_1 & y_1 x'_1 & x'_1 \\
-\vdots &  &  & \vdots &  & \vdots &  &  & \vdots \\
--x_4 & -y_4 & -1 & 0 & 0 & 0 & x'_4x_4 & y_4 x'_4 & x'_4 \\
-0 & 0 & 0 & -x_1 & -y_1 & -1 & x_1 y'_1 & y_1 y'_1 & y'_1\\
-\vdots &  &  & \vdots &  & \vdots &  &  & \vdots \\
-0 & 0 & 0 & -x_4 & -y_4 & -1 & x_4 y'_4 & y_4 y'_4 & y'_4\\
-\end{bmatrix},$
-
-y
-
-$a =
-\begin{bmatrix}
-a_{11} &
-a_{12} &
-a_{13} &
-a_{21} &
-a_{22} &
-a_{23} &
-a_{31} &
-a_{32} &
-a_{33}
-\end{bmatrix}^{T}.$
-"""
-
-# ╔═╡ fb6ecdb4-2686-4dad-8cec-965d30208cda
-pixeles = [50 50 200 150 1 200 1 200; 100 200 100 200 1 1 200 200]
-
-# ╔═╡ 270869cf-3e45-4a98-9af8-eef56a77665e
-function SolHa(pxs,M,N)
-	coord = [0 1; -1 0]*pxs .+ [-N/2;M/2]
-	A = [coord[1:2,1:4]' ones(4,1)]
-	Z = zeros(4,3)
-	B = A .* coord[1,5:8]
-	C = A .* coord[2,5:8]
-	H = [-A Z B ; Z -A C]
-	return Array(reshape(nullspace(H),3,3)')
-end
-
-# ╔═╡ 247f9d2a-ba9f-4d1b-855f-fb520511c115
-SolHa(pixeles,238,330)
-
-# ╔═╡ e58a555d-0e63-4865-b74c-f56be2a6724a
-function homog_coord(image, pxs)
-    M, N = size(image)
-    cx = N / 2
-    cy = M / 2
-	A = SolHa(pxs,M,N)
-    new_image = zeros(eltype(image), M, N)
-
-    for m in 1:M, n in 1:N
-        x = n - cx
-        y = cy - m
-        new_coords = A * [x; y ; 1]
-		λ = new_coords[3]
-        x_p = new_coords[1]/λ + cx
-        y_p = cy - new_coords[2]/λ
-        
-        x_p = round(Int, x_p)
-        y_p = round(Int, y_p)
-        if x_p >= 1 && x_p <= N && y_p >= 1 && y_p <= M
-            new_image[m, n] = image[y_p, x_p]
-        end
-    end
-    return new_image
-end
-
-# ╔═╡ f841355e-58d9-4df1-a911-30b646f5bc70
-imagplaca
-
-# ╔═╡ beb7a873-3fb1-4bfe-90ce-6d97382130b9
-homog_coord(imagplaca, pixeles)
-
-# ╔═╡ de8440de-2d38-44b8-9bcc-20c6517a80bc
-homog_coord(imagplaca,[1 0 0; 0 1 0; 0 0 1])
-
-# ╔═╡ fe95c961-f662-4d6c-a583-e39990e5e660
-md"""
-Este sistema tiene nueve variables pero solo ocho ecuaciones, lo cual es algo muy positivo, ya que nos gustaría que tuviera una variable libre y, por lo tanto, una solución no trivial. Debido al tamaño de la matriz, no intentamos reducirla por filas manualmente y recomendamos usar un sistema de álgebra computacional para completar el cálculo de las entradas $a_{jk}$ de la matriz de transformación $A$. El valor numérico del parámetro de escala $\lambda$ se puede obtener utilizando la fórmula.
-
-Al igual que con la implementación de la transformación de rotación en la sección anterior, la transformación de cambio de perspectiva no es sobreyectiva (es decir, no cubre todo el rango) cuando su dominio y rango consisten en pares de números enteros (en lugar de números reales). Como resultado, es muy probable que algunos de los píxeles en la imagen transformada no reciban ningún valor mediante la transformación. Estos píxeles deben ser interpolados utilizando los píxeles vecinos que sí hayan recibido nuevos valores.
-
-La implementación de la transformación de “cambio de perspectiva” es similar al procedimiento de la transformación de rotación discutido en la sección anterior. La describimos aquí a continuación.
-"""
-
-# ╔═╡ d3699263-5afb-423a-b30b-81c74adb286b
-md"""
-**Un procedimiento paso a paso para la implementación de la transformación de cambio de perspectiva (que se aplicará a cada píxel)**
-"""
-
-# ╔═╡ 3f8b32a5-91b7-48fc-8573-f34b048aea95
-md"""
-1. **Calcular las coordenadas cartesianas** $(x, y)$ y definir las coordenadas homogéneas $(x, y, 1)$ para el píxel con los índices $(m, n)$ utilizando las fórmulas de conversión:
-
-$x = n - \frac{N}{2} \quad \text{y} \quad y = \frac{M}{2} - m.$
-
-2. **Aplicar la transformación de cambio de perspectiva** para calcular las "nuevas" coordenadas homogéneas $(x'/\lambda, y'/\lambda, 1)$ a las que el píxel en $(m, n)$ necesita moverse.
-
-3. **Convertir las "nuevas" coordenadas homogéneas** $(x'/\lambda, y'/\lambda, 1)$ en los "nuevos" índices $(m', n')$ utilizando las fórmulas de conversión (si es necesario, deberemos redondear $m'$ y $n'$ al entero más cercano):
-
-$m' = \frac{M}{2} - \frac{y'}{\lambda} \quad \text{y} \quad n' = \frac{x'}{\lambda} + \frac{N}{2}.$
-
-
-
-4. **Asignar el valor del píxel con los "antiguos" índices** $(m, n)$ al píxel con los "nuevos" índices $(m', n')$.
-
-
-
-Dado que todos los cálculos se realizan en coordenadas homogéneas, todas las transformaciones involucradas en el procedimiento pueden realizarse con la ayuda de matrices y productos matriciales. De hecho, los pasos pueden combinarse y multiplicarse por una sola matriz.
-"""
+# ╔═╡ 8e88dae1-8c40-43d5-95cd-ba63ac5e4e7c
+md"""$\texttt{Figura 21. Reflexión a través del origen de la Figura 2.}$"""
 
 # ╔═╡ 4da22b7a-f145-43ef-aad6-2cad844e560b
 md"""# Referencias
@@ -1191,9 +1000,9 @@ version = "3.5.1+1"
 
 [[deps.ArrayInterface]]
 deps = ["Adapt", "LinearAlgebra"]
-git-tree-sha1 = "d5140b60b87473df18cf4fe66382b7c3596df047"
+git-tree-sha1 = "017fcb757f8e921fb44ee063a7aafe5f89b86dd1"
 uuid = "4fba245c-0d91-5ea0-9b3e-6abc04ee57a9"
-version = "7.17.1"
+version = "7.18.0"
 
     [deps.ArrayInterface.extensions]
     ArrayInterfaceBandedMatricesExt = "BandedMatrices"
@@ -1256,7 +1065,7 @@ version = "0.1.6"
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "8873e196c2eb87962a2048b3b8e08946535864a1"
 uuid = "6e34b625-4abd-537c-b88f-471c36dfa7a0"
-version = "1.0.8+2"
+version = "1.0.8+4"
 
 [[deps.CEnum]]
 git-tree-sha1 = "389ad5c84de1ae7cf0e28e381131c98ea87d54fc"
@@ -1283,9 +1092,9 @@ version = "0.2.2"
 
 [[deps.ChainRulesCore]]
 deps = ["Compat", "LinearAlgebra"]
-git-tree-sha1 = "3e4b134270b372f2ed4d4d0e936aabaefc1802bc"
+git-tree-sha1 = "1713c74e00545bfe14605d2a2be1712de8fbcb58"
 uuid = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
-version = "1.25.0"
+version = "1.25.1"
 weakdeps = ["SparseArrays"]
 
     [deps.ChainRulesCore.extensions]
@@ -1299,9 +1108,9 @@ version = "0.1.13"
 
 [[deps.Clustering]]
 deps = ["Distances", "LinearAlgebra", "NearestNeighbors", "Printf", "Random", "SparseArrays", "Statistics", "StatsBase"]
-git-tree-sha1 = "9ebb045901e9bbf58767a9f34ff89831ed711aae"
+git-tree-sha1 = "3e22db924e2945282e70c33b75d4dde8bfa44c94"
 uuid = "aaaa29a8-35af-508c-8bc3-b662a17a0fe5"
-version = "0.15.7"
+version = "0.15.8"
 
 [[deps.CodecZlib]]
 deps = ["TranscodingStreams", "Zlib_jll"]
@@ -1364,9 +1173,9 @@ version = "0.3.2"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
-git-tree-sha1 = "ea32b83ca4fefa1768dc84e504cc0a94fb1ab8d1"
+git-tree-sha1 = "f36e5e8fdffcb5646ea5da81495a5a7566005127"
 uuid = "f0e56b4a-5159-44fe-b623-3e5288b988bb"
-version = "2.4.2"
+version = "2.4.3"
 
 [[deps.ConstructionBase]]
 git-tree-sha1 = "76219f1ed5771adbb096743bff43fb5fdd4c1157"
@@ -1452,9 +1261,9 @@ version = "1.11.0"
 
 [[deps.Distributions]]
 deps = ["AliasTables", "FillArrays", "LinearAlgebra", "PDMats", "Printf", "QuadGK", "Random", "SpecialFunctions", "Statistics", "StatsAPI", "StatsBase", "StatsFuns"]
-git-tree-sha1 = "3101c32aab536e7a27b1763c0797dba151b899ad"
+git-tree-sha1 = "03aa5d44647eaec98e1920635cdfed5d5560a8b9"
 uuid = "31c24e10-a181-5473-b8eb-7969acd0382f"
-version = "0.25.113"
+version = "0.25.117"
 
     [deps.Distributions.extensions]
     DistributionsChainRulesCoreExt = "ChainRulesCore"
@@ -1479,9 +1288,9 @@ version = "1.6.0"
 
 [[deps.EpollShim_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "8e9441ee83492030ace98f9789a654a6d0b1f643"
+git-tree-sha1 = "8a4be429317c42cfae6a7fc03c31bad1970c310d"
 uuid = "2702e6a9-849d-5ed8-8c21-79e8b8f9ee43"
-version = "0.0.20230411+0"
+version = "0.0.20230411+1"
 
 [[deps.ExceptionUnwrapping]]
 deps = ["Test"]
@@ -1491,9 +1300,9 @@ version = "0.1.11"
 
 [[deps.Expat_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "cc5231d52eb1771251fbd37171dbc408bcc8a1b6"
+git-tree-sha1 = "e51db81749b0777b2147fbe7b783ee79045b8e99"
 uuid = "2e619515-83b5-522b-bb60-26c02a35a201"
-version = "2.6.4+0"
+version = "2.6.4+3"
 
 [[deps.FFMPEG]]
 deps = ["FFMPEG_jll"]
@@ -1523,7 +1332,7 @@ version = "1.8.0"
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "4d81ed14783ec49ce9f2e168208a12ce1815aa25"
 uuid = "f5851436-0d7a-5f13-b9de-f02708fd171a"
-version = "3.3.10+1"
+version = "3.3.10+3"
 
 [[deps.FileIO]]
 deps = ["Pkg", "Requires", "UUIDs"]
@@ -1559,9 +1368,9 @@ version = "0.8.5"
 
 [[deps.Fontconfig_jll]]
 deps = ["Artifacts", "Bzip2_jll", "Expat_jll", "FreeType2_jll", "JLLWrappers", "Libdl", "Libuuid_jll", "Zlib_jll"]
-git-tree-sha1 = "db16beca600632c95fc8aca29890d83788dd8b23"
+git-tree-sha1 = "21fac3c77d7b5a9fc03b0ec503aa1a6392c34d2b"
 uuid = "a3f928ae-7b40-5064-980b-68af3947d34b"
-version = "2.13.96+0"
+version = "2.15.0+0"
 
 [[deps.Format]]
 git-tree-sha1 = "9c68794ef81b08086aeb32eeaf33531668d5f5fc"
@@ -1570,15 +1379,15 @@ version = "1.3.7"
 
 [[deps.FreeType2_jll]]
 deps = ["Artifacts", "Bzip2_jll", "JLLWrappers", "Libdl", "Zlib_jll"]
-git-tree-sha1 = "5c1d8ae0efc6c2e7b1fc502cbe25def8f661b7bc"
+git-tree-sha1 = "786e968a8d2fb167f2e4880baba62e0e26bd8e4e"
 uuid = "d7e528f0-a631-5988-bf34-fe36492bcfd7"
-version = "2.13.2+0"
+version = "2.13.3+1"
 
 [[deps.FriBidi_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "1ed150b39aebcc805c26b93a8d0122c940f64ce2"
+git-tree-sha1 = "846f7026a9decf3679419122b49f8a1fdb48d2d5"
 uuid = "559328eb-81f9-559d-9380-de523a88c83c"
-version = "1.0.14+0"
+version = "1.0.16+0"
 
 [[deps.Future]]
 deps = ["Random"]
@@ -1587,9 +1396,9 @@ version = "1.11.0"
 
 [[deps.GLFW_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll", "libdecor_jll", "xkbcommon_jll"]
-git-tree-sha1 = "532f9126ad901533af1d4f5c198867227a7bb077"
+git-tree-sha1 = "fcb0584ff34e25155876418979d4c8971243bb89"
 uuid = "0656b61e-2033-5cc2-a64a-77c0f6c09b89"
-version = "3.4.0+1"
+version = "3.4.0+2"
 
 [[deps.GR]]
 deps = ["Artifacts", "Base64", "DelimitedFiles", "Downloads", "GR_jll", "HTTP", "JSON", "Libdl", "LinearAlgebra", "Pkg", "Preferences", "Printf", "Random", "Serialization", "Sockets", "TOML", "Tar", "Test", "UUIDs", "p7zip_jll"]
@@ -1617,15 +1426,15 @@ version = "9.55.0+4"
 
 [[deps.Giflib_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "0224cce99284d997f6880a42ef715a37c99338d1"
+git-tree-sha1 = "6570366d757b50fabae9f4315ad74d2e40c0560a"
 uuid = "59f7168a-df46-5410-90c8-f2779963d0ec"
-version = "5.2.2+0"
+version = "5.2.3+0"
 
 [[deps.Glib_jll]]
 deps = ["Artifacts", "Gettext_jll", "JLLWrappers", "Libdl", "Libffi_jll", "Libiconv_jll", "Libmount_jll", "PCRE2_jll", "Zlib_jll"]
-git-tree-sha1 = "674ff0db93fffcd11a3573986e550d66cd4fd71f"
+git-tree-sha1 = "b0036b392358c80d2d2124746c2bf3d48d457938"
 uuid = "7746bdde-850d-59dc-9ae8-88ece973131d"
-version = "2.80.5+0"
+version = "2.82.4+0"
 
 [[deps.Graphics]]
 deps = ["Colors", "LinearAlgebra", "NaNMath"]
@@ -1635,9 +1444,9 @@ version = "1.1.3"
 
 [[deps.Graphite2_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "344bf40dcab1073aca04aa0df4fb092f920e4011"
+git-tree-sha1 = "01979f9b37367603e2848ea225918a3b3861b606"
 uuid = "3b182d85-2403-5c21-9c21-1e1f0cc25472"
-version = "1.3.14+0"
+version = "1.3.14+1"
 
 [[deps.Graphs]]
 deps = ["ArnoldiMethod", "Compat", "DataStructures", "Distributed", "Inflate", "LinearAlgebra", "Random", "SharedArrays", "SimpleTraits", "SparseArrays", "Statistics"]
@@ -1651,16 +1460,16 @@ uuid = "42e2da0e-8278-4e71-bc24-59509adca0fe"
 version = "1.0.2"
 
 [[deps.HTTP]]
-deps = ["Base64", "CodecZlib", "ConcurrentUtilities", "Dates", "ExceptionUnwrapping", "Logging", "LoggingExtras", "MbedTLS", "NetworkOptions", "OpenSSL", "Random", "SimpleBufferStream", "Sockets", "URIs", "UUIDs"]
-git-tree-sha1 = "1336e07ba2eb75614c99496501a8f4b233e9fafe"
+deps = ["Base64", "CodecZlib", "ConcurrentUtilities", "Dates", "ExceptionUnwrapping", "Logging", "LoggingExtras", "MbedTLS", "NetworkOptions", "OpenSSL", "PrecompileTools", "Random", "SimpleBufferStream", "Sockets", "URIs", "UUIDs"]
+git-tree-sha1 = "c67b33b085f6e2faf8bf79a61962e7339a81129c"
 uuid = "cd3eb016-35fb-5094-929b-558a96fad6f3"
-version = "1.10.10"
+version = "1.10.15"
 
 [[deps.HarfBuzz_jll]]
 deps = ["Artifacts", "Cairo_jll", "Fontconfig_jll", "FreeType2_jll", "Glib_jll", "Graphite2_jll", "JLLWrappers", "Libdl", "Libffi_jll"]
-git-tree-sha1 = "401e4f3f30f43af2c8478fc008da50096ea5240f"
+git-tree-sha1 = "55c53be97790242c29031e5cd45e8ac296dadda3"
 uuid = "2e76f6c2-a576-52d4-95c1-20adfe4de566"
-version = "8.3.1+0"
+version = "8.5.0+0"
 
 [[deps.HistogramThresholding]]
 deps = ["ImageBase", "LinearAlgebra", "MappedArrays"]
@@ -1747,9 +1556,9 @@ version = "0.2.17"
 
 [[deps.ImageFiltering]]
 deps = ["CatIndices", "ComputationalResources", "DataStructures", "FFTViews", "FFTW", "ImageBase", "ImageCore", "LinearAlgebra", "OffsetArrays", "PrecompileTools", "Reexport", "SparseArrays", "StaticArrays", "Statistics", "TiledIteration"]
-git-tree-sha1 = "432ae2b430a18c58eb7eca9ef8d0f2db90bc749c"
+git-tree-sha1 = "33cb509839cc4011beb45bde2316e64344b0f92b"
 uuid = "6a3955dd-da59-5b1f-98d4-e7296123deb5"
-version = "0.7.8"
+version = "0.7.9"
 
 [[deps.ImageIO]]
 deps = ["FileIO", "IndirectArrays", "JpegTurbo", "LazyModules", "Netpbm", "OpenEXR", "PNGFiles", "QOI", "Sixel", "TiffImages", "UUIDs", "WebP"]
@@ -1789,9 +1598,9 @@ version = "0.3.7"
 
 [[deps.ImageSegmentation]]
 deps = ["Clustering", "DataStructures", "Distances", "Graphs", "ImageCore", "ImageFiltering", "ImageMorphology", "LinearAlgebra", "MetaGraphs", "RegionTrees", "SimpleWeightedGraphs", "StaticArrays", "Statistics"]
-git-tree-sha1 = "3ff0ca203501c3eedde3c6fa7fd76b703c336b5f"
+git-tree-sha1 = "b217d9ded4a95052ffc09acc41ab781f7f72c7ba"
 uuid = "80713f31-8817-5129-9cf8-209ff8fb23e1"
-version = "1.8.2"
+version = "1.8.3"
 
 [[deps.ImageShow]]
 deps = ["Base64", "ColorSchemes", "FileIO", "ImageBase", "ImageCore", "OffsetArrays", "StackViews"]
@@ -1882,21 +1691,21 @@ version = "1.0.0"
 
 [[deps.JLD2]]
 deps = ["FileIO", "MacroTools", "Mmap", "OrderedCollections", "PrecompileTools", "Requires", "TranscodingStreams"]
-git-tree-sha1 = "a0746c21bdc986d0dc293efa6b1faee112c37c28"
+git-tree-sha1 = "91d501cb908df6f134352ad73cde5efc50138279"
 uuid = "033835bb-8acc-5ee8-8aae-3f567f8a3819"
-version = "0.4.53"
+version = "0.5.11"
 
 [[deps.JLFzf]]
 deps = ["Pipe", "REPL", "Random", "fzf_jll"]
-git-tree-sha1 = "39d64b09147620f5ffbf6b2d3255be3c901bec63"
+git-tree-sha1 = "71b48d857e86bf7a1838c4736545699974ce79a2"
 uuid = "1019f520-868f-41f5-a6de-eb00f4b6a39c"
-version = "0.1.8"
+version = "0.1.9"
 
 [[deps.JLLWrappers]]
 deps = ["Artifacts", "Preferences"]
-git-tree-sha1 = "be3dc50a92e5a386872a493a10050136d4703f9b"
+git-tree-sha1 = "a007feb38b422fbdab534406aeca1b86823cb4d6"
 uuid = "692b3bcd-3c85-4b1f-b108-f13ce0eb3210"
-version = "1.6.1"
+version = "1.7.0"
 
 [[deps.JSON]]
 deps = ["Dates", "Mmap", "Parsers", "Unicode"]
@@ -1912,9 +1721,9 @@ version = "0.1.5"
 
 [[deps.JpegTurbo_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "25ee0be4d43d0269027024d75a24c24d6c6e590c"
+git-tree-sha1 = "eac1206917768cb54957c65a615460d87b455fc1"
 uuid = "aacddb02-875f-59d6-b918-886e6ef4fbf8"
-version = "3.0.4+0"
+version = "3.1.1+0"
 
 [[deps.KernelDensity]]
 deps = ["Distributions", "DocStringExtensions", "FFTW", "Interpolations", "StatsBase"]
@@ -1942,9 +1751,9 @@ version = "18.1.7+0"
 
 [[deps.LZO_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "854a9c268c43b77b0a27f22d7fab8d33cdb3a731"
+git-tree-sha1 = "1c602b1127f4751facb671441ca72715cc95938a"
 uuid = "dd4b983a-f0e5-5f8d-a1b7-129d4a5fb1ac"
-version = "2.10.2+1"
+version = "2.10.3+0"
 
 [[deps.LaTeXStrings]]
 git-tree-sha1 = "dda21b8cbd6a6c40d9d02a73230f9d70fed6918c"
@@ -2014,9 +1823,9 @@ version = "1.11.0"
 
 [[deps.Libffi_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "0b4a5d71f3e5200a7dff793393e09dfc2d874290"
+git-tree-sha1 = "27ecae93dd25ee0909666e6835051dd684cc035e"
 uuid = "e9f186c6-92d2-5b65-8a66-fee21dc1b490"
-version = "3.2.2+1"
+version = "3.2.2+2"
 
 [[deps.Libgcrypt_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libgpg_error_jll"]
@@ -2025,28 +1834,28 @@ uuid = "d4300ac3-e22c-5743-9152-c294e39db1e4"
 version = "1.11.0+0"
 
 [[deps.Libglvnd_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg", "Xorg_libX11_jll", "Xorg_libXext_jll"]
-git-tree-sha1 = "6f73d1dd803986947b2c750138528a999a6c7733"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libX11_jll", "Xorg_libXext_jll"]
+git-tree-sha1 = "ff3b4b9d35de638936a525ecd36e86a8bb919d11"
 uuid = "7e76a0d4-f3c7-5321-8279-8d96eeed0f29"
-version = "1.6.0+0"
+version = "1.7.0+0"
 
 [[deps.Libgpg_error_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "c6ce1e19f3aec9b59186bdf06cdf3c4fc5f5f3e6"
+git-tree-sha1 = "df37206100d39f79b3376afb6b9cee4970041c61"
 uuid = "7add5ba3-2f88-524e-9cd5-f83b8a55f7b8"
-version = "1.50.0+0"
+version = "1.51.1+0"
 
 [[deps.Libiconv_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "61dfdba58e585066d8bce214c5a51eaa0539f269"
+git-tree-sha1 = "be484f5c92fad0bd8acfef35fe017900b0b73809"
 uuid = "94ce4f54-9a6c-5748-9c1c-f9c7231a4531"
-version = "1.17.0+1"
+version = "1.18.0+0"
 
 [[deps.Libmount_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "0c4f9c4f1a50d8f35048fa0532dabbadf702f81e"
+git-tree-sha1 = "89211ea35d9df5831fca5d33552c02bd33878419"
 uuid = "4b2f31a3-9ecc-558c-b454-b3730dcb73e9"
-version = "2.40.1+0"
+version = "2.40.3+0"
 
 [[deps.Libtiff_jll]]
 deps = ["Artifacts", "JLLWrappers", "JpegTurbo_jll", "LERC_jll", "Libdl", "Pkg", "Zlib_jll", "Zstd_jll"]
@@ -2056,9 +1865,9 @@ version = "4.4.0+0"
 
 [[deps.Libuuid_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "5ee6203157c120d79034c748a2acba45b82b8807"
+git-tree-sha1 = "e888ad02ce716b319e6bdb985d2ef300e7089889"
 uuid = "38a345b3-de98-5d2b-a5d3-14cd9215e700"
-version = "2.40.1+0"
+version = "2.40.3+0"
 
 [[deps.LinearAlgebra]]
 deps = ["Libdl", "OpenBLAS_jll", "libblastrampoline_jll"]
@@ -2073,9 +1882,9 @@ version = "2.12.0+0"
 
 [[deps.LogExpFunctions]]
 deps = ["DocStringExtensions", "IrrationalConstants", "LinearAlgebra"]
-git-tree-sha1 = "a2d09619db4e765091ee5c6ffe8872849de0feea"
+git-tree-sha1 = "13ca9e2586b89836fd20cccf56e57e2b9ae7f38f"
 uuid = "2ab3a3ac-af41-5b50-aa03-7779005ae688"
-version = "0.3.28"
+version = "0.3.29"
 
     [deps.LogExpFunctions.extensions]
     LogExpFunctionsChainRulesCoreExt = "ChainRulesCore"
@@ -2124,10 +1933,9 @@ uuid = "856f044c-d86e-5d09-b602-aeab76dc8ba7"
 version = "2024.2.0+0"
 
 [[deps.MacroTools]]
-deps = ["Markdown", "Random"]
-git-tree-sha1 = "2fa9ee3e63fd3a4f7a9a4f4744a52f4856de82df"
+git-tree-sha1 = "72aebe0b5051e5143a079a4685a46da330a40472"
 uuid = "1914dd2f-81c6-5fcd-8719-6d5c9610ff09"
-version = "0.5.13"
+version = "0.5.15"
 
 [[deps.ManualMemory]]
 git-tree-sha1 = "bcaef4fc7a0cfe2cba636d84cda54b5e4e4ca3cd"
@@ -2162,9 +1970,9 @@ version = "0.3.2"
 
 [[deps.MetaGraphs]]
 deps = ["Graphs", "JLD2", "Random"]
-git-tree-sha1 = "1130dbe1d5276cb656f6e1094ce97466ed700e5a"
+git-tree-sha1 = "e9650bea7f91c3397eb9ae6377343963a22bf5b8"
 uuid = "626554b9-1ddb-594c-aa3c-2596fe9399a5"
-version = "0.7.2"
+version = "0.8.0"
 
 [[deps.Missings]]
 deps = ["DataAPI"]
@@ -2194,9 +2002,9 @@ version = "0.10.3"
 
 [[deps.NaNMath]]
 deps = ["OpenLibm_jll"]
-git-tree-sha1 = "0877504529a3e5c3343c6f8b4c0381e57e4387e4"
+git-tree-sha1 = "030ea22804ef91648f29b7ad3fc15fa49d0e6e71"
 uuid = "77ba4419-2d1f-58cd-9bb1-8ffee604a2e3"
-version = "1.0.2"
+version = "1.0.3"
 
 [[deps.NearestNeighbors]]
 deps = ["Distances", "StaticArrays"]
@@ -2220,9 +2028,9 @@ uuid = "510215fc-4207-5dde-b226-833fc4488ee2"
 version = "0.5.5"
 
 [[deps.OffsetArrays]]
-git-tree-sha1 = "1a27764e945a152f7ca7efa04de513d473e9542e"
+git-tree-sha1 = "5e1897147d1ff8d98883cda2be2187dcf57d8f0c"
 uuid = "6fe1bfb0-de20-5000-8ca7-80f57d26f881"
-version = "1.14.1"
+version = "1.15.0"
 weakdeps = ["Adapt"]
 
     [deps.OffsetArrays.extensions]
@@ -2275,10 +2083,10 @@ uuid = "458c3c95-2e84-50aa-8efc-19380b2a3a95"
 version = "1.1.23+1"
 
 [[deps.OpenSpecFun_jll]]
-deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "13652491f6856acfd2db29360e1bbcd4565d04f1"
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "Libdl"]
+git-tree-sha1 = "1346c9208249809840c91b26703912dff463d335"
 uuid = "efe28fd5-8261-553b-a9e1-b2916fc3738e"
-version = "0.5.5+0"
+version = "0.5.6+0"
 
 [[deps.Opus_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -2287,9 +2095,9 @@ uuid = "91d4177d-7536-5919-b921-800302f37372"
 version = "1.3.3+0"
 
 [[deps.OrderedCollections]]
-git-tree-sha1 = "dfdf5519f235516220579f949664f1bf44e741c5"
+git-tree-sha1 = "12f1439c4f986bb868acda6ea33ebc78e19b95ad"
 uuid = "bac558e1-5e72-5ebc-8fee-abe8a469f55d"
-version = "1.6.3"
+version = "1.7.0"
 
 [[deps.PCRE2_jll]]
 deps = ["Artifacts", "Libdl"]
@@ -2298,9 +2106,9 @@ version = "10.42.0+1"
 
 [[deps.PDMats]]
 deps = ["LinearAlgebra", "SparseArrays", "SuiteSparse"]
-git-tree-sha1 = "949347156c25054de2db3b166c52ac4728cbad65"
+git-tree-sha1 = "966b85253e959ea89c53a9abebbf2e964fbf593b"
 uuid = "90014a1f-27ba-587c-ab20-58faa44d9150"
-version = "0.11.31"
+version = "0.11.32"
 
 [[deps.PNGFiles]]
 deps = ["Base64", "CEnum", "ImageCore", "IndirectArrays", "OffsetArrays", "libpng_jll"]
@@ -2316,9 +2124,9 @@ version = "0.5.12"
 
 [[deps.Pango_jll]]
 deps = ["Artifacts", "Cairo_jll", "Fontconfig_jll", "FreeType2_jll", "FriBidi_jll", "Glib_jll", "HarfBuzz_jll", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "e127b609fb9ecba6f201ba7ab753d5a605d53801"
+git-tree-sha1 = "ed6834e95bd326c52d5675b4181386dfbe885afb"
 uuid = "36c8627f-9965-5494-a995-c6b170f724f3"
-version = "1.54.1+0"
+version = "1.55.5+0"
 
 [[deps.Parameters]]
 deps = ["OrderedCollections", "UnPack"]
@@ -2404,9 +2212,9 @@ version = "0.2.2"
 
 [[deps.Polynomials]]
 deps = ["LinearAlgebra", "OrderedCollections", "RecipesBase", "Requires", "Setfield", "SparseArrays"]
-git-tree-sha1 = "adc25dbd4d13f148f3256b6d4743fe7e63a71c4a"
+git-tree-sha1 = "27f6107dc202e2499f0750c628a848ce5d6e77f5"
 uuid = "f27b6e38-b328-58d1-80ce-0feddd5e7a45"
-version = "4.0.12"
+version = "4.0.13"
 
     [deps.Polynomials.extensions]
     PolynomialsChainRulesCoreExt = "ChainRulesCore"
@@ -2444,9 +2252,9 @@ uuid = "92933f4c-e287-5a05-a399-4b506db050ca"
 version = "1.10.2"
 
 [[deps.PtrArrays]]
-git-tree-sha1 = "77a42d78b6a92df47ab37e177b2deac405e1c88f"
+git-tree-sha1 = "1d36ef11a9aaf1e8b74dacc6a731dd1de8fd493d"
 uuid = "43287f4e-b6f4-7ad1-bb20-aadabca52c3d"
-version = "1.2.1"
+version = "1.3.0"
 
 [[deps.QOI]]
 deps = ["ColorTypes", "FileIO", "FixedPointNumbers"]
@@ -2572,9 +2380,9 @@ version = "0.7.0"
 
 [[deps.SIMD]]
 deps = ["PrecompileTools"]
-git-tree-sha1 = "52af86e35dd1b177d051b12681e1c581f53c281b"
+git-tree-sha1 = "fea870727142270bdf7624ad675901a1ee3b4c87"
 uuid = "fdea26ae-647d-5447-a871-4b548cad5224"
-version = "3.7.0"
+version = "3.7.1"
 
 [[deps.SIMDTypes]]
 git-tree-sha1 = "330289636fb8107c5f32088d2741e9fd7a061a5c"
@@ -2595,9 +2403,9 @@ version = "1.2.1"
 
 [[deps.SentinelArrays]]
 deps = ["Dates", "Random"]
-git-tree-sha1 = "d0553ce4031a081cc42387a9b9c8441b7d99f32d"
+git-tree-sha1 = "712fb0231ee6f9120e005ccd56297abbc053e7e0"
 uuid = "91c51154-3ec4-41a3-a24f-3f23e20d615c"
-version = "1.4.7"
+version = "1.4.8"
 
 [[deps.Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
@@ -2660,9 +2468,9 @@ version = "1.11.0"
 
 [[deps.SpecialFunctions]]
 deps = ["IrrationalConstants", "LogExpFunctions", "OpenLibm_jll", "OpenSpecFun_jll"]
-git-tree-sha1 = "2f5d4697f21388cbe1ff299430dd169ef97d7e14"
+git-tree-sha1 = "64cca0c26b4f31ba18f13f6c12af7c85f478cfde"
 uuid = "276daf66-3868-5448-9aa4-cd146d93841b"
-version = "2.4.0"
+version = "2.5.0"
 weakdeps = ["ChainRulesCore"]
 
     [deps.SpecialFunctions.extensions]
@@ -2699,9 +2507,9 @@ weakdeps = ["OffsetArrays", "StaticArrays"]
 
 [[deps.StaticArrays]]
 deps = ["LinearAlgebra", "PrecompileTools", "Random", "StaticArraysCore"]
-git-tree-sha1 = "777657803913ffc7e8cc20f0fd04b634f871af8f"
+git-tree-sha1 = "47091a0340a675c738b1304b58161f3b0839d454"
 uuid = "90137ffa-7385-5640-81b9-e52037218182"
-version = "1.9.8"
+version = "1.9.10"
 weakdeps = ["ChainRulesCore", "Statistics"]
 
     [deps.StaticArrays.extensions]
@@ -2730,10 +2538,10 @@ uuid = "82ae8749-77ed-4fe6-ae5f-f523153014b0"
 version = "1.7.0"
 
 [[deps.StatsBase]]
-deps = ["DataAPI", "DataStructures", "LinearAlgebra", "LogExpFunctions", "Missings", "Printf", "Random", "SortingAlgorithms", "SparseArrays", "Statistics", "StatsAPI"]
-git-tree-sha1 = "5cf7606d6cef84b543b483848d4ae08ad9832b21"
+deps = ["AliasTables", "DataAPI", "DataStructures", "LinearAlgebra", "LogExpFunctions", "Missings", "Printf", "Random", "SortingAlgorithms", "SparseArrays", "Statistics", "StatsAPI"]
+git-tree-sha1 = "29321314c920c26684834965ec2ce0dacc9cf8e5"
 uuid = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
-version = "0.34.3"
+version = "0.34.4"
 
 [[deps.StatsFuns]]
 deps = ["HypergeometricFunctions", "IrrationalConstants", "LogExpFunctions", "Reexport", "Rmath", "SpecialFunctions"]
@@ -2815,9 +2623,9 @@ version = "0.5.2"
 
 [[deps.TiffImages]]
 deps = ["ColorTypes", "DataStructures", "DocStringExtensions", "FileIO", "FixedPointNumbers", "IndirectArrays", "Inflate", "Mmap", "OffsetArrays", "PkgVersion", "ProgressMeter", "SIMD", "UUIDs"]
-git-tree-sha1 = "0248b1b2210285652fbc67fd6ced9bf0394bcfec"
+git-tree-sha1 = "3c0faa42f2bd3c6d994b06286bba2328eae34027"
 uuid = "731e570b-9d59-4bfa-96dc-6df516fadf69"
-version = "0.11.1"
+version = "0.11.2"
 
 [[deps.TiledIteration]]
 deps = ["OffsetArrays", "StaticArrayInterface"]
@@ -2831,9 +2639,9 @@ uuid = "3bb67fe8-82b1-5028-8e26-92a6c54297fa"
 version = "0.11.3"
 
 [[deps.Tricks]]
-git-tree-sha1 = "7822b97e99a1672bfb1b49b668a6d46d58d8cbcb"
+git-tree-sha1 = "6cae795a5a9313bbb4f60683f7263318fc7d1505"
 uuid = "410a4b4d-49e4-4fbc-ab6d-cb71b17b3775"
-version = "0.1.9"
+version = "0.1.10"
 
 [[deps.URIs]]
 git-tree-sha1 = "67db6cc7b3821e19ebe75791a9dd19c9b1188f2b"
@@ -2862,9 +2670,9 @@ version = "0.4.1"
 
 [[deps.Unitful]]
 deps = ["Dates", "LinearAlgebra", "Random"]
-git-tree-sha1 = "d95fe458f26209c66a187b1114df96fd70839efd"
+git-tree-sha1 = "c0667a8e676c53d390a09dc6870b3d8d6650e2bf"
 uuid = "1986cc42-f94f-5a68-af5c-568840ba703d"
-version = "1.21.0"
+version = "1.22.0"
 
     [deps.Unitful.extensions]
     ConstructionBaseUnitfulExt = "ConstructionBase"
@@ -2893,15 +2701,15 @@ version = "0.21.71"
 
 [[deps.Wayland_jll]]
 deps = ["Artifacts", "EpollShim_jll", "Expat_jll", "JLLWrappers", "Libdl", "Libffi_jll", "Pkg", "XML2_jll"]
-git-tree-sha1 = "7558e29847e99bc3f04d6569e82d0f5c54460703"
+git-tree-sha1 = "85c7811eddec9e7f22615371c3cc81a504c508ee"
 uuid = "a2964d1f-97da-50d4-b82a-358c7fce9d89"
-version = "1.21.0+1"
+version = "1.21.0+2"
 
 [[deps.Wayland_protocols_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "93f43ab61b16ddfb2fd3bb13b3ce241cafb0e6c9"
+git-tree-sha1 = "5db3e9d307d32baba7067b13fc7b5aa6edd4a19a"
 uuid = "2381bf8a-dfd0-557d-9999-79630e7b1b91"
-version = "1.31.0+0"
+version = "1.36.0+0"
 
 [[deps.WebP]]
 deps = ["CEnum", "ColorTypes", "FileIO", "FixedPointNumbers", "ImageCore", "libwebp_jll"]
@@ -2929,87 +2737,87 @@ version = "2.13.5+0"
 
 [[deps.XSLT_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libgcrypt_jll", "Libgpg_error_jll", "Libiconv_jll", "XML2_jll", "Zlib_jll"]
-git-tree-sha1 = "a54ee957f4c86b526460a720dbc882fa5edcbefc"
+git-tree-sha1 = "7d1671acbe47ac88e981868a078bd6b4e27c5191"
 uuid = "aed1982a-8fda-507f-9586-7b0439959a61"
-version = "1.1.41+0"
+version = "1.1.42+0"
 
 [[deps.Xorg_libX11_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libxcb_jll", "Xorg_xtrans_jll"]
-git-tree-sha1 = "afead5aba5aa507ad5a3bf01f58f82c8d1403495"
+git-tree-sha1 = "9dafcee1d24c4f024e7edc92603cedba72118283"
 uuid = "4f6342f7-b3d2-589e-9d20-edeb45f2b2bc"
-version = "1.8.6+0"
+version = "1.8.6+3"
 
 [[deps.Xorg_libXau_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "6035850dcc70518ca32f012e46015b9beeda49d8"
+git-tree-sha1 = "e9216fdcd8514b7072b43653874fd688e4c6c003"
 uuid = "0c0b7dd1-d40b-584c-a123-a41640f87eec"
-version = "1.0.11+0"
+version = "1.0.12+0"
 
 [[deps.Xorg_libXcursor_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg", "Xorg_libXfixes_jll", "Xorg_libXrender_jll"]
-git-tree-sha1 = "12e0eb3bc634fa2080c1c37fccf56f7c22989afd"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libXfixes_jll", "Xorg_libXrender_jll"]
+git-tree-sha1 = "807c226eaf3651e7b2c468f687ac788291f9a89b"
 uuid = "935fb764-8cf2-53bf-bb30-45bb1f8bf724"
-version = "1.2.0+4"
+version = "1.2.3+0"
 
 [[deps.Xorg_libXdmcp_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "34d526d318358a859d7de23da945578e8e8727b7"
+git-tree-sha1 = "89799ae67c17caa5b3b5a19b8469eeee474377db"
 uuid = "a3789734-cfe1-5b06-b2d0-1dd0d9d62d05"
-version = "1.1.4+0"
+version = "1.1.5+0"
 
 [[deps.Xorg_libXext_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libX11_jll"]
-git-tree-sha1 = "d2d1a5c49fae4ba39983f63de6afcbea47194e85"
+git-tree-sha1 = "d7155fea91a4123ef59f42c4afb5ab3b4ca95058"
 uuid = "1082639a-0dae-5f34-9b06-72781eeb8cb3"
-version = "1.3.6+0"
+version = "1.3.6+3"
 
 [[deps.Xorg_libXfixes_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg", "Xorg_libX11_jll"]
-git-tree-sha1 = "0e0dc7431e7a0587559f9294aeec269471c991a4"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libX11_jll"]
+git-tree-sha1 = "6fcc21d5aea1a0b7cce6cab3e62246abd1949b86"
 uuid = "d091e8ba-531a-589c-9de9-94069b037ed8"
-version = "5.0.3+4"
+version = "6.0.0+0"
 
 [[deps.Xorg_libXi_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg", "Xorg_libXext_jll", "Xorg_libXfixes_jll"]
-git-tree-sha1 = "89b52bc2160aadc84d707093930ef0bffa641246"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libXext_jll", "Xorg_libXfixes_jll"]
+git-tree-sha1 = "984b313b049c89739075b8e2a94407076de17449"
 uuid = "a51aa0fd-4e3c-5386-b890-e753decda492"
-version = "1.7.10+4"
+version = "1.8.2+0"
 
 [[deps.Xorg_libXinerama_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg", "Xorg_libXext_jll"]
-git-tree-sha1 = "26be8b1c342929259317d8b9f7b53bf2bb73b123"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libXext_jll"]
+git-tree-sha1 = "a1a7eaf6c3b5b05cb903e35e8372049b107ac729"
 uuid = "d1454406-59df-5ea1-beac-c340f2130bc3"
-version = "1.1.4+4"
+version = "1.1.5+0"
 
 [[deps.Xorg_libXrandr_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg", "Xorg_libXext_jll", "Xorg_libXrender_jll"]
-git-tree-sha1 = "34cea83cb726fb58f325887bf0612c6b3fb17631"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libXext_jll", "Xorg_libXrender_jll"]
+git-tree-sha1 = "b6f664b7b2f6a39689d822a6300b14df4668f0f4"
 uuid = "ec84b674-ba8e-5d96-8ba1-2a689ba10484"
-version = "1.5.2+4"
+version = "1.5.4+0"
 
 [[deps.Xorg_libXrender_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libX11_jll"]
-git-tree-sha1 = "47e45cd78224c53109495b3e324df0c37bb61fbe"
+git-tree-sha1 = "a490c6212a0e90d2d55111ac956f7c4fa9c277a6"
 uuid = "ea2f1a96-1ddc-540d-b46f-429655e07cfa"
-version = "0.9.11+0"
+version = "0.9.11+1"
 
 [[deps.Xorg_libpthread_stubs_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "8fdda4c692503d44d04a0603d9ac0982054635f9"
+git-tree-sha1 = "c57201109a9e4c0585b208bb408bc41d205ac4e9"
 uuid = "14d82f49-176c-5ed1-bb49-ad3f5cbd8c74"
-version = "0.1.1+0"
+version = "0.1.2+0"
 
 [[deps.Xorg_libxcb_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "XSLT_jll", "Xorg_libXau_jll", "Xorg_libXdmcp_jll", "Xorg_libpthread_stubs_jll"]
-git-tree-sha1 = "bcd466676fef0878338c61e655629fa7bbc69d8e"
+git-tree-sha1 = "1a74296303b6524a0472a8cb12d3d87a78eb3612"
 uuid = "c7cfdc94-dc32-55de-ac96-5a1b8d977c5b"
-version = "1.17.0+0"
+version = "1.17.0+3"
 
 [[deps.Xorg_libxkbfile_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libX11_jll"]
-git-tree-sha1 = "730eeca102434283c50ccf7d1ecdadf521a765a4"
+git-tree-sha1 = "dbc53e4cf7701c6c7047c51e17d6e64df55dca94"
 uuid = "cc61e674-0454-545c-8b26-ed2c68acab7a"
-version = "1.1.2+0"
+version = "1.1.2+1"
 
 [[deps.Xorg_xcb_util_image_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg", "Xorg_xcb_util_jll"]
@@ -3043,9 +2851,9 @@ version = "0.4.1+1"
 
 [[deps.Xorg_xkbcomp_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libxkbfile_jll"]
-git-tree-sha1 = "330f955bc41bb8f5270a369c473fc4a5a4e4d3cb"
+git-tree-sha1 = "ab2221d309eda71020cdda67a973aa582aa85d69"
 uuid = "35661453-b289-5fab-8a00-3d9160c6a3a4"
-version = "1.4.6+0"
+version = "1.4.6+1"
 
 [[deps.Xorg_xkeyboard_config_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_xkbcomp_jll"]
@@ -3055,9 +2863,9 @@ version = "2.39.0+0"
 
 [[deps.Xorg_xtrans_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "e92a1a012a10506618f10b7047e478403a046c77"
+git-tree-sha1 = "6dba04dbfb72ae3ebe5418ba33d087ba8aa8cb00"
 uuid = "c5fb5394-a638-5e4d-96e5-b29de1b5cf10"
-version = "1.5.0+0"
+version = "1.5.1+0"
 
 [[deps.Zlib_jll]]
 deps = ["Libdl"]
@@ -3066,21 +2874,21 @@ version = "1.2.13+1"
 
 [[deps.Zstd_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "555d1076590a6cc2fdee2ef1469451f872d8b41b"
+git-tree-sha1 = "622cf78670d067c738667aaa96c553430b65e269"
 uuid = "3161d3a3-bdf6-5164-811a-617609db77b4"
-version = "1.5.6+1"
+version = "1.5.7+0"
 
 [[deps.fzf_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "936081b536ae4aa65415d869287d43ef3cb576b2"
+git-tree-sha1 = "6e50f145003024df4f5cb96c7fce79466741d601"
 uuid = "214eeab7-80f7-51ab-84ad-2988db7cef09"
-version = "0.53.0+0"
+version = "0.56.3+0"
 
 [[deps.libaom_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "1827acba325fdcdf1d2647fc8d5301dd9ba43a9d"
+git-tree-sha1 = "522c1df09d05a71785765d19c9524661234738e9"
 uuid = "a4ae2306-e953-59d6-aa16-d00cac43593b"
-version = "3.9.0+0"
+version = "3.11.0+0"
 
 [[deps.libass_jll]]
 deps = ["Artifacts", "Bzip2_jll", "FreeType2_jll", "FriBidi_jll", "HarfBuzz_jll", "JLLWrappers", "Libdl", "Zlib_jll"]
@@ -3107,15 +2915,15 @@ version = "2.0.3+0"
 
 [[deps.libpng_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Zlib_jll"]
-git-tree-sha1 = "b70c870239dc3d7bc094eb2d6be9b73d27bef280"
+git-tree-sha1 = "d7b5bbf1efbafb5eca466700949625e07533aff2"
 uuid = "b53b4c65-9356-5827-b1ea-8c7a1a84506f"
-version = "1.6.44+0"
+version = "1.6.45+1"
 
 [[deps.libsixel_jll]]
-deps = ["Artifacts", "JLLWrappers", "JpegTurbo_jll", "Libdl", "Pkg", "libpng_jll"]
-git-tree-sha1 = "7dfa0fd9c783d3d0cc43ea1af53d69ba45c447df"
+deps = ["Artifacts", "JLLWrappers", "JpegTurbo_jll", "Libdl", "libpng_jll"]
+git-tree-sha1 = "c1733e347283df07689d71d61e14be986e49e47a"
 uuid = "075b6546-f08a-558a-be8f-8157d0f608a5"
-version = "1.10.3+1"
+version = "1.10.5+0"
 
 [[deps.libvorbis_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Ogg_jll", "Pkg"]
@@ -3159,9 +2967,9 @@ version = "3.5.0+0"
 
 [[deps.xkbcommon_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg", "Wayland_jll", "Wayland_protocols_jll", "Xorg_libxcb_jll", "Xorg_xkeyboard_config_jll"]
-git-tree-sha1 = "9c304562909ab2bab0262639bd4f444d7bc2be37"
+git-tree-sha1 = "63406453ed9b33a0df95d570816d5366c92b7809"
 uuid = "d8fb68d0-12a3-5cfd-a85a-d49703b185fd"
-version = "1.4.1+1"
+version = "1.4.1+2"
 """
 
 # ╔═╡ Cell order:
@@ -3226,69 +3034,56 @@ version = "1.4.1+1"
 # ╟─2ea0c762-0377-4db9-b891-002f189a3ada
 # ╟─ad2006cb-0f8a-400b-b352-3228d7383fc9
 # ╟─d341cf66-93ea-4857-b8f8-3518760259df
-# ╟─c63131b0-fc8a-4fc5-991b-25eff5950aef
+# ╟─0151b512-3281-4e9d-99ce-e13b9d64d75d
+# ╟─5174e068-4b35-4189-82a3-67bf7a331d7b
+# ╟─da818437-dcb2-48fe-8b4e-b23d74f4d0bf
 # ╠═8a9438fc-4754-4ece-8601-d3f075681db1
-# ╠═df624514-b98c-4f4d-8348-96577a54167e
-# ╠═0de7918c-fa71-4523-a314-653e1e190288
-# ╠═225bbc0a-205f-4221-b945-ebc0aeaeae63
-# ╠═0307bca1-6358-4181-92b4-6d7fbeb50bf5
-# ╠═eb9116f9-2aa8-4f55-9c4f-f27891f46e30
+# ╟─eb9116f9-2aa8-4f55-9c4f-f27891f46e30
+# ╟─51cc850a-c4e7-4330-8696-0602ef8447f8
+# ╟─b64f48d4-02bf-4ce8-998e-188e0ed0d20b
 # ╠═450ce71e-2fcb-4c32-ae96-bba24b7584b1
-# ╠═4c39f6db-6d97-431e-97cf-1a7e400b71de
 # ╠═809054ff-58bd-46eb-bbe1-65fe353da582
-# ╠═4756613f-dec2-4145-ab57-de24776ab9e4
-# ╠═225ea01f-243a-49fe-a22f-a85fc5c78a9b
-# ╠═6e02907a-678c-4d4f-a3f7-92eddc878baf
+# ╟─4756613f-dec2-4145-ab57-de24776ab9e4
+# ╟─59aff8cf-2972-411f-bf58-e87e1cab553e
+# ╟─26250b0b-09c1-49ea-9b8c-02774fc64fde
+# ╟─3826f6f1-ccd4-43d5-b3f7-8e24a2630ff0
 # ╟─44bac7a6-5e6c-4e8d-a221-90d6c1173f38
 # ╟─80e3c274-0dcc-448d-a380-aa28462ab5e9
 # ╟─ed773753-e3f4-4d70-9718-183ace0f7d5a
 # ╟─4f7059b3-41ce-4e43-a14e-f64de7f6e514
+# ╟─903d6150-461a-4aeb-a7d7-fae582caf3e1
 # ╟─2e45b58f-fcde-4de4-a485-72940d7da6ac
 # ╟─4409e7cb-3cb7-4bfd-a1ec-cc36354f757b
-# ╠═f72a702d-af26-4876-8d64-77582825fcc9
+# ╟─f72a702d-af26-4876-8d64-77582825fcc9
+# ╟─4e2d48fb-56dc-4d57-b7d8-f3a2b78c83d5
 # ╟─6c97e63b-9ab5-4966-ae37-d1c5dcb2ab52
 # ╟─b25c28f0-0f3a-48b5-be7b-af59a68439ea
 # ╟─29b2fdae-6a13-4057-a75c-412a5a3c17ad
+# ╟─2bc97ca8-30fc-4e37-946c-d3057572a39b
 # ╟─0356097c-9c73-432c-b94f-d1143fcdfc34
 # ╟─ae98d703-76ca-44f9-9c98-2c5648d9ce80
 # ╟─8cd9c33b-079e-4984-ac3f-a73fc6fa1178
+# ╟─032b7f9e-9131-4032-ab45-a85cfe991a7d
 # ╟─304b82b3-cfa1-4c94-a2c8-b4e8e2d3d6e7
 # ╟─970bf9e2-1466-42da-b202-c6b9f454eacb
 # ╟─36cc24eb-c6bb-4fcd-ac9d-befddac22da8
+# ╟─a9b0da79-53a4-4888-9d56-1d9cb2c7bfbd
 # ╟─3ba6dfae-931a-48d6-b90c-8bc612c4076e
 # ╟─ac2d9cee-d5b7-4a67-8454-0ca988ac4d6e
 # ╟─9f9497d0-f42d-45f6-a250-b5f1f49952d0
+# ╟─ba930fb5-ba36-453d-8bf5-60f9139598ae
 # ╟─fb92541f-4fa9-4329-a8ac-d22d8389ff4b
 # ╟─94aa56d5-9076-4271-a51d-c21a1524aad5
 # ╟─a43d7c96-120b-4894-a454-e517551cf84a
+# ╟─4abb1f6d-9801-48aa-a9fe-0f87bb5548fd
 # ╟─a79b0ccd-5b9f-41c3-b277-b554403b5002
 # ╟─e1d84093-ef75-4e49-a91b-f9b2d8e73deb
 # ╟─f41ea8ef-045d-4a3d-b095-8d9514d09d24
+# ╟─22d49fd5-e0ee-4e83-b868-94cf2b578442
 # ╟─871510fa-dfce-43d4-b063-fb036e907458
 # ╟─c04fc6be-50ab-4f8d-8df0-f043936f5b8f
 # ╟─5218f6e3-51d2-46e8-9afa-e52598e02175
-# ╟─db9272d9-aad3-4819-b518-997e00fbfb5f
-# ╟─f6bd2f0e-46ba-48ac-87c4-514640aa39d6
-# ╟─60f7d827-3afb-4cb8-a004-597a72b3aa93
-# ╟─4607bb45-1b1e-4727-8e66-b729edb717fa
-# ╟─461a4468-eb0e-440e-a8e6-5b4a9583d338
-# ╠═fed4b0f2-2e58-4f0f-9d18-fcf2756e990e
-# ╠═8a8838ec-92a7-4663-8a2b-592f9376d20b
-# ╠═2952a243-dcce-41d6-900b-3ced15e97194
-# ╟─90bec4f5-f77f-4184-a274-e5b93e968a70
-# ╠═07507b03-ce49-40e0-9ba6-ecc209ab9ada
-# ╟─3989d5f6-cb52-4d33-8eac-2e94322cf24a
-# ╟─a3ef0853-0751-44b1-82de-6c66bea67503
-# ╠═fb6ecdb4-2686-4dad-8cec-965d30208cda
-# ╠═270869cf-3e45-4a98-9af8-eef56a77665e
-# ╠═247f9d2a-ba9f-4d1b-855f-fb520511c115
-# ╠═e58a555d-0e63-4865-b74c-f56be2a6724a
-# ╠═f841355e-58d9-4df1-a911-30b646f5bc70
-# ╠═beb7a873-3fb1-4bfe-90ce-6d97382130b9
-# ╠═de8440de-2d38-44b8-9bcc-20c6517a80bc
-# ╟─fe95c961-f662-4d6c-a583-e39990e5e660
-# ╟─d3699263-5afb-423a-b30b-81c74adb286b
-# ╟─3f8b32a5-91b7-48fc-8573-f34b048aea95
+# ╟─8e88dae1-8c40-43d5-95cd-ba63ac5e4e7c
 # ╟─4da22b7a-f145-43ef-aad6-2cad844e560b
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

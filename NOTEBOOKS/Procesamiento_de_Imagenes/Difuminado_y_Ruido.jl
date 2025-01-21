@@ -123,7 +123,7 @@ end
 
 # ╔═╡ b8b84a35-4b7d-47be-ac66-0b2d490d5b65
 md"""
-## Ruido Speckle
+##   $\cdot$ Ruido Speckle
 """
 
 # ╔═╡ 3dfcbe46-a26a-484e-ad2d-f25dca23716b
@@ -307,7 +307,7 @@ Al primero se le denomina *difuminado de promedio*, mientras que al segundo proc
 
 # ╔═╡ 8bb59b12-5978-4b11-9c56-a2dbcf049f94
 md"""
-## Filtrado de mediana
+##    $\cdot$ Filtrado de mediana
 """
 
 # ╔═╡ 434a8b4e-42a7-41c2-82a4-2e9ef36164c2
@@ -339,7 +339,7 @@ end
 
 # ╔═╡ edfcd89d-3a7d-4f4e-b6c3-6534bd6854e3
 md"""
-## Fitrado de Variación Total
+##    $\cdot$ Fitrado de Variación Total
 """
 
 # ╔═╡ bde84449-68fe-4069-8734-b406e29e2393
@@ -355,7 +355,9 @@ $\min_{A\in \mathbb{R}^{M\times N}} d(A,B)+\lambda v(A),$
 
 donde $d(\cdot,\cdot)$ es una medida de distancia, $v(A)$ es una medida de la variación entre los pixeles, y $\lambda$ es un parámetro que mide la importancia que le damos a cada uno de estos factores (note que el problema con $\lambda=0$ tiene solución la matriz con ruido). Por ejemplo, podemos considerar el problema
 
-$\min_{A\in \mathbb{R}^{M\times N}} \sum_{i=1}^{N}\sum_{j=1}^{k}(B[i,j]-A[i,j])^2+\lambda \left(\sum_{i=1}^{N-1}\sum_{j=1}^{N-1} \left|A[i,j]-A[i,j+1]\right|+|A[i,j]-A[i+1,j]|\right)$
+$\min_{A\in \mathbb{R}^{M\times N}} \sum_{i=1}^{N}\sum_{j=1}^{k}(B[i,j]-A[i,j])^2$
+
+$+\lambda \left(\sum_{i=1}^{N-1}\sum_{j=1}^{N-1} \left|A[i,j]-A[i,j+1]\right|+|A[i,j]-A[i+1,j]|\right)$
 
 Se han desarrollado varios métodos que intentan resolver este problema de manera eficiente, incluyendo métodos variacionales que pretenden solucionar el problema variacional equivalente (reducir infinitesimalmente los pixeles de la imagen). No obstante, se escapan del alcance de este cuaderno, e intentaremos resolver este problema mediante optimización numérica.
 """
@@ -412,8 +414,7 @@ Nótese que un parámetro $\lambda$ muy grande resulta en una imagen excesivamen
 [A1 total_variation(A1,3)]
 
 # ╔═╡ ac4fd8ff-a4cd-4c5d-946c-931af96d540b
-md"""
-## Otra imagen
+md"""##    $\cdot$ Ejemplo
 """
 
 # ╔═╡ 05f8d1c7-689d-4267-b266-65571667fe7e
@@ -424,8 +425,7 @@ begin
 end
 
 # ╔═╡ a6454a40-9f73-48e7-a83b-be5c6e33f70e
-md"""
-## Difuminado
+md"""Difuminado
 """
 
 # ╔═╡ 3a34b778-cbbc-4c7c-adad-bbb2a73c3eb8
@@ -442,7 +442,6 @@ T3 = agregar_ruido_speckle(T, 0.3);
 
 # ╔═╡ 04778277-36c3-4e5b-b7e4-a2519631fe2a
 md"""
-## Filtrado
 
 Se aplican los distintos filtros presentados para la imagen con ruido.
 """
@@ -2510,12 +2509,12 @@ version = "17.4.0+2"
 # ╠═a175a1c9-32fa-4493-b7cb-4c630d51770d
 # ╟─ac4fd8ff-a4cd-4c5d-946c-931af96d540b
 # ╟─05f8d1c7-689d-4267-b266-65571667fe7e
-# ╟─a6454a40-9f73-48e7-a83b-be5c6e33f70e
+# ╠═a6454a40-9f73-48e7-a83b-be5c6e33f70e
 # ╠═3a34b778-cbbc-4c7c-adad-bbb2a73c3eb8
 # ╠═2a84219b-8f2e-4934-9831-b1484dec8de9
 # ╠═1a0ad46a-fa61-4191-87cc-f20ed6ba0bc8
 # ╠═bf1e0a76-b741-43d4-aa30-6c67d3023062
-# ╟─04778277-36c3-4e5b-b7e4-a2519631fe2a
+# ╠═04778277-36c3-4e5b-b7e4-a2519631fe2a
 # ╠═73112f06-fdb8-4523-8f46-eddf36da04b2
 # ╠═5fed002f-0a43-4fb1-99a4-fb18aa9674ea
 # ╠═490055bf-cf98-4e51-81ea-822c8db1a9ce
