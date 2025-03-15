@@ -172,7 +172,7 @@ header-includes: |
             <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
                 RGB y YCbCr
             </footer>
-        <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">El cuaderno aborda aplicaciones de funciones elementales en el procesamiento de imágenes digitales, centrándose en transformaciones potenciales, exponenciales y logarítmicas para mejorar la iluminación y el contraste. Presenta técnicas como la corrección gamma, que ajusta el brillo de imágenes mal expuestas mediante funciones de potencia. También incluye herramientas para transformar imágenes entre espacios de color RGB y YCbCr, aplicando correcciones específicas en el canal de luminancia (Y). Además, se implementan funciones para visualizar histogramas y ajustar niveles de brillo y contraste. El cuaderno utiliza imágenes subexpuestas y sobreexpuestas como ejemplos, mostrando sus respectivas transformaciones y resultados.</p>
+        <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">Se abordan aplicaciones de funciones elementales en el procesamiento de imágenes digitales, centrándose en transformaciones potenciales, exponenciales y logarítmicas para mejorar la iluminación y el contraste. Presenta técnicas como la corrección gamma, que ajusta el brillo de imágenes mal expuestas mediante funciones de potencia. También incluye herramientas para transformar imágenes entre espacios de color RGB y YCbCr, aplicando correcciones específicas en el canal de luminancia (Y). Además, se implementan funciones para visualizar histogramas y ajustar niveles de brillo y contraste. El cuaderno utiliza imágenes subexpuestas y sobreexpuestas como ejemplos, mostrando sus respectivas transformaciones y resultados.</p>
       </div>
     </div>
 </div>
@@ -223,7 +223,6 @@ header-includes: |
             <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
                 Ecualización del Histograma
             </footer>
-        <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">Este cuaderno aborda conceptos de probabilidad y variables aleatorias aplicados al procesamiento de imágenes, con un enfoque particular en los histogramas. El objetivo principal es aprender a especificar y diseñar histogramas deseados mediante herramientas probabilísticas, logrando mejorar la calidad visual de imágenes digitales.</p>
         <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">Se define la relación entre imágenes digitales y variables aleatorias, donde cada píxel representa un valor que puede ser modelado como una variable aleatoria con una distribución de probabilidad. Se detalla cómo los histogramas de las imágenes representan gráficamente estas distribuciones, y cómo pueden transformarse para cumplir ciertos objetivos mediante técnicas como la ecualización del histograma. Este procedimiento busca lograr distribuciones uniformes, garantizando que todos los tonos de gris estén representados equitativamente. Además, el cuaderno introduce el teorema de transformación de variables aleatorias, explicando cómo modificar una variable aleatoria con una función de densidad conocida para que adopte otra distribución deseada.</p>
       </div>
     </div>
@@ -287,7 +286,7 @@ header-includes: |
   <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/Convolucion/" 
      class="button" 
      style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
-    Convolución y filtros
+    Convolución y filtrado
   </a>
 </div>
 
