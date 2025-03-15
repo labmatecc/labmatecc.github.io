@@ -67,4 +67,4 @@ header-includes: |
       color: #333;
     }
   </style>
-<iframe src="https://labmatecc.github.io/HTML%20Lab/P_Imagenes/AMetricas_Imagenes.html" width="100%" height="600px"></iframe>
+<iframe src="https://labmatecc.github.io/HTML%20Lab/P_Imagenes/Metricas_Imagenes.html" width="100%" height="600px"></iframe>
