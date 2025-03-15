@@ -1,7 +1,7 @@
 ---
 title: "Métricas en imágenes"
 permalink: /Notebooks/ProcesamientoDeImagenes/Metricas/
-date: 2019-02-15
+date: 2025-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}
 ---

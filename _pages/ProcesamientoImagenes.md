@@ -143,7 +143,7 @@ header-includes: |
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <!-- Pie de página -->
             <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
-                RGB y YCbC
+                RGB y YCbCr
             </footer>
         <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">Se presentan métricas con referencia completa, como el Error Cuadrático Medio (MSE) y la Relación Señal-Ruido de Pico (PSNR), que comparan imágenes procesadas con una referencia ideal para cuantificar la distorsión. Además, se analizan métricas sin referencia, como el Índice de Similitud Estructural (SSIM) y su extensión Multi-SSIM, que evalúan la calidad visual considerando luminancia, contraste y estructura sin necesidad de una imagen ideal. También se discute el error estructural y su relación con estas métricas, proporcionando ejemplos numéricos y cálculos aplicados a imágenes de prueba.</p>
       </div>
