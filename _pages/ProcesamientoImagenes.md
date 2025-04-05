@@ -190,12 +190,12 @@ header-includes: |
     <div class="person">
       <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
       <!-- Imagen más grande y centrada con sombras -->
-            <img src="https://loqueopino.com/wp-content/uploads/2023/07/Mejorar-la-calidad-de-una-foto.webp" 
+            <img src="https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/Transformaciones.png?raw=true" 
                  alt="Espacio Euclídeo" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <!-- Pie de página -->
             <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
-                Mejora en la calidad de la imagen
+                Transformaciones aplicadas a una imagen
             </footer>
         <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">Este cuaderno aborda el procesamiento de imágenes mediante transformaciones lineales y técnicas de automatización para mejorar la calidad visual. Se presentan funciones auxiliares en Julia para realizar tareas como la conversión entre espacios de color RGB y YCbCr, ajuste de valores de píxeles, creación de histogramas y transformaciones específicas para mejorar el contraste. Se introduce la trasformación lineal como una herramienta para expandir el rango de valores de los píxeles y mejorar significativamente el contraste de las imágenes. Además, se describe una variación de esta técnica que utiliza transformaciones lineales a trozos para ajustar los percentiles de los píxeles a intervalos uniformemente distribuidos. El cuaderno incluye ejemplos visuales que muestran los efectos de estas transformaciones.</p>
       </div>
