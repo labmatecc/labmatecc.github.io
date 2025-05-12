@@ -650,6 +650,29 @@ header-includes: |
 </div>
 <hr>
 
+
+<!-- Recurso adicional -->
+<div class="button-container">
+  <a href="https://codepen.io/mr-joseph-charles/pen/WbNNgor" 
+     class="button" 
+     style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+    Recurso adicional
+  </a>
+</div>
+
+<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="person">
+        <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+            <!-- Texto llamativo con colores, espaciado y negrita -->
+            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+                Como parte del curso de Álgebra Lineal impartido por la profesora Carolina Neira, se propuso a los estudiantes desarrollar herramientas visuales para comprender mejor los conceptos geométricos del curso, como planos, rectas y el conjunto de soluciones de sistemas de ecuaciones lineales en dos y tres dimensiones. En respuesta a esta iniciativa, el estudiante José Carlos Robles Martínez, del programa de Ciencias de la Computación, diseñó un complemento a GeoGebra que permite visualizar de forma clara e interactiva estos elementos. El recurso facilita la interpretación geométrica de la existencia y unicidad de soluciones, así como de la relación entre ecuaciones y sus representaciones en el espacio.
+            </p>
+        </div>
+    </div>
+</div>
+<hr>
+
+
 <!-- Contenedor para referencias de imágenes -->
 <div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-top: 20px;">
     <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
