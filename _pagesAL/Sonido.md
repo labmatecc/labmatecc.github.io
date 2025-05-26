@@ -1,6 +1,6 @@
 ---
-title: "Compresión de imágenes (PCA)"
-permalink: /Notebooks/AlgebraLineal/PCA/
+title: "Introducción al Procesamiento Básico de Sonido"
+permalink: /Notebooks/AlgebraLineal/Sonido/
 date: 2019-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}
@@ -23,7 +23,7 @@ header-includes: |
 </head>
 <body>
 
-<h1>Compresión de imágenes (PCA)</h1>
+<h1>Introducción al Procesamiento Básico de Sonido</h1>
 
 </body>
 </html>
@@ -68,4 +68,4 @@ header-includes: |
     }
   </style>
 
-<iframe src="https://labmatecc.github.io/HTML%20Lab/AL/PCA.html" width="100%" height="600px"></iframe>
+<iframe src="https://labmatecc.github.io/HTML%20Lab/AL/Introduccion_al_Procesamiento_Basico_de_Sonido.html" width="100%" height="600px"></iframe>

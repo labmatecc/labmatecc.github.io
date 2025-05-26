@@ -552,27 +552,27 @@ header-includes: |
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen representativa centrada con sombras (opcional) -->
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9XGCVvE3ZGlCl-jeccCVjerpRvT_4empBag&s" 
-                 alt="Análisis de Componentes Principales" 
+            <img src="https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/image.png?raw=true" 
+                 alt="Introducción al Procesamiento Básico de Sonido" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <!-- Pie de página -->
             <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
-                Técnicas de Reducción de Dimensionalidad
+                Onda de sonido de un mono
             </footer>
             <!-- Título destacado para hacer el texto más llamativo -->
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">
-                Análisis de componentes principales (PCA)
+                Introducción al Procesamiento Básico de Sonido
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
             <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
-                Este cuaderno aborda el <strong>Método de Análisis de Componentes Principales (PCA)</strong>, una técnica de reducción de dimensionalidad. Comienza explicando conceptos como la <strong>media</strong> y la <strong>varianza</strong> en un conjunto de datos.
-            </p>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
-                Luego, se presenta la <strong>covarianza</strong> y la <strong>matriz de covarianza</strong>, seguidas por el proceso detallado de cómo se emplea el PCA. Se describen los pasos desde la centralización de datos y cálculo de la matriz de covarianza hasta la reconstrucción de datos y la compresión de imágenes utilizando las componentes principales.
-            </p>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
-                Se muestra cómo la compresión efectiva mantiene la información esencial de la imagen original mientras reduce su dimensionalidad. Además, se incluyen ejemplos prácticos de compresión de imágenes con diferentes números de componentes principales y se evalúa el error de compresión en cada caso.
-            </p>
+    Este cuaderno explora los fundamentos del <strong>procesamiento digital de sonido</strong>, abordando desde su representación discreta hasta la manipulación básica de señales de audio. Inicia explicando cómo una señal continua es convertida en digital mediante el <strong>muestreo</strong> y la <strong>cuantificación</strong>, ilustrando la importancia de la <strong>frecuencia de muestreo</strong> y la <strong>profundidad en bits</strong> en distintos contextos como telefonía, música o producción audiovisual.
+</p>
+<p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+    Luego, se introducen las diferencias entre señales <strong>mono</strong> y <strong>estéreo</strong>, junto con los principales <strong>tipos de datos</strong> utilizados en audio digital (enteros y punto flotante). Se enseña a leer y graficar archivos <code>.wav</code>, tanto desde archivos locales como en línea, y se analizan aspectos como la duración, número de canales y tipo de codificación de los archivos.
+</p>
+<p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+    Finalmente, se exploran modificaciones básicas como <strong>cambiar el volumen</strong>, <strong>recortar fragmentos</strong>, <strong>mezclar señales</strong> y <strong>reproducirlas al revés</strong>, todo con ejemplos interactivos. Se incluye además una reflexión comparativa entre el procesamiento de sonido y el de imágenes digitales, destacando las similitudes en muestreo y cuantificación, y las diferencias en dimensionalidad y percepción.
+</p>
         </div>
     </div>
 </div>
