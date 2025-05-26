@@ -538,6 +538,46 @@ header-includes: |
 </div>
 <hr>
 
+<!-- Introducción al Procesamiento Básico de Sonido -->
+
+<div class="button-container">
+  <a href="https://labmatecc.github.io/Notebooks/AlgebraLineal/Sonido/" 
+     class="button" 
+     style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+    Introducción al Procesamiento Básico de Sonido
+  </a>
+</div>
+
+<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="person">
+        <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+            <!-- Imagen representativa centrada con sombras (opcional) -->
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9XGCVvE3ZGlCl-jeccCVjerpRvT_4empBag&s" 
+                 alt="Análisis de Componentes Principales" 
+                 style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            <!-- Pie de página -->
+            <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
+                Técnicas de Reducción de Dimensionalidad
+            </footer>
+            <!-- Título destacado para hacer el texto más llamativo -->
+            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">
+                Análisis de componentes principales (PCA)
+            </h2>
+            <!-- Texto llamativo con colores, espaciado y negrita -->
+            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+                Este cuaderno aborda el <strong>Método de Análisis de Componentes Principales (PCA)</strong>, una técnica de reducción de dimensionalidad. Comienza explicando conceptos como la <strong>media</strong> y la <strong>varianza</strong> en un conjunto de datos.
+            </p>
+            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+                Luego, se presenta la <strong>covarianza</strong> y la <strong>matriz de covarianza</strong>, seguidas por el proceso detallado de cómo se emplea el PCA. Se describen los pasos desde la centralización de datos y cálculo de la matriz de covarianza hasta la reconstrucción de datos y la compresión de imágenes utilizando las componentes principales.
+            </p>
+            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+                Se muestra cómo la compresión efectiva mantiene la información esencial de la imagen original mientras reduce su dimensionalidad. Además, se incluyen ejemplos prácticos de compresión de imágenes con diferentes números de componentes principales y se evalúa el error de compresión en cada caso.
+            </p>
+        </div>
+    </div>
+</div>
+<hr>
+
 <!-- Sistemas de ecuaciones diferenciales -->
 <div class="button-container">
   <a href="https://labmatecc.github.io/Notebooks/AlgebraLineal/Sistemasdeecuacionesdiferenciales/" 
