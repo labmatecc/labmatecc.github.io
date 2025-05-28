@@ -34,6 +34,9 @@ md"""Este cuaderno está en construcción y puede ser modificado en el futuro pa
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor.
 """
 
+# ╔═╡ 12ec5b82-dac9-4975-a614-d2c2edc179ef
+md"""Elaborado por Andres Felipe Barreto y Juan Galvis."""
+
 # ╔═╡ 8fa8595f-621d-48c8-a96d-1f5651c2aacb
 md"Vamos a usar las siguientes librerías:"
 
@@ -2183,6 +2186,7 @@ version = "1.4.1+2"
 # ╟─b538a5f2-279e-11f0-02ae-55967c881bd4
 # ╟─1626ff28-eed7-461f-94c7-51c30a375c29
 # ╟─ee186202-67c9-43d6-bba6-e522a6c8354c
+# ╟─12ec5b82-dac9-4975-a614-d2c2edc179ef
 # ╟─8fa8595f-621d-48c8-a96d-1f5651c2aacb
 # ╠═b37ce740-ced2-430c-af8d-25153ee46224
 # ╠═d86d5ce5-aea3-4636-8d8f-c3b820ac4b9d
