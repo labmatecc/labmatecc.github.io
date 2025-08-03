@@ -89,6 +89,17 @@ header-includes: |
 <hr>
 
 <div class="container">
+
+  <!-- Bloque de descripción original -->
+  <div class="person">
+    <div class="info">
+      <p>El Laboratorio Virtual de Matemáticas es una iniciativa de varios profesores de los programas de Matemáticas y Ciencias de la Computación, creada con el objetivo de complementar los cursos del Departamento de Matemáticas a través de herramientas computacionales que faciliten la comprensión de conceptos matemáticos y su aplicación en problemas prácticos.</p>
+      <p>En esta fase inicial, se está recopilando material proporcionado por los docentes del Departamento de Matemáticas. Las versiones alfa (2024) y beta (2025) del Laboratorio Virtual fueron desarrolladas y editadas por Yessica Trujillo, Carlos Nosa, Juan Galvis, Francisco Gómez, Freddy Hernández, Eduards Chipatecua y Sergio Nuñez, con el apoyo del Área Curricular de Matemáticas, bajo la dirección de Carolina Neira, durante los años 2023 y 2024.</p>
+      <p>Para cualquier duda, sugerencia o comentario, pueden contactarnos en: <a href="mailto:labmatecc_bog@unal.edu.co">labmatecc_bog@unal.edu.co</a>.</p>
+    </div>
+  </div>
+
+<div class="container">
   <div class="person">
     <a href="https://sites.google.com/view/jgalvis/">
       <img src="https://labmatecc.github.io/images/juan_galvis.jpeg" alt="Juan Galvis">
@@ -118,7 +129,7 @@ header-includes: |
 
   <div class="person">
     <a href="https://ytrujillol.github.io/">
-      <img src="https://labmatecc.github.io/images/yessica_trujillo.webp" alt="Yessica Trujillo">
+      <img src="https://labmatecc.github.io/images/yessica_trujillo.jpg" alt="Yessica Trujillo">
     </a>
     <h3><a href="https://ytrujillol.github.io/">Yessica Trujillo</a></h3>
     <p>Colaboradora</p>
@@ -139,7 +150,7 @@ header-includes: |
       <img src="https://labmatecc.github.io/images/eduards_mendez.jpg" alt="Eduards Mendez">
     </a>
     <h3><a href="https://eguar11011.github.io/">Eduards Mendez</a></h3>
-    <p>Colaborador técnico</p>
+    <p>Colaborador</p>
     <p><a href="mailto:emendezc@unal.edu.co">emendezc@unal.edu.co</a></p>
   </div>
 
@@ -148,7 +159,7 @@ header-includes: |
       <img src="https://labmatecc.github.io/images/sergio_nunez.png" alt="Sergio Nuñez">
     </a>
     <h3><a href="#">Sergio Nuñez</a></h3>
-    <p>Colaborador técnico</p>
+    <p>Colaborador</p>
     <p><a href="mailto:snunezs@unal.edu.co">snunezs@unal.edu.co</a></p>
   </div>
 
