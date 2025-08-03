@@ -78,17 +78,6 @@ header-includes: |
   </div>
 
   <div class="person">
-    <a href="https://labmatecc.github.io/images/yessica_trujillo.jpg">
-      <img src="https://labmatecc.github.io/images/yessica_trujillo.jpg" alt="Yessica Trujillo">
-    </a>
-    <div class="info">
-      <h3><a href="https://labmatecc.github.io/images/yessica_trujillo.jpg">Yessica Trujillo</a></h3>
-      <p>Colaboradora</p>
-      <p><a href="mailto:ytrujillol@unal.edu.co">ytrujillol@unal.edu.co</a></p>
-    </div>
-  </div>
-
-  <div class="person">
     <a href="https://sites.google.com/view/jgalvis/">
       <img src="https://labmatecc.github.io/images/juan_galvis.jpg" alt="Juan Galvis">
     </a>
@@ -122,6 +111,28 @@ header-includes: |
   </div>
 
   <div class="person">
+    <a href="https://labmatecc.github.io/images/yessica_trujillo.jpg">
+      <img src="https://labmatecc.github.io/images/yessica_trujillo.jpg" alt="Yessica Trujillo">
+    </a>
+    <div class="info">
+      <h3><a href="https://labmatecc.github.io/images/yessica_trujillo.jpg">Yessica Trujillo</a></h3>
+      <p>Colaboradora</p>
+      <p><a href="mailto:ytrujillol@unal.edu.co">ytrujillol@unal.edu.co</a></p>
+    </div>
+  </div>
+
+  <div class="person">
+    <a href="https://cnosa.github.io/">
+      <img src="https://labmatecc.github.io/images/carlos_nosa.jpg" alt="Carlos Nosa">
+    </a>
+    <div class="info">
+      <h3><a href="https://cnosa.github.io/">Carlos Nosa</a></h3>
+      <p>Colaboradora</p>
+      <p><a href="mailto:cnosa@unal.edu.co">cnosa@unal.edu.co</a></p>
+    </div>
+  </div>
+
+  <div class="person">
     <a href="https://eguar11011.github.io/">
       <img src="https://labmatecc.github.io/images/eduards_chipatecua.jpg" alt="Eduards Chipatecua">
     </a>
@@ -145,7 +156,7 @@ header-includes: |
 
   <div class="person">
     <a href="#">
-      <img src="https://labmatecc.github.io/images/carolina_neira.jpg" alt="Carolina Neira">
+      <img src="https://labmatecc.github.io/images/carolina_neira.jpeg" alt="Carolina Neira">
     </a>
     <div class="info">
       <h3><a href="#">Carolina Neira</a></h3>
