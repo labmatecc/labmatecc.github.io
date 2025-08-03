@@ -135,6 +135,15 @@ header-includes: |
   </div>
 
   <div class="person">
+    <a href="#">
+      <img src="https://labmatecc.github.io/images/carolina_neira.jpeg" alt="Carolina Neira">
+    </a>
+    <h3><a href="#">Carolina Neira</a></h3>
+    <p>Dirección académica</p>
+    <p><a href="mailto:cneiraj@unal.edu.co">cneiraj@unal.edu.co</a></p>
+  </div>
+  
+  <div class="person">
     <a href="https://ytrujillol.github.io/">
       <img src="https://labmatecc.github.io/images/yessica_trujillo.jpg" alt="Yessica Trujillo">
     </a>
@@ -168,15 +177,6 @@ header-includes: |
     <h3><a href="#">Sergio Nuñez</a></h3>
     <p>Colaborador</p>
     <p><a href="mailto:snunezs@unal.edu.co">snunezs@unal.edu.co</a></p>
-  </div>
-
-  <div class="person">
-    <a href="#">
-      <img src="https://labmatecc.github.io/images/carolina_neira.jpeg" alt="Carolina Neira">
-    </a>
-    <h3><a href="#">Carolina Neira</a></h3>
-    <p>Dirección académica</p>
-    <p><a href="mailto:cneiraj@unal.edu.co">cneiraj@unal.edu.co</a></p>
   </div>
 </div>
 
