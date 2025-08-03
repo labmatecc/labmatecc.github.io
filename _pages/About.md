@@ -26,7 +26,16 @@ header-includes: |
           justify-content: space-between;
         }
 
-        .person {
+        /* El primer .person ocupa todo el ancho para la descripción */
+        .container .person:first-child {
+          width: 100%;
+          text-align: justify;
+          margin-bottom: 40px;
+          box-sizing: border-box;
+        }
+
+        /* Los demás perfiles ocupan 30% para 3 por fila */
+        .container .person:not(:first-child) {
           width: 30%;
           margin-bottom: 40px;
           text-align: center;
@@ -50,6 +59,7 @@ header-includes: |
         .person p {
           margin: 0;
           color: #555;
+          line-height: 1.4em;
         }
 
         a {
@@ -60,25 +70,23 @@ header-includes: |
           text-decoration: underline;
         }
 
-        @media (max-width: 768px) {
-          .person {
-            width: 45%;
-            margin-bottom: 30px;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .person {
-            width: 100%;
-            margin-bottom: 25px;
-          }
-        }
-
         hr {
           border: none;
           height: 1px;
           background-color: #CCCCCC;
           margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+          .container .person:not(:first-child) {
+            width: 45%;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .container .person:not(:first-child) {
+            width: 100%;
+          }
         }
     </style>
 </head>
@@ -99,7 +107,6 @@ header-includes: |
     </div>
   </div>
 
-<div class="container">
   <div class="person">
     <a href="https://sites.google.com/view/jgalvis/">
       <img src="https://labmatecc.github.io/images/juan_galvis.jpeg" alt="Juan Galvis">
