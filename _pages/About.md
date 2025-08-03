@@ -79,7 +79,7 @@ header-includes: |
 
   <div class="person">
     <a href="https://sites.google.com/view/jgalvis/">
-      <img src="https://labmatecc.github.io/images/juan_galvis.jpg" alt="Juan Galvis">
+      <img src="https://labmatecc.github.io/images/juan_galvis.jpeg" alt="Juan Galvis">
     </a>
     <div class="info">
       <h3><a href="https://sites.google.com/view/jgalvis/">Juan Galvis</a></h3>
@@ -90,7 +90,7 @@ header-includes: |
 
   <div class="person">
     <a href="https://sites.google.com/site/fagomezj/">
-      <img src="https://labmatecc.github.io/images/francisco_gomez.jpg" alt="Francisco Gómez">
+      <img src="https://labmatecc.github.io/images/francisco_gomez.jpeg" alt="Francisco Gómez">
     </a>
     <div class="info">
       <h3><a href="https://sites.google.com/site/fagomezj/">Francisco Gómez</a></h3>
@@ -101,7 +101,7 @@ header-includes: |
 
   <div class="person">
     <a href="https://sites.google.com/unal.edu.co/fohernandezr">
-      <img src="https://labmatecc.github.io/images/freddy_hernandez.jpg" alt="Freddy Hernández">
+      <img src="https://labmatecc.github.io/images/freddy_hernandez.png" alt="Freddy Hernández">
     </a>
     <div class="info">
       <h3><a href="https://sites.google.com/unal.edu.co/fohernandezr">Freddy Hernández</a></h3>
@@ -112,10 +112,10 @@ header-includes: |
 
   <div class="person">
     <a href="https://labmatecc.github.io/images/yessica_trujillo.jpg">
-      <img src="https://labmatecc.github.io/images/yessica_trujillo.jpg" alt="Yessica Trujillo">
+      <img src="https://labmatecc.github.io/images/yessica_trujillo.webp" alt="Yessica Trujillo">
     </a>
     <div class="info">
-      <h3><a href="https://labmatecc.github.io/images/yessica_trujillo.jpg">Yessica Trujillo</a></h3>
+      <h3><a href="https://ytrujillol.github.io/">Yessica Trujillo</a></h3>
       <p>Colaboradora</p>
       <p><a href="mailto:ytrujillol@unal.edu.co">ytrujillol@unal.edu.co</a></p>
     </div>
@@ -134,10 +134,10 @@ header-includes: |
 
   <div class="person">
     <a href="https://eguar11011.github.io/">
-      <img src="https://labmatecc.github.io/images/eduards_chipatecua.jpg" alt="Eduards Chipatecua">
+      <img src="https://labmatecc.github.io/images/eduards_mendez.jpg" alt="Eduards Mendez">
     </a>
     <div class="info">
-      <h3><a href="https://eguar11011.github.io/">Eduards Chipatecua</a></h3>
+      <h3><a href="https://eguar11011.github.io/">Eduards Mendez</a></h3>
       <p>Colaborador técnico</p>
       <p><a href="mailto:emendezc@unal.edu.co">emendezc@unal.edu.co</a></p>
     </div>
@@ -145,7 +145,7 @@ header-includes: |
 
   <div class="person">
     <a href="#">
-      <img src="https://labmatecc.github.io/images/sergio_nunez.jpg" alt="Sergio Nuñez">
+      <img src="https://labmatecc.github.io/images/sergio_nunez.png" alt="Sergio Nuñez">
     </a>
     <div class="info">
       <h3><a href="#">Sergio Nuñez</a></h3>
