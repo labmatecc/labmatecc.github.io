@@ -1,3 +1,15 @@
+---
+title: "Acerca del laboratorio"
+permalink: /About/
+date: 2024-09-30
+header-includes: |
+    \usepackage{amsmath,mathtools}
+---
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+  type="text/javascript">
+</script>
+
 <html>
 <head>
     <style>
