@@ -1,15 +1,3 @@
----
-title: "Acerca del laboratorio"
-permalink: /About/
-date: 2024-09-30
-header-includes: |
-    \usepackage{amsmath,mathtools}
----
-<script
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-  type="text/javascript">
-</script>
-
 <html>
 <head>
     <style>
@@ -19,39 +7,59 @@ header-includes: |
         }
 
         .container {
-          max-width: 800px;
+          max-width: 900px;
           margin: 20px auto;
-          overflow: hidden;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
         }
 
         .person {
-          display: flex;
-          margin-bottom: 20px;
-          justify-content: space-between;
-          align-items: center;
-          flex-wrap: wrap;
+          width: 30%;
+          margin-bottom: 40px;
+          text-align: center;
+          box-sizing: border-box;
         }
 
         .person img {
-          max-width: 200px;
-          max-height: 200px;
+          width: 150px;
+          height: 150px;
+          object-fit: cover;
           border-radius: 50%;
-          margin-right: 20px;
-          margin-left: 20px;
+          margin-bottom: 10px;
         }
 
-        .person .info {
-          flex: 1;
-          text-align: left;
-        }
-
-        .person:nth-child(even) {
-          flex-direction: row-reverse;
-        }
-
-        h2 {
-          text-align: center;
+        .person h3 {
+          margin: 0 0 5px 0;
+          font-size: 1.1em;
           color: #333;
+        }
+
+        .person p {
+          margin: 0;
+          color: #555;
+        }
+
+        a {
+          color: #318233;
+          text-decoration: none;
+        }
+        a:hover {
+          text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+          .person {
+            width: 45%;
+            margin-bottom: 30px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .person {
+            width: 100%;
+            margin-bottom: 25px;
+          }
         }
 
         hr {
@@ -70,99 +78,75 @@ header-includes: |
 
 <div class="container">
   <div class="person">
-    <div class="info">
-      <p>El Laboratorio Virtual de Matemáticas es una iniciativa de varios profesores de los programas de Matemáticas y Ciencias de la Computación, creada con el objetivo de complementar los cursos del Departamento de Matemáticas a través de herramientas computacionales que faciliten la comprensión de conceptos matemáticos y su aplicación en problemas prácticos.</p>
-      <p>En esta fase inicial, se está recopilando material proporcionado por los docentes del Departamento de Matemáticas. Las versiones alfa (2024) y beta (2025) del Laboratorio Virtual fueron desarrolladas y editadas por Yessica Trujillo, <a href="mailto:ytrujillol@unal.edu.co">ytrujillol@unal.edu.co</a>, <a href="https://sites.google.com/view/jgalvis/" target="_blank">Juan Galvis</a>, <a href="mailto:jcgalvisa@unal.edu.co">jcgalvisa@unal.edu.co</a>, <a href="https://sites.google.com/site/fagomezj/" target="_blank">Francisco Gómez</a>, <a href="mailto:fagomezj@unal.edu.co">fagomezj@unal.edu.co</a>, <a href="https://sites.google.com/unal.edu.co/fohernandezr" target="_blank">Freddy Hernández</a>, <a href="mailto:fohernandezr@unal.edu.co">fohernandezr@unal.edu.co</a>, <a href="https://eguar11011.github.io/" target="_blank">Eduards Chipatecua</a>, <a href="mailto:emendezc@unal.edu.co">emendezc@unal.edu.co</a>, <a href="#" target="_blank">Sergio Nuñez</a>, <a href="mailto:snunezs@unal.edu.co">snunezs@unal.edu.co</a>, con el apoyo del Área Curricular de Matemáticas, bajo la dirección de <a href="#" target="_blank">Carolina Neira</a>, <a href="mailto:cneiraj@unal.edu.co">cneiraj@unal.edu.co</a>, durante los años 2023 y 2024.</p>
-      <p>Para cualquier duda, sugerencia o comentario, pueden contactarnos en: <a href="mailto:labmatecc_bog@unal.edu.co">labmatecc_bog@unal.edu.co</a>.</p>
-    </div>
-  </div>
-
-  <div class="person">
     <a href="https://sites.google.com/view/jgalvis/">
       <img src="https://labmatecc.github.io/images/juan_galvis.jpeg" alt="Juan Galvis">
     </a>
-    <div class="info">
-      <h3><a href="https://sites.google.com/view/jgalvis/">Juan Galvis</a></h3>
-      <p>Docente a cargo</p>
-      <p><a href="mailto:jcgalvisa@unal.edu.co">jcgalvisa@unal.edu.co</a></p>
-    </div>
+    <h3><a href="https://sites.google.com/view/jgalvis/">Juan Galvis</a></h3>
+    <p>Docente a cargo</p>
+    <p><a href="mailto:jcgalvisa@unal.edu.co">jcgalvisa@unal.edu.co</a></p>
   </div>
 
   <div class="person">
     <a href="https://sites.google.com/site/fagomezj/">
       <img src="https://labmatecc.github.io/images/francisco_gomez.jpeg" alt="Francisco Gómez">
     </a>
-    <div class="info">
-      <h3><a href="https://sites.google.com/site/fagomezj/">Francisco Gómez</a></h3>
-      <p>Docente colaborador</p>
-      <p><a href="mailto:fagomezj@unal.edu.co">fagomezj@unal.edu.co</a></p>
-    </div>
+    <h3><a href="https://sites.google.com/site/fagomezj/">Francisco Gómez</a></h3>
+    <p>Docente colaborador</p>
+    <p><a href="mailto:fagomezj@unal.edu.co">fagomezj@unal.edu.co</a></p>
   </div>
 
   <div class="person">
     <a href="https://sites.google.com/unal.edu.co/fohernandezr">
       <img src="https://labmatecc.github.io/images/freddy_hernandez.png" alt="Freddy Hernández">
     </a>
-    <div class="info">
-      <h3><a href="https://sites.google.com/unal.edu.co/fohernandezr">Freddy Hernández</a></h3>
-      <p>Docente colaborador</p>
-      <p><a href="mailto:fohernandezr@unal.edu.co">fohernandezr@unal.edu.co</a></p>
-    </div>
+    <h3><a href="https://sites.google.com/unal.edu.co/fohernandezr">Freddy Hernández</a></h3>
+    <p>Docente colaborador</p>
+    <p><a href="mailto:fohernandezr@unal.edu.co">fohernandezr@unal.edu.co</a></p>
   </div>
 
   <div class="person">
-    <a href="https://labmatecc.github.io/images/yessica_trujillo.jpg">
+    <a href="https://ytrujillol.github.io/">
       <img src="https://labmatecc.github.io/images/yessica_trujillo.webp" alt="Yessica Trujillo">
     </a>
-    <div class="info">
-      <h3><a href="https://ytrujillol.github.io/">Yessica Trujillo</a></h3>
-      <p>Colaboradora</p>
-      <p><a href="mailto:ytrujillol@unal.edu.co">ytrujillol@unal.edu.co</a></p>
-    </div>
+    <h3><a href="https://ytrujillol.github.io/">Yessica Trujillo</a></h3>
+    <p>Colaboradora</p>
+    <p><a href="mailto:ytrujillol@unal.edu.co">ytrujillol@unal.edu.co</a></p>
   </div>
 
   <div class="person">
     <a href="https://cnosa.github.io/">
       <img src="https://labmatecc.github.io/images/carlos_nosa.jpg" alt="Carlos Nosa">
     </a>
-    <div class="info">
-      <h3><a href="https://cnosa.github.io/">Carlos Nosa</a></h3>
-      <p>Colaboradora</p>
-      <p><a href="mailto:cnosa@unal.edu.co">cnosa@unal.edu.co</a></p>
-    </div>
+    <h3><a href="https://cnosa.github.io/">Carlos Nosa</a></h3>
+    <p>Colaborador</p>
+    <p><a href="mailto:cnosa@unal.edu.co">cnosa@unal.edu.co</a></p>
   </div>
 
   <div class="person">
     <a href="https://eguar11011.github.io/">
       <img src="https://labmatecc.github.io/images/eduards_mendez.jpg" alt="Eduards Mendez">
     </a>
-    <div class="info">
-      <h3><a href="https://eguar11011.github.io/">Eduards Mendez</a></h3>
-      <p>Colaborador técnico</p>
-      <p><a href="mailto:emendezc@unal.edu.co">emendezc@unal.edu.co</a></p>
-    </div>
+    <h3><a href="https://eguar11011.github.io/">Eduards Mendez</a></h3>
+    <p>Colaborador técnico</p>
+    <p><a href="mailto:emendezc@unal.edu.co">emendezc@unal.edu.co</a></p>
   </div>
 
   <div class="person">
     <a href="#">
       <img src="https://labmatecc.github.io/images/sergio_nunez.png" alt="Sergio Nuñez">
     </a>
-    <div class="info">
-      <h3><a href="#">Sergio Nuñez</a></h3>
-      <p>Colaborador técnico</p>
-      <p><a href="mailto:snunezs@unal.edu.co">snunezs@unal.edu.co</a></p>
-    </div>
+    <h3><a href="#">Sergio Nuñez</a></h3>
+    <p>Colaborador técnico</p>
+    <p><a href="mailto:snunezs@unal.edu.co">snunezs@unal.edu.co</a></p>
   </div>
 
   <div class="person">
     <a href="#">
       <img src="https://labmatecc.github.io/images/carolina_neira.jpeg" alt="Carolina Neira">
     </a>
-    <div class="info">
-      <h3><a href="#">Carolina Neira</a></h3>
-      <p>Dirección académica</p>
-      <p><a href="mailto:cneiraj@unal.edu.co">cneiraj@unal.edu.co</a></p>
-    </div>
+    <h3><a href="#">Carolina Neira</a></h3>
+    <p>Dirección académica</p>
+    <p><a href="mailto:cneiraj@unal.edu.co">cneiraj@unal.edu.co</a></p>
   </div>
 </div>
 
