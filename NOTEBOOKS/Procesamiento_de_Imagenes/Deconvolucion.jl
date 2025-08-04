@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.0
+# v0.20.5
 
 using Markdown
 using InteractiveUtils
@@ -9,7 +9,7 @@ using PlutoUI
 
 # ╔═╡ 7f0d9d18-2286-4a0c-8f3b-14eec26a1a31
 begin
-	using Plots,Colors,ColorVectorSpace,ImageShow,FileIO,ImageIO
+	using Plots,LaTeXStrings,Colors,ColorVectorSpace,ImageShow,FileIO,ImageIO
 	using HypertextLiteral
 	using Images, ImageShow 
 	using Statistics,  Distributions, LinearAlgebra
@@ -60,20 +60,20 @@ md"""$\texttt{Figura 1. Camarógrafo}$"""
 md"""
 Vamos a modificar esta imagen para que tenga una distorsión que simula el movimiento en el momento de la captura de la fotografía y además que se encuentre contaminada por ruido aditivo.
 
-Para la distorsión usamos el kernel $K = u\cdot v^{\top} \in\mathbb{R}^{3\times 45}$ donde 
+Para la distorsión usamos el kernel $K = u\cdot v^{\top} \in\mathbb{R}^{3\times 7}$ donde 
 
-$u = \frac{1}{90}\begin{pmatrix}
+$u = \begin{pmatrix}
 1\\
 1\\
-0\end{pmatrix}\in\mathbb{R}^{3\times 1} \quad \text{ y }\quad
-v^{\top} = \begin{pmatrix}
-1 & 1 & \ldots & 1\end{pmatrix}\in\mathbb{R}^{1\times 45}.$
+1\end{pmatrix}\in\mathbb{R}^{3\times 1} \quad \text{ y }\quad
+v^{\top} = \frac{1}{21}\begin{pmatrix}
+1 & 1 & \ldots & 1\end{pmatrix}\in\mathbb{R}^{1\times 7}.$
 """
 
 # ╔═╡ ed6953b4-744c-4dbb-8ac3-69c506972554
 begin
-	u = (1/30)*[1; 1; 0]
-	v = ones(15)
+	u = (1/3)*ones(3)
+	v = (1/7)*ones(7)
 	K = u * v'
 end
 
@@ -83,7 +83,7 @@ El resultado de la convolución se muestra en la figura 2. Se puede notar que la
 """
 
 # ╔═╡ 9955f70c-6636-4b95-b774-feaa57a6a8f5
-camfilter0 = imfilter(imresize(camoriginal, (1000, 1000)), K)
+camfilter0 = imfilter(imresize(camoriginal, (512, 512)), K)
 
 # ╔═╡ 716cbf70-eee8-41ee-a735-06068498dd7a
 md"""$\texttt{Figura 2.}$"""
@@ -94,7 +94,7 @@ Ahora agregamos un ruido aditivo gaussiano con media $\mu=0$ y desviación está
 """
 
 # ╔═╡ 22257c37-d113-4ebb-b392-8d4886dea5ca
-camfilternoise0 = Gray.(channelview(camfilter0) + 0.1*randn(1000,1000))
+camfilternoise0 = Gray.(channelview(camfilter0) + 0.1*randn(512,512))
 
 # ╔═╡ 68650463-6f3b-4193-a2db-b85bf5532482
 md"""$\texttt{Figura 3.}$"""
@@ -510,11 +510,22 @@ donde
 # ╔═╡ a7724f6d-5b36-4993-9982-627a73d41243
 Uᵤ, Σᵤ, Vᵤ = svd(Tᵤ)
 
-# ╔═╡ 5ffbb790-50e5-4736-8417-d4a398b74191
-norm(Tᵤ - Uᵤ* diagm(Σᵤ)*Vᵤ')
-
 # ╔═╡ 6afed8e7-49e9-4a73-8aee-795e15deaba0
 Uᵥ, Σᵥ, Vᵥ = svd(Tᵥ)
+
+# ╔═╡ 0770dd5d-f843-4b3a-bf46-847b467ef9ff
+md"""
+Graficamos los valores singulares de las matrices $T_u$ y $T_v$.
+"""
+
+# ╔═╡ 5690a382-23ef-4b13-9daa-d8ab45870ad7
+begin
+	plot(Σᵤ,label="Tᵤ",xlabel="Índice",ylabel="Valor singular",lw=2)
+	plot!(Σᵥ,label="Tᵥ",xlabel="Índice",lw=2)
+end
+
+# ╔═╡ 991edf6d-e61a-4a10-a1f4-d98e9014e756
+md"""$\texttt{Figura 5.}$"""
 
 # ╔═╡ c4ac11fd-99fd-4315-8698-1c6216af4eb1
 md"""
@@ -524,11 +535,14 @@ Calculamos los valores singulares de la matriz $M_{u\cdot v^{\top}}$ y luego los
 # ╔═╡ f9d0918b-78aa-4836-87fe-ced9d9e91239
 Σ = kron(Σᵥ,Σᵤ)
 
+# ╔═╡ 50a9c393-6fb5-447c-add6-08bd622e950c
+Σᵤ
+
 # ╔═╡ 37266eb1-d5dc-4bef-b31d-7f967c88df66
 plot(Σ,label=false, xlabel="Índice", ylabel="Valor singular", title="Valores singulares de la matriz del problema inverso")
 
 # ╔═╡ c1db2105-49ab-4768-86d2-cf10ac1abf97
-md"""$\texttt{Figura 5.}$"""
+md"""$\texttt{Figura 6.}$"""
 
 # ╔═╡ 1333f1d1-0516-470e-bda6-3e11b8f76e8a
 md"""
@@ -541,10 +555,10 @@ Se debe tener cuidado dado que, a pesar de que el producto de Kronecker conserva
 """
 
 # ╔═╡ 5014f95d-4222-411c-a481-0fcd8755c220
-plot(Σ[1:2560],label=false, xlabel="Índice", ylabel="Valor singular", title="Valores singulares de la matriz del problema inverso")
+plot(Σ[1:2560],label=false, xlabel="Índice", ylabel="Valor singular", title=L"Valores singulares de la matriz $\Sigma$")
 
 # ╔═╡ b62391fc-feaf-477d-9243-9af33610b60e
-md"""$\texttt{Figura 6.}$"""
+md"""$\texttt{Figura 7.}$"""
 
 # ╔═╡ 6791a7c5-fef6-4f93-848c-dfb4ac441092
 md"""
@@ -594,15 +608,18 @@ begin
 end
 
 # ╔═╡ b7e279ad-4400-4013-a363-2bbc104913b7
-md"""$\texttt{Figura 6.}$"""
+md"""$\texttt{Figura 8.}$"""
 
 # ╔═╡ f68d17e2-719d-4d58-807c-041bc2c44602
 md"""
-Cualitativamente 
+Cualitativamente la solución directa por medio de la matriz del modelo lineal no asegura buenos resultados para recuperar la imágen original. Esto ocurre dado que la matriz presenta valores singulares muy cercanos a cero, por ende en la inversión, estos valores casi nulos dañan la solución dado que añaden ruido en la recuperación de la imagen original. A continuación se muestran los primeros 2560 valores singulares de la matriz $\Sigma$.
 """
 
 # ╔═╡ b1070518-aacc-44f5-ad26-52fa4c1c6107
-plot( 1 ./Σ,label=false, xlabel="Índice", ylabel="Valor singular", title="Valores singulares de la matriz del problema inverso")
+scatter( 1 ./Σ[1:2560],label=false, xlabel="Índice", ylabel="Valor singular", title=L"Valores singulares de la matriz $\Sigma^{-1}$")
+
+# ╔═╡ b5839619-5456-4215-a682-9d87c6095e86
+md"""$\texttt{Figura 9.}$"""
 
 # ╔═╡ 85f4c493-63e1-42ce-b6b5-eaa0cdc52bce
 md"""
@@ -638,34 +655,32 @@ $\hat{x}_{minimizador} = \left(\Sigma^{\top}\Sigma + \alpha I\right)^{-1}\Sigma^
 así, $x_{minimizador} = V \hat{x}_{minimizador}$.
 """
 
-# ╔═╡ 578af934-0c6e-424c-88c1-7f8c69c5b881
-α = 1E-1
+# ╔═╡ c81938a2-7720-4b2c-a620-9d82189b8e0f
+md"""
+Seleccionamos el valor de $\alpha$:
+"""
 
-# ╔═╡ d1731454-607c-4ccc-bbbd-d71d84653059
-1 ./(Σ .^2 .+ α) .* Σ
+# ╔═╡ 578af934-0c6e-424c-88c1-7f8c69c5b881
+α = 0.01
+
+# ╔═╡ d61b8630-83ef-4743-981a-bed47ed5bd79
+md"""
+Graficamos los valores en la diagonal de la matriz diagonal $(\Sigma^\top \Sigma + \alpha I)^{-1}\Sigma^\top$:
+"""
 
 # ╔═╡ 3acdef8b-ea7f-4e0e-bea4-86e951450788
-plot(1 ./(Σ .^2 .+ α) .* Σ, label=false, xlabel="Índices", ylabel="Valor singular", title="Valores singulares de ")
-
-# ╔═╡ 2574bb61-47dc-4ff0-941d-1d95c3c2d15c
-function alphachoosing(range)
-	L = length(range)
-	Info = zeros(3,L)
-	for i in 1:L
-		Matrix = 1 ./(Σ .^2 .+ i) .* Σ
-		Info[1,i] = maximum(Matrix)
-		Info[2,i] = minimum(Matrix)
-		Info[3,i] = abs(Info[2,i]-Info[1,i])
-	end
-	p01 = plot(range,Info[1,:],label="Máximo valor singular",xlabel="α")
-	p02 = plot(range,Info[2,:],label="Mínimo valor singular",xlabel="α")
-	p03 = plot(range, Info[3,:],label="Número de condición",xlabel="α")
-	p0 = plot(p01,p02,p03,layout=(1,3),size=(800,350))
-	return p0
+begin
+	Sigmaaux = 1 ./(Σ .^2 .+ α) .* Σ
+	plot(Sigmaaux[1:2560], label=false, xlabel="Índices", ylabel="Valor singular", title=L"Valores singulares de la matriz $(\Sigma^\top \Sigma + \alpha I)^{-1}\Sigma^\top$")
 end
 
-# ╔═╡ ba38dd18-5af2-4100-8a2e-6dba9ee90962
-alphachoosing(0:1E-4:1E-1)
+# ╔═╡ d6c2bc4e-c624-4475-ae16-7105703f25b8
+md"""$\texttt{Figura 10.}$"""
+
+# ╔═╡ 5b1ff33a-4754-4a5b-8123-5aceb4b52cca
+md"""
+A continuación creamos la función que toma la imagen procesada y devuelve una aproximación a la imagen original por medio de la regularización de Tikhonov.
+"""
 
 # ╔═╡ dee9b6f8-43d1-4ee8-8c67-c423ee6263bd
 function inverseTikhonov(img,α)
@@ -678,17 +693,15 @@ function inverseTikhonov(img,α)
 	return X
 end
 
-# ╔═╡ 26e4ac9b-ce27-4391-b1ab-7d2aa5faf828
-md"""
-
-"""
-
 # ╔═╡ d92230f4-7922-4e0b-9cf1-b9bc808bc4f1
 begin
 	p5 = plot(Gray.(inverseTikhonov(camfilter, α)),axis=false, grid=false, title="Recuperación sin ruido")
 	p6 = plot(Gray.(inverseTikhonov(camfilternoise, α)),axis=false, grid=false, title="Recuperación con ruido")
 	plot(p5,p6,layout=(1,2), size=(800,400))
 end
+
+# ╔═╡ d627e42e-20f1-428c-a9a7-f8ddb4d3395d
+md"""$\texttt{Figura 11.}$"""
 
 # ╔═╡ fcd1857a-22c2-498c-9842-db4b87405c4d
 md"""
@@ -733,26 +746,15 @@ $\sum_{i=1}^{p}\frac{v_i\cdot u_{i}^{\top}}{\sigma_i} y = V \begin{pmatrix}\hat{
 \end{pmatrix}$
 """
 
-# ╔═╡ ec826f9b-b827-4917-a8ca-13c6e6f81cfc
-function inverseTSVD_naive(img,p)
-	Y = channelview(img)
-	yhat = vec(Uᵤ' * Y * Uᵥ)
-	yhattrunc = [yhat[1:p]; zeros(512^2-p)]
-	Yhat_S = reshape(yhattrunc ./ Σ, (512,512))
-	X = Vᵤ * Yhat_S * Vᵥ'
-	return X	
-end
-
-# ╔═╡ dc6ee861-fac4-4ec5-aa0c-0833e263e0e5
-begin
-	p7 = plot(Gray.(inverseTSVD_naive(camfilter,10000)),axis=false, grid=false, title="Recuperación sin ruido")
-	p8 = plot(Gray.(inverseTSVD_naive(camfilternoise,10000)),axis=false, grid=false, title="Recuperación con ruido")
-	plot(p7,p8,layout=(1,2), size=(800,400))
-end
-
 # ╔═╡ 5d7aabf3-927d-4540-9611-4dd8c6deb194
 md"""
+No obstante, el método de truncamiento asume que los valores singulares se encuentran ordenados de manera descendiente y dado que nuestra matriz del problema lineal viene de un producto de Kronecker entonces este ordenamiento no se tiene, como se evidenció anteriormente.
 
+Recordemos que la inversión sin ningún método de regularización es la siguiente:
+
+$X = (V_{u}\cdot\Sigma_{u}^{\dagger}\cdot U_{u}^{\top}) \cdot Y\cdot (U_{v}\cdot\Sigma_{v}^{\dagger}\cdot V_{v}^{\top});$
+
+para aplicar la regularización TSVD en este contexto se propone tomar $p_1$ valores singulares de $T_u$ y $p_2$ valores singulares de la matriz $T_v$, para de esta manera asegurar que se seleccionan valores que no se encuentran cerca a cero y corregir el problema de la inversión sin ninguna regularización.
 """
 
 # ╔═╡ 8407e0e7-2722-4371-b4c2-1b25f6284d60
@@ -768,12 +770,26 @@ function inverseTSVD(img,p)
 	return X	
 end
 
+# ╔═╡ 0da5c31e-b334-4eb4-a911-fdddc2fe32a5
+begin
+	p₁ = 250
+	p₂ = 50
+end
+
+# ╔═╡ e675a394-02d4-49af-aff8-56636d2d2d79
+md"""
+A continuación se muestra el resultado del método de inversión regularizado por truncamiento.
+"""
+
 # ╔═╡ ec368cbb-49ea-45db-838c-56b461396dee
 begin
-	p9 = plot(Gray.(inverseTSVD(camfilter,[75,75])),axis=false, grid=false, title="Recuperación sin ruido")
-	p10 = plot(Gray.(inverseTSVD(camfilternoise,[75,75])),axis=false, grid=false, title="Recuperación con ruido")
+	p9 = plot(Gray.(inverseTSVD(camfilter,[p₁,p₂])),axis=false, grid=false, title="Recuperación sin ruido")
+	p10 = plot(Gray.(inverseTSVD(camfilternoise,[p₁,p₂])),axis=false, grid=false, title="Recuperación con ruido")
 	plot(p9,p10,layout=(1,2), size=(800,400))
 end
+
+# ╔═╡ 05b8fb8d-2d94-416f-98ff-808145fac041
+md"""$\texttt{Figura 12.}$"""
 
 # ╔═╡ cecd20e5-5b7e-4061-92d0-dff450931a96
 md"""
@@ -797,6 +813,7 @@ ImageFiltering = "6a3955dd-da59-5b1f-98d4-e7296123deb5"
 ImageIO = "82e4d734-157c-48bb-816b-45c225c6df19"
 ImageShow = "4e3cecfd-b093-5904-9786-8bbb286a6a31"
 Images = "916415d5-f1e6-5110-898d-aaa5f9f070e0"
+LaTeXStrings = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
@@ -815,8 +832,10 @@ ImageFiltering = "~0.7.9"
 ImageIO = "~0.6.9"
 ImageShow = "~0.3.8"
 Images = "~0.26.1"
+LaTeXStrings = "~1.4.0"
 Plots = "~1.40.7"
 PlutoUI = "~0.7.23"
+Statistics = "~1.11.1"
 StatsBase = "~0.34.3"
 StatsPlots = "~0.15.7"
 TestImages = "~1.9.0"
@@ -826,9 +845,9 @@ TestImages = "~1.9.0"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.11.0"
+julia_version = "1.11.1"
 manifest_format = "2.0"
-project_hash = "e8b907a4193173f97f6033b4dda8a2f8a1d7fef2"
+project_hash = "8b40a704aa821c7ab7038216dcbe57169de54d18"
 
 [[deps.AbstractFFTs]]
 deps = ["LinearAlgebra"]
@@ -950,9 +969,9 @@ version = "0.1.6"
 
 [[deps.Bzip2_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "8873e196c2eb87962a2048b3b8e08946535864a1"
+git-tree-sha1 = "35abeca13bc0425cff9e59e229d971f5231323bf"
 uuid = "6e34b625-4abd-537c-b88f-471c36dfa7a0"
-version = "1.0.8+4"
+version = "1.0.8+3"
 
 [[deps.CEnum]]
 git-tree-sha1 = "389ad5c84de1ae7cf0e28e381131c98ea87d54fc"
@@ -979,9 +998,9 @@ version = "0.2.2"
 
 [[deps.ChainRulesCore]]
 deps = ["Compat", "LinearAlgebra"]
-git-tree-sha1 = "1713c74e00545bfe14605d2a2be1712de8fbcb58"
+git-tree-sha1 = "3e4b134270b372f2ed4d4d0e936aabaefc1802bc"
 uuid = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
-version = "1.25.1"
+version = "1.25.0"
 weakdeps = ["SparseArrays"]
 
     [deps.ChainRulesCore.extensions]
@@ -1191,9 +1210,9 @@ version = "0.1.11"
 
 [[deps.Expat_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "e51db81749b0777b2147fbe7b783ee79045b8e99"
+git-tree-sha1 = "f42a5b1e20e009a43c3646635ed81a9fcaccb287"
 uuid = "2e619515-83b5-522b-bb60-26c02a35a201"
-version = "2.6.4+3"
+version = "2.6.4+2"
 
 [[deps.FFMPEG]]
 deps = ["FFMPEG_jll"]
@@ -1221,9 +1240,9 @@ version = "1.8.0"
 
 [[deps.FFTW_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "4d81ed14783ec49ce9f2e168208a12ce1815aa25"
+git-tree-sha1 = "5cf2433259aa3985046792e2afc01fcec076b549"
 uuid = "f5851436-0d7a-5f13-b9de-f02708fd171a"
-version = "3.3.10+3"
+version = "3.3.10+2"
 
 [[deps.FileIO]]
 deps = ["Pkg", "Requires", "UUIDs"]
@@ -1317,9 +1336,9 @@ version = "9.55.0+4"
 
 [[deps.Giflib_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "6570366d757b50fabae9f4315ad74d2e40c0560a"
+git-tree-sha1 = "7141135f9073f135e68c5ee8df44fb0fb80689b8"
 uuid = "59f7168a-df46-5410-90c8-f2779963d0ec"
-version = "5.2.3+0"
+version = "5.2.2+1"
 
 [[deps.Glib_jll]]
 deps = ["Artifacts", "Gettext_jll", "JLLWrappers", "Libdl", "Libffi_jll", "Libiconv_jll", "Libmount_jll", "PCRE2_jll", "Zlib_jll"]
@@ -1612,9 +1631,9 @@ version = "0.1.5"
 
 [[deps.JpegTurbo_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "eac1206917768cb54957c65a615460d87b455fc1"
+git-tree-sha1 = "3447a92280ecaad1bd93d3fce3d408b6cfff8913"
 uuid = "aacddb02-875f-59d6-b918-886e6ef4fbf8"
-version = "3.1.1+0"
+version = "3.1.0+1"
 
 [[deps.KernelDensity]]
 deps = ["Distributions", "DocStringExtensions", "FFTW", "Interpolations", "StatsBase"]
@@ -1642,9 +1661,9 @@ version = "18.1.7+0"
 
 [[deps.LZO_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "854a9c268c43b77b0a27f22d7fab8d33cdb3a731"
+git-tree-sha1 = "16e6ec700154e8004dba90b4aec376f68905d104"
 uuid = "dd4b983a-f0e5-5f8d-a1b7-129d4a5fb1ac"
-version = "2.10.2+3"
+version = "2.10.2+2"
 
 [[deps.LaTeXStrings]]
 git-tree-sha1 = "dda21b8cbd6a6c40d9d02a73230f9d70fed6918c"
@@ -1732,9 +1751,9 @@ version = "1.7.0+0"
 
 [[deps.Libgpg_error_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "df37206100d39f79b3376afb6b9cee4970041c61"
+git-tree-sha1 = "dc4e8d10d4c6c11bf8d52dfd7213c09863c38cd5"
 uuid = "7add5ba3-2f88-524e-9cd5-f83b8a55f7b8"
-version = "1.51.1+0"
+version = "1.51.0+1"
 
 [[deps.Libiconv_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1744,9 +1763,9 @@ version = "1.17.0+1"
 
 [[deps.Libmount_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "84eef7acd508ee5b3e956a2ae51b05024181dee0"
+git-tree-sha1 = "d841749621f4dcf0ddc26a27d1f6484dfc37659a"
 uuid = "4b2f31a3-9ecc-558c-b454-b3730dcb73e9"
-version = "2.40.2+2"
+version = "2.40.2+1"
 
 [[deps.Libtiff_jll]]
 deps = ["Artifacts", "JLLWrappers", "JpegTurbo_jll", "LERC_jll", "Libdl", "Pkg", "Zlib_jll", "Zstd_jll"]
@@ -1756,9 +1775,9 @@ version = "4.4.0+0"
 
 [[deps.Libuuid_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "edbf5309f9ddf1cab25afc344b1e8150b7c832f9"
+git-tree-sha1 = "9d630b7fb0be32eeb5e8da515f5e8a26deb457fe"
 uuid = "38a345b3-de98-5d2b-a5d3-14cd9215e700"
-version = "2.40.2+2"
+version = "2.40.2+1"
 
 [[deps.LinearAlgebra]]
 deps = ["Libdl", "OpenBLAS_jll", "libblastrampoline_jll"]
@@ -1970,10 +1989,10 @@ uuid = "458c3c95-2e84-50aa-8efc-19380b2a3a95"
 version = "1.1.23+1"
 
 [[deps.OpenSpecFun_jll]]
-deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "1346c9208249809840c91b26703912dff463d335"
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "Libdl", "Pkg"]
+git-tree-sha1 = "418e63d434f5ca12b188bbb287dfbe10a5af1da4"
 uuid = "efe28fd5-8261-553b-a9e1-b2916fc3738e"
-version = "0.5.6+0"
+version = "0.5.5+1"
 
 [[deps.Opus_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -2569,9 +2588,9 @@ version = "0.4.1"
 
 [[deps.Unitful]]
 deps = ["Dates", "LinearAlgebra", "Random"]
-git-tree-sha1 = "c0667a8e676c53d390a09dc6870b3d8d6650e2bf"
+git-tree-sha1 = "01915bfcd62be15329c9a07235447a89d588327c"
 uuid = "1986cc42-f94f-5a68-af5c-568840ba703d"
-version = "1.22.0"
+version = "1.21.1"
 
     [deps.Unitful.extensions]
     ConstructionBaseUnitfulExt = "ConstructionBase"
@@ -2642,15 +2661,15 @@ version = "1.1.42+0"
 
 [[deps.Xorg_libX11_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libxcb_jll", "Xorg_xtrans_jll"]
-git-tree-sha1 = "9dafcee1d24c4f024e7edc92603cedba72118283"
+git-tree-sha1 = "ff1fdd02e71717c7418deb1c42f487529d0b9574"
 uuid = "4f6342f7-b3d2-589e-9d20-edeb45f2b2bc"
-version = "1.8.6+3"
+version = "1.8.6+2"
 
 [[deps.Xorg_libXau_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "2b0e27d52ec9d8d483e2ca0b72b3cb1a8df5c27a"
+git-tree-sha1 = "7966eb654d74306e553ce28b9aea17969fc1966c"
 uuid = "0c0b7dd1-d40b-584c-a123-a41640f87eec"
-version = "1.0.11+3"
+version = "1.0.11+2"
 
 [[deps.Xorg_libXcursor_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libXfixes_jll", "Xorg_libXrender_jll"]
@@ -2660,15 +2679,15 @@ version = "1.2.3+0"
 
 [[deps.Xorg_libXdmcp_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "02054ee01980c90297412e4c809c8694d7323af3"
+git-tree-sha1 = "6a0d3b4248b01faa44509c5ea363881d3ad3f5eb"
 uuid = "a3789734-cfe1-5b06-b2d0-1dd0d9d62d05"
-version = "1.1.4+3"
+version = "1.1.4+2"
 
 [[deps.Xorg_libXext_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libX11_jll"]
-git-tree-sha1 = "d7155fea91a4123ef59f42c4afb5ab3b4ca95058"
+git-tree-sha1 = "fb3f116a4efb81aecf8c415e9423869c6ee0f21f"
 uuid = "1082639a-0dae-5f34-9b06-72781eeb8cb3"
-version = "1.3.6+3"
+version = "1.3.6+2"
 
 [[deps.Xorg_libXfixes_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libX11_jll"]
@@ -2702,15 +2721,15 @@ version = "0.9.11+1"
 
 [[deps.Xorg_libpthread_stubs_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "fee57a273563e273f0f53275101cd41a8153517a"
+git-tree-sha1 = "9c7539767c23ed0db32fd50916d8f5807ee11af8"
 uuid = "14d82f49-176c-5ed1-bb49-ad3f5cbd8c74"
-version = "0.1.1+3"
+version = "0.1.1+2"
 
 [[deps.Xorg_libxcb_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "XSLT_jll", "Xorg_libXau_jll", "Xorg_libXdmcp_jll", "Xorg_libpthread_stubs_jll"]
-git-tree-sha1 = "1a74296303b6524a0472a8cb12d3d87a78eb3612"
+git-tree-sha1 = "b4678b3c5ee394ae6422c415b231b8015c85542f"
 uuid = "c7cfdc94-dc32-55de-ac96-5a1b8d977c5b"
-version = "1.17.0+3"
+version = "1.17.0+2"
 
 [[deps.Xorg_libxkbfile_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libX11_jll"]
@@ -2762,9 +2781,9 @@ version = "2.39.0+0"
 
 [[deps.Xorg_xtrans_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "b9ead2d2bdb27330545eb14234a2e300da61232e"
+git-tree-sha1 = "26ded386f85de26df35524639e525c2018f68ddd"
 uuid = "c5fb5394-a638-5e4d-96e5-b29de1b5cf10"
-version = "1.5.0+3"
+version = "1.5.0+2"
 
 [[deps.Zlib_jll]]
 deps = ["Libdl"]
@@ -2773,9 +2792,9 @@ version = "1.2.13+1"
 
 [[deps.Zstd_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "622cf78670d067c738667aaa96c553430b65e269"
+git-tree-sha1 = "7dc5adc3f9bfb9b091b7952f4f6048b7e37acafc"
 uuid = "3161d3a3-bdf6-5164-811a-617609db77b4"
-version = "1.5.7+0"
+version = "1.5.6+2"
 
 [[deps.fzf_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -2785,9 +2804,9 @@ version = "0.56.3+0"
 
 [[deps.libaom_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "522c1df09d05a71785765d19c9524661234738e9"
+git-tree-sha1 = "1827acba325fdcdf1d2647fc8d5301dd9ba43a9d"
 uuid = "a4ae2306-e953-59d6-aa16-d00cac43593b"
-version = "3.11.0+0"
+version = "3.9.0+0"
 
 [[deps.libass_jll]]
 deps = ["Artifacts", "Bzip2_jll", "FreeType2_jll", "FriBidi_jll", "HarfBuzz_jll", "JLLWrappers", "Libdl", "Zlib_jll"]
@@ -2814,15 +2833,15 @@ version = "2.0.3+0"
 
 [[deps.libpng_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Zlib_jll"]
-git-tree-sha1 = "b7bfd3ab9d2c58c3829684142f5804e4c6499abc"
+git-tree-sha1 = "9c42636e3205e555e5785e902387be0061e7efc1"
 uuid = "b53b4c65-9356-5827-b1ea-8c7a1a84506f"
-version = "1.6.45+0"
+version = "1.6.44+1"
 
 [[deps.libsixel_jll]]
-deps = ["Artifacts", "JLLWrappers", "JpegTurbo_jll", "Libdl", "libpng_jll"]
-git-tree-sha1 = "1e53ffe8941ee486739f3c0cf11208c26637becd"
+deps = ["Artifacts", "JLLWrappers", "JpegTurbo_jll", "Libdl", "Pkg", "libpng_jll"]
+git-tree-sha1 = "80c5ae2c7b5163441018f4666b179f1ffca194c1"
 uuid = "075b6546-f08a-558a-be8f-8157d0f608a5"
-version = "1.10.4+0"
+version = "1.10.3+2"
 
 [[deps.libvorbis_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Ogg_jll", "Pkg"]
@@ -2876,7 +2895,7 @@ version = "1.4.1+2"
 # ╟─7a337404-eb3a-4639-93f5-cd2c907b6422
 # ╟─ff935e28-0b09-44c9-b80e-5f45fee7b400
 # ╟─471bba4a-305a-4123-a824-bb1f91e32348
-# ╠═3838a8ee-63f9-4f41-85f3-502603433098
+# ╟─3838a8ee-63f9-4f41-85f3-502603433098
 # ╠═7f0d9d18-2286-4a0c-8f3b-14eec26a1a31
 # ╠═dd989a69-1961-4fe0-98e5-2698a852d8e2
 # ╟─993aff42-0eb3-4cd1-9d99-333d5a2d2669
@@ -2923,11 +2942,14 @@ version = "1.4.1+2"
 # ╟─f84b8b24-251a-4f33-a724-0481b257a1a4
 # ╟─2cb6f484-a392-405c-8a17-1c75f56b96fa
 # ╠═a7724f6d-5b36-4993-9982-627a73d41243
-# ╠═5ffbb790-50e5-4736-8417-d4a398b74191
 # ╠═6afed8e7-49e9-4a73-8aee-795e15deaba0
+# ╟─0770dd5d-f843-4b3a-bf46-847b467ef9ff
+# ╟─5690a382-23ef-4b13-9daa-d8ab45870ad7
+# ╟─991edf6d-e61a-4a10-a1f4-d98e9014e756
 # ╟─c4ac11fd-99fd-4315-8698-1c6216af4eb1
 # ╠═f9d0918b-78aa-4836-87fe-ced9d9e91239
-# ╠═37266eb1-d5dc-4bef-b31d-7f967c88df66
+# ╠═50a9c393-6fb5-447c-add6-08bd622e950c
+# ╟─37266eb1-d5dc-4bef-b31d-7f967c88df66
 # ╟─c1db2105-49ab-4768-86d2-cf10ac1abf97
 # ╟─1333f1d1-0516-470e-bda6-3e11b8f76e8a
 # ╟─264f4e99-4173-4ce1-80db-0e6eef38695f
@@ -2939,28 +2961,31 @@ version = "1.4.1+2"
 # ╟─4d79fbd1-47b6-47f5-8814-c60b722dbbbb
 # ╟─e4bba822-23bf-4fef-b1e5-2178c6e6821b
 # ╟─b7e279ad-4400-4013-a363-2bbc104913b7
-# ╠═f68d17e2-719d-4d58-807c-041bc2c44602
-# ╠═b1070518-aacc-44f5-ad26-52fa4c1c6107
+# ╟─f68d17e2-719d-4d58-807c-041bc2c44602
+# ╟─b1070518-aacc-44f5-ad26-52fa4c1c6107
+# ╟─b5839619-5456-4215-a682-9d87c6095e86
 # ╟─85f4c493-63e1-42ce-b6b5-eaa0cdc52bce
 # ╟─05489b85-4612-4498-b57d-7f6ab3d5e960
 # ╟─2a5beb83-1635-4ed3-8a8c-1e27e157b0f0
 # ╟─88357769-7764-4354-bf1a-86980b345c7a
+# ╟─c81938a2-7720-4b2c-a620-9d82189b8e0f
 # ╠═578af934-0c6e-424c-88c1-7f8c69c5b881
-# ╠═d1731454-607c-4ccc-bbbd-d71d84653059
-# ╠═3acdef8b-ea7f-4e0e-bea4-86e951450788
-# ╠═2574bb61-47dc-4ff0-941d-1d95c3c2d15c
-# ╠═ba38dd18-5af2-4100-8a2e-6dba9ee90962
+# ╟─d61b8630-83ef-4743-981a-bed47ed5bd79
+# ╟─3acdef8b-ea7f-4e0e-bea4-86e951450788
+# ╟─d6c2bc4e-c624-4475-ae16-7105703f25b8
+# ╟─5b1ff33a-4754-4a5b-8123-5aceb4b52cca
 # ╠═dee9b6f8-43d1-4ee8-8c67-c423ee6263bd
-# ╠═26e4ac9b-ce27-4391-b1ab-7d2aa5faf828
-# ╠═d92230f4-7922-4e0b-9cf1-b9bc808bc4f1
+# ╟─d92230f4-7922-4e0b-9cf1-b9bc808bc4f1
+# ╟─d627e42e-20f1-428c-a9a7-f8ddb4d3395d
 # ╟─fcd1857a-22c2-498c-9842-db4b87405c4d
 # ╟─526bdc20-e0c8-4b05-a5d1-6f409f338c38
 # ╟─960aa457-7913-46d9-913d-cabe186ed71d
-# ╠═ec826f9b-b827-4917-a8ca-13c6e6f81cfc
-# ╠═dc6ee861-fac4-4ec5-aa0c-0833e263e0e5
-# ╠═5d7aabf3-927d-4540-9611-4dd8c6deb194
+# ╟─5d7aabf3-927d-4540-9611-4dd8c6deb194
 # ╠═8407e0e7-2722-4371-b4c2-1b25f6284d60
-# ╠═ec368cbb-49ea-45db-838c-56b461396dee
+# ╠═0da5c31e-b334-4eb4-a911-fdddc2fe32a5
+# ╟─e675a394-02d4-49af-aff8-56636d2d2d79
+# ╟─ec368cbb-49ea-45db-838c-56b461396dee
+# ╟─05b8fb8d-2d94-416f-98ff-808145fac041
 # ╟─cecd20e5-5b7e-4061-92d0-dff450931a96
 # ╟─3d19f24e-2990-4da6-b5a2-58ea8c6e717c
 # ╟─00000000-0000-0000-0000-000000000001

@@ -1,976 +1,641 @@
 ### A Pluto.jl notebook ###
-# v0.20.5
+# v0.19.40
 
 using Markdown
 using InteractiveUtils
 
-# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
-macro bind(def, element)
-    #! format: off
-    return quote
-        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
-        local el = $(esc(element))
-        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
-        el
-    end
-    #! format: on
-end
-
-# ╔═╡ b01d7d50-c521-11ef-32ce-0751a4c10dc5
+# ╔═╡ 0cfd667b-2092-4ad3-9369-a18b8dc7e9f2
 using PlutoUI
 
-# ╔═╡ 3241856d-b2b9-4236-9759-49cd6e52e974
+# ╔═╡ e68b5266-1321-4900-a6d2-8471734ecbde
 begin
 	using Plots,Colors,ColorVectorSpace,ImageShow,FileIO,ImageIO
 	using HypertextLiteral
-	using Images, ImageShow 
+	using Images, ImageShow, ImageCore 
 	using TestImages, ImageFiltering
 	using Statistics,  Distributions, LinearAlgebra
 	using StatsBase, StatsPlots
 end
 
-# ╔═╡ 0108e854-2215-42ce-b522-7455e1c694ad
-using FFTW
+# ╔═╡ fa70bd89-948e-4aad-aa5f-103bca356996
+PlutoUI.TableOfContents(title="Compresión de Imágenes Basada en Wavelets", aside=true)
 
-# ╔═╡ a11c6ad2-f459-4d17-9135-1c272a1f85eb
-PlutoUI.TableOfContents(title="Transformada de Fourier en Imágenes", aside=true)
-
-# ╔═╡ c7e5d4f1-65ab-4e6e-95fb-1fb293a4ac79
+# ╔═╡ e42eb10e-4456-441e-8efa-b83673219560
 md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a **labmatecc_bog@unal.edu.co**.
 
 Tu participación es fundamental para hacer de este curso una experiencia aún mejor."""
 
-# ╔═╡ 88e077fc-1e7c-4876-9075-f6d673988a11
+# ╔═╡ 5798176a-d2d6-47ad-9cc9-6f410a3bf92b
 md"""**Este cuaderno está basado en actividades del seminario Procesamiento de Imágenes de la Universidad Nacional de Colombia, sede Bogotá, dirigido por el profesor Jorge Mauricio Ruíz en 2024-2.**
 
-Elaborado por Juan Galvis, Jorge Mauricio Ruíz, Yessica Trujillo y Carlos Nosa."""
+Elaborado por Juan Galvis, Jorge Mauricio Ruíz, Angie Forero, Carlos Nosa y Yessica Trujillo."""
 
-# ╔═╡ 0d3693d4-ff96-4876-93bb-e6566ce14aa0
+# ╔═╡ c5794c1b-3405-4b60-9157-ef5da147cee8
 md"""Vamos a usar las siguientes librerías:"""
 
-# ╔═╡ ea8f127b-729c-410d-be47-e15eb13a0e44
+# ╔═╡ d9629211-6630-4748-b57b-c5172b211727
 md"""
 # Introducción
 """
 
-# ╔═╡ 9bb3294c-79d3-495b-a75c-4a855e5113c3
+# ╔═╡ 51ff806d-79de-4001-b727-224e80c51f04
 md"""
-La Transformada Discreta de Fourier (DFT) es una herramienta fundamental en procesamiento de señales e imágenes, ya que permite analizar el contenido en frecuencia de una señal discreta. Su aplicación en imágenes posibilita el filtrado, la compresión y la mejora de calidad, entre otros usos.
+¿Por qué caben miles de fotos en tu teléfono? Supongamos que queremos comprar un nuevo smartphone. No necesitamos nada sofisticado, solo un dispositivo básico con 16 gigabytes de memoria interna. Tras instalar las aplicaciones esenciales, nos quedan 4 gigabytes disponibles para nuestras fotos y videos.
 
-La DFT transforma una secuencia de valores en el dominio del tiempo o espacio a una representación en el dominio de la frecuencia. Esta transformación es especialmente útil para entender la composición de una señal y para realizar operaciones en dicho dominio, como la eliminación de ruido o la detección de características específicas.
+Revisamos las especificaciones del dispositivo y notamos que tiene una excelente cámara de 16.1 megapíxeles. Como sabemos, una imagen en color utiliza tres canales (rojo, verde y azul) y algo de información adicional. Esto nos lleva a suponer que cada imagen podría ocupar cerca de:
+
+$16.1 \text{ MP} × 3 \text{ canales} + \text{datos extra} ≈ 50 \text{ MB}$
+
+Con solo 4 gigabytes libres, esto implicaría que apenas podríamos guardar unas 80 fotos. ¡Una gran decepción!
+
+Pero todos sabemos que esto no es cierto. De hecho, miles (incluso decenas de miles) de imágenes caben en nuestros teléfonos. Al revisar el tamaño real de las fotos en el sistema, descubrimos que no ocupan ni cerca de 50 MB cada una. ¿Entonces, qué fue lo que no tuvimos en cuenta en nuestra estimación rápida?
+
+La respuesta es: **compresión de imágenes**. Ese es precisamente el tema de este cuaderno. A lo largo de las últimas décadas, se han desarrollado métodos muy eficientes de compresión de imágenes. Uno de los más conocidos es JPEG, basado en la Transformada Discreta del Coseno (DCT), una pariente cercana de la Transformada de Fourier Discreta (DFT). Además de estas, existen métodos modernos que utilizan transformadas wavelet discretas, y es a estas últimas a las que nos dedicaremos aquí.
+"""
+
+# ╔═╡ dd55ff72-341e-43f3-8796-0df7a6775bf6
+md"""
+Comenzamos tratando de usar consideraciones generales y algo de intuición para encontrar un método práctico de comprimir una cadena de números, como por ejemplo:
+
+$v = (7, 9, 1, 3)$
+
+El objetivo final es ahorrar espacio de almacenamiento. Una idea inicial: ¿qué tal si simplemente reemplazamos cada par sucesivo de números por su promedio?
+Observamos que:
+
+$\frac{7+9}{2} = 8, \ \frac{1+3}{2} = 2$
+
+Entonces aplicamos la transformación:
+
+$(7,9,1,3) \to (8,2).$
+
+Sin embargo, no es posible recuperar fielmente la secuencia original solo a partir de los promedios. La secuencia (8, 2) podría haber salido también de (5, 11, 0, 4), (4, 12, 5, −1), o incluso infinitas otras combinaciones.
+
+¿Qué pasa si además de los promedios, calculamos también las semidiferencias de cada par sucesivo?
+Notamos que:
+
+$\frac{9-7}{2} = 1, \ \frac{3-1}{2} = 1$
+
+Y ahora aplicamos la nueva transformación:
+
+$(7,9,1,3)\to (8,2|1,1)$
+
+Con esta información sí podemos reconstruir la secuencia original:
+
+$7 = 8-1, 9= 8+1, 1 = 2-1, 3 = 2 + 1.$
+
+> **Observación fundamental:** Una secuencia se puede reconstruir fielmente a partir de los promedios y las semidiferencias de los pares sucesivos de elementos de la secuencia.
+"""
+
+# ╔═╡ f744e4bf-f0b7-45d0-be54-22b4f918c344
+md"""
+**Definición Entropía de una Secuencia.** Supongamos que la cadena $v$ consiste en símbolos del conjunto:
+
+$S = \{s_1, s_2, \dots, s_n\}$
+
+los cuales ocurren con frecuencias relativas:
+
+$\{p_1, p_2, \dots, p_n\}$
+
+Entonces, la entropía de la secuencia $v$ se define como:
+
+$\text{Ent}(v) = - \sum_{k=1}^{n} p_k \log_2(p_k)
+              = \sum_{k=1}^{n} p_k \log_2\left(\frac{1}{p_k}\right)$
+
+La entropía de una cadena $v$ de símbolos proporciona el límite inferior para el número promedio de bits por símbolo que podemos esperar alcanzar al usar una codificación binaria para $v$. En otras palabras, ningún esquema de compresión sin pérdida puede superar este límite, es la frontera fundamental de la eficiencia en la codificación.
+
+Un cálculo sencillo muestra que la entropía de la cadena original $(7, 9, 1, 3)$ es:
+
+$H_1 = -4 \cdot \left[0.25 \cdot \log_2(0.25)\right] = 2$
+
+mientras que la entropía de la cadena transformada $(8, 2 \mid 1, 1)$ es:
+
+$H_2 = -\left[0.25 \cdot \log_2(0.25) + 0.25 \cdot \log_2(0.25) + 0.5 \cdot \log_2(0.5)\right] = 1.5$
+
+Esto indica que la transformación ha reducido la entropía, lo que sugiere una posible mejora en la compresión de los datos.
+
 
 """
 
-# ╔═╡ 678f6525-9cb9-414a-9d55-248956911512
+# ╔═╡ 8c6dc39d-583c-4297-bfec-866b9be75641
+md"""# La Transformada Discreta de Wavelet de Haar"""
+
+# ╔═╡ 1d3c2b72-d0b1-4abe-9ef4-4a35b3d1721e
 md"""
-En análisis de frecuencias en señales, las secuencias trigonométricas como el coseno y el seno juegan un papel fundamental. Estas secuencias se pueden definir como:
+En esta sección se define la transformada de Haar discreta que encapsula la transformación por promedios y por semidiferencias, mostrando diferentes resultados acerca de esta transformación.
+"""
 
-$c(k) = A \cos(2\pi f k)$
-$s(k) = A \sin(2\pi f k)$
+# ╔═╡ f42fd42a-6aa6-48e6-8c51-9b128dc798ce
+md"""
+**Definición Transformada Haar Discreta (HWT).** Dada una secuencia de números reales de longitud par $x = (x_1, x_2, ..., x_N)$, definimos su Transformada Haar Wavelet Discreta (no normalizada) como el par de secuencias $(y | z)$, donde:
 
-donde $A$ es la amplitud y $f$ es la frecuencia medida en revoluciones por muestra. Para simplificar el análisis, combinamos estas secuencias en una única secuencia exponencial compleja:
+$y_n = \frac{1}{2}(x_{2n} + x_{2n-1}), \quad
+z_n = \frac{1}{2}(x_{2n} - x_{2n-1})
+\quad \text{para } 1 \leq n \leq N/2.$
+Llamamos a la secuencia y la parte pasa-bajas (low-pass), y a la secuencia z la parte pasa-altas (high-pass) de la transformada.
 
-$w(k) = A e^{2\pi i f k} = A \cos(2\pi f k) + i A \sin(2\pi f k)$
 
-Esta representación nos proporciona varias propiedades importantes:
+Es fácil ver que la transformada Haar es invertible usando las siguientes fórmulas:
 
-1. **Periodicidad**: Mientras que una señal seno o coseno continua es siempre periódica, sus contrapartes discretas solo son $N$-periódicas si la frecuencia satisface $f = \frac{n}{N}$, donde $n$ es un entero. Esto implica que las secuencias trigonométricas discretas solo son periódicas si tienen frecuencias racionales.
-2. **Simetría**:
-   - El coseno discreto es una función par: $c(-k) = c(k)$ y, si es $N$-periódico, también satisface $c(N-k) = c(k)$.
-   - El seno discreto es impar: $s(N-k) = -s(k)$.
-   - La exponencial compleja cumple $w(N-k) = w(-k)$.
-3. **Identidad de señales con frecuencias desplazadas**: En señales continuas, dos sinusoides de diferentes frecuencias son distintas. Sin embargo, en señales discretas, dos secuencias exponenciales con frecuencias $f_1$ y $f_2$ son idénticas si difieren en un número entero: $w(k) = e^{2\pi i (f+m) k}$ para cualquier entero $m$. Además, dos secuencias coseno de frecuencias $n_1$ y $n_2$ cumplen $c_1(k) = c_2(k)$ si $n_1 + n_2 = N$, y dos secuencias seno cumplen $s_1(k) = -s_2(k)$ en la misma condición.
+$x_{2n-1} = y_{n}-z_{n} , x_{2n} = y_{n}+z_{n}$
 
-Estas propiedades son clave para el desarrollo de la DFT, que utiliza una base de $N$ secuencias exponenciales complejas de la forma:
+Con estas ecuaciones, podemos recuperar la secuencia original $x$ a partir de $y$ y $z$.
 
-$w(k) = A e^{2\pi i n k / N}, \quad n = 0, \dots, N - 1$
-
-para descomponer señales discretas en sus componentes espectrales. A partir de esta base, se establecen técnicas de análisis de frecuencia de señales periódicas y finitas.
 
 """
 
-# ╔═╡ 3aa09adf-7454-4938-ba6b-2021093797f7
-md"""
-# Transformada discreta de Fourier en una dimensión
-"""
-
-# ╔═╡ 6240e543-bba8-4e7c-affe-d7323d181d2e
-md"""
-Dada una secuencia discreta de $N$ muestras $x[n]$, su Transformada Discreta de Fourier (DFT) se define como:
-
-$X[k] = \sum_{n=0}^{N-1} x[n] e^{-i 2\pi k n / N}, \quad k = 0, 1, \dots, N-1$
-
-donde:
--  $X[k]$ representa los coeficientes espectrales en el dominio de la frecuencia.
--  $x[n]$ es la señal en el dominio del tiempo.
--  $N$ es el número total de muestras de la señal.
--  $i$ es la unidad imaginaria $( i^2 = -1 )$.
--  La frecuencia discreta está dada por $f_k = \frac{k}{N} f_s$, donde $f_s$ es la frecuencia de muestreo que es la cantidad de muestras que se toman por segundo para digitalizar una señal analógica. Se mide en Hertz (Hz) y determina la resolución en el dominio del tiempo de la señal muestreada.
-
-**Ejemplo.** Se considera una señal discreta construida como una onda senoidal con frecuencias de $10$ Hz , muestreadas a $f_s$ Hz durante $N$ muestras. Para estudiar su contenido espectral, se aplica la Transformada Discreta de Fourier (DFT) usando la función `fft` de Julia, que devuelve coeficientes complejos cuyos módulos representan la magnitud de las componentes en frecuencia. La frecuencia de cada componente en el espectro se obtiene como $f_k = k f_s / N$, permitiendo identificar picos en $10$ Hz y $f_s-10$ Hz, lo que confirma la presencia de dicha frecuencia en la señal original. Este análisis muestra cómo la DFT descompone la señal en sus componentes fundamentales.
-"""
-
-
-# ╔═╡ e0b31a67-f9a5-4273-85df-ca059936d4ee
+# ╔═╡ 0c3e13bd-67dd-4018-bd3e-daa20f457537
 begin
-	# Parámetros de la señal
-	N = 20  # Número de muestras
-	fs = 60 # Frecuencia de muestreo en Hz
-	t = (0:N-1) / fs  # Vector de tiempo
-	
-	# Generar una señal como combinación de dos senoidales
-	f1 = 10  # Frecuencia (Hz)
-	x = sin.(2π * f1 * t)   # Señal discreta
-	
-	# Calcular la DFT usando FFT
-	X = fft(x)
-	
-	# Obtener la frecuencia correspondiente a cada coeficiente de la FFT
-	freqs = (0:N-1) * (fs / N)
-	
-	# Graficar la señal original
-	plot(t, x, xlabel="Tiempo (s)", ylabel="Amplitud", title="Señal Discreta", label="x(t)", lw=2,marker=:o)
+	N = 512
+	x = [10*cos(2π*i/N*4) + 4*cos(2π*i/N*64) for i in 1:N]
 end
 
-# ╔═╡ b326acea-88a7-43b6-bda5-09284511fa99
-md"""$\texttt{Figura 1. Señal discreta.}$"""
-
-# ╔═╡ a6421d28-fc4e-41b7-8317-e3fa337bd8b4
-# Graficar la magnitud de la DFT
-plot(freqs[1:N], abs.(X[1:N]), seriestype=:stem, markershape=:circle, xlabel="Frecuencia (Hz)", ylabel="Magnitud", title="DFT de la Señal", label="|X(f)|", lw=2)
-
-# ╔═╡ 6100e9bb-2b54-43ae-b41c-91724170d75a
-md"""$\texttt{Figura 2. DFT de la Figura 1.}$"""
-
-# ╔═╡ 9d06ba70-61f6-4199-835c-68f89d4b2b1f
-md"""
-La gráfica muestra la magnitud de la Transformada Discreta de Fourier (DFT) en función de la frecuencia. En el eje horizontal, se representan las frecuencias correspondientes a cada coeficiente $X[k]$, mientras que en el eje vertical, se muestra su magnitud $|X[k]|$. Los picos en la gráfica indican la presencia de componentes frecuenciales dominantes en la señal original, permitiendo identificar qué frecuencias están presentes y con qué intensidad. La visualización con marcadores mejora la interpretación al destacar los valores discretos de la DFT.
-"""
-
-# ╔═╡ 533c3579-7a43-4c89-a2d5-a881536723cf
-begin
-	X_shifted = fftshift(X)  # Centrar la transformada
-
-	# Obtener magnitudes y fases de los coeficientes
-	magnitudes = abs.(X_shifted)  # Módulo de X[k]
-	fases = angle.(X_shifted)  # Fase de X[k]
-	
-	# Gráfica en coordenadas polares con vectores
-	plot(proj=:polar, title="Coeficientes de la DFT en Coordenadas Polares")
-	quiver!(zeros(N), zeros(N), quiver=(fases, magnitudes), color=:black, label="X[k]")  # Vectores
-	scatter!(fases, magnitudes, color=:red, markersize=5, label="Puntos X[k]")  # Puntos en los extremos
+# ╔═╡ 88fe22db-e8a5-4584-b2dd-5a8f4729990c
+function haar_transform(x)
+    N = length(x)
+    y = Float64[]
+    z = Float64[]
+    for n in 1:2:N-1
+        push!(y, 0.5*(x[n] + x[n+1]))
+        push!(z, 0.5*(x[n+1] - x[n]))
+    end
+    return vcat(y, z)
 end
 
-# ╔═╡ 05c736e8-935d-4ce8-aed6-f59b47a65ca9
-md"""$\texttt{Figura 3. Coeficientes de la DFT en Coordenadas Polares.}$"""
+# ╔═╡ 6ee50b2d-f4fc-4b12-a0be-05042b50f9bc
+begin
+	hwt = haar_transform(x)
+	
+	plot1 = plot(x, title="Original Signal", legend=false, ylim=(-15,15), xlabel="n", ylabel="x[n]")
+	plot2 = plot(hwt, title="Haar Wavelet Transform", legend=false, ylim=(-15,15), xlabel="n", ylabel="Transform")
+	
+	plot(plot1, plot2, layout=(1,2), size=(1000,400))
+end
 
-# ╔═╡ 756e320f-019a-4004-9db0-0005ad23dd90
+# ╔═╡ 0326d2d3-a5ee-4f7a-9687-5dbf69c61649
 md"""
-La representación en coordenadas polares muestra los coeficientes de la Transformada Discreta de Fourier (DFT) como vectores radiales. Cada coeficiente $X[k]$ se visualiza con un ángulo correspondiente a su fase $\angle X[k]$ y una magnitud $|X[k]|$ que indica su contribución en la señal original. Los vectores, trazados en negro, parten del origen y terminan en la ubicación compleja de cada coeficiente, mientras que los puntos resaltan sus posiciones finales.
+$\texttt{Figura 1}$
 """
 
-# ╔═╡ 77ab6c80-5ed1-43f7-a68e-5a8e4fb5680a
+# ╔═╡ a2c31c65-3e05-4a44-ab2d-0882e6e6c04f
 md"""
-Considere la siguiente representación
+Para un vector columna general $v$ de dimensión par $N$, podemos describir formalmente su transformada de Haar en forma matricial como:
 
-$\boldsymbol{x} =
+$\text{HWT}(v) = W_N \cdot v =
 \begin{bmatrix}
-x(0) \\
-x(1) \\
-\vdots \\
-x(N - 1)
-\end{bmatrix}\quad\text{ y }\quad\boldsymbol{X}=
+H_N \\
+G_N
+\end{bmatrix}
+\cdot v$
+
+donde la matriz de la transformada de Haar $W_N$ está compuesta por las partes de promedio $H_N$ y diferencia $G_N$, ambas de tamaño $\frac{N}{2} \times N$:
+
+*Matriz de la transformada de Haar $W_N$:*
+
+$W_N =
 \begin{bmatrix}
-X(0) \\
-X(1) \\
-\vdots \\
-X(N - 1)
-\end{bmatrix}.$
+\frac{1}{2} & \frac{1}{2} & 0 & 0 & \cdots & 0 & 0 \\
+0 & 0 & \frac{1}{2} & \frac{1}{2} & \cdots & 0 & 0 \\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+0 & 0 & 0 & 0 & \cdots & \frac{1}{2} & \frac{1}{2} \\ \hline
+-\frac{1}{2} & \frac{1}{2} & 0 & 0 & \cdots & 0 & 0 \\
+0 & 0 & -\frac{1}{2} & \frac{1}{2} & \cdots & 0 & 0 \\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+0 & 0 & 0 & 0 & \cdots & -\frac{1}{2} & \frac{1}{2}
+\end{bmatrix}$
 
-Recordando que 
+Parte de promedios $H_N$:
 
-$X[k] = \sum_{n=0}^{N-1} x[n] e^{-i 2\pi k n / N}, \quad k = 0, 1, \dots, N-1,$
+$H_N =
+\begin{bmatrix}
+\frac{1}{2} & \frac{1}{2} & 0 & 0 & \cdots & 0 & 0 \\
+0 & 0 & \frac{1}{2} & \frac{1}{2} & \cdots & 0 & 0 \\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+0 & 0 & 0 & 0 & \cdots & \frac{1}{2} & \frac{1}{2}
+\end{bmatrix}$
 
-se puede hallar una relación matricial entre los vectores $\boldsymbol{x}$ y $\boldsymbol{X}$, en efecto, defina
+Parte de diferencias $G_N$:
 
-$\omega_N =  e^{i\frac{2\pi}{N}}$
+$G_N =
+\begin{bmatrix}
+-\frac{1}{2} & \frac{1}{2} & 0 & 0 & \cdots & 0 & 0 \\
+0 & 0 & -\frac{1}{2} & \frac{1}{2} & \cdots & 0 & 0 \\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+0 & 0 & 0 & 0 & \cdots & -\frac{1}{2} & \frac{1}{2}
+\end{bmatrix}$
 
-y para $1\leq i,j,\leq N$ sea $A_{ij} = \omega_{N}^{-(i-1)(j-1)}$ de esta manera se tiene la relación
+Fórmula de inversión: También podemos expresar la fórmula de reconstrucción de la secuencia original como multiplicación matricial:
 
-$\boldsymbol{X} = A \cdot \boldsymbol{x}.$
+$x = W_N^{-1} \cdot
+\begin{bmatrix}
+y \\
+z
+\end{bmatrix}$
+
+donde $y$ representa la parte de baja frecuencia (promedios) y $z$ la parte de alta frecuencia (diferencias).
+
 """
 
-# ╔═╡ 574cfed5-ae2a-4362-82af-eda31021f8c4
+# ╔═╡ 99517dbc-9e81-45e8-861e-40af82e32f33
 md"""
-**Teorema 1.** Para la matriz $A$ definida anteriormente se cumple que $\frac{1}{N}A^{\ast}A = \frac{1}{N}A A^{\ast} =  I$.
-
-*Demostración.* Considere $1\leq j_1,j_2\leq N$, de esta manera, el producto interno entre la columna $j_1$ y la columna $j_2$ es igual a 
-
-$\begin{align*}
-col_{j_1}^\top \overline{col_{j_2}} &= \sum_{i=1}^{N} A_{ij_1}\overline{A_{ij_2}}\\
-&= \sum_{i=1}^{N} \omega_{N}^{-(i-1)(j_1-1)}\overline{\omega_{N}^{-(i-1)(j_2-1)}}\\
-&= \sum_{i=1}^{N} [\omega_{N}^{j_2-j_1}]^{i-1}\\
-&= \sum_{i=0}^{N-1} [\omega_{N}^{j_2-j_1}]^{i}\\
-&= \begin{cases}
-N, & j_1 = j_2,\\
-0, & j_1\not=j_2.
-\end{cases}
-\end{align*}$
+En la siguiente función se calcula explícitamente la matriz para la transformación.
 """
 
-# ╔═╡ f100c697-d4a8-4a51-9d01-381b2b3412cf
+# ╔═╡ 69ceb27d-457b-425a-88fd-2fd717ddef25
+function haar_wavelet_matrix(N::Int)
+    # Verifica si N es par
+    if N % 2 != 0
+        error("La dimensión N debe ser par.")
+    end
+
+    W = zeros(Float64, N, N)
+
+    for k in 1:(N ÷ 2)
+        W[k, 2k-1] = 0.5
+        W[k, 2k]   = 0.5
+    end
+
+    for k in 1:(N ÷ 2)
+        W[N÷2 + k, 2k-1] = -0.5
+        W[N÷2 + k, 2k]   =  0.5
+    end
+
+    return W
+end
+
+# ╔═╡ 75a11584-16c5-4f24-a378-ccca170845b6
+W = haar_wavelet_matrix(8)
+
+# ╔═╡ 808be566-e1fb-4b4d-8a50-b1a1deb2b1b6
 md"""
-De esta manera se tiene que $\frac{1}{N}A^\ast \boldsymbol{X} = \boldsymbol{x}$ y esto da paso a la definición de la inversa de la inversa de la transformada discreta de Fourier:
-
-
-
-
-**Definción.** La inversa de la transformada discreta de Fourier se define como:
-
-
-$x[n] = \frac{1}{N}\sum_{k=0}^{N-1} X[k] e^{i 2\pi k n / N}, \quad n = 0, 1, \dots, N-1.$
-
-
-**Ejemplo.** Como primer y más sencillo ejemplo, calculamos la Transformada Discreta de Fourier (DFT) del impulso unitario periódico $\delta$, que, recordemos, está definido por  
-
-$\delta(k) =
-\begin{cases}
-1, & k = 0 \mod N \\
-0, & k \neq 0 \mod N.
-\end{cases}$
-
-Es evidente que  
-
-$\Delta(n) = \delta(0) e^{-2\pi i n \cdot 0 / N} = 1$
-
-para todo $n$ y, por lo tanto, el impulso unitario está compuesto por todas las frecuencias en el espectro. Como una variación de este ejemplo, también podemos considerar el impulso unitario desplazado $\delta_a$, definido por  
-
-$\delta_a(k) =
-\begin{cases}
-1, & k = a \mod N \\
-0, & k \neq a \mod N.
-\end{cases}$
-
-y observar que su DFT es  
-
-$\Delta_a(n) = \delta(a)e^{-2\pi i n a / N} = e^{-2\pi i n \cdot a / N}$
-
-para todo $n$, lo que equivale a la DFT del impulso unitario multiplicada por una exponencial compleja.  Este ejemplo es la motivación del siguiente teorema.
-
+Por otra parte, la función a continuación ejecuta el código para construir la matriz para la transformada de Haar inversa.
 """
 
-# ╔═╡ c1996ac2-f26d-4201-8239-aa36fd93aa21
+# ╔═╡ 2769318b-5ac4-4a1f-b939-6ab822bf9602
+function inverse_haar_wavelet_matrix(N::Int)
+    if N % 2 != 0
+        error("La dimensión N debe ser un número par.")
+    end
+    W_inv = zeros(Float64, N, N)
+    for k in 1:(N ÷ 2)
+        W_inv[2k-1, k]        = 1.0
+        W_inv[2k-1, N÷2 + k]  = -1.0
+
+        W_inv[2k, k]          = 1.0
+        W_inv[2k, N÷2 + k]    = 1.0
+    end
+    return W_inv
+end
+
+# ╔═╡ b8eb0766-03be-4821-8c6b-3e652351674f
+W_inv = inverse_haar_wavelet_matrix(8)
+
+# ╔═╡ 0e30e5d7-516a-412b-b051-33ce84776558
 md"""
-**Teorema 2.** El desplazamiento de un número $a$ de posiciones en una señal discreta finita o $N$-periódica es equivalente a la multiplicación de su Transformada Discreta de Fourier (DFT) por el factor $e^{-2\pi i a n / N}$. Más formalmente, si  $y(k) = x(k - a)$ entonces $Y(n) =e^{-2\pi i a n / N} X(n).$
-
+Como se pudo evidenciar, esta matriz inversa se puede calcular fácilmente y da la inversa exacta como se puede comprobar haciedno el producto $W^{-1} W$:
 """
 
-# ╔═╡ 74e1d603-f640-458b-bae7-710016ea7208
+# ╔═╡ a2273052-0e6a-4c12-a70f-46b00a56d298
+W_inv * W
+
+# ╔═╡ a06d62a1-a73c-44b7-9f63-2ee23ad6b5ec
 md"""
-**Ejemplo.** Es intuitivamente evidente (a partir del significado y la definición de la transformada discreta de Fourier) que la DFT de la secuencia exponencial compleja  
+Podemos ver claramente cómo la "parte de promediado" de la transformada de Haar suprime la componente de alta frecuencia de la señal y cómo la "parte de diferenciación" de la transformada suprime la componente de baja frecuencia. En vista de la *Figura 1, podemos describir la transformada de Haar como la aplicación de un par de filtros compuesto por el filtro de paso bajo de Haar:
 
-$w_m(k) = e^{2\pi i k m / N}$
+$h = \left(\frac{1}{2}, \frac{1}{2}\right)$
 
-de longitud $N$ y frecuencia $m$ es $N\delta_m(n)$, lo que también puede confirmarse con el cálculo  
+(que realiza el cálculo de los promedios de valores sucesivos) y el filtro de onda de paso alto de Haar:
 
-$W_m(n) = \sum_{k=0}^{N-1} e^{2\pi i k m / N} \cdot e^{-2\pi i k n / N}$
-$= \sum_{k=0}^{N-1} e^{-2\pi i k (n - m) / N} = N\delta_m(n),$
+$g = \left(\frac{1}{2}, -\frac{1}{2}\right)$
 
-como se puede verificar fácilmente.  
-
-Se sigue que la DFT de la onda coseno discreta de frecuencia $m$, dada por  
-
-$c_m(k) = A \cos\left(m \cdot \frac{2\pi k}{N}\right) = \frac{A}{2} \left(e^{m \cdot 2\pi i k / N} + e^{-m \cdot 2\pi i k / N}\right),$
-
-es  
-
-$C_m(n) = \frac{A N}{2} \left(\delta_m(n) + \delta_m(-n)\right),$
-
-y que la DFT de la onda seno discreta análoga, dada por  
-
-$s_m(k) = A \sin\left(m \cdot \frac{2\pi k}{N}\right) = \frac{A}{2i} \left(e^{m \cdot 2\pi i k / N} - e^{-m \cdot 2\pi i k / N}\right),$
-
-es  
-
-$S_m(n) = \frac{A N}{2i} \left(\delta_m(n) - \delta_m(-n)\right).$
+(que realiza el cálculo de las medias diferencias de los valores sucesivos), seguido por una reducción de muestreo (tomando cada otro valor de la salida filtrada).
 
 """
 
-# ╔═╡ 249ca1f0-403a-464a-997e-c57c27fdde36
+# ╔═╡ d3cb4cfb-2473-47a4-b120-ec9d9279832d
 md"""
-**Teorema 3.** Una modulación en frecuencia (es decir, la multiplicación por $e^{2\pi i k m / N}$) de una señal discreta $N$-periódica resulta en un desplazamiento de su DFT en \( m \) posiciones.  
-Más formalmente, si  
-
-$y(k) = x(k) e^{2\pi i k m / N}$
-
-entonces  
-
-$Y(n) = X(n - m).$
+En el siguiente código se producen diferentes sucesiones basadas en la función coseno. Se invita al lector a que pruebe la transformada de Haar en cada una de estas sucesiones.
 """
 
-# ╔═╡ 35660aee-510e-49d3-bfd3-8269aabf6b84
-md"""
-**Teorema 4.** Multiplicar una secuencia $N$-periódica $x(k)$ por la secuencia coseno discreta $N$-periódica de frecuencia $m$ es equivalente a tomar el promedio de los  
-desplazamientos de su DFT en $m$ y $-m$ posiciones. Más formalmente, si  
+# ╔═╡ c6145c72-5907-44e6-bfab-5b092e44afe3
+function generar_coseno(A::Float64, N::Int, k::Int)
+	n = 0:N-1
+	x = A * cos.(2π * k * n / N)
+	return n, x
+end
 
-$y(k) = x(k) \cos\left(\frac{2\pi k m}{N}\right)$
-
-entonces  
-
-$Y(n) = \frac{1}{2} \left[ X(n - m) + X(n + m) \right].$
-"""
-
-# ╔═╡ 3a1237cb-7acd-4672-802e-93918eaf3a8e
-md"""
-**Teorema 5.** La multiplicación componente a componente de secuencias finitas o $N$-periódicas es equivalente (hasta el factor constante $\frac{1}{N}$) a la convolución circular de sus transformadas de Fourier discretas. Formalmente, si  
-
-$g(k) = x(k) \cdot y(k)$
-
-entonces  
-
-$G(n) = \frac{1}{N} (X * Y)(n).$
-"""
-
-# ╔═╡ 580b238c-c6d0-4bcd-9bcb-d8914d854661
-md"""
-**Teorema 6.** La convolución circular de secuencias finitas o $N$-periódicas es equivalente al producto punto a punto de sus transformadas de Fourier discretas. Formalmente, si  
-
-$g(k) = (x * y)(k)$
-
-entonces  
-
-$G(n) = X(n) \cdot Y(n).$
-
-"""
-
-# ╔═╡ ae9ba491-f21e-4c2d-b6d7-a907eb324a9f
-md"""
-**Ejemplo.** Este ejemplo genera una señal discreta como la superposición de tres secuencias cosenoidales con diferentes frecuencias y amplitudes. La señal se construye con un número total de 60 muestras y se representa gráficamente mediante un gráfico de stem. Luego, se calcula la Transformada Discreta de Fourier (DFT) de la señal utilizando la función `fft` y se visualiza su magnitud, lo que permite analizar la distribución de las frecuencias presentes en la señal.
-"""
-
-# ╔═╡ 08a441f0-5e09-479f-af93-03449dc6ce28
+# ╔═╡ 706eadcf-a514-4944-bcfa-631fb513dda4
 begin
-	N0 = 60  # Longitud de la señal
-	k0 = 0:N-1  # Índices de la secuencia
-	
-	# Amplitudes de los componentes de la señal
-	A10, A20, A30 = 9, 7, 5  
-	
-	# Frecuencias de los componentes de la señal
-	f10, f20, f30 = 2, 6, 15  
-	
-	# Construcción de la señal como una superposición de cosenos
-	x0 = A10 * cos.(2π * f10 * k0 / N0) .+ A20 * cos.(2π * f20 * k0 / N0) .+ A30 * cos.(2π * f30 * k0 / N0)
-	
-	# Cálculo de la DFT de x0
-	X0 = fft(x0)
-	
-	# Gráficos
-	plot(plot(k0, x0, seriestype=:stem, markershape=:circle, label="", xlabel="k", ylabel="x(k)", title="Superposición de tres secuencias coseno"),
-	plot(k0, abs.(X0), seriestype=:stem, markershape=:circle, label="", xlabel="n", ylabel="|X(n)|", title="DFT X(n) de x(k)"),
-	layout=(2,1))
-	
-end
-
-# ╔═╡ dabd2108-2d88-4615-93da-34b2941935eb
-md"""$\texttt{Figura 4. Visualización de una secuencia y su DFT.}$"""
-
-# ╔═╡ 90b53c6c-e005-4ac1-a79f-c2d7604507da
-md"""
-## Transformaciones de Señales
-"""
-
-# ╔═╡ d54d6f0e-c5ed-4dd2-8017-98f681689b40
-md"""
-En el procesamiento de señales e imágenes, es fundamental enfocarse en transformaciones lineales, ya que son más fáciles de manejar. Estas cumplen la propiedad de linealidad:  
-
-$T(ax + by) = aT(x) + bT(y)$
-
-para cualquier par de vectores $x$ y $y$ y escalares $a$ y $b$.  
-
-Además, una suposición clave es la **invariancia en el tiempo**, lo que implica que un retraso en la entrada genera el mismo retraso en la salida sin alteraciones adicionales. Formalmente, si $x(k)$ es la señal original y $y(k)$ su transformación, la transformación $T$ es invariante en el tiempo si se cumple:  
-
-$T(x_{\tau}) = y_{\tau}$
-
-para cualquier desplazamiento $\tau$ con $x_{\tau}(k) = x(k-\tau)$ y $y_{\tau}(k) = y(k-\tau)$.  
-
-Esta propiedad es crucial, ya que cualquier transformación definida mediante convolución $T(x) = x \ast h$ es automáticamente lineal e invariante en el tiempo.
-
-
-$\begin{align*}
-T(x_{\tau})(k) &= (x_\tau \ast h)(k)\\
-&= \sum_{m}x_{\tau}(k-m)h(m)\\
-&= \sum_{m}x(k-m-\tau)h(m)\\
-& = (x \ast h)(k - \tau) \\
-& = (x \ast h)_\tau(k) \\
-\end{align*}$
-
-
-Además, toda transformación lineal e invariante en el tiempo puede expresarse como una convolución.
-"""
-
-# ╔═╡ 73a26fa3-02b0-4876-ac2d-403c8e7ed83a
-md"""
-**Teorema 7.** Sea $x$ una señal y $T$ una transformación lineal y con invarianza en el tiempo, de esta manera $T(x) = x\ast h$ con $h= T(\delta)$ y $\delta$ el impulso unitario.
-
-*Demostración.* Dado que la secuencia $x$ puede expresarse como la convolución con un delta de Dirac $\delta$, se tiene:  
-
-$x(k) = \sum_{m} x(m) \delta(k - m)$
-
-Por lo tanto, aplicando la transformación $T$ a ambos lados:  
-
-$T(x)(k) = T \left( \sum_{m} x(m) \delta(k - m) \right)$
-
-Por la linealidad de $T$:  
-
-$T(x)(k) = \sum_{m} x(m) T(\delta_m)(k)$
-
-Por la invariancia en el tiempo de $T$:  
-
-$T(x)(k) = \sum_{m} x(m) T(\delta)(k - m)$
-
-Dado que $h(k) = T(\delta)(k)$, se obtiene la expresión de convolución:  
-
-$T(x)(k) = (x \ast h)(k).$
-
-
-**Definición.** La imagen $h$ de la secuencia impulso unitario $\delta$ bajo la transformación $T$ se denomina **respuesta al impulso** de $T$. La transformada de Fourier discreta $H$ de la respuesta al impulso $h$ se denomina **función de transferencia** de la transformación $T$, y está dada por:
-
-$H(n) = \sum_{k=0}^{N-1} h(k)e^{-2\pi i n k / N}.$
-
-"""
-
-# ╔═╡ 5a91f2fd-5b3e-40a2-ab0f-b7519ff2d179
-md"""
-Los resultados anteriores sugieren una estrategia efectiva para transformar señales manipulando su contenido de frecuencia. La clave es diseñar una secuencia $h$ cuya transformada de Fourier discreta $H$ enfatice las frecuencias deseadas y suprima las no deseadas. Luego, se aplica la transformación lineal e invariante en el tiempo con respuesta al impulso $h$ a la señal de entrada.  
-
-El proceso de mejora de una señal $x$ mediante análisis de frecuencia se desarrolla en los siguientes pasos:  
-
-1. Se calcula la transformada de Fourier discreta $X$ de la señal $x$, lo que representa el espectro de frecuencia de la señal a mejorar.  
-2. Se computa el producto punto a punto $Y = X \odot H$, donde $Y$ es el espectro de frecuencia de la versión mejorada $y$ de $x$.  
-3. Se utiliza la fórmula de inversión de la DFT para obtener $y$, que idealmente estará libre de la mayoría de las deficiencias y artefactos no deseados de $x$.  
-
-
-
-Cuando una señal original $x$ es distorsionada por un sistema con una respuesta al impulso $h$ conocida o aproximada, se recibe una versión distorsionada $y$, que es la convolución de $x$ con $h$. En este caso, el procedimiento para restaurar la señal original es:  
-
-1. Se calcula la transformada de Fourier discreta $Y$ de la señal distorsionada $y$ con el objetivo de eliminar las distorsiones.  
-2. Se divide $Y$ componente a componente por la función de transferencia del sistema $H$, siempre que $H(n) \neq 0$. Esto permite recuperar la DFT $X$ de la señal original. Si $H(n) = 0$ para algún $n$, la señal original no puede reconstruirse completamente, solo aproximarse.  
-3. Finalmente, se usa la fórmula de inversión de la DFT para reconstruir $x$.  
-"""
-
-# ╔═╡ ef94cde7-1783-424e-8ff6-ccfb1894e084
-md"""
-**Ejemplo.
-pag238**
-"""
-
-# ╔═╡ c88b7a67-5d04-4f0f-9b0d-b68a831b26b0
-md"""
-# Transformada discreta de Fourier en dos dimensiones
-"""
-
-# ╔═╡ 18e29310-82fe-41b6-99cc-7b7088df7b6c
-md"""
-Para extender la Transformada de Fourier Discreta (DFT) a matrices de tamaño \( M \times N \), se puede aplicar la DFT primero a las columnas y luego a las filas de la matriz dada. Esto da lugar a la **transformada de Fourier discreta en dos dimensiones (2-D DFT)**, formalmente definida como:  
-
-**Definición.** La 2-D DFT de una matriz $A$ de tamaño $M \times N$ está dada por:  
-
-$\hat{A}(m, n) =
-\sum_{k=0}^{M-1} \sum_{l=0}^{N-1} A(k, l) e^{-2\pi i mk/M - 2\pi i nl/N}$
-
-Gracias a los desarrollos previos, se puede prever un método para reconstruir una matriz a partir de su 2-D DFT utilizando la **fórmula de inversión en dos dimensiones**:  
-
-$A(k, l) = \frac{1}{MN} \sum_{m=0}^{M-1} \sum_{n=0}^{N-1} \hat{A}(m, n) e^{2\pi i mk/M + 2\pi i nl/N}$
-
-Esta fórmula puede verificarse reconstruyendo la matriz $A$ separadamente en cada dimensión (filas y columnas).  
-
-
-Las propiedades de la 2-D DFT son análogas a las de la DFT en una dimensión. Por ejemplo, la 2-D DFT del **impulso unitario en dos dimensiones** $\delta(k, l)$ definido como:  
-
-$\delta(k, l) =
-\begin{cases} 
-1, & \text{si } (k, l) = (0,0) \\
-0, & \text{si } (k, l) \neq (0,0)
-\end{cases}$
-
-es la **secuencia constante unitaria en dos dimensiones**:  
-
-$\hat{\delta}(m, n) = 1, \quad \text{para todo } \; 0 \leq m < M, \; 0 \leq n < N$
-
-Recíprocamente, la 2-D DFT de la **secuencia constante unitaria en dos dimensiones** es el **impulso unitario en dos dimensiones**, multiplicado por $M \times N$.
-
-"""
-
-# ╔═╡ 475d326b-b21e-4508-b386-f2cd2c68926c
-md"""
-**Teorema 8.** La **multiplicación elemento a elemento** de dos matrices $M \times N$ es equivalente (hasta un factor constante) a la **convolución cíclica** de sus transformadas de Fourier discreta en dos dimensiones (2-D DFT).  
-
-Formalmente, si:  
-
-$C(k, l) = A(k, l) \cdot B(k, l)$
-
-entonces su 2-D DFT está dada por:  
-
-$\hat{C}(m, n) = \frac{1}{MN} \left( \hat{A} * \hat{B} \right)(m, n)$
-
-donde $*$ denota la convolución cíclica en dos dimensiones. 
-
-
-
-**Teorema 9.** La **convolución cíclica** de dos matrices $M \times N$ es equivalente a la **multiplicación elemento a elemento** de sus transformadas de Fourier discreta en dos dimensiones (2-D DFT).  
-
-Formalmente, si:  
-
-$C(k, l) = (A * B)(k, l)$
-
-entonces su 2-D DFT está dada por:  
-
-$\hat{C}(m, n) = \hat{A}(m, n) \cdot \hat{B}(m, n)$
-
-donde $*$ denota la convolución cíclica en dos dimensiones.  
-"""
-
-# ╔═╡ 750a01bf-b4e9-412a-bce7-9bb72e2b3a55
-md"""
-Como análogo a las transformaciones invariantes en el tiempo para secuencias, se pueden definir **transformaciones invariantes en el espacio** que operan sobre matrices. Sea $T$ una transformación lineal que actúa sobre matrices de tamaño $M \times N$, y sea $B = T(A)$. Se definen las matrices desplazadas $A_{(u,v)}$ y $B_{(u,v)}$ como:  
-
-$A_{(u,v)}(k, l) = A(k - u, l - v)$
-
-$B_{(u,v)}(k, l) = B(k - u, l - v)$
-
-donde la resta se realiza módulo $M$ y $N$ respectivamente, o se combina con **zero-padding**, dependiendo de las circunstancias.  
-
-Una transformación **invariante en el espacio** $T$ cumple la propiedad:
-
-$T(A_{(u,v)}) = B_{(u,v)}$
-
-
-para todos los valores de $u$ y $v$.  
-
-
-Así como cualquier secuencia finita o infinita se puede escribir como la convolución consigo misma con el **impulso unitario** $\delta(k)$, cualquier matriz $A$ se puede escribir como la convolución consigo misma con el **impulso unitario 2-D** $\delta(k, l)$.  
-
-Por lo tanto, la imagen de la matriz $A$ bajo la transformación lineal e invariante en el espacio $T$ se expresa como:
-
-$B = T(A) = A \ast H$
-
-donde $H = T(\delta)$ es la **respuesta al impulso** de la transformación $T$. En el contexto bidimensional, particularmente en imágenes digitales, esta respuesta se denomina **función de dispersión de punto (PSF, Point Spread Function)** de la transformación $T$.  
-
-Se sigue que:
-
-$\hat{B}(m, n) = \hat{A}(m, n) \odot \hat{H}(m, n)$
-
-donde $\hat{H}$ es la transformada de Fourier discreta de la PSF $H$, conocida en el contexto de imágenes digitales como la **función de transferencia óptica (OTF, Optical Transfer Function)**.  
-"""
-
-# ╔═╡ 51b22df4-9388-4111-809d-24d3ea383f3c
-md"""
-**Ejemplo.** El código en Julia genera una matriz $A_1$ de tamaño $20 \times 20$, donde los valores varían según una función coseno en las columnas. La expresión $1/2 + \cos(2\pi \cdot 4 \cdot j / 20)/2$ crea un patrón oscilatorio con una frecuencia de 4 ciclos en 20 columnas. Luego, se calcula la transformada discreta de Fourier (DFT) de la matriz usando `fft(A1)`, y se toma su magnitud con `abs.` para obtener la intensidad de las frecuencias. Se aplica `log.(...)` para mejorar la visualización de las amplitudes y evitar que los valores más altos dominen la imagen. Finalmente, se generan dos gráficos en una disposición de $1 \times 2$: uno muestra la señal original como un mapa de calor y el otro muestra la magnitud logarítmica de su DFT, permitiendo analizar el contenido frecuencial de la matriz.
-
-"""
-
-# ╔═╡ 80bfafec-7dc1-4d03-8cdf-ecdb087544f9
-begin	
-	# Crear la matriz
-	A1 = [1/2 + cos(2π * 4 * j / 20)/2 for i in 1:20, j in 1:20]
-	log_DFT_A1 = log.(abs.(fft(A1)) .+ 1 )
-	
-	# Visualización
-	plot(heatmap(A1, color=:grays, title="Señal"),
-	heatmap(log_DFT_A1, color=:grays, title="log-DFT de la señal"),
-	layout=(1,2), size=(800,400))
-end
-
-# ╔═╡ 63259eaf-c707-4370-84ec-8ce1c32a8665
-md"""$\texttt{Figura 5. }$"""
-
-# ╔═╡ b372a69e-edb1-4956-9ccb-fa939fb21287
-md"""
-La señal está dada por:
-
-$A1(i, j) = \frac{1}{2} + \frac{1}{2} \cos\left( 2\pi \cdot 4 \cdot \frac{j}{20} \right)$
-
-donde $j$ representa la coordenada horizontal.
-
-Esta ecuación describe una onda cosenoidal con una frecuencia espacial de 4 ciclos en 20 unidades. Es decir, la señal tiene 4 repeticiones completas a lo largo de la dirección horizontal (cada 5 unidades se repite el patrón).
-
-La Transformada Discreta de Fourier (DFT) descompone la señal en sus componentes de frecuencia. En este caso, la señal es esencialmente una suma de una constante $\frac{1}{2}$ y una función coseno con frecuencia espacial 4 en la dirección horizontal.
-
-- La DFT de un coseno puro genera dos picos simétricos en la frecuencia correspondiente (positiva y negativa).
-- Como la señal tiene una frecuencia de 4 ciclos en un dominio de 20 puntos, la DFT muestra picos en la posición correspondiente a $k = 4$ y su simétrica en $k = -4$. En una DFT discreta, esta última se ve reflejada en el final del eje de frecuencias.
-
-En la imagen de la log-DFT, los puntos brillantes aparecen en la cuarta posición en la dirección horizontal. Esto ocurre porque:
-
-- La frecuencia fundamental de la transformada discreta de Fourier está indexada de $0$ a $N-1$ (en este caso, de 0 a 19).
-- La frecuencia 4 y su simétrica $N - 4 = 16$ aparecen como los valores dominantes, reflejando la periodicidad observada en la señal.
-
-Los picos brillantes en la DFT se deben a la naturaleza periódica de la señal en la dirección horizontal. Como la señal tiene 4 ciclos a lo largo de 20 píxeles, la DFT identifica estas frecuencias y genera picos en las posiciones esperadas.
-
-"""
-
-# ╔═╡ f324ed85-8a3a-43bf-abe7-3171b1c38a13
-md"""
-# DFT en procesamiento de imágenes
-"""
-
-# ╔═╡ ebb95a43-c333-48b7-bdb0-a760945560cf
-md"""
-Antes de aplicar el análisis de frecuencia en el procesamiento de imágenes digitales, es importante familiarizarse con ciertas técnicas para visualizar la Transformada Discreta de Fourier (DFT) en dos dimensiones. Existen tres puntos clave a considerar:
-
-1. Representación de la DFT en imágenes  
-
-La forma más común de visualizar la DFT de una imagen digital es interpretando sus valores como niveles de brillo en una escala de grises. Sin embargo, los valores de la DFT pueden ser negativos o complejos. Para solucionar esto, se muestra el **valor absoluto** de la DFT.
-
-2. Coeficiente DC y transformación logarítmica  
-
-El coeficiente **DC**, definido como:
-
-$\hat{A}(0,0) = \sum_{k=0}^{M-1} \sum_{l=0}^{N-1} A(k,l)$
-
-es generalmente mucho mayor que los demás valores de la DFT, lo que hace que la imagen bruta de la DFT parezca un cielo nocturno con pocos puntos brillantes. Para mejorar la visualización, se aplica una **transformación logarítmica**:
-
-$x \to \log(1 + |x|)$
-
-seguida de un reescalado a un rango entre 0 y 255.
-
-3. Posición del origen en la DFT 
-
-En matemáticas, el origen suele esperarse en el centro de una imagen. Sin embargo, en una imagen digital representada como matriz, los índices de fila y columna comienzan en la esquina superior izquierda. Para ajustar la visualización al esquema matemático, se utiliza una reorganización de los cuadrantes, como la función `fftshift` en Julia.
-
-Este conocimiento es fundamental para interpretar correctamente la DFT en imágenes digitales y aprovechar su potencial en análisis de frecuencia.  
-
-"""
-
-# ╔═╡ 931a4907-e078-414b-85bf-cd989017babf
-md"""
-**Ejemplo.** Continuando con el ejemplo en que la señal está definida por:
-
-$A1(i, j) = \frac{1}{2} + \frac{1}{2} \cos\left( 2\pi \cdot 4 \cdot \frac{j}{20} \right)$
-
-donde $j$ representa la coordenada horizontal, se hace la traslación para que las coordenadas del centro de la imágen coincidan con el origen de coordenadas
-"""
-
-# ╔═╡ 7c611333-4c51-49e9-b3cf-ef19788323c2
-begin	
-	# Crear la matriz
-	# A1 = [1/2 + cos(2π * 4 * j / 20)/2 for i in 1:20, j in 1:20]
-	# log_DFT_A1 = log.(abs.(fft(A1)) .+ 1 )
-	log_DFT_A1_shift = log.(abs.(fftshift(fft(A1)) .+ 1 ))
-	
-	# Visualización
-	plot(heatmap(log_DFT_A1, color=:grays, title="log-DFT de la señal"),
-	heatmap(log_DFT_A1_shift, color=:grays, title="log-DFT movida de la señal"),
-	layout=(1,2), size=(800,400))
-end
-
-# ╔═╡ 1beb1b74-6fc1-4109-aad9-f6ef40a523c8
-function imageDFT(img)
-	A = channelview(img)
-	l = abs.(fftshift(fft(A))) 
-	logDFTshift = log.(l .+ minimum(l) .+ 1 )
-	logDFTshift = logDFTshift / maximum(logDFTshift)
-	return logDFTshift
-end
-
-# ╔═╡ 10f46e3e-cd96-433f-a9be-12c603906c52
-md"""$\texttt{Figura 6.}$"""
-
-# ╔═╡ 2d642832-3619-4996-ab6d-0596232763ec
-md"""
-**Ejemplo.**
-"""
-
-# ╔═╡ 4b29af6c-673e-4a2b-9a17-f5bf105eadb9
-begin
-	A2 = zeros(500,500)
-	for i in 1:500, j in 1:500
-		if (i-250)^2+(j-250)^2 <= 25^2
-			A2[i,j] = 1.0
-		end
+	valores = [
+	    (1.0, 64, 2),
+	    (1.0, 64, 8),
+	    (2.0, 64, 4),
+	    (1.0, 128, 16),
+	]
+	plots = []
+	for (A, N, k) in valores
+	    n, x = generar_coseno(A, N, k)
+	    push!(plots, plot(n, x, title="A=$A, N=$N, k=$k", xlabel="n", ylabel="x(n)", legend=false))
 	end
-
-	plot(heatmap(A2, color=:grays, title="Señal"),
-	heatmap(imageDFT(A2), color=:RdBu, title="log-DFT de la señal"),
-	layout=(1,2), size=(800,400))
+	plot(plots..., layout=(2,2), size=(900,600))
 end
 
-# ╔═╡ 538992e0-e080-4034-ac76-687f4897f133
-md"""$\texttt{Figura 7.}$"""
-
-# ╔═╡ b845dbc0-2bd1-4217-8682-af74adbf1ab7
+# ╔═╡ 14d2f010-82f8-4113-a1ea-d3b973bb6bbd
 md"""
-**Ejemplo.**
+$\texttt{Figura 2}$
 """
 
-# ╔═╡ 7f6a0ba5-52d5-4674-bf32-8c9064c2cac2
-begin
-	A3 = zeros(300,300)
-	for i in 1:300, j in 1:300
-		if abs(i-125)+abs(j-125) <= 25
-			A3[i,j] = 1.0
-		end
-		if abs(i-150)+abs(j-150) <= 25
-			A3[i,j] = 1.0
-		end
-		if abs(i-175)+abs(j-175) <= 25
-			A3[i,j] = 1.0
-		end
-	end
+# ╔═╡ a1399006-cd25-4aff-830d-e942964153ce
+md"""# La Transformada Discreta de Wavelet de Haar en Imágenes"""
 
-	plot(heatmap(A3, color=:grays, title="Señal"),
-	heatmap(imageDFT(Gray.(A3)), color=:RdBu, title="log-DFT de la señal"),
-	layout=(1,2), size=(800,400))
-end
-
-# ╔═╡ 497026d7-145c-48c5-ba08-b2e04c3878c6
-md"""$\texttt{Figura 8.}$"""
-
-# ╔═╡ 4ee16828-ebb6-4627-b8c2-5ef752f05e04
+# ╔═╡ 3cdc5c93-8ff2-45cc-9d61-99eafafab748
 md"""
-**Ejemplo.**
-"""
+A menudo es conveniente visualizar la transformada de Haar (HWT) de una imagen en su forma matricial tanto para fines teóricos como computacionales. Supongamos que la imagen original $A$ tiene $M$ filas y $N$ columnas. Entonces, la HWT de las columnas se logra multiplicando la matriz de la imagen por la izquierda por la matriz HWT $W_M$ de dimensión $M$, mientras que la HWT de las filas se logra multiplicando la matriz de la imagen por la derecha por la transpuesta $W_N^T$ de la matriz HWT de dimensión $N$. El resultado final es:
 
-# ╔═╡ a8f6926d-8780-4efd-801a-d39a96240f95
-begin
-	function sierpinski!(img, x, y, size, depth)
-	    if depth == 0
-	        return
-	    end
-	    step = div(size, 3)
-	
-	    for i in 0:2, j in 0:2
-	        if i == 1 && j == 1
-	            img[x+step*(i):x+step*(i+1)-1, y+step*(j):y+step*(j+1)-1] .= 255
-	        else
-	            sierpinski!(img, x + step*i, y + step*j, step, depth - 1)
-	        end
-	    end
-	end
-	A4 = fill(0, 3^3, 3^3)
-	sierpinski!(A4, 1, 1, 3^3, 3)
+$A \to W_M \cdot A \cdot W_N^T = \begin{pmatrix}
+B & V \\
+H & D
+\end{pmatrix}$
 
-	A4 = A4 /255
-
-	plot(heatmap(A4, color=:grays, title="Señal"),
-	heatmap(imageDFT(Gray.(A4)), color=:RdBu, title="log-DFT de la señal"),
-	layout=(1,2), size=(900,400))
-end
-
-# ╔═╡ 0cfd8bc0-c259-48ca-bfa3-2e11f5323d6b
-md"""$\texttt{Figura 9.}$"""
-
-# ╔═╡ 85e7761b-c6d1-46cf-8f6f-73e06208b206
-md"""## Filtrado en el dominio de la frecuencia
-
-### Filtrado Paso-Bajo 
-
-Supongamos que tenemos una matriz de Transformada de Fourier \( F \), desplazada de modo que el coeficiente DC esté en el centro.  
-
-Realizaremos un filtrado pasa-bajo multiplicando la transformada por una matriz de tal manera que los valores centrales se mantengan y los valores alejados del centro sean eliminados o minimizados.  
-
-Una forma de hacer esto es multiplicando por una matriz ideal de filtrado pasa-bajo, que es una matriz binaria $m$ definida por:  
-
-$m(x,y) =
-\begin{cases} 
-1 & \text{si } (x,y) \text{ está más cerca del centro que algún valor } D, \\
-0 & \text{si } (x,y) \text{ está más lejos del centro que } D.
-\end{cases}$
-
-El círculo $c$ mostrado en la Figura 7 es precisamente una de estas matrices.
-
-Entonces, la Transformada de Fourier inversa del producto elemento a elemento de $F$ y $m$ es el resultado que necesitamos:
-
-$\mathcal{F}^{-1} (F \cdot m).$
-
-Veamos qué sucede si aplicamos este filtro a una imagen. Primero obtenemos una imagen y su DFT."""
-
-# ╔═╡ e1fc9cf1-5d1e-446e-b159-004d5573fbf1
-md"""**Ejemplo:**"""
-
-# ╔═╡ fac50950-66dc-48ad-b079-c148bac9fad2
-begin
-	url = "https://image.jimcdn.com/app/cms/image/transf/none/path/s6b62474d6def2639/image/i2284a58ede66cadc/version/1420667431/image.gif"  
-	cuborubik = Gray.(1 .- Float64.(Gray.( load(download(url)) )))
-	Acuborubik = channelview(cuborubik)
-
-	plot(heatmap(Acuborubik, color=:grays, title="Señal"),
-	heatmap(imageDFT(cuborubik), color=:RdBu, title="log-DFT de la señal"),
-	layout=(1,2), size=(900,400))
-end
-
-# ╔═╡ a4043c54-b713-4490-a8e0-8cdfe606ec50
-md"""$\texttt{Figura 10.}$"""
-
-# ╔═╡ 42048529-4531-4061-a70f-02a3b9e52593
-begin
-	Center = zeros(500,500)
-	for i in 1:500, j in 1:500
-		if (i-250)^2+(j-250)^2 <= 20^2
-			Center[i,j] = 1.0
-		end
-	end
-	DFT_rubik_centerin = fftshift(fft(Acuborubik)) .* Center
-	IDFT_rubik_centerin = ifft(DFT_rubik_centerin)
-	
-	rubik1 = heatmap(log.(abs.(DFT_rubik_centerin) .+ 1), color=:RdBu, title="")
-	rubik2 = heatmap(log.(abs.(IDFT_rubik_centerin) .+ 1), color=:grays, title="")
-
-	plot(rubik1,rubik2,layout=(1,2),size=(900,400))
-end
-
-# ╔═╡ 752144bf-dc01-4fd3-9290-ce0989823da3
-md"""$\texttt{Figura 11}$"""
-
-# ╔═╡ c7c4d069-9de0-4bbe-a562-76ed10eef97a
-md"""**Ejemplo:**
+- La esquina superior izquierda $B$ de la transformada representa el desenfoque de la imagen, y consiste en valores promedio de bloques de 2 × 2 píxeles.
+- La esquina superior derecha $V$ representa las medias diferencias entre píxeles adyacentes en la dirección horizontal y, por lo tanto, probablemente sea representativa de las características verticales prominentes de la imagen.
+- La esquina inferior izquierda $H$ representa las medias diferencias en la dirección vertical y, por lo tanto, probablemente corresponda a las características horizontales de la imagen.
+- La esquina inferior derecha $D$ de la imagen representa las medias diferencias "diagonales" y es probable que sea representativa de las características diagonales.
 
 """
 
-# ╔═╡ 58f5c17a-5765-495f-b1f2-425e0423d9bc
-begin
-	camoriginal = Gray.(testimage("cameraman.tif"))
-	camDFT = imageDFT(camoriginal)
-
-	[camoriginal Gray.(camDFT)]
+# ╔═╡ 15c47f19-06e8-4949-bbfa-77161e493b44
+function haar2d(img::Matrix{Float64})
+    M, N = size(img)
+    if M % 2 != 0 || N % 2 != 0
+        error("Dimensiones deben ser pares")
+    end
+    WM = haar_wavelet_matrix(M)
+    WN = haar_wavelet_matrix(N)
+    return WM * img * transpose(WN)
 end
 
-# ╔═╡ 4c672598-29cf-4fae-929f-4ec77b1502ec
-md"""$\texttt{Figura 12.}$"""
-
-# ╔═╡ 54f94eba-b01d-47fc-b475-f99a29a909d0
-n = @bind nn Slider(0:1:512, show_value=true, default=25)
-
-# ╔═╡ fc86bb52-43fe-43e7-9183-c889dd79904a
-begin
-	A₃ = zeros(512,512)
-	for i in 1:512, j in 1:512
-		if (i-256)^2+(j-256)^2 <= nn^2
-			A₃[i,j] = 1.0
-		end
-	end
-	
-	DFT_camoriginal = fftshift(fft(channelview(camoriginal))) .* A₃
-	IDFT_camoriginal = ifft(DFT_camoriginal)
-
-	[Gray.(log.(abs.(DFT_camoriginal) .+ 1)) Gray.(log.(abs.(IDFT_camoriginal) .+ 1))]
-end
-
-# ╔═╡ 0e40e6db-6c6f-46f0-b17f-804a461d6401
-md"""$\texttt{Figura 13.}$"""
-
-# ╔═╡ 620de51c-4329-4efa-9bde-0f2d900aad18
-md"""### Filtrado de Paso-Alto
-
-Así como podemos realizar un filtrado de paso bajo manteniendo los valores centrales de la DFT (Transformada Discreta de Fourier) y eliminando los demás, el filtrado de paso alto se puede realizar de manera opuesta: eliminando los valores centrales y manteniendo los demás. Esto se puede hacer con una pequeña modificación del método anterior de filtrado de paso bajo."""
-
-# ╔═╡ 32d159c4-e667-4020-84b5-ca1417538b41
+# ╔═╡ a5bff652-d613-495f-86be-79f9c2f82072
 md"""
-**Ejemplo.**
+Podemos obtener resultados aún mejores si aplicamos el mismo método a la esquina superior izquierda de la imagen transformada (es decir, a la porción de baja frecuencia $B$ de la transformada). Esto se puede hacer si tanto el número de filas como el número de columnas de la imagen son divisibles por 4. En principio, el proceso puede continuarse $k$ veces mientras las dimensiones de la imagen sean divisibles por $2^k$ (y aunque no lo sean, el tamaño de la imagen puede ajustarse en consecuencia mediante relleno con ceros).
+
 """
 
-# ╔═╡ ccb26d93-d403-4d0b-9085-317de4cc3a2a
-begin
-	DFT_rubik_centerout = fftshift(fft(Acuborubik)) .* (1 .-Center)
-	IDFT_rubik_centerout = ifft(DFT_rubik_centerout)
-	
-	rubik3 = heatmap(log.(abs.(DFT_rubik_centerout) .+ 1), color=:RdBu, title="")
-	rubik4 = heatmap(log.(abs.(IDFT_rubik_centerout) .+ 1), color=:grays, title="")
-
-	plot(rubik3,rubik4,layout=(1,2),size=(900,400))
+# ╔═╡ 3615be86-14f6-490b-bacd-113cc6331493
+function iterated_haar2d(img::Matrix{Float64}, k::Int)
+    img_copy = copy(img)
+    for i in 1:k
+        rows, cols = size(img_copy)
+        subrows = div(rows, 2^(i-1))
+        subcols = div(cols, 2^(i-1))
+        subimg = img_copy[1:subrows, 1:subcols]
+        t_sub = haar2d(subimg)
+        img_copy[1:subrows, 1:subcols] = t_sub
+    end
+    return img_copy
 end
 
-# ╔═╡ 45c1af7e-61a7-48f5-81b8-9def858163eb
-md"""$\texttt{Figura 14.}$"""
-
-# ╔═╡ d7bb978e-c4ab-4c60-acee-0c9f3f831376
-n₂ = @bind n2 Slider(0:1:512, show_value=true, default=25)
-
-# ╔═╡ f89c0037-c02e-4af0-ab26-849462f5935e
-begin
-	A₄ = zeros(512,512)
-	for i in 1:512, j in 1:512
-		if (i-256)^2+(j-256)^2 <= n2^2
-			A₄[i,j] = 1.0
-		end
-	end
-	
-	DFT_camoriginal_on = fftshift(fft(channelview(camoriginal))) .* (1 .-A₄)
-	IDFT_camoriginal_on = ifft(DFT_camoriginal_on)
-
-	[Gray.(log.(abs.(DFT_camoriginal_on) .+ 1)) Gray.(log.(abs.(IDFT_camoriginal_on) .+ 1))]
-end
-
-# ╔═╡ cbfd979d-8865-4fb2-9107-ab7289c11a6b
-md"""$\texttt{Figura 15.}$"""
-
-# ╔═╡ d149cf31-fb7c-4236-8a87-8bcd11811cc3
-md"""### Filtrado Gaussiano
-
-De manera analoga a los experimentos anteriores, buscamos crear un filtro gaussiano, multiplicarlo por la transformada de la imagen e invertir el resultado."""
-
-# ╔═╡ 54d6dac8-d075-4df0-bb22-65b3670098b2
+# ╔═╡ e52d09a4-5467-46a1-a768-f678cf687799
 md"""
-**Ejemplo.**
+Para tener un punto de comparación, la definición de entropía se puede extender a sucesiones bidimensiones como lo son las imágenes representadas por matrices.
 """
 
-# ╔═╡ c0e1321f-2723-4e1c-8d1e-613216124ede
-σ₁ = @bind σ Slider(0:1:100, show_value=true, default=30)
+# ╔═╡ 6452a273-86ac-4685-87d7-65a35923c50e
+function calcular_entropia(img::Matrix{Float64})
+    img_discreta = round.(img .* 255)
+    h = fit(Histogram, vec(img_discreta), 0:255)
+    p = normalize(h.weights, 1)
+    H = -sum(p_i -> p_i > 0 ? p_i * log2(p_i) : 0.0, p)
+    return H
+end
 
-# ╔═╡ b5ce1b92-184d-4f0a-81d4-398f020734d2
+# ╔═╡ c5e8d35c-0ea6-4036-81e2-f1df83f01dd7
 begin
-	rows, cols = size(camoriginal)
-	g = zeros(Float64, rows, cols)
-	center_x = cols / 2
-	center_y = rows / 2
-	
-	for i in 1:rows
-	    for j in 1:cols
-	        x = i - center_y
-	        y = j - center_x
-	        g[i, j] = exp(-(x^2 + y^2) / (σ^2))
-	    end
-	end
-	g ./= maximum(g)
+	url = "https://github.com/ytrujillol/Procesamiento-de-imagenes/blob/main/Images/cameraman.png?raw=true"
+	img_gray = Gray.(load(download(url)))
+	img_mat = Float64.(channelview(img_gray))
+
+	rows, cols = size(img_mat)
+	rows -= rows % 2
+	cols -= cols % 2
+	img_mat = img_mat[1:rows, 1:cols]
 end;
 
-# ╔═╡ 4ec08f1a-d9d6-4468-b693-835b0f9b166e
-begin
-	DFT_camoriginal_g = fftshift(fft(channelview(camoriginal))) .*g
-	IDFT_camoriginal_g = ifft(DFT_camoriginal_g)
-
-	[Gray.(log.(abs.(DFT_camoriginal_g) .+ 1)) Gray.(log.(abs.(IDFT_camoriginal_g) .+ 1))]
-end
-
-# ╔═╡ c04bb0a7-02eb-49f3-b37e-0afa62578974
-md"""$\texttt{Figura 16.}$"""
-
-# ╔═╡ e30fa056-7cae-41c4-89a7-03bebe3ecf25
-begin
-	h1 = 1 .- g
-	DFT_camoriginal_h1 = fftshift(fft(channelview(camoriginal))) .*h1
-	IDFT_camoriginal_h1 = ifft(DFT_camoriginal_h1)
-
-	[Gray.(log.(abs.(DFT_camoriginal_h1) .+ 1)) Gray.(log.(abs.(IDFT_camoriginal_h1) .+ 1))]
-end
-
-# ╔═╡ 33c6a7c0-9f59-4cab-97c2-17352abfa383
-md"""$\texttt{Figura 17.}$"""
-
-# ╔═╡ 78403afb-106c-4922-9fc8-b377f6b8b0e6
+# ╔═╡ 93100b46-7b9f-49bd-92d0-e1a3a9230795
 md"""
-# Referencias
+A continuación se muestra el resultado de aplicar una vez la transformada de Haar y la compresión de información obtenida al pasar de una entropía de 7.05 de la imágen origina a una entropía de 4.03 de la imagen comprimida en solo una iteración de la transformación.
 """
 
-# ╔═╡ fc8bb555-4e29-4064-bdb3-312d05988d03
+# ╔═╡ 5600b81f-ba3b-4ab2-b58c-4417b4842613
+hwt_img = iterated_haar2d(img_mat, 1);
+
+# ╔═╡ 16d5f8a5-cf9f-462b-960c-a9c7b4cf65e4
+[Gray.(img_mat) Gray.(hwt_img)]
+
+# ╔═╡ 6848a946-95c8-4f18-bc34-e67882820e59
+md"""
+$\texttt{Figura 3}$
+"""
+
+# ╔═╡ 4f94e8ac-8618-42fe-9dfd-a5dae102448b
+begin
+	# Entropía de la imagen original
+	H_original = calcular_entropia(img_mat)
+	println("Entropía imagen original: ", round(H_original, digits=2))
+	
+	# Entropía de la imagen transformada (1 iteración)
+	H_transformada = calcular_entropia(hwt_img)
+	println("Entropía imagen transformada (1 iteración): ", round(H_transformada, digits=2))
+end
+
+# ╔═╡ a844974c-c597-4c8a-9ff8-5eba556fd926
+md"""
+Hasta ahora solo hemos hablado de compresión sin pérdida donde la imagen original puede reconstruirse fielmente sin pérdida de información. ¿Pero qué pasa si necesitamos alcanzar una mejor tasa de compresión que la que permiten los métodos sin pérdida?
+Podemos lograrlo sacrificando algunas características de la imagen que se consideran innecesarias o poco importantes. Por ejemplo, pequeñas variaciones en el brillo (y color) del cielo, las telas u otras superficies suaves no suelen contribuir de forma crítica a nuestra percepción de la imagen. Lo mismo ocurre con los matices sutiles de color del césped o las copas de los árboles.
+
+Esas pequeñas variaciones se traducen en muchos valores pequeños en las partes de alta frecuencia de la transformada wavelet —es decir, en las componentes $H$, $V$ y $D$— que contienen las semi-diferencias entre los valores de píxeles adyacentes. Si establecemos esos valores pequeños como cero, se perderán esas variaciones en la imagen reconstruida, pero difícilmente lo notaremos. Lo que sí notaremos es un incremento significativo en la tasa de compresión.
+
+> Para lograr una mejor tasa de compresión, se anulan (se establecen en cero) los valores en las componentes de alta frecuencia $H$, $V$ y $D$ de la transformada cuyo valor absoluto sea menor que un umbral $\lambda$.
+
+"""
+
+# ╔═╡ c580a6a1-b2e8-4521-982c-11056684b72a
+function threshold_HVD(hwt::Matrix{Float64}, λ::Float64)
+    M, N = size(hwt)
+    half_M, half_N = M ÷ 2, N ÷ 2
+    hwt_thres = copy(hwt)
+
+    # Aplica umbral a V (superior derecha)
+    hwt_thres[1:half_M, half_N+1:end] .= ifelse.(abs.(hwt_thres[1:half_M, half_N+1:end]) .< λ, 0, hwt_thres[1:half_M, half_N+1:end])
+    
+    # Aplica umbral a H (inferior izquierda)
+    hwt_thres[half_M+1:end, 1:half_N] .= ifelse.(abs.(hwt_thres[half_M+1:end, 1:half_N]) .< λ, 0, hwt_thres[half_M+1:end, 1:half_N])
+    
+    # Aplica umbral a D (inferior derecha)
+    hwt_thres[half_M+1:end, half_N+1:end] .= ifelse.(abs.(hwt_thres[half_M+1:end, half_N+1:end]) .< λ, 0, hwt_thres[half_M+1:end, half_N+1:end])
+
+    return hwt_thres
+end
+
+# ╔═╡ 84c7a75f-6935-4b56-9938-c3aa7451d762
+md"""
+En la figura 4 se muestra la imagen original y la aplicación de esta umbralización a las diferencias obtenidas de la compresión con $\lambda = 0.01,0.1,1.0$ (de izquierda a derecha y de arriba a abajo). 
+"""
+
+# ╔═╡ f4b92cec-d92b-4ab0-b74b-31f9ff4778d6
+begin
+	lambdas = [0.01, 0.1, 1.0]
+	imgs_rec = Matrix{Float64}[]
+	entropias = Float64[]
+
+	for λ in lambdas
+	    hwt_thres = threshold_HVD(hwt_img, λ)
+	    WM = haar_wavelet_matrix(size(hwt_img, 1))
+	    WN = haar_wavelet_matrix(size(hwt_img, 2))
+	    WM_inv = inverse_haar_wavelet_matrix(size(hwt_img, 1))
+		WN_inv = inverse_haar_wavelet_matrix(size(hwt_img, 2))
+		img_rec = WM_inv * hwt_thres * transpose(WN_inv)
+	    push!(imgs_rec, img_rec)
+	    push!(entropias, calcular_entropia(img_rec))
+	end
+end
+
+# ╔═╡ 54e3b0fa-0684-44a7-bb1d-8c74ee2aa928
+[Gray.(img_mat) Gray.(imgs_rec[1]);
+Gray.(imgs_rec[2]) Gray.(imgs_rec[3])]
+
+# ╔═╡ 03c55c70-c053-482d-9b83-926620e3d654
+md"""
+$\texttt{Figura 4}$
+"""
+
+# ╔═╡ 22f5d43a-9120-4b07-b445-dbd38c9134f2
+md"""
+Nótese que hubo reducciones en las entropías de las imágenes cuendo se aplicó un $\lambda$ más grande, indicando un mayor nivel de compresión.
+"""
+
+# ╔═╡ 594b9f69-4fa0-45f1-9a72-e4d8cacc4458
+[round(H_original, digits=5) round(entropias[1], digits=5);
+ round(entropias[2], digits=5) round(entropias[3], digits=5)]
+
+# ╔═╡ aed6f545-f9d4-453f-b4d3-0f0d928b1599
+md"""
+Una mejor estrategia consiste en especificar qué porcentaje de la energía de la imagen (o, alternativamente, qué porcentaje de la energía en la porción de alta frecuencia de la transformada) debe conservarse durante la etapa de umbralización del proceso de compresión.
+
+Para sentar las bases técnicas de esta idea, recordemos que la **energía** de un vector $\mathbf{v} = [v_1, ..., v_n]^T$ se define como:
+
+$E(\mathbf{v}) = \|\mathbf{v}\|^2 = \sum_{k=1}^{n} |v_k|^2$
+
+De manera similar, la energía de una imagen (o matriz) $A$ de tamaño $M \times N$ se define como:
+
+$E(A) = \|A\|^2 = \sum_{m=1}^{M} \sum_{n=1}^{N} |A(m, n)|^2$
+"""
+
+# ╔═╡ 6e360a4f-67d2-4886-831f-37eb94d5fb2b
+function energia(A::Matrix{Float64})
+    return sum(abs2, A)
+end
+
+# ╔═╡ e495eefa-be0d-4f6d-88c7-81e76b4b5418
+md"""
+A continuación se define la función para aplicar el método de umbralización por medio del porcentaje de energía.
+"""
+
+# ╔═╡ e10acc44-a37d-4776-bf04-76ad84979349
+function umbral_por_energia(hwt::Matrix{Float64}, porcentaje::Float64)
+    M, N = size(hwt)
+    half_M, half_N = M ÷ 2, N ÷ 2
+
+    V = hwt[1:half_M, half_N+1:end]
+    H = hwt[half_M+1:end, 1:half_N]
+    D = hwt[half_M+1:end, half_N+1:end]
+
+    v = vcat(vec(V), vec(H), vec(D))
+    v_abs_sorted = sort(abs.(v))
+    E_total = sum(v.^2)
+    E_acumulada = 0.0
+    for i in length(v_abs_sorted):-1:1
+        E_acumulada += v_abs_sorted[i]^2
+        if E_acumulada / E_total >= porcentaje
+            return v_abs_sorted[i]
+        end
+    end
+    return 0.0
+end
+
+# ╔═╡ 2bf0ab32-75f6-483b-bea2-788212f24850
+md"""
+Para diferentes porcentajes de energía se exhibe el valor de $\lambda$ adecuando para aplicar en la umbralización y obtener la energía esperada.
+"""
+
+# ╔═╡ a89af050-6983-45ca-bdbb-857cf87081c8
+begin
+	# Transformada de Haar (1 iteración)
+	hwt_img_2 = iterated_haar2d(img_mat, 1)
+	
+	# Preservar 99% de la energía
+	λ_99 = umbral_por_energia(hwt_img_2, 0.99)
+	λ_95 = umbral_por_energia(hwt_img_2, 0.95)
+	λ_90 = umbral_por_energia(hwt_img_2, 0.90)
+	
+	println("λ para 99% energía: ", round(λ_99, digits=5))
+	println("λ para 95% energía: ", round(λ_95, digits=5))
+	println("λ para 90% energía: ", round(λ_90, digits=5))
+end
+
+# ╔═╡ cd40b738-1808-4f8f-b9b6-4da18a4a428d
+md"""
+En la siguiente función se hace la reconstrucción de una imágen comprimida y aplicandole el método de umbralización.
+"""
+
+# ╔═╡ a0474e7d-b7d6-413e-b2b5-e5a4c8202b73
+begin
+	function reconstruir_img_con_lambda(hwt::Matrix{Float64}, λ::Float64)
+	    WM_inv = inverse_haar_wavelet_matrix(size(hwt, 1))
+	    WN_inv = inverse_haar_wavelet_matrix(size(hwt, 2))
+	    hwt_thres = threshold_HVD(copy(hwt), λ)
+	    return WM_inv * hwt_thres * transpose(WN_inv)
+	end
+	
+	img_99 = reconstruir_img_con_lambda(hwt_img, λ_99)
+	img_95 = reconstruir_img_con_lambda(hwt_img, λ_95)
+	img_90 = reconstruir_img_con_lambda(hwt_img, λ_90)
+end;
+
+# ╔═╡ a46637f2-0830-4e31-a550-7930fe96f312
+md"""
+En la figura 5 se muestra la imágen original, la imágen con 99\% de energía, con 95\% y con 90\% (de izquierda a derecha y de arriba a abajo).
+"""
+
+# ╔═╡ 6b6a889d-e514-4950-9db5-4bf0219b08e3
+[Gray.(img_mat) Gray.(img_99);
+Gray.(img_95) Gray.(img_90)]
+
+# ╔═╡ 87dc3954-d0ab-4616-abec-08bda857d0e9
+md"""
+$\texttt{Figura 5}$
+"""
+
+# ╔═╡ 8cf62652-7d9c-4203-98ae-507106dc0417
+md"""
+La figura 6 corresponde a la imágen umbralizada con un 90\% de energía.
+"""
+
+# ╔═╡ c4d79a2c-155e-490e-9a38-b458a8e08370
+Gray.(img_90)
+
+# ╔═╡ fda158d5-b513-4bfe-8f73-f2750d44f781
+md"""
+$\texttt{Figura 6}$
+"""
+
+# ╔═╡ ce9a0e09-905e-44e3-8306-3ef41b9b04e5
+md"""# Referencias"""
+
+# ╔═╡ c7fc5656-bbb1-491b-b311-fe7860ac1c38
 md"""
 [1] Galperin, Y. V. (2020). An image processing tour of college mathematics. Chapman & Hall/CRC Press.
 
-[2] McAndrew, A. (2015). A computational introduction to digital image processing (2nd ed.). CRC Press.
-
-[3] First Principles of Computer Vision, Image Filtering in Frequency Domain | Image Processing II (2 de marzo de 2021), YouTube. Recuperado 24 de febrero de 2025, de [https://www.youtube.com/watch?si=l5PBkKI-MUQKlKYE&v=OOu5KP3Gvx0&feature=youtu.be](https://www.youtube.com/watch?si=l5PBkKI-MUQKlKYE&v=OOu5KP3Gvx0&feature=youtu.be)
-
-[4] JuliaImages. (s.f.). JuliaImages Documentation. Recuperado de [https://juliaimages.org/stable/](https://juliaimages.org/stable/).
+[2] JuliaImages. (s.f.). JuliaImages Documentation. Recuperado de [https://juliaimages.org/stable/](https://juliaimages.org/stable/).
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -979,9 +644,9 @@ PLUTO_PROJECT_TOML_CONTENTS = """
 ColorVectorSpace = "c3611d14-8923-5661-9e6a-0046d554d3a4"
 Colors = "5ae59095-9a9b-59fe-a467-6f913c188581"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
-FFTW = "7a1cc6ca-52ef-59f5-83cd-3a7055c09341"
 FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
 HypertextLiteral = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
+ImageCore = "a09fc81d-aa75-5fe9-8630-4744c3626534"
 ImageFiltering = "6a3955dd-da59-5b1f-98d4-e7296123deb5"
 ImageIO = "82e4d734-157c-48bb-816b-45c225c6df19"
 ImageShow = "4e3cecfd-b093-5904-9786-8bbb286a6a31"
@@ -993,15 +658,32 @@ Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 StatsPlots = "f3b207a7-027a-5e70-b257-86293d7955fd"
 TestImages = "5e47fb64-e119-507b-a336-dd2b206d9990"
+
+[compat]
+ColorVectorSpace = "~0.10.0"
+Colors = "~0.13.0"
+Distributions = "~0.25.118"
+FileIO = "~1.17.0"
+HypertextLiteral = "~0.9.5"
+ImageCore = "~0.10.5"
+ImageFiltering = "~0.7.9"
+ImageIO = "~0.6.9"
+ImageShow = "~0.3.8"
+Images = "~0.26.2"
+Plots = "~1.40.7"
+PlutoUI = "~0.7.62"
+StatsBase = "~0.34.4"
+StatsPlots = "~0.15.7"
+TestImages = "~1.9.0"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.9.2"
 manifest_format = "2.0"
-project_hash = "21b402e783f7657fffb6e7e762090b53f05f8d2f"
+project_hash = "4083bae525eb2bec8e5ded834e93604c4d05ec25"
 
 [[deps.AbstractFFTs]]
 deps = ["LinearAlgebra"]
@@ -1060,21 +742,16 @@ uuid = "68821587-b530-5797-8361-c406ea357684"
 version = "3.5.1+1"
 
 [[deps.ArrayInterface]]
-deps = ["Adapt", "LinearAlgebra"]
-git-tree-sha1 = "017fcb757f8e921fb44ee063a7aafe5f89b86dd1"
+deps = ["Adapt", "LinearAlgebra", "Requires", "SparseArrays", "SuiteSparse"]
+git-tree-sha1 = "c5aeb516a84459e0318a02507d2261edad97eb75"
 uuid = "4fba245c-0d91-5ea0-9b3e-6abc04ee57a9"
-version = "7.18.0"
+version = "7.7.1"
 
     [deps.ArrayInterface.extensions]
     ArrayInterfaceBandedMatricesExt = "BandedMatrices"
     ArrayInterfaceBlockBandedMatricesExt = "BlockBandedMatrices"
     ArrayInterfaceCUDAExt = "CUDA"
-    ArrayInterfaceCUDSSExt = "CUDSS"
-    ArrayInterfaceChainRulesCoreExt = "ChainRulesCore"
-    ArrayInterfaceChainRulesExt = "ChainRules"
     ArrayInterfaceGPUArraysCoreExt = "GPUArraysCore"
-    ArrayInterfaceReverseDiffExt = "ReverseDiff"
-    ArrayInterfaceSparseArraysExt = "SparseArrays"
     ArrayInterfaceStaticArraysCoreExt = "StaticArraysCore"
     ArrayInterfaceTrackerExt = "Tracker"
 
@@ -1082,12 +759,7 @@ version = "7.18.0"
     BandedMatrices = "aae01518-5342-5314-be14-df237901396f"
     BlockBandedMatrices = "ffab5731-97b5-5995-9138-79e8c1846df0"
     CUDA = "052768ef-5323-5732-b1bb-66c8b64840ba"
-    CUDSS = "45b445bb-4962-46a0-9369-b4df9d0f772e"
-    ChainRules = "082447d4-558c-5d27-93f4-14fc19e9eca2"
-    ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
     GPUArraysCore = "46192b85-c4d5-4398-a991-12ede77f4527"
-    ReverseDiff = "37e2e3b7-166d-5795-8a7a-e32c996b4267"
-    SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
     StaticArraysCore = "1e83bf80-4336-4d27-bf5d-d5a4f845583c"
     Tracker = "9f7883ad-71c0-57eb-9f7f-b5c9e6d3789c"
 
@@ -1185,21 +857,15 @@ version = "3.29.0"
 
 [[deps.ColorTypes]]
 deps = ["FixedPointNumbers", "Random"]
-git-tree-sha1 = "67e11ee83a43eb71ddc950302c53bf33f0690dfe"
+git-tree-sha1 = "b10d0b65641d57b8b4d5e234446582de5047050d"
 uuid = "3da002f7-5984-5a60-b8a6-cbb66c0b333f"
-version = "0.12.1"
-
-    [deps.ColorTypes.extensions]
-    StyledStringsExt = "StyledStrings"
-
-    [deps.ColorTypes.weakdeps]
-    StyledStrings = "f489334b-da3d-4c2e-b8f0-e476e12c162b"
+version = "0.11.5"
 
 [[deps.ColorVectorSpace]]
 deps = ["ColorTypes", "FixedPointNumbers", "LinearAlgebra", "Requires", "Statistics", "TensorCore"]
-git-tree-sha1 = "8b3b6f87ce8f65a2b4f857528fd8d70086cd72b1"
+git-tree-sha1 = "a1f44953f2382ebb937d60dafbe2deea4bd23249"
 uuid = "c3611d14-8923-5661-9e6a-0046d554d3a4"
-version = "0.11.0"
+version = "0.10.0"
 weakdeps = ["SpecialFunctions"]
 
     [deps.ColorVectorSpace.extensions]
@@ -1210,11 +876,6 @@ deps = ["ColorTypes", "FixedPointNumbers", "Reexport"]
 git-tree-sha1 = "64e15186f0aa277e174aa81798f7eb8598e0157e"
 uuid = "5ae59095-9a9b-59fe-a467-6f913c188581"
 version = "0.13.0"
-
-[[deps.CommonWorldInvalidations]]
-git-tree-sha1 = "ae52d1c52048455e85a387fbee9be553ec2b68d0"
-uuid = "f70d9fcc-98c5-4d4a-abd7-e4cdeebd8ca8"
-version = "1.0.0"
 
 [[deps.Compat]]
 deps = ["TOML", "UUIDs"]
@@ -1229,7 +890,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.1.1+0"
+version = "1.0.5+0"
 
 [[deps.ComputationalResources]]
 git-tree-sha1 = "52cb3ec90e8a8bea0e62e275ba577ad0f74821f7"
@@ -1260,9 +921,9 @@ version = "0.6.3"
 
 [[deps.CoordinateTransformations]]
 deps = ["LinearAlgebra", "StaticArrays"]
-git-tree-sha1 = "a692f5e257d332de1e554e4566a4e5a8a72de2b2"
+git-tree-sha1 = "f9d7112bfff8a19a3a4ea4e03a8e6a91fe8456bf"
 uuid = "150eb455-5306-5404-9cee-2592286d6298"
-version = "0.6.4"
+version = "0.6.3"
 
 [[deps.CpuId]]
 deps = ["Markdown"]
@@ -1521,9 +1182,9 @@ version = "1.0.2"
 
 [[deps.HTTP]]
 deps = ["Base64", "CodecZlib", "ConcurrentUtilities", "Dates", "ExceptionUnwrapping", "Logging", "LoggingExtras", "MbedTLS", "NetworkOptions", "OpenSSL", "PrecompileTools", "Random", "SimpleBufferStream", "Sockets", "URIs", "UUIDs"]
-git-tree-sha1 = "c67b33b085f6e2faf8bf79a61962e7339a81129c"
+git-tree-sha1 = "f93655dc73d7a0b4a368e3c0bce296ae035ad76e"
 uuid = "cd3eb016-35fb-5094-929b-558a96fad6f3"
-version = "1.10.15"
+version = "1.10.16"
 
 [[deps.HarfBuzz_jll]]
 deps = ["Artifacts", "Cairo_jll", "Fontconfig_jll", "FreeType2_jll", "Glib_jll", "Graphite2_jll", "JLLWrappers", "Libdl", "Libffi_jll"]
@@ -1551,9 +1212,9 @@ version = "0.3.28"
 
 [[deps.Hyperscript]]
 deps = ["Test"]
-git-tree-sha1 = "8d511d5b81240fc8e6802386302675bdf47737b9"
+git-tree-sha1 = "179267cfa5e712760cd43dcae385d7ea90cc25a4"
 uuid = "47d2ed2b-36de-50cf-bf87-49c2cf4b8b91"
-version = "0.0.4"
+version = "0.0.5"
 
 [[deps.HypertextLiteral]]
 deps = ["Tricks"]
@@ -1616,9 +1277,9 @@ version = "0.2.17"
 
 [[deps.ImageFiltering]]
 deps = ["CatIndices", "ComputationalResources", "DataStructures", "FFTViews", "FFTW", "ImageBase", "ImageCore", "LinearAlgebra", "OffsetArrays", "PrecompileTools", "Reexport", "SparseArrays", "StaticArrays", "Statistics", "TiledIteration"]
-git-tree-sha1 = "33cb509839cc4011beb45bde2316e64344b0f92b"
+git-tree-sha1 = "eea3a5095c0c5f143e62773164ab11f67e43c4bb"
 uuid = "6a3955dd-da59-5b1f-98d4-e7296123deb5"
-version = "0.7.9"
+version = "0.7.10"
 
 [[deps.ImageIO]]
 deps = ["FileIO", "IndirectArrays", "JpegTurbo", "LazyModules", "Netpbm", "OpenEXR", "PNGFiles", "QOI", "Sixel", "TiffImages", "UUIDs", "WebP"]
@@ -1723,9 +1384,9 @@ weakdeps = ["Unitful"]
     InterpolationsUnitfulExt = "Unitful"
 
 [[deps.IntervalSets]]
-git-tree-sha1 = "dba9ddf07f77f60450fe5d2e2beb9854d9a49bd0"
+git-tree-sha1 = "5fbb102dcb8b1a858111ae81d56682376130517d"
 uuid = "8197267c-284f-5f27-9208-e0e47529a953"
-version = "0.7.10"
+version = "0.7.11"
 weakdeps = ["Random", "RecipesBase", "Statistics"]
 
     [deps.IntervalSets.extensions]
@@ -1749,16 +1410,20 @@ uuid = "82899510-4779-5014-852e-03e436cf321d"
 version = "1.0.0"
 
 [[deps.JLD2]]
-deps = ["FileIO", "MacroTools", "Mmap", "OrderedCollections", "PrecompileTools", "Requires", "TranscodingStreams"]
-git-tree-sha1 = "1059c071429b4753c0c869b75c859c44ba09a526"
+deps = ["FileIO", "MacroTools", "Mmap", "OrderedCollections", "PrecompileTools", "TranscodingStreams"]
+git-tree-sha1 = "8e071648610caa2d3a5351aba03a936a0c37ec61"
 uuid = "033835bb-8acc-5ee8-8aae-3f567f8a3819"
-version = "0.5.12"
+version = "0.5.13"
+weakdeps = ["UnPack"]
+
+    [deps.JLD2.extensions]
+    UnPackExt = "UnPack"
 
 [[deps.JLFzf]]
 deps = ["REPL", "Random", "fzf_jll"]
-git-tree-sha1 = "1d4015b1eb6dc3be7e6c400fbd8042fe825a6bac"
+git-tree-sha1 = "82f7acdc599b65e0f8ccd270ffa1467c21cb647b"
 uuid = "1019f520-868f-41f5-a6de-eb00f4b6a39c"
-version = "0.1.10"
+version = "0.1.11"
 
 [[deps.JLLWrappers]]
 deps = ["Artifacts", "Preferences"]
@@ -1804,9 +1469,9 @@ version = "3.0.0+1"
 
 [[deps.LLVMOpenMP_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "78211fb6cbc872f77cad3fc0b6cf647d923f4929"
+git-tree-sha1 = "eb62a3deb62fc6d8822c0c4bef73e4412419c5d8"
 uuid = "1d63c593-3942-5779-bab2-d838dc0a180e"
-version = "18.1.7+0"
+version = "18.1.8+0"
 
 [[deps.LZO_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1821,9 +1486,9 @@ version = "1.4.0"
 
 [[deps.Latexify]]
 deps = ["Format", "InteractiveUtils", "LaTeXStrings", "MacroTools", "Markdown", "OrderedCollections", "Requires"]
-git-tree-sha1 = "cd714447457c660382fe634710fb56eb255ee42e"
+git-tree-sha1 = "cd10d2cc78d34c0e2a3a36420ab607b611debfbb"
 uuid = "23fbe1c1-3f47-55db-b15f-69d7ec21a316"
-version = "0.16.6"
+version = "0.16.7"
 
     [deps.Latexify.extensions]
     DataFramesExt = "DataFrames"
@@ -1853,26 +1518,21 @@ version = "0.3.1"
 [[deps.LibCURL]]
 deps = ["LibCURL_jll", "MozillaCACerts_jll"]
 uuid = "b27032c2-a3e7-50c8-80cd-2d36dbcbfd21"
-version = "0.6.4"
+version = "0.6.3"
 
 [[deps.LibCURL_jll]]
 deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll", "Zlib_jll", "nghttp2_jll"]
 uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
-version = "8.4.0+0"
+version = "7.84.0+0"
 
 [[deps.LibGit2]]
-deps = ["Base64", "LibGit2_jll", "NetworkOptions", "Printf", "SHA"]
+deps = ["Base64", "NetworkOptions", "Printf", "SHA"]
 uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
-
-[[deps.LibGit2_jll]]
-deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll"]
-uuid = "e37daf67-58a4-590a-8e99-b0245dd2ffc5"
-version = "1.6.4+0"
 
 [[deps.LibSSH2_jll]]
 deps = ["Artifacts", "Libdl", "MbedTLS_jll"]
 uuid = "29816b5a-b9ab-546f-933c-edad1886dfa8"
-version = "1.11.0+1"
+version = "1.10.2+0"
 
 [[deps.Libdl]]
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
@@ -1883,23 +1543,11 @@ git-tree-sha1 = "27ecae93dd25ee0909666e6835051dd684cc035e"
 uuid = "e9f186c6-92d2-5b65-8a66-fee21dc1b490"
 version = "3.2.2+2"
 
-[[deps.Libgcrypt_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Libgpg_error_jll"]
-git-tree-sha1 = "d77592fa54ad343c5043b6f38a03f1a3c3959ffe"
-uuid = "d4300ac3-e22c-5743-9152-c294e39db1e4"
-version = "1.11.1+0"
-
 [[deps.Libglvnd_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libX11_jll", "Xorg_libXext_jll"]
-git-tree-sha1 = "ff3b4b9d35de638936a525ecd36e86a8bb919d11"
+git-tree-sha1 = "d36c21b9e7c172a44a10484125024495e2625ac0"
 uuid = "7e76a0d4-f3c7-5321-8279-8d96eeed0f29"
-version = "1.7.0+0"
-
-[[deps.Libgpg_error_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "df37206100d39f79b3376afb6b9cee4970041c61"
-uuid = "7add5ba3-2f88-524e-9cd5-f83b8a55f7b8"
-version = "1.51.1+0"
+version = "1.7.1+1"
 
 [[deps.Libiconv_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1937,9 +1585,9 @@ version = "2.12.0+0"
 
 [[deps.LogExpFunctions]]
 deps = ["DocStringExtensions", "IrrationalConstants", "LinearAlgebra"]
-git-tree-sha1 = "13ca9e2586b89836fd20cccf56e57e2b9ae7f38f"
+git-tree-sha1 = "a2d09619db4e765091ee5c6ffe8872849de0feea"
 uuid = "2ab3a3ac-af41-5b50-aa03-7779005ae688"
-version = "0.3.29"
+version = "0.3.28"
 
     [deps.LogExpFunctions.extensions]
     LogExpFunctionsChainRulesCoreExt = "ChainRulesCore"
@@ -1975,6 +1623,11 @@ version = "0.12.172"
     ForwardDiff = "f6369f11-7733-5829-9624-2563aa707210"
     SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
 
+[[deps.MIMEs]]
+git-tree-sha1 = "c64d943587f7187e751162b3b84445bbbd79f691"
+uuid = "6c6e2e6c-3030-632d-7369-2d6c69616d65"
+version = "1.1.0"
+
 [[deps.MKL_jll]]
 deps = ["Artifacts", "IntelOpenMP_jll", "JLLWrappers", "LazyArtifacts", "Libdl", "oneTBB_jll"]
 git-tree-sha1 = "5de60bc6cb3899cd318d80d627560fae2e2d99ae"
@@ -1982,9 +1635,9 @@ uuid = "856f044c-d86e-5d09-b602-aeab76dc8ba7"
 version = "2025.0.1+1"
 
 [[deps.MacroTools]]
-git-tree-sha1 = "72aebe0b5051e5143a079a4685a46da330a40472"
+git-tree-sha1 = "1e0228a030642014fe5cfe68c2c0a818f9e3f522"
 uuid = "1914dd2f-81c6-5fcd-8719-6d5c9610ff09"
-version = "0.5.15"
+version = "0.5.16"
 
 [[deps.ManualMemory]]
 git-tree-sha1 = "bcaef4fc7a0cfe2cba636d84cda54b5e4e4ca3cd"
@@ -2009,7 +1662,7 @@ version = "1.1.9"
 [[deps.MbedTLS_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
-version = "2.28.2+1"
+version = "2.28.2+0"
 
 [[deps.Measures]]
 git-tree-sha1 = "c13304c81eec1ed3af7fc20e75fb6b26092a1102"
@@ -2039,7 +1692,7 @@ version = "0.3.4"
 
 [[deps.MozillaCACerts_jll]]
 uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
-version = "2023.1.10"
+version = "2022.10.11"
 
 [[deps.MultivariateStats]]
 deps = ["Arpack", "Distributions", "LinearAlgebra", "SparseArrays", "Statistics", "StatsAPI", "StatsBase"]
@@ -2049,9 +1702,9 @@ version = "0.10.3"
 
 [[deps.NaNMath]]
 deps = ["OpenLibm_jll"]
-git-tree-sha1 = "9b8215b1ee9e78a293f99797cd31375471b2bcae"
+git-tree-sha1 = "030ea22804ef91648f29b7ad3fc15fa49d0e6e71"
 uuid = "77ba4419-2d1f-58cd-9bb1-8ffee604a2e3"
-version = "1.1.3"
+version = "1.0.3"
 
 [[deps.NearestNeighbors]]
 deps = ["Distances", "StaticArrays"]
@@ -2075,9 +1728,9 @@ uuid = "510215fc-4207-5dde-b226-833fc4488ee2"
 version = "0.5.5"
 
 [[deps.OffsetArrays]]
-git-tree-sha1 = "a414039192a155fb38c4599a60110f0018c6ec82"
+git-tree-sha1 = "117432e406b5c023f665fa73dc26e79ec3630151"
 uuid = "6fe1bfb0-de20-5000-8ca7-80f57d26f881"
-version = "1.16.0"
+version = "1.17.0"
 weakdeps = ["Adapt"]
 
     [deps.OffsetArrays.extensions]
@@ -2092,7 +1745,7 @@ version = "1.3.5+1"
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.23+4"
+version = "0.3.21+4"
 
 [[deps.OpenEXR]]
 deps = ["Colors", "FileIO", "OpenEXR_jll"]
@@ -2115,7 +1768,7 @@ version = "2.4.0+0"
 [[deps.OpenLibm_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "05823500-19ac-5b8b-9628-191a04bc5112"
-version = "0.8.1+2"
+version = "0.8.1+0"
 
 [[deps.OpenSSL]]
 deps = ["BitFlags", "Dates", "MozillaCACerts_jll", "OpenSSL_jll", "Sockets"]
@@ -2149,13 +1802,13 @@ version = "1.8.0"
 [[deps.PCRE2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "efcefdf7-47ab-520b-bdef-62a2eaa19f15"
-version = "10.42.0+1"
+version = "10.42.0+0"
 
 [[deps.PDMats]]
 deps = ["LinearAlgebra", "SparseArrays", "SuiteSparse"]
-git-tree-sha1 = "48566789a6d5f6492688279e22445002d171cf76"
+git-tree-sha1 = "949347156c25054de2db3b166c52ac4728cbad65"
 uuid = "90014a1f-27ba-587c-ab20-58faa44d9150"
-version = "0.11.33"
+version = "0.11.31"
 
 [[deps.PNGFiles]]
 deps = ["Base64", "CEnum", "ImageCore", "IndirectArrays", "OffsetArrays", "libpng_jll"]
@@ -2183,9 +1836,9 @@ version = "0.12.3"
 
 [[deps.Parsers]]
 deps = ["Dates", "PrecompileTools", "UUIDs"]
-git-tree-sha1 = "8489905bcdbcfac64d1daa51ca07c0d8f0283821"
+git-tree-sha1 = "7d2f8f21da5db6a806faf7b9b292296da42b2810"
 uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
-version = "2.8.1"
+version = "2.8.3"
 
 [[deps.Pixman_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "LLVMOpenMP_jll", "Libdl"]
@@ -2196,7 +1849,7 @@ version = "0.44.2+0"
 [[deps.Pkg]]
 deps = ["Artifacts", "Dates", "Downloads", "FileWatching", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
-version = "1.10.0"
+version = "1.9.2"
 
 [[deps.PkgVersion]]
 deps = ["Pkg"]
@@ -2237,10 +1890,10 @@ version = "1.40.7"
     Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 
 [[deps.PlutoUI]]
-deps = ["AbstractPlutoDingetjes", "Base64", "Dates", "Hyperscript", "HypertextLiteral", "IOCapture", "InteractiveUtils", "JSON", "Logging", "Markdown", "Random", "Reexport", "UUIDs"]
-git-tree-sha1 = "5152abbdab6488d5eec6a01029ca6697dff4ec8f"
+deps = ["AbstractPlutoDingetjes", "Base64", "ColorTypes", "Dates", "FixedPointNumbers", "Hyperscript", "HypertextLiteral", "IOCapture", "InteractiveUtils", "JSON", "Logging", "MIMEs", "Markdown", "Random", "Reexport", "URIs", "UUIDs"]
+git-tree-sha1 = "d3de2694b52a01ce61a036f18ea9c0f61c4a9230"
 uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
-version = "0.7.23"
+version = "0.7.62"
 
 [[deps.PolyesterWeave]]
 deps = ["BitTwiddlingConvenienceFunctions", "CPUSummary", "IfElse", "Static", "ThreadingUtilities"]
@@ -2328,7 +1981,7 @@ deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
 uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 
 [[deps.Random]]
-deps = ["SHA"]
+deps = ["SHA", "Serialization"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [[deps.RangeArrays]]
@@ -2496,13 +2149,12 @@ version = "1.2.1"
 [[deps.SparseArrays]]
 deps = ["Libdl", "LinearAlgebra", "Random", "Serialization", "SuiteSparse_jll"]
 uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
-version = "1.10.0"
 
 [[deps.SpecialFunctions]]
 deps = ["IrrationalConstants", "LogExpFunctions", "OpenLibm_jll", "OpenSpecFun_jll"]
-git-tree-sha1 = "64cca0c26b4f31ba18f13f6c12af7c85f478cfde"
+git-tree-sha1 = "41852b8679f78c8d8961eeadc8f62cef861a52e3"
 uuid = "276daf66-3868-5448-9aa4-cd146d93841b"
-version = "2.5.0"
+version = "2.5.1"
 weakdeps = ["ChainRulesCore"]
 
     [deps.SpecialFunctions.extensions]
@@ -2521,16 +2173,16 @@ uuid = "cae243ae-269e-4f55-b966-ac2d0dc13c15"
 version = "0.1.1"
 
 [[deps.Static]]
-deps = ["CommonWorldInvalidations", "IfElse", "PrecompileTools"]
-git-tree-sha1 = "f737d444cb0ad07e61b3c1bef8eb91203c321eff"
+deps = ["IfElse"]
+git-tree-sha1 = "b366eb1eb68075745777d80861c6706c33f588ae"
 uuid = "aedffcd0-7271-4cad-89d0-dc628f76c6d3"
-version = "1.2.0"
+version = "0.8.9"
 
 [[deps.StaticArrayInterface]]
-deps = ["ArrayInterface", "Compat", "IfElse", "LinearAlgebra", "PrecompileTools", "Static"]
-git-tree-sha1 = "96381d50f1ce85f2663584c8e886a6ca97e60554"
+deps = ["ArrayInterface", "Compat", "IfElse", "LinearAlgebra", "PrecompileTools", "Requires", "Static"]
+git-tree-sha1 = "c3668ff1a3e4ddf374fc4f8c25539ce7194dcc39"
 uuid = "0d7ed370-da01-4f52-bd93-41d350b8b718"
-version = "1.8.0"
+version = "1.6.0"
 weakdeps = ["OffsetArrays", "StaticArrays"]
 
     [deps.StaticArrayInterface.extensions]
@@ -2556,7 +2208,7 @@ version = "1.4.3"
 [[deps.Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
 uuid = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
-version = "1.10.0"
+version = "1.9.0"
 
 [[deps.StatsAPI]]
 deps = ["LinearAlgebra"]
@@ -2601,9 +2253,9 @@ deps = ["Libdl", "LinearAlgebra", "Serialization", "SparseArrays"]
 uuid = "4607b0f0-06f3-5cda-b6b1-a6196a1729e9"
 
 [[deps.SuiteSparse_jll]]
-deps = ["Artifacts", "Libdl", "libblastrampoline_jll"]
+deps = ["Artifacts", "Libdl", "Pkg", "libblastrampoline_jll"]
 uuid = "bea87d4a-7f5b-5778-9afe-8cc45184846c"
-version = "7.2.1+1"
+version = "5.10.1+6"
 
 [[deps.TOML]]
 deps = ["Dates"]
@@ -2651,9 +2303,9 @@ version = "1.9.0"
 
 [[deps.ThreadingUtilities]]
 deps = ["ManualMemory"]
-git-tree-sha1 = "eda08f7e9818eb53661b3deb74e3159460dfbc27"
+git-tree-sha1 = "18ad3613e129312fe67789a71720c3747e598a61"
 uuid = "8290d209-cae3-49c0-8002-c8c24d57dab5"
-version = "0.5.2"
+version = "0.5.3"
 
 [[deps.TiffImages]]
 deps = ["ColorTypes", "DataStructures", "DocStringExtensions", "FileIO", "FixedPointNumbers", "IndirectArrays", "Inflate", "Mmap", "OffsetArrays", "PkgVersion", "ProgressMeter", "SIMD", "UUIDs"]
@@ -2767,89 +2419,77 @@ git-tree-sha1 = "b8b243e47228b4a3877f1dd6aee0c5d56db7fcf4"
 uuid = "02c8fc9c-b97f-50b9-bbe4-9be30ff0a78a"
 version = "2.13.6+1"
 
-[[deps.XSLT_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Libgcrypt_jll", "Libgpg_error_jll", "Libiconv_jll", "XML2_jll", "Zlib_jll"]
-git-tree-sha1 = "82df486bfc568c29de4a207f7566d6716db6377c"
-uuid = "aed1982a-8fda-507f-9586-7b0439959a61"
-version = "1.1.43+0"
-
 [[deps.Xorg_libX11_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libxcb_jll", "Xorg_xtrans_jll"]
-git-tree-sha1 = "9dafcee1d24c4f024e7edc92603cedba72118283"
+git-tree-sha1 = "b5899b25d17bf1889d25906fb9deed5da0c15b3b"
 uuid = "4f6342f7-b3d2-589e-9d20-edeb45f2b2bc"
-version = "1.8.6+3"
+version = "1.8.12+0"
 
 [[deps.Xorg_libXau_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "e9216fdcd8514b7072b43653874fd688e4c6c003"
+git-tree-sha1 = "aa1261ebbac3ccc8d16558ae6799524c450ed16b"
 uuid = "0c0b7dd1-d40b-584c-a123-a41640f87eec"
-version = "1.0.12+0"
+version = "1.0.13+0"
 
 [[deps.Xorg_libXcursor_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libXfixes_jll", "Xorg_libXrender_jll"]
-git-tree-sha1 = "807c226eaf3651e7b2c468f687ac788291f9a89b"
+git-tree-sha1 = "6c74ca84bbabc18c4547014765d194ff0b4dc9da"
 uuid = "935fb764-8cf2-53bf-bb30-45bb1f8bf724"
-version = "1.2.3+0"
+version = "1.2.4+0"
 
 [[deps.Xorg_libXdmcp_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "89799ae67c17caa5b3b5a19b8469eeee474377db"
+git-tree-sha1 = "52858d64353db33a56e13c341d7bf44cd0d7b309"
 uuid = "a3789734-cfe1-5b06-b2d0-1dd0d9d62d05"
-version = "1.1.5+0"
+version = "1.1.6+0"
 
 [[deps.Xorg_libXext_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libX11_jll"]
-git-tree-sha1 = "d7155fea91a4123ef59f42c4afb5ab3b4ca95058"
+git-tree-sha1 = "a4c0ee07ad36bf8bbce1c3bb52d21fb1e0b987fb"
 uuid = "1082639a-0dae-5f34-9b06-72781eeb8cb3"
-version = "1.3.6+3"
+version = "1.3.7+0"
 
 [[deps.Xorg_libXfixes_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libX11_jll"]
-git-tree-sha1 = "6fcc21d5aea1a0b7cce6cab3e62246abd1949b86"
+git-tree-sha1 = "9caba99d38404b285db8801d5c45ef4f4f425a6d"
 uuid = "d091e8ba-531a-589c-9de9-94069b037ed8"
-version = "6.0.0+0"
+version = "6.0.1+0"
 
 [[deps.Xorg_libXi_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libXext_jll", "Xorg_libXfixes_jll"]
-git-tree-sha1 = "984b313b049c89739075b8e2a94407076de17449"
+git-tree-sha1 = "a376af5c7ae60d29825164db40787f15c80c7c54"
 uuid = "a51aa0fd-4e3c-5386-b890-e753decda492"
-version = "1.8.2+0"
+version = "1.8.3+0"
 
 [[deps.Xorg_libXinerama_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libXext_jll"]
-git-tree-sha1 = "a1a7eaf6c3b5b05cb903e35e8372049b107ac729"
+git-tree-sha1 = "a5bc75478d323358a90dc36766f3c99ba7feb024"
 uuid = "d1454406-59df-5ea1-beac-c340f2130bc3"
-version = "1.1.5+0"
+version = "1.1.6+0"
 
 [[deps.Xorg_libXrandr_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libXext_jll", "Xorg_libXrender_jll"]
-git-tree-sha1 = "b6f664b7b2f6a39689d822a6300b14df4668f0f4"
+git-tree-sha1 = "aff463c82a773cb86061bce8d53a0d976854923e"
 uuid = "ec84b674-ba8e-5d96-8ba1-2a689ba10484"
-version = "1.5.4+0"
+version = "1.5.5+0"
 
 [[deps.Xorg_libXrender_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libX11_jll"]
-git-tree-sha1 = "a490c6212a0e90d2d55111ac956f7c4fa9c277a6"
+git-tree-sha1 = "7ed9347888fac59a618302ee38216dd0379c480d"
 uuid = "ea2f1a96-1ddc-540d-b46f-429655e07cfa"
-version = "0.9.11+1"
-
-[[deps.Xorg_libpthread_stubs_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "c57201109a9e4c0585b208bb408bc41d205ac4e9"
-uuid = "14d82f49-176c-5ed1-bb49-ad3f5cbd8c74"
-version = "0.1.2+0"
+version = "0.9.12+0"
 
 [[deps.Xorg_libxcb_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "XSLT_jll", "Xorg_libXau_jll", "Xorg_libXdmcp_jll", "Xorg_libpthread_stubs_jll"]
-git-tree-sha1 = "1a74296303b6524a0472a8cb12d3d87a78eb3612"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libXau_jll", "Xorg_libXdmcp_jll"]
+git-tree-sha1 = "bfcaf7ec088eaba362093393fe11aa141fa15422"
 uuid = "c7cfdc94-dc32-55de-ac96-5a1b8d977c5b"
-version = "1.17.0+3"
+version = "1.17.1+0"
 
 [[deps.Xorg_libxkbfile_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libX11_jll"]
-git-tree-sha1 = "dbc53e4cf7701c6c7047c51e17d6e64df55dca94"
+git-tree-sha1 = "e3150c7400c41e207012b41659591f083f3ef795"
 uuid = "cc61e674-0454-545c-8b26-ed2c68acab7a"
-version = "1.1.2+1"
+version = "1.1.3+0"
 
 [[deps.Xorg_xcb_util_image_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg", "Xorg_xcb_util_jll"]
@@ -2883,15 +2523,15 @@ version = "0.4.1+1"
 
 [[deps.Xorg_xkbcomp_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libxkbfile_jll"]
-git-tree-sha1 = "ab2221d309eda71020cdda67a973aa582aa85d69"
+git-tree-sha1 = "801a858fc9fb90c11ffddee1801bb06a738bda9b"
 uuid = "35661453-b289-5fab-8a00-3d9160c6a3a4"
-version = "1.4.6+1"
+version = "1.4.7+0"
 
 [[deps.Xorg_xkeyboard_config_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_xkbcomp_jll"]
-git-tree-sha1 = "691634e5453ad362044e2ad653e79f3ee3bb98c3"
+git-tree-sha1 = "00af7ebdc563c9217ecc67776d1bbf037dbcebf4"
 uuid = "33bec58e-1273-512f-9401-5d533626f822"
-version = "2.39.0+0"
+version = "2.44.0+0"
 
 [[deps.Xorg_xtrans_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -2902,7 +2542,7 @@ version = "1.6.0+0"
 [[deps.Zlib_jll]]
 deps = ["Libdl"]
 uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
-version = "1.2.13+1"
+version = "1.2.13+0"
 
 [[deps.Zstd_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -2912,9 +2552,9 @@ version = "1.5.7+1"
 
 [[deps.fzf_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "6e50f145003024df4f5cb96c7fce79466741d601"
+git-tree-sha1 = "b6a34e0e0960190ac2a4363a1bd003504772d631"
 uuid = "214eeab7-80f7-51ab-84ad-2988db7cef09"
-version = "0.56.3+0"
+version = "0.61.1+0"
 
 [[deps.libaom_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -2931,7 +2571,7 @@ version = "0.15.2+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.8.0+0"
 
 [[deps.libdecor_jll]]
 deps = ["Artifacts", "Dbus_jll", "JLLWrappers", "Libdl", "Libglvnd_jll", "Pango_jll", "Wayland_jll", "xkbcommon_jll"]
@@ -2972,7 +2612,7 @@ version = "1.4.0+0"
 [[deps.nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850ede-7688-5339-a07c-302acd2aaf8d"
-version = "1.52.0+1"
+version = "1.48.0+0"
 
 [[deps.oneTBB_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -2983,7 +2623,7 @@ version = "2022.0.0+0"
 [[deps.p7zip_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
-version = "17.4.0+2"
+version = "17.4.0+0"
 
 [[deps.x264_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -2998,101 +2638,80 @@ uuid = "dfaa095f-4041-5dcd-9319-2fabd8486b76"
 version = "3.5.0+0"
 
 [[deps.xkbcommon_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg", "Wayland_jll", "Wayland_protocols_jll", "Xorg_libxcb_jll", "Xorg_xkeyboard_config_jll"]
-git-tree-sha1 = "63406453ed9b33a0df95d570816d5366c92b7809"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Wayland_jll", "Wayland_protocols_jll", "Xorg_libxcb_jll", "Xorg_xkeyboard_config_jll"]
+git-tree-sha1 = "c950ae0a3577aec97bfccf3381f66666bc416729"
 uuid = "d8fb68d0-12a3-5cfd-a85a-d49703b185fd"
-version = "1.4.1+2"
+version = "1.8.1+0"
 """
 
 # ╔═╡ Cell order:
-# ╟─b01d7d50-c521-11ef-32ce-0751a4c10dc5
-# ╟─a11c6ad2-f459-4d17-9135-1c272a1f85eb
-# ╟─c7e5d4f1-65ab-4e6e-95fb-1fb293a4ac79
-# ╟─88e077fc-1e7c-4876-9075-f6d673988a11
-# ╟─0d3693d4-ff96-4876-93bb-e6566ce14aa0
-# ╠═3241856d-b2b9-4236-9759-49cd6e52e974
-# ╠═0108e854-2215-42ce-b522-7455e1c694ad
-# ╟─ea8f127b-729c-410d-be47-e15eb13a0e44
-# ╟─9bb3294c-79d3-495b-a75c-4a855e5113c3
-# ╟─678f6525-9cb9-414a-9d55-248956911512
-# ╟─3aa09adf-7454-4938-ba6b-2021093797f7
-# ╟─6240e543-bba8-4e7c-affe-d7323d181d2e
-# ╟─e0b31a67-f9a5-4273-85df-ca059936d4ee
-# ╟─b326acea-88a7-43b6-bda5-09284511fa99
-# ╠═a6421d28-fc4e-41b7-8317-e3fa337bd8b4
-# ╟─6100e9bb-2b54-43ae-b41c-91724170d75a
-# ╟─9d06ba70-61f6-4199-835c-68f89d4b2b1f
-# ╟─533c3579-7a43-4c89-a2d5-a881536723cf
-# ╟─05c736e8-935d-4ce8-aed6-f59b47a65ca9
-# ╟─756e320f-019a-4004-9db0-0005ad23dd90
-# ╟─77ab6c80-5ed1-43f7-a68e-5a8e4fb5680a
-# ╟─574cfed5-ae2a-4362-82af-eda31021f8c4
-# ╟─f100c697-d4a8-4a51-9d01-381b2b3412cf
-# ╟─c1996ac2-f26d-4201-8239-aa36fd93aa21
-# ╟─74e1d603-f640-458b-bae7-710016ea7208
-# ╟─249ca1f0-403a-464a-997e-c57c27fdde36
-# ╟─35660aee-510e-49d3-bfd3-8269aabf6b84
-# ╟─3a1237cb-7acd-4672-802e-93918eaf3a8e
-# ╟─580b238c-c6d0-4bcd-9bcb-d8914d854661
-# ╟─ae9ba491-f21e-4c2d-b6d7-a907eb324a9f
-# ╟─08a441f0-5e09-479f-af93-03449dc6ce28
-# ╟─dabd2108-2d88-4615-93da-34b2941935eb
-# ╟─90b53c6c-e005-4ac1-a79f-c2d7604507da
-# ╟─d54d6f0e-c5ed-4dd2-8017-98f681689b40
-# ╟─73a26fa3-02b0-4876-ac2d-403c8e7ed83a
-# ╟─5a91f2fd-5b3e-40a2-ab0f-b7519ff2d179
-# ╠═ef94cde7-1783-424e-8ff6-ccfb1894e084
-# ╟─c88b7a67-5d04-4f0f-9b0d-b68a831b26b0
-# ╟─18e29310-82fe-41b6-99cc-7b7088df7b6c
-# ╟─475d326b-b21e-4508-b386-f2cd2c68926c
-# ╟─750a01bf-b4e9-412a-bce7-9bb72e2b3a55
-# ╟─51b22df4-9388-4111-809d-24d3ea383f3c
-# ╟─80bfafec-7dc1-4d03-8cdf-ecdb087544f9
-# ╟─63259eaf-c707-4370-84ec-8ce1c32a8665
-# ╟─b372a69e-edb1-4956-9ccb-fa939fb21287
-# ╟─f324ed85-8a3a-43bf-abe7-3171b1c38a13
-# ╟─ebb95a43-c333-48b7-bdb0-a760945560cf
-# ╟─931a4907-e078-414b-85bf-cd989017babf
-# ╟─7c611333-4c51-49e9-b3cf-ef19788323c2
-# ╠═1beb1b74-6fc1-4109-aad9-f6ef40a523c8
-# ╟─10f46e3e-cd96-433f-a9be-12c603906c52
-# ╟─2d642832-3619-4996-ab6d-0596232763ec
-# ╟─4b29af6c-673e-4a2b-9a17-f5bf105eadb9
-# ╟─538992e0-e080-4034-ac76-687f4897f133
-# ╟─b845dbc0-2bd1-4217-8682-af74adbf1ab7
-# ╟─7f6a0ba5-52d5-4674-bf32-8c9064c2cac2
-# ╟─497026d7-145c-48c5-ba08-b2e04c3878c6
-# ╟─4ee16828-ebb6-4627-b8c2-5ef752f05e04
-# ╟─a8f6926d-8780-4efd-801a-d39a96240f95
-# ╟─0cfd8bc0-c259-48ca-bfa3-2e11f5323d6b
-# ╟─85e7761b-c6d1-46cf-8f6f-73e06208b206
-# ╟─e1fc9cf1-5d1e-446e-b159-004d5573fbf1
-# ╟─fac50950-66dc-48ad-b079-c148bac9fad2
-# ╟─a4043c54-b713-4490-a8e0-8cdfe606ec50
-# ╟─42048529-4531-4061-a70f-02a3b9e52593
-# ╟─752144bf-dc01-4fd3-9290-ce0989823da3
-# ╟─c7c4d069-9de0-4bbe-a562-76ed10eef97a
-# ╟─58f5c17a-5765-495f-b1f2-425e0423d9bc
-# ╟─4c672598-29cf-4fae-929f-4ec77b1502ec
-# ╟─54f94eba-b01d-47fc-b475-f99a29a909d0
-# ╟─fc86bb52-43fe-43e7-9183-c889dd79904a
-# ╟─0e40e6db-6c6f-46f0-b17f-804a461d6401
-# ╟─620de51c-4329-4efa-9bde-0f2d900aad18
-# ╟─32d159c4-e667-4020-84b5-ca1417538b41
-# ╟─ccb26d93-d403-4d0b-9085-317de4cc3a2a
-# ╟─45c1af7e-61a7-48f5-81b8-9def858163eb
-# ╠═d7bb978e-c4ab-4c60-acee-0c9f3f831376
-# ╟─f89c0037-c02e-4af0-ab26-849462f5935e
-# ╟─cbfd979d-8865-4fb2-9107-ab7289c11a6b
-# ╟─d149cf31-fb7c-4236-8a87-8bcd11811cc3
-# ╟─54d6dac8-d075-4df0-bb22-65b3670098b2
-# ╟─c0e1321f-2723-4e1c-8d1e-613216124ede
-# ╟─b5ce1b92-184d-4f0a-81d4-398f020734d2
-# ╟─4ec08f1a-d9d6-4468-b693-835b0f9b166e
-# ╟─c04bb0a7-02eb-49f3-b37e-0afa62578974
-# ╟─e30fa056-7cae-41c4-89a7-03bebe3ecf25
-# ╟─33c6a7c0-9f59-4cab-97c2-17352abfa383
-# ╟─78403afb-106c-4922-9fc8-b377f6b8b0e6
-# ╟─fc8bb555-4e29-4064-bdb3-312d05988d03
+# ╟─0cfd667b-2092-4ad3-9369-a18b8dc7e9f2
+# ╟─fa70bd89-948e-4aad-aa5f-103bca356996
+# ╟─e42eb10e-4456-441e-8efa-b83673219560
+# ╟─5798176a-d2d6-47ad-9cc9-6f410a3bf92b
+# ╟─c5794c1b-3405-4b60-9157-ef5da147cee8
+# ╠═e68b5266-1321-4900-a6d2-8471734ecbde
+# ╟─d9629211-6630-4748-b57b-c5172b211727
+# ╟─51ff806d-79de-4001-b727-224e80c51f04
+# ╟─dd55ff72-341e-43f3-8796-0df7a6775bf6
+# ╟─f744e4bf-f0b7-45d0-be54-22b4f918c344
+# ╟─8c6dc39d-583c-4297-bfec-866b9be75641
+# ╟─1d3c2b72-d0b1-4abe-9ef4-4a35b3d1721e
+# ╟─f42fd42a-6aa6-48e6-8c51-9b128dc798ce
+# ╠═0c3e13bd-67dd-4018-bd3e-daa20f457537
+# ╠═88fe22db-e8a5-4584-b2dd-5a8f4729990c
+# ╟─6ee50b2d-f4fc-4b12-a0be-05042b50f9bc
+# ╟─0326d2d3-a5ee-4f7a-9687-5dbf69c61649
+# ╟─a2c31c65-3e05-4a44-ab2d-0882e6e6c04f
+# ╟─99517dbc-9e81-45e8-861e-40af82e32f33
+# ╠═69ceb27d-457b-425a-88fd-2fd717ddef25
+# ╠═75a11584-16c5-4f24-a378-ccca170845b6
+# ╟─808be566-e1fb-4b4d-8a50-b1a1deb2b1b6
+# ╠═2769318b-5ac4-4a1f-b939-6ab822bf9602
+# ╠═b8eb0766-03be-4821-8c6b-3e652351674f
+# ╟─0e30e5d7-516a-412b-b051-33ce84776558
+# ╠═a2273052-0e6a-4c12-a70f-46b00a56d298
+# ╟─a06d62a1-a73c-44b7-9f63-2ee23ad6b5ec
+# ╟─d3cb4cfb-2473-47a4-b120-ec9d9279832d
+# ╠═c6145c72-5907-44e6-bfab-5b092e44afe3
+# ╟─706eadcf-a514-4944-bcfa-631fb513dda4
+# ╟─14d2f010-82f8-4113-a1ea-d3b973bb6bbd
+# ╟─a1399006-cd25-4aff-830d-e942964153ce
+# ╟─3cdc5c93-8ff2-45cc-9d61-99eafafab748
+# ╠═15c47f19-06e8-4949-bbfa-77161e493b44
+# ╟─a5bff652-d613-495f-86be-79f9c2f82072
+# ╠═3615be86-14f6-490b-bacd-113cc6331493
+# ╟─e52d09a4-5467-46a1-a768-f678cf687799
+# ╠═6452a273-86ac-4685-87d7-65a35923c50e
+# ╟─c5e8d35c-0ea6-4036-81e2-f1df83f01dd7
+# ╟─93100b46-7b9f-49bd-92d0-e1a3a9230795
+# ╠═5600b81f-ba3b-4ab2-b58c-4417b4842613
+# ╟─16d5f8a5-cf9f-462b-960c-a9c7b4cf65e4
+# ╟─6848a946-95c8-4f18-bc34-e67882820e59
+# ╟─4f94e8ac-8618-42fe-9dfd-a5dae102448b
+# ╟─a844974c-c597-4c8a-9ff8-5eba556fd926
+# ╠═c580a6a1-b2e8-4521-982c-11056684b72a
+# ╟─84c7a75f-6935-4b56-9938-c3aa7451d762
+# ╟─f4b92cec-d92b-4ab0-b74b-31f9ff4778d6
+# ╠═54e3b0fa-0684-44a7-bb1d-8c74ee2aa928
+# ╟─03c55c70-c053-482d-9b83-926620e3d654
+# ╟─22f5d43a-9120-4b07-b445-dbd38c9134f2
+# ╟─594b9f69-4fa0-45f1-9a72-e4d8cacc4458
+# ╟─aed6f545-f9d4-453f-b4d3-0f0d928b1599
+# ╠═6e360a4f-67d2-4886-831f-37eb94d5fb2b
+# ╟─e495eefa-be0d-4f6d-88c7-81e76b4b5418
+# ╠═e10acc44-a37d-4776-bf04-76ad84979349
+# ╟─2bf0ab32-75f6-483b-bea2-788212f24850
+# ╟─a89af050-6983-45ca-bdbb-857cf87081c8
+# ╟─cd40b738-1808-4f8f-b9b6-4da18a4a428d
+# ╠═a0474e7d-b7d6-413e-b2b5-e5a4c8202b73
+# ╟─a46637f2-0830-4e31-a550-7930fe96f312
+# ╟─6b6a889d-e514-4950-9db5-4bf0219b08e3
+# ╟─87dc3954-d0ab-4616-abec-08bda857d0e9
+# ╟─8cf62652-7d9c-4203-98ae-507106dc0417
+# ╟─c4d79a2c-155e-490e-9a38-b458a8e08370
+# ╟─fda158d5-b513-4bfe-8f73-f2750d44f781
+# ╟─ce9a0e09-905e-44e3-8306-3ef41b9b04e5
+# ╟─c7fc5656-bbb1-491b-b311-fe7860ac1c38
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
