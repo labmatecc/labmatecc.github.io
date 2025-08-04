@@ -78,25 +78,32 @@ header-includes: |
 </body>
 </html>
 
-<div class="button-container" style="text-align: center; margin: 20px 0;">
-  <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/Conceptosbasicos/" 
-     class="button" 
-     style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
-    Conceptos básicos
-  </a>
-</div>
-
 <div class="container" style="background-color:rgb(220, 236, 211); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
-      <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+  <div class="person">
+    <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
       <!-- Imagen más grande y centrada con sombras -->
-            <img src="https://mismat.wordpress.com/wp-content/uploads/2023/03/96165-blog.png" 
-                 alt="Espacio Euclídeo" 
-                 style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-        <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">El cuaderno aborda conceptos básicos y aplicaciones del procesamiento de imágenes digitales en escala de grises y a color. Introduce formatos como RGB, CMY y YCbCr, y analiza cómo las imágenes pueden representarse como matrices de valores de píxeles. Además, explora cómo manipular imágenes mediante ajustes de brillo, contrastes y operaciones matemáticas en matrices.</p>
-        <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">Se presentan ejemplos prácticos, como la visualización y modificación de imágenes en escala de grises, y la construcción de objetos geométricos, desde figuras simples hasta fractales como el triángulo de Sierpinski. También se explica la importancia del análisis estadístico de imágenes mediante histogramas para evaluar características como brillo y contraste.</p>
+      <img src="https://mismat.wordpress.com/wp-content/uploads/2023/03/96165-blog.png" 
+           alt="Espacio Euclídeo" 
+           style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+      
+      <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+        El cuaderno aborda conceptos básicos y aplicaciones del procesamiento de imágenes digitales en escala de grises y a color. Introduce formatos como RGB, CMY y YCbCr, y analiza cómo las imágenes pueden representarse como matrices de valores de píxeles. Además, explora cómo manipular imágenes mediante ajustes de brillo, contrastes y operaciones matemáticas en matrices.
+      </p>
+      <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+        Se presentan ejemplos prácticos, como la visualización y modificación de imágenes en escala de grises, y la construcción de objetos geométricos, desde figuras simples hasta fractales como el triángulo de Sierpinski. También se explica la importancia del análisis estadístico de imágenes mediante histogramas para evaluar características como brillo y contraste.
+      </p>
+
+      <!-- Botón dentro del cuadro -->
+      <div class="button-container" style="text-align: center; margin: 20px 0;">
+        <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/Conceptosbasicos/" 
+           class="button" 
+           style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold; display: inline-block;">
+          Conceptos básicos
+        </a>
       </div>
+
     </div>
+  </div>
 </div>
 
 
