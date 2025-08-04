@@ -86,19 +86,15 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: #D0F0C0; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
       <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
       <!-- Imagen más grande y centrada con sombras -->
             <img src="https://mismat.wordpress.com/wp-content/uploads/2023/03/96165-blog.png" 
                  alt="Espacio Euclídeo" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <!-- Pie de página -->
-            <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
-                Triángulo de Sierpinski
-            </footer>
-        <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">El cuaderno aborda conceptos básicos y aplicaciones del procesamiento de imágenes digitales en escala de grises y a color. Introduce formatos como RGB, CMY y YCbCr, y analiza cómo las imágenes pueden representarse como matrices de valores de píxeles. Además, explora cómo manipular imágenes mediante ajustes de brillo, contrastes y operaciones matemáticas en matrices.</p>
-        <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">Se presentan ejemplos prácticos, como la visualización y modificación de imágenes en escala de grises, y la construcción de objetos geométricos, desde figuras simples hasta fractales como el triángulo de Sierpinski. También se explica la importancia del análisis estadístico de imágenes mediante histogramas para evaluar características como brillo y contraste.</p>
+        <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">El cuaderno aborda conceptos básicos y aplicaciones del procesamiento de imágenes digitales en escala de grises y a color. Introduce formatos como RGB, CMY y YCbCr, y analiza cómo las imágenes pueden representarse como matrices de valores de píxeles. Además, explora cómo manipular imágenes mediante ajustes de brillo, contrastes y operaciones matemáticas en matrices.</p>
+        <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">Se presentan ejemplos prácticos, como la visualización y modificación de imágenes en escala de grises, y la construcción de objetos geométricos, desde figuras simples hasta fractales como el triángulo de Sierpinski. También se explica la importancia del análisis estadístico de imágenes mediante histogramas para evaluar características como brillo y contraste.</p>
       </div>
     </div>
 </div>

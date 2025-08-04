@@ -139,10 +139,10 @@ header-includes: |
       <img src="https://labmatecc.github.io/images/carolina_neira.jpeg" alt="Carolina Neira">
     </a>
     <h3><a href="#">Carolina Neira</a></h3>
-    <p>Dirección académica</p>
+    <p>Directora</p>
     <p><a href="mailto:cneiraj@unal.edu.co">cneiraj@unal.edu.co</a></p>
   </div>
-  
+
   <div class="person">
     <a href="https://ytrujillol.github.io/">
       <img src="https://labmatecc.github.io/images/yessica_trujillo.jpg" alt="Yessica Trujillo">
