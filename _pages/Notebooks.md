@@ -78,12 +78,10 @@ header-includes: |
 
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
-        <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
-            <div class="button-container">
-            <a href="https://labmatecc.github.io/Notebooks/AlgebraLineal/" class="button"
-            style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;"
-            >Álgebra Lineal</a>
-            </div>
+            <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+        <div class="button-container" style="text-align: center; margin: 20px 0;">
+            <a href="https://labmatecc.github.io/Notebooks/AlgebraLineal/" class="button" style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Álgebra Lineal</a>
+        </div>
             <!-- Imagen más grande y centrada con sombras -->
             <img src="https://keepcoding.io/wp-content/uploads/2023/01/image-122-1024x663.png" 
                  alt="Espacio Euclídeo" 
@@ -139,10 +137,8 @@ header-includes: |
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
-        <div class="button-container">
-        <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/" class="button"
-        style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;"
-        >Análisis Numérico</a>
+        <div class="button-container" style="text-align: center; margin: 20px 0;">
+            <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/" class="button" style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Análisis Numérico</a>
         </div>
             <!-- Imagen más grande y centrada con sombras -->
             <img src="https://img1.wsimg.com/isteam/ip/8d767449-15bc-4e62-a794-e70427f7c7b3/Mallado-por-elementos-finitos.png" 
@@ -182,10 +178,8 @@ header-includes: |
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
-        <div class="button-container">
-        <a href="https://labmatecc.github.io/Notebooks/EDO/" class="button"
-        style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;"
-        >Ecuaciones Diferenciales Ordinarias</a>
+        <div class="button-container" style="text-align: center; margin: 20px 0;">
+            <a href="https://labmatecc.github.io/Notebooks/EDO/" class="button" style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Ecuaciones Diferenciales Ordinarias</a>
         </div>
             <!-- Imagen más grande y centrada con sombras -->
             <img src="https://bachilleratovirtual.com/aula/pluginfile.php/6562/mod_lesson/page_contents/2536/Fasorxva.gif" 
