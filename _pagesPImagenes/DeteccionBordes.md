@@ -1,5 +1,5 @@
 ---
-title: "Deconvolución"
+title: "Detección de Bordes"
 permalink: /Notebooks/ProcesamientoDeImagenes/DeteccionBordes/
 date: 2019-02-15
 header-includes: |
@@ -23,7 +23,7 @@ header-includes: |
 </head>
 <body>
 
-<h1>Deconvolución</h1>
+<h1>Detección de Bordes</h1>
 
 </body>
 </html>
