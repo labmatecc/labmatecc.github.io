@@ -214,10 +214,8 @@ header-includes: |
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
-        <div class="button-container">
-        <a href="https://labmatecc.github.io/Notebooks/IntroCCyP" class="button"
-        style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;"
-        >Introducción a las Ciencias de la Computación y la Programación</a>
+        <div class="button-container" style="text-align: center; margin: 20px 0;">
+            <a href="https://labmatecc.github.io/Notebooks/IntroCCyP" class="button" style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Introducción a las Ciencias de la Computación y la Programación</a>
         </div>
             <!-- Imagen centrada -->
             <img src="https://i.ytimg.com/vi/CxGSnA-RTsA/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLB81zDsfTaH6F6crVu5J-kDJDouAQ" 
