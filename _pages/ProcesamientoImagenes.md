@@ -262,7 +262,23 @@ header-includes: |
             <img src="https://comprimeme.wordpress.com/wp-content/uploads/2014/12/lenna-600x197.png" 
                  alt="Espacio Euclídeo" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-        <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">El cuaderno explora el uso de coordenadas homogéneas y transformaciones proyectivas para modelar y aplicar homografías en imágenes mediante Julia y PlutoUI: primero presenta una demo interactiva con sliders para ajustar en tiempo real los parámetros de la matriz <p>3&times;3</p> (rotación, escala, traslación y perspectiva) sobre una imagen de prueba con cuadros; luego describe cómo, dados cuatro pares de puntos correspondientes (por ejemplo, los vértices de una placa vehicular), se arma y resuelve un sistema lineal homogéneo para obtener la matriz de homografía usando espacios nulos, y se aplica píxel a píxel la transformación para rectificar la perspectiva de una imagen real. </p>
+        <p style="font-family: 'Arial', sans-serif;
+          color: #013220;
+          font-size: 16px;
+          line-height: 1.6;
+          margin-bottom: 15px;">
+  El cuaderno explora el uso de coordenadas homogéneas y transformaciones
+  proyectivas para modelar y aplicar homografías en imágenes mediante Julia
+  y PlutoUI: primero presenta una demo interactiva con sliders para ajustar
+  en tiempo real los parámetros de la matriz 
+  <span style="font-weight: bold;">3 &times; 3</span> (rotación, escala,
+  traslación y perspectiva) sobre una imagen de prueba con cuadros; luego
+  describe cómo, dados cuatro pares de puntos correspondientes (por ejemplo,
+  los vértices de una placa vehicular), se arma y resuelve un sistema lineal
+  homogéneo para obtener la matriz de homografía usando espacios nulos, y
+  se aplica píxel a píxel la transformación para rectificar la perspectiva
+  de una imagen real.
+</p>
       </div>
     </div>
 </div>
@@ -337,7 +353,7 @@ header-includes: |
             <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
                 Convolución Circular
             </footer>
-        <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">El cuaderno presenta la <strong>deconvolución</strong> como un problema inverso de restauración de imágenes degradadas por desenfoque y ruido: parte de un ejemplo con la imagen “camarógrafo” distorsionada mediante un kernel separable <code>K = u v<sup>T</sup></code> y contaminada con ruido gaussiano, luego muestra cómo modelar la convolución como una transformación lineal <code>Y = K * X + Θ</code> usando matrices de convolución y vectorización/Kronecker para obtener <code>vec(Y) = M<sub>K</sub> vec(X) + θ</code>. A continuación, explica la inversión directa mediante la descomposición en valores singulares de <code>M<sub>K</sub></code> y demuestra sus limitaciones (valores singulares cercanos a cero), para luego implementar y comparar dos estrategias de regularización—<strong>Tikhonov</strong> y <strong>TSVD</strong>—mostrando sus fórmulas, código en Julia y resultados gráficos de recuperación con y sin ruido. Finalmente incluye referencias clave para profundizar en problemas inversos y deconvolución. </p>
+        <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">El cuaderno presenta la deconvolución como un problema inverso de restauración de imágenes degradadas por desenfoque y ruido: parte de un ejemplo con la imagen “camarógrafo” distorsionada mediante un kernel separable <code>K = u v<sup>T</sup></code> y contaminada con ruido gaussiano, luego muestra cómo modelar la convolución como una transformación lineal <code>Y = K * X + Θ</code> usando matrices de convolución y vectorización/Kronecker para obtener <code>vec(Y) = M<sub>K</sub> vec(X) + θ</code>. A continuación, explica la inversión directa mediante la descomposición en valores singulares de <code>M<sub>K</sub></code> y demuestra sus limitaciones (valores singulares cercanos a cero), para luego implementar y comparar dos estrategias de regularización, Tikhonov y TSVD, mostrando sus fórmulas, código en Julia y resultados gráficos de recuperación con y sin ruido. Finalmente incluye referencias clave para profundizar en problemas inversos y deconvolución. </p>
       </div>
     </div>
 </div>
