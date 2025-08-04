@@ -372,7 +372,6 @@ ImageShow = "~0.3.8"
 Images = "~0.26.1"
 Plots = "~1.40.7"
 PlutoUI = "~0.7.23"
-Statistics = "~1.11.1"
 StatsBase = "~0.34.4"
 StatsPlots = "~0.15.7"
 TestImages = "~1.9.0"
@@ -384,7 +383,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.11.2"
 manifest_format = "2.0"
-project_hash = "1426ee0ca87317542de42dba5f262fc729aee445"
+project_hash = "bf25cd492afb98214f88911ce9a4007db47c5d50"
 
 [[deps.AbstractFFTs]]
 deps = ["LinearAlgebra"]
@@ -2468,6 +2467,6 @@ version = "1.4.1+2"
 # ╟─228465f0-94b7-40bc-9ad9-a27b480b8911
 # ╟─6e6e639b-1b59-474e-a9c8-0377850ddd8d
 # ╟─269d6fa2-65c5-458b-849f-3eb1564728fc
-# ╠═9694486a-a468-4fed-bd51-7ebfb06cd2e5
+# ╟─9694486a-a468-4fed-bd51-7ebfb06cd2e5
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
