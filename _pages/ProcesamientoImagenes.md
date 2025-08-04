@@ -126,26 +126,22 @@ header-includes: |
 </head>
 <body>
 <hr>
-<div class="button-container" style="text-align: center; margin: 20px 0;">
-  <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/Metricas/" 
-     class="button" 
-     style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
-    Métricas en imágenes
-  </a>
-</div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(245, 255, 239); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
       <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+      <div class="button-container" style="text-align: center; margin: 20px 0;">
+        <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/Metricas/" 
+          class="button" 
+          style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+          Métricas en imágenes
+        </a>
+      </div>
       <!-- Imagen más grande y centrada con sombras -->
             <img src="https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/Distorsionada.png?raw=true" 
                  alt="Métricas" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <!-- Pie de página -->
-            <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
-                Errores
-            </footer>
-        <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">Se presentan métricas con referencia completa, como el Error Cuadrático Medio (MSE) y la Relación Señal-Ruido de Pico (PSNR), que comparan imágenes procesadas con una referencia ideal para cuantificar la distorsión. Además, se analizan métricas sin referencia, como el Índice de Similitud Estructural (SSIM) y su extensión Multi-SSIM, que evalúan la calidad visual considerando luminancia, contraste y estructura sin necesidad de una imagen ideal. También se discute el error estructural y su relación con estas métricas, proporcionando ejemplos numéricos y cálculos aplicados a imágenes de prueba.</p>
+        <p style="font-family: 'Arial', sans-serif; color:  #013220; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">Se presentan métricas con referencia completa, como el Error Cuadrático Medio (MSE) y la Relación Señal-Ruido de Pico (PSNR), que comparan imágenes procesadas con una referencia ideal para cuantificar la distorsión. Además, se analizan métricas sin referencia, como el Índice de Similitud Estructural (SSIM) y su extensión Multi-SSIM, que evalúan la calidad visual considerando luminancia, contraste y estructura sin necesidad de una imagen ideal. También se discute el error estructural y su relación con estas métricas, proporcionando ejemplos numéricos y cálculos aplicados a imágenes de prueba.</p>
       </div>
     </div>
 </div>
