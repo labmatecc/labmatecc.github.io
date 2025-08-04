@@ -93,7 +93,7 @@ header-includes: |
       <img src="https://mismat.wordpress.com/wp-content/uploads/2023/03/96165-blog.png" 
            alt="Espacio Euclídeo" 
            style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-      <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+      <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 15px; line-height: 1.6; margin-bottom: 15px;">
         El cuaderno aborda conceptos básicos y aplicaciones del procesamiento de imágenes digitales en escala de grises y a color. Introduce formatos como RGB, CMY y YCbCr, y analiza cómo las imágenes pueden representarse como matrices de valores de píxeles. Además, explora cómo manipular imágenes mediante ajustes de brillo, contrastes y operaciones matemáticas en matrices.
       </p>
       <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
