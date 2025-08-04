@@ -148,18 +148,16 @@ header-includes: |
 
 <hr>
 
-
-<div class="button-container" style="text-align: center; margin: 20px 0;">
-  <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/FuncionesElementales/" 
-     class="button" 
-     style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
-    Aplicaciones y funciones elementales
-  </a>
-</div>
-
 <div class="container" style="background-color:rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
       <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+      <div class="button-container" style="text-align: center; margin: 20px 0;">
+        <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/FuncionesElementales/" 
+          class="button" 
+          style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+          Aplicaciones y funciones elementales
+        </a>
+      </div>
       <!-- Imagen más grande y centrada con sombras -->
             <img src="https://www.ivanandrei.com/wp-content/uploads/2022/06/rgb-ycbcr.png" 
                  alt="Espacio Euclídeo" 
@@ -175,16 +173,16 @@ header-includes: |
 
 <hr>
 
-<div class="button-container" style="text-align: center; margin: 20px 0;">
-  <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/TranformacionesLineales/" 
-     class="button" 
-     style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
-    Transformaciones lineales y automatización del proceso
-  </a>
-</div>
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
       <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+      <div class="button-container" style="text-align: center; margin: 20px 0;">
+        <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/TranformacionesLineales/" 
+          class="button" 
+          style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+          Transformaciones lineales y automatización del proceso
+        </a>
+      </div>
       <!-- Imagen más grande y centrada con sombras -->
             <img src="https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/Transformaciones.png?raw=true" 
                  alt="Espacio Euclídeo" 
@@ -200,17 +198,16 @@ header-includes: |
 
 <hr>
 
-<div class="button-container" style="text-align: center; margin: 20px 0;">
-  <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/Probabilidad/" 
-     class="button" 
-     style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
-    Probabilidad en el procesamiento de imágenes
-  </a>
-</div>
-
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
       <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+      <div class="button-container" style="text-align: center; margin: 20px 0;">
+        <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/Probabilidad/" 
+          class="button" 
+          style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+          Probabilidad en el procesamiento de imágenes
+        </a>
+      </div>
       <!-- Imagen más grande y centrada con sombras -->
             <img src="https://i.ytimg.com/vi/BC31_smmFEs/maxresdefault.jpg" 
                  alt="Espacio Euclídeo" 
@@ -226,17 +223,16 @@ header-includes: |
 
 <hr>
 
-<div class="button-container" style="text-align: center; margin: 20px 0;">
-  <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/Matrices/" 
-     class="button" 
-     style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
-    Matrices y transformaciones lineales
-  </a>
-</div>
-
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
       <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+      <div class="button-container" style="text-align: center; margin: 20px 0;">
+        <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/Matrices/" 
+          class="button" 
+          style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+          Matrices y transformaciones lineales
+        </a>
+      </div>
       <!-- Imagen más grande y centrada con sombras -->
             <img src="https://comprimeme.wordpress.com/wp-content/uploads/2014/12/lenna-600x197.png" 
                  alt="Espacio Euclídeo" 
@@ -252,17 +248,16 @@ header-includes: |
 
 <hr>
 
-<div class="button-container" style="text-align: center; margin: 20px 0;">
-  <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/Difuminado-Ruido/" 
-     class="button" 
-     style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
-    Difuminado y ruido
-  </a>
-</div>
-
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
       <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+      <div class="button-container" style="text-align: center; margin: 20px 0;">
+        <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/Difuminado-Ruido/" 
+          class="button" 
+          style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+          Difuminado y ruido
+        </a>
+      </div>
       <!-- Imagen más grande y centrada con sombras -->
             <img src="https://solucioningenieril.com/imagenes/asignaturas/vision_artificial/tema_9/9.png" 
                  alt="Espacio Euclídeo" 
@@ -278,17 +273,16 @@ header-includes: |
 
 <hr>
 
-<div class="button-container" style="text-align: center; margin: 20px 0;">
-  <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/Convolucion/" 
-     class="button" 
-     style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
-    Convolución y filtrado
-  </a>
-</div>
-
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
       <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+      <div class="button-container" style="text-align: center; margin: 20px 0;">
+        <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/Convolucion/" 
+          class="button" 
+          style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+          Convolución y filtrado
+        </a>
+      </div>
       <!-- Imagen más grande y centrada con sombras -->
             <img src="https://eng.libretexts.org/@api/deki/files/20283/CircularConvolution-display.png" 
                  alt="Espacio Euclídeo" 
