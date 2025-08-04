@@ -78,7 +78,7 @@ header-includes: |
 </body>
 </html>
 
-<div class="container" style="background-color:rgb(234, 243, 228); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color:rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
   <div class="person">
     <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
       <!-- Botón dentro del cuadro -->
@@ -127,7 +127,7 @@ header-includes: |
 <body>
 <hr>
 
-<div class="container" style="background-color: rgb(245, 255, 239); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
       <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
       <div class="button-container" style="text-align: center; margin: 20px 0;">
@@ -157,7 +157,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color:rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
       <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
       <!-- Imagen más grande y centrada con sombras -->
@@ -168,7 +168,7 @@ header-includes: |
             <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
                 RGB y YCbCr
             </footer>
-        <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">Se abordan aplicaciones de funciones elementales en el procesamiento de imágenes digitales, centrándose en transformaciones potenciales, exponenciales y logarítmicas para mejorar la iluminación y el contraste. Presenta técnicas como la corrección gamma, que ajusta el brillo de imágenes mal expuestas mediante funciones de potencia. También incluye herramientas para transformar imágenes entre espacios de color RGB y YCbCr, aplicando correcciones específicas en el canal de luminancia (Y). Además, se implementan funciones para visualizar histogramas y ajustar niveles de brillo y contraste. El cuaderno utiliza imágenes subexpuestas y sobreexpuestas como ejemplos, mostrando sus respectivas transformaciones y resultados.</p>
+        <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">Se abordan aplicaciones de funciones elementales en el procesamiento de imágenes digitales, centrándose en transformaciones potenciales, exponenciales y logarítmicas para mejorar la iluminación y el contraste. Presenta técnicas como la corrección gamma, que ajusta el brillo de imágenes mal expuestas mediante funciones de potencia. También incluye herramientas para transformar imágenes entre espacios de color RGB y YCbCr, aplicando correcciones específicas en el canal de luminancia (Y). Además, se implementan funciones para visualizar histogramas y ajustar niveles de brillo y contraste. El cuaderno utiliza imágenes subexpuestas y sobreexpuestas como ejemplos, mostrando sus respectivas transformaciones y resultados.</p>
       </div>
     </div>
 </div>
@@ -182,7 +182,7 @@ header-includes: |
     Transformaciones lineales y automatización del proceso
   </a>
 </div>
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
       <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
       <!-- Imagen más grande y centrada con sombras -->
@@ -193,7 +193,7 @@ header-includes: |
             <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
                 Transformaciones aplicadas a una imagen
             </footer>
-        <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">Este cuaderno aborda el procesamiento de imágenes mediante transformaciones lineales y técnicas de automatización para mejorar la calidad visual. Se presentan funciones auxiliares en Julia para realizar tareas como la conversión entre espacios de color RGB y YCbCr, ajuste de valores de píxeles, creación de histogramas y transformaciones específicas para mejorar el contraste. Se introduce la trasformación lineal como una herramienta para expandir el rango de valores de los píxeles y mejorar significativamente el contraste de las imágenes. Además, se describe una variación de esta técnica que utiliza transformaciones lineales a trozos para ajustar los percentiles de los píxeles a intervalos uniformemente distribuidos. El cuaderno incluye ejemplos visuales que muestran los efectos de estas transformaciones.</p>
+        <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">Este cuaderno aborda el procesamiento de imágenes mediante transformaciones lineales y técnicas de automatización para mejorar la calidad visual. Se presentan funciones auxiliares en Julia para realizar tareas como la conversión entre espacios de color RGB y YCbCr, ajuste de valores de píxeles, creación de histogramas y transformaciones específicas para mejorar el contraste. Se introduce la trasformación lineal como una herramienta para expandir el rango de valores de los píxeles y mejorar significativamente el contraste de las imágenes. Además, se describe una variación de esta técnica que utiliza transformaciones lineales a trozos para ajustar los percentiles de los píxeles a intervalos uniformemente distribuidos. El cuaderno incluye ejemplos visuales que muestran los efectos de estas transformaciones.</p>
       </div>
     </div>
 </div>
@@ -208,7 +208,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
       <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
       <!-- Imagen más grande y centrada con sombras -->
@@ -219,7 +219,7 @@ header-includes: |
             <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
                 Ecualización del Histograma
             </footer>
-        <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">Se define la relación entre imágenes digitales y variables aleatorias, donde cada píxel representa un valor que puede ser modelado como una variable aleatoria con una distribución de probabilidad. Se detalla cómo los histogramas de las imágenes representan gráficamente estas distribuciones, y cómo pueden transformarse para cumplir ciertos objetivos mediante técnicas como la ecualización del histograma. Este procedimiento busca lograr distribuciones uniformes, garantizando que todos los tonos de gris estén representados equitativamente. Además, el cuaderno introduce el teorema de transformación de variables aleatorias, explicando cómo modificar una variable aleatoria con una función de densidad conocida para que adopte otra distribución deseada.</p>
+        <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">Se define la relación entre imágenes digitales y variables aleatorias, donde cada píxel representa un valor que puede ser modelado como una variable aleatoria con una distribución de probabilidad. Se detalla cómo los histogramas de las imágenes representan gráficamente estas distribuciones, y cómo pueden transformarse para cumplir ciertos objetivos mediante técnicas como la ecualización del histograma. Este procedimiento busca lograr distribuciones uniformes, garantizando que todos los tonos de gris estén representados equitativamente. Además, el cuaderno introduce el teorema de transformación de variables aleatorias, explicando cómo modificar una variable aleatoria con una función de densidad conocida para que adopte otra distribución deseada.</p>
       </div>
     </div>
 </div>
@@ -234,7 +234,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
       <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
       <!-- Imagen más grande y centrada con sombras -->
@@ -245,7 +245,7 @@ header-includes: |
             <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
                 Compresión de una imagen
             </footer>
-        <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">El cuaderno explora cómo las matrices y las transformaciones lineales pueden aplicarse en el procesamiento de imágenes. El contenido incluye operaciones básicas con matrices, como la generación del negativo de una imagen, la transposición para rotaciones y reflejos, la sobreposición mediante la suma de matrices, y el producto de matrices para efectos como compresión y resaltado de bordes. También se describen métodos para segmentar partes específicas de imágenes usando matrices personalizadas. Se muestra también como modificar imágenes mediante rotaciones y cambios de perspectiva utilizando coordenadas homogéneas y proyectivas.</p>
+        <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">El cuaderno explora cómo las matrices y las transformaciones lineales pueden aplicarse en el procesamiento de imágenes. El contenido incluye operaciones básicas con matrices, como la generación del negativo de una imagen, la transposición para rotaciones y reflejos, la sobreposición mediante la suma de matrices, y el producto de matrices para efectos como compresión y resaltado de bordes. También se describen métodos para segmentar partes específicas de imágenes usando matrices personalizadas. Se muestra también como modificar imágenes mediante rotaciones y cambios de perspectiva utilizando coordenadas homogéneas y proyectivas.</p>
       </div>
     </div>
 </div>
@@ -260,7 +260,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
       <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
       <!-- Imagen más grande y centrada con sombras -->
@@ -271,7 +271,7 @@ header-includes: |
             <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
                 Aplicación de Filtros a una Imagen
             </footer>
-        <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">El cuaderno explora técnicas de restauración de imágenes afectadas por ruido. Aborda tres tipos de ruido: AWGN (variaciones aleatorias normales), sal y pimienta (píxeles dispersos blancos y negros) y speckle (ruido multiplicativo típico en imágenes médicas). Se muestran métodos de difuminado, como el promedio simple, gaussiano y convolución, que suavizan imágenes reduciendo ruido. También se explican técnicas de filtrado como el filtrado de mediana, efectivo contra el ruido sal y pimienta, y el filtrado por variación total, que equilibra reducción de ruido y preservación de detalles. Cada método es evaluado en imágenes con diferentes tipos de ruido, destacando sus fortalezas según el caso. Incluye referencias útiles y es una guía práctica para aprender y aplicar procesamiento de imágenes.</p>
+        <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">El cuaderno explora técnicas de restauración de imágenes afectadas por ruido. Aborda tres tipos de ruido: AWGN (variaciones aleatorias normales), sal y pimienta (píxeles dispersos blancos y negros) y speckle (ruido multiplicativo típico en imágenes médicas). Se muestran métodos de difuminado, como el promedio simple, gaussiano y convolución, que suavizan imágenes reduciendo ruido. También se explican técnicas de filtrado como el filtrado de mediana, efectivo contra el ruido sal y pimienta, y el filtrado por variación total, que equilibra reducción de ruido y preservación de detalles. Cada método es evaluado en imágenes con diferentes tipos de ruido, destacando sus fortalezas según el caso. Incluye referencias útiles y es una guía práctica para aprender y aplicar procesamiento de imágenes.</p>
       </div>
     </div>
 </div>
@@ -286,7 +286,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
       <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
       <!-- Imagen más grande y centrada con sombras -->
@@ -297,7 +297,7 @@ header-includes: |
             <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
                 Convolución Circular
             </footer>
-        <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">Este cuaderno trata sobre el uso de la convolución y el filtrado de imágenes. Se inicia con una introducción a diferentes variantes de convoluciones (continuas, discretas, lineales, circulares, entre otras) y se centra en las convoluciones lineales y circulares, tanto para secuencias como para matrices. Posteriormente, se muestra cómo se aplica la convolución en el procesamiento de imágenes. Esto incluye el uso de kernels (también llamados filtros) que permiten realizar transformaciones locales, como suavizado, detección de bordes y mejora de detalles en imágenes. Ejemplos prácticos muestran cómo utilizar la convolución para modificar matrices asociadas a imágenes y obtener efectos específicos. Además, se exploran diferentes tipos de kernels y sus aplicaciones. Entre ellos se incluyen filtros de identidad, detección de bordes, realce, desenfoque y gradientes, con ejemplos que ilustran cómo aplicarlos mediante la función imfilter.</p>
+        <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">Este cuaderno trata sobre el uso de la convolución y el filtrado de imágenes. Se inicia con una introducción a diferentes variantes de convoluciones (continuas, discretas, lineales, circulares, entre otras) y se centra en las convoluciones lineales y circulares, tanto para secuencias como para matrices. Posteriormente, se muestra cómo se aplica la convolución en el procesamiento de imágenes. Esto incluye el uso de kernels (también llamados filtros) que permiten realizar transformaciones locales, como suavizado, detección de bordes y mejora de detalles en imágenes. Ejemplos prácticos muestran cómo utilizar la convolución para modificar matrices asociadas a imágenes y obtener efectos específicos. Además, se exploran diferentes tipos de kernels y sus aplicaciones. Entre ellos se incluyen filtros de identidad, detección de bordes, realce, desenfoque y gradientes, con ejemplos que ilustran cómo aplicarlos mediante la función imfilter.</p>
       </div>
     </div>
 </div>
@@ -306,7 +306,7 @@ header-includes: |
 
 
 <!-- Contenedor para referencias de imágenes -->
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-top: 20px;">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-top: 20px;">
     <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
         <!-- Imagen centrada y más pequeña -->
         <img src="https://apastyle.apa.org/images/references-page-category_tcm11-282727_w1024_n.jpg" 
@@ -319,7 +319,7 @@ header-includes: |
         <h2 style="font-family: 'Arial', sans-serif; font-size: 28px; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">
             Imágenes tomadas de
         </h2>
-        <div class="references" style="text-align: start; max-width: 900px; margin: 0 auto; font-size: 16px; color: #34495e;">
+        <div class="references" style="text-align: start; max-width: 900px; margin: 0 auto; font-size: 16px; color: #013220;">
             <!-- Uso de flex para alinear el texto y el enlace -->
             <p style="font-family: 'Arial', sans-serif; line-height: 1.6;">
                 <span style="display: flex; justify-content: space-between;">

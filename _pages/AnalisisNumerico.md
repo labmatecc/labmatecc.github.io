@@ -86,7 +86,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen representativa centrada con sombras (opcional) -->
@@ -102,13 +102,13 @@ header-includes: |
                 Enteros y Punto Flotante
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Este cuaderno muestra la representación de <strong>números enteros</strong> y de <strong>punto flotante</strong>. Comienza mostrando cómo se representan los enteros utilizando bits, proporcionando ejemplos prácticos y conversiones de enteros a cadenas de bits.
             </p>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Luego, se muestran los números de punto flotante, explicando su representación detallada, incluyendo el signo, el exponente y el significando, y cómo estas representaciones pueden afectar los cálculos numéricos debido a errores de redondeo y límites de precisión.
             </p>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 También se muestra una introducción al <strong>cálculo simbólico</strong> utilizando la librería <strong>Symbolics</strong>, mostrando cómo realizar operaciones simbólicas que no dependen de valores numéricos específicos.
             </p>
         </div>
@@ -148,7 +148,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen representativa centrada con sombras (opcional) -->
@@ -164,13 +164,13 @@ header-includes: |
                 Comparación asintótica
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 El cuaderno comienza definiendo los conceptos de <strong>orden asintótico</strong> para sucesiones, como \(x_n = \mathcal{O}(\alpha_n)\) y \(x_n = \mathcal{o}(\alpha_n)\), que indican cómo las sucesiones \(x_n\) y \(\alpha_n\) convergen hacia cero en comparación. Proporciona ejemplos gráficos para ilustrar estas comparaciones, como \(\frac{n+1}{n^2}\) en relación con \(\frac{1}{n}\), y \(\frac{1}{n \log(n)}\) también en relación con \(\frac{1}{n}\), entre otros.
             </p>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 El cuaderno también explora la velocidad de convergencia, describiendo la convergencia lineal y superlineal con ejemplos como \(x_n = 0.5^n\) y \(x_n = 0.5^{n^2}\). Además, aborda la convergencia de orden y cómo se puede demostrar mediante gráficos, como el caso de \(x_n = 0.5^{2^n}\).
             </p>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Finalmente, se introduce la <strong>expansión de Taylor</strong>, explicando cómo aproximar funciones mediante polinomios de Taylor y su error asociado. El cuaderno utiliza la librería <strong>TaylorSeries</strong> para generar y trabajar con estos polinomios.
             </p>
         </div>
@@ -186,7 +186,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen representativa centrada con sombras (opcional) -->
@@ -202,13 +202,13 @@ header-includes: |
                 Ecuaciones No Lineales
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 El cuaderno trata sobre métodos numéricos para encontrar las raíces de una función real \( f: \mathbb{R} \to \mathbb{R} \). Se exploran varios métodos, incluyendo el de bisección, el de Newton y el método del punto fijo. 
             </p>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 El método de bisección se basa en la propiedad de cambio de signo de la función en un intervalo y se implementa para encontrar raíces de funciones continuas. El método de Newton utiliza la derivada para iterar hacia una raíz, y el método de punto fijo busca un valor \( x^* \) tal que \( F(x^*) = x^* \).
             </p>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 El cuaderno también presenta implementaciones y ejemplos prácticos usando la función \( \exp(x) - \sin(x) \) para ilustrar cada método.
             </p>
         </div>
@@ -224,7 +224,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen representativa centrada con sombras (opcional) -->
@@ -240,10 +240,10 @@ header-includes: |
                 Ecuaciones No Lineales II
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Este cuaderno aborda tres métodos para resolver ecuaciones no lineales y diferenciales: Newton, Euler y Picard. 
             </p>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 El Método de Newton aproxima raíces de funciones no lineales, Euler resuelve ecuaciones diferenciales ordinarias con variantes explícita e implícita, y Picard utiliza aproximaciones iterativas basadas en integrales para garantizar la convergencia.
             </p>
         </div>
@@ -259,7 +259,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen representativa centrada con sombras (opcional) -->
@@ -275,10 +275,10 @@ header-includes: |
                 Ecuaciones Lineales
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 El cuaderno comienza con una introducción al sistema de ecuaciones lineales representado por la ecuación \( A x = b,\) donde \( A \) es una matriz y \( x \) y \( b \) son vectores. Luego, explora cómo calcular diferentes normas de vectores y matrices en Julia, proporcionando ejemplos prácticos de cómo obtener normas subordinadas y de Frobenius.
             </p>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Luego, se presenta la factorización LU, incluyendo un algoritmo para descomponer una matriz en productos de matrices triangulares y cómo implementarlo en Julia. Se presentan ejemplos de factorización LU con matrices específicas, incluyendo la verificación de la precisión de la factorización mediante normas. También se discute la factorización PA=LU con pivoteo, utilizando ejemplos adicionales como la matriz de Hilbert y matrices diagonales dominantes. Luego de esto, el cuaderno aborda la factorización de Cholesky para matrices simétricas y definidas positivas, y cómo resolver sistemas lineales en Julia usando el operador backslash.
             </p>
         </div>
@@ -296,7 +296,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen representativa centrada con sombras (opcional) -->
@@ -312,10 +312,10 @@ header-includes: |
                 Interpolación
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 El cuaderno muestra, primero el problema de encontrar un polinomio de menor grado que pase por un conjunto de puntos dados \((x_i, y_i)\), es decir, la interpolación polinomial, y se describen las formas de Newton y Lagrange para calcular este polinomio. 
             </p>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Además, se explora la interpolación por splines, que utiliza polinomios de grado \(k\) en intervalos distintos, garantizando suavidad en las derivadas de orden \(k-1\) en los puntos de unión. Se muestran ejemplos de la aplicación de splines constantes, lineales y cúbicos en datos caligráficos.
             </p>
         </div>
@@ -333,7 +333,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen representativa centrada con sombras (opcional) -->
@@ -349,10 +349,10 @@ header-includes: |
                 Ajuste de Curvas
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 El cuaderno aborda el ajuste de curvas y datos, explorando métodos para encontrar modelos que describan con precisión el comportamiento de datos observados, centrándose en el crecimiento de tumores en ratones. 
             </p>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Se discuten varios enfoques, como el ajuste lineal, polinómico cúbico, redes neuronales artificiales y ecuaciones diferenciales, específicamente el modelo de Von Bertalanffy. El ajuste de curvas busca establecer relaciones entre variables optimizando los parámetros del modelo para minimizar el desajuste entre datos observados y generados, utilizando la técnica de mínimos cuadrados basada en la norma euclidiana.
             </p>
         </div>
@@ -368,7 +368,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen representativa centrada con sombras (opcional) -->
@@ -384,10 +384,10 @@ header-includes: |
                 Integración Numérica I
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 En este cuaderno se estudian métodos de integración numérica como las sumas de Riemann, la regla del trapecio y la regla de Simpson. 
             </p>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Estos métodos dividen un intervalo \([a,b]\) en subintervalos y aproximan el área bajo una curva utilizando rectángulos o trapecios. Se ejemplifica con las funciones \(y=x^2\) en \([0,3]\) y \(y=e^{x^2}\) en \([0,1]\), mostrando cómo estas técnicas convergen hacia el área exacta conforme se aumenta el número de subintervalos. Estos métodos son esenciales para calcular áreas bajo curvas cuando la función no tiene una integral elemental.
             </p>
         </div>
@@ -404,7 +404,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen representativa centrada con sombras (opcional) -->
@@ -420,10 +420,10 @@ header-includes: |
                 Método de Elementos Finitos
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Este cuaderno se centra en el método de elementos finitos. En primer lugar, se estudia el comportamiento de la cuerda elástica en una dimensión. 
             </p>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Aquí, discretizamos el dominio y resolvemos ecuaciones lineales con condiciones de frontera específicas. Observamos cómo los resultados varían según ajustamos los parámetros del problema. En la segunda parte, se muestra como resolver la ecuación de Poisson de manera numérica en un dominio bidimensional usando elementos finitos, esto con la ayuda de la librería Gridap.
             </p>
         </div>
@@ -432,7 +432,7 @@ header-includes: |
 <hr>
 
 <!-- Contenedor para referencias de imágenes -->
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-top: 20px;">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-top: 20px;">
     <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
         <!-- Imagen centrada y más pequeña -->
         <img src="https://apastyle.apa.org/images/references-page-category_tcm11-282727_w1024_n.jpg" 
@@ -445,7 +445,7 @@ header-includes: |
         <h2 style="font-family: 'Arial', sans-serif; font-size: 28px; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">
             Imágenes tomadas de
         </h2>
-        <div class="references" style="text-align: start; max-width: 900px; margin: 0 auto; font-size: 16px; color: #34495e;">
+        <div class="references" style="text-align: start; max-width: 900px; margin: 0 auto; font-size: 16px; color: #013220;">
             <!-- Uso de flex para alinear el texto y el enlace -->
             <p style="font-family: 'Arial', sans-serif; line-height: 1.6;">
                 <span style="display: flex; justify-content: space-between;">

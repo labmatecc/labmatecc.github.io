@@ -174,7 +174,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
@@ -182,7 +182,7 @@ header-includes: |
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Datos, variables y expresiones</h2>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 El cuaderno introduce conceptos fundamentales de programación en Julia, comenzando con los tipos básicos de datos (números, cadenas y booleanos) y el uso de variables para almacenarlos. Explica cómo combinar datos y operadores en expresiones, realizar operaciones aritméticas, manipular cadenas y trabajar con tipos de datos utilizando funciones nativas. También aborda la interacción con el usuario mediante entrada de datos, operadores lógicos para realizar comparaciones y ejemplos prácticos como el cálculo del área de un círculo, utilizando fórmulas matemáticas y constantes predefinidas. Además, se enseña cómo realizar conversiones de tipos y definir constantes inmutables. Estos conceptos se presentan de manera progresiva, con ejemplos prácticos que facilitan su comprensión.
             </p>
         </div>
@@ -206,7 +206,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
@@ -214,7 +214,7 @@ header-includes: |
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Estructuras de control</h2>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 El documento es un cuaderno interactivo diseñado para introducir y practicar el uso de estructuras de control en el lenguaje de programación Julia. A lo largo del material, se exploran diferentes estructuras como bucles (for y while), condicionales (if-else) y comandos avanzados (break y continue). Cada sección combina teoría con ejercicios prácticos que permiten al lector experimentar con el código directamente.
 
                 Se presentan conceptos básicos, como iterar sobre listas y rangos, junto con ejemplos más avanzados, como bucles anidados para operar sobre matrices y el manejo de diccionarios. También incluye el uso de estructuras de control para manejar condiciones dinámicas y patrones comunes como tablas de multiplicar, triángulos de asteriscos y pirámides de números.
@@ -242,7 +242,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
@@ -250,7 +250,7 @@ header-includes: |
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Listas, secuencias y arreglos</h2>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Este cuaderno interactivo introduce a los usuarios en el uso y la manipulación de listas, arreglos y secuencias en Julia, con un enfoque práctico y progresivo. Las listas, entendidas como colecciones unidimensionales que almacenan elementos de diferentes tipos, son el punto de partida. Se detalla cómo crearlas, acceder a sus elementos mediante índices, modificarlas dinámicamente y aplicar operaciones básicas como ordenarlas, invertirlas o calcular su longitud.
 
                 El documento avanza hacia los arreglos multidimensionales, explicando cómo se pueden representar datos en dos o más dimensiones, como matrices. Aquí se explora cómo reorganizar datos con la función reshape(), acceder a elementos específicos utilizando índices, y realizar operaciones comunes como transponer matrices o calcular la suma total de sus elementos.
@@ -280,7 +280,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
@@ -288,7 +288,7 @@ header-includes: |
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Funciones</h2>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Este cuaderno interactivo explica el concepto y uso de funciones en Julia, desde lo básico hasta lo avanzado, destacando su papel en la modularidad y reutilización del código. Comienza con la definición de funciones básicas, incluyendo argumentos predeterminados y sintaxis compacta. Luego, explora el manejo de variables locales y globales, aclarando su impacto en el alcance y el rendimiento del código.
 
                 Avanza hacia funciones intermedias y avanzadas, como el uso de argumentos con nombre, funciones anónimas y de orden superior, que permiten recibir o devolver otras funciones. Además, introduce herramientas como map, filter y reduce para manipular colecciones de datos de forma eficiente.
@@ -316,7 +316,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
@@ -324,7 +324,7 @@ header-includes: |
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Clases y Objetos</h2>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Este cuaderno interactivo explica cómo Julia implementa conceptos similares a clases y objetos a través de estructuras (struct) y tipos. Introduce estructuras inmutables y mutables para definir datos y métodos que operan sobre ellos, mostrando cómo asociar funciones a estructuras y sobrecargar funciones para diferentes tipos.
 
                 También aborda constructores personalizados para crear instancias con lógica específica y el uso de tipos abstractos para jerarquías y polimorfismo. Se destaca la composición como alternativa a la herencia para combinar estructuras de manera modular.
@@ -353,7 +353,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
@@ -361,7 +361,7 @@ header-includes: |
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Recursión</h2>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Este cuaderno interactivo explica a fondo la recursión en Julia, mostrando cómo resolver problemas dividiéndolos en subproblemas más pequeños. Comienza con ejemplos básicos como el cálculo del factorial y la suma de números hasta un valor dado, destacando la importancia de los casos base para evitar ciclos infinitos. 
 
                 Se exploran conceptos intermedios como la sucesión de Fibonacci, que genera un árbol de cálculos, y el problema de las Torres de Hanoi, que muestra la lógica paso a paso. A nivel avanzado, se introducen la recursión de cola para optimizar funciones, la memoización para evitar cálculos repetitivos y el backtracking, utilizado en problemas como las N-reinas.
@@ -389,7 +389,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
@@ -397,7 +397,7 @@ header-includes: |
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Grafos</h2>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 La teoría de grafos estudia cómo los objetos están relacionados entre sí mediante nodos y aristas. Los grafos pueden ser dirigidos (con relaciones unidireccionales) o no dirigidos (relaciones bidireccionales) y se utilizan para modelar situaciones como redes sociales, sistemas de transporte y conexiones en sistemas complejos. 
 
                 Propiedades clave incluyen el grado de los nodos (número de conexiones), la conexidad (si todos los nodos están interconectados), los ciclos (rutas cerradas) y las componentes conexas (subgrafos donde todos los nodos están conectados entre sí). 
@@ -425,7 +425,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
@@ -433,7 +433,7 @@ header-includes: |
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Optimización</h2>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 La optimización es un proceso para encontrar los valores máximos o mínimos de una función, con o sin restricciones. Es fundamental en áreas como la economía, la ingeniería y la ciencia de datos, donde se busca maximizar eficiencia, minimizar costos o resolver problemas complejos.
 
                 En la optimización sin restricciones, el objetivo es localizar extremos locales o globales de una función, mientras que en la optimización con restricciones se añaden condiciones que deben cumplirse, como límites en los valores de las variables. Se emplean ejemplos como funciones cuadráticas simples y funciones no lineales con múltiples puntos óptimos, como la función de Himmelblau.
@@ -462,7 +462,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
@@ -470,7 +470,7 @@ header-includes: |
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Complejidad computacional</h2>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 El contenido de este documento se centra en la complejidad computacional, un área de estudio que evalúa la eficiencia de los algoritmos en términos de **tiempo** y **espacio**. Se explican conceptos fundamentales como las notaciones de complejidad O-grande (para el peor caso), Omega-grande (para el mejor caso), y Theta (para casos promedio), utilizadas para describir el comportamiento de los algoritmos a medida que crece el tamaño de los datos de entrada.
 
                 Se destacan ejemplos prácticos, como la búsqueda secuencial (complejidad lineal, O(n)) y la búsqueda binaria (complejidad logarítmica, O(log n)). Además, se incluyen ejercicios y visualizaciones que comparan estas técnicas, mostrando gráficamente cómo varía su rendimiento.
@@ -500,7 +500,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
@@ -508,7 +508,7 @@ header-includes: |
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Introducción a la criptografía</h2>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 El cuaderno presenta una introducción detallada a los conceptos fundamentales de la criptografía, su evolución histórica, tipos principales, aplicaciones y desafíos actuales. Comienza explicando la importancia de la criptografía en la seguridad de la información, destacando propiedades clave como la confidencialidad, integridad, autenticación y no repudio.
 
                 Se abordan técnicas clásicas como el Cifrado César y el cifrado por transposición, mostrando su relevancia histórica y sus limitaciones frente a los métodos modernos. Los principales tipos de criptografía incluyen:
@@ -544,7 +544,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #f4f4f9; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
@@ -552,7 +552,7 @@ header-includes: |
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Introducción al modelamiento 3D</h2>
-            <p style="font-family: 'Arial', sans-serif; color: #34495e; font-size: 18px; line-height: 1.6; margin-bottom: 15px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 El contenido explora el modelado tridimensional y la representación de datos en 3D usando PlutoPlotly, centrándose en la creación y análisis de gráficos interactivos. Comienza con la introducción de puntos tridimensionales definidos por coordenadas (x, y, z), visualizados mediante gráficos de dispersión que permiten analizar la distribución de datos en un espacio tridimensional. Estos gráficos pueden personalizarse con marcadores, líneas y combinaciones de ambos.
 
                 Se aborda la creación de mallas y superficies, estructuras que conectan puntos mediante caras triangulares para formar representaciones más complejas, como superficies topográficas. Estas herramientas permiten observar características clave como relieves y contornos, destacando variaciones en los datos.
