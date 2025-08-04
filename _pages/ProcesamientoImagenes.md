@@ -86,7 +86,7 @@ header-includes: |
   </a>
 </div>
 
-<div class="container" style="background-color: #D0F0C0; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+<div class="container" style="background-color:rgb(218, 238, 207); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
       <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
       <!-- Imagen más grande y centrada con sombras -->
