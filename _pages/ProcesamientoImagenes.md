@@ -337,7 +337,7 @@ header-includes: |
             <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
                 Convolución Circular
             </footer>
-        <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">Este ...</p>
+        <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">El cuaderno presenta la <strong>deconvolución</strong> como un problema inverso de restauración de imágenes degradadas por desenfoque y ruido: parte de un ejemplo con la imagen “camarógrafo” distorsionada mediante un kernel separable <code>K = u v<sup>T</sup></code> y contaminada con ruido gaussiano, luego muestra cómo modelar la convolución como una transformación lineal <code>Y = K * X + Θ</code> usando matrices de convolución y vectorización/Kronecker para obtener <code>vec(Y) = M<sub>K</sub> vec(X) + θ</code>. A continuación, explica la inversión directa mediante la descomposición en valores singulares de <code>M<sub>K</sub></code> y demuestra sus limitaciones (valores singulares cercanos a cero), para luego implementar y comparar dos estrategias de regularización—<strong>Tikhonov</strong> y <strong>TSVD</strong>—mostrando sus fórmulas, código en Julia y resultados gráficos de recuperación con y sin ruido. Finalmente incluye referencias clave para profundizar en problemas inversos y deconvolución. </p>
       </div>
     </div>
 </div>
