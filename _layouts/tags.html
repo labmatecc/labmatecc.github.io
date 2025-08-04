@@ -27,7 +27,7 @@ header-includes: |
       {% if tag[1].size == i %}
         <li>
           <a href="#{{ tag[0] | slugify }}">
-            <strong>{{ tag[0] }}</strong> <span class="taxonomy__count">{{ i }}</span>
+            {{ tag[0] }} <span class="taxonomy__count">{{ i }}</span>
           </a>
         </li>
       {% endif %}

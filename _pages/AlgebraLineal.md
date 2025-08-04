@@ -104,13 +104,13 @@ header-includes: |
             </h2>
             <!-- Texto más llamativo con colores, espaciado y negrita -->
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                En este notebook, se presenta una <strong>introducción a las matrices</strong>. Se explica que una matriz es un conjunto rectangular de números, símbolos o expresiones organizados en filas y columnas, representados con letras mayúsculas y con su dimensión indicada por el número de filas y columnas.
+                En este notebook, se presenta una introducción a las matrices. Se explica que una matriz es un conjunto rectangular de números, símbolos o expresiones organizados en filas y columnas, representados con letras mayúsculas y con su dimensión indicada por el número de filas y columnas.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Se muestran ejemplos de <strong>matrices reales, simbólicas y de números complejos</strong>, junto con la explicación detallada de cómo acceder a elementos específicos y mostrar submatrices. Se introducen conceptos como matrices menores y por bloques, con ejemplos prácticos.
+                Se muestran ejemplos de matrices reales, simbólicas y de números complejos, junto con la explicación detallada de cómo acceder a elementos específicos y mostrar submatrices. Se introducen conceptos como matrices menores y por bloques, con ejemplos prácticos.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Se exploran tipos de matrices como <strong>cuadradas, diagonales, identidad y nulas</strong>, con ejemplos aleatorios y operaciones básicas como suma y multiplicación por escalar. Se abordan operaciones más avanzadas, como la multiplicación de matrices por vectores, entre matrices y el producto de Kronecker, con ejemplos prácticos utilizando matrices aleatorias.
+                Se exploran tipos de matrices como cuadradas, diagonales, identidad y nulas, con ejemplos aleatorios y operaciones básicas como suma y multiplicación por escalar. Se abordan operaciones más avanzadas, como la multiplicación de matrices por vectores, entre matrices y el producto de Kronecker, con ejemplos prácticos utilizando matrices aleatorias.
             </p>
         </div>
     </div>
@@ -166,16 +166,16 @@ header-includes: |
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                El cuaderno comienza explicando los <strong>vectores como conjuntos ordenados de números</strong>, resaltando su representación en Julia mediante el tipo de dato Array. Se exploran operaciones básicas, como la dimensión del arreglo.
+                El cuaderno comienza explicando los vectores como conjuntos ordenados de números, resaltando su representación en Julia mediante el tipo de dato Array. Se exploran operaciones básicas, como la dimensión del arreglo.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Se detalla el acceso a elementos, introduciendo el uso de índices y la función <code>end</code>. Se muestra cómo trabajar con subconjuntos de vectores mediante rangos, la <strong>comparación de vectores</strong> y de elementos individuales.
+                Se detalla el acceso a elementos, introduciendo el uso de índices y la función <code>end</code>. Se muestra cómo trabajar con subconjuntos de vectores mediante rangos, la comparación de vectores y de elementos individuales.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Se introducen <strong>vectores nulos, canónicos y de unos</strong>, mostrando cómo construir manualmente vectores canónicos en Julia. Se utiliza el paquete <code>Plots.jl</code> para generar gráficos de vectores y visualizar datos.
+                Se introducen vectores nulos, canónicos y de unos, mostrando cómo construir manualmente vectores canónicos en Julia. Se utiliza el paquete <code>Plots.jl</code> para generar gráficos de vectores y visualizar datos.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Las operaciones con vectores se abordan desde la <strong>suma componente a componente</strong> hasta la <strong>multiplicación y división por escalares</strong>, proporcionando ejemplos prácticos.
+                Las operaciones con vectores se abordan desde la suma componente a componente hasta la multiplicación y división por escalares, proporcionando ejemplos prácticos.
             </p>
         </div>
     </div>
@@ -208,16 +208,16 @@ header-includes: |
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Este notebook introduce el procesamiento de imágenes mediante <strong>representaciones numéricas de intensidad</strong> y los <strong>canales RGB</strong>. Se destaca la creación interactiva del notebook en Pluto.jl, usando librerías como <code>Colors</code> e <code>ImageShow</code>.
+                Este notebook introduce el procesamiento de imágenes mediante representaciones numéricas de intensidad y los canales RGB. Se destaca la creación interactiva del notebook en Pluto.jl, usando librerías como <code>Colors</code> e <code>ImageShow</code>.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                La exploración de <strong>píxeles y matrices</strong> revela propiedades RGB y facilita la manipulación eficiente de imágenes. Se abordan operaciones como la <strong>selección de subimágenes</strong>, el ajuste de tamaños y el uso del operador de <strong>Broadcasting</strong> para manipulación de datos.
+                La exploración de píxeles y matrices revela propiedades RGB y facilita la manipulación eficiente de imágenes. Se abordan operaciones como la selección de subimágenes, el ajuste de tamaños y el uso del operador de Broadcasting para manipulación de datos.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Finalmente, se presentan operaciones avanzadas de procesamiento como la <strong>reducción de tamaño</strong> y la <strong>inversión</strong>, utilizando álgebra lineal para <strong>reescalar píxeles y realizar combinaciones lineales</strong>.
+                Finalmente, se presentan operaciones avanzadas de procesamiento como la reducción de tamaño y la inversión, utilizando álgebra lineal para reescalar píxeles y realizar combinaciones lineales.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Para concluir, el notebook muestra la aplicación de <strong>filtros y kernels</strong>, ilustrando cómo estos pueden ser utilizados en diferentes operaciones de procesamiento de imágenes.
+                Para concluir, el notebook muestra la aplicación de filtros y kernels, ilustrando cómo estos pueden ser utilizados en diferentes operaciones de procesamiento de imágenes.
             </p>
         </div>
     </div>
@@ -253,13 +253,13 @@ header-includes: |
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Este cuaderno introduce conceptos básicos de <strong>grafos</strong>, como nodos, aristas y adyacencia, ilustrados mediante el famoso problema de los <strong>Puentes de Königsberg</strong>.
+                Este cuaderno introduce conceptos básicos de grafos, como nodos, aristas y adyacencia, ilustrados mediante el famoso problema de los Puentes de Königsberg.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Se explican los distintos tipos de <strong>nodos y aristas</strong>, destacando cómo la flexibilidad de los grafos permite representar diversas estructuras. A través de ejemplos interactivos, se construyen y visualizan grafos usando la librería <code>GraphPlot</code>.
+                Se explican los distintos tipos de nodos y aristas, destacando cómo la flexibilidad de los grafos permite representar diversas estructuras. A través de ejemplos interactivos, se construyen y visualizan grafos usando la librería <code>GraphPlot</code>.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                También se introducen las <strong>matrices de adyacencia e incidencia</strong>, utilizadas para representar conexiones entre nodos y aristas, facilitando el análisis y comprensión de las estructuras de grafos.
+                También se introducen las matrices de adyacencia e incidencia, utilizadas para representar conexiones entre nodos y aristas, facilitando el análisis y comprensión de las estructuras de grafos.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Finalmente, se presentan generadores de grafos incorporados, permitiendo crear grafos con diferentes características para fines de estudio y experimentación.
@@ -297,16 +297,16 @@ header-includes: |
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                El cuaderno comienza con una introducción al <strong>machine learning</strong>, destacando la importancia de la <strong>distancia euclidiana</strong> en el contexto del clustering.
+                El cuaderno comienza con una introducción al machine learning, destacando la importancia de la distancia euclidiana en el contexto del clustering.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Se presenta una función para evaluar la calidad de los clusters y se introduce el algoritmo <code>K-Means</code>, con una implementación y un ejemplo de aplicación a datos generados aleatoriamente.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Además, se aborda el <strong>preprocesamiento de datos</strong>, que incluye la carga desde archivos y la generación aleatoria de datos.
+                Además, se aborda el preprocesamiento de datos, que incluye la carga desde archivos y la generación aleatoria de datos.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Se detallan técnicas de <strong>normalización y estandarización</strong>, proporcionando funciones para <code>Min-Máx</code> y <code>Z-Score</code>.
+                Se detallan técnicas de normalización y estandarización, proporcionando funciones para <code>Min-Máx</code> y <code>Z-Score</code>.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 La visualización de datos antes y después de la normalización se presenta, seguida de la aplicación del algoritmo <code>K-Means</code> y la visualización de los clusters resultantes.
@@ -343,7 +343,7 @@ header-includes: |
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                El cuaderno comienza introduciendo el concepto de <strong>independencia lineal</strong>. Se define la dependencia e independencia lineal, relacionándolos con la existencia de combinaciones lineales no triviales.
+                El cuaderno comienza introduciendo el concepto de independencia lineal. Se define la dependencia e independencia lineal, relacionándolos con la existencia de combinaciones lineales no triviales.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Se muestra un teorema clave que establece la relación de dependencia lineal entre dos vectores cuando uno es un múltiplo escalar del otro, ilustrando este concepto con un ejemplo específico.
@@ -355,10 +355,10 @@ header-includes: |
                 Se proporcionan ejemplos adicionales para determinar la dependencia o independencia lineal de conjuntos de vectores en \(\mathbb{R}^n\), utilizando el concepto de determinante para tomar decisiones sobre la independencia lineal.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Se introduce el concepto de <strong>base</strong> en un espacio vectorial, demostrando que cualquier conjunto de \(n\) vectores linealmente independientes en \(\mathbb{R}^n\) genera todo el espacio, ilustrado con un ejemplo específico.
+                Se introduce el concepto de base en un espacio vectorial, demostrando que cualquier conjunto de \(n\) vectores linealmente independientes en \(\mathbb{R}^n\) genera todo el espacio, ilustrado con un ejemplo específico.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                El cuaderno concluye abordando el tema de <strong>vectores ortonormales</strong> y presenta el proceso de <strong>ortogonalización de Gram-Schmidt</strong> para convertir un conjunto linealmente independiente en un conjunto ortonormal.
+                El cuaderno concluye abordando el tema de vectores ortonormales y presenta el proceso de ortogonalización de Gram-Schmidt para convertir un conjunto linealmente independiente en un conjunto ortonormal.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Se describen las variantes clásica y modificada del algoritmo de Gram-Schmidt, y se demuestra su aplicación en un ejemplo práctico, proporcionando código para implementar estos algoritmos.
@@ -396,10 +396,10 @@ header-includes: |
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Este notebook presenta una introducción a la <strong>factorización QR</strong>, un método clave para descomponer una matriz \( A \) en el producto de una matriz ortogonal \( Q \) y una matriz triangular superior \( R \).
+                Este notebook presenta una introducción a la factorización QR, un método clave para descomponer una matriz \( A \) en el producto de una matriz ortogonal \( Q \) y una matriz triangular superior \( R \).
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                La descomposición QR se utiliza para resolver sistemas de ecuaciones lineales y problemas de optimización. El cuaderno describe métodos para obtener la factorización QR, centrándose en las <strong>reflexiones de Householder</strong> y las <strong>rotaciones de Givens</strong>.
+                La descomposición QR se utiliza para resolver sistemas de ecuaciones lineales y problemas de optimización. El cuaderno describe métodos para obtener la factorización QR, centrándose en las reflexiones de Householder y las rotaciones de Givens.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Primero, se explican las propiedades y el cálculo de las matrices de Householder, que se utilizan para transformar un vector en un múltiplo de un vector canónico, facilitando la ortogonalización de las columnas de una matriz. Se proporciona un algoritmo para calcular el vector y el coeficiente de Householder, junto con ejemplos prácticos.
@@ -440,13 +440,13 @@ header-includes: |
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                El cuaderno comienza con la importación de librerías. Luego, aborda el tema de <strong>matrices semejantes</strong>, proporcionando definiciones y ejemplos. También incluye un teorema que establece que matrices semejantes tienen el mismo polinomio característico y, por lo tanto, los mismos valores propios.
+                El cuaderno comienza con la importación de librerías. Luego, aborda el tema de matrices semejantes, proporcionando definiciones y ejemplos. También incluye un teorema que establece que matrices semejantes tienen el mismo polinomio característico y, por lo tanto, los mismos valores propios.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Se presentan ejemplos de matrices semejantes y se verifica que comparten los valores propios. Luego, se introduce el concepto de <strong>matriz diagonalizable</strong>, junto con un teorema que establece las condiciones para que una matriz sea diagonalizable. Se presenta un corolario que afirma que si una matriz tiene valores propios distintos, entonces es diagonalizable.
+                Se presentan ejemplos de matrices semejantes y se verifica que comparten los valores propios. Luego, se introduce el concepto de matriz diagonalizable, junto con un teorema que establece las condiciones para que una matriz sea diagonalizable. Se presenta un corolario que afirma que si una matriz tiene valores propios distintos, entonces es diagonalizable.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Se proporcionan ejemplos de matrices diagonalizables y se calculan sus valores y vectores propios. Posteriormente, se explora la aplicación de estos conceptos a la <strong>sucesión de Fibonacci</strong>. Se describe cómo se puede expresar el sistema recursivo de Fibonacci en términos matriciales y se muestra cómo calcular directamente el n-ésimo número de Fibonacci mediante la diagonalización de la matriz asociada.
+                Se proporcionan ejemplos de matrices diagonalizables y se calculan sus valores y vectores propios. Posteriormente, se explora la aplicación de estos conceptos a la sucesión de Fibonacci. Se describe cómo se puede expresar el sistema recursivo de Fibonacci en términos matriciales y se muestra cómo calcular directamente el n-ésimo número de Fibonacci mediante la diagonalización de la matriz asociada.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Se implementa una función para calcular \(F_n\) de manera eficiente utilizando la diagonalización.
@@ -484,13 +484,13 @@ header-includes: |
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                En este cuaderno, se presentan definiciones de <strong>valor y vector propio</strong>. Posteriormente, se muestra cómo hallar los valores singulares de una matriz. A continuación, se detalla la <strong>descomposición en valores singulares (SVD)</strong> con diversos ejemplos.
+                En este cuaderno, se presentan definiciones de valor y vector propio. Posteriormente, se muestra cómo hallar los valores singulares de una matriz. A continuación, se detalla la descomposición en valores singulares (SVD) con diversos ejemplos.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Luego, nos enfocamos en la descomposición en valores singulares reducida, que es la que utiliza Julia, y se muestran ejemplos específicos. Después de explorar la SVD, se muestra la <strong>compresión de imágenes</strong>. Este proceso implica realizar la SVD de la imagen y luego truncar dicha descomposición en \(k\) valores singulares (se realiza esto en cada canal de color para luego ensamblar nuevamente la imagen).
+                Luego, nos enfocamos en la descomposición en valores singulares reducida, que es la que utiliza Julia, y se muestran ejemplos específicos. Después de explorar la SVD, se muestra la compresión de imágenes. Este proceso implica realizar la SVD de la imagen y luego truncar dicha descomposición en \(k\) valores singulares (se realiza esto en cada canal de color para luego ensamblar nuevamente la imagen).
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Con este concepto presente, se presenta la creación de una <strong>marca de agua digital</strong>. Esta técnica permite personalizar imágenes sin que sea perceptible al ojo humano. La marca de agua se inserta creando una perturbación en la matriz \(V\). Una vez que la imagen está marcada, se muestra cómo deducir y recuperar la marca de agua.
+                Con este concepto presente, se presenta la creación de una marca de agua digital. Esta técnica permite personalizar imágenes sin que sea perceptible al ojo humano. La marca de agua se inserta creando una perturbación en la matriz \(V\). Una vez que la imagen está marcada, se muestra cómo deducir y recuperar la marca de agua.
             </p>
         </div>
     </div>
@@ -525,10 +525,10 @@ header-includes: |
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Este cuaderno aborda el <strong>Método de Análisis de Componentes Principales (PCA)</strong>, una técnica de reducción de dimensionalidad. Comienza explicando conceptos como la <strong>media</strong> y la <strong>varianza</strong> en un conjunto de datos.
+                Este cuaderno aborda el Método de Análisis de Componentes Principales (PCA), una técnica de reducción de dimensionalidad. Comienza explicando conceptos como la media y la varianza en un conjunto de datos.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Luego, se presenta la <strong>covarianza</strong> y la <strong>matriz de covarianza</strong>, seguidas por el proceso detallado de cómo se emplea el PCA. Se describen los pasos desde la centralización de datos y cálculo de la matriz de covarianza hasta la reconstrucción de datos y la compresión de imágenes utilizando las componentes principales.
+                Luego, se presenta la covarianza y la matriz de covarianza, seguidas por el proceso detallado de cómo se emplea el PCA. Se describen los pasos desde la centralización de datos y cálculo de la matriz de covarianza hasta la reconstrucción de datos y la compresión de imágenes utilizando las componentes principales.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Se muestra cómo la compresión efectiva mantiene la información esencial de la imagen original mientras reduce su dimensionalidad. Además, se incluyen ejemplos prácticos de compresión de imágenes con diferentes números de componentes principales y se evalúa el error de compresión en cada caso.
@@ -565,13 +565,13 @@ header-includes: |
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-    Este cuaderno explora los fundamentos del <strong>procesamiento digital de sonido</strong>, abordando desde su representación discreta hasta la manipulación básica de señales de audio. Inicia explicando cómo una señal continua es convertida en digital mediante el <strong>muestreo</strong> y la <strong>cuantificación</strong>, ilustrando la importancia de la <strong>frecuencia de muestreo</strong> y la <strong>profundidad en bits</strong> en distintos contextos como telefonía, música o producción audiovisual.
+    Este cuaderno explora los fundamentos del procesamiento digital de sonido, abordando desde su representación discreta hasta la manipulación básica de señales de audio. Inicia explicando cómo una señal continua es convertida en digital mediante el muestreo y la cuantificación, ilustrando la importancia de la frecuencia de muestreo y la profundidad en bits en distintos contextos como telefonía, música o producción audiovisual.
 </p>
 <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-    Luego, se introducen las diferencias entre señales <strong>mono</strong> y <strong>estéreo</strong>, junto con los principales <strong>tipos de datos</strong> utilizados en audio digital (enteros y punto flotante). Se enseña a leer y graficar archivos <code>.wav</code>, tanto desde archivos locales como en línea, y se analizan aspectos como la duración, número de canales y tipo de codificación de los archivos.
+    Luego, se introducen las diferencias entre señales mono y estéreo, junto con los principales tipos de datos utilizados en audio digital (enteros y punto flotante). Se enseña a leer y graficar archivos <code>.wav</code>, tanto desde archivos locales como en línea, y se analizan aspectos como la duración, número de canales y tipo de codificación de los archivos.
 </p>
 <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-    Finalmente, se exploran modificaciones básicas como <strong>cambiar el volumen</strong>, <strong>recortar fragmentos</strong>, <strong>mezclar señales</strong> y <strong>reproducirlas al revés</strong>, todo con ejemplos interactivos. Se incluye además una reflexión comparativa entre el procesamiento de sonido y el de imágenes digitales, destacando las similitudes en muestreo y cuantificación, y las diferencias en dimensionalidad y percepción.
+    Finalmente, se exploran modificaciones básicas como cambiar el volumen, recortar fragmentos, mezclar señales y reproducirlas al revés, todo con ejemplos interactivos. Se incluye además una reflexión comparativa entre el procesamiento de sonido y el de imágenes digitales, destacando las similitudes en muestreo y cuantificación, y las diferencias en dimensionalidad y percepción.
 </p>
         </div>
     </div>
@@ -604,10 +604,10 @@ header-includes: |
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Se comienza con una introducción sobre <strong>ecuaciones diferenciales</strong>, destacando la forma general de las ecuaciones de primer orden y proporcionando un ejemplo específico. Luego, presentan una solución numérica para el ejemplo utilizando la biblioteca <code>DifferentialEquations</code> de Julia.
+                Se comienza con una introducción sobre ecuaciones diferenciales, destacando la forma general de las ecuaciones de primer orden y proporcionando un ejemplo específico. Luego, presentan una solución numérica para el ejemplo utilizando la biblioteca <code>DifferentialEquations</code> de Julia.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                El cuaderno continúa con una sección sobre <strong>sistemas lineales homogéneos</strong>. Se introduce la notación matricial y se explica cómo resolver sistemas lineales homogéneos mediante el uso de matrices diagonalizables. Se presenta un ejemplo concreto, mostrando cómo la solución general de un sistema homogéneo se puede expresar en términos de los vectores propios y valores propios de la matriz asociada al sistema. Luego, se muestra cómo resolver un sistema específico con condiciones iniciales dadas.
+                El cuaderno continúa con una sección sobre sistemas lineales homogéneos. Se introduce la notación matricial y se explica cómo resolver sistemas lineales homogéneos mediante el uso de matrices diagonalizables. Se presenta un ejemplo concreto, mostrando cómo la solución general de un sistema homogéneo se puede expresar en términos de los vectores propios y valores propios de la matriz asociada al sistema. Luego, se muestra cómo resolver un sistema específico con condiciones iniciales dadas.
             </p>
         </div>
     </div>
@@ -641,7 +641,7 @@ header-includes: |
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Este cuaderno muestra los métodos de localización de <strong>valores propios</strong>, comenzando con el <strong>Teorema de Gershgorin</strong>, que establece que todos los valores propios de una matriz están contenidos en la unión de discos en el plano complejo. Luego, se extiende la teoría a los discos de Brauer y a los discos generalizados de Gershgorin, mostrando mejoras en las estimaciones sobre la ubicación de los valores propios.
+                Este cuaderno muestra los métodos de localización de valores propios, comenzando con el Teorema de Gershgorin, que establece que todos los valores propios de una matriz están contenidos en la unión de discos en el plano complejo. Luego, se extiende la teoría a los discos de Brauer y a los discos generalizados de Gershgorin, mostrando mejoras en las estimaciones sobre la ubicación de los valores propios.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Además, se proporciona una serie de ejemplos prácticos que ilustran la aplicación de estos teoremas y métodos, mostrando cómo se pueden visualizar los discos correspondientes para diferentes matrices y cómo estos métodos pueden ser utilizados en la práctica para análisis y simulaciones.
@@ -677,10 +677,10 @@ header-includes: |
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                El cuaderno proporciona una introducción al <strong>método de mínimos cuadrados</strong>, destacando su aplicación para resolver sistemas sobredeterminados de ecuaciones lineales. Luego, se presenta un ejemplo con datos y se resuelve utilizando el operador de backslash (<code>\</code>) en Julia.
+                El cuaderno proporciona una introducción al método de mínimos cuadrados, destacando su aplicación para resolver sistemas sobredeterminados de ecuaciones lineales. Luego, se presenta un ejemplo con datos y se resuelve utilizando el operador de backslash (<code>\</code>) en Julia.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Posteriormente, el cuaderno aborda el ajuste por mínimos cuadrados en el contexto de la <strong>regresión lineal</strong> y presenta un ejemplo específico de ajuste polinomial. Se describe cómo se puede aplicar el método para encontrar un polinomio de grado específico que se ajuste de manera óptima a un conjunto de datos dado.
+                Posteriormente, el cuaderno aborda el ajuste por mínimos cuadrados en el contexto de la regresión lineal y presenta un ejemplo específico de ajuste polinomial. Se describe cómo se puede aplicar el método para encontrar un polinomio de grado específico que se ajuste de manera óptima a un conjunto de datos dado.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Finalmente, se explora el ajuste por mínimos cuadrados de ecuaciones cuadráticas en las variables <code>x</code> e <code>y</code>, y se proporciona un ejemplo práctico con datos que se ajustan a una elipse.

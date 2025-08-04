@@ -103,13 +103,13 @@ header-includes: |
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Este cuaderno muestra la representación de <strong>números enteros</strong> y de <strong>punto flotante</strong>. Comienza mostrando cómo se representan los enteros utilizando bits, proporcionando ejemplos prácticos y conversiones de enteros a cadenas de bits.
+                Este cuaderno muestra la representación de números enteros y de punto flotante. Comienza mostrando cómo se representan los enteros utilizando bits, proporcionando ejemplos prácticos y conversiones de enteros a cadenas de bits.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Luego, se muestran los números de punto flotante, explicando su representación detallada, incluyendo el signo, el exponente y el significando, y cómo estas representaciones pueden afectar los cálculos numéricos debido a errores de redondeo y límites de precisión.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                También se muestra una introducción al <strong>cálculo simbólico</strong> utilizando la librería <strong>Symbolics</strong>, mostrando cómo realizar operaciones simbólicas que no dependen de valores numéricos específicos.
+                También se muestra una introducción al cálculo simbólico utilizando la librería Symbolics, mostrando cómo realizar operaciones simbólicas que no dependen de valores numéricos específicos.
             </p>
         </div>
     </div>
@@ -165,13 +165,13 @@ header-includes: |
             </h2>
             <!-- Texto llamativo con colores, espaciado y negrita -->
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                El cuaderno comienza definiendo los conceptos de <strong>orden asintótico</strong> para sucesiones, como \(x_n = \mathcal{O}(\alpha_n)\) y \(x_n = \mathcal{o}(\alpha_n)\), que indican cómo las sucesiones \(x_n\) y \(\alpha_n\) convergen hacia cero en comparación. Proporciona ejemplos gráficos para ilustrar estas comparaciones, como \(\frac{n+1}{n^2}\) en relación con \(\frac{1}{n}\), y \(\frac{1}{n \log(n)}\) también en relación con \(\frac{1}{n}\), entre otros.
+                El cuaderno comienza definiendo los conceptos de orden asintótico para sucesiones, como \(x_n = \mathcal{O}(\alpha_n)\) y \(x_n = \mathcal{o}(\alpha_n)\), que indican cómo las sucesiones \(x_n\) y \(\alpha_n\) convergen hacia cero en comparación. Proporciona ejemplos gráficos para ilustrar estas comparaciones, como \(\frac{n+1}{n^2}\) en relación con \(\frac{1}{n}\), y \(\frac{1}{n \log(n)}\) también en relación con \(\frac{1}{n}\), entre otros.
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 El cuaderno también explora la velocidad de convergencia, describiendo la convergencia lineal y superlineal con ejemplos como \(x_n = 0.5^n\) y \(x_n = 0.5^{n^2}\). Además, aborda la convergencia de orden y cómo se puede demostrar mediante gráficos, como el caso de \(x_n = 0.5^{2^n}\).
             </p>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Finalmente, se introduce la <strong>expansión de Taylor</strong>, explicando cómo aproximar funciones mediante polinomios de Taylor y su error asociado. El cuaderno utiliza la librería <strong>TaylorSeries</strong> para generar y trabajar con estos polinomios.
+                Finalmente, se introduce la expansión de Taylor, explicando cómo aproximar funciones mediante polinomios de Taylor y su error asociado. El cuaderno utiliza la librería TaylorSeries para generar y trabajar con estos polinomios.
             </p>
         </div>
     </div>

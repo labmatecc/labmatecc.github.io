@@ -20,9 +20,9 @@ PlutoUI.TableOfContents(title="Optimización", aside=true)
 html"""
 <h1>Introducción a la Optimización</h1>
 <ul>
-    <li><strong>¿Qué es la optimización?</strong><br>Es un proceso para encontrar el valor máximo o mínimo de una función, dadas algunas restricciones.</li>
-    <li><strong>Aplicaciones:</strong><br>Se usa en economía, ciencia de datos, ingeniería, etc.</li>
-    <li><strong>Tipos de optimización:</strong><br>Optimización sin restricciones y optimización con restricciones.</li>
+    <li>¿Qué es la optimización?<br>Es un proceso para encontrar el valor máximo o mínimo de una función, dadas algunas restricciones.</li>
+    <li>Aplicaciones:<br>Se usa en economía, ciencia de datos, ingeniería, etc.</li>
+    <li>Tipos de optimización:<br>Optimización sin restricciones y optimización con restricciones.</li>
 
 """
 
