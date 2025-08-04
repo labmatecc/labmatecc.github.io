@@ -252,6 +252,27 @@ header-includes: |
     <div class="person">
       <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
       <div class="button-container" style="text-align: center; margin: 20px 0;">
+        <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/CoordenadasHomogeneas/" 
+          class="button" 
+          style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+          Coordenadas Homogéneas
+        </a>
+      </div>
+      <!-- Imagen más grande y centrada con sombras -->
+            <img src="https://comprimeme.wordpress.com/wp-content/uploads/2014/12/lenna-600x197.png" 
+                 alt="Espacio Euclídeo" 
+                 style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+        <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">El cuaderno explora el uso de coordenadas homogéneas y transformaciones proyectivas para modelar y aplicar homografías en imágenes mediante Julia y PlutoUI: primero presenta una demo interactiva con sliders para ajustar en tiempo real los parámetros de la matriz <p>3&times;3</p> (rotación, escala, traslación y perspectiva) sobre una imagen de prueba con cuadros; luego describe cómo, dados cuatro pares de puntos correspondientes (por ejemplo, los vértices de una placa vehicular), se arma y resuelve un sistema lineal homogéneo para obtener la matriz de homografía usando espacios nulos, y se aplica píxel a píxel la transformación para rectificar la perspectiva de una imagen real. </p>
+      </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="person">
+      <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+      <div class="button-container" style="text-align: center; margin: 20px 0;">
         <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/Difuminado-Ruido/" 
           class="button" 
           style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
