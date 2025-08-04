@@ -90,7 +90,7 @@ header-includes: |
         </a>
       </div>
       <!-- Imagen más grande y centrada con sombras -->
-      <img src="https://mismat.wordpress.com/wp-content/uploads/2023/03/96165-blog.png" 
+      <img src="https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/Conceptos_Basicos_PI.png?raw=true" 
            alt="Espacio Euclídeo" 
            style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
       <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
