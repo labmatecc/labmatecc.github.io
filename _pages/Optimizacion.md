@@ -88,7 +88,7 @@ header-includes: |
         </a>
       </div>
       <!-- Imagen más grande y centrada con sombras -->
-            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/b85099f27d4364c570a6c22645c36036aef89069/Im%C3%A1genes/Bordes_PI.png" 
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/1a9fb0ed9d1b3cffebb2eb63cae75fbb4ec7ae1e/Im%C3%A1genes/Dieta_OP.png" 
                  alt="Espacio Euclídeo" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
         <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">Este cuaderno aborda el problema de la optimización dietética, inspirado en el problema de la dieta de Stigler propuesto por George Stigler. Se enfoca en encontrar la combinación óptima de alimentos que satisfaga los requisitos nutricionales mínimos a un costo mínimo, considerando las restricciones de disponibilidad económica y los límites máximos y mínimos de consumo de alimentos. Además, discute la importancia de estas optimizaciones en términos de políticas públicas para abordar la seguridad alimentaria y la nutrición adecuada, destacando cómo decisiones individuales en la dieta pueden tener implicaciones económicas y sociales más amplias. </p>
