@@ -119,17 +119,22 @@ header-includes: |
 <body>
 
 <hr>
-
-<div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/Optimizacion/MetodosDeDescenso/" class="button">Métodos de descenso</a>
-</div>
-
-<div class="container">
+  <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
-      <div class="info">
-        <p>Este cuaderno presenta varios métodos de optimización numérica, enfocándose en el descenso de gradiente y sus variantes. Comienza con una explicación del método de descenso, donde se busca minimizar una función iterativamente ajustando el tamaño de paso y la dirección de búsqueda. Se exploran métodos como el descenso de máximo pendiente en diferentes normas (euclidiana, cuadrática, y norma 1), así como el método de Newton, que utiliza la inversa de la matriz Hessiana para guiar la búsqueda. Se presentan implementaciones prácticas de estos métodos mostrando visualizaciones gráficas para ilustrar los conceptos discutidos.</p>
+      <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+      <div class="button-container" style="text-align: center; margin: 20px 0;">
+        <a href="https://labmatecc.github.io/Notebooks/Optimizacion/MetodosDeDescenso/" 
+          class="button" 
+          style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+          Métodos de descenso
+        </a>
+      </div>
+      <!-- Imagen más grande y centrada con sombras -->
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/1a9fb0ed9d1b3cffebb2eb63cae75fbb4ec7ae1e/Im%C3%A1genes/Dieta_OP.png" 
+                 alt="Espacio Euclídeo" 
+                 style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+        <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">Este cuaderno presenta varios métodos de optimización numérica, enfocándose en el descenso de gradiente y sus variantes. Comienza con una explicación del método de descenso, donde se busca minimizar una función iterativamente ajustando el tamaño de paso y la dirección de búsqueda. Se exploran métodos como el descenso de máximo pendiente en diferentes normas (euclidiana, cuadrática, y norma 1), así como el método de Newton, que utiliza la inversa de la matriz Hessiana para guiar la búsqueda. Se presentan implementaciones prácticas de estos métodos mostrando visualizaciones gráficas para ilustrar los conceptos discutidos.</p>
       </div>
     </div>
-  </div>
-
+</div>
 <hr>
