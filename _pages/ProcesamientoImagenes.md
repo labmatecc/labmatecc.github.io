@@ -138,7 +138,7 @@ header-includes: |
         </a>
       </div>
       <!-- Imagen más grande y centrada con sombras -->
-            <img src="https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/Distorsionada.png?raw=true" 
+            <img src="https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/Metricas_PI.png?raw=true" 
                  alt="Métricas" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
         <p style="font-family: 'Arial', sans-serif; color:  #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">Se presentan métricas con referencia completa, como el Error Cuadrático Medio (MSE) y la Relación Señal-Ruido de Pico (PSNR), que comparan imágenes procesadas con una referencia ideal para cuantificar la distorsión. Además, se analizan métricas sin referencia, como el Índice de Similitud Estructural (SSIM) y su extensión Multi-SSIM, que evalúan la calidad visual considerando luminancia, contraste y estructura sin necesidad de una imagen ideal. También se discute el error estructural y su relación con estas métricas, proporcionando ejemplos numéricos y cálculos aplicados a imágenes de prueba.</p>
@@ -159,13 +159,9 @@ header-includes: |
         </a>
       </div>
       <!-- Imagen más grande y centrada con sombras -->
-            <img src="https://www.ivanandrei.com/wp-content/uploads/2022/06/rgb-ycbcr.png" 
+            <img src="https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/Aplicaciones_PI.png?raw=true" 
                  alt="Espacio Euclídeo" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <!-- Pie de página -->
-            <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
-                RGB y YCbCr
-            </footer>
         <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">Se abordan aplicaciones de funciones elementales en el procesamiento de imágenes digitales, centrándose en transformaciones potenciales, exponenciales y logarítmicas para mejorar la iluminación y el contraste. Presenta técnicas como la corrección gamma, que ajusta el brillo de imágenes mal expuestas mediante funciones de potencia. También incluye herramientas para transformar imágenes entre espacios de color RGB y YCbCr, aplicando correcciones específicas en el canal de luminancia (Y). Además, se implementan funciones para visualizar histogramas y ajustar niveles de brillo y contraste. El cuaderno utiliza imágenes subexpuestas y sobreexpuestas como ejemplos, mostrando sus respectivas transformaciones y resultados.</p>
       </div>
     </div>
