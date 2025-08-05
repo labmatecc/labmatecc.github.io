@@ -343,13 +343,9 @@ header-includes: |
         </a>
       </div>
       <!-- Imagen más grande y centrada con sombras -->
-            <img src="https://eng.libretexts.org/@api/deki/files/20283/CircularConvolution-display.png" 
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/b85099f27d4364c570a6c22645c36036aef89069/Im%C3%A1genes/Bordes_PI.png" 
                  alt="Espacio Euclídeo" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <!-- Pie de página -->
-            <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
-                Convolución Circular
-            </footer>
         <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">El cuaderno comienza con el método del gradiente, que calcula diferencias horizontales y verticales para estimar la magnitud y dirección del cambio de intensidad; sigue con el operador cruzado de Roberts, sensible a bordes diagonales a ±45°, luego desarrolla el método de Prewitt, que amplía la vecindad considerada para robustecer la detección, y el método de Sobel, que pondera más los píxeles contiguos; a continuación propone el detector laplaciano, que emplea una sola convolución con un kernel centrado en la segunda derivada discreta; analiza cómo el ruido gaussiano degrada estos detectores y sugiere prefiltrar con un filtro gaussiano o con la Laplaciana de Gaussiana para mejorar la resistencia al ruido; finalmente muestra cómo, tras binarizar el resultado de un detector (por ejemplo Sobel), aplicar convolución booleana y dilatación con distintos elementos estructurales ensancha y refina los bordes obtenidos. </p>
       </div>
     </div>
