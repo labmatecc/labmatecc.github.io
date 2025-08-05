@@ -180,13 +180,9 @@ header-includes: |
         </a>
       </div>
       <!-- Imagen más grande y centrada con sombras -->
-            <img src="https://github.com/labmatecc/labmatecc.github.io/blob/main/Im%C3%A1genes/Transformaciones.png?raw=true" 
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/112778b86b24f3741ff34634af92ae29e1c5eecb/Im%C3%A1genes/TransformacionesLineales_PI.png" 
                  alt="Espacio Euclídeo" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <!-- Pie de página -->
-            <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
-                Transformaciones aplicadas a una imagen
-            </footer>
         <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">Este cuaderno aborda el procesamiento de imágenes mediante transformaciones lineales y técnicas de automatización para mejorar la calidad visual. Se presentan funciones auxiliares en Julia para realizar tareas como la conversión entre espacios de color RGB y YCbCr, ajuste de valores de píxeles, creación de histogramas y transformaciones específicas para mejorar el contraste. Se introduce la trasformación lineal como una herramienta para expandir el rango de valores de los píxeles y mejorar significativamente el contraste de las imágenes. Además, se describe una variación de esta técnica que utiliza transformaciones lineales a trozos para ajustar los percentiles de los píxeles a intervalos uniformemente distribuidos. El cuaderno incluye ejemplos visuales que muestran los efectos de estas transformaciones.</p>
       </div>
     </div>
@@ -205,13 +201,9 @@ header-includes: |
         </a>
       </div>
       <!-- Imagen más grande y centrada con sombras -->
-            <img src="https://i.ytimg.com/vi/BC31_smmFEs/maxresdefault.jpg" 
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/112778b86b24f3741ff34634af92ae29e1c5eecb/Im%C3%A1genes/Probabilidad_PI.png" 
                  alt="Espacio Euclídeo" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <!-- Pie de página -->
-            <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
-                Ecualización del Histograma
-            </footer>
         <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">Se define la relación entre imágenes digitales y variables aleatorias, donde cada píxel representa un valor que puede ser modelado como una variable aleatoria con una distribución de probabilidad. Se detalla cómo los histogramas de las imágenes representan gráficamente estas distribuciones, y cómo pueden transformarse para cumplir ciertos objetivos mediante técnicas como la ecualización del histograma. Este procedimiento busca lograr distribuciones uniformes, garantizando que todos los tonos de gris estén representados equitativamente. Además, el cuaderno introduce el teorema de transformación de variables aleatorias, explicando cómo modificar una variable aleatoria con una función de densidad conocida para que adopte otra distribución deseada.</p>
       </div>
     </div>
@@ -230,13 +222,9 @@ header-includes: |
         </a>
       </div>
       <!-- Imagen más grande y centrada con sombras -->
-            <img src="https://comprimeme.wordpress.com/wp-content/uploads/2014/12/lenna-600x197.png" 
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/112778b86b24f3741ff34634af92ae29e1c5eecb/Im%C3%A1genes/Matrices_PI.png" 
                  alt="Espacio Euclídeo" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <!-- Pie de página -->
-            <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
-                Compresión de una imagen
-            </footer>
         <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">El cuaderno explora cómo las matrices y las transformaciones lineales pueden aplicarse en el procesamiento de imágenes. El contenido incluye operaciones básicas con matrices, como la generación del negativo de una imagen, la transposición para rotaciones y reflejos, la sobreposición mediante la suma de matrices, y el producto de matrices para efectos como compresión y resaltado de bordes. También se describen métodos para segmentar partes específicas de imágenes usando matrices personalizadas. Se muestra también como modificar imágenes mediante rotaciones y cambios de perspectiva utilizando coordenadas homogéneas y proyectivas.</p>
       </div>
     </div>
@@ -255,7 +243,7 @@ header-includes: |
         </a>
       </div>
       <!-- Imagen más grande y centrada con sombras -->
-            <img src="https://comprimeme.wordpress.com/wp-content/uploads/2014/12/lenna-600x197.png" 
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/112778b86b24f3741ff34634af92ae29e1c5eecb/Im%C3%A1genes/Coordenadas_PI.png" 
                  alt="Espacio Euclídeo" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
         <p style="font-family: 'Arial', sans-serif;
@@ -292,13 +280,9 @@ header-includes: |
         </a>
       </div>
       <!-- Imagen más grande y centrada con sombras -->
-            <img src="https://solucioningenieril.com/imagenes/asignaturas/vision_artificial/tema_9/9.png" 
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/112778b86b24f3741ff34634af92ae29e1c5eecb/Im%C3%A1genes/Difuminado_PI.png" 
                  alt="Espacio Euclídeo" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <!-- Pie de página -->
-            <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
-                Aplicación de Filtros a una Imagen
-            </footer>
         <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">El cuaderno explora técnicas de restauración de imágenes afectadas por ruido. Aborda tres tipos de ruido: AWGN (variaciones aleatorias normales), sal y pimienta (píxeles dispersos blancos y negros) y speckle (ruido multiplicativo típico en imágenes médicas). Se muestran métodos de difuminado, como el promedio simple, gaussiano y convolución, que suavizan imágenes reduciendo ruido. También se explican técnicas de filtrado como el filtrado de mediana, efectivo contra el ruido sal y pimienta, y el filtrado por variación total, que equilibra reducción de ruido y preservación de detalles. Cada método es evaluado en imágenes con diferentes tipos de ruido, destacando sus fortalezas según el caso. Incluye referencias útiles y es una guía práctica para aprender y aplicar procesamiento de imágenes.</p>
       </div>
     </div>
@@ -317,13 +301,9 @@ header-includes: |
         </a>
       </div>
       <!-- Imagen más grande y centrada con sombras -->
-            <img src="https://eng.libretexts.org/@api/deki/files/20283/CircularConvolution-display.png" 
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/112778b86b24f3741ff34634af92ae29e1c5eecb/Im%C3%A1genes/Convolucion_PI.png" 
                  alt="Espacio Euclídeo" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <!-- Pie de página -->
-            <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
-                Convolución Circular
-            </footer>
         <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">Este cuaderno trata sobre el uso de la convolución y el filtrado de imágenes. Se inicia con una introducción a diferentes variantes de convoluciones (continuas, discretas, lineales, circulares, entre otras) y se centra en las convoluciones lineales y circulares, tanto para secuencias como para matrices. Posteriormente, se muestra cómo se aplica la convolución en el procesamiento de imágenes. Esto incluye el uso de kernels (también llamados filtros) que permiten realizar transformaciones locales, como suavizado, detección de bordes y mejora de detalles en imágenes. Ejemplos prácticos muestran cómo utilizar la convolución para modificar matrices asociadas a imágenes y obtener efectos específicos. Además, se exploran diferentes tipos de kernels y sus aplicaciones. Entre ellos se incluyen filtros de identidad, detección de bordes, realce, desenfoque y gradientes, con ejemplos que ilustran cómo aplicarlos mediante la función imfilter.</p>
       </div>
     </div>
