@@ -159,7 +159,7 @@ header-includes: |
                  alt="Espacio Euclídeo" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
         <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">El cuaderno comienza generando y visualizando el conjunto de Mandelbrot utilizando una función iterativa que determina si un punto en el plano complejo pertenece al conjunto o no, basándose en si la serie iterada tiende hacia el infinito o permanece acotada. Después, se menciona la relación entre el conjunto de Mandelbrot y los Conjuntos de Julia, donde cada punto en el conjunto de Mandelbrot corresponde a un conjunto de Julia único.</p>
-        <p>Se presenta el conjunto de Julia como una familia de fractales generados por una función iterativa de números complejos \(f_c(z) = z^2 + c\), donde \(c\) es un número complejo. También se genera y visualiza conjuntos de Julia para valores específicos de \(c\), tanto para \(f_c(z) = z^2 + c\) como para \(f(z) = c \sin(z)\), con la posibilidad de ajustar los valores de los parámetros \(a\) y \(b\).</p>
+        <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">Se presenta el conjunto de Julia como una familia de fractales generados por una función iterativa de números complejos \(f_c(z) = z^2 + c\), donde \(c\) es un número complejo. También se genera y visualiza conjuntos de Julia para valores específicos de \(c\), tanto para \(f_c(z) = z^2 + c\) como para \(f(z) = c \sin(z)\), con la posibilidad de ajustar los valores de los parámetros \(a\) y \(b\).</p>
       </div>
     </div>
 </div>
