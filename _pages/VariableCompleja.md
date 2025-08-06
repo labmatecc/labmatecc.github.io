@@ -93,7 +93,7 @@ header-includes: |
                  alt="Espacio Euclídeo" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
         <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">El cuaderno aborda la representación de datos en Julia, centrándose en números enteros, números de punto flotante y números complejos. Comienza explicando la representación de enteros y números de punto flotante, mostrando ejemplos de ello.</p>
-        <p>Además, se aborda la representación de números complejos, mostrando ejemplos de su creación y operaciones básicas como la suma, resta, multiplicación, división, potenciación, inverso, conjugado y módulo. Finalmente, se introduce la forma exponencial y la fórmula de De Moivre para números complejos.</p>
+        <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">Además, se aborda la representación de números complejos, mostrando ejemplos de su creación y operaciones básicas como la suma, resta, multiplicación, división, potenciación, inverso, conjugado y módulo. Finalmente, se introduce la forma exponencial y la fórmula de De Moivre para números complejos.</p>
       </div>
     </div>
 </div>
