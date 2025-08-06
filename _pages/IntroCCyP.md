@@ -160,7 +160,6 @@ header-includes: |
 <hr>
 
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
     <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Estructuras_de_control/" 
      class="button" 
@@ -174,6 +173,7 @@ header-includes: |
     Estructuras de control
   </a>
 </div>
+  <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Estructuras_de_Control_Logo.png" 
