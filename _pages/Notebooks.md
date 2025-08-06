@@ -206,7 +206,7 @@ header-includes: |
             <a href="https://labmatecc.github.io/Notebooks/IntroCCyP" class="button" style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Introducción a las Ciencias de la Computación y la Programación</a>
         </div>
             <!-- Imagen centrada -->
-            <img src="https://i.ytimg.com/vi/CxGSnA-RTsA/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLB81zDsfTaH6F6crVu5J-kDJDouAQ" 
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/cdcafa96cfa81d3971bece7d75337d5e3f8b4b72/Im%C3%A1genes/CC.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <!-- Pie de página -->
