@@ -541,17 +541,9 @@ header-includes: |
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                El cuaderno presenta una introducción detallada a los conceptos fundamentales de la criptografía, su evolución histórica, tipos principales, aplicaciones y desafíos actuales. Comienza explicando la importancia de la criptografía en la seguridad de la información, destacando propiedades clave como la confidencialidad, integridad, autenticación y no repudio.
+                El cuaderno ofrece una introducción exhaustiva a los pilares de la criptografía, repasando su evolución histórica, sus aplicaciones y los desafíos que enfrenta en la actualidad. En él se explica cómo la criptografía garantiza la seguridad de la información mediante propiedades como la confidencialidad, la integridad, la autenticación y el no repudio, e ilustra técnicas clásicas (por ejemplo, el cifrado César o el de transposición) para comprender sus limitaciones frente a los métodos modernos. A continuación se profundiza en los distintos enfoques criptográficos: la criptografía simétrica, que emplea una única clave (por ejemplo, AES); la criptografía asimétrica, basada en pares de claves públicas y privadas (como RSA o criptografía de curvas elípticas); y las funciones hash, que generan resúmenes irreversibles de datos para usos como firmas digitales o protección de contraseñas.
 
-                Se abordan técnicas clásicas como el Cifrado César y el cifrado por transposición, mostrando su relevancia histórica y sus limitaciones frente a los métodos modernos. Los principales tipos de criptografía incluyen:
-
-                1. Criptografía Simétrica: Utiliza una sola clave para cifrar y descifrar. Ejemplo: AES.
-                2. Criptografía Asimétrica: Emplea pares de claves (pública y privada). Ejemplo: RSA y criptografía de curvas elípticas (ECC).
-                3. Funciones Hash: Generan un resumen irreversible de datos para aplicaciones como firmas digitales y protección de contraseñas.
-
-                Se incluyen ejemplos de implementación de algoritmos como XOR, AES y RSA, junto con explicaciones sobre su funcionamiento interno y aplicaciones prácticas. Además, se presentan conceptos avanzados como la criptografía poscuántica y los retos que plantea la computación cuántica a los algoritmos actuales.
-
-                Finalmente, el cuaderno incluye ejercicios y visualizaciones interactivas para ilustrar los conceptos, haciendo énfasis en cómo la criptografía protege la información en aplicaciones modernas como blockchain, transacciones electrónicas y redes seguras.
+                Además, el cuaderno incluye ejemplos prácticos de implementación de algoritmos (desde operaciones de XOR hasta esquemas completos de AES y RSA) y aborda conceptos avanzados como la criptografía poscuántica, analizando los retos que plantea la llegada de la computación cuántica. Para facilitar el aprendizaje, se proponen ejercicios y visualizaciones interactivas que muestran cómo estas técnicas protegen la información en aplicaciones modernas, desde blockchain y transacciones electrónicas hasta el aseguramiento de redes seguras.
             </p>
         </div>
     </div>
