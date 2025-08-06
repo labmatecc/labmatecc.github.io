@@ -78,8 +78,6 @@ header-includes: |
 </body>
 </html>
 
-<!-- Botón de Datos, Variables y Expresiones -->
-
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
 <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Datos_Variables_Expresiones/" 
@@ -100,7 +98,6 @@ header-includes: |
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Datos_Variables_Expresiones_Logo.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Datos, variables y expresiones</h2>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 El cuaderno introduce conceptos fundamentales de programación en Julia, comenzando con los tipos básicos de datos (números, cadenas y booleanos) y el uso de variables para almacenarlos. Explica cómo combinar datos y operadores en expresiones, realizar operaciones aritméticas, manipular cadenas y trabajar con tipos de datos utilizando funciones nativas. También aborda la interacción con el usuario mediante entrada de datos, operadores lógicos para realizar comparaciones y ejemplos prácticos como el cálculo del área de un círculo, utilizando fórmulas matemáticas y constantes predefinidas. Además, se enseña cómo realizar conversiones de tipos y definir constantes inmutables. Estos conceptos se presentan de manera progresiva, con ejemplos prácticos que facilitan su comprensión.
             </p>
@@ -110,17 +107,24 @@ header-includes: |
 
 <hr>
 
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
 <div class="button-container">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/EnterosYFlotante/" class="button">Enteros y Punto Flotante</a>
 </div>
-
-  <div class="container">
     <div class="person">
-      <div class="info">
-        <p>Este cuaderno muestra la representación de números enteros y de punto flotante. Comienza mostrando cómo se representan los enteros utilizando bits, proporcionando ejemplos prácticos y conversiones de enteros a cadenas de bits. Luego, se muestran los números de punto flotante, explicando su representación detallada, incluyendo el signo, el exponente y el significando, y cómo estas representaciones pueden afectar los cálculos numéricos debido a errores de redondeo y límites de precisión. También se muestra una introducción al cálculo simbólico utilizando la librería Symbolics, mostrando cómo realizar operaciones simbólicas que no dependen de valores numéricos específicos. </p>
-      </div>
+        <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+            <!-- Imagen centrada -->
+            <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Datos_Variables_Expresiones_Logo.png" 
+                 alt="Descripción de la imagen" 
+                 style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
+                Este cuaderno muestra la representación de números enteros y de punto flotante. Comienza mostrando cómo se representan los enteros utilizando bits, proporcionando ejemplos prácticos y conversiones de enteros a cadenas de bits. Luego, se muestran los números de punto flotante, explicando su representación detallada, incluyendo el signo, el exponente y el significando, y cómo estas representaciones pueden afectar los cálculos numéricos debido a errores de redondeo y límites de precisión. También se muestra una introducción al cálculo simbólico utilizando la librería Symbolics, mostrando cómo realizar operaciones simbólicas que no dependen de valores numéricos específicos.
+            </p>
+        </div>
     </div>
-  </div>
+</div>
+
+<hr>
 
   <html>
 <head>
