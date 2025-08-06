@@ -242,9 +242,8 @@ header-includes: |
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <!-- Pie de página -->
             <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
-                Mathematical optimization models
+                Modelos de optimización
             </footer>
-            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Cuadernos sobre Optimización</h2>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Los cuadernos sobre optimización muestran temas clave en la mejora de decisiones y procesos. En el problema de la dieta, se busca la combinación óptima de alimentos para satisfacer requisitos nutricionales a bajo costo, influenciados por el problema de Stigler, con implicaciones de seguridad alimentaria. El cuaderno de métodos de descenso explora técnicas de optimización numérica, incluyendo el descenso de gradiente y el método de Newton, con aplicaciones prácticas y visualizaciones para facilitar la comprensión.
             </p>
@@ -314,6 +313,9 @@ header-includes: |
             <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/a0e5768eb12b338d93d9715d431f8e629be614ae/Im%C3%A1genes/VariableCompleja.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
+                Conjunto de Mandelbrot
+            </footer>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Los cuadernos sobre variable compleja se enfocan en diversos temas. Desde la introducción a la representación y operaciones básicas con números complejos hasta la visualización de funciones complejas y la exploración de conjuntos de Julia utilizando técnicas iterativas y de graficación en el plano complejo, estos cuadernos ofrecen un completo panorama de cómo se estudian y aplican los conceptos de variable compleja en Julia.
             </p>
