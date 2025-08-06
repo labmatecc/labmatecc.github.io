@@ -89,7 +89,7 @@ header-includes: |
         </a>
       </div>
       <!-- Imagen más grande y centrada con sombras -->
-            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/ac5e5870d289da097e0398ffb92cd7c6e737ee01/Im%C3%A1genes/FuncionesComplejas_VC.png" 
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/54ded4b6c05f0649b28e00a485ad3476d15b8457/Im%C3%A1genes/Aleatorios_P.png" 
                  alt="Espacio Euclídeo" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
         <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">Este cuaderno comienza con una reflexión sobre el concepto de aleatoriedad y su formalización en términos de variables aleatorias definidas en un espacio de probabilidad (Ω, 𝓕, P). A continuación se diferencia entre aleatoriedad verdadera y pseudoaleatoriedad en computadoras y se explica el funcionamiento de los generadores congruenciales lineales (LCG) mediante la fórmula
