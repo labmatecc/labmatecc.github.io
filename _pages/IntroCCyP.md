@@ -108,8 +108,9 @@ header-includes: |
 <hr>
 
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-<div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/EnterosYFlotante/" class="button" 
+<div class="button-container" style="text-align: center; margin: 20px 0;">
+  <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/EnterosYFlotante/" 
+     class="button" 
      style="padding: 10px 20px; 
             color: white; 
             background-color: rgb(127, 161, 105); 
@@ -117,13 +118,13 @@ header-includes: |
             border-radius: 5px; 
             text-decoration: none; 
             font-weight: bold;">
-            Enteros y Punto Flotante
+    Enteros y Punto Flotante
   </a>
 </div>
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
-            <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Datos_Variables_Expresiones_Logo.png" 
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/1d62d017a815358d12572f9a03c70cf9c394f529/Im%C3%A1genes/Datos_CC.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
