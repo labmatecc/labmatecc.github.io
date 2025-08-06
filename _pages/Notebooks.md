@@ -279,7 +279,7 @@ header-includes: |
             <a href="https://labmatecc.github.io/Notebooks/ProcesamientoDeImagenes/" class="button" style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Procesamiento de Imágenes</a>
         </div>
             <!-- Imagen centrada -->
-            <img src="https://www.wolfram.com/language/12/new-in-image-processing/assets.en/featuredimage.png.en" 
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/3bc17494b908980ffe0433709daf4b4903cb276e/Im%C3%A1genes/PI.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
