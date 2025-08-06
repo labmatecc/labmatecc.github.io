@@ -311,13 +311,9 @@ header-includes: |
             <a href="https://labmatecc.github.io/Notebooks/VariableCompleja/" class="button" style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Variable Compleja</a>
         </div>
             <!-- Imagen centrada -->
-            <img src="https://xciencia.wordpress.com/wp-content/uploads/2013/07/conjunto-de-mandelbrot-wikimedia-commons.png" 
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/a0e5768eb12b338d93d9715d431f8e629be614ae/Im%C3%A1genes/VariableCompleja.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
-                Conjunto de Mandelbrot
-            </footer>
-            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Cuadernos sobre Variable Compleja</h2>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Los cuadernos sobre variable compleja se enfocan en diversos temas. Desde la introducción a la representación y operaciones básicas con números complejos hasta la visualización de funciones complejas y la exploración de conjuntos de Julia utilizando técnicas iterativas y de graficación en el plano complejo, estos cuadernos ofrecen un completo panorama de cómo se estudian y aplican los conceptos de variable compleja en Julia.
             </p>
