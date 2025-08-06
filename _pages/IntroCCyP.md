@@ -191,52 +191,9 @@ header-includes: |
 
 <hr>
 
-<div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/ModelacionMatematica/" class="button">Introducción a la modelación matemática</a>
-</div>
-
-  <div class="container">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
-      <div class="info">
-        <p>El cuaderno muestra una introducción a la modelación matemática. Se centra en el problema de estimar la cantidad de jugo en una naranja mediante un enfoque matemático. Se presenta un modelo matemático básico asumiendo la forma esférica de la naranja y propone un método numérico para estimar la cantidad de jugo. También se discute la implementación del método numérico y la importancia de determinar y validar los parámetros del modelo, así como de considerar y cuantificar los diferentes errores introducidos en el proceso de modelación. </p>
-      </div>
-    </div>
-  </div>
-
-<hr>
-
-<div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/AjusteDeCurvas/" class="button">Ajuste de curvas</a>
-</div>
-
-<div class="container">
-    <div class="person">
-      <div class="info">
-        <p>El cuaderno aborda el ajuste de curvas y datos, explorando métodos para encontrar modelos que describan con precisión el comportamiento de datos observados, centrándose en el crecimiento de tumores en ratones. Se discuten varios enfoques, como el ajuste lineal, polinómico cúbico, redes neuronales artificiales y ecuaciones diferenciales, específicamente el modelo de Von Bertalanffy. El ajuste de curvas busca establecer relaciones entre variables optimizando los parámetros del modelo para minimizar el desajuste entre datos observados y generados, utilizando la técnica de mínimos cuadrados basada en la norma euclidiana. </p>
-      </div>
-    </div>
-  </div>
-
-<hr>
-
-<div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/EcuacionesNoLineales/" class="button">Ecuaciones No Lineales</a>
-</div>
-
-<div class="container">
-    <div class="person">
-      <div class="info">
-        <p>El cuaderno trata sobre métodos numéricos para encontrar las raíces de una función real \( f: \mathbb{R} \to \mathbb{R} \). Se exploran varios métodos, incluyendo el de bisección, el de Newton y el método del punto fijo. El método de bisección se basa en la propiedad de cambio de signo de la función en un intervalo y se implementa para encontrar raíces de funciones continuas. El método de Newton utiliza la derivada para iterar hacia una raíz, y el método de punto fijo busca un valor \( x^* \) tal que \( F(x^*) = x^* \). El cuaderno también presenta implementaciones y ejemplos prácticos usando la función \( \exp(x) - \sin(x) \) para ilustrar cada método. </p>
-      </div>
-    </div>
-  </div>
-
-
-
-
-<hr>
-
-<div class="button-container" style="text-align: center; margin: 20px 0;">
+    <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Listas_secuencias_arreglos/" 
      class="button" 
      style="padding: 10px 20px; 
@@ -249,15 +206,11 @@ header-includes: |
     Listas, secuencias y arreglos
   </a>
 </div>
-
-<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Listas_secuencias_arreglos_Logo.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Listas, secuencias y arreglos</h2>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Este cuaderno interactivo introduce a los usuarios en el uso y la manipulación de listas, arreglos y secuencias en Julia, con un enfoque práctico y progresivo. Las listas, entendidas como colecciones unidimensionales que almacenan elementos de diferentes tipos, son el punto de partida. Se detalla cómo crearlas, acceder a sus elementos mediante índices, modificarlas dinámicamente y aplicar operaciones básicas como ordenarlas, invertirlas o calcular su longitud.
 
@@ -272,9 +225,10 @@ header-includes: |
 </div>
 
 <hr>
-<!-- Botón de Funciones -->
 
-<div class="button-container" style="text-align: center; margin: 20px 0;">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="person">
+    <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Funciones/" 
      class="button" 
      style="padding: 10px 20px; 
@@ -287,15 +241,11 @@ header-includes: |
     Funciones
   </a>
 </div>
-
-<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Funciones_Logo.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Funciones</h2>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Este cuaderno interactivo explica el concepto y uso de funciones en Julia, desde lo básico hasta lo avanzado, destacando su papel en la modularidad y reutilización del código. Comienza con la definición de funciones básicas, incluyendo argumentos predeterminados y sintaxis compacta. Luego, explora el manejo de variables locales y globales, aclarando su impacto en el alcance y el rendimiento del código.
 
@@ -308,9 +258,43 @@ header-includes: |
 </div>
 
 <hr>
-<!-- Botón de Clases y Objetos -->
 
-<div class="button-container" style="text-align: center; margin: 20px 0;">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="person">
+    <div class="button-container" style="text-align: center; margin: 20px 0;">
+  <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Recursion/" 
+     class="button" 
+     style="padding: 10px 20px; 
+            color: white; 
+            background-color: rgb(127, 161, 105); 
+            border: none; 
+            border-radius: 5px; 
+            text-decoration: none; 
+            font-weight: bold;">
+    Recursión
+  </a>
+</div>
+        <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+            <!-- Imagen centrada -->
+            <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Recursion_Logo.png" 
+                 alt="Descripción de la imagen" 
+                 style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
+                Este cuaderno interactivo explica a fondo la recursión en Julia, mostrando cómo resolver problemas dividiéndolos en subproblemas más pequeños. Comienza con ejemplos básicos como el cálculo del factorial y la suma de números hasta un valor dado, destacando la importancia de los casos base para evitar ciclos infinitos. 
+
+                Se exploran conceptos intermedios como la sucesión de Fibonacci, que genera un árbol de cálculos, y el problema de las Torres de Hanoi, que muestra la lógica paso a paso. A nivel avanzado, se introducen la recursión de cola para optimizar funciones, la memoización para evitar cálculos repetitivos y el backtracking, utilizado en problemas como las N-reinas.
+
+                El cuaderno incluye visualizaciones como el triángulo de Sierpinski, que demuestra cómo las funciones recursivas pueden generar patrones gráficos complejos. Es una guía completa que combina teoría, práctica y ejemplos interactivos, ideal para aprender y dominar la recursión en Julia.
+            </p>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="person">
+    <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Clases_y_Objetos/" 
      class="button" 
      style="padding: 10px 20px; 
@@ -323,15 +307,11 @@ header-includes: |
     Clases y Objetos
   </a>
 </div>
-
-<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Programación_orientada_a_objetos_Logo.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Clases y Objetos</h2>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Este cuaderno interactivo explica cómo Julia implementa conceptos similares a clases y objetos a través de estructuras (struct) y tipos. Introduce estructuras inmutables y mutables para definir datos y métodos que operan sobre ellos, mostrando cómo asociar funciones a estructuras y sobrecargar funciones para diferentes tipos.
 
@@ -345,10 +325,10 @@ header-includes: |
 
 <hr>
 
-<!-- Botón de Recursión -->
-
-<div class="button-container" style="text-align: center; margin: 20px 0;">
-  <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Recursion/" 
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="person">
+    <div class="button-container" style="text-align: center; margin: 20px 0;">
+  <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/ModelacionMatematica/" 
      class="button" 
      style="padding: 10px 20px; 
             color: white; 
@@ -357,33 +337,84 @@ header-includes: |
             border-radius: 5px; 
             text-decoration: none; 
             font-weight: bold;">
-    Recursión
+    Introducción a la modelación matemática
   </a>
 </div>
-
-<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
-            <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Recursion_Logo.png" 
+            <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Programación_orientada_a_objetos_Logo.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Recursión</h2>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Este cuaderno interactivo explica a fondo la recursión en Julia, mostrando cómo resolver problemas dividiéndolos en subproblemas más pequeños. Comienza con ejemplos básicos como el cálculo del factorial y la suma de números hasta un valor dado, destacando la importancia de los casos base para evitar ciclos infinitos. 
-
-                Se exploran conceptos intermedios como la sucesión de Fibonacci, que genera un árbol de cálculos, y el problema de las Torres de Hanoi, que muestra la lógica paso a paso. A nivel avanzado, se introducen la recursión de cola para optimizar funciones, la memoización para evitar cálculos repetitivos y el backtracking, utilizado en problemas como las N-reinas.
-
-                El cuaderno incluye visualizaciones como el triángulo de Sierpinski, que demuestra cómo las funciones recursivas pueden generar patrones gráficos complejos. Es una guía completa que combina teoría, práctica y ejemplos interactivos, ideal para aprender y dominar la recursión en Julia.
+                El cuaderno muestra una introducción a la modelación matemática. Se centra en el problema de estimar la cantidad de jugo en una naranja mediante un enfoque matemático. Se presenta un modelo matemático básico asumiendo la forma esférica de la naranja y propone un método numérico para estimar la cantidad de jugo. También se discute la implementación del método numérico y la importancia de determinar y validar los parámetros del modelo, así como de considerar y cuantificar los diferentes errores introducidos en el proceso de modelación.
             </p>
         </div>
     </div>
 </div>
 
 <hr>
-<!-- Botón de Grafos -->
 
-<div class="button-container" style="text-align: center; margin: 20px 0;">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="person">
+    <div class="button-container" style="text-align: center; margin: 20px 0;">
+  <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/EcuacionesNoLineales/" 
+     class="button" 
+     style="padding: 10px 20px; 
+            color: white; 
+            background-color: rgb(127, 161, 105); 
+            border: none; 
+            border-radius: 5px; 
+            text-decoration: none; 
+            font-weight: bold;">
+    Ecuaciones No Lineales
+  </a>
+</div>
+        <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+            <!-- Imagen centrada -->
+            <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Programación_orientada_a_objetos_Logo.png" 
+                 alt="Descripción de la imagen" 
+                 style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
+                El cuaderno trata sobre métodos numéricos para encontrar las raíces de una función real \( f: \mathbb{R} \to \mathbb{R} \). Se exploran varios métodos, incluyendo el de bisección, el de Newton y el método del punto fijo. El método de bisección se basa en la propiedad de cambio de signo de la función en un intervalo y se implementa para encontrar raíces de funciones continuas. El método de Newton utiliza la derivada para iterar hacia una raíz, y el método de punto fijo busca un valor \( x^* \) tal que \( F(x^*) = x^* \). El cuaderno también presenta implementaciones y ejemplos prácticos usando la función \( \exp(x) - \sin(x) \) para ilustrar cada método.
+            </p>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="person">
+    <div class="button-container" style="text-align: center; margin: 20px 0;">
+  <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/AjusteDeCurvas/" 
+     class="button" 
+     style="padding: 10px 20px; 
+            color: white; 
+            background-color: rgb(127, 161, 105); 
+            border: none; 
+            border-radius: 5px; 
+            text-decoration: none; 
+            font-weight: bold;">
+    Ajuste de curvas
+  </a>
+</div>
+        <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+            <!-- Imagen centrada -->
+            <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Programación_orientada_a_objetos_Logo.png" 
+                 alt="Descripción de la imagen" 
+                 style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
+                El cuaderno aborda el ajuste de curvas y datos, explorando métodos para encontrar modelos que describan con precisión el comportamiento de datos observados, centrándose en el crecimiento de tumores en ratones. Se discuten varios enfoques, como el ajuste lineal, polinómico cúbico, redes neuronales artificiales y ecuaciones diferenciales, específicamente el modelo de Von Bertalanffy. El ajuste de curvas busca establecer relaciones entre variables optimizando los parámetros del modelo para minimizar el desajuste entre datos observados y generados, utilizando la técnica de mínimos cuadrados basada en la norma euclidiana.
+            </p>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="person">
+    <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Grafos/" 
      class="button" 
      style="padding: 10px 20px; 
@@ -396,15 +427,11 @@ header-includes: |
     Grafos
   </a>
 </div>
-
-<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Grafos_Logo.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Grafos</h2>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 La teoría de grafos estudia cómo los objetos están relacionados entre sí mediante nodos y aristas. Los grafos pueden ser dirigidos (con relaciones unidireccionales) o no dirigidos (relaciones bidireccionales) y se utilizan para modelar situaciones como redes sociales, sistemas de transporte y conexiones en sistemas complejos. 
 
@@ -419,7 +446,9 @@ header-includes: |
 
 <!-- Botón de optimización -->
 
-<div class="button-container" style="text-align: center; margin: 20px 0;">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="person">
+    <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Optimizacion/" 
      class="button" 
      style="padding: 10px 20px; 
@@ -432,15 +461,11 @@ header-includes: |
     Optimización
   </a>
 </div>
-
-<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Optimizacion_Logo.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Optimización</h2>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 La optimización es un proceso para encontrar los valores máximos o mínimos de una función, con o sin restricciones. Es fundamental en áreas como la economía, la ingeniería y la ciencia de datos, donde se busca maximizar eficiencia, minimizar costos o resolver problemas complejos.
 
@@ -456,7 +481,10 @@ header-includes: |
 
 <!-- Botón de Complejidad computacional -->
 
-<div class="button-container" style="text-align: center; margin: 20px 0;">
+
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="person">
+    <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Complejidad_computacional/" 
      class="button" 
      style="padding: 10px 20px; 
@@ -469,15 +497,11 @@ header-includes: |
     Complejidad computacional
   </a>
 </div>
-
-<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Complejidad_computacional_Logo.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Complejidad computacional</h2>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 El contenido de este documento se centra en la complejidad computacional, un área de estudio que evalúa la eficiencia de los algoritmos en términos de **tiempo** y **espacio**. Se explican conceptos fundamentales como las notaciones de complejidad O-grande (para el peor caso), Omega-grande (para el mejor caso), y Theta (para casos promedio), utilizadas para describir el comportamiento de los algoritmos a medida que crece el tamaño de los datos de entrada.
 
@@ -494,7 +518,9 @@ header-includes: |
 
 <!-- Botón de Introducción a la criptografía -->
 
-<div class="button-container" style="text-align: center; margin: 20px 0;">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="person">
+    <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Introduccion_a_la_criptografia/" 
      class="button" 
      style="padding: 10px 20px; 
@@ -507,15 +533,11 @@ header-includes: |
     Introducción a la criptografía
   </a>
 </div>
-
-<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Criptografia_Logo.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Introducción a la criptografía</h2>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 El cuaderno presenta una introducción detallada a los conceptos fundamentales de la criptografía, su evolución histórica, tipos principales, aplicaciones y desafíos actuales. Comienza explicando la importancia de la criptografía en la seguridad de la información, destacando propiedades clave como la confidencialidad, integridad, autenticación y no repudio.
 
@@ -538,7 +560,9 @@ header-includes: |
 
 <!-- Botón de Modelamiento 3D -->
 
-<div class="button-container" style="text-align: center; margin: 20px 0;">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="person">
+    <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Modelamiento3D/" 
      class="button" 
      style="padding: 10px 20px; 
@@ -551,15 +575,11 @@ header-includes: |
     Introducción al modelamiento 3D
   </a>
 </div>
-
-<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Modelamiento3D_Logo.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Introducción al modelamiento 3D</h2>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 El contenido explora el modelado tridimensional y la representación de datos en 3D usando PlutoPlotly, centrándose en la creación y análisis de gráficos interactivos. Comienza con la introducción de puntos tridimensionales definidos por coordenadas (x, y, z), visualizados mediante gráficos de dispersión que permiten analizar la distribución de datos en un espacio tridimensional. Estos gráficos pueden personalizarse con marcadores, líneas y combinaciones de ambos.
 
