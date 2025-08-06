@@ -83,15 +83,13 @@ header-includes: |
             <a href="https://labmatecc.github.io/Notebooks/AlgebraLineal/" class="button" style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Álgebra Lineal</a>
         </div>
             <!-- Imagen más grande y centrada con sombras -->
-            <img src="https://keepcoding.io/wp-content/uploads/2023/01/image-122-1024x663.png" 
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/50efbf05f4ab239ef6386271814ed5c19c188627/Im%C3%A1genes/Algebra.png" 
                  alt="Espacio Euclídeo" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <!-- Pie de página -->
             <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
                 Espacio Euclídeo
             </footer>
-            <!-- Título destacado para hacer el texto más llamativo -->
-            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Cuadernos de Álgebra Lineal</h2>
             <!-- Texto más llamativo con colores, espaciado y negrita -->
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Los cuadernos de Álgebra Lineal abarcan tanto temas fundamentales como aplicaciones prácticas. Comienzan con una introducción a las matrices, donde se muestra su estructura y se explican las operaciones básicas. También incluyen un estudio detallado de los vectores, resaltando su representación en Julia y las operaciones básicas asociadas.
