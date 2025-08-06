@@ -193,7 +193,6 @@ header-includes: |
 <hr>
 
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
     <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Listas_secuencias_arreglos/" 
      class="button" 
@@ -207,6 +206,7 @@ header-includes: |
     Listas, secuencias y arreglos
   </a>
 </div>
+<div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Listas_secuencias_arreglos_Logo.png" 
@@ -228,7 +228,6 @@ header-includes: |
 <hr>
 
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
     <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Funciones/" 
      class="button" 
@@ -242,6 +241,7 @@ header-includes: |
     Funciones
   </a>
 </div>
+<div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Funciones_Logo.png" 
@@ -261,7 +261,6 @@ header-includes: |
 <hr>
 
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
     <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Recursion/" 
      class="button" 
@@ -275,6 +274,7 @@ header-includes: |
     Recursión
   </a>
 </div>
+<div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Recursion_Logo.png" 
@@ -294,7 +294,6 @@ header-includes: |
 <hr>
 
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
     <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Clases_y_Objetos/" 
      class="button" 
@@ -308,6 +307,7 @@ header-includes: |
     Clases y Objetos
   </a>
 </div>
+<div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Programación_orientada_a_objetos_Logo.png" 
@@ -327,7 +327,6 @@ header-includes: |
 <hr>
 
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
     <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/ModelacionMatematica/" 
      class="button" 
@@ -341,6 +340,7 @@ header-includes: |
     Introducción a la modelación matemática
   </a>
 </div>
+<div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Programación_orientada_a_objetos_Logo.png" 
@@ -356,7 +356,6 @@ header-includes: |
 <hr>
 
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
     <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/EcuacionesNoLineales/" 
      class="button" 
@@ -370,6 +369,7 @@ header-includes: |
     Ecuaciones No Lineales
   </a>
 </div>
+<div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Programación_orientada_a_objetos_Logo.png" 
@@ -385,7 +385,6 @@ header-includes: |
 <hr>
 
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
     <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/AjusteDeCurvas/" 
      class="button" 
@@ -399,6 +398,7 @@ header-includes: |
     Ajuste de curvas
   </a>
 </div>
+<div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Programación_orientada_a_objetos_Logo.png" 
@@ -414,7 +414,6 @@ header-includes: |
 <hr>
 
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
     <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Grafos/" 
      class="button" 
@@ -428,6 +427,7 @@ header-includes: |
     Grafos
   </a>
 </div>
+<div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Grafos_Logo.png" 
@@ -448,7 +448,6 @@ header-includes: |
 <!-- Botón de optimización -->
 
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
     <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Optimizacion/" 
      class="button" 
@@ -462,6 +461,7 @@ header-includes: |
     Optimización
   </a>
 </div>
+<div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Optimizacion_Logo.png" 
@@ -484,7 +484,6 @@ header-includes: |
 
 
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
     <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Complejidad_computacional/" 
      class="button" 
@@ -498,13 +497,14 @@ header-includes: |
     Complejidad computacional
   </a>
 </div>
+<div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Complejidad_computacional_Logo.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                El contenido de este documento se centra en la complejidad computacional, un área de estudio que evalúa la eficiencia de los algoritmos en términos de **tiempo** y **espacio**. Se explican conceptos fundamentales como las notaciones de complejidad O-grande (para el peor caso), Omega-grande (para el mejor caso), y Theta (para casos promedio), utilizadas para describir el comportamiento de los algoritmos a medida que crece el tamaño de los datos de entrada.
+                El contenido de este documento se centra en la complejidad computacional, un área de estudio que evalúa la eficiencia de los algoritmos en términos de tiempo y espacio. Se explican conceptos fundamentales como las notaciones de complejidad O-grande (para el peor caso), Omega-grande (para el mejor caso), y Theta (para casos promedio), utilizadas para describir el comportamiento de los algoritmos a medida que crece el tamaño de los datos de entrada.
 
                 Se destacan ejemplos prácticos, como la búsqueda secuencial (complejidad lineal, O(n)) y la búsqueda binaria (complejidad logarítmica, O(log n)). Además, se incluyen ejercicios y visualizaciones que comparan estas técnicas, mostrando gráficamente cómo varía su rendimiento.
 
@@ -520,7 +520,6 @@ header-includes: |
 <!-- Botón de Introducción a la criptografía -->
 
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
     <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Introduccion_a_la_criptografia/" 
      class="button" 
@@ -534,6 +533,7 @@ header-includes: |
     Introducción a la criptografía
   </a>
 </div>
+<div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Criptografia_Logo.png" 
@@ -562,7 +562,6 @@ header-includes: |
 <!-- Botón de Modelamiento 3D -->
 
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
     <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Modelamiento3D/" 
      class="button" 
@@ -576,6 +575,7 @@ header-includes: |
     Introducción al modelamiento 3D
   </a>
 </div>
+<div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
             <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Modelamiento3D_Logo.png" 
