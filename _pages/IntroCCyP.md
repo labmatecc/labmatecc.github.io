@@ -124,7 +124,7 @@ header-includes: |
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
-            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/1d62d017a815358d12572f9a03c70cf9c394f529/Im%C3%A1genes/Datos_CC.png" 
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/470176d036020e5ef60c9e778b803cc62677ebf4/Im%C3%A1genes/Enteros_CC.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
