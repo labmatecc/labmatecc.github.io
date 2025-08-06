@@ -139,15 +139,13 @@ header-includes: |
             <a href="https://labmatecc.github.io/Notebooks/AnalisisNumerico/" class="button" style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Análisis Numérico</a>
         </div>
             <!-- Imagen más grande y centrada con sombras -->
-            <img src="https://img1.wsimg.com/isteam/ip/8d767449-15bc-4e62-a794-e70427f7c7b3/Mallado-por-elementos-finitos.png" 
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/a0937102d6457cc8c227b75958c662cdd0a215b2/Im%C3%A1genes/Numerico.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <!-- Pie de página -->
             <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
-                Malla en diferencias finitas
+                Discretización
             </footer>
-            <!-- Título destacado para hacer el texto más llamativo -->
-            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Cuadernos de Análisis Numérico</h2>
             <!-- Texto más llamativo con colores, espaciado y negrita -->
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Los cuadernos de Análisis Numérico comienzan mostrando la representación de números enteros y de punto flotante, mostrando cómo los errores de redondeo y los límites de precisión afectan los cálculos numéricos. También incluyen una introducción al cálculo simbólico con la librería Symbolics.
