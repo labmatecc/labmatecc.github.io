@@ -84,8 +84,8 @@ header-includes: |
         }
 
         @media (max-width: 480px) {
-          /* Padding solo para pantallas pequeñas */
-          body {
+          /* Sólo el bloque de descripción gana padding en móvil */
+          .container .person:first-child {
             padding: 0 15px;
             box-sizing: border-box;
           }
