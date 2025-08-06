@@ -117,7 +117,8 @@ header-includes: |
             border-radius: 5px; 
             text-decoration: none; 
             font-weight: bold;">
-            Enteros y Punto Flotante</a>
+            Enteros y Punto Flotante
+  </a>
 </div>
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
