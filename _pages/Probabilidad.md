@@ -78,17 +78,26 @@ header-includes: |
 </body>
 </html>
 
-<div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/Probabilidad/Numeros_Aleatorios" class="button">Números Aleatorios</a>
-</div>
-
-  <div class="container">
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="person">
-      <div class="info">
-        <p>Descripción en construcción. </p>
+      <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+      <div class="button-container" style="text-align: center; margin: 20px 0;">
+        <a href="https://labmatecc.github.io/Notebooks/VariableCompleja/FuncionesComplejas/" 
+          class="button" 
+          style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
+          Funciones complejas
+        </a>
+      </div>
+      <!-- Imagen más grande y centrada con sombras -->
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/ac5e5870d289da097e0398ffb92cd7c6e737ee01/Im%C3%A1genes/FuncionesComplejas_VC.png" 
+                 alt="Espacio Euclídeo" 
+                 style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+        <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">Este cuaderno comienza con una reflexión sobre el concepto de aleatoriedad y su formalización en términos de variables aleatorias definidas en un espacio de probabilidad (Ω, 𝓕, P). A continuación se diferencia entre aleatoriedad verdadera y pseudoaleatoriedad en computadoras y se explica el funcionamiento de los generadores congruenciales lineales (LCG) mediante la fórmula
+\( X_{n+1} = (a X_n + c)\bmod m \), al tiempo que se proponen preguntas para profundizar en el papel de la semilla y el módulo. Empleando PlutoUI y controles interactivos, el usuario puede ajustar los parámetros del LCG, tales como multiplicador, incremento, módulo y semilla, y visualizar en tiempo real las secuencias generadas con Plots. Posteriormente se presenta el Generador de Lehmer, un caso particular de LCG multiplicativo que utiliza un módulo primo y un multiplicador elegido como generador primitivo para alcanzar un período máximo de $m-1$. A continuación se describen sus ventajas de sencillez, largo período y buena distribución, así como sus limitaciones asociadas a posibles correlaciones en dimensiones altas y a la falta de seguridad criptográfica. Por último se introduce el Generador de Fibonacci Modificado o Lagged Fibonacci Generator, que emplea retardos $j$ y $k$ y operaciones como suma o XOR sobre valores anteriores para producir secuencias con períodos muy largos y menor correlación, e incluye una implementación interactiva que permite experimentar con los retardos, el módulo y las semillas iniciales para comparar su comportamiento con los métodos anteriores.
+</p>
       </div>
     </div>
-  </div>
+</div>
 
   <html>
 <head>
