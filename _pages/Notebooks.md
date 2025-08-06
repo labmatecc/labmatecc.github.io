@@ -211,9 +211,8 @@ header-includes: |
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <!-- Pie de página -->
             <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
-                ¿Que son las Ciencias de la Computación?
+                Ciencias de la Computación
             </footer>
-            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Introducción a las Ciencias de la Computación y la Programación</h2>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Los cuadernos sobre el curso Introducción a las Ciencias de la Computación y la Programación están en construcción.
             </p>
