@@ -109,7 +109,15 @@ header-includes: |
 
 <div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
 <div class="button-container">
-  <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/EnterosYFlotante/" class="button">Enteros y Punto Flotante</a>
+  <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/EnterosYFlotante/" class="button" 
+     style="padding: 10px 20px; 
+            color: white; 
+            background-color: rgb(127, 161, 105); 
+            border: none; 
+            border-radius: 5px; 
+            text-decoration: none; 
+            font-weight: bold;">
+            Enteros y Punto Flotante</a>
 </div>
     <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
@@ -147,6 +155,39 @@ header-includes: |
     </style>
 </head>
 <body>
+
+<hr>
+
+<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="person">
+    <div class="button-container" style="text-align: center; margin: 20px 0;">
+  <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Estructuras_de_control/" 
+     class="button" 
+     style="padding: 10px 20px; 
+            color: white; 
+            background-color: rgb(127, 161, 105); 
+            border: none; 
+            border-radius: 5px; 
+            text-decoration: none; 
+            font-weight: bold;">
+    Estructuras de control
+  </a>
+</div>
+        <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
+            <!-- Imagen centrada -->
+            <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Estructuras_de_Control_Logo.png" 
+                 alt="Descripción de la imagen" 
+                 style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
+                El documento es un cuaderno interactivo diseñado para introducir y practicar el uso de estructuras de control en el lenguaje de programación Julia. A lo largo del material, se exploran diferentes estructuras como bucles (for y while), condicionales (if-else) y comandos avanzados (break y continue). Cada sección combina teoría con ejercicios prácticos que permiten al lector experimentar con el código directamente.
+
+                Se presentan conceptos básicos, como iterar sobre listas y rangos, junto con ejemplos más avanzados, como bucles anidados para operar sobre matrices y el manejo de diccionarios. También incluye el uso de estructuras de control para manejar condiciones dinámicas y patrones comunes como tablas de multiplicar, triángulos de asteriscos y pirámides de números.
+
+                Además, se introduce el manejo de excepciones con try-catch-finally, explicando cómo capturar y manejar errores en el código. Todo esto se acompaña de ejercicios prácticos que fomentan la comprensión y el dominio de estas herramientas clave en la programación.
+            </p>
+        </div>
+    </div>
+</div>
 
 <hr>
 
@@ -194,44 +235,6 @@ header-includes: |
 
 
 <hr>
-
-<!-- Botón de Estructuras de control -->
-
-<div class="button-container" style="text-align: center; margin: 20px 0;">
-  <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Estructuras_de_control/" 
-     class="button" 
-     style="padding: 10px 20px; 
-            color: white; 
-            background-color: rgb(127, 161, 105); 
-            border: none; 
-            border-radius: 5px; 
-            text-decoration: none; 
-            font-weight: bold;">
-    Estructuras de control
-  </a>
-</div>
-
-<div class="container" style="background-color: rgb(246, 255, 240); padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="person">
-        <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
-            <!-- Imagen centrada -->
-            <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Estructuras_de_Control_Logo.png" 
-                 alt="Descripción de la imagen" 
-                 style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Estructuras de control</h2>
-            <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                El documento es un cuaderno interactivo diseñado para introducir y practicar el uso de estructuras de control en el lenguaje de programación Julia. A lo largo del material, se exploran diferentes estructuras como bucles (for y while), condicionales (if-else) y comandos avanzados (break y continue). Cada sección combina teoría con ejercicios prácticos que permiten al lector experimentar con el código directamente.
-
-                Se presentan conceptos básicos, como iterar sobre listas y rangos, junto con ejemplos más avanzados, como bucles anidados para operar sobre matrices y el manejo de diccionarios. También incluye el uso de estructuras de control para manejar condiciones dinámicas y patrones comunes como tablas de multiplicar, triángulos de asteriscos y pirámides de números.
-
-                Además, se introduce el manejo de excepciones con try-catch-finally, explicando cómo capturar y manejar errores en el código. Todo esto se acompaña de ejercicios prácticos que fomentan la comprensión y el dominio de estas herramientas clave en la programación.
-            </p>
-        </div>
-    </div>
-</div>
-
-<hr>
-<!-- Botón de Listas, Secuencias y Arreglos -->
 
 <div class="button-container" style="text-align: center; margin: 20px 0;">
   <a href="https://labmatecc.github.io/Notebooks/IntroCCyP/Intro_a_CC__Listas_secuencias_arreglos/" 
