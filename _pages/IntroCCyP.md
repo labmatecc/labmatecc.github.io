@@ -245,7 +245,7 @@ header-includes: |
 <div class="person">
         <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
             <!-- Imagen centrada -->
-            <img src="https://labmatecc.github.io/Imágenes/Intro_a_CC__Funciones_Logo.png" 
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/82727d9895b614a24184be989224b02e3ac2e6f8/Im%C3%A1genes/Funciones_CC.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
