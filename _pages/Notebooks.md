@@ -237,7 +237,7 @@ header-includes: |
             <a href="https://labmatecc.github.io/Notebooks/Optimizacion" class="button" style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Optimización</a>
         </div>
             <!-- Imagen centrada -->
-            <img src="https://chalmersindustriteknik.se/app/uploads/Optimering_overgripande.jpg" 
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/69e7456714b0cc3458b750db33a42c88a8a5393e/Im%C3%A1genes/Optimizacion.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <!-- Pie de página -->
