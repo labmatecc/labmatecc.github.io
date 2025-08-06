@@ -82,10 +82,10 @@ header-includes: |
     <div class="person">
       <div class="info" style="text-align: center; max-width: 900px; margin: 0 auto;">
       <div class="button-container" style="text-align: center; margin: 20px 0;">
-        <a href="https://labmatecc.github.io/Notebooks/VariableCompleja/FuncionesComplejas/" 
+        <a href="https://labmatecc.github.io/Notebooks/Probabilidad/NumerosAleatorios/" 
           class="button" 
           style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">
-          Funciones complejas
+          Números Aleatorios
         </a>
       </div>
       <!-- Imagen más grande y centrada con sombras -->

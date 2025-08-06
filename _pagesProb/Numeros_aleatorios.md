@@ -1,6 +1,6 @@
 ---
 title: "Generacion de numeros aleatorios"
-permalink: /Notebooks/Probabilidad/Numeros_Aleatorios/
+permalink: /Notebooks/Probabilidad/NumerosAleatorios/
 date: 2019-02-15
 header-includes: |
     \usepackage{amsmath,mathtools}
