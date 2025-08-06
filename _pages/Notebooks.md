@@ -178,15 +178,13 @@ header-includes: |
             <a href="https://labmatecc.github.io/Notebooks/EDO/" class="button" style="padding: 10px 20px; color: white; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Ecuaciones Diferenciales Ordinarias</a>
         </div>
             <!-- Imagen más grande y centrada con sombras -->
-            <img src="https://bachilleratovirtual.com/aula/pluginfile.php/6562/mod_lesson/page_contents/2536/Fasorxva.gif" 
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/cb293e1222d869503344e26a480e4975eb972675/Im%C3%A1genes/Ecuaciones.png" 
                  alt="Descripción de la imagen" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
             <!-- Pie de página -->
             <footer style="text-align: center; margin-top: 2px; font-family: 'Arial', sans-serif; color: #7f8c8d; font-size: 16px;">
-                Movimiento armónico simple
+                Modelo presa-depredador
             </footer>
-            <!-- Título destacado para hacer el texto más llamativo -->
-            <h2 style="font-family: 'Arial', sans-serif; color: #2C3E50; font-weight: bold; margin-bottom: 15px;">Cuadernos sobre Ecuaciones Diferenciales Ordinarias</h2>
             <!-- Texto más llamativo con colores, espaciado y negrita -->
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
                 Los cuadernos sobre ecuaciones diferenciales ordinarias abarcan una amplia gama de temas matemáticos y prácticos. Desde la introducción a la modelación matemática y las ecuaciones diferenciales hasta la resolución de problemas específicos como el crecimiento de poblaciones, el movimiento de planetas o la dosificación de medicamentos, estos cuadernos ofrecen un panorama completo de cómo las ecuaciones diferenciales se aplican en diferentes contextos.
