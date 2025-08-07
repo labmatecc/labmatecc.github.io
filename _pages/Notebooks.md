@@ -214,7 +214,7 @@ header-includes: |
                 Ciencias de la Computación
             </footer>
             <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-                Los cuadernos sobre el curso Introducción a las Ciencias de la Computación y la Programación están en construcción.
+                Los cuadernos de Introducción a las Ciencias de la Computación y la Programación cubren desde los fundamentos (tipos de datos, variables, expresiones y estructuras de control) hasta colecciones, funciones, recursión y programación orientada a objetos con estructuras de datos y jerarquías de tipos. También incluyen modelación matemática para estimar volúmenes y evaluar errores, así como métodos numéricos (bisección, Newton y punto fijo) para resolver ecuaciones no lineales. Se abordan técnicas de ajuste de curvas (regresión lineal, polinomios, redes neuronales y modelos diferenciales), teoría de grafos con algoritmos de búsqueda, optimización de funciones con ejemplos prácticos y análisis de complejidad computacional (notaciones O, Ω y Θ, algoritmos de ordenamiento y problemas P versus NP). Finalmente, exploran la criptografía (clásica y moderna, cifrados simétricos, asimétricos, funciones hash y retos poscuánticos) y concluyen con visualizaciones tridimensionales interactivas que incluyen dispersión, mallas, líneas, burbujas y controles de cámara dinámica.
             </p>
         </div>
     </div>
