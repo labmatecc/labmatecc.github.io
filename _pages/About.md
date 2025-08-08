@@ -142,7 +142,7 @@ header-includes: |
 
   <div class="person">
     <a href="https://sites.google.com/unal.edu.co/fohernandezr">
-      <img src="https://labmatecc.github.io/images/freddy_hernandez.png" alt="Freddy Hernández">
+      <img src="https://labmatecc.github.io/images/freddy_hernandez.jpeg" alt="Freddy Hernández">
     </a>
     <h3><a href="https://sites.google.com/unal.edu.co/fohernandezr">Freddy Hernández</a></h3>
     <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
