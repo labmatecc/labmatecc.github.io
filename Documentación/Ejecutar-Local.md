@@ -11,7 +11,9 @@
    sudo apt install ruby-full build-essential zlib1g-dev libv8-node
    gem install bundler
    sudo bundle install
-   bundle exec jekyll serve --lsi
-   ```
+   sudo bundle exec jekyll serve --lsi
+   ```                                                                                                                                                      
 
 Ahora deberías poder acceder a tu página localmente.
+
+**Nota:** Recuerda ejecutar  ```sudo bundle exec jekyll serve --lsi``` desde la raíz del repositorio.

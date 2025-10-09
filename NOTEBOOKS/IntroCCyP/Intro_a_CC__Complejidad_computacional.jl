@@ -1,378 +1,425 @@
 ### A Pluto.jl notebook ###
-# v0.20.3
+# v0.19.46
 
 using Markdown
 using InteractiveUtils
 
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
-    #! format: off
     quote
         local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
     end
-    #! format: on
 end
 
-# ╔═╡ 1284ab86-8cf4-4a2b-a939-4ea7c40a1f7f
-using PlutoUI
-
-# ╔═╡ 5295a88f-076c-4581-b9b1-3be54aaafde7
-using Plots
-
-# ╔═╡ 057a80d3-db81-42ed-bac9-4dd6da93683a
-using Primes  # Para generar números primos
-
-
-# ╔═╡ 61f725df-b692-4101-956c-1e8c824cbf86
-md"
-# Introducción a los números aleatorios en Julia
-
-En este notebook, exploraremos los números aleatorios, un concepto fundamental en matemáticas, estadística y computación. Antes de comenzar, reflexionemos:
-
-**¿Qué significa que algo sea aleatorio?**  
-Para muchas personas, algo aleatorio es simplemente algo sin patrón o impredecible. Pero, ¿cómo podemos definirlo formalmente? ¿Y cómo lo implementa una computadora, que es esencialmente un sistema determinista?
-
----
-
-## **1. ¿Qué es un número aleatorio?**
-
-Un número aleatorio es un valor seleccionado de un conjunto posible de resultados, donde cada resultado tiene una cierta probabilidad asociada. Formalmente, podemos describirlo usando el lenguaje de la probabilidad:
-
-- Un número aleatorio ``X`` es una **variable aleatoria** definida en un espacio probabilístico ``(\Omega, \mathcal{F}, P)``, donde:
-  - ``\Omega``: Conjunto de todos los resultados posibles.
-  - ``\mathcal{F}``: Colección de subconjuntos de ``\Omega``, llamada **σ-álgebra**.
-  - ``P``: Función de probabilidad que asigna una probabilidad a cada evento en ``\mathcal{F}``.
-
-Por ejemplo, si lanzamos un dado, el conjunto de resultados posibles es ``\Omega = \{1, 2, 3, 4, 5, 6\}``, y cada número tiene una probabilidad ``P = \frac{1}{6}``.
-
-**Pregunta para reflexionar:**  
-- ¿Qué diferencias puedes notar entre aleatorio en el sentido cotidiano y aleatorio en términos matemáticos?
-
----
-
-## **2. Pseudoaleatoriedad en la computación**
-
-En el mundo real, podemos generar números aleatorios verdaderos midiendo fenómenos físicos impredecibles, como **ruido térmico o radiación**. Sin embargo, las computadoras son **sistemas deterministas**, lo que significa que no pueden generar números verdaderamente aleatorios sin ayuda externa.
-
-En su lugar, las computadoras utilizan **generadores de números pseudoaleatorios (PRNGs)**, que son algoritmos matemáticos diseñados para producir secuencias de números que parecen aleatorios pero que en realidad son completamente predecibles si conocemos el algoritmo y su estado inicial (la **semilla**).
-
-Un PRNG utiliza fórmulas como esta para generar números:
-``X_{n+1} = (aX_n + c) \mod m``
-Donde:
-- ``a, c, m`` son constantes elegidas cuidadosamente.
-- ``X_n`` es el número generado en el paso ``n``.
-- ``X_{n+1}`` es el siguiente número de la secuencia.
-
-Este es un ejemplo de un **generador congruencial lineal (LCG)**, uno de los PRNGs más simples.
-
-**Preguntas para reflexionar:**  
-1. Si cambiamos la semilla ``X_0``, ¿cómo afecta esto a la secuencia generada?  
-2. ¿Por qué crees que se necesita el módulo ``m`` en el cálculo?
-
----
-
-## **3. Diferencias clave: Aleatorio vs. Pseudoaleatorio**
-
-| Característica              | Aleatorio verdadero                  | Pseudoaleatorio                  |
-|-----------------------------|----------------------------------------|----------------------------------|
-| **Definición**              | Basado en fenómenos físicos impredecibles. | Generado por un algoritmo determinista. |
-| **Reproducibilidad**        | No es reproducible.                   | Es reproducible si se conoce la semilla. |
-| **Uso común**               | Criptografía, simulaciones físicas.   | Simulaciones, estadística, videojuegos. |
-
-En Julia, el módulo `Random` permite generar números pseudoaleatorios utilizando PRNGs como `MersenneTwister`, que es el generador predeterminado.
-
-**Actividad sugerida:**  
-- Usa el comando `Random.seed!(1234)` para establecer una semilla. Genera algunos números con `rand()` y **repite todo el proceso.** ¿Qué observas?
-
----
-
-## **4. Una definición formal de pseudoaleatoriedad**
-
-Un generador de números pseudoaleatorios es una función ``G`` tal que:
-1. Recibe una semilla ``s`` y produce una secuencia ``x_1, x_2, \ldots, x_n``.
-2. La secuencia es estadísticamente indistinguible de una verdadera secuencia aleatoria para un observador sin conocimiento de ``G`` o ``s``.
-3. Es determinista: dado ``s``, siempre produce la misma secuencia.
-
-Esto implica que los PRNGs son útiles en muchos contextos, pero no en criptografía, donde la seguridad depende de la imprevisibilidad.
-
-**Pregunta avanzada:**  
-- Si un PRNG es estadísticamente indistinguible de una fuente aleatoria, ¿qué tipo de problemas prácticos pueden surgir de usarlo?
-
----
-"
-
-# ╔═╡ 58d1222c-90f5-4172-ab1f-1f10010454d3
-md"""
-> 🐤 Regresemos a nuestro generador congruencial lineal para realizar más experimentos y explorar sus características directamente en Julia.  Recordemos que la congruencia esta definida de esta forma:  ``X_{n+1} = (aX_n + c) \mod m``
-"""
-
-# ╔═╡ 351b4a4e-8d3b-4a2b-aed1-cf3d8639165a
-function congruential_generator(a, c, m, seed, n)
-    X = zeros(Int, n)
-    X[1] = seed
-    for i in 2:n
-        X[i] = (a * X[i - 1] + c) % m
-    end
-    return X
+# ╔═╡ 9bbdce67-c41d-4dab-9000-d1405670df8e
+begin
+    using PlutoUI
+    using Markdown
+    using Printf
+    using Random
+    using LinearAlgebra
+    using GraphPlot
+    using Graphs
+    using Plots
+	using DataFrames
 end
 
+# ╔═╡ e9ab3b5d-f135-46f9-8869-115d3048ebc1
+PlutoUI.TableOfContents(title="Complejidad Computacional", aside=true)
 
-# ╔═╡ 8a5fb2d7-6045-4e57-a44d-2f675bf565e2
-@bind a Slider(1:1:50, show_value=true)
-
-# ╔═╡ d5deca64-2907-4934-9163-617589218d72
-@bind c Slider(0:1:50, show_value=true)
-
-# ╔═╡ d55834c2-991c-4412-af37-d26bf525b071
-@bind m Slider(1:1:100, show_value=true)
-
-
-# ╔═╡ bcbfdb50-906a-4615-83d3-1760ef0440a8
-@bind seed Slider(0:1:50, show_value=true)
-
-# ╔═╡ f4db214c-5807-4f5e-aa8d-3c544a8ec9ec
-data_lcg = congruential_generator(a, c, m, seed, 500)
-
-# ╔═╡ de2bf35f-c285-4b18-8efb-0661a181c2cb
-scatter(data_lcg, title="Números generados por un LCG", xlabel="Índice", ylabel="Valor")
-
-# ╔═╡ 57f9ac91-7fc0-46c2-ae27-d2c96a70212a
+# ╔═╡ a05a343d-dc44-4d80-957c-25b41c4549fb
 md"""
-> 🐤 Con este experimento, esperamos que puedas responder las preguntas planteadas anteriormente. Utilizando los sliders, podrás experimentar de forma rápida y dinámica
+# Introducción a la Complejidad Computacional
 """
 
-# ╔═╡ 6ccd9919-b401-436e-956a-704a4b6c3a04
-md"
----
-
-## **1. ¿Qué es el Generador de Lehmer?**
-
-El **Generador de Lehmer**, también conocido como **Multiplicador Lineal**, es un tipo de **Generador Congruencial Multiplicativo** que produce números pseudoaleatorios utilizando aritmética modular. Fue introducido por D. H. Lehmer en 1949 y se utiliza debido a su simplicidad y eficiencia.
-
-La fórmula básica del generador de Lehmer es:
-
-
----
-"
-
-# ╔═╡ 76390892-4158-42e4-aee2-20671090ef85
+# ╔═╡ 9061e0f9-faae-4a68-9835-193289f4303e
 md"""
+## Teoría General: Complejidad Computacional
+La **complejidad computacional** es el campo de estudio que se ocupa de analizar cuán eficientes son los algoritmos, tanto en términos de **tiempo** como de **espacio**. Los algoritmos se evalúan según el tiempo que toman y la cantidad de memoria que usan conforme aumentan los datos de entrada. La complejidad computacional nos ayuda a determinar qué tan viable es resolver un problema con un enfoque específico cuando se enfrenta a datos de gran tamaño.
 
-Donde:
-- `` X_n `` es el estado actual o número generado en la posición `` n ``.
-- `` a  `` es el multiplicador, un número entero positivo cuidadosamente elegido.
-- `` m `` es el módulo, generalmente un número primo grande.
-- `` X_{n+1} `` es el siguiente número pseudoaleatorio en la secuencia.
+Para describir la eficiencia de un algoritmo, se utilizan notaciones como **O-grande** (`O()`), **Omega-grande** (`Ω()`) y **Theta** (`Θ()`). Estas notaciones nos permiten caracterizar el comportamiento de un algoritmo a medida que crece el tamaño de la entrada.
+"""
 
----
+# ╔═╡ 4cc4c5e3-b72f-4334-8eb8-b9b03a2a2bea
+md"""
+### Notación O-Gran (`O()`)
+La notación O-grande describe el **peor caso** de tiempo de ejecución de un algoritmo. Nos dice cómo crece el tiempo de ejecución de un algoritmo a medida que aumentan los datos de entrada.
+- **Ejemplo de Complejidad Lineal (`O(n)`)**: En una búsqueda secuencial, tenemos que revisar cada elemento hasta encontrar el deseado. Esto implica que, en el peor caso, debemos revisar `n` elementos.
+"""
 
-## **2. Propiedades Importantes**
+# ╔═╡ e1067a0d-891b-4bc2-8a9a-3eaf11325e76
+function busqueda_secuencial(arr::Vector{Int}, objetivo::Int)
+      for i in 1:length(arr)
+          if arr[i] == objetivo
+              return i
+          end
+      end
+      return -1  # No encontrado
+  end
 
-### **2.1. Módulo `` m ``**
-El valor de `` m `` determina el rango de números generados. En el generador de Lehmer, típicamente:
-- `` m `` se elige como un número primo grande.
-- Esto asegura que el período máximo de la secuencia sea `` m-1 ``, evitando ciclos cortos.
+# ╔═╡ 42d30121-6f62-4743-9c3d-70861f274c19
+begin
+	# Ejemplo de uso
+  arrlin = [1, 3, 5, 7, 9, 11]
+  println("Elemento encontrado en la posición: \$(busqueda_secuencial(arrlin, 7))")  # Imprime 4
+end
 
-### **2.2. Multiplicador `` a ``**
-El valor de `` a `` afecta directamente la calidad de los números generados. Para obtener un período máximo y buena distribución:
-- `` a `` debe ser un **generador primitivo módulo `` m ``**.
-- Un ejemplo típico es `` a = 48271 ``.
+# ╔═╡ bca9d6be-4c6f-4fc4-9ed9-17e0afe6a4f4
+md"""**Complejidad Logarítmica (`O(log n)`)**: Un ejemplo típico de complejidad logarítmica es la **búsqueda binaria**, donde el conjunto de datos se divide a la mitad en cada iteración, reduciendo exponencialmente el tamaño del problema.
+"""
 
-### **2.3. Semilla `` X_0 ``**
-La semilla inicial debe ser un valor positivo menor que `` m ``. Si `` X_0 = 0 ``, todos los números generados serán 0, lo cual estanca el generador.
+# ╔═╡ a9909637-7aef-4739-a3fa-6e94ddd61c28
+function busqueda_binaria(arr::Vector{Int}, objetivo::Int, inicio::Int, fin::Int)
+      if inicio > fin
+          return -1  # No encontrado
+      end
+      medio = div(inicio + fin, 2)
+      if arr[medio] == objetivo
+          return medio
+      elseif arr[medio] > objetivo
+          return busqueda_binaria(arr, objetivo, inicio, medio - 1)
+      else
+          return busqueda_binaria(arr, objetivo, medio + 1, fin)
+      end
+end
 
----
+# ╔═╡ 4374097a-693e-4142-82e2-1c3ce822c4d3
+begin
+	#Ejemplo de uso
+	arr = [1, 3, 5, 7, 9, 11]
+  	println("Elemento encontrado en la posición: \$(busqueda_binaria(arr, 7, 1, length(arr)))")  # Imprime 4
+end
 
-## **3. Ventajas del Generador de Lehmer**
+# ╔═╡ 82445c12-a1eb-4cf9-bf4c-cbaf62013a8f
+md"""
+### Ejemplo: Búsqueda Lineal vs Búsqueda Binaria
+- **Búsqueda Lineal**: Recorrer los elementos uno por uno hasta encontrar el objetivo. $O(n)$.
+  - Por ejemplo, para una lista de 10 elementos: `[5, 8, 1, 3, 9, 2, 6, 4, 7, 0]`, si queremos encontrar el `9`, necesitamos recorrer hasta la posición 4. En el peor caso, si el elemento está al final de la lista o no está, recorreríamos todos los elementos.
 
-1. **Simplicidad**: 
-   - Su implementación es sencilla y rápida.
-2. **Período Largo**: 
-   - Con un buen `` m ``, el generador puede tener un período de `` m-1 ``, lo que significa que los números no se repiten hasta después de `` m-1 `` iteraciones.
-3. **Propiedades Estadísticas**:
-   - Produce números distribuidos uniformemente en el rango ``[0, \( m-1 \)]`` si los parámetros se eligen correctamente.
-
----
-
-## **4. Limitaciones del Generador de Lehmer**
-
-1. **Correlaciones**:
-   - Los números pueden mostrar correlaciones si se proyectan en dimensiones altas.
-2. **No Criptográficamente Seguro**:
-   - No es adecuado para aplicaciones criptográficas, ya que su funcionamiento es determinista y puede ser invertido fácilmente.
-3. **Elección de Parámetros**:
-   - Si ``a `` y `` m `` no se eligen correctamente, el generador puede tener ciclos cortos y patrones predecibles.
+- **Búsqueda Binaria**: Requiere una lista ordenada y divide la búsqueda en cada iteración. $O(log(n))$.
+  - Por ejemplo, para una lista ordenada de 10 elementos: `[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]`, si queremos encontrar el `9`, comenzamos dividiendo la lista por la mitad y reduciendo el rango de búsqueda hasta encontrar el elemento. Esto reduce drásticamente el número de comparaciones necesarias.
 
 """
 
-# ╔═╡ 29fac509-27b4-47b3-9ea8-afbf04db89ef
+# ╔═╡ 81d8abf8-dbb3-493d-971b-003d1ae2614f
+@bind n PlutoUI.Slider(1:1:100, show_value=true, default=10)
+
+# ╔═╡ 774c0d7e-1ae5-4d9b-8399-e3313a14ca59
 md"""
-> 🐤Este método es igual al anterior, solo que ahora el multiplicador utiliza un número primo. Esperamos que pueda observar cómo varía el método al usar números primos.
+#### Comparación de Complejidad para n = $n$
+- Búsqueda Lineal: $O(n) = $ $n$
+- Búsqueda Binaria: $O(log(n)) = $ $(Int(log2(n)))$
 """
 
-# ╔═╡ 0cc363e8-3144-4c1a-a9dd-a3bc15b89053
-primos = collect(Primes.primes(500))  # Números primos hasta 100
+# ╔═╡ fa200449-0664-46fd-a2df-b42a9fbe2e77
+md"""### Graficación del Tiempo de Ejecución
+Podemos visualizar la complejidad de los algoritmos mediante gráficos de tiempo de ejecución. Aquí graficaremos la diferencia entre la búsqueda secuencial y la búsqueda binaria para entender cómo cambia el rendimiento al aumentar el tamaño de la entrada.
 
-# Crear el slider que permite seleccionar solo números primos
-
-# ╔═╡ 3f97d39c-9571-40b5-80b0-cf8a6e8f9ea8
-@bind m_2 Slider(primos, show_value=true)
-
-# ╔═╡ f2a3fd21-6626-4a7f-8cea-fa148f5a180b
-data_lehmer = congruential_generator(a, 0, m_2, seed, 500)
-
-# ╔═╡ 3c36bffa-88d9-4cbc-a9b1-ef6688e43395
-scatter(data_lehmer, title="Números generados por un Lehmer", xlabel="Índice", ylabel="Valor")
-
-# ╔═╡ 7e08c292-717e-4d56-a19f-aac03c853484
-md"""
-# Introducción al Generador de Fibonacci Modificado
-
----
-
-## **1. ¿Qué es el Generador de Fibonacci Modificado?**
-
-El **Generador de Fibonacci Modificado**, también conocido como **Lagged Fibonacci Generator (LFG)**, es un algoritmo para generar números pseudoaleatorios que se basa en la famosa secuencia de Fibonacci. En lugar de seguir la fórmula tradicional de Fibonacci, introduce modificaciones para aumentar la aleatoriedad.
-
-En la secuencia clásica de Fibonacci, cada número se calcula como:
-`` F_n = F_{n-1} + F_{n-2} ``
-
-En el caso del Generador de Fibonacci Modificado, la fórmula general es:
-`` X_n = (X_{n-j} \circ X_{n-k}) \mod m ``
-
-Donde:
-- `` j `` y `` k `` son índices de retardo (`` j > k ``), es decir, el generador utiliza valores anteriores en la secuencia para calcular el nuevo número.
-- `` \circ `` es una operación aritmética o lógica, como suma (`` + ``), resta (`` - ``), multiplicación (`` * ``) o XOR (`` \oplus ``).
-- `` m `` es el módulo, utilizado para mantener los números dentro de un rango determinado.
-- `` X_n `` es el número pseudoaleatorio generado en la posición `` n ``.
-
----
-
-## **2. Propiedades Clave del Generador de Fibonacci Modificado**
-
-### **2.1. Operación `` \circ ``**
-La operación que se utiliza entre `` X_{n-j} `` y `` X_{n-k} `` afecta directamente las propiedades del generador. Algunas opciones comunes incluyen:
-- **Suma** (`` + ``): Genera secuencias con una buena distribución básica.
-- **Resta** (`` - ``): Similar a la suma, pero con propiedades ligeramente diferentes.
-- **XOR** (`` \oplus ``): Ayuda a eliminar correlaciones entre los números generados.
-
-### **2.2. Período**
-El período máximo del generador depende de los valores de `` j ``, `` k ``, `` m ``, y la operación utilizada. Si los parámetros son adecuados, puede generar secuencias con un período muy largo.
-
-### **2.3. Semilla Inicial**
-El generador necesita `` j `` valores iniciales para comenzar. Estos valores iniciales forman la "semilla" del generador y determinan la secuencia producida.
-
----
-
-## **3. Ventajas del Generador de Fibonacci Modificado**
-
-1. **Período Largo**:
-   - Comparado con generadores congruenciales, puede producir secuencias mucho más largas antes de repetir.
-2. **Flexibilidad**:
-   - Permite ajustar `` j, k, m, `` y `` \circ `` para adaptarse a diferentes aplicaciones.
-3. **Mejor Aleatoriedad**:
-   - En general, produce números con menos correlaciones que los generadores congruenciales simples.
-4. **Aplicaciones Científicas**:
-   - Muy útil en simulaciones Monte Carlo y otros modelos que requieren números pseudoaleatorios de alta calidad.
-
----
-
-## **4. Desventajas del Generador de Fibonacci Modificado**
-
-1. **Complejidad de Inicialización**:
-   - Necesita `` j `` valores iniciales, lo que puede ser más complicado que otros generadores.
-2. **Correlaciones Potenciales**:
-   - Si los parámetros no se eligen correctamente, puede haber correlaciones entre los números generados.
-3. **No Criptográficamente Seguro**:
-   - Aunque útil para simulaciones y tareas generales, no es adecuado para aplicaciones donde se requiere seguridad.
-
----
+Para cada algoritmo, realizaremos dos gráficos: uno comparando el tiempo teórico con el tamaño de la entrada y otro comparando el tiempo empírico medido durante la ejecución.
 """
 
-# ╔═╡ c00c6eb7-9a29-4941-a63d-1a636999e652
+# ╔═╡ d8f5618c-9087-444a-a424-e91fa063e80e
+begin
+# Generar datos de prueba
+sizes = [10, 100, 1000, 5000, 10000]
+
+tiempos_secuencial = Float64[]
+tiempos_binaria = Float64[]
+
+for size in sizes
+    arr = sort(rand(1:100000, size))
+    objetivo = arr[rand(1:size)]
+
+    # Medir el tiempo de búsqueda secuencial
+    t = @elapsed busqueda_secuencial(arr, objetivo)
+    push!(tiempos_secuencial, t)
+
+    # Medir el tiempo de búsqueda binaria
+    t = @elapsed busqueda_binaria(arr, objetivo, 1, length(arr))
+    push!(tiempos_binaria, t)
+end
+end
+
+# ╔═╡ 60e6628e-e77d-4c20-afd9-daaae674d235
+# Graficar resultados: Tiempo Teórico
+begin
+	plot(sizes, sizes, label="Búsqueda Lineal (Teórico O(n))", lw=2, xlabel="Tamaño del Array", ylabel="Tiempo Relativo (n)", legend=:topleft)
+	plot!(sizes, log.(sizes), label="Búsqueda Binaria (Teórico O(log n))", lw=2)
+end
+
+# ╔═╡ 9326c120-382b-4b89-b63e-6a55960123f5
+begin
+	# Graficar resultados: Tiempo Empírico
+	plot(sizes, tiempos_secuencial, label="Búsqueda Lineal (Empírico)", lw=2, xlabel="Tamaño del Array", ylabel="Tiempo (s)", legend=:topleft)
+	plot!(sizes, tiempos_binaria, label="Búsqueda Binaria (Empírico)", lw=2)
+end
+
+# ╔═╡ c163de34-f715-4ccc-9841-11740c7a2b0d
+md""" Para muestras pequeñas y continuas podemos apreciar mejor el comportamiento teórico"""
+
+# ╔═╡ 0bfc06d2-f946-4f61-aecf-0a8a0ed967f1
+begin
+	plot([n -> n, n -> 2^n], 1:10, label=["Lineal O(n)" "Exponencial O(2^n)"], xlabel="Tamaño de entrada (n)", ylabel="Tiempo de Ejecución (Unidades Arbitrarias)", title="Comparación de Complejidades", lw=2)
+end
+
+# ╔═╡ b02f8128-37cb-4220-b5a8-cfb1ff8c966a
 md"""
-> 🐤Veamos la implementación de esto para poder experimentar.
+### Complejidad Espacial
+Además del tiempo de ejecución, también se analiza la **complejidad espacial**, que describe cuánta **memoria** utiliza un algoritmo a medida que aumenta el tamaño de la entrada. Por ejemplo, los algoritmos recursivos suelen tener una mayor complejidad espacial debido a la acumulación de llamadas en la **pila de llamadas**.
 """
 
-# ╔═╡ 255d43a9-1898-4cec-b722-2ea37d67e397
-function lagged_fibonacci_generator(j, k, m, seeds, n)
-    """
-    Lagged Fibonacci Generator (LFG).
-    
-    Args:
-        j::Int: First lag parameter (j < k).
-        k::Int: Second lag parameter.
-        m::Int: Modulus for the generator.
-        seeds::Vector{Int}: Initial seeds (length >= k).
-        n::Int: Number of random numbers to generate.
-
-    Returns:
-        Vector{Int}: Sequence of n generated numbers.
-    """
-    if length(seeds) < k
-        throw(ArgumentError("The length of seeds must be at least k."))
+# ╔═╡ e79f1258-140c-44ff-bb92-ea7520fee89f
+# Ejemplo de Complejidad Espacial: Factorial Recursivo
+function factorial(n::Int)
+    if n == 0
+        return 1
+    else
+        return n * factorial(n - 1)
     end
-    
-    X = zeros(Int, n)
-    X[1:k] .= seeds[1:k] # Initialize the first k values with the seeds
-    
-    for i in (k + 1):n
-        X[i] = (X[i - j] + X[i - k]) % m
+end
+
+# ╔═╡ 3acbb1f2-bd29-4066-9cee-0880ac30da78
+md"""### Complejidad de Algoritmos de Ordenamiento
+- **Ordenamiento Burbuja (`O(n^2)`)**: Es un algoritmo sencillo, pero ineficiente para listas grandes, ya que compara cada elemento con todos los demás.
+  ```julia
+  function burbuja(arr::Vector{Int})
+      n = length(arr)
+      for i in 1:n-1
+          for j in 1:(n-i)
+              if arr[j] > arr[j+1]
+                  arr[j], arr[j+1] = arr[j+1], arr[j]  # Intercambio
+              end
+          end
+      end
+  end
+
+  arr = [5, 3, 8, 4, 2]
+  burbuja(arr)
+  println("Array ordenado: \$(arr)")  # Imprime [2, 3, 4, 5, 8]
+  ```
+
+- **Ordenamiento Rápido (`O(n log n)`)**: Utiliza la estrategia de **dividir y vencerás** para ordenar un arreglo dividiéndolo en subarreglos más pequeños.
+  ```julia
+  function quicksort(arr::Vector{Int})
+      if length(arr) <= 1
+          return arr
+      else
+          pivote = arr[1]
+          menores = [x for x in arr[2:end] if x <= pivote]
+          mayores = [x for x in arr[2:end] if x > pivote]
+          return vcat(quicksort(menores), [pivote], quicksort(mayores))
+      end
+  end
+
+  arr = [5, 3, 8, 4, 2]
+  println("Array ordenado con quicksort: \$(quicksort(arr))")  # Imprime [2, 3, 4, 5, 8]
+  ```
+"""
+
+# ╔═╡ 887de94b-c080-4762-ae16-fe4d1c0f6859
+md"""El algoritmo anterior tiene una complejidad espacial de `O(n)` debido a las `n` llamadas que se almacenan en la pila antes de alcanzar la condición base."""
+
+# ╔═╡ ce4aa30b-cf3f-48f9-acf1-e31a022814dd
+md"""
+## Problemas P y NP
+- **Clase P**: Problemas que se pueden resolver en tiempo polinómico (P).
+  - Ejemplo: **Ordenar una lista**. Algoritmos como MergeSort o QuickSort tienen una complejidad $O(n \log n)$, lo cual es polinómico.
+
+- **Clase NP**: Problemas para los cuales una solución puede ser verificada en tiempo polinómico.
+  - Ejemplo: **Problema del Viajante de Comercio (TSP)**. Dado un conjunto de ciudades, encontrar el camino más corto que pasa por todas las ciudades y regresa al punto de inicio es un problema NP. Verificar si una solución propuesta es válida y mínima puede hacerse en tiempo polinómico.
+"""
+
+# ╔═╡ 62e684b0-9acb-457f-a1cd-535ea8b8ba54
+md"""
+### Problema del Viajante de Comercio
+Un comerciante necesita visitar una serie de ciudades y volver al punto de partida minimizando la distancia recorrida.
+- En el siguiente grafo, cada nodo representa una ciudad y cada arista representa una posible ruta con una distancia asignada.
+
+"""
+
+# ╔═╡ 7ce3e577-f45f-4fbf-84be-937d708106e0
+begin
+    n_cities = 5
+    graph = SimpleGraph(n_cities)
+    for i in 1:n_cities, j in i+1:n_cities
+        add_edge!(graph, i, j)
     end
-    
-    return X
+    positions = [(rand(), rand()) for i in 1:nv(graph)]
+    gplot(graph)
+end
+
+# ╔═╡ 8f7fca6c-8825-44de-976f-f4e5e5eda522
+begin
+    using Combinatorics  # Usaremos Combinatorics para las permutaciones
+
+    # Matriz de distancias aleatorias
+    Random.seed!(42)  # Fijar semilla para reproducibilidad
+    distancias = rand(1:20, nv(graph), nv(graph))
+    for i in 1:nv(graph)
+        distancias[i, i] = 0
+    end
+   
+end
+
+# ╔═╡ 72992477-68ea-494e-a3fd-9e095c4e7460
+println("Factorial de 5: $(factorial(5))")  # Imprime 120
+
+# ╔═╡ 21bdf9c1-53ca-49c7-b54c-8280a4a3ae6e
+### Graficar tiempo teórico de ejecución ###
+begin
+    # Definir función para calcular tiempo teórico de ejecución del problema del viajero
+    function tiempo_teorico(n::Int)
+        return factorial(n)
+    end
+
+    # Datos para graficar
+    num_ciudades = 2:10
+    tiempo = [tiempo_teorico(n) for n in num_ciudades]
+
+    # Graficar la complejidad teórica de tiempo de ejecución
+    plot(num_ciudades, tiempo, label="Tiempo teórico (n!)", xlabel="Número de ciudades", ylabel="Tiempo", lw=2, title="Complejidad del problema del viajero", legend=false)
 end
 
 
-# ╔═╡ b358e57a-4cf3-4b91-87e7-e65b96a42c38
-@bind j Slider(0:1:50, show_value=true)
+# ╔═╡ d00373e5-9830-439a-9e3c-24f69d95569e
+function calcular_distancia(ruta, dist)
+        total = 0
+        for i in 1:(length(ruta) - 1)
+            total += dist[ruta[i], ruta[i + 1]]
+        end
+        return total + dist[ruta[end], ruta[1]]  # Para regresar a la ciudad inicial
+    end
 
-# ╔═╡ fab0bbef-36a4-438e-a2c3-9e441dd949ae
-@bind k Slider(0:1:50, show_value=true)
+# ╔═╡ 9ec84581-9210-477d-b50a-1ecb88e7ce28
+begin
+	# Resolver el problema con fuerza bruta
+    mejor_distancia = Inf
+    mejor_ruta = []
 
-# ╔═╡ 1af6a6b8-a363-4e09-abd1-3f25a4b32ff1
-@bind m_f Slider(0:1:500, show_value=true)
+    for perm in permutations(1:nv(graph))
+        dist_actual = calcular_distancia(perm, distancias)
+        if dist_actual < mejor_distancia
+            mejor_distancia = dist_actual
+            mejor_ruta = perm
+        end
+    end
+end
 
-# ╔═╡ 7c35d57d-a1eb-4739-8033-5232e127d78d
-seeds = rand(1:100, k)  # Semillas iniciales aleatorias (tamaño k)
+# ╔═╡ 307005e8-ca67-47c3-bcf2-58e8ecb1b0a0
+begin
+	# Mostrar la mejor ruta y la mejor distancia
+    println("La mejor ruta encontrada es: ", mejor_ruta)
+    println("Con una distancia total de: ", mejor_distancia)
+end
 
-# ╔═╡ 7afdfac0-a602-4268-8f51-ce982e8267a0
-n = 500           # Número de números a generar
+# ╔═╡ dbd75b04-d670-4789-bb75-e4b9c56e3ec1
+md"""
+### Problema de la Mochila
+Otro ejemplo de problema NP es el **Problema de la Mochila**:
+- Imagina que tienes una mochila con una capacidad limitada y una serie de objetos, cada uno con un peso y un valor.
+- El objetivo es seleccionar un subconjunto de objetos de manera que se maximice el valor total sin exceder la capacidad de la mochila.
+- Este problema es difícil de resolver (NP), pero una solución propuesta puede verificarse fácilmente.
+"""
 
-# Generar números pseudoaleatorios
+# ╔═╡ 616751fe-4d3a-400c-beba-ccf63b13c7bd
+md"""
+#### Capacidad de la mochila: $weight$ kg
+- Supongamos que tenemos los siguientes objetos:
+  - Objeto A: Peso 10 kg, Valor 60
+  - Objeto B: Peso 20 kg, Valor 100
+  - Objeto C: Peso 30 kg, Valor 120
+- ¿Cuál es la mejor combinación de objetos para maximizar el valor sin exceder $weight$ kg?
+"""
 
-# ╔═╡ 4b370e6c-fc38-48b9-9999-2a50af299594
-X = lagged_fibonacci_generator(j, k, m_f, seeds, n)
+# ╔═╡ c1613673-3347-4706-8a58-b4afa6a0cdd7
+md"""Veamos la aplicación"""
 
-# ╔═╡ 8f901c8d-9c23-4f70-bf22-ebf394efe222
-println("Semillas iniciales: ", seeds)
+# ╔═╡ 1e857708-55ec-4b8a-a828-7b9302ddfd89
+begin
+    # Definir la capacidad de la mochila y los objetos disponibles
+    capacidad_mochila = 50
+    num_objetos = 10
+    Random.seed!(42)  # Fijar semilla para reproducibilidad
 
-# ╔═╡ c18fc69e-5e31-4441-b770-61f307b9b359
-scatter(X, title="Números generados por un Lehmer", xlabel="Índice", ylabel="Valor")
+    # Generar pesos y valores aleatorios para los objetos
+    pesos = rand(5:15, num_objetos)
+    valores = rand(10:100, num_objetos)
+    objetos = DataFrame(Peso = pesos, Valor = valores)
+
+    # Mostrar los objetos generados
+    println("Objetos disponibles: \n", objetos)
+    
+end
+
+
+# ╔═╡ 5ef0b393-d108-4342-981d-447614b66b02
+bar(1:num_objetos, valores, label="Valor", xlabel="Objeto", ylabel="Valor", title="Valores de los objetos", legend=false)
+
+# ╔═╡ 0b752c97-178f-407c-a0e5-87a8435b218c
+bar(1:num_objetos, pesos, label="Peso", xlabel="Objeto", ylabel="Peso", title="Pesos de los objetos", legend=false)
+
+# ╔═╡ 6ac1ad80-52df-4225-b9db-a9bbd5633edd
+# Función para resolver el problema de la mochila con Programación Dinámica
+    function knapsack(capacidad, pesos, valores, n)
+        # Crear una matriz para almacenar los valores máximos
+        K = zeros(Int, n + 1, capacidad + 1)
+
+        # Rellenar la matriz K
+        for i in 1:n+1
+            for w in 0:capacidad
+                if i == 1 || w == 0
+                    K[i, w+1] = 0
+                elseif pesos[i-1] <= w
+                    K[i, w+1] = max(valores[i-1] + K[i-1, w-pesos[i-1]+1], K[i-1, w+1])
+                else
+                    K[i, w+1] = K[i-1, w+1]
+                end
+            end
+        end
+
+        return K[n+1, capacidad+1]
+    end
+
+# ╔═╡ decb5b21-971f-4527-a800-aaf198081ccc
+begin
+    # Resolver el problema de la mochila
+    valor_maximo = knapsack(capacidad_mochila, pesos, valores, num_objetos)
+    println("El valor máximo que se puede obtener es: ", valor_maximo)
+end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
+Combinatorics = "861a8166-3701-5b0c-9a16-15d98fcdc6aa"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+GraphPlot = "a2cc645c-3eea-5389-862e-a155d0052231"
+Graphs = "86223c79-3864-5bf0-83f7-82e725a168b6"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Markdown = "d6f4376e-aef5-505a-96c1-9c027394607a"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
-Primes = "27ebfcd6-29c5-5fa9-bf4b-fb8fc14df3ae"
+Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [compat]
+Combinatorics = "~1.0.2"
+DataFrames = "~1.7.0"
+GraphPlot = "~0.5.2"
+Graphs = "~1.9.0"
 Plots = "~1.40.9"
 PlutoUI = "~0.7.60"
-Primes = "~0.5.6"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.11.1"
+julia_version = "1.11.0"
 manifest_format = "2.0"
-project_hash = "bb0d3189a4535e4eb2d433638515e5bacdec54ff"
+project_hash = "08571daf83ba0cf6f0603c9a15c96e0ad023ca7e"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -383,6 +430,12 @@ version = "1.3.2"
 [[deps.ArgTools]]
 uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
 version = "1.1.2"
+
+[[deps.ArnoldiMethod]]
+deps = ["LinearAlgebra", "Random", "StaticArrays"]
+git-tree-sha1 = "62e51b39331de8911e4a7ff6f5aaf38a5f4cc0ae"
+uuid = "ec485272-7323-5ecc-a04f-4719b315124d"
+version = "0.2.0"
 
 [[deps.Artifacts]]
 uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
@@ -441,9 +494,14 @@ version = "0.10.0"
 
 [[deps.Colors]]
 deps = ["ColorTypes", "FixedPointNumbers", "Reexport"]
-git-tree-sha1 = "64e15186f0aa277e174aa81798f7eb8598e0157e"
+git-tree-sha1 = "362a287c3aa50601b0bc359053d5c2468f0e7ce0"
 uuid = "5ae59095-9a9b-59fe-a467-6f913c188581"
-version = "0.13.0"
+version = "0.12.11"
+
+[[deps.Combinatorics]]
+git-tree-sha1 = "08c8b6831dc00bfea825826be0bc8336fc369860"
+uuid = "861a8166-3701-5b0c-9a16-15d98fcdc6aa"
+version = "1.0.2"
 
 [[deps.Compat]]
 deps = ["TOML", "UUIDs"]
@@ -460,6 +518,12 @@ deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
 version = "1.1.1+0"
 
+[[deps.Compose]]
+deps = ["Base64", "Colors", "DataStructures", "Dates", "IterTools", "JSON", "LinearAlgebra", "Measures", "Printf", "Random", "Requires", "Statistics", "UUIDs"]
+git-tree-sha1 = "bf6570a34c850f99407b494757f5d7ad233a7257"
+uuid = "a81c6b42-2e10-5240-aca2-a61377ecd94b"
+version = "0.9.5"
+
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
 git-tree-sha1 = "ea32b83ca4fefa1768dc84e504cc0a94fb1ab8d1"
@@ -471,16 +535,32 @@ git-tree-sha1 = "439e35b0b36e2e5881738abc8857bd92ad6ff9a8"
 uuid = "d38c429a-6771-53c6-b99e-75d170b6e991"
 version = "0.6.3"
 
+[[deps.Crayons]]
+git-tree-sha1 = "249fe38abf76d48563e2f4556bebd215aa317e15"
+uuid = "a8cc5b0e-0ffa-5ad4-8c14-923d3ee1735f"
+version = "4.1.1"
+
 [[deps.DataAPI]]
 git-tree-sha1 = "abe83f3a2f1b857aac70ef8b269080af17764bbe"
 uuid = "9a962f9c-6df0-11e9-0e5d-c546b8b5ee8a"
 version = "1.16.0"
+
+[[deps.DataFrames]]
+deps = ["Compat", "DataAPI", "DataStructures", "Future", "InlineStrings", "InvertedIndices", "IteratorInterfaceExtensions", "LinearAlgebra", "Markdown", "Missings", "PooledArrays", "PrecompileTools", "PrettyTables", "Printf", "Random", "Reexport", "SentinelArrays", "SortingAlgorithms", "Statistics", "TableTraits", "Tables", "Unicode"]
+git-tree-sha1 = "fb61b4812c49343d7ef0b533ba982c46021938a6"
+uuid = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+version = "1.7.0"
 
 [[deps.DataStructures]]
 deps = ["Compat", "InteractiveUtils", "OrderedCollections"]
 git-tree-sha1 = "1d0a14036acb104d9e89698bd408f63ab58cdc82"
 uuid = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
 version = "0.18.20"
+
+[[deps.DataValueInterfaces]]
+git-tree-sha1 = "bfc1187b79289637fa0ef6d4436ebdfe6905cbd6"
+uuid = "e2d170a0-9d28-54be-80f0-106bbe20a464"
+version = "1.0.0"
 
 [[deps.Dates]]
 deps = ["Printf"]
@@ -498,6 +578,11 @@ deps = ["Mmap"]
 git-tree-sha1 = "9e2f36d3c96a820c678f2f1f1782582fcf685bae"
 uuid = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 version = "1.9.1"
+
+[[deps.Distributed]]
+deps = ["Random", "Serialization", "Sockets"]
+uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
+version = "1.11.0"
 
 [[deps.DocStringExtensions]]
 deps = ["LibGit2"]
@@ -573,6 +658,11 @@ git-tree-sha1 = "1ed150b39aebcc805c26b93a8d0122c940f64ce2"
 uuid = "559328eb-81f9-559d-9380-de523a88c83c"
 version = "1.0.14+0"
 
+[[deps.Future]]
+deps = ["Random"]
+uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
+version = "1.11.0"
+
 [[deps.GLFW_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll", "libdecor_jll", "xkbcommon_jll"]
 git-tree-sha1 = "532f9126ad901533af1d4f5c198867227a7bb077"
@@ -603,11 +693,23 @@ git-tree-sha1 = "b36c7e110080ae48fdef61b0c31e6b17ada23b33"
 uuid = "7746bdde-850d-59dc-9ae8-88ece973131d"
 version = "2.82.2+0"
 
+[[deps.GraphPlot]]
+deps = ["ArnoldiMethod", "ColorTypes", "Colors", "Compose", "DelimitedFiles", "Graphs", "LinearAlgebra", "Random", "SparseArrays"]
+git-tree-sha1 = "5cd479730a0cb01f880eff119e9803c13f214cab"
+uuid = "a2cc645c-3eea-5389-862e-a155d0052231"
+version = "0.5.2"
+
 [[deps.Graphite2_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "01979f9b37367603e2848ea225918a3b3861b606"
 uuid = "3b182d85-2403-5c21-9c21-1e1f0cc25472"
 version = "1.3.14+1"
+
+[[deps.Graphs]]
+deps = ["ArnoldiMethod", "Compat", "DataStructures", "Distributed", "Inflate", "LinearAlgebra", "Random", "SharedArrays", "SimpleTraits", "SparseArrays", "Statistics"]
+git-tree-sha1 = "899050ace26649433ef1af25bc17a815b3db52b7"
+uuid = "86223c79-3864-5bf0-83f7-82e725a168b6"
+version = "1.9.0"
 
 [[deps.Grisu]]
 git-tree-sha1 = "53bb909d1151e57e2484c3d1b53e19552b887fb2"
@@ -616,9 +718,9 @@ version = "1.0.2"
 
 [[deps.HTTP]]
 deps = ["Base64", "CodecZlib", "ConcurrentUtilities", "Dates", "ExceptionUnwrapping", "Logging", "LoggingExtras", "MbedTLS", "NetworkOptions", "OpenSSL", "PrecompileTools", "Random", "SimpleBufferStream", "Sockets", "URIs", "UUIDs"]
-git-tree-sha1 = "ae350b8225575cc3ea385d4131c81594f86dfe4f"
+git-tree-sha1 = "6c4d6a1babbbee6f283b3da64ac895f0a3bfbc96"
 uuid = "cd3eb016-35fb-5094-929b-558a96fad6f3"
-version = "1.10.12"
+version = "1.10.11"
 
 [[deps.HarfBuzz_jll]]
 deps = ["Artifacts", "Cairo_jll", "Fontconfig_jll", "FreeType2_jll", "Glib_jll", "Graphite2_jll", "JLLWrappers", "Libdl", "Libffi_jll"]
@@ -644,20 +746,48 @@ git-tree-sha1 = "b6d6bfdd7ce25b0f9b2f6b3dd56b2673a66c8770"
 uuid = "b5f81e59-6552-4d32-b1f0-c071b021bf89"
 version = "0.2.5"
 
-[[deps.IntegerMathUtils]]
-git-tree-sha1 = "b8ffb903da9f7b8cf695a8bead8e01814aa24b30"
-uuid = "18e54dd8-cb9d-406c-a71d-865a43cbb235"
-version = "0.1.2"
+[[deps.Inflate]]
+git-tree-sha1 = "d1b1b796e47d94588b3757fe84fbf65a5ec4a80d"
+uuid = "d25df0c9-e2be-5dd7-82c8-3ad0b3e990b9"
+version = "0.1.5"
+
+[[deps.InlineStrings]]
+git-tree-sha1 = "45521d31238e87ee9f9732561bfee12d4eebd52d"
+uuid = "842dd82b-1e85-43dc-bf29-5d0ee9dffc48"
+version = "1.4.2"
+
+    [deps.InlineStrings.extensions]
+    ArrowTypesExt = "ArrowTypes"
+    ParsersExt = "Parsers"
+
+    [deps.InlineStrings.weakdeps]
+    ArrowTypes = "31f734f8-188a-4ce0-8406-c8a06bd891cd"
+    Parsers = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
 
 [[deps.InteractiveUtils]]
 deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
 version = "1.11.0"
 
+[[deps.InvertedIndices]]
+git-tree-sha1 = "0dc7b50b8d436461be01300fd8cd45aa0274b038"
+uuid = "41ab1584-1d38-5bbf-9106-f11c6c58b48f"
+version = "1.3.0"
+
 [[deps.IrrationalConstants]]
 git-tree-sha1 = "630b497eafcc20001bba38a4651b327dcfc491d2"
 uuid = "92d709cd-6900-40b7-9082-c6be49f344b6"
 version = "0.2.2"
+
+[[deps.IterTools]]
+git-tree-sha1 = "42d5f897009e7ff2cf88db414a389e5ed1bdd023"
+uuid = "c8e1da08-722c-5040-9ed9-7db0dc04731e"
+version = "1.10.0"
+
+[[deps.IteratorInterfaceExtensions]]
+git-tree-sha1 = "a3f24677c21f5bbe9d2a714f95dcd58337fb2856"
+uuid = "82899510-4779-5014-852e-03e436cf321d"
+version = "1.0.0"
 
 [[deps.JLFzf]]
 deps = ["Pipe", "REPL", "Random", "fzf_jll"]
@@ -1006,6 +1136,12 @@ git-tree-sha1 = "eba4810d5e6a01f612b948c9fa94f905b49087b0"
 uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 version = "0.7.60"
 
+[[deps.PooledArrays]]
+deps = ["DataAPI", "Future"]
+git-tree-sha1 = "36d8b4b899628fb92c2749eb488d884a926614d3"
+uuid = "2dfb63ee-cc39-5dd5-95bd-886bf059d720"
+version = "1.4.3"
+
 [[deps.PrecompileTools]]
 deps = ["Preferences"]
 git-tree-sha1 = "5aa36f7049a63a1528fe8f7c3f2113413ffd4e1f"
@@ -1018,11 +1154,11 @@ git-tree-sha1 = "9306f6085165d270f7e3db02af26a400d580f5c6"
 uuid = "21216c6a-2e73-6563-6e65-726566657250"
 version = "1.4.3"
 
-[[deps.Primes]]
-deps = ["IntegerMathUtils"]
-git-tree-sha1 = "cb420f77dc474d23ee47ca8d14c90810cafe69e7"
-uuid = "27ebfcd6-29c5-5fa9-bf4b-fb8fc14df3ae"
-version = "0.5.6"
+[[deps.PrettyTables]]
+deps = ["Crayons", "LaTeXStrings", "Markdown", "PrecompileTools", "Printf", "Reexport", "StringManipulation", "Tables"]
+git-tree-sha1 = "1101cd475833706e4d0e7b122218257178f48f34"
+uuid = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
+version = "2.4.0"
 
 [[deps.Printf]]
 deps = ["Unicode"]
@@ -1102,8 +1238,19 @@ git-tree-sha1 = "3bac05bc7e74a75fd9cba4295cde4045d9fe2386"
 uuid = "6c6a2e73-6563-6170-7368-637461726353"
 version = "1.2.1"
 
+[[deps.SentinelArrays]]
+deps = ["Dates", "Random"]
+git-tree-sha1 = "d0553ce4031a081cc42387a9b9c8441b7d99f32d"
+uuid = "91c51154-3ec4-41a3-a24f-3f23e20d615c"
+version = "1.4.7"
+
 [[deps.Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
+version = "1.11.0"
+
+[[deps.SharedArrays]]
+deps = ["Distributed", "Mmap", "Random", "Serialization"]
+uuid = "1a1011a3-84de-559e-8e89-a11a2f7dc383"
 version = "1.11.0"
 
 [[deps.Showoff]]
@@ -1116,6 +1263,12 @@ version = "1.0.3"
 git-tree-sha1 = "f305871d2f381d21527c770d4788c06c097c9bc1"
 uuid = "777ac1f9-54b0-4bf8-805c-2214025038e7"
 version = "1.2.0"
+
+[[deps.SimpleTraits]]
+deps = ["InteractiveUtils", "MacroTools"]
+git-tree-sha1 = "5d7e3f4e11935503d3ecaf7186eac40602e7d231"
+uuid = "699a6c99-e7fa-54fc-8d76-47d257e15c1d"
+version = "0.9.4"
 
 [[deps.Sockets]]
 uuid = "6462fe0b-24de-5631-8697-dd941f90decc"
@@ -1137,6 +1290,25 @@ deps = ["Random"]
 git-tree-sha1 = "83e6cce8324d49dfaf9ef059227f91ed4441a8e5"
 uuid = "860ef19b-820b-49d6-a774-d7a799459cd3"
 version = "1.0.2"
+
+[[deps.StaticArrays]]
+deps = ["LinearAlgebra", "PrecompileTools", "Random", "StaticArraysCore"]
+git-tree-sha1 = "777657803913ffc7e8cc20f0fd04b634f871af8f"
+uuid = "90137ffa-7385-5640-81b9-e52037218182"
+version = "1.9.8"
+
+    [deps.StaticArrays.extensions]
+    StaticArraysChainRulesCoreExt = "ChainRulesCore"
+    StaticArraysStatisticsExt = "Statistics"
+
+    [deps.StaticArrays.weakdeps]
+    ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
+    Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
+
+[[deps.StaticArraysCore]]
+git-tree-sha1 = "192954ef1208c7019899fbf8049e717f92959682"
+uuid = "1e83bf80-4336-4d27-bf5d-d5a4f845583c"
+version = "1.4.3"
 
 [[deps.Statistics]]
 deps = ["LinearAlgebra"]
@@ -1160,6 +1332,12 @@ git-tree-sha1 = "5cf7606d6cef84b543b483848d4ae08ad9832b21"
 uuid = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 version = "0.34.3"
 
+[[deps.StringManipulation]]
+deps = ["PrecompileTools"]
+git-tree-sha1 = "a6b1675a536c5ad1a60e5a5153e1fee12eb146e3"
+uuid = "892a3eda-7b42-436c-8928-eab12a02cf0e"
+version = "0.4.0"
+
 [[deps.StyledStrings]]
 uuid = "f489334b-da3d-4c2e-b8f0-e476e12c162b"
 version = "1.11.0"
@@ -1173,6 +1351,18 @@ version = "7.7.0+0"
 deps = ["Dates"]
 uuid = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
 version = "1.0.3"
+
+[[deps.TableTraits]]
+deps = ["IteratorInterfaceExtensions"]
+git-tree-sha1 = "c06b2f539df1c6efa794486abfb6ed2022561a39"
+uuid = "3783bdb8-4a98-5b6b-af9a-565f29a5fe9c"
+version = "1.0.1"
+
+[[deps.Tables]]
+deps = ["DataAPI", "DataValueInterfaces", "IteratorInterfaceExtensions", "OrderedCollections", "TableTraits"]
+git-tree-sha1 = "598cd7c1f68d1e205689b1c2fe65a9f85846f297"
+uuid = "bd369af6-aec1-5ad0-b16a-f7cc5008161c"
+version = "1.12.0"
 
 [[deps.Tar]]
 deps = ["ArgTools", "SHA"]
@@ -1271,9 +1461,9 @@ version = "2.13.5+0"
 
 [[deps.XSLT_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libgcrypt_jll", "Libgpg_error_jll", "Libiconv_jll", "XML2_jll", "Zlib_jll"]
-git-tree-sha1 = "7d1671acbe47ac88e981868a078bd6b4e27c5191"
+git-tree-sha1 = "a54ee957f4c86b526460a720dbc882fa5edcbefc"
 uuid = "aed1982a-8fda-507f-9586-7b0439959a61"
-version = "1.1.42+0"
+version = "1.1.41+0"
 
 [[deps.XZ_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1543,36 +1733,45 @@ version = "1.4.1+1"
 """
 
 # ╔═╡ Cell order:
-# ╟─1284ab86-8cf4-4a2b-a939-4ea7c40a1f7f
-# ╟─5295a88f-076c-4581-b9b1-3be54aaafde7
-# ╟─057a80d3-db81-42ed-bac9-4dd6da93683a
-# ╟─61f725df-b692-4101-956c-1e8c824cbf86
-# ╠═58d1222c-90f5-4172-ab1f-1f10010454d3
-# ╠═351b4a4e-8d3b-4a2b-aed1-cf3d8639165a
-# ╠═8a5fb2d7-6045-4e57-a44d-2f675bf565e2
-# ╠═d5deca64-2907-4934-9163-617589218d72
-# ╠═d55834c2-991c-4412-af37-d26bf525b071
-# ╠═bcbfdb50-906a-4615-83d3-1760ef0440a8
-# ╠═f4db214c-5807-4f5e-aa8d-3c544a8ec9ec
-# ╠═de2bf35f-c285-4b18-8efb-0661a181c2cb
-# ╟─57f9ac91-7fc0-46c2-ae27-d2c96a70212a
-# ╟─6ccd9919-b401-436e-956a-704a4b6c3a04
-# ╟─76390892-4158-42e4-aee2-20671090ef85
-# ╟─29fac509-27b4-47b3-9ea8-afbf04db89ef
-# ╠═0cc363e8-3144-4c1a-a9dd-a3bc15b89053
-# ╠═3f97d39c-9571-40b5-80b0-cf8a6e8f9ea8
-# ╠═f2a3fd21-6626-4a7f-8cea-fa148f5a180b
-# ╠═3c36bffa-88d9-4cbc-a9b1-ef6688e43395
-# ╟─7e08c292-717e-4d56-a19f-aac03c853484
-# ╟─c00c6eb7-9a29-4941-a63d-1a636999e652
-# ╟─255d43a9-1898-4cec-b722-2ea37d67e397
-# ╠═b358e57a-4cf3-4b91-87e7-e65b96a42c38
-# ╠═fab0bbef-36a4-438e-a2c3-9e441dd949ae
-# ╠═1af6a6b8-a363-4e09-abd1-3f25a4b32ff1
-# ╠═7c35d57d-a1eb-4739-8033-5232e127d78d
-# ╠═7afdfac0-a602-4268-8f51-ce982e8267a0
-# ╠═4b370e6c-fc38-48b9-9999-2a50af299594
-# ╠═8f901c8d-9c23-4f70-bf22-ebf394efe222
-# ╠═c18fc69e-5e31-4441-b770-61f307b9b359
+# ╟─9bbdce67-c41d-4dab-9000-d1405670df8e
+# ╟─e9ab3b5d-f135-46f9-8869-115d3048ebc1
+# ╟─a05a343d-dc44-4d80-957c-25b41c4549fb
+# ╟─9061e0f9-faae-4a68-9835-193289f4303e
+# ╟─4cc4c5e3-b72f-4334-8eb8-b9b03a2a2bea
+# ╠═e1067a0d-891b-4bc2-8a9a-3eaf11325e76
+# ╠═42d30121-6f62-4743-9c3d-70861f274c19
+# ╠═bca9d6be-4c6f-4fc4-9ed9-17e0afe6a4f4
+# ╠═a9909637-7aef-4739-a3fa-6e94ddd61c28
+# ╠═4374097a-693e-4142-82e2-1c3ce822c4d3
+# ╟─82445c12-a1eb-4cf9-bf4c-cbaf62013a8f
+# ╟─81d8abf8-dbb3-493d-971b-003d1ae2614f
+# ╟─774c0d7e-1ae5-4d9b-8399-e3313a14ca59
+# ╟─fa200449-0664-46fd-a2df-b42a9fbe2e77
+# ╟─d8f5618c-9087-444a-a424-e91fa063e80e
+# ╟─60e6628e-e77d-4c20-afd9-daaae674d235
+# ╟─9326c120-382b-4b89-b63e-6a55960123f5
+# ╟─c163de34-f715-4ccc-9841-11740c7a2b0d
+# ╟─0bfc06d2-f946-4f61-aecf-0a8a0ed967f1
+# ╟─b02f8128-37cb-4220-b5a8-cfb1ff8c966a
+# ╠═e79f1258-140c-44ff-bb92-ea7520fee89f
+# ╠═72992477-68ea-494e-a3fd-9e095c4e7460
+# ╟─3acbb1f2-bd29-4066-9cee-0880ac30da78
+# ╟─887de94b-c080-4762-ae16-fe4d1c0f6859
+# ╟─ce4aa30b-cf3f-48f9-acf1-e31a022814dd
+# ╟─62e684b0-9acb-457f-a1cd-535ea8b8ba54
+# ╠═7ce3e577-f45f-4fbf-84be-937d708106e0
+# ╟─21bdf9c1-53ca-49c7-b54c-8280a4a3ae6e
+# ╠═8f7fca6c-8825-44de-976f-f4e5e5eda522
+# ╠═d00373e5-9830-439a-9e3c-24f69d95569e
+# ╠═9ec84581-9210-477d-b50a-1ecb88e7ce28
+# ╠═307005e8-ca67-47c3-bcf2-58e8ecb1b0a0
+# ╟─dbd75b04-d670-4789-bb75-e4b9c56e3ec1
+# ╟─616751fe-4d3a-400c-beba-ccf63b13c7bd
+# ╟─c1613673-3347-4706-8a58-b4afa6a0cdd7
+# ╠═1e857708-55ec-4b8a-a828-7b9302ddfd89
+# ╟─5ef0b393-d108-4342-981d-447614b66b02
+# ╟─0b752c97-178f-407c-a0e5-87a8435b218c
+# ╠═6ac1ad80-52df-4225-b9db-a9bbd5633edd
+# ╠═decb5b21-971f-4527-a800-aaf198081ccc
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
