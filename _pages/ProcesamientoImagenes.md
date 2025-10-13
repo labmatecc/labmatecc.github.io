@@ -385,7 +385,7 @@ header-includes: |
         </a>
       </div>
       <!-- Imagen más grande y centrada con sombras -->
-            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/228a8db714a6642f895a2bb6fc7fc837b2a0ab04/Im%C3%A1genes/Fourier_PI.png" 
+            <img src="https://raw.githubusercontent.com/labmatecc/labmatecc.github.io/228a8db714a6642f895a2bb6fc7fc837b2a0ab04/Im%C3%A1genes/Fourier_PI2.png" 
                  alt="Espacio Euclídeo" 
                  style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
         <p style="font-family: 'Arial', sans-serif; color: #013220; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">El cuaderno desarrolla un estudio aplicado de la Transformada de Fourier en el procesamiento y restauración de imágenes con neblina, basado en el modelo atmosférico de dispersión y en el método de Roy–Chaudhuri. Se presenta el modelo físico que describe la imagen observada como una combinación entre la imagen original y la luz atmosférica, y se explica cómo estimar la transmisión luminosa mediante el canal oscuro y la luz del aire. Posteriormente, se aplica una regularización en el dominio de Fourier usando la Transformada Rápida de Fourier (FFT) para eliminar componentes de baja frecuencia responsables del blanqueamiento y mejorar el contraste sin alterar los colores. El proceso se complementa con un ajuste de contraste basado en el índice de Michelson para optimizar la percepción visual. </p>
