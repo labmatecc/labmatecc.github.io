@@ -97,7 +97,7 @@ donde $J_c$ representa cada canal de color de $J$ y $\Omega(x)$ representa una b
 Veamos ahora como con este modelo se da una estimación de la luz atmosférica para esto vamos a trabajar en el canal más oscuro sobre el 0.1$\%$ de los píxeles más brillantes, de estos píxeles los de mayor intensidad se consideran luz atmosférica, aunque esto no significa que sean los más brillantes de toda la imagen.\\
 La trasmisión de la imagen en este modelo se va a estimar de la siguiente forma 
 
-$t=1-\omega\cdot\text{min}_{c\in\{R,G,B\}}\left(\text{min}_{y\in\omega(x)}\dfrac{I_c(y)}{a_c}\right)$
+$t=1-\omega\cdot\text{min}_{c\in\{R,G,B\}}\left(\text{min}_{y\in\Omega(x)}\dfrac{I_c(y)}{a_c}\right)$
 por lo general se trabaja con $\omega=0.96$, pero el valor de $\omega$ también se puede hallar mediante optimización.\\
 Ahora para hallar la imagen mejorada ($J(x)$) despejemos la igualdad dada
 
@@ -265,7 +265,7 @@ begin
 end;
 
 # ╔═╡ adc61ee7-90e3-4a41-ab48-dfdd82869e1c
-[HazeImg removeHazeYJN(HazeImg, 0.25)]
+[HazeImg removeHazeYJN(HazeImg, 0.12)]
 
 # ╔═╡ b502467a-9f0f-45cf-aa3a-b30f750493a4
 md"""$\texttt{Figura 1. }$"""
@@ -309,7 +309,7 @@ begin
 end;
 
 # ╔═╡ bc31c6bd-23e4-4e50-b7e8-26b4beea2e7b
-[RGB.(HazeImg2) removeHazeYJN(RGB.(HazeImg2), 0.5)]
+[RGB.(HazeImg2) removeHazeYJN(RGB.(HazeImg2), 0.18)]
 
 # ╔═╡ b980bf5a-deec-437b-a0f4-10468ceb1b88
 md"""$\texttt{Figura 5. }$"""
@@ -2485,7 +2485,7 @@ version = "1.9.2+0"
 # ╟─4dd134f7-e370-456d-926f-142a929371bd
 # ╟─f24621bb-7ba4-44b7-8946-e87c46acc52c
 # ╟─32200528-a5cb-4cf6-a02d-01c841856c70
-# ╟─bc31c6bd-23e4-4e50-b7e8-26b4beea2e7b
+# ╠═bc31c6bd-23e4-4e50-b7e8-26b4beea2e7b
 # ╟─b980bf5a-deec-437b-a0f4-10468ceb1b88
 # ╟─228465f0-94b7-40bc-9ad9-a27b480b8911
 # ╟─6e6e639b-1b59-474e-a9c8-0377850ddd8d
