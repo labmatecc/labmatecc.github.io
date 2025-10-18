@@ -220,9 +220,9 @@ md"""La normalización y estandarización son técnicas comunes de preprocesamie
 md"""### Min-Max"""
 
 # ╔═╡ 27d00db4-a3e7-4a8a-adcd-84371da8ad6e
-md"""La normalización Min-Max es un método de preprocesamiento de datos que ajusta los valores de las características de un conjunto de datos para que estén dentro de un rango específico, generalmente entre 0 y 1. El propósito de esta normalización es asegurar que todas las características tengan la misma escala, lo que puede ser importante para ciertos algoritmos que son sensibles a la magnitud de las características.
+md"""La normalización Min-Max es un método de preprocesamiento de datos que ajusta los valores de las características de un conjunto de datos para que estén dentro de un rango específico, generalmente entre $0$ y $1$. El propósito de esta normalización es asegurar que todas las características tengan la misma escala, lo que puede ser importante para ciertos algoritmos que son sensibles a la magnitud de las características.
 
-La fórmula general para la normalización Min-Max es la siguiente:
+La fórmula general para la normalización Min-Max esta dado como
 
 $X_{\text{normalizado}} = \frac{X - X_{\text{min}}}{X_{\text{max}} - X_{\text{min}}}$
 
@@ -285,9 +285,9 @@ md"""### $Z$-Score"""
 # ╔═╡ 81502e8e-ee6a-4abd-b822-cdaddfbd81f8
 md"""La estandarización ($Z$-Score) es otro método común de preprocesamiento de datos que transforma las características de un conjunto de datos para que tengan una media de cero y una desviación estándar de uno. Este proceso es útil para algoritmos que asumen normalidad en los datos y para aquellos que son sensibles a la magnitud de las características.
 
-La fórmula general para la estandarización (Z-Score) es la siguiente:
+La fórmula general para la estandarización (Z-Score) esta dada por
 
-$Z = \frac{X - \mu}{\sigma}$
+$Z = \frac{X - \mu}{\sigma},$
 
 donde:
 
