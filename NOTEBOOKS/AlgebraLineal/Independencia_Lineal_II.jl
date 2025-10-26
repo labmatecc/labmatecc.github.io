@@ -1,21 +1,23 @@
 ### A Pluto.jl notebook ###
-# v0.19.39
+# v0.20.3
 
 using Markdown
 using InteractiveUtils
 
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
+    #! format: off
     quote
         local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
     end
+    #! format: on
 end
 
 # ╔═╡ db207f03-6472-44fc-ba20-2d14499af15b
-using PlutoUI
+using LaTeXStrings, HypertextLiteral, PlutoUI
 
 # ╔═╡ 537df122-4692-4a5a-847f-70777ed330ce
 using LinearAlgebra
@@ -62,17 +64,17 @@ md"""# Reflexiones de Householder"""
 # ╔═╡ 2bbf4bdf-ae76-4189-80b8-71b51c70fe62
 md"""Dado $v \in \mathbb{R}^m$, definimos la matriz de Householder como $H_v = I - 2 \frac{vv^T}{v^Tv}$, donde $v$ es el vector de Householder. Veamos algunas propiedades importantes de esta matriz:
 
-1. La matriz $H_v$ es una isometría en la norma $\|\cdot\|_2$: Esto significa que $\|H_v x\|_2 = \|x\|_2$ para cualquier vector $x$. La matriz $H_v$ preserva las distancias bajo la norma $\|\cdot\|_2$.
+1. La matriz $H_v$ es una isometría en la norma $\|\cdot\|_2$: esto significa que $\|H_v x\|_2 = \|x\|_2$ para cualquier vector $x$. La matriz $H_v$ preserva las distancias bajo la norma $\|\cdot\|_2$.
 
-2. La matriz $H_v$ es simétrica: La matriz $H_v$ es igual a su traspuesta, es decir, $H_v^T = H_v$. Esto se debe a la simetría de la operación de reflexión que realiza la matriz Householder.
+2. La matriz $H_v$ es simétrica: la matriz $H_v$ es igual a su traspuesta, es decir, $H_v^T = H_v$. Esto se debe a la simetría de la operación de reflexión que realiza la matriz Householder.
 
-3. La matriz $H_v$ es ortogonal: La matriz $H_v$ es ortogonal porque $H_v^T H_v = I$, lo que implica que la inversa de $H_v$ es igual a su traspuesta.
+3. La matriz $H_v$ es ortogonal: la matriz $H_v$ es ortogonal porque $H_v^T H_v = I$, lo que implica que la inversa de $H_v$ es igual a su traspuesta.
 
 Para reflejar un vector $x$ respecto al hiperplano $v^\perp$, utilizamos la fórmula $y = H_v x = x - 2 \frac{v^Tx}{v^Tv}v$. Es importante destacar que para calcular $y$ no es necesario calcular todas las entradas de la matriz $H_v$; simplemente calculamos el producto interno $s = v^Tx$ y realizamos la resta $x - \beta s v$, donde $\beta = 2 \frac{1}{v^Tv}$. El valor de $\beta$ puede ser precalculado, lo que reduce la complejidad computacional del cálculo de la reflexión de Householder.
 """
 
 # ╔═╡ 4592e579-0c6c-4599-98fc-f3f11507f4ab
-md"""Dado $x,y \in \mathbb{R}^m$, nos preguntamos si ¿existe un vector $v$ tal que $H_v x = y$? Si $|x|_2 = |y|_2$, la respuesta es afirmativa y $v = \alpha (x - y)$.
+md"""Dado $x,y \in \mathbb{R}^m$, nos preguntamos si ¿existe un vector $v$ tal que $H_v x = y$? Si $||x||_2 = ||y||_2$, la respuesta es afirmativa y $v = \alpha (x - y)$.
 
 Para utilizar Householder en la ortogonalización, procedemos de la siguiente manera. Supongamos que deseamos ortogonalizar las columnas de $A = (a_1, a_2, \dots, a_n) \in \mathbb{R}^{m \times n}$. Consideremos inicialmente el caso de columnas linealmente independientes. Comenzamos la ortogonalización de Householder calculando el vector $v$ que transforma $a_1$ en un múltiplo del primer vector canónico $e_1 = (1, 0, \dots, 0)$. Es decir, $H_v a_1 = \sigma e_1$ con $\sigma = \pm \|x\|_2$.
 """
@@ -80,9 +82,9 @@ Para utilizar Householder en la ortogonalización, procedemos de la siguiente ma
 # ╔═╡ 6193030e-3807-471c-aaf9-d3c8a3ac895e
 md"""Supongamos que $x \in \mathbb{R}^m$ y queremos calcular $v$ tal que $H_v x$ sea un múltiplo de $e_1$, digamos $\sigma e_1$ con $\sigma = \pm \|x\|_2$. En la resta $x_1 - \sigma$, puede ocurrir cancelación catastrófica. Para evitarla, consideramos las siguientes opciones:
 
-*Opción 1:* Si $x_1 > 0$, entonces $x$ está más cerca de $\|x\|_2 e_1$ que de $-\|x\|_2 e_1$. Podemos tomar $\sigma = -\text{sign}(x_1)$ para evitar la cancelación catastrófica. Después de calcular $v_1 = x_1 - \sigma$, obtenemos
+*Opción 1:* si $x_1 > 0$, entonces $x$ está más cerca de $\|x\|_2 e_1$ que de $-\|x\|_2 e_1$. Podemos tomar $\sigma = -\text{sign}(x_1)$ para evitar la cancelación catastrófica. Después de calcular $v_1 = x_1 - \sigma$, obtenemos
 
-$\beta = \frac{2}{v^Tv} = \frac{2}{v_1^2 + s}$
+$\beta = \frac{2}{v^Tv} = \frac{2}{v_1^2 + s},$
 
 donde $s = x_2^2 + \dots + x_m^2$.
 
@@ -90,7 +92,7 @@ Al elegir el signo de $\sigma$ de esta manera, evitamos la cancelación catastr�
 """
 
 # ╔═╡ a5a2b67c-80ee-4f9b-a933-f3485a6cd892
-md"""*Opción 2:* Podemos seleccionar $\sigma = \|x\|_2$ pero debemos tener cuidado al calcular $x_1 - \sigma$:
+md"""*Opción 2:* podemos seleccionar $\sigma = \|x\|_2$ pero debemos tener cuidado al calcular $x_1 - \sigma$:
 - Si $x_1 < 0$, entonces podemos calcular $v_1 = x_1 - \sigma$ (no hay resta).
 - Si $x_1 > 0$, entonces calculamos 
   $x_1 - \sigma = (x_1 - \sigma) \frac{x_1 + \sigma}{x_1 + \sigma} = \frac{x_1^2 - \|x\|_2^2}{x_1 + \sigma} = -\frac{x_2^2 + \dots + x_m^2}{x_1 + \sigma} = - \frac{s}{x_1 + \sigma}$
@@ -185,7 +187,7 @@ md"""Así, la matriz de Householder $H_v$ es la siguiente"""
 H=UniformScaling(1)- 2(v*v')/(v'v)
 
 # ╔═╡ aa63c29e-c5c7-4ee6-91fb-f4dfaf01b5e7
-md"""Así"""
+md"""Así, se obtiene $H_{v}x$ como:"""
 
 # ╔═╡ 36d99657-dcfb-4516-9265-0cc8d61ae35e
 H*x
@@ -221,11 +223,11 @@ Note que quedamos con la matriz $R$, pero para poder obtener la matriz $Q$ debem
 """
 
 # ╔═╡ 5a8f5d62-3f4e-48ab-aef7-8a9446e33f14
-md"""Consideremos el siguiente algoritmo 
+md"""Consideremos el siguiente algoritmo: 
 
 1.   $[v, \beta]$ = house$(A(j:m,j))$
 2.   $A(j:m,j;n)=(I_{m-j+1}-\beta v v^T)A(j:m, j:n)$
-3.   $A(j+1:m,j)=v(2:m-j+1)$
+3.   $A(j+1:m,j)=v(2:m-j+1)$.
 
 Este algoritmo usa el algoritmo anterior para obtener la matriz $R$ de la factorización $QR$. Recuerde que asumimos que las columnas de $A$ son linealmente independientes."""
 
@@ -245,7 +247,7 @@ end
 # ╔═╡ 575ae122-a70d-4c28-8c93-4213b72f5a6a
 md"""*Ejemplo:*
 
-Consideremos la siguiente matriz"""
+Consideremos la siguiente matriz."""
 
 # ╔═╡ 7bcc8c19-176b-4bec-9788-14bed749f920
 begin
@@ -283,13 +285,13 @@ end
 # ╔═╡ ef43ca1d-a653-4a5d-97a4-4009fdfad54c
 md"""*Ejemplo:*
 
-Consideremos nuevamente la matriz del ejemplo anterior"""
+Consideremos nuevamente la matriz del ejemplo anterior."""
 
 # ╔═╡ 26bd3a24-5c5b-4d1a-82b0-3c00b3b8443d
 A₁
 
 # ╔═╡ 8aa0a10e-48d2-4f1d-865a-64786821c8f6
-md"""Usando el algoritmo anterior se tiene que su factorización $QR$ es la siguiente"""
+md"""Usando el algoritmo anterior se tiene que su factorización $QR$ es la siguiente:"""
 
 # ╔═╡ 1fff49b0-de66-4d7a-be0a-54da00d29d60
 begin
@@ -321,7 +323,7 @@ $G(i,k,\theta)=\begin{pmatrix}
 \vdots & \vdots  & \vdots & \vdots & \vdots \\ 
 \dots & -s  & \dots & c& \dots \\
 \vdots & \vdots  & \vdots & \vdots & \vdots \\ 
-\end{pmatrix}$
+\end{pmatrix}.$
 
 Aplicar $G^T(i,k,\theta)$ a una matriz $A=(a_1,\dots,a_n)$ equivale a "rotar" los ejes $i$ y $k$.
 """
@@ -330,9 +332,9 @@ Aplicar $G^T(i,k,\theta)$ a una matriz $A=(a_1,\dots,a_n)$ equivale a "rotar" lo
 md""" 
 Si $y=G^T(i,k,\theta)x$ con $x\in \mathbb{R}^n$ tenemos que 
 
-$y_i=cx_i -sx_k, \quad y_k=sx_i+cx_k$
+$y_i=cx_i -sx_k, \quad y_k=sx_i+cx_k,$
 
-y además $y_j=x_j$ para $j\not=i$,$j\not=k$. Luego
+y además, $y_j=x_j$ para $j\not=i$,$j\not=k$. Luego
 
 $G^T(i,k,\theta)A=G^T(i,k,\theta)
 \begin{pmatrix} 
@@ -352,7 +354,7 @@ cr_i-sr_k \\
 sr_i+cr_k \\ 
 \vdots \\
 r_m
-\end{pmatrix}$
+\end{pmatrix}.$
 """
 
 # ╔═╡ 29959f97-471f-4e2f-a124-eedea72fbab3
@@ -398,12 +400,12 @@ function Givens(a,b)
 end
 
 # ╔═╡ ca11ea3a-e4e7-4ad7-8a88-915e274539af
-md"""Observe que $|\tau|\leq 1$ e que para calsuclar $s$ y $c$ necesitamos de 5 operaciones y una raíz cuadrada.  """
+md"""Observe que $|\tau|\leq 1$ y que para calcular $s$ y $c$ necesitamos de $5$ operaciones y una raíz cuadrada.  """
 
 # ╔═╡ 13cb5cc9-c818-4f5d-ba96-ec35c75b3c39
 md"""*Ejemplo:*
 
-Consideremos el siguiente vector"""
+Consideremos el siguiente vector."""
 
 # ╔═╡ e61cc769-d17d-47d3-9844-d122019d520d
 v₁₁=[8; 6]
@@ -451,7 +453,7 @@ n= @bind N Slider(2:1:6, show_value=true, default=4)
 A₁₂ = floor.(10*rand(N, N))
 
 # ╔═╡ 6c45f477-7356-4c0e-82df-bf1d64518411
-md"""Realizamos la primera rotación de Givens (en las filas $2$ y $3$), se verifica si $a_{31}$ es distinto de $0$, si es así, se calcula la rotación de Givens volver dicha componente $0$."""
+md"""Realizamos la primera rotación de Givens (en las filas $2$ y $3$), se verifica si $a_{31}$ es distinto de $0$, si es así, se calcula la rotación de Givens para volver dicha componente $0$."""
 
 # ╔═╡ 9464edf3-1096-4e77-b64b-ad15fd256b76
 begin
@@ -479,30 +481,36 @@ md"""
 """
 
 # ╔═╡ 7bb9ca37-7339-4e47-8831-caa6895f7dfc
-md""" 
-Una matriz $G(i,k,\theta)$ puede escribirse (según sea tipo 1 o 2) como: 
+md""" Una matriz $G(i,k,\theta)$ puede escribirse (según sea tipo 1 o 2) como: 
 
-
-$G(i,k,\theta)^T=
-\mbox{diag}(1,\dots,1,-s,1,\dots,1,s,1,\dots)
+$$\begin{align*}
+G(i,k,\theta)^{T} &= 
+\text{diag}(1,\ldots,1,-s,1,\ldots,1,s,1,\ldots)
 \begin{pmatrix} 
 \vdots & \vdots  & \vdots & \vdots & \vdots \\ 
-\dots & -\tau  & \dots & 1 & \dots \\ 
+\ldots & -\tau  & \ldots & 1 & \ldots \\ 
 \vdots & \vdots  & \vdots & \vdots & \vdots \\ 
-\dots & 1  & \dots & \tau& \dots \\
+\ldots & 1  & \ldots & \tau& \ldots \\
 \vdots & \vdots  & \vdots & \vdots & \vdots \\ 
-\end{pmatrix}=S_1(i,k,s)T_1(i,k,\tau)$
+\end{pmatrix}, \\
+
+ & = S_{1}(i,k,s)T_{1}(i,k,\tau),
+\end{align*}$$
+
 o
 
-$G(i,k,\theta)^T=
-\mbox{diag}(1,\dots,1,c,1,\dots,1,c,1,\dots)
+$$\begin{align*}
+G(i,k,\theta)^{T} &=
+\text{diag}(1,\dots,1,c,1,\dots,1,c,1,\dots)
 \begin{pmatrix} 
 \vdots & \vdots  & \vdots & \vdots & \vdots \\ 
 \dots & 1  & \dots & -\tau & \dots \\ 
 \vdots & \vdots  & \vdots & \vdots & \vdots \\ 
 \dots & \tau  & \dots & 1& \dots \\
 \vdots & \vdots  & \vdots & \vdots & \vdots \\ 
-\end{pmatrix}=S_2(i,k,c)T_2(i,k,\tau).$
+\end{pmatrix},\\
+&=S_{2}(i,k,c)T_{2}(i,k,\tau).
+\end{align*}$$
 """
 
 # ╔═╡ 4e512555-bed0-40d6-aa59-b351a6a25c77
@@ -519,7 +527,7 @@ $G^T(i_2,k_2,\theta_2)G^T(i_1,k_1,\theta_1)A= S_q(i_2,k_2,c_2)T_q(i_2,k_2,\tau_2
 md"""
 Queremos proceder de tal manera que la multiplicación $C_p(i_1,k_1,c_1)\widetilde{A}$ no se haga y solo acumule hasta el final. Queremos escribir 
 
-$T_q(i_2,k_2,\tau_2)S_p(i_1,k_1,c_1)= \text{ Digonal}\times \text{Matrix similar to S}$
+$T_q(i_2,k_2,\tau_2)S_p(i_1,k_1,c_1)= \text{ Digonal}\times \text{Matrix similar to S}.$
 """
 
 # ╔═╡ 12f4f64c-9746-4180-9e9c-c90be81b9de4
@@ -552,7 +560,7 @@ d_1&0\\ 0&d_2\end{pmatrix}
 d_1&0\\ 0&d_2\end{pmatrix}
 \begin{pmatrix}
 \left(\frac{d_1}{d_2}\right)^2 \frac{a_1}{b_1}&1\\ 1& -\frac{a_1}{b_1}\end{pmatrix}=
-D(d_1,d_2) S_3$
+D(d_1,d_2) S_3,$
 y podemos realizar  la multiplicación $S_2\tilde{A}$ y acumular la multipliación de matrices diagonales $S_p\times D$. 
 """
 
@@ -560,13 +568,13 @@ y podemos realizar  la multiplicación $S_2\tilde{A}$ y acumular la multipliaci�
 md"""
 Obtenemos así matrices $\tilde{G}_\ell=S_3(i,k)$ tales que
 
-$D\tilde{G}_N\tilde{G}_{N-1}\cdots \tilde{G}_1 A= M (\text{ que es triangular superior})$
+$D\tilde{G}_N\tilde{G}_{N-1}\cdots \tilde{G}_1 A= M \ (\text{ que es triangular superior}).$
 """
 
 # ╔═╡ de0dadd6-3b56-4604-bc10-297900a65092
-md"""Para obtener las matrices $\tilde{G}_\ell$ basta calcular $\tau$. Para calcular las entradas de la diagonal de la matriz D, tenemos elementos de la forma 
+md"""Para obtener las matrices $\tilde{G}_\ell$ basta calcular $\tau$. Para calcular las entradas de la diagonal de la matriz $D$, tenemos elementos de la forma 
 
-$d^2=\prod_{\ell=1}^N\left(\frac{1}{1+\tau_\ell^2}\right)$
+$d^2=\prod_{\ell=1}^N\left(\frac{1}{1+\tau_\ell^2}\right).$
 """
 
 # ╔═╡ 9a7ed401-4344-4039-aebc-9d3e6d4c8263
@@ -643,9 +651,9 @@ end
 md"""
 Ahora se implementa FastGivensQR, la cual toma una matriz $A$ y sobreescribe en ella una matriz triangular superior $T$ y devuelve las matrices $M, D$ que satisfacen:
 
-$\begin{gather} M^{T}M = D\\
-M^{T}A=T\\
-A=\left(MD^{-\frac{1}{2}}\right)\left(D^{-\frac{1}{2}}T\right)
+$\begin{gather} M^{T}M = D,\\
+M^{T}A=T,\\
+A=\left(MD^{-\frac{1}{2}}\right)\left(D^{-\frac{1}{2}}T\right).
 \end{gather}$
 
 """
@@ -683,14 +691,14 @@ end
 # ╔═╡ 131a04f5-67eb-4457-9239-9a0eb698d5db
 md""" *Ejemplo:*
 
-Ejecutamos el algoritmo sobre una matriz $A$, verificamos que $A=QR$ y la ortogonalidad de $Q$,
+Ejecutamos el algoritmo sobre una matriz $A$, verificamos que $A=QR$ y la ortogonalidad de $Q$.
 """
 
 # ╔═╡ 667ddc44-d8a9-4ef4-9e36-c0e36ebce40e
 A₁₅  = floor.(20*rand(5,4))
 
 # ╔═╡ 557c517c-897d-4e56-abf3-b0b0e3b0acae
-md"""Así, usando givens rápido sobre $A$ se tiene lo siguiente"""
+md"""Así, usando givens rápido sobre $A$ se tiene lo siguiente:"""
 
 # ╔═╡ c4f50bbb-28dd-4ed5-a93f-50ede0bcb3cb
 begin
@@ -738,10 +746,14 @@ md"""[1] Golub, G. H. (1996). Matrix computation and the theory of moments. Nume
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
+HypertextLiteral = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
+LaTeXStrings = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 
 [compat]
+HypertextLiteral = "~0.9.5"
+LaTeXStrings = "~1.4.0"
 PlutoUI = "~0.7.59"
 """
 
@@ -749,9 +761,9 @@ PlutoUI = "~0.7.59"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.5"
+julia_version = "1.11.1"
 manifest_format = "2.0"
-project_hash = "e41793cbd1124ea5d05573eb874098b20a960e1d"
+project_hash = "772f542a7b5e8a46634b97b59d992f0398b72660"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -761,19 +773,27 @@ version = "1.3.2"
 
 [[deps.ArgTools]]
 uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
-version = "1.1.1"
+version = "1.1.2"
 
 [[deps.Artifacts]]
 uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
+version = "1.11.0"
 
 [[deps.Base64]]
 uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
+version = "1.11.0"
 
 [[deps.ColorTypes]]
 deps = ["FixedPointNumbers", "Random"]
-git-tree-sha1 = "b10d0b65641d57b8b4d5e234446582de5047050d"
+git-tree-sha1 = "67e11ee83a43eb71ddc950302c53bf33f0690dfe"
 uuid = "3da002f7-5984-5a60-b8a6-cbb66c0b333f"
-version = "0.11.5"
+version = "0.12.1"
+
+    [deps.ColorTypes.extensions]
+    StyledStringsExt = "StyledStrings"
+
+    [deps.ColorTypes.weakdeps]
+    StyledStrings = "f489334b-da3d-4c2e-b8f0-e476e12c162b"
 
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
@@ -783,6 +803,7 @@ version = "1.1.1+0"
 [[deps.Dates]]
 deps = ["Printf"]
 uuid = "ade2ca70-3891-5945-98fb-dc099432e06a"
+version = "1.11.0"
 
 [[deps.Downloads]]
 deps = ["ArgTools", "FileWatching", "LibCURL", "NetworkOptions"]
@@ -791,6 +812,7 @@ version = "1.6.0"
 
 [[deps.FileWatching]]
 uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
+version = "1.11.0"
 
 [[deps.FixedPointNumbers]]
 deps = ["Statistics"]
@@ -812,19 +834,25 @@ version = "0.9.5"
 
 [[deps.IOCapture]]
 deps = ["Logging", "Random"]
-git-tree-sha1 = "8b72179abc660bfab5e28472e019392b97d0985c"
+git-tree-sha1 = "b6d6bfdd7ce25b0f9b2f6b3dd56b2673a66c8770"
 uuid = "b5f81e59-6552-4d32-b1f0-c071b021bf89"
-version = "0.2.4"
+version = "0.2.5"
 
 [[deps.InteractiveUtils]]
 deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+version = "1.11.0"
 
 [[deps.JSON]]
 deps = ["Dates", "Mmap", "Parsers", "Unicode"]
 git-tree-sha1 = "31e996f0a15c7b280ba9f76636b3ff9e2ae58c9a"
 uuid = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 version = "0.21.4"
+
+[[deps.LaTeXStrings]]
+git-tree-sha1 = "dda21b8cbd6a6c40d9d02a73230f9d70fed6918c"
+uuid = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
+version = "1.4.0"
 
 [[deps.LibCURL]]
 deps = ["LibCURL_jll", "MozillaCACerts_jll"]
@@ -834,16 +862,17 @@ version = "0.6.4"
 [[deps.LibCURL_jll]]
 deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll", "Zlib_jll", "nghttp2_jll"]
 uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
-version = "8.4.0+0"
+version = "8.6.0+0"
 
 [[deps.LibGit2]]
 deps = ["Base64", "LibGit2_jll", "NetworkOptions", "Printf", "SHA"]
 uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
+version = "1.11.0"
 
 [[deps.LibGit2_jll]]
 deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll"]
 uuid = "e37daf67-58a4-590a-8e99-b0245dd2ffc5"
-version = "1.6.4+0"
+version = "1.7.2+0"
 
 [[deps.LibSSH2_jll]]
 deps = ["Artifacts", "Libdl", "MbedTLS_jll"]
@@ -852,34 +881,39 @@ version = "1.11.0+1"
 
 [[deps.Libdl]]
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
+version = "1.11.0"
 
 [[deps.LinearAlgebra]]
 deps = ["Libdl", "OpenBLAS_jll", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+version = "1.11.0"
 
 [[deps.Logging]]
 uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
+version = "1.11.0"
 
 [[deps.MIMEs]]
-git-tree-sha1 = "65f28ad4b594aebe22157d6fac869786a255b7eb"
+git-tree-sha1 = "c64d943587f7187e751162b3b84445bbbd79f691"
 uuid = "6c6e2e6c-3030-632d-7369-2d6c69616d65"
-version = "0.1.4"
+version = "1.1.0"
 
 [[deps.Markdown]]
 deps = ["Base64"]
 uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
+version = "1.11.0"
 
 [[deps.MbedTLS_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
-version = "2.28.2+1"
+version = "2.28.6+0"
 
 [[deps.Mmap]]
 uuid = "a63ad114-7e13-5084-954f-fe012c677804"
+version = "1.11.0"
 
 [[deps.MozillaCACerts_jll]]
 uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
-version = "2023.1.10"
+version = "2023.12.12"
 
 [[deps.NetworkOptions]]
 uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
@@ -888,24 +922,30 @@ version = "1.2.0"
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.23+4"
+version = "0.3.27+1"
 
 [[deps.Parsers]]
 deps = ["Dates", "PrecompileTools", "UUIDs"]
-git-tree-sha1 = "8489905bcdbcfac64d1daa51ca07c0d8f0283821"
+git-tree-sha1 = "7d2f8f21da5db6a806faf7b9b292296da42b2810"
 uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
-version = "2.8.1"
+version = "2.8.3"
 
 [[deps.Pkg]]
-deps = ["Artifacts", "Dates", "Downloads", "FileWatching", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
+deps = ["Artifacts", "Dates", "Downloads", "FileWatching", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "Random", "SHA", "TOML", "Tar", "UUIDs", "p7zip_jll"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
-version = "1.10.0"
+version = "1.11.0"
+
+    [deps.Pkg.extensions]
+    REPLExt = "REPL"
+
+    [deps.Pkg.weakdeps]
+    REPL = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 
 [[deps.PlutoUI]]
-deps = ["AbstractPlutoDingetjes", "Base64", "ColorTypes", "Dates", "FixedPointNumbers", "Hyperscript", "HypertextLiteral", "IOCapture", "InteractiveUtils", "JSON", "Logging", "MIMEs", "Markdown", "Random", "Reexport", "URIs", "UUIDs"]
-git-tree-sha1 = "ab55ee1510ad2af0ff674dbcced5e94921f867a9"
+deps = ["AbstractPlutoDingetjes", "Base64", "ColorTypes", "Dates", "Downloads", "FixedPointNumbers", "Hyperscript", "HypertextLiteral", "IOCapture", "InteractiveUtils", "JSON", "Logging", "MIMEs", "Markdown", "Random", "Reexport", "URIs", "UUIDs"]
+git-tree-sha1 = "f53232a27a8c1c836d3998ae1e17d898d4df2a46"
 uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
-version = "0.7.59"
+version = "0.7.72"
 
 [[deps.PrecompileTools]]
 deps = ["Preferences"]
@@ -915,21 +955,19 @@ version = "1.2.1"
 
 [[deps.Preferences]]
 deps = ["TOML"]
-git-tree-sha1 = "9306f6085165d270f7e3db02af26a400d580f5c6"
+git-tree-sha1 = "0f27480397253da18fe2c12a4ba4eb9eb208bf3d"
 uuid = "21216c6a-2e73-6563-6e65-726566657250"
-version = "1.4.3"
+version = "1.5.0"
 
 [[deps.Printf]]
 deps = ["Unicode"]
 uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
-
-[[deps.REPL]]
-deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
-uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
+version = "1.11.0"
 
 [[deps.Random]]
 deps = ["SHA"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+version = "1.11.0"
 
 [[deps.Reexport]]
 git-tree-sha1 = "45e428421666073eab6f2da5c9d310d99bb12f9b"
@@ -942,24 +980,19 @@ version = "0.7.0"
 
 [[deps.Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
-
-[[deps.Sockets]]
-uuid = "6462fe0b-24de-5631-8697-dd941f90decc"
-
-[[deps.SparseArrays]]
-deps = ["Libdl", "LinearAlgebra", "Random", "Serialization", "SuiteSparse_jll"]
-uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
-version = "1.10.0"
+version = "1.11.0"
 
 [[deps.Statistics]]
-deps = ["LinearAlgebra", "SparseArrays"]
+deps = ["LinearAlgebra"]
+git-tree-sha1 = "ae3bb1eb3bba077cd276bc5cfc337cc65c3075c0"
 uuid = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
-version = "1.10.0"
+version = "1.11.1"
 
-[[deps.SuiteSparse_jll]]
-deps = ["Artifacts", "Libdl", "libblastrampoline_jll"]
-uuid = "bea87d4a-7f5b-5778-9afe-8cc45184846c"
-version = "7.2.1+1"
+    [deps.Statistics.extensions]
+    SparseArraysExt = ["SparseArrays"]
+
+    [deps.Statistics.weakdeps]
+    SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 
 [[deps.TOML]]
 deps = ["Dates"]
@@ -974,23 +1007,26 @@ version = "1.10.0"
 [[deps.Test]]
 deps = ["InteractiveUtils", "Logging", "Random", "Serialization"]
 uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+version = "1.11.0"
 
 [[deps.Tricks]]
-git-tree-sha1 = "eae1bb484cd63b36999ee58be2de6c178105112f"
+git-tree-sha1 = "372b90fe551c019541fafc6ff034199dc19c8436"
 uuid = "410a4b4d-49e4-4fbc-ab6d-cb71b17b3775"
-version = "0.1.8"
+version = "0.1.12"
 
 [[deps.URIs]]
-git-tree-sha1 = "67db6cc7b3821e19ebe75791a9dd19c9b1188f2b"
+git-tree-sha1 = "bef26fb046d031353ef97a82e3fdb6afe7f21b1a"
 uuid = "5c2747f8-b7ea-4ff2-ba2e-563bfd36b1d4"
-version = "1.5.1"
+version = "1.6.1"
 
 [[deps.UUIDs]]
 deps = ["Random", "SHA"]
 uuid = "cf7118a7-6976-5b1a-9a39-7adc72f591a4"
+version = "1.11.0"
 
 [[deps.Unicode]]
 uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
+version = "1.11.0"
 
 [[deps.Zlib_jll]]
 deps = ["Libdl"]
@@ -1005,7 +1041,7 @@ version = "5.11.0+0"
 [[deps.nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850ede-7688-5339-a07c-302acd2aaf8d"
-version = "1.52.0+1"
+version = "1.59.0+0"
 
 [[deps.p7zip_jll]]
 deps = ["Artifacts", "Libdl"]
