@@ -106,7 +106,7 @@ begin
 end
 
 # ╔═╡ 3f1350e8-1f77-4b0a-a6d5-dd65d7ccf9fa
-md"""La matriz $P$ es no singular, ya que $\text{det}(P)=3\neq 0$"""
+md"""La matriz $P$ es no singular, ya que $\text{det}(P)=3\neq 0$."""
 
 # ╔═╡ ad101ebd-7d08-4deb-9818-cc428c623111
 det(P₂)
