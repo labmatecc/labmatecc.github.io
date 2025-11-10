@@ -94,15 +94,15 @@ md"""Las ecuaciones diferenciales ordinarias simultáneas surgen de forma inhere
 Consideremos el sistema de ecuaciones diferenciales lineal homogéneo:
 
 $\begin{align*}
-x_1(t) &= a_{11}x_1(t) + a_{12}x_2(t) + \ldots + a_{1n}x_n(t) \\
-x_2(t) &= a_{21}x_1(t) + a_{22}x_2(t) + \ldots + a_{2n}x_n(t) \\
+x_{1}'(t) &= a_{11}x_1(t) + a_{12}x_2(t) + \ldots + a_{1n}x_n(t), \\
+x_{2}'(t) &= a_{21}x_1(t) + a_{22}x_2(t) + \ldots + a_{2n}x_n(t), \\
 &\vdots \\
-x_n(t) &= a_{n1}x_1(t) + a_{n2}x_2(t) + \ldots + a_{nn}x_n(t)
+x_{n}'(t) &= a_{n1}x_1(t) + a_{n2}x_2(t) + \ldots + a_{nn}x_n(t),
 \end{align*}$
 
 donde las $a_{ij}$ representan constantes conocidas. Estamos interesados en encontrar funciones $x_1(t), x_2(t), \ldots, x_n(t)$ que estén definidas y sean diferenciables en el dominio de los números reales, y que satisfagan el sistema anterior. Dicho sistema se puede escribir de manera matricial como:
 
-$x'(t)=Ax(t)$,
+$x'(t)=Ax(t),$
 o de manera más concisa $x'=Ax$, donde
 
 $x(t) = \begin{bmatrix}
@@ -115,7 +115,7 @@ a_{11} & a_{12} & \ldots & a_{1n} \\
 a_{21} & a_{22} & \ldots & a_{2n} \\
 \vdots & \vdots & \ddots & \vdots \\
 a_{n1} & a_{n2} & \ldots & a_{nn}
-\end{bmatrix}$
+\end{bmatrix},$
 y 
 
 $x'(t) = \begin{bmatrix}
@@ -133,19 +133,19 @@ md"""*Ejemplo:*
 El sistema 
 
 $\begin{align*}
-x_1(t) &= a_{11}x_1(t) \\
-x_2(t) &= \quad\quad\quad\quad a_{22}x_2(t) \\
+x_{1}'(t) &= a_{11}x_1(t) \\
+x_{2}'(t) &= \quad\quad\quad\quad a_{22}x_2(t) \\
 &\vdots \\
-x_n(t) &= \quad\quad\quad\quad\quad\quad\quad\quad a_{nn}x_n(t)
+x_{n}'(t) &= \quad\quad\quad\quad\quad\quad\quad\quad a_{nn}x_n(t)
 \end{align*}$
 es un sistema diagonal ya que la matriz $A$ es diagonal. Este sistema es fácil de resolver, ya que las ecuaciones pueden resolverse por separado (de la misma forma que el primer ejemplo), así obtenemos
 
 $\begin{align*}
-x_1(t) &= C_1e^{a_{11}t} \\
-x_2(t) &= C_2e^{a_{22}t} \\
+x_1(t) &= C_1e^{a_{11}t}, \\
+x_2(t) &= C_2e^{a_{22}t}, \\
 &\vdots \\
-x_n(t) &= C_ne^{a_{nn}t}
-\end{align*},$
+x_n(t) &= C_ne^{a_{nn}t},
+\end{align*}$
 donde $C_1, C_2, \cdots, C_n$ son constantes que dependen de las condiciones iniciales del problema. Por tanto, al escribir lo anterior de manera vectorial se tiene que 
 
 $x(t) = \begin{bmatrix}
@@ -158,13 +158,15 @@ $x(t) = \begin{bmatrix}
 # ╔═╡ b0da3218-177f-448b-867a-6a019f6f003a
 md"""Ahora, si el sistema dado no es diagonal, pero $A$ es diagonalizable y $P$ es una matriz no singular tal que
 
-$P^{-1}AP=D$, donde $D$ es diagonal. Entonces, multiplicando a la izquierda por $P^{-1}$ en el sistema $x'=Ax$, se tiene
+$P^{-1}AP=D,$ 
 
-$P^{-1}x'=P^{-1}Ax$.
+donde $D$ es diagonal. Entonces, multiplicando a la izquierda por $P^{-1}$ en el sistema $x'=Ax$, se tiene
+
+$P^{-1}x'=P^{-1}Ax.$
 
 Ahora bien, si $u=P^{-1}x$, entonces $u'=P^{-1}x'$. Si sustituimos eso en la ecuación anterior se tiene que
 
-$u'=(P^{-1}AP)(P^{-1}x)=Du$.
+$u'=(P^{-1}AP)(P^{-1}x)=Du.$
 
 Este ya es un sistema diagonal que podemos resolver tal como lo mostramos anteriormente. Así,
 
@@ -174,7 +176,7 @@ $u(t) = C_1u_1(t) + C_2u_2(t) + \ldots + C_nu_n(t) =
     C_2e^{\lambda_2 t} \\
     \vdots \\
     C_ne^{\lambda_n t}
-\end{bmatrix}$
+\end{bmatrix},$
 
 donde
 $u_1(t) =
@@ -216,7 +218,7 @@ md"""**Teorema:**
 
 Si la matriz $A$ de $n \times n$ tiene $n$ vectores propios linealmente independientes $p_1, p_2, \ldots, p_n$ asociados con los valores propios $\lambda_1, \lambda_2, \ldots, \lambda_n$, respectivamente, la solución general del sistema lineal homogéneo de ecuaciones diferenciales
 
-$x' = Ax$
+$x' = Ax,$
 está dada por
 
 $x(t) = C_1p_1e^{\lambda_1 t} + C_2p_2e^{\lambda_2 t} + \ldots + C_np_ne^{\lambda_n t}.$
@@ -254,7 +256,7 @@ md"""En términos de componentes, esto se puede escribir como:"""
 # ╔═╡ bcc1f654-37d8-4c77-ad06-326c1a8943d8
 println("x₁(t) = C₁ ", eigvecs(A₁)[1,1], " exp(", eigvals(A₁)[1], "t) + C₂ ",  eigvecs(A₁)[1,2], " exp(", eigvals(A₁)[2], "t)
 
-x₁(t) = C₁ ", eigvecs(A₁)[2,1], " exp(", eigvals(A₁)[1], "t) + C₂ ",  eigvecs(A₁)[2,2], " exp(", eigvals(A₁)[2], "t)")
+x₂(t) = C₁ ", eigvecs(A₁)[2,1], " exp(", eigvals(A₁)[1], "t) + C₂ ",  eigvecs(A₁)[2,2], " exp(", eigvals(A₁)[2], "t)")
 
 # ╔═╡ 08924507-7389-4ad6-b91b-68a9a051d27c
 md"""*Ejemplo:*
@@ -299,7 +301,7 @@ $x(t)=P\begin{bmatrix}
     C_1e^{\lambda_1t} \\
     C_2e^{\lambda_2t} \\
     C_3e^{\lambda_3t}
-\end{bmatrix}$"""
+\end{bmatrix}.$"""
 
 # ╔═╡ 625312f7-937c-4a50-9853-58a3a5c1d848
 md"""Ahora resolvamos el problema de valor inicial, observe que si $t=0$ se tiene 
@@ -316,7 +318,7 @@ $P\begin{bmatrix}
     0\\
     -1\\
     1
-\end{bmatrix}$
+\end{bmatrix}.$
 Esto es equivalente a resolver un sistema de ecuaciones lineales:"""
 
 # ╔═╡ 045ac79d-0df9-4b30-b82c-436d37f8103c
@@ -373,7 +375,7 @@ begin
 end
 
 # ╔═╡ 85f327ba-fc4c-43bb-8ba2-ee1a4eea3d86
-md"""Otra manera de resolver el problema mencionado es usando la función $\texttt{DifferentialEquations}$, tal como se muestra a continuación."""
+md"""Otra manera de resolver el problema mencionado es usando la función $\texttt{DifferentialEquations}$ tal como se muestra a continuación."""
 
 # ╔═╡ 8cb93262-fff4-4441-abfb-519ab939b6e5
 function system!(dx, x, p, t) #Definir el sistema de EDOs
@@ -387,7 +389,7 @@ x₀ = b #condiciones iniciales
 tspan₂ = (0.0, 5.0) #Definimos el intervalo de tiempo
 
 # ╔═╡ a1dc309d-9c54-4079-b8a9-109bfbdb779c
-md"""Ahora, creamos un problema de EDO con $\texttt{ODEProblem}$, que toma la función del sistema, las condiciones iniciales y el intervalo de tiempo que previamente definimos, y luego se resuelve el problema, de la siguiente forma"""
+md"""Ahora, creamos un problema de EDO con $\texttt{ODEProblem}$, que toma la función del sistema, las condiciones iniciales y el intervalo de tiempo que previamente definimos, y luego se resuelve el problema, de la siguiente forma:"""
 
 # ╔═╡ 2a739bd3-2b81-4d81-af39-4347df1598aa
 begin
@@ -396,7 +398,7 @@ begin
 end
 
 # ╔═╡ d9c8fbbc-b95d-4a0a-a1ce-b81a7d8e6f7d
-md"""Ahora visualicemos la solución del problema"""
+md"""Ahora visualicemos la solución del problema."""
 
 # ╔═╡ ac4cb0b1-4a15-4cd9-b223-ed8e93b73d8d
 begin
