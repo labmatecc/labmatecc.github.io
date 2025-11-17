@@ -58,11 +58,11 @@ y $a_{ii}$ es la entrada $(i,i)$ de la diagonal de la matriz $A$ y $R_i = \displ
 # ╔═╡ 24af59c8-44ed-4839-a62c-20d049b07ee9
 md"""**Demostración.** Para $λ$ un valor propio de $A$ considere un vector propio $x$ y sea $m$ el índice del componente del vector con norma mayor, ahora considere el vector $y = x/|x_m|$, así, $y$ también es un vector propio de $A$ asociado a $λ$ con $|y_m| = 1$ y $|y_i|\leq 1$ para todo $i$. Puesto que $Ay = \lambda y$ entonces
 
-$\sum^{d}_{k=1} a_{mk}y_k = λ y_m$
+$\sum^{d}_{k=1} a_{mk}y_k = λ y_m,$
 luego
 
-$y_{m}(\lambda - a_{mm}) =  \sum^{d}_{k=1, ~ k\not=m} a_{mk}y_k$
-usando las propiedades del vector $y$, concluimos que
+$y_{m}(\lambda - a_{mm}) =  \sum^{d}_{k=1, ~ k\not=m} a_{mk}y_k.$
+Usando las propiedades del vector $y$, concluimos que
 
 $|\lambda - a_{mm}| \leq \sum^{d}_{k=1, ~ k\not=m} |a_{mk}||y_k| \leq  \sum^{d}_{k=1, ~ k\not=m} |a_{mk}| \text{.}$"""
 
@@ -312,20 +312,20 @@ Suponga que $z = x + iy \in ℂ$ y $x,y\in ℝ$,
 *   Discos de Gershgorin
 1.   $|z- 1 |\leq 1 ⟼ (x-1)^2 +y^2\leq 1$
 2.   $|z- 2 |\leq 0 ⟼ (x,y) = (2,0)$
-3.   $|z|\leq 2 ⟼ x^2+y^2\leq 4$
+3.   $|z|\leq 2 ⟼ x^2+y^2\leq 4.$
 
 *   Conjuntos de Brauer
 4.   $|z- 1 ||z- 2 |\leq 0 ⟼(x,y) = (1,0),(2,0)$
 5.   $|z- 1 ||z|\leq 2 ⟼x^4+2x^2y^2+y^4-2x^3-2xy^2+x^2+y^2\leq 4$
-6.   $|z- 2 ||z|\leq 0 ⟼(x,y) = (0,0),(2,0)$
+6.   $|z- 2 ||z|\leq 0 ⟼(x,y) = (0,0),(2,0).$
 
 *   Conjuntos de Gershgorin generalizado
-7.   $|(z- 1 )(z- 2 )|\leq|z- 2 | ⟼ (x-1)^2+y^2\leq 1 \quad (x,y) = (2,0)$
+7.   $|(z- 1 )(z- 2 )|\leq|z- 2 | ⟼ (x-1)^2+y^2\leq 1, \quad \textup{o}\quad (x,y) = (2,0)$
 8.   $|(z- 1 )(z)- 1 |\leq 1 ⟼ (x^2-y^2-x-1)^2 + (2xy-y)^2 \leq 1$
 9.   $|(z- 2 )(z- 1 )|\leq 0 ⟼ (x,y) = (1,0),(2,0)$
 10.   $|(z- 2 )(z) |\leq 0 ⟼(x,y) = (0,0),(2,0)$
 11.   $|(z)(z- 1 )- 1 |\leq|z- 1 | ⟼ (x^2-y^2-x-1)^2 + (2xy-y)^2 \leq (x-1)^2+y^2$
-12.   $|(z )(z- 2 ) |\leq|z- 2 | ⟼ x^2+y^2\leq 1 \quad (x,y) = (2,0)$
+12.   $|(z )(z- 2 ) |\leq|z- 2 | ⟼ x^2+y^2\leq 1, \quad \textup{o}\quad (x,y) = (2,0).$
 """
 
 # ╔═╡ f148667d-bc71-49d1-a9f2-47d0dc83b4fa
@@ -356,7 +356,7 @@ $C(p(x)) = \begin{pmatrix}
 0 & 0 & 4 \\
 1 & 0 & -4 \\
 0 & 1 & 1
-\end{pmatrix}$"""
+\end{pmatrix}.$"""
 
 # ╔═╡ 28c0ba45-66da-49d9-8b73-6b4990ac9510
 md"""La función $\texttt{Companion()}$ halla la matriz de compañía teniendo en cuenta los coeficientes del polinomio."""
@@ -380,7 +380,7 @@ md"""Creamos la matriz de compañía:"""
 B = Companion(P)
 
 # ╔═╡ 245470ed-7132-4396-b678-d169f4e56fdf
-md"""Se tiene así la siguiente región"""
+md"""Se tiene así la siguiente región:"""
 
 # ╔═╡ 7239338a-606b-4c32-a555-fb51c7e7167e
 alldisksforA(B, r=7, k=500)
