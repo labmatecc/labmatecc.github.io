@@ -9,7 +9,7 @@ using PlutoUI
 
 # ╔═╡ b02f4a16-7a15-4520-a540-dde4f3876d1d
 begin
-	using LinearAlgebra, GLMakie
+	using LinearAlgebra,GLMakie
 	using Colors, ColorVectorSpace, ImageShow, FileIO, ImageIO
 end
 
@@ -33,7 +33,7 @@ md"""Usaremos las siguientes librerías:"""
 md"""# Introducción"""
 
 # ╔═╡ 64e2e390-bbc0-11ee-02c2-6f5e15ce2274
-md"""El problema de mínimos cuadrados se desea resolver para encontrar las soluciones a un sistema de ecuaciones sobredeterminado. Este sistema se puede escribir de forma matricial de la siguiente forma, $A x = b$, con $A\in\mathcal{M}_{n,m}(\mathbb{R})$, esto es, 
+md"""El problema de mínimos cuadrados se desea resolver para encontrar las soluciones a un sistema de ecuaciones sobredeterminado. Este sistema se puede escribir de forma matricial de la siguiente forma, $A x = b$, con $A\in\mathcal{M}_{m,n}(\mathbb{R})$, esto es, 
 
 $\begin{equation}
 \begin{bmatrix}
@@ -91,14 +91,14 @@ $A=\begin{bmatrix}
     1 & 4 & 6 & 8 \\
     7 & 50 & 2 & 5 \\
     75 & 5 & 9 & 3 \\
-\end{bmatrix}
-\quad\quad\quad b=\begin{bmatrix}
+\end{bmatrix}, 
+\quad \textup{y}\quad b=\begin{bmatrix}
     0\\
     3\\
     4\\
     10\\
     0\\
-\end{bmatrix}$"""
+\end{bmatrix}.$"""
 
 # ╔═╡ fa95acb9-1d1f-4a09-b066-ba0612774745
 A₁ = [1 2 4 5; 1 4 5 6; 1 4 6 8; 7 50 2 5; 75 5 9 3]
@@ -145,11 +145,11 @@ $y_i = a_m x_i^m + a_{m-1} x_i^{m-1} + \ldots + a_1 x_i + a_0 + d_i, \quad i = 1
 
 Si definimos el vector $b$ como
 
-$b = \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{bmatrix}$
+$b = \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{bmatrix},$
 
 y escribimos las $n$ ecuaciones anteriores como la ecuación matricial $b = Ax + d$, donde
 
-$A = \begin{bmatrix} x_1^m & x_1^{m-1} & \ldots & 1 \\ x_2^m & x_2^{m-1} & \ldots & 1 \\ \vdots & \vdots & \ddots & \vdots \\ x_n^m & x_n^{m-1} & \ldots & 1 \end{bmatrix}, \quad x = \begin{bmatrix} a_m \\ a_{m-1} \\ \vdots \\ a_0 \end{bmatrix}, \quad d = \begin{bmatrix} d_1 \\ d_2 \\ \vdots \\ d_n \end{bmatrix}$
+$A = \begin{bmatrix} x_1^m & x_1^{m-1} & \ldots & 1 \\ x_2^m & x_2^{m-1} & \ldots & 1 \\ \vdots & \vdots & \ddots & \vdots \\ x_n^m & x_n^{m-1} & \ldots & 1 \end{bmatrix}, \quad x = \begin{bmatrix} a_m \\ a_{m-1} \\ \vdots \\ a_0 \end{bmatrix}, \quad \textup{y} \quad d = \begin{bmatrix} d_1 \\ d_2 \\ \vdots \\ d_n \end{bmatrix},$
 
 entonces, una solución del sistema normal $A^TAx = A^Tb$ proporciona una solución por mínimos cuadrados de $Ax = b$. Con esta solución, podemos garantizar que $\|d\| = \|b - Ax\|$ se minimiza, ya que $d$ se acerca al vector nulo.
 """
@@ -190,12 +190,12 @@ $y = a_2x^2+a_1x+a_0.$
 Así, si evaluamos cada uno de los datos vamos a tener el siguiente sistema de ecuaciónes
 
 $\begin{align*}
-0.5 &= a_2(1)^2+a_1(1)+a_0\\
-0.85 &= a_2(1.5)^2+a_1(1.5)+a_0\\
-1.2 &= a_2(2)^2+a_1(2)+a_0\\
-1.05 &= a_2(2.5)^2+a_1(2.5)+a_0\\
-0.7 &= a_2(3)^2+a_1(3)+a_0\\
--0.2 &= a_2(3.5)^2+a_1(3.5)+a_0\\
+0.5 &= a_2(1)^2+a_1(1)+a_0,\\
+0.85 &= a_2(1.5)^2+a_1(1.5)+a_0,\\
+1.2 &= a_2(2)^2+a_1(2)+a_0,\\
+1.05 &= a_2(2.5)^2+a_1(2.5)+a_0,\\
+0.7 &= a_2(3)^2+a_1(3)+a_0,\\
+-0.2 &= a_2(3.5)^2+a_1(3.5)+a_0,\\
 \end{align*}$
 
 lo que implica el siguiente sistema matricial $Ax=b$, donde:
@@ -340,14 +340,14 @@ $A = \begin{bmatrix}
     (3.92)^2 & (3.92)(-1.6) & (-1.6)^2 & 3.92 & -1.6 \\
     (4.78)^2 & (4.78)(-0.49) & (-0.49)^2 & 4.78 & -0.49 \\
     (4.81)^2 & (4.81)(0.18) & (0.18)^2 & 4.81 & 0.18 \\
-\end{bmatrix},
+\end{bmatrix}, \quad
 x = \begin{bmatrix}
     a \\
     b \\
     c \\
     d \\
     e \\
-\end{bmatrix},
+\end{bmatrix}, \quad
 b = \begin{bmatrix}
     1 \\
     1 \\
@@ -359,7 +359,7 @@ b = \begin{bmatrix}
     1 \\
     1 \\
     1 \\
-\end{bmatrix}$
+\end{bmatrix}.$
 Resolvamos esto con ayuda de mínimos cuadrados."""
 
 # ╔═╡ 94e3dd2e-857f-43ed-a5c9-3432f55a62c8
@@ -591,10 +591,10 @@ PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 
 [compat]
 ColorVectorSpace = "~0.10.0"
-Colors = "~0.12.10"
-FileIO = "~1.16.3"
-GLMakie = "~0.9.10"
-ImageIO = "~0.6.7"
+Colors = "~0.12.11"
+FileIO = "~1.17.0"
+GLMakie = "~0.9.11"
+ImageIO = "~0.6.9"
 ImageShow = "~0.3.8"
 PlutoUI = "~0.7.59"
 """
@@ -605,7 +605,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.11.1"
 manifest_format = "2.0"
-project_hash = "f128561a9a3b2451d71cedbcbabef0203d452a03"
+project_hash = "e6c95a8191c83c9210a4868819f82a13af86ec84"
 
 [[deps.AbstractFFTs]]
 deps = ["LinearAlgebra"]
@@ -829,9 +829,9 @@ version = "1.16.2+0"
 
 [[deps.DelaunayTriangulation]]
 deps = ["AdaptivePredicates", "EnumX", "ExactPredicates", "Random"]
-git-tree-sha1 = "5620ff4ee0084a6ab7097a27ba0c19290200b037"
+git-tree-sha1 = "783b21581a051ac91a3921ee37e26a23ed7f57a6"
 uuid = "927a84f5-c5f4-47a5-9785-b46e178433df"
-version = "1.6.4"
+version = "1.6.5"
 
 [[deps.Distributed]]
 deps = ["Random", "Serialization", "Sockets"]
@@ -918,9 +918,9 @@ version = "3.3.11+0"
 
 [[deps.FileIO]]
 deps = ["Pkg", "Requires", "UUIDs"]
-git-tree-sha1 = "2dd20384bf8c6d411b5c7370865b1e9b26cb2ea3"
+git-tree-sha1 = "b66970a70db13f45b7e57fbda1736e1cf72174ea"
 uuid = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
-version = "1.16.6"
+version = "1.17.0"
 
     [deps.FileIO.extensions]
     HTTPExt = "HTTP"
@@ -951,9 +951,9 @@ version = "1.11.0"
 
 [[deps.FillArrays]]
 deps = ["LinearAlgebra"]
-git-tree-sha1 = "173e4d8f14230a7523ae11b9a3fa9edb3e0efd78"
+git-tree-sha1 = "5bfcd42851cf2f1b303f51525a54dc5e98d408a3"
 uuid = "1a297f60-69ca-5386-bcde-b61e274b549b"
-version = "1.14.0"
+version = "1.15.0"
 weakdeps = ["PDMats", "SparseArrays", "Statistics"]
 
     [deps.FillArrays.extensions]
@@ -1021,9 +1021,9 @@ uuid = "e9467ef8-e4e7-5192-8a1a-b1aee30e663a"
 version = "0.9.11"
 
 [[deps.GeoFormatTypes]]
-git-tree-sha1 = "8e233d5167e63d708d41f87597433f59a0f213fe"
+git-tree-sha1 = "7528a7956248c723d01a0a9b0447bf254bf4da52"
 uuid = "68eda718-8dee-11e9-39e7-89f7f65f511f"
-version = "0.4.4"
+version = "0.4.5"
 
 [[deps.GeoInterface]]
 deps = ["DataAPI", "Extents", "GeoFormatTypes"]
@@ -1204,9 +1204,9 @@ version = "1.0.1"
     SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 
 [[deps.IntervalSets]]
-git-tree-sha1 = "5fbb102dcb8b1a858111ae81d56682376130517d"
+git-tree-sha1 = "d966f85b3b7a8e49d034d27a189e9a4874b4391a"
 uuid = "8197267c-284f-5f27-9208-e0e47529a953"
-version = "0.7.11"
+version = "0.7.13"
 
     [deps.IntervalSets.extensions]
     IntervalSetsRandomExt = "Random"
@@ -1567,9 +1567,13 @@ version = "10.42.0+1"
 
 [[deps.PDMats]]
 deps = ["LinearAlgebra", "SparseArrays", "SuiteSparse"]
-git-tree-sha1 = "f07c06228a1c670ae4c87d1276b92c7c597fdda0"
+git-tree-sha1 = "d922b4d80d1e12c658da7785e754f4796cc1d60d"
 uuid = "90014a1f-27ba-587c-ab20-58faa44d9150"
-version = "0.11.35"
+version = "0.11.36"
+weakdeps = ["StatsBase"]
+
+    [deps.PDMats.extensions]
+    StatsBaseExt = "StatsBase"
 
 [[deps.PNGFiles]]
 deps = ["Base64", "CEnum", "ImageCore", "IndirectArrays", "OffsetArrays", "libpng_jll"]
@@ -1591,9 +1595,9 @@ version = "0.5.12"
 
 [[deps.Pango_jll]]
 deps = ["Artifacts", "Cairo_jll", "Fontconfig_jll", "FreeType2_jll", "FriBidi_jll", "Glib_jll", "HarfBuzz_jll", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "1f7f9bbd5f7a2e5a9f7d96e51c9754454ea7f60b"
+git-tree-sha1 = "0662b083e11420952f2e62e17eddae7fc07d5997"
 uuid = "36c8627f-9965-5494-a995-c6b170f724f3"
-version = "1.56.4+0"
+version = "1.57.0+0"
 
 [[deps.Parsers]]
 deps = ["Dates", "PrecompileTools", "UUIDs"]
@@ -1624,9 +1628,9 @@ version = "0.3.3"
 
 [[deps.PlotUtils]]
 deps = ["ColorSchemes", "Colors", "Dates", "PrecompileTools", "Printf", "Random", "Reexport", "StableRNGs", "Statistics"]
-git-tree-sha1 = "3ca9a356cd2e113c420f2c13bea19f8d3fb1cb18"
+git-tree-sha1 = "26ca162858917496748aad52bb5d3be4d26a228a"
 uuid = "995b91a9-d308-5afd-9ec6-746e21dbc043"
-version = "1.4.3"
+version = "1.4.4"
 
 [[deps.PlutoUI]]
 deps = ["AbstractPlutoDingetjes", "Base64", "ColorTypes", "Dates", "Downloads", "FixedPointNumbers", "Hyperscript", "HypertextLiteral", "IOCapture", "InteractiveUtils", "JSON", "Logging", "MIMEs", "Markdown", "Random", "Reexport", "URIs", "UUIDs"]
@@ -1826,9 +1830,9 @@ weakdeps = ["ChainRulesCore"]
 
 [[deps.StableRNGs]]
 deps = ["Random"]
-git-tree-sha1 = "95af145932c2ed859b63329952ce8d633719f091"
+git-tree-sha1 = "4f96c596b8c8258cc7d3b19797854d368f243ddc"
 uuid = "860ef19b-820b-49d6-a774-d7a799459cd3"
-version = "1.0.3"
+version = "1.0.4"
 
 [[deps.StackViews]]
 deps = ["OffsetArrays"]
@@ -1870,9 +1874,9 @@ version = "1.7.1"
 
 [[deps.StatsBase]]
 deps = ["AliasTables", "DataAPI", "DataStructures", "LinearAlgebra", "LogExpFunctions", "Missings", "Printf", "Random", "SortingAlgorithms", "SparseArrays", "Statistics", "StatsAPI"]
-git-tree-sha1 = "a136f98cefaf3e2924a66bd75173d1c891ab7453"
+git-tree-sha1 = "064b532283c97daae49e544bb9cb413c26511f8c"
 uuid = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
-version = "0.34.7"
+version = "0.34.8"
 
 [[deps.StatsFuns]]
 deps = ["HypergeometricFunctions", "IrrationalConstants", "LogExpFunctions", "Reexport", "Rmath", "SpecialFunctions"]
@@ -2158,9 +2162,9 @@ version = "2.0.4+0"
 
 [[deps.libpng_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Zlib_jll"]
-git-tree-sha1 = "07b6a107d926093898e82b3b1db657ebe33134ec"
+git-tree-sha1 = "5cb3c5d039f880c0b3075803c8bf45cb95ae1e91"
 uuid = "b53b4c65-9356-5827-b1ea-8c7a1a84506f"
-version = "1.6.50+0"
+version = "1.6.51+0"
 
 [[deps.libsixel_jll]]
 deps = ["Artifacts", "JLLWrappers", "JpegTurbo_jll", "Libdl", "libpng_jll"]
@@ -2210,9 +2214,9 @@ version = "4.1.0+0"
 
 [[deps.xkbcommon_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Xorg_libxcb_jll", "Xorg_xkeyboard_config_jll"]
-git-tree-sha1 = "fbf139bce07a534df0e699dbb5f5cc9346f95cc1"
+git-tree-sha1 = "a1fc6507a40bf504527d0d4067d718f8e179b2b8"
 uuid = "d8fb68d0-12a3-5cfd-a85a-d49703b185fd"
-version = "1.9.2+0"
+version = "1.13.0+0"
 """
 
 # ╔═╡ Cell order:
@@ -2261,12 +2265,12 @@ version = "1.9.2+0"
 # ╟─1e6eafa1-6509-4e9c-bf1e-72b770820ad0
 # ╟─c5760b4d-c784-4a70-8990-608a3edbe36b
 # ╟─c227c241-ce0b-4fe2-adba-8825648917fd
-# ╟─ed0ea5b5-5150-4b85-8db0-7a1317d68db2
+# ╠═ed0ea5b5-5150-4b85-8db0-7a1317d68db2
 # ╟─1dd7a5b7-50ea-49cc-a8f9-4fe9022b1547
 # ╟─be342e4a-0086-4dc6-b623-7e0760265356
 # ╠═ca3f7f44-fa66-44e5-b34c-7bfda72edb19
 # ╠═8abf8ea9-5d7e-43d6-9f81-4714dd30c9d4
-# ╟─ced48584-9f65-4a7d-9549-7970b4a6115d
+# ╠═ced48584-9f65-4a7d-9549-7970b4a6115d
 # ╟─e2037336-3de2-477d-a6b3-f8d47d5b0562
 # ╠═5607de4d-baec-4e86-96a0-90b8c038ed30
 # ╟─a108f864-bb92-405c-9de0-6dadd76e3eff
