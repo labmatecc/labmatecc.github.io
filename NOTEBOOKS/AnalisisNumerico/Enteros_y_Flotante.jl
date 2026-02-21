@@ -492,7 +492,7 @@ md""" # Referencias
 
 [1] Kincaid, D., & Cheney, W. (2009). Numerical analysis: Mathematics of scientific computing (3rd ed.). American Mathematical Society.
 
-[2] Driscoll, T. A., & Braun, R. J. (n.d.). *Fundamentals of Numerical Computation*. Adapted for Julia. Recuperado de [https://tobydriscoll.net/fnc-julia/frontmatter.html](https://tobydriscoll.net/fnc-julia/frontmatter.html)
+[2] Driscoll, T. A., & Braun, R. J. (n.d.). *Fundamentals of Numerical Computation*. Adapted for Julia. Recuperado de [https://tobydriscoll.net/fnc-julia/home.html](https://tobydriscoll.net/fnc-julia/home.html)
 
 [3] Sullivan, E. (2020). *Numerical Methods: An Inquiry-Based Approach With Python*.
 
