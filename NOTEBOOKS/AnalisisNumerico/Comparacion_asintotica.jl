@@ -87,7 +87,7 @@ begin
 	f₄ = sin.(x₄)
 	g₄ = x₄-x₄.^3 ./6
 	plot(x₄, f₄, lw=4, label="sin(x)")
-	plot!(x₄, g₄, lw=4, label="x-x^3/6",legend=:bottomright)
+	plot!(x₄, g₄, lw=4, label="x-((x^3)/6)",legend=:bottomright)
 end
 
 # ╔═╡ f97b7b88-a7f3-4922-96c9-04fc488a034b
@@ -95,8 +95,8 @@ begin
 	x₅ = -0.2:0.01:0.2
 	f₅ = sin.(x₅)
 	g₅ = x₅-x₅.^3 ./6
-	plot(x₅, f₅-g₅, lw=4, label="sin(x)-x-x^3/6")
-	scatter!(x₅, x₅.^5/120, label="x^5/5!")
+	plot(x₅, f₅-g₅, lw=4, label="sin(x)-x-((x^3)/6)")
+	scatter!(x₅, x₅.^5/120, label="(x^5)/5!")
 end
 
 # ╔═╡ d4b500a4-a4bc-43f7-8851-ad206771bc35
@@ -163,7 +163,7 @@ md"""La convergencia es superlineal si existe $\epsilon_n\to 0$ tal que $|x_{n+1
 
 Esto es equivalente a considerar
 
-$\lim_{n\to \infty} \frac{\mid x_{n+1}-a\mid}{\mid x_n-a\mid}=0$"""
+$\lim_{n\to \infty} \frac{\mid x_{n+1}-a\mid}{\mid x_n-a\mid}=0.$"""
 
 # ╔═╡ c153f605-f972-4d62-8498-494d43533783
 md"""**Ejemplo:**
@@ -236,7 +236,7 @@ md"""Con la siguiente función podemos hallar una representación del polinomio 
 Taylor1([1,2,3])
 
 # ╔═╡ 3d72ec1d-bdd8-4d77-aa08-1cf20d349073
-md"""La función $\texttt{affine(a)}$ genera un polinomio de Taylor de orden 5 cuyo término constante es $a$."""
+md"""La función $\texttt{affine(a)}$ genera un polinomio de Taylor de orden $5$ cuyo término constante es $a$."""
 
 # ╔═╡ 779f3557-6138-41ee-ac19-6b031b995503
 affine(a) = a + Taylor1(typeof(a),5)  ## a + taylor-polynomial of order 5
@@ -266,7 +266,7 @@ cos(sin(1/(1+t^2)))
 (1+t)^sin(t)
 
 # ╔═╡ 19b63882-8944-48b4-a1eb-596600be4d1a
-md"""Ahora, consideremos las siguientes variables representadas en expansión de Taylor"""
+md"""Ahora, consideremos las siguientes variables representadas en expansión de Taylor:"""
 
 # ╔═╡ d5685d0e-ff7b-4c1b-8ea6-d5e2afc11eea
 x, y = set_variables("x y")
@@ -1489,7 +1489,7 @@ version = "1.13.0+0"
 # ╟─58a9d8a7-3320-48ba-940b-3fbfc12f339a
 # ╟─62234680-edd8-4a94-b11c-037dd9ad2f73
 # ╟─e27c6221-5911-4ab6-b1ed-a7eddfc26963
-# ╠═f97b7b88-a7f3-4922-96c9-04fc488a034b
+# ╟─f97b7b88-a7f3-4922-96c9-04fc488a034b
 # ╟─d4b500a4-a4bc-43f7-8851-ad206771bc35
 # ╟─46fdee32-ae0c-4f90-bb60-d787c901ecc6
 # ╟─59404fa3-dcd3-4a80-8386-31bd1620fc96
