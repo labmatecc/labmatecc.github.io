@@ -146,7 +146,7 @@ begin
 end
 
 # ╔═╡ 38a66945-ace2-4237-bfe4-cbec75334d0c
-md"""Observamos que en la iteración $33$ el programa finaliza con la aproximación $-3.1830630120821297$, con una longitud del intervalo de $|e|\approx 2.3\times 10^{-10}$ y un residuo de $|w|\approx 8.7\times 10^{-11}$.
+md"""Observe que en la iteración $33$ el programa finaliza con la aproximación $-3.1830630120821297$, con una longitud del intervalo de $|e|\approx 2.3\times 10^{-10}$ y un residuo de $|w|\approx 8.7\times 10^{-11}$.
 """
 
 # ╔═╡ 353d752c-5f19-4b8d-937b-7957cd93187a
@@ -154,15 +154,15 @@ md"""## Método de Newton
 
 Nuevamente tenemos una función cuyos ceros deben determinarse numéricamente. Sea $r$ un cero de $f(x)$ y $x$ una aproximación a $r$. Si $f''(x)$ existe y es continua, el teorema de Taylor nos dice que:
 
-$0 = f(r) = f(x + h) = f(x) + h f'(x) + O(h^2)$
+$0 = f(r) = f(x + h) = f(x) + h f'(x) + O(h^2),$
 
 donde $h = r - x$. Si $h$ es pequeño, es decir, si $x$ está cerca de $r$, es razonable ignorar el término $O(h^2)$ y resolver el resto de la ecuación para $h$. En consecuencia, se tiene que
 
-$h = -\frac{f(x)}{f'(x)}$
+$h = -\frac{f(x)}{f'(x)}.$
 
 Si $x$ está cerca de $r$, entonces $x - \frac{f(x)}{f'(x)}$ debería estar aún más cerca de $r$. El método de Newton comienza con una estimación $x_0$ de $r$ a partir de la cual se define una sucesión de aproximaciones:
 
-$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)} \quad (n \geq 0).$
+$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}, \quad (n \geq 0).$
 """
 
 # ╔═╡ 005f3a2c-49af-4521-83f5-1326672e3cb1
@@ -178,7 +178,7 @@ md"""**ALGORITMO de Newton**:
 6.   $\hspace{0.5cm}$**for** $k=1,2,\cdots, M$ **do**
 7.   $\hspace{1cm}w=f'(x_0)$
 8.   $\hspace{1cm}x_1=x_0-\frac{v}{w}$
-10.   $\hspace{1cm}$**if** $|x_1-x_2|<\delta$ o $|v|<\delta$
+10.   $\hspace{1cm}$**if** $|x_1-x_0|<\delta$ o $|v|<\delta$
 11.   $\hspace{1.5cm}$**stop**
 12.   $\hspace{1cm} x_0=x_1$
 16.   $\hspace{0.5cm}$ **end for**
@@ -339,7 +339,7 @@ md"""**Problema (Kelley)** Considere el método de Shamanskii de orden $m$ defin
 
 $z_1=x_n-f(x_n)/f'(x_n)$
 
-$z_{j+1}=z_{j}-f(z_j)/f'(x_n), \hspace{0.5cm}1\leq j\leq m-1$
+$z_{j+1}=z_{j}-f(z_j)/f'(x_n), \hspace{0.5cm}1\leq j\leq m-1,$
 
 $x_{n+1}=z_{m}.$
 
