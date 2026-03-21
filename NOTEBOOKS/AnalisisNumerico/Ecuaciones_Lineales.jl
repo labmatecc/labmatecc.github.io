@@ -412,7 +412,7 @@ begin
 end
 
 # ╔═╡ babd81de-8495-4bcf-9d14-a875ad2fdaf6
-md"""Recuerden que debemos mirar el número de de cóndición de la matriz, el comando *cond(H,p)* aproxima la condición de la matriz con $p=1,2,\infty$ """
+md"""Recuerden que debemos mirar el número de de cóndición de la matriz, el comando *cond(H,p)* aproxima la condición de la matriz con $p=1,2,\infty.$ """
 
 # ╔═╡ 9043e1a4-3833-4244-a282-77ac7cdb5e1c
 cond(H₅,Inf)
@@ -428,7 +428,7 @@ Esta matriz tiene un total de 494 filas y 494 columnas. Contiene 1666 entradas n
 """
 
 # ╔═╡ 23cb1bd5-2883-468c-943e-239916a1e164
-md"""A continuación cargamos dicha matriz, de la siguiente forma"""
+md"""A continuación cargamos dicha matriz, de la siguiente forma:"""
 
 # ╔═╡ ceab82c1-1adc-4be5-a4c7-52d0587c5515
 url = "https://suitesparse-collection-website.herokuapp.com/mat/HB/494_bus.mat" #url de la matriz
