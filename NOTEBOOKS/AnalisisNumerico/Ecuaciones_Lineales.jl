@@ -105,7 +105,15 @@ md"""Ahora consideremos la siguiente matriz:"""
 A1=[0 0 1; -1  2  0; 1 2  1]
 
 # ╔═╡ 0ff22446-02cd-4c1a-868e-02b909ed6e80
-md"""Algunos valores de las normas de $A$ son:"""
+md"""Algunos valores de las normas de esta matriz son:"""
+
+# ╔═╡ 69daeb44-c973-4b48-a646-d83fd7faf00d
+begin
+	println("La norma  2 de la matrix extendida a vector  es = ", norm(A1))
+	println("La norma de Frobenious es = ",norm(A1,2)) # Frobeniusln
+	println("La norma subordinada 1 es = ",opnorm(A1,1))
+	println("La norma subordinada Inf es = ", opnorm(A1,Inf))
+end
 
 # ╔═╡ a01ee843-e60d-469a-8eb4-0abbabda7df4
 md"""# Factorizaciones"""
@@ -169,18 +177,10 @@ $A = \begin{pmatrix}
 60 & 30 & 20 \\
 30 & 20 & 15 \\
 20 & 15 & 12
-\end{pmatrix}$"""
+\end{pmatrix}.$"""
 
 # ╔═╡ ddd6ff6f-3e60-49aa-9aec-001b3578f511
 A=[60 30 20; 30 20 15; 20 15 12] #Definimos la matriz
-
-# ╔═╡ 69daeb44-c973-4b48-a646-d83fd7faf00d
-begin
-	println("La norma  2 de la matrix extendida a vector  es = ", norm(A))
-	println("La norma de Frobenious es = ",norm(A,2)) # Frobeniusln
-	println("La norma subordinada 1 es = ",opnorm(A,1))
-	println("La norma subordinada Inf es = ", opnorm(A,Inf))
-end
 
 # ╔═╡ f16922f2-3e6b-405d-b7a6-e3a6cd73e4f2
 md"""Con ayuda de la función creada hallamos su factorización LU."""
@@ -232,7 +232,7 @@ begin
 end
 
 # ╔═╡ e837f218-1099-4bc4-b8a9-cd9a2ef3d014
-md""" Podemos calcular la norma del residuo de la factorización: $|| PA-LU||$,"""
+md""" Podemos calcular la norma del residuo de la factorización: $|| PA-LU||$."""
 
 # ╔═╡ f4d510f5-0995-48c9-8940-1ab8e1eca805
 opnorm(luA.P*A₁-luA.L*luA.U)
@@ -264,7 +264,7 @@ end
 # ╔═╡ 50fdd35a-de2a-4a75-acbc-5c337626d772
 md"""**Ejemplo 3:**
 
-Calculemos la permutación de la factorización $PA=LU$ para una matriz diagonal dominante. """
+Calculemos la permutación de la factorización $PA=LU$ para la siguiente matriz diagonal dominante. """
 
 # ╔═╡ abd66ffe-97bf-44b9-8713-16a4041463b4
 A₂ =[5 -1 2 -1; -1 5 0 1; 0 -1 4 2; 1 1 1 5] #Definimos la matriz A
@@ -287,7 +287,7 @@ md"""Observe que en este caso la matriz de permutación es la matriz identidad. 
 # ╔═╡ 36dc58de-640a-4328-8ed8-08c5485ea749
 md"""## Factorización de Cholesky
 
-El algoritmo para la factorización de Cholesky es un caso especial del algoritmo general para la factorización LU. Si $A$ es real, simétrica y definida positiva, entonces, por el teorema 2 de [1], tiene una factorización única de la forma $A = LL^T$, en donde $L$ es triangular inferior y tiene una diagonal positiva.
+El algoritmo para la factorización de Cholesky es un caso especial del algoritmo general para la factorización LU. Si $A$ es real, simétrica y definida positiva, entonces, por el teorema $2$ de $[1]$, tiene una factorización única de la forma $A = LL^T$, en donde $L$ es triangular inferior y tiene una diagonal positiva.
 
 El algoritmo para la factorización de Cholesky es el siguiente.
 """
@@ -333,7 +333,7 @@ begin
 end
 
 # ╔═╡ 61afa6a1-f109-4cc0-a102-c681f029e613
-md"""Note que por defecto Julia define $U=L^T.$"""
+md"""Note que por defecto Julia define $U=L^T$."""
 
 # ╔═╡ 340d2511-6df3-4ef7-a3d0-6d98d675dc92
 typeof(cholA.L) #Tipo de dato que es L
