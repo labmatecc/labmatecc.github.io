@@ -165,7 +165,7 @@ begin
 end
 
 # ╔═╡ 6a1957f2-e862-4bb0-a0f3-68b2d300534f
-md"""Para $x=\pi$ se tiene lo siguiente"""
+md"""Para $x=\pi$ se tiene lo siguiente:"""
 
 # ╔═╡ 649b75ff-e2a2-4b62-81a6-823d33ef330a
 begin
@@ -181,7 +181,7 @@ end
 
 # ╔═╡ da416d35-d074-4e37-bff6-cd2f04510d0e
 md"""Podemos consultar por el 
- de la maquina y el rango representado. """
+ de la máquina y el rango representado. """
 
 # ╔═╡ dcba3ba7-e801-4039-8a78-d1725aafa03e
 for Ft in [Float16,Float32,Float64,BigFloat]
@@ -305,7 +305,7 @@ end
 # ╔═╡ f9ddce28-e503-4203-b02b-831f85a347ec
 md"""**Ejemplo:**
 
-Otro ejemplo es el de calcular $\sqrt{a^2+b^2}$ con $a=$1E+200 y $b=1$."""
+Otro ejemplo es el de calcular $\sqrt{a^2+b^2}$ con $a=1E+200$ y $b=1$."""
 
 # ╔═╡ e8846356-38b7-43a5-bb31-d5a7f4a8d63b
 begin
@@ -442,7 +442,7 @@ md"""# Problemas"""
 
 # ╔═╡ 3b0181ce-5038-4c34-9629-40adb5c585c2
 md"""
-**PROBLEMA 1.** ¿Cuánta memoria requiere guardar 100.000 números de punto flotante de precisión doble?¿Cuánta memoria requiere guardar una matriz de números de punto flotante dimensión 100.000 x 100.000?
+**PROBLEMA 1.** ¿Cuánta memoria requiere guardar 100.000 números de punto flotante de precisión doble?¿Cuánta memoria requiere guardar una matriz de números de punto flotante dimensión $100.000 \times 100.000$?
 
 **PROBLEMA 2.** Describe el tipo BigFloat the Julia. 
 
@@ -2054,7 +2054,7 @@ version = "1.13.0+0"
 # ╟─f1bbb819-c83c-4b62-a376-a7a3ef82df04
 # ╠═2d843847-ef7e-47d0-a255-c5ec3cc5ec57
 # ╟─65543d5f-4d55-4dc5-917b-8a241e09fe86
-# ╟─4ffbafed-ca8d-443e-92ff-ec6a6d76f05d
+# ╠═4ffbafed-ca8d-443e-92ff-ec6a6d76f05d
 # ╟─1afd2287-6a84-4f16-ab6c-141fce1782cd
 # ╟─db2fc0fd-a234-490e-b3a0-936efd699b9c
 # ╠═d794e5ad-d893-41c3-a257-2ed0af0390dd
