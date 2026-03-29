@@ -192,7 +192,7 @@ md"""La siguiente función es la implementación del método de Newton."""
 function minewton(f,fp,x0,myeps,mydel,max_iter)
     #=f(x)=0 usando newton xn=xa-f(xa)/fp(xa)
     ----------
-    f : funnción
+    f : función
     fp : Derivada
     x0 : Aproximación inicial
     epsilon : Tolerancia residuo.
@@ -308,7 +308,7 @@ En Julia, las librerías $\texttt{Roots}$ y $\texttt{NLsolve}$ son herramientas 
 La librería $\texttt{Roots}$ está diseñada para encontrar las raíces (o ceros) de funciones de una sola variable. Se utiliza para resolver ecuaciones de la forma $f(x)=0$. Esta librería ofrece varios métodos numéricos para la búsqueda de raíces, incluyendo el método de Bisección, el método de Newton, el método de la Secante y el método de Regula Falsi: Un método que combina aspectos de la bisección y la secante, ver [2]."""
 
 # ╔═╡ 463422ed-d182-40d2-9b9c-a677c8486951
-md"""A continuación se presenta un ejemplo"""
+md"""A continuación se presenta el siguiente ejemplo:"""
 
 # ╔═╡ 674c9c17-db7c-4d37-b152-c0ef4eede8da
 f1(x)=exp(x)-sin(x) #Definimos la función
@@ -320,7 +320,7 @@ x=fzero(f1,-4,-3) #Hallamos la raíz en el intervalo [-4,-3]
 md"""La librería $\texttt{NLsolve}$ se utiliza para resolver sistemas de ecuaciones no lineales. Es útil para problemas en los que se busca encontrar un vector $x$ tal que el sistema de ecuaciones no lineales $F(x)=0$ sea satisfecho, donde $F$ es una función vectorial que devuelve un vector de valores. Los principales métodos que usa son el método de Newton-Raphson y el método de Levenberg-Marquardt, ver [3]."""
 
 # ╔═╡ 5e0cc28f-6dfb-4c90-8979-418c93548084
-md"""A continuación se presenta un ejemplo"""
+md"""A continuación se presenta el siguiente ejemplo:"""
 
 # ╔═╡ ad0d9818-b39e-4134-93a8-4605d7f1923b
 function fv(F,x) #Definimos el sistema de ecuaciones no lineales
@@ -365,7 +365,7 @@ donde $g=9.8 \frac{m}{s^2}$. Suponga que el objeto se ha movido $1$ metro en un 
 # ╔═╡ 547e2260-633e-4b63-9735-5bc11721bbf7
 md"""**Problema (Quarteroni, Saleri, Gervasio)** La longitud máxima de una varilla que se puede arrastrar de un extremo a otro deslizandola por un pasillo es 
 
-$L=\frac{l_2}{\sin(\pi-\gamma-\alpha)}+\frac{l_1}{\sin(\alpha)}$
+$L=\frac{l_2}{\sin(\pi-\gamma-\alpha)}+\frac{l_1}{\sin(\alpha)},$
 donde $\alpha$ es la solución de la ecuación
 
 $l_2 \frac{\cos(\pi-\gamma-\alpha)}{\sin^2(\pi-\gamma-\alpha)}-l_1\frac{\cos(\alpha)}{\sin^2(\alpha)}=0.$
