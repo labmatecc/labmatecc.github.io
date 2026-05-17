@@ -247,13 +247,13 @@ md"""# Compresión de imágenes
 Este proceso utiliza las componentes principales para representar la información de la imagen de entrada en un espacio de dimensionalidad reducida, lo que puede conducir a una compresión efectiva de la información manteniendo la mayor parte de la variabilidad importante en la imagen original."""
 
 # ╔═╡ 4d8b94f0-5719-4548-b088-637de34f98ae
-md"""Cargamos la imagen deseada"""
+md"""Cargamos la imagen deseada."""
 
 # ╔═╡ 485d894c-65c9-4702-8203-036840f8038a
 url₆="https://upload.wikimedia.org/wikipedia/commons/9/94/BOGOTA_CITY.jpg"
 
 # ╔═╡ 5ce31dc3-b706-46b4-872d-5ee2989628b6
-md"""Bajamos la imagen a la máquina local"""
+md"""Bajamos la imagen a la máquina local."""
 
 # ╔═╡ 7d0e4529-7259-4254-ac1c-05352db366e3
 fname₆ = download(url₆)
@@ -340,13 +340,13 @@ md"""La matriz reconstruida se reformatea a las dimensiones originales y se guar
 matriz_reconstruida = reshape(matriz_reconstruid, m, n, :);
 
 # ╔═╡ 9156af1d-fd9a-4dd7-a379-45d4fa9e654b
-md"""La imagen comprimida es la siguiente"""
+md"""La imagen comprimida es la siguiente:"""
 
 # ╔═╡ 03d110fb-57cb-4162-abf1-5936348d826d
 imagenc_omprida = colorview(RGB, matriz_reconstruida)
 
 # ╔═╡ 9443a8bc-44b8-475e-be04-97811555103e
-md"""Con la siguiente función podemos hallar la diferencia (error) entre dos imagenes"""
+md"""Con la siguiente función podemos hallar la diferencia (error) entre dos imagenes:"""
 
 # ╔═╡ 01236d8e-a74f-44dc-ad89-9e7b0ea653bd
 function error(imagen1, imagen2)
@@ -394,7 +394,7 @@ md"""Realizamos varios ejemplos, tomando diferentes valores para el número de c
 Im3=pca(imag₆, 50)    Im4=pca(imag₆, 1000)]
 
 # ╔═╡ 1f56e7fb-a482-41b4-8012-f3f5266763fc
-md"""Los errores de estas compresiones respectivamente son"""
+md"""Los errores de estas compresiones respectivamente son:"""
 
 # ╔═╡ f3afcf7f-eabd-4ba9-8208-fc7abbd724d1
 [error(imag₆, Im1)    error(imag₆, Im2);
