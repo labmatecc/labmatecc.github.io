@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.5
+# v0.20.24
 
 using Markdown
 using InteractiveUtils
@@ -61,7 +61,7 @@ Ejemplos comunes:
 - **96.000 Hz** – Audio de alta resolución, usado en producción musical profesional.
 - **192.000 Hz** – Mastering y aplicaciones especializadas de alta fidelidad.
 
-La **cuantificación** puede entenderse como el proceso de mapear valores reales continuos a un subconjunto finito de representaciones numéricas compatibles con la aritmética de punto fijo o punto flotante en un sistema digital. Tras el muestreo de una señal analógica —donde se obtiene una secuencia de valores reales en el tiempo— cada uno de estos valores es proyectado al número de máquina más cercano dentro de un dominio finito definido por la arquitectura del sistema, usualmente determinado por la profundidad en bits. Esta profundidad establece la cardinalidad del conjunto de representaciones posibles: por ejemplo, una profundidad de 16 bits permite $2^{16}$ numeros de maquina, mientras que 24 bits permiten $2^{24}$, lo que reduce el error de redondeo o ruido de cuantización, análogo al error de truncamiento en representaciones numéricas. En términos de representación interna, este proceso convierte cada valor cuantificado en una cadena binaria fija.
+La **cuantificación** puede entenderse como el proceso de mapear valores reales continuos a un subconjunto finito de representaciones numéricas compatibles con la aritmética de punto fijo o punto flotante en un sistema digital. Tras el muestreo de una señal analógica —donde se obtiene una secuencia de valores reales en el tiempo— cada uno de estos valores es proyectado al número de máquina más cercano dentro de un dominio finito definido por la arquitectura del sistema, usualmente determinado por la profundidad en bits. Esta profundidad establece la cardinalidad del conjunto de representaciones posibles: por ejemplo, una profundidad de 16 bits permite $2^{16}$ números de maquina, mientras que 24 bits permiten $2^{24}$, lo que reduce el error de redondeo o ruido de cuantización, análogo al error de truncamiento en representaciones numéricas. En términos de representación interna, este proceso convierte cada valor cuantificado en una cadena binaria fija.
 
 
 
@@ -77,7 +77,7 @@ md"
 Una representación general de una señal digitalizada es un vector:
 
 
-$x(t_n) = \{x(t_0), x(t_1), x(t_2), \dots, x(t_{N-1})\}$
+$x(t_n) = \{x(t_0), x(t_1), x(t_2), \dots, x(t_{N-1})\},$
 
 donde cada $t_n = \dfrac{n}{f_s}$ indica el instante de muestreo asociado al índice $n$ , y $f_s$ es la frecuencia de muestreo.
 
@@ -92,7 +92,7 @@ Definamos los parametros de nuestra señal:
 
 # ╔═╡ 0be7bac8-d270-4245-b40e-6723903500ff
 md"
-Creemos una señal de ejemplo (una onda sinusoidal)
+Creemos una señal de ejemplo (una onda sinusoidal).
 "
 
 # ╔═╡ c98dd202-d540-4273-8c54-da880d8c74a0
@@ -110,7 +110,7 @@ theme(:ggplot2)
 
 # ╔═╡ 80d4fc9b-1ad8-47e2-a520-44b7d5878144
 md"
-Con este control deslizable puede modificar la frecuencia_muestreo
+Con este control deslizable puede modificar la frecuencia_muestreo.
 "
 
 # ╔═╡ f59922ae-378a-40b1-850e-3f6b1bf2b90a
@@ -124,7 +124,7 @@ end;
 
 # ╔═╡ b1f7280c-64e9-433c-a23a-37a0a962d277
 md"
-Con este control deslizable puede modificar los Hz de la señal
+Con este control deslizable puede modificar los Hz de la señal.
 "
 
 # ╔═╡ 8c889fe5-213f-4454-8114-9bb38db4a70f
@@ -188,7 +188,7 @@ end;
 
 # ╔═╡ 48239a9b-ad53-4850-a85f-de4ca6c8161f
 md"
-Se definen dos señales diferentes para los canales izquierdo y derecho
+Se definen dos señales diferentes para los canales izquierdo y derecho.
 "
 
 # ╔═╡ cb0edd9b-bf9e-4fbb-bbe4-fa66110e2bb7
@@ -201,7 +201,7 @@ begin
 end;
 
 # ╔═╡ b43daf36-c62f-4c60-adae-11a2670fc57e
-md"Se combinan los dos canales en una matriz de 2 columnas"
+md"Se combinan los dos canales en una matriz de 2 columnas."
 
 # ╔═╡ cba5713e-fb21-4622-bd95-421e8b007782
 senal_estereo = hcat(canal_izquierdo_estereo, canal_derecho_estereo)
@@ -319,7 +319,7 @@ Empecemos importandolo localmente:
 
 > **NOTA:** El archivo utilizado en el notebook se encuentra en el siguiente link https://freewavesamples.com/bontempi-b3-c6
 
-Escribimos la ruta del archivo .wav y lo guardamos en la variable ruta\_archivo\_local
+Escribimos la ruta del archivo .wav y lo guardamos en la variable ruta\_archivo\_local.
 "
 
 # ╔═╡ 72d2b449-b303-46e2-8e9c-7f1b158d7dea
@@ -329,7 +329,7 @@ ruta_archivo_local = "Bontempi-B3-C6.wav"
 md"
 Se extrae la señal del audio y se guarda en la variable audio\_data\_local.
 
-Se extrae la frecuencia de muestreo y se guarda en la variable frecuencia\_muestreo\_audio\_local.
+Ahora, se extrae la frecuencia de muestreo y se guarda en la variable frecuencia\_muestreo\_audio\_local.
 "
 
 # ╔═╡ 8cc5326d-16b6-4eb6-9d05-4fa9bb32a586
@@ -348,7 +348,7 @@ begin
 end
 
 # ╔═╡ 94e5a4fd-9a8a-4d51-be27-457d0c0bbb1f
-md"Calculamos el numero de muestras y numero de canales:"
+md"Calculamos el número de muestras y número de canales:"
 
 # ╔═╡ 9779a4a2-10d9-4c44-9a7e-cb3571e5ddd0
 begin 
@@ -366,7 +366,7 @@ tiempo_local = range(0, stop=(num_muestras_local - 1) / frecuencia_muestreo_audi
 
 # ╔═╡ 8489312a-8c60-4162-b211-71afaa70a542
 md"
-Graficamos los dos canales en la misma grafica
+Graficamos los dos canales en la misma gráfica.
 "
 
 # ╔═╡ aae90516-3d69-466e-a1ef-e43341f06b55
@@ -380,7 +380,7 @@ end
 
 # ╔═╡ 5acc89d7-b9ce-4b96-bbb8-968365de8e09
 md"
-Tambien podemos graficar los canales por separado:
+También podemos graficar los canales por separado:
 "
 
 # ╔═╡ b9ed7ec4-9821-448e-9c2f-a1956d749fdb
@@ -404,7 +404,7 @@ end
 
 # ╔═╡ 896d6cd9-2798-41fe-90b0-b7a63894cad2
 md"
-Calculamos la duracion de la señal diviendo el numero de muestras entre la frecuencia de muestreo:
+Calculamos la duración de la señal diviendo el número de muestras entre la frecuencia de muestreo:
 "
 
 # ╔═╡ 33f3a9cb-5398-496f-a867-40ffe3469d39
@@ -412,7 +412,7 @@ duracion_audio_local = num_muestras_local / frecuencia_muestreo_audio_local;
 
 # ╔═╡ f816b793-8234-491d-99af-848e88650a81
 md"
-Imprimimos los metadatos del archivo wav
+Imprimimos los metadatos del archivo wav.
 "
 
 # ╔═╡ ceb08589-ece4-4c77-ba0c-6d18e831d12c
@@ -427,7 +427,7 @@ end
 
 # ╔═╡ 1e711fc4-e945-4342-a9f9-341639d9fc48
 md"
-Tambien podemos importar un archivo directamente desde una web:
+También podemos importar un archivo directamente desde una web:
 "
 
 # ╔═╡ 54a5d257-58f0-4595-a19c-c52fdfb46464
@@ -446,7 +446,7 @@ end;
 
 # ╔═╡ f06724b0-194a-42d9-95c3-928dc9427bf7
 md"
-Se lee el archivo Wav desde el archivo temporal
+Se lee el archivo Wav desde el archivo temporal:
 "
 
 # ╔═╡ 5c75a606-a470-43fe-92f4-6ab9fffabf1f
@@ -454,7 +454,7 @@ audio_data, frecuencia_muestreo_audio = wavread(archivo_temporal);
 
 # ╔═╡ a7b854e2-d64e-4ce2-89b2-63e8b8f959f6
 md"
-Se imprimen los datos anteriormente guardados
+Se imprimen los datos anteriormente guardados.
 "
 
 # ╔═╡ ca27de1f-5ab6-4d48-ab5f-01e9418381fe
@@ -467,7 +467,7 @@ begin
 end
 
 # ╔═╡ e060bf70-ee83-4203-9557-9976fdd351e7
-md"Calculamos el numero de muestras y numero de canales:"
+md"Calculamos el número de muestras y número de canales:"
 
 # ╔═╡ fc865d70-4c0a-42e2-8dd3-1c2c934c7cb3
 begin
@@ -495,7 +495,7 @@ end
 
 # ╔═╡ 09a456da-f21a-40a2-b6ac-218c2a44367c
 md"
-Se calcula la duracion de la señal diviendo el numero de muestras entre la frecuencia de muestreo:
+Se calcula la duración de la señal diviendo el número de muestras entre la frecuencia de muestreo:
 "
 
 # ╔═╡ 84eea23a-1461-4348-8516-93b1f7ac6ed0
@@ -536,7 +536,7 @@ Cambiar el volumen de una señal implica multiplicar la amplitud de cada muestra
 
 # ╔═╡ 3dac4551-8e9d-43a6-9d00-b73b269b07b8
 md"
-El siguiente control deslizante permite modificar el escalar por el que va a aumentar/disminuir el volumen 
+El siguiente control deslizante permite modificar el escalar por el que va a aumentar/disminuir el volumen: 
 "
 
 # ╔═╡ 55617754-42d9-4880-bf5d-e4310bd869c3
@@ -544,7 +544,7 @@ El siguiente control deslizante permite modificar el escalar por el que va a aum
 
 # ╔═╡ cd0b65af-0b27-476e-a077-0130044d0bc5
 md"
-Utilizaremos la señal **Mono**
+Utilizaremos la señal **Mono**.
 "
 
 # ╔═╡ 1bda3aeb-27d0-40d3-9aa5-59e2f4967ff6
@@ -580,7 +580,7 @@ end
 
 # ╔═╡ 9f63dfa0-86c0-4a83-b1f6-864e341f0b8a
 md"
-Tenga presente que si aumenta el volumen (amplitud) demasiado, las amplitudes pueden exceder el rango maximo representable por el tipo de datos (por ejemplo, -32768 a 32767 para Int16). Esto se conoce como 'clipping' y puede introducir distorsión. Es importante tener cuidado con los factores de escala grandes y posiblemente 'clipear' los valores a los límites del rango si es necesario.
+Tenga presente que si aumenta el volumen (amplitud) demasiado, las amplitudes pueden exceder el rango máximo representable por el tipo de datos (por ejemplo, -32768 a 32767 para Int16). Esto se conoce como 'clipping' y puede introducir distorsión. Es importante tener cuidado con los factores de escala grandes y posiblemente 'clipear' los valores a los límites del rango si es necesario.
 "
 
 # ╔═╡ ad3ad198-b6c6-432d-9912-fcef1840b6c5
@@ -627,7 +627,7 @@ fragmento_audio = audio_data[indice_inicio:indice_fin, :]
 
 # ╔═╡ 54fad877-9f6f-4221-bca8-10de84475ab3
 md"
-Se grafica el audio recortado:
+Se gráfica el audio recortado:
 "
 
 # ╔═╡ cd4a9580-872e-4581-9059-1610cc2d65a8
@@ -647,7 +647,7 @@ end
 
 # ╔═╡ ad0d97da-edef-46c1-89ae-275a20c47fc7
 md"
-Tambien podemos recortar el audio seleccionando la muestra inicial y final, para ello definimos dos sliders que marcan el inicio y fin de las muestras:
+También podemos recortar el audio seleccionando la muestra inicial y final, para ello definimos dos sliders que marcan el inicio y fin de las muestras:
 " 
 
 # ╔═╡ e0e6c019-92b2-458d-9cef-97804185d5cd
@@ -658,7 +658,7 @@ Tambien podemos recortar el audio seleccionando la muestra inicial y final, para
 
 # ╔═╡ 12ba98eb-ba1b-4842-bcdf-44d00d369b03
 md"
-se recorta el audio utilizando los indices:
+Se recorta el audio utilizando los indices:
 "
 
 # ╔═╡ 0bb73a03-89c2-46af-9a79-2009b0be1e37
@@ -666,7 +666,7 @@ fragmento_audio_por_muestra = audio_data[indice_inicio_muestra:indice_fin_muestr
 
 # ╔═╡ 863764f6-bc8f-480e-9dbb-d1300c1e539b
 md"
-Se grafica el audio recortado:
+Se gráfica el audio recortado:
 "
 
 # ╔═╡ 3596f942-a733-4f72-b71c-bdf8caf739e3
@@ -710,7 +710,7 @@ end;
 
 # ╔═╡ 58b7722a-7acd-4d6d-956a-5b407e1ea643
 md"
-Se leen los archivos Wav
+Se leen los archivos Wav:
 "
 
 # ╔═╡ 3c1ba380-12ae-4af9-874f-9db1c3824b80
@@ -751,7 +751,7 @@ Se mezclan las señales sumandolas muestra a muestra.
 audio_mezclado = audio_data1_truncado + audio_data2_truncado;
 
 # ╔═╡ fa698d21-f2c1-4b3d-84b9-f726825eba73
-md"Calculamos el numero de muestras y numero de canales del audio 1 y audio 2:"
+md"Calculamos el número de muestras y número de canales del audio 1 y audio 2:"
 
 # ╔═╡ c0c76d9c-cc4a-4eb6-adf6-0be78d4c86d9
 begin 
@@ -776,7 +776,7 @@ end;
 
 # ╔═╡ 661b1dbd-3f08-4b51-b51a-33b7c3846c86
 md"
-Se grafica la señal 1 y la señal 2:
+Se gráfica la señal 1 y la señal 2:
 "
 
 # ╔═╡ d10f6d69-4c86-49d5-8286-5b9c96434dc6
@@ -800,7 +800,7 @@ end
 
 # ╔═╡ 315b0d85-6984-40fc-886f-b901c630fc82
 md"
-Se grafica la mezcla de ambas señales:
+Se gráfica la mezcla de ambas señales:
 "
 
 # ╔═╡ 3b88aab6-b682-4755-a467-29eab5c804ae
@@ -831,7 +831,7 @@ audio_invertido_mono = reverse(audio_mezclado);
 
 # ╔═╡ bdb11222-e184-412e-943e-fc74dce50a90
 md"
-Se grafica la señal invertida:
+Se gráfica la señal invertida:
 "
 
 # ╔═╡ e1c74ab6-020d-4e81-808b-82e421ac2cdf
@@ -899,9 +899,9 @@ WAV = "8149f6b0-98f6-5db9-b78f-408fbbb8ef88"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.4"
+julia_version = "1.12.6"
 manifest_format = "2.0"
-project_hash = "8d505db8727a4c261d4cd84e70073e4db49147fe"
+project_hash = "693ce4efe557940888b3bc71e2892b9553b5a49d"
 
 [[deps.AbstractFFTs]]
 deps = ["LinearAlgebra"]
@@ -931,13 +931,15 @@ version = "1.1.3"
 
 [[deps.ArgTools]]
 uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
-version = "1.1.1"
+version = "1.1.2"
 
 [[deps.Artifacts]]
 uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
+version = "1.11.0"
 
 [[deps.Base64]]
 uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
+version = "1.11.0"
 
 [[deps.Bessels]]
 git-tree-sha1 = "4435559dc39793d53a9e3d278e185e920b4619ef"
@@ -1008,7 +1010,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.1.1+0"
+version = "1.3.0+1"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
@@ -1062,6 +1064,7 @@ version = "0.18.22"
 [[deps.Dates]]
 deps = ["Printf"]
 uuid = "ade2ca70-3891-5945-98fb-dc099432e06a"
+version = "1.11.0"
 
 [[deps.Dbus_jll]]
 deps = ["Artifacts", "Expat_jll", "JLLWrappers", "Libdl"]
@@ -1083,7 +1086,7 @@ version = "0.9.4"
 [[deps.Downloads]]
 deps = ["ArgTools", "FileWatching", "LibCURL", "NetworkOptions"]
 uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
-version = "1.6.0"
+version = "1.7.0"
 
 [[deps.EpollShim_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1139,6 +1142,7 @@ weakdeps = ["HTTP"]
 
 [[deps.FileWatching]]
 uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
+version = "1.11.0"
 
 [[deps.FixedPointNumbers]]
 deps = ["Statistics"]
@@ -1172,6 +1176,7 @@ version = "1.0.17+0"
 [[deps.Future]]
 deps = ["Random"]
 uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
+version = "1.11.0"
 
 [[deps.GLFW_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll", "libdecor_jll", "xkbcommon_jll"]
@@ -1253,6 +1258,7 @@ version = "2025.0.4+0"
 [[deps.InteractiveUtils]]
 deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+version = "1.11.0"
 
 [[deps.IrrationalConstants]]
 git-tree-sha1 = "e2222959fbc6c19554dc15174c81bf7bf3aa691c"
@@ -1287,6 +1293,11 @@ deps = ["Artifacts", "JLLWrappers", "Libdl"]
 git-tree-sha1 = "eac1206917768cb54957c65a615460d87b455fc1"
 uuid = "aacddb02-875f-59d6-b918-886e6ef4fbf8"
 version = "3.1.1+0"
+
+[[deps.JuliaSyntaxHighlighting]]
+deps = ["StyledStrings"]
+uuid = "ac6e5ff7-fb65-4e79-a425-ec3bc9c03011"
+version = "1.12.0"
 
 [[deps.LAME_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1336,6 +1347,7 @@ version = "0.16.6"
 [[deps.LazyArtifacts]]
 deps = ["Artifacts", "Pkg"]
 uuid = "4af54fe1-eca0-43a8-85a7-787d91b784e3"
+version = "1.11.0"
 
 [[deps.LibCURL]]
 deps = ["LibCURL_jll", "MozillaCACerts_jll"]
@@ -1343,26 +1355,28 @@ uuid = "b27032c2-a3e7-50c8-80cd-2d36dbcbfd21"
 version = "0.6.4"
 
 [[deps.LibCURL_jll]]
-deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll", "Zlib_jll", "nghttp2_jll"]
+deps = ["Artifacts", "LibSSH2_jll", "Libdl", "OpenSSL_jll", "Zlib_jll", "nghttp2_jll"]
 uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
-version = "8.4.0+0"
+version = "8.15.0+0"
 
 [[deps.LibGit2]]
-deps = ["Base64", "LibGit2_jll", "NetworkOptions", "Printf", "SHA"]
+deps = ["LibGit2_jll", "NetworkOptions", "Printf", "SHA"]
 uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
+version = "1.11.0"
 
 [[deps.LibGit2_jll]]
-deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll"]
+deps = ["Artifacts", "LibSSH2_jll", "Libdl", "OpenSSL_jll"]
 uuid = "e37daf67-58a4-590a-8e99-b0245dd2ffc5"
-version = "1.6.4+0"
+version = "1.9.0+0"
 
 [[deps.LibSSH2_jll]]
-deps = ["Artifacts", "Libdl", "MbedTLS_jll"]
+deps = ["Artifacts", "Libdl", "OpenSSL_jll"]
 uuid = "29816b5a-b9ab-546f-933c-edad1886dfa8"
-version = "1.11.0+1"
+version = "1.11.3+1"
 
 [[deps.Libdl]]
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
+version = "1.11.0"
 
 [[deps.Libffi_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1415,6 +1429,7 @@ version = "2.41.0+0"
 [[deps.LinearAlgebra]]
 deps = ["Libdl", "OpenBLAS_jll", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+version = "1.12.0"
 
 [[deps.LogExpFunctions]]
 deps = ["DocStringExtensions", "IrrationalConstants", "LinearAlgebra"]
@@ -1434,6 +1449,7 @@ version = "0.3.29"
 
 [[deps.Logging]]
 uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
+version = "1.11.0"
 
 [[deps.LoggingExtras]]
 deps = ["Dates", "Logging"]
@@ -1458,8 +1474,9 @@ uuid = "1914dd2f-81c6-5fcd-8719-6d5c9610ff09"
 version = "0.5.15"
 
 [[deps.Markdown]]
-deps = ["Base64"]
+deps = ["Base64", "JuliaSyntaxHighlighting", "StyledStrings"]
 uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
+version = "1.11.0"
 
 [[deps.MbedTLS]]
 deps = ["Dates", "MbedTLS_jll", "MozillaCACerts_jll", "NetworkOptions", "Random", "Sockets"]
@@ -1468,7 +1485,8 @@ uuid = "739be429-bea8-5141-9913-cc70e7f3736d"
 version = "1.1.9"
 
 [[deps.MbedTLS_jll]]
-deps = ["Artifacts", "Libdl"]
+deps = ["Artifacts", "JLLWrappers", "Libdl"]
+git-tree-sha1 = "602f302c470571202c8ea3fef2a39f0a419e0caa"
 uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
 version = "2.28.2+1"
 
@@ -1485,10 +1503,11 @@ version = "1.2.0"
 
 [[deps.Mmap]]
 uuid = "a63ad114-7e13-5084-954f-fe012c677804"
+version = "1.11.0"
 
 [[deps.MozillaCACerts_jll]]
 uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
-version = "2023.1.10"
+version = "2025.11.4"
 
 [[deps.NaNMath]]
 deps = ["OpenLibm_jll"]
@@ -1498,7 +1517,7 @@ version = "1.1.3"
 
 [[deps.NetworkOptions]]
 uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
-version = "1.2.0"
+version = "1.3.0"
 
 [[deps.Ogg_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1509,12 +1528,12 @@ version = "1.3.5+1"
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.23+4"
+version = "0.3.29+0"
 
 [[deps.OpenLibm_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "05823500-19ac-5b8b-9628-191a04bc5112"
-version = "0.8.1+2"
+version = "0.8.7+0"
 
 [[deps.OpenSSL]]
 deps = ["BitFlags", "Dates", "MozillaCACerts_jll", "OpenSSL_jll", "Sockets"]
@@ -1523,10 +1542,9 @@ uuid = "4d8831e6-92b7-49fb-bdf8-b643e874388c"
 version = "1.4.3"
 
 [[deps.OpenSSL_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "a9697f1d06cc3eb3fb3ad49cc67f2cfabaac31ea"
+deps = ["Artifacts", "Libdl"]
 uuid = "458c3c95-2e84-50aa-8efc-19380b2a3a95"
-version = "3.0.16+0"
+version = "3.5.4+0"
 
 [[deps.OpenSpecFun_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "Libdl"]
@@ -1548,7 +1566,7 @@ version = "1.8.0"
 [[deps.PCRE2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "efcefdf7-47ab-520b-bdef-62a2eaa19f15"
-version = "10.42.0+1"
+version = "10.44.0+1"
 
 [[deps.Pango_jll]]
 deps = ["Artifacts", "Cairo_jll", "Fontconfig_jll", "FreeType2_jll", "FriBidi_jll", "Glib_jll", "HarfBuzz_jll", "JLLWrappers", "Libdl"]
@@ -1569,9 +1587,13 @@ uuid = "30392449-352a-5448-841d-b1acce4e97dc"
 version = "0.44.2+0"
 
 [[deps.Pkg]]
-deps = ["Artifacts", "Dates", "Downloads", "FileWatching", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
+deps = ["Artifacts", "Dates", "Downloads", "FileWatching", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "Random", "SHA", "TOML", "Tar", "UUIDs", "p7zip_jll"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
-version = "1.10.0"
+version = "1.12.1"
+weakdeps = ["REPL"]
+
+    [deps.Pkg.extensions]
+    REPLExt = "REPL"
 
 [[deps.PlotThemes]]
 deps = ["PlotUtils", "Statistics"]
@@ -1644,6 +1666,7 @@ version = "1.4.3"
 [[deps.Printf]]
 deps = ["Unicode"]
 uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
+version = "1.11.0"
 
 [[deps.PtrArrays]]
 git-tree-sha1 = "1d36ef11a9aaf1e8b74dacc6a731dd1de8fd493d"
@@ -1675,12 +1698,14 @@ uuid = "e99dba38-086e-5de3-a5b1-6e4c66e897c3"
 version = "6.7.1+1"
 
 [[deps.REPL]]
-deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
+deps = ["InteractiveUtils", "JuliaSyntaxHighlighting", "Markdown", "Sockets", "StyledStrings", "Unicode"]
 uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
+version = "1.11.0"
 
 [[deps.Random]]
 deps = ["SHA"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+version = "1.11.0"
 
 [[deps.RecipesBase]]
 deps = ["PrecompileTools"]
@@ -1723,6 +1748,7 @@ version = "1.2.1"
 
 [[deps.Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
+version = "1.11.0"
 
 [[deps.Setfield]]
 deps = ["ConstructionBase", "Future", "MacroTools", "StaticArraysCore"]
@@ -1743,6 +1769,7 @@ version = "1.2.0"
 
 [[deps.Sockets]]
 uuid = "6462fe0b-24de-5631-8697-dd941f90decc"
+version = "1.11.0"
 
 [[deps.SortingAlgorithms]]
 deps = ["DataStructures"]
@@ -1753,7 +1780,7 @@ version = "1.2.1"
 [[deps.SparseArrays]]
 deps = ["Libdl", "LinearAlgebra", "Random", "Serialization", "SuiteSparse_jll"]
 uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
-version = "1.10.0"
+version = "1.12.0"
 
 [[deps.SpecialFunctions]]
 deps = ["IrrationalConstants", "LogExpFunctions", "OpenLibm_jll", "OpenSpecFun_jll"]
@@ -1779,9 +1806,14 @@ uuid = "1e83bf80-4336-4d27-bf5d-d5a4f845583c"
 version = "1.4.3"
 
 [[deps.Statistics]]
-deps = ["LinearAlgebra", "SparseArrays"]
+deps = ["LinearAlgebra"]
+git-tree-sha1 = "ae3bb1eb3bba077cd276bc5cfc337cc65c3075c0"
 uuid = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
-version = "1.10.0"
+version = "1.11.1"
+weakdeps = ["SparseArrays"]
+
+    [deps.Statistics.extensions]
+    SparseArraysExt = ["SparseArrays"]
 
 [[deps.StatsAPI]]
 deps = ["LinearAlgebra"]
@@ -1795,10 +1827,14 @@ git-tree-sha1 = "29321314c920c26684834965ec2ce0dacc9cf8e5"
 uuid = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 version = "0.34.4"
 
+[[deps.StyledStrings]]
+uuid = "f489334b-da3d-4c2e-b8f0-e476e12c162b"
+version = "1.11.0"
+
 [[deps.SuiteSparse_jll]]
 deps = ["Artifacts", "Libdl", "libblastrampoline_jll"]
 uuid = "bea87d4a-7f5b-5778-9afe-8cc45184846c"
-version = "7.2.1+1"
+version = "7.8.3+2"
 
 [[deps.TOML]]
 deps = ["Dates"]
@@ -1819,6 +1855,7 @@ version = "0.1.1"
 [[deps.Test]]
 deps = ["InteractiveUtils", "Logging", "Random", "Serialization"]
 uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+version = "1.11.0"
 
 [[deps.TranscodingStreams]]
 git-tree-sha1 = "0c45878dcfdcfa8480052b6ab162cdd138781742"
@@ -1838,9 +1875,11 @@ version = "1.5.2"
 [[deps.UUIDs]]
 deps = ["Random", "SHA"]
 uuid = "cf7118a7-6976-5b1a-9a39-7adc72f591a4"
+version = "1.11.0"
 
 [[deps.Unicode]]
 uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
+version = "1.11.0"
 
 [[deps.UnicodeFun]]
 deps = ["REPL"]
@@ -2062,7 +2101,7 @@ version = "1.6.0+0"
 [[deps.Zlib_jll]]
 deps = ["Libdl"]
 uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
-version = "1.2.13+1"
+version = "1.3.1+2"
 
 [[deps.Zstd_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -2103,7 +2142,7 @@ version = "0.15.2+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.15.0+0"
 
 [[deps.libdecor_jll]]
 deps = ["Artifacts", "Dbus_jll", "JLLWrappers", "Libdl", "Libglvnd_jll", "Pango_jll", "Wayland_jll", "xkbcommon_jll"]
@@ -2150,18 +2189,18 @@ version = "1.1.6+0"
 [[deps.nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850ede-7688-5339-a07c-302acd2aaf8d"
-version = "1.52.0+1"
+version = "1.64.0+1"
 
 [[deps.oneTBB_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl"]
+deps = ["Artifacts", "JLLWrappers", "LazyArtifacts", "Libdl"]
 git-tree-sha1 = "d5a767a3bb77135a99e433afe0eb14cd7f6914c3"
 uuid = "1317d2d5-d96f-522e-a858-c73665f53c3e"
 version = "2022.0.0+0"
 
 [[deps.p7zip_jll]]
-deps = ["Artifacts", "Libdl"]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
-version = "17.4.0+2"
+version = "17.7.0+0"
 
 [[deps.x264_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -2201,7 +2240,7 @@ version = "1.4.1+2"
 # ╟─c98dd202-d540-4273-8c54-da880d8c74a0
 # ╠═f0a11db0-88bd-490d-bb75-2bfa86e80de3
 # ╟─83b373d8-8f4f-45f7-9b9e-9351583769b4
-# ╟─ff1a5ffd-d2aa-427c-b153-493396daf799
+# ╠═ff1a5ffd-d2aa-427c-b153-493396daf799
 # ╟─80d4fc9b-1ad8-47e2-a520-44b7d5878144
 # ╠═f59922ae-378a-40b1-850e-3f6b1bf2b90a
 # ╟─b1f7280c-64e9-433c-a23a-37a0a962d277
