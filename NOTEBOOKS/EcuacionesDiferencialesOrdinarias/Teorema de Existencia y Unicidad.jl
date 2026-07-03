@@ -1,16 +1,22 @@
 ### A Pluto.jl notebook ###
-# v0.19.46
+# v0.20.24
 
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ c5b5b491-0737-4556-a953-1d224b3c9e13
+# ╔═╡ d94ad2ec-7cbe-426b-9de0-d4edf4a72f86
 begin
 using Markdown
 using PlutoUI
 using InteractiveUtils
 using Plots
 end
+
+# ╔═╡ c9b2df7a-5183-49db-ac64-c38cf85cb4be
+PlutoUI.TableOfContents(title="Teorema de Existencia y Unicidad", aside=true)
+
+# ╔═╡ 0292f6b0-719a-43a5-8090-647a2c619282
+md"""Usaremos las siguientes librerías:"""
 
 # ╔═╡ e2b94e59-0785-4906-a7aa-ee8ec7cf2a75
 md"""
@@ -45,9 +51,9 @@ md"""### Ejemplo 0: ¿Donde se Aplica el Teorema?
 
 Consideremos la ecuación diferencial:
 
-$$\frac{dy}{dt} = y.$$
+$$\frac{dy}{dt} = y,$$
 
-Con la condición inicial:
+con la condición inicial:
 
 $$y(0) = y_0.$$
 
@@ -93,19 +99,23 @@ Por tanto tenemos que existe una única solución en la región donde $y_0>0$.""
 
 # ╔═╡ d2a00ebe-7142-400e-80d1-d8edd7d7027d
 md""" ### Ejemplo 2: No existencia de soluciones
+
 Para la ecuación diferencial $y'=y^{\frac{1}{3}}$, tenemos que $f(y)=y^{\frac{1}{3}}$ es una función continua en $(0,0)$ pero su derivada respecto a la variable dependiente es $3y^{-\frac{2}{3}}$ la cual no se encuentra definida en $(0,0)$ por tanto no se garantiza unicidad de soluciones, en particular no está definida para $y<0$, por tanto no tenemos existencia, tal como podemos observar en el siguiente gráfico.
 """
 
 # ╔═╡ 2f85d420-1f47-4896-a621-5b774277cdba
 md""" ### Ejemplo 3: Multiples Soluciones a una función discontinua
 Tomando la función a trozos
-$$f(x) = 
+
+$f(x) = 
 \begin{cases} 
-    1 & \text{si } x \geq 0 \\
-    -1 & \text{si } x < 0 
-\end{cases}$$
-vemos que no se cumple la continudad, por tanto podemos encontrar dos funciones que cumplen el ser solución más no de un intervalo alrededor de $(0,0)$
-Las soluciones son $f(x)=x$ que cumple la ecuación para $x\geq 0$ y $f(x)=-x$ que cumple la ecuación para $x< 0$
+    1 & \text{si } x \geq 0, \\
+    -1 & \text{si } x < 0,
+\end{cases}$
+
+vemos que no se cumple la continudad, por tanto podemos encontrar dos funciones que cumplen el ser solución más no de un intervalo alrededor de $(0,0)$.
+
+Las soluciones son $f(x)=x$ que cumple la ecuación para $x\geq 0$ y $f(x)=-x$ que cumple la ecuación para $x< 0$.
 """
 
 # ╔═╡ d25bcbed-eee2-49e6-b6fc-4048f5b72f55
@@ -114,7 +124,7 @@ md"""
 
 Considera la ecuación diferencial:
 
-$$\frac{dy}{dx} = y^2$$
+$$\frac{dy}{dx} = y^2,$$
 
 con la condición inicial $y(0) = y_0 \neq 0$.
 
@@ -131,7 +141,7 @@ md"""
 
 Considera la ecuación diferencial:
 
-$$\frac{dy}{dx} = |y|^{\alpha}$$
+$$\frac{dy}{dx} = |y|^{\alpha},$$
 
 con $0 < \alpha < 1$ y la condición inicial $y(0) = 0$.
 
@@ -158,63 +168,63 @@ md"""
 
 La ecuación diferencial dada es:
 
-$$y' = \sqrt{y}$$
+$$y' = \sqrt{y}.$$
 
 Reescribimos $y'$ como $\frac{dy}{dx}$:
 
-$$\frac{dy}{dx} = \sqrt{y}$$
+$$\frac{dy}{dx} = \sqrt{y}.$$
 
 Para separar las variables, dividimos ambos lados por $\sqrt{y}$ y multiplicamos por $dx$:
 
-$$\frac{1}{\sqrt{y}} \, dy = dx$$
+$$\frac{1}{\sqrt{y}} \, dy = dx.$$
 
 Ahora integramos ambos lados de la ecuación:
 
-$$\int \frac{1}{\sqrt{y}} \, dy = \int dx$$
+$$\int \frac{1}{\sqrt{y}} \, dy = \int dx.$$
 
 La integral del lado izquierdo se resuelve como:
 
-$$\int \frac{1}{\sqrt{y}} \, dy = 2\sqrt{y}$$
+$$\int \frac{1}{\sqrt{y}} \, dy = 2\sqrt{y}.$$
 
 La integral del lado derecho es simplemente:
 
-$$\int dx = x + C$$
+$$\int dx = x + C,$$
 
 donde $C$ es la constante de integración.
 
 Por lo tanto, tenemos:
 
-$$2\sqrt{y} = x + C$$
+$$2\sqrt{y} = x + C.$$
 
 Para encontrar la expresión explícita de $y$, despejamos $\sqrt{y}$:
 
-$$\sqrt{y} = \frac{x + C}{2}$$
+$$\sqrt{y} = \frac{x + C}{2}.$$
 
 Elevamos ambos lados al cuadrado:
 
-$$y = \left( \frac{x + C}{2} \right)^2$$
+$$y = \left( \frac{x + C}{2} \right)^2,$$
 
-$$y = \frac{(x + C)^2}{4}$$
+$$y = \frac{(x + C)^2}{4}.$$
 
 Ahora aplicamos la condición inicial $(x_0, y_0)$ para determinar el valor de la constante $C$.
 
 Sustituimos $x = x_0$ y $y = y_0$:
 
-$$y_0 = \frac{(x_0 + C)^2}{4}$$
+$$y_0 = \frac{(x_0 + C)^2}{4}.$$
 
 Multiplicamos ambos lados por 4:
 
-$$4y_0 = (x_0 + C)^2$$
+$$4y_0 = (x_0 + C)^2.$$
 
 Tomamos la raíz cuadrada de ambos lados:
 
-$$x_0 + C = \pm \sqrt{4y_0}$$
+$$x_0 + C = \pm \sqrt{4y_0},$$
 
-$$C = -x_0 \pm 2\sqrt{y_0}$$
+$$C = -x_0 \pm 2\sqrt{y_0}.$$
 
 Por lo tanto, la solución general es:
 
-$$y = \frac{(x - x_0 \pm 2\sqrt{y_0})^2}{4}$$
+$$y = \frac{(x - x_0 \pm 2\sqrt{y_0})^2}{4}.$$
 
 
 """
@@ -222,8 +232,8 @@ $$y = \frac{(x - x_0 \pm 2\sqrt{y_0})^2}{4}$$
 # ╔═╡ f664a3d1-9b17-4a5b-aff1-81a9c999c779
 md""" ### ¿Dos soluciones en la región de unicidad?
 Notamos que tenemos presentes dos soluciones 
-- $y = \frac{(x - x_0 - 2\sqrt{y_0})^2}{4}$
-- $y = \frac{(x - x_0 + 2\sqrt{y_0})^2}{4}$
+- $y = \frac{(x - x_0 - 2\sqrt{y_0})^2}{4},$
+- $y = \frac{(x - x_0 + 2\sqrt{y_0})^2}{4},$
 que al evaluar observamos que cumple perfectamente la condición inicial
 """
 
@@ -236,11 +246,11 @@ md"""
 #### Primera solución
 Al evaluar el segundo caso observamos que
 $y'=\frac{x-x_0-2\sqrt{y_0}}{2}$ y al realizar la operación
-$\sqrt{y}=\sqrt{\frac{(x - x_0 - 2\sqrt{y_0})^2}{4}}=\left|\frac{x - x_0 - 2\sqrt{y_0}}{2}\right|$,
+$\sqrt{y}=\sqrt{\frac{(x - x_0 - 2\sqrt{y_0})^2}{4}}=\left|\frac{x - x_0 - 2\sqrt{y_0}}{2}\right|$.
 
-Por tanto tenemos que $y'=\sqrt{y}$ cuando $\frac{x - x_0 - 2\sqrt{y_0}}{2} = |\frac{x - x_0 - 2\sqrt{y_0}}{2}|$ es decir, $x - x_0 - 2\sqrt{y_0}>0$, en otras palabras $x-x_0>2\sqrt{y_0}$
+Por tanto tenemos que $y'=\sqrt{y}$ cuando $\frac{x - x_0 - 2\sqrt{y_0}}{2} = |\frac{x - x_0 - 2\sqrt{y_0}}{2}|$, es decir, $x - x_0 - 2\sqrt{y_0}>0$, en otras palabras $x-x_0>2\sqrt{y_0}$.
 
-Pero esto no se puede dar puesto que $(x_0,y_0)$ no cumplirían la condición, por lo cual, esta solución no es válida.
+Pero esto no se puede dar, puesto que $(x_0,y_0)$ no cumplirían la condición, por lo cual, esta solución no es válida.
 """
 
 # ╔═╡ a5e22115-48d6-4ed9-8eda-a2994fe22ec0
@@ -248,9 +258,9 @@ md"""
 #### Segunda solución
 Al evaluar el segundo caso observamos que
 $y'=\frac{x-x_0+2\sqrt{y_0}}{2}$ y al realizar la operación
-$\sqrt{y}=\sqrt{\frac{(x - x_0 + 2\sqrt{y_0})^2}{4}}=\left|\frac{x - x_0 + 2\sqrt{y_0}}{2}\right|$,
+$\sqrt{y}=\sqrt{\frac{(x - x_0 + 2\sqrt{y_0})^2}{4}}=\left|\frac{x - x_0 + 2\sqrt{y_0}}{2}\right|$.
 
-Por tanto tenemos que $y'=\sqrt{y}$ cuando $\frac{x - x_0 + 2\sqrt{y_0}}{2} = |\frac{x - x_0 + 2\sqrt{y_0}}{2}|$ es decir, $x - x_0 + 2\sqrt{y_0}>0$, en otras palabras $x-x_0>-2\sqrt{y_0}$
+Por tanto tenemos que $y'=\sqrt{y}$ cuando $\frac{x - x_0 + 2\sqrt{y_0}}{2} = |\frac{x - x_0 + 2\sqrt{y_0}}{2}|$, es decir, $x - x_0 + 2\sqrt{y_0}>0$, en otras palabras $x-x_0>-2\sqrt{y_0}$.
 """
 
 # ╔═╡ 1993fa4c-a024-44e9-9917-19b9ab6a961d
@@ -477,9 +487,6 @@ md"""
 
 """
 
-# ╔═╡ 350a656f-4f2e-4206-b154-3190a96c7400
-PlutoUI.TableOfContents(title="Teorema de Existencia y Unicidad", aside=true)
-
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
@@ -497,9 +504,9 @@ PlutoUI = "~0.7.60"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.11.0"
+julia_version = "1.12.6"
 manifest_format = "2.0"
-project_hash = "ca8e11c5d6a4bea026cec7cc8eab17c5fa750560"
+project_hash = "85b5e4aa2b40e020d98fddd51f8acd8e58886cd1"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -585,7 +592,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.1.1+0"
+version = "1.3.0+1"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
@@ -635,7 +642,7 @@ version = "0.9.3"
 [[deps.Downloads]]
 deps = ["ArgTools", "FileWatching", "LibCURL", "NetworkOptions"]
 uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
-version = "1.6.0"
+version = "1.7.0"
 
 [[deps.EpollShim_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -805,6 +812,11 @@ git-tree-sha1 = "25ee0be4d43d0269027024d75a24c24d6c6e590c"
 uuid = "aacddb02-875f-59d6-b918-886e6ef4fbf8"
 version = "3.0.4+0"
 
+[[deps.JuliaSyntaxHighlighting]]
+deps = ["StyledStrings"]
+uuid = "ac6e5ff7-fb65-4e79-a425-ec3bc9c03011"
+version = "1.12.0"
+
 [[deps.LAME_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
 git-tree-sha1 = "170b660facf5df5de098d866564877e119141cbd"
@@ -856,24 +868,24 @@ uuid = "b27032c2-a3e7-50c8-80cd-2d36dbcbfd21"
 version = "0.6.4"
 
 [[deps.LibCURL_jll]]
-deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll", "Zlib_jll", "nghttp2_jll"]
+deps = ["Artifacts", "LibSSH2_jll", "Libdl", "OpenSSL_jll", "Zlib_jll", "nghttp2_jll"]
 uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
-version = "8.6.0+0"
+version = "8.15.0+0"
 
 [[deps.LibGit2]]
-deps = ["Base64", "LibGit2_jll", "NetworkOptions", "Printf", "SHA"]
+deps = ["LibGit2_jll", "NetworkOptions", "Printf", "SHA"]
 uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
 version = "1.11.0"
 
 [[deps.LibGit2_jll]]
-deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll"]
+deps = ["Artifacts", "LibSSH2_jll", "Libdl", "OpenSSL_jll"]
 uuid = "e37daf67-58a4-590a-8e99-b0245dd2ffc5"
-version = "1.7.2+0"
+version = "1.9.0+0"
 
 [[deps.LibSSH2_jll]]
-deps = ["Artifacts", "Libdl", "MbedTLS_jll"]
+deps = ["Artifacts", "Libdl", "OpenSSL_jll"]
 uuid = "29816b5a-b9ab-546f-933c-edad1886dfa8"
-version = "1.11.0+1"
+version = "1.11.3+1"
 
 [[deps.Libdl]]
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
@@ -930,7 +942,7 @@ version = "2.40.1+0"
 [[deps.LinearAlgebra]]
 deps = ["Libdl", "OpenBLAS_jll", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
-version = "1.11.0"
+version = "1.12.0"
 
 [[deps.LogExpFunctions]]
 deps = ["DocStringExtensions", "IrrationalConstants", "LinearAlgebra"]
@@ -970,7 +982,7 @@ uuid = "1914dd2f-81c6-5fcd-8719-6d5c9610ff09"
 version = "0.5.13"
 
 [[deps.Markdown]]
-deps = ["Base64"]
+deps = ["Base64", "JuliaSyntaxHighlighting", "StyledStrings"]
 uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 version = "1.11.0"
 
@@ -981,9 +993,10 @@ uuid = "739be429-bea8-5141-9913-cc70e7f3736d"
 version = "1.1.9"
 
 [[deps.MbedTLS_jll]]
-deps = ["Artifacts", "Libdl"]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
+git-tree-sha1 = "0eef589dd1c26a3ac9d753fe1a8bcad63f956fa6"
 uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
-version = "2.28.6+0"
+version = "2.16.8+1"
 
 [[deps.Measures]]
 git-tree-sha1 = "c13304c81eec1ed3af7fc20e75fb6b26092a1102"
@@ -1002,7 +1015,7 @@ version = "1.11.0"
 
 [[deps.MozillaCACerts_jll]]
 uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
-version = "2023.12.12"
+version = "2025.11.4"
 
 [[deps.NaNMath]]
 deps = ["OpenLibm_jll"]
@@ -1012,7 +1025,7 @@ version = "1.0.2"
 
 [[deps.NetworkOptions]]
 uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
-version = "1.2.0"
+version = "1.3.0"
 
 [[deps.Ogg_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1023,12 +1036,12 @@ version = "1.3.5+1"
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.27+1"
+version = "0.3.29+0"
 
 [[deps.OpenLibm_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "05823500-19ac-5b8b-9628-191a04bc5112"
-version = "0.8.1+2"
+version = "0.8.7+0"
 
 [[deps.OpenSSL]]
 deps = ["BitFlags", "Dates", "MozillaCACerts_jll", "OpenSSL_jll", "Sockets"]
@@ -1037,10 +1050,9 @@ uuid = "4d8831e6-92b7-49fb-bdf8-b643e874388c"
 version = "1.4.3"
 
 [[deps.OpenSSL_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "7493f61f55a6cce7325f197443aa80d32554ba10"
+deps = ["Artifacts", "Libdl"]
 uuid = "458c3c95-2e84-50aa-8efc-19380b2a3a95"
-version = "3.0.15+1"
+version = "3.5.4+0"
 
 [[deps.Opus_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1056,7 +1068,7 @@ version = "1.6.3"
 [[deps.PCRE2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "efcefdf7-47ab-520b-bdef-62a2eaa19f15"
-version = "10.42.0+1"
+version = "10.44.0+1"
 
 [[deps.Pango_jll]]
 deps = ["Artifacts", "Cairo_jll", "Fontconfig_jll", "FreeType2_jll", "FriBidi_jll", "Glib_jll", "HarfBuzz_jll", "JLLWrappers", "Libdl"]
@@ -1084,7 +1096,7 @@ version = "0.43.4+0"
 [[deps.Pkg]]
 deps = ["Artifacts", "Dates", "Downloads", "FileWatching", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "Random", "SHA", "TOML", "Tar", "UUIDs", "p7zip_jll"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
-version = "1.11.0"
+version = "1.12.1"
 weakdeps = ["REPL"]
 
     [deps.Pkg.extensions]
@@ -1170,7 +1182,7 @@ uuid = "e99dba38-086e-5de3-a5b1-6e4c66e897c3"
 version = "6.7.1+1"
 
 [[deps.REPL]]
-deps = ["InteractiveUtils", "Markdown", "Sockets", "StyledStrings", "Unicode"]
+deps = ["InteractiveUtils", "JuliaSyntaxHighlighting", "Markdown", "Sockets", "StyledStrings", "Unicode"]
 uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 version = "1.11.0"
 
@@ -1246,7 +1258,7 @@ version = "1.2.1"
 [[deps.SparseArrays]]
 deps = ["Libdl", "LinearAlgebra", "Random", "Serialization", "SuiteSparse_jll"]
 uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
-version = "1.11.0"
+version = "1.12.0"
 
 [[deps.Statistics]]
 deps = ["LinearAlgebra"]
@@ -1277,7 +1289,7 @@ version = "1.11.0"
 [[deps.SuiteSparse_jll]]
 deps = ["Artifacts", "Libdl", "libblastrampoline_jll"]
 uuid = "bea87d4a-7f5b-5778-9afe-8cc45184846c"
-version = "7.7.0+0"
+version = "7.8.3+2"
 
 [[deps.TOML]]
 deps = ["Dates"]
@@ -1538,7 +1550,7 @@ version = "1.5.0+0"
 [[deps.Zlib_jll]]
 deps = ["Libdl"]
 uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
-version = "1.2.13+1"
+version = "1.3.1+2"
 
 [[deps.Zstd_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1579,7 +1591,7 @@ version = "0.15.2+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.11.0+0"
+version = "5.15.0+0"
 
 [[deps.libdecor_jll]]
 deps = ["Artifacts", "Dbus_jll", "JLLWrappers", "Libdl", "Libglvnd_jll", "Pango_jll", "Wayland_jll", "xkbcommon_jll"]
@@ -1626,12 +1638,12 @@ version = "1.1.6+0"
 [[deps.nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850ede-7688-5339-a07c-302acd2aaf8d"
-version = "1.59.0+0"
+version = "1.64.0+1"
 
 [[deps.p7zip_jll]]
-deps = ["Artifacts", "Libdl"]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
-version = "17.4.0+2"
+version = "17.7.0+0"
 
 [[deps.x264_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1653,6 +1665,9 @@ version = "1.4.1+1"
 """
 
 # ╔═╡ Cell order:
+# ╟─c9b2df7a-5183-49db-ac64-c38cf85cb4be
+# ╟─0292f6b0-719a-43a5-8090-647a2c619282
+# ╠═d94ad2ec-7cbe-426b-9de0-d4edf4a72f86
 # ╟─e2b94e59-0785-4906-a7aa-ee8ec7cf2a75
 # ╟─8b8d70b9-3804-4cb8-9655-dc9af6db8f76
 # ╟─7a070386-d368-4705-814c-c5975d833e3f
@@ -1683,8 +1698,6 @@ version = "1.4.1+1"
 # ╟─4e01f29a-c651-4e07-9649-399e9d641f26
 # ╟─2d50d6e0-8348-41bc-abe6-216042a235a0
 # ╟─c1f5a459-72bc-4fcf-9974-44587be177a4
-# ╠═06a8584b-ed8f-42ae-af71-95d517215381
-# ╠═c5b5b491-0737-4556-a953-1d224b3c9e13
-# ╠═350a656f-4f2e-4206-b154-3190a96c7400
+# ╟─06a8584b-ed8f-42ae-af71-95d517215381
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
