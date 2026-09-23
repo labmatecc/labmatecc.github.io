@@ -1,0 +1,185 @@
+---
+layout: default
+title: "Investigaciones"
+permalink: /femathcc.github.io/
+---
+
+<!-- MathJax / KaTeX for LaTeX Math Rendering -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,600;1,400&display=swap" rel="stylesheet" />
+
+<!-- Femathcc Stylesheet -->
+<link rel="stylesheet" href="{{ '/femathcc.github.io/css/styles.css' | relative_url }}" />
+
+<div class="femath-wrapper">
+  <!-- Hero Section -->
+  <div class="femath-hero">
+    <hr class="femath-divider">
+    <h1>János Lajos — Investigaciones</h1>
+    <hr class="femath-divider">
+    <p class="femath-subtitle">
+      Colección abierta de investigación en matemáticas, computación y ciencias del <strong>Laboratorio de Matemáticas</strong>,
+      incluyendo trabajos de grado, publicaciones científicas, código abierto y simulaciones computacionales interactivas.
+    </p>
+  </div>
+
+  <!-- Sticky Control Toolbar -->
+  <div class="container">
+    <div class="toolbar" id="sticky-toolbar">
+      <div class="controls">
+        <!-- Search Field -->
+        <div class="search-field">
+          <input type="text" id="nexus-search-input" placeholder="Buscar por título, autor, fórmula o palabras clave..." />
+          <button class="clear-search" id="clear-search-btn" title="Limpiar búsqueda" hidden>&times;</button>
+        </div>
+
+        <!-- Category / Area Selector -->
+        <select id="category-select">
+          <option value="all">Todas las Áreas</option>
+        </select>
+
+        <!-- Deliverables Filter -->
+        <select id="type-select">
+          <option value="all">Todos los Entregables</option>
+          <option value="pdf">Tesis PDF</option>
+          <option value="code">Código GitHub</option>
+          <option value="simulation">Simulaciones Interactivas</option>
+        </select>
+
+        <!-- Sort Selector -->
+        <select id="sort-select">
+          <option value="recent">Más Recientes</option>
+          <option value="citations">Más Citados</option>
+          <option value="views">Más Vistos</option>
+          <option value="title">Título (A-Z)</option>
+        </select>
+
+        <!-- Random Shuffle Button -->
+        <button class="btn btn-outline" id="shuffle-btn" title="Descubrir un proyecto aleatorio">🎲 Azar</button>
+
+        <!-- Theme Toggle Button -->
+        <button class="theme-toggle-btn" id="theme-toggle" title="Cambiar Tema Oscuro/Claro">
+          <span class="sun-icon">☀️</span>
+          <span class="moon-icon">🌙</span>
+        </button>
+      </div>
+
+      <div class="meta" id="nexus-meta-bar">
+        Mostrando <strong id="results-count">0</strong> de <span id="total-count">0</span> proyectos de investigación
+      </div>
+    </div>
+
+    <!-- Main Card Grid -->
+    <div class="grid" id="nexus-grid">
+      <!-- Dynamically populated by app.js -->
+    </div>
+
+    <!-- Empty Results State -->
+    <div class="empty-results hidden" id="empty-state">
+      <div class="empty-icon">🔍</div>
+      <h3>No se encontraron resultados</h3>
+      <p>Prueba ajustando el término de búsqueda o cambiando los filtros seleccionados.</p>
+      <button class="btn btn-outline" id="reset-filters-btn">Restablecer Filtros</button>
+    </div>
+
+    <!-- Femathcc Credits -->
+    <div class="femath-credits">
+      <hr class="femath-divider">
+      <p><strong>János Lajos</strong> — Colección abierta de investigación, matemáticas y computación.</p>
+      <p>
+        Desarrollado por Eduards Alexis Mendez Chipatecua,
+        Daniel Alejandro Castillo Garzon y Juan Galvis.
+      </p>
+      <p>
+        Inspirado en la estructura de interfaz académica de
+        <a href="https://www.gpeyre.com/mathematical-nexus/" target="_blank" rel="noopener noreferrer">Gabriel Peyré</a>.
+      </p>
+    </div>
+  </div>
+
+  <!-- MODAL: Detailed Project View & Simulation / Reader -->
+  <div class="modal-overlay hidden" id="project-modal">
+    <div class="modal-card modal-large">
+      <button class="modal-close-btn" id="close-project-modal">&times;</button>
+      
+      <div class="modal-header-block">
+        <span class="chip" id="modal-chip">Categoría</span>
+        <h2 id="modal-title">Título del Proyecto</h2>
+        <p class="modal-subtitle" id="modal-subtitle">Subtítulo explicativo...</p>
+        <div class="modal-meta-row">
+          <div><strong>Autor(es):</strong> <span id="modal-authors">---</span></div>
+          <div><strong>Universidad:</strong> <span id="modal-uni">---</span></div>
+          <div><strong>Año / Grado:</strong> <span id="modal-year">---</span></div>
+          <div><strong>DOI:</strong> <span id="modal-doi">---</span></div>
+        </div>
+      </div>
+
+      <!-- Simulation / Canvas Container in Modal -->
+      <div class="modal-media-container" id="modal-media-box">
+        <!-- Canvas animation or preview image dynamically rendered -->
+      </div>
+
+      <!-- LaTeX Math Formula Snippet -->
+      <div class="math-box" id="modal-math-box"></div>
+
+      <!-- Abstract Text -->
+      <div class="modal-section">
+        <h3>Resumen Académico (Abstract)</h3>
+        <p id="modal-abstract-text" class="abstract-p"></p>
+      </div>
+
+      <!-- Tags Pills -->
+      <div class="modal-section">
+        <h3>Palabras Clave & Tecnologías</h3>
+        <div class="tags-row" id="modal-tags-row"></div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="modal-actions-row">
+        <a href="#" id="modal-pdf-btn" target="_blank" class="btn btn-primary">
+          📄 Descargar Tesis PDF
+        </a>
+        <a href="#" id="modal-code-btn" target="_blank" class="btn btn-outline">
+          💻 Código en GitHub
+        </a>
+        <button class="btn btn-outline" id="modal-cite-btn">
+          📊 Citar Investigación
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Citation Generator -->
+  <div class="modal-overlay hidden" id="cite-modal">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="close-cite-modal">&times;</button>
+      <h2>Citar Trabajo de Investigación</h2>
+      <p class="meta">Selecciona el formato de cita académica requerida:</p>
+
+      <div class="cite-selector">
+        <button class="cite-tab active" data-style="apa">APA 7ma Ed.</button>
+        <button class="cite-tab" data-style="ieee">IEEE</button>
+        <button class="cite-tab" data-style="bibtex">BibTeX</button>
+      </div>
+
+      <textarea id="cite-textarea" readonly rows="4" class="cite-textarea"></textarea>
+      
+      <div class="modal-actions-row" style="margin-top: 1rem;">
+        <button class="btn btn-primary" id="copy-cite-btn">
+          Copiar Cita al Portapapeles
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div class="toast hidden" id="toast-msg">Mensaje de notificación</div>
+</div>
+
+<!-- Main JavaScript -->
+<script src="{{ '/femathcc.github.io/js/app.js' | relative_url }}"></script>
