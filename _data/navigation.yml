@@ -3,5 +3,8 @@ main:
     url: /
   - title: "Notebooks"
     url: /Notebooks/
+  - title: "Investigaciones"
+    url: /femathcc.github.io/
+    description: "Femathcc - Repositorio de Tesis y Proyectos de Investigación"
   - title: "Acerca del laboratorio"
     url: /About/
