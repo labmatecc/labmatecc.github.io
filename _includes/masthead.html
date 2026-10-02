@@ -19,7 +19,7 @@
               {%- assign url = link.url | relative_url -%}
             {%- endif -%}
             <li class="masthead__menu-item">
-              <a href="{{ url }}" {% if link.description %}title="{{ link.description }}"{% endif %}>{{ link.title }}</a>
+              <a href="{{ url }}" {% if link.description %}title="{{ link.description }}"{% endif %}{% if link.target %} target="{{ link.target }}" rel="noopener noreferrer"{% elsif link.url contains '://' %} target="_blank" rel="noopener noreferrer"{% endif %}>{{ link.title }}</a>
             </li>
           {%- endfor -%}
         </ul>
