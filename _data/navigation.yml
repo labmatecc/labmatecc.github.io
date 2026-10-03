@@ -6,5 +6,8 @@ main:
   - title: "Investigaciones"
     url: /femathcc.github.io/
     description: "Femathcc - Repositorio de Tesis y Proyectos de Investigación"
+  - title: "Manual"
+    url: https://freckle-afternoon-1f1.notion.site/Manual-para-el-acceso-41c0c710ec45481b9b925e8b6ebf23ad
+    target: "_blank"
   - title: "Acerca del laboratorio"
     url: /About/

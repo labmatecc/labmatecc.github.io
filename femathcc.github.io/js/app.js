@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const elements = {
-    themeToggle: document.getElementById('theme-toggle'),
     brandLink: document.getElementById('brand-link'),
     nexusSearchInput: document.getElementById('nexus-search-input'),
     clearSearchBtn: document.getElementById('clear-search-btn'),
@@ -104,26 +103,16 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.totalCount.textContent = state.projects.length;
   }
 
-  // Theme Setup
+  // Theme Setup (Enforce Light Theme Only)
   function setupTheme() {
-    const saved = localStorage.getItem('nexus_theme') || 
-      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', saved);
-  }
-
-  function toggleTheme() {
-    const current = document.documentElement.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('nexus_theme', next);
+    document.documentElement.setAttribute('data-theme', 'light');
+    try {
+      localStorage.removeItem('nexus_theme');
+    } catch (e) {}
   }
 
   // Event Listeners
   function setupEventListeners() {
-    if (elements.themeToggle) {
-      elements.themeToggle.addEventListener('click', toggleTheme);
-    }
-
     elements.nexusSearchInput.addEventListener('input', (e) => {
       state.filters.query = e.target.value.trim();
       elements.clearSearchBtn.hidden = !state.filters.query;
