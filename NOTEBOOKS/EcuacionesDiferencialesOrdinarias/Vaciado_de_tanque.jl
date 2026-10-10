@@ -263,7 +263,7 @@ En este caso se está asumiendo que $\frac{dh}{dt}=-ah$, con la condición inici
 
 Vamos a suponer que los datos tomados $\{z_{\ell}\}_{\ell=1}^{22}$ a lo largo del tiempo $\{t_{\ell}\}_{\ell=1}^{22}$ son realizaciones aleatorias de una distribución $Normal(\mu,\sigma^2)$ con media $\mu$ y varianza $\sigma^2 \mu^2$. Como queremos comparar el ajuste del modelo $H1_1$ en los datos $\{z_{\ell}\}_{\ell=1}^{22}$ asumimos que la $\mu= H1_1(t;a)$ y $\sigma^2=1$, por lo tanto,
 
-$z_\ell \sim Gamma(H1_1(t_\ell;a),1)$
+$z_\ell \sim Gamma(H1_1(t_\ell;a),1),$
 
 con $E[z_{\ell}] = H1_1(t_\ell;a)$ y $Var[z_\ell] = H1_1(t_\ell;a)^2$. Por otra parte, para el modelo a priori del parámetro $a$ suponemos que $a$ sigue una distribución $Normal(0,1)$. Con lo dicho anteriormente creamos la función de la energía.
 """
