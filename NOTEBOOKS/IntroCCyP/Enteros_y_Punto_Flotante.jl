@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.3
+# v0.20.24
 
 using Markdown
 using InteractiveUtils
@@ -7,7 +7,7 @@ using InteractiveUtils
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
     #! format: off
-    quote
+    return quote
         local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
@@ -104,22 +104,24 @@ md"""
 # Punto Flotante
 Presentamos ilustraciones simples de cálculo con números de máquina y redondeo.
 En particular, la representación usando un bit para el signo, $s_0\in \{0,1\}$, con 
-$s=(-1)^{1-s_0}$, 
-$k$ bits para el exponente
+$s=(-1)^{1-s_0}$, $k$ bits para el exponente
 
 $m=(b_{k-1}b_{k-2}\dots b_1b_0)_{\mbox{expfp}(k)} = b_0+b_1 2^1+b_22^2+\cdots+b_{k-1}2^{k-1}-(2^{k-1}-1),$  
+
 con $e_i\in\{0,1\}$, y $p$ bits de precisión para el significando 
 
 $q=(1. a_1a_2\dots a_p)_2 = 1 + a_12^{-1}+a_22^{-2}+\dots+a_p2^{-p},$ 
 está dada por 
 
 $x=s\times q\times 2^m.$
+
+La notación $\mbox{expfp}(k)$ representa el exponente de punto flotante de orden $k$.
 """
 
 # ╔═╡ e3a0c47b-800b-4335-8cc4-6d6944de6d5f
 md"""**Ejemplo:** 
 
-Para $x=0.5$ tenemos en el formato Float32 tenemos bit para el signo 
+Para $x=0.5$ en el formato Float32 tenemos bit para el signo 
 $s_0=0$, tenemos 8 bits para el exponente $m=(01111110)_{{\mbox{expfp}(8)}}=-1$ y 23 bits para el significando $q=(1.00000000000000000000000)_2$. Tenemos lo siguiente.
 """
 
@@ -129,7 +131,7 @@ bitstring(Float32(0.5))
 # ╔═╡ c406547c-c093-49c7-976c-4397db35fb10
 begin
 	bs=bitstring(Float32(0.5));
-	println("signo=",bs[1],"\t exp=",bs[2:9],"\t significand=",bs[19:32])	     
+	println("signo=",bs[1],"\t exp=",bs[2:9],"\t significando=",bs[19:32])	     
 end
 
 # ╔═╡ b76dc8c8-d564-4105-9852-742b9f14386e
@@ -137,7 +139,7 @@ md"""Puede consultar cuántos bits usa cada uno de estos tipos de datos.
 
 **Ejemplo:**
 
-Para $x=1.0$ se tiene lo siguiente"""
+Para $x=1.0$ se tiene lo siguiente:"""
 
 # ╔═╡ 0b6afa44-ab1a-4bbd-9fdd-e6ed253921f7
 begin
@@ -150,7 +152,7 @@ begin
 end
 
 # ╔═╡ 54b16c62-3b92-4bb5-8471-1204433ca447
-md"""Para $x=0.1$ se sigue que"""
+md"""Para $x=0.1$ se sigue que:"""
 
 # ╔═╡ 34610964-a504-4f36-90e1-f714c196b5a8
 begin
@@ -163,7 +165,7 @@ begin
 end
 
 # ╔═╡ c25da692-a21b-4d57-8b6d-f7240895d4d4
-md"""Para $x=\pi$ se tiene lo siguiente"""
+md"""Para $x=\pi$ se tiene lo siguiente:"""
 
 # ╔═╡ 16ce635a-1476-4447-ad79-6415263be9be
 begin
@@ -227,7 +229,7 @@ begin
 	for i=1:N
 	  suma64=suma64+(1/10) 
 	end
-	println("Despues de ",N, " sumas(Float64) de 1/10, \nel resultado es ",suma64)
+	println("Después de ",N, " sumas(Float64) de 1/10, \nel resultado es ",suma64)
 	x=1/10
 	p=N*x
 	println("El producto es : ",p)
@@ -240,7 +242,7 @@ begin
 	for i=1:N
 	  suma32=suma32+Float32(1/10) 
 	end
-	println("Despues de ",N, " sumas(Float32) de 1/10, el resultado es ",suma32)
+	println("Después de ",N, " sumas(Float32) de 1/10, el resultado es ",suma32)
 	f32=Float32(1/10)
 	p32=N*f32
 	println("El producto es : ",p32)
@@ -255,9 +257,9 @@ Veamos números de máquina positivos pequeños y algunas operaciones."""
 begin
 	xx=3E-324
 	yy=2E-324
-	print("x=",xx,"es un numero de maquina. Pero y=2E-324 es aproximado  a  y=\t",yy, "\n")
-	print("Al dividir x=3E-324 por dos tenemos x/2=\t",xx/2,"\n")
-	print("Note tambien que 1/x=\t",1/xx)
+	print("x=",xx," es un número de maquina. Pero y=2e-324 es aproximado  a  y=\t",yy, "\n")
+	print("Al dividir x=3e-324 por dos tenemos x/2=\t",xx/2,"\n")
+	print("Note también que 1/x=\t",1/xx)
 end
 
 # ╔═╡ 50250407-3fd3-43da-8d18-b8a53eddeaf4
@@ -267,7 +269,7 @@ md""" Ahora veamos con números positivos grandes. """
 begin
 	xp=1.7E+308
 	#y=1.8E+308 # overflow in numeric constant 
-	print("x=",xp," es un numéro de maquina pero 'y' genera desbordamiento\n")
+	print("x=",xp," es un número de máquina pero 'y=1.8e308' genera desbordamiento\n")
 end
 
 # ╔═╡ eba86e53-615a-49fe-9e55-2ffe24e6402d
@@ -301,13 +303,13 @@ end
 # ╔═╡ e0c659f7-c2b6-4d99-9074-027db577a151
 md"""**Ejemplo:**
 
-Otro ejemplo es el de calcular $\sqrt{a^2+b^2}$ con $a=$1E+200 y $b=1$."""
+Otro ejemplo es calcular $\sqrt{a^2+b^2}$ con $a=1\text{e}+200$ y $b=1$."""
 
 # ╔═╡ 669cdb95-5cc9-40aa-8e52-439fd0b1d2dc
 begin
 	asq=1E+200
 	bsq=1
-	ysqr=sqrt( a^2+b^2)
+	ysqr=sqrt( asq^2+bsq^2)
 	print(ysqr)
 end
 
@@ -315,7 +317,7 @@ end
 md"""Podemos evitar el desbordamiento por exceso, considerando que
 
 $\sqrt{a^2+b^2} = a \sqrt{1+\frac{b^2}{a^2}},$
-tal como se muestra a continuación"""
+tal como se muestra a continuación."""
 
 # ╔═╡ 35dd98b4-6abf-44f0-8f6f-1d8b9f909986
 z=asq*sqrt( 1+(bsq/asq)^2)
@@ -323,7 +325,7 @@ z=asq*sqrt( 1+(bsq/asq)^2)
 # ╔═╡ 5a06e7a5-f73a-4a9e-886f-3dad4e7df3d3
 md"""**Ejemplo:**
 
-Se presentan algunas expresiones ideterminadas con las que se debe tener cuidado a la hora de calcular con punto flotante."""
+Se presentan algunas expresiones indeterminadas con las que se debe tener cuidado a la hora de calcular con punto flotante."""
 
 # ╔═╡ e0beb0df-ccdc-4e61-8e1d-7bb18323eac2
 begin
@@ -364,7 +366,7 @@ let
 end
 
 # ╔═╡ f6d92c8f-d74b-4a0f-afad-a7181e9e2b90
-md"""Vemos que, para esta máquina, el epsilon de la máquina es $\approx 1e-8$ (en base 10). Esto se puede interpretar como sigue: en esta máquina (en precisión float32) tenemos unos 6 o 7 decimales correctos al redondear. Si bien es cierto que esto genera un error relativo pequeño, en códigos complicados con muchos cálculos intermedios podemos acumular errores y terminar con menos decimales significativos."""
+md"""Vemos que, para esta máquina, el epsilon de la máquina es $\approx 1\text{e}-8$ (en base 10). Esto se puede interpretar como sigue: en esta máquina (en precisión float32) tenemos unos 6 o 7 decimales correctos al redondear. Si bien es cierto que esto genera un error relativo pequeño, en códigos complicados con muchos cálculos intermedios podemos acumular errores y terminar con menos decimales significativos."""
 
 # ╔═╡ 5cec0ece-bfa1-4db6-b3da-e394dc6756ff
 let
@@ -421,7 +423,7 @@ begin
 	p1= (xv.-uno).^7;
 	p2=xv.^7-7*xv.^6+21*xv.^5-35*xv.^4+35*xv.^3-21*xv.^2+7*xv.-uno;
 	p3= ((((((xv-7*uno).*xv+21*uno).*xv-35*uno).*xv+35*uno).*xv-21*uno).*xv+7*uno).*xv-uno
-	plot(xv, p1,title = "Expansion vs Fatorizado", label = ["Factorizado"], lw = 1)
+	plot(xv, p1,title = "Expansión vs Factorizado", label = ["Factorizado"], lw = 1)
 	plot!( xv, p2, label=["Expandido"],lw=1)
 	plot!( xv, p3, label=["Horner"],lw=1)
 end
@@ -430,7 +432,7 @@ end
 md""" 
 Por último notamos que, aunque el error de redondeo es pequeño al principio, en cálculos complejos puede acumular para ocasionar efectos catastróficos.
 
-**EJEMPLO 1:** Explosión del [misil Ariane](https://www.bugsnag.com/blog/bug-day-ariane-5-disaster) en Junio de 1996 por un desbordamiento por exceso en el computador del mismo. 
+**EJEMPLO 1:** Explosión del [misil Ariane](https://smartbear.com/blog/bug-day-ariane-5-disaster/) en Junio de 1996 por un desbordamiento por exceso en el computador del mismo. 
 
 **EJEMPLO 2:** La falla de una misión de un [misil American Patriot](https://www.iro.umontreal.ca/~mignotte/IFT2425/Disasters.html) durante la guerra del Golfo en 1991 debido a errores de redondeo en el cálculo de la trayectoria a seguir. 
 """
@@ -517,10 +519,10 @@ La implementación del tipo de dato float en lenguaje C corresponde solo a la de
 **PROBLEMA (Sullivan) 3** Con $x_0=1/10$, considere la sucesión,  
 
 $x_{n+1}=\left\{\begin{array}{ll}
-2x_n & \mbox{ si } x_n\in \left[0,\frac{1}{2}\right] \\
+2x_n & \mbox{ si } x_n\in \left[0,\frac{1}{2}\right], \\
 2x_n-1 &  \mbox{ si } x_n\in \left(\frac{1}{2},1\right].
 \end{array}\right.$
-para $n=1,2,\dots$. Calcule $x_1,x_2,x_3,\dots,x_{50}$ de forma análitica y despues usandoun código en python. Compare y explique.
+para $n=1,2,\dots$. Calcule $x_1,x_2,x_3,\dots,x_{50}$ de forma análitica y después usando un código en python. Compare y explique.
 
 Repetir pero ahora iniciando con $x_0=1/8$. Compare y explique. 
 
@@ -531,7 +533,10 @@ Repetir pero ahora iniciando con $x_0=1/8$. Compare y explique.
 $SF_{i}(x)=\frac{\exp\left(x_{i}\right)}{\sum_{j=1}^{n}\exp\left(x_{j}\right)}.$
 La rutina debe estar estabilizada para evitar desbordamiento por exceso. 
 
-**PROBLEMA (Stoer) 6** Ensaye calcular las funciones $$f(x)=\sqrt{x^2+1}-1 \quad g(x)=\frac{x^2}{\sqrt{x^2+1}+1}$$
+**PROBLEMA (Stoer) 6** Ensaye calcular las funciones 
+
+$$f(x)=\sqrt{x^2+1}-1, \quad \text{y} \quad g(x)=\frac{x^2}{\sqrt{x^2+1}+1}.$$
+
 Use valores pequeños como $x=8^{-1},8^{-2},8^{-3},\dots$. Explique los resultados. Note que, análiticamete,  $f(x)=g(x)$.
 
 """
@@ -559,7 +564,7 @@ md""" # Referencias
 
 [1] Kincaid, D., & Cheney, W. (2009). Numerical analysis: Mathematics of scientific computing (3rd ed.). American Mathematical Society.
 
-[2] Driscoll, T. A., & Braun, R. J. (n.d.). *Fundamentals of Numerical Computation*. Adapted for Julia. Recuperado de [https://tobydriscoll.net/fnc-julia/frontmatter.html](https://tobydriscoll.net/fnc-julia/frontmatter.html)
+[2] Driscoll, T. A., & Braun, R. J. (n.d.). *Fundamentals of Numerical Computation*. Adapted for Julia. Recuperado de [https://tobydriscoll.net/fnc-julia/frontmatter.html](https://tobydriscoll.net/fnc-julia/home.html)
 
 [3] Sullivan, E. (2020). *Numerical Methods: An Inquiry-Based Approach With Python*.
 
@@ -598,9 +603,9 @@ Symbolics = "~7.0.2"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.11.1"
+julia_version = "1.12.6"
 manifest_format = "2.0"
-project_hash = "2b35a0be2c51944bc0d8e7c03d3cace65dd0f578"
+project_hash = "38099cbbf7612b0c36ce5a177fab02590bb15cf3"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "8b2b045b22740e4be20654175cc38291d48539db"
@@ -788,7 +793,7 @@ version = "1.0.0"
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.1.1+0"
+version = "1.3.0+1"
 
 [[deps.CompositeTypes]]
 git-tree-sha1 = "bce26c3dab336582805503bed209faab1c279768"
@@ -882,7 +887,7 @@ version = "0.7.16"
 [[deps.Downloads]]
 deps = ["ArgTools", "FileWatching", "LibCURL", "NetworkOptions"]
 uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
-version = "1.6.0"
+version = "1.7.0"
 
 [[deps.DynamicPolynomials]]
 deps = ["Future", "LinearAlgebra", "MultivariatePolynomials", "MutableArithmetics", "Reexport", "Test"]
@@ -1128,6 +1133,11 @@ git-tree-sha1 = "4255f0032eafd6451d707a51d5f0248b8a165e4d"
 uuid = "aacddb02-875f-59d6-b918-886e6ef4fbf8"
 version = "3.1.3+0"
 
+[[deps.JuliaSyntaxHighlighting]]
+deps = ["StyledStrings"]
+uuid = "ac6e5ff7-fb65-4e79-a425-ec3bc9c03011"
+version = "1.12.0"
+
 [[deps.LAME_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
 git-tree-sha1 = "059aabebaa7c82ccb853dd4a0ee9d17796f7e1bc"
@@ -1181,24 +1191,24 @@ uuid = "b27032c2-a3e7-50c8-80cd-2d36dbcbfd21"
 version = "0.6.4"
 
 [[deps.LibCURL_jll]]
-deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll", "Zlib_jll", "nghttp2_jll"]
+deps = ["Artifacts", "LibSSH2_jll", "Libdl", "OpenSSL_jll", "Zlib_jll", "nghttp2_jll"]
 uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
-version = "8.6.0+0"
+version = "8.15.0+0"
 
 [[deps.LibGit2]]
-deps = ["Base64", "LibGit2_jll", "NetworkOptions", "Printf", "SHA"]
+deps = ["LibGit2_jll", "NetworkOptions", "Printf", "SHA"]
 uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
 version = "1.11.0"
 
 [[deps.LibGit2_jll]]
-deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll"]
+deps = ["Artifacts", "LibSSH2_jll", "Libdl", "OpenSSL_jll"]
 uuid = "e37daf67-58a4-590a-8e99-b0245dd2ffc5"
-version = "1.7.2+0"
+version = "1.9.0+0"
 
 [[deps.LibSSH2_jll]]
-deps = ["Artifacts", "Libdl", "MbedTLS_jll"]
+deps = ["Artifacts", "Libdl", "OpenSSL_jll"]
 uuid = "29816b5a-b9ab-546f-933c-edad1886dfa8"
-version = "1.11.0+1"
+version = "1.11.3+1"
 
 [[deps.Libdl]]
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
@@ -1243,7 +1253,7 @@ version = "2.41.2+0"
 [[deps.LinearAlgebra]]
 deps = ["Libdl", "OpenBLAS_jll", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
-version = "1.11.0"
+version = "1.12.0"
 
 [[deps.LogExpFunctions]]
 deps = ["DocStringExtensions", "IrrationalConstants", "LinearAlgebra"]
@@ -1282,7 +1292,7 @@ uuid = "1914dd2f-81c6-5fcd-8719-6d5c9610ff09"
 version = "0.5.16"
 
 [[deps.Markdown]]
-deps = ["Base64"]
+deps = ["Base64", "JuliaSyntaxHighlighting", "StyledStrings"]
 uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 version = "1.11.0"
 
@@ -1293,7 +1303,8 @@ uuid = "739be429-bea8-5141-9913-cc70e7f3736d"
 version = "1.1.9"
 
 [[deps.MbedTLS_jll]]
-deps = ["Artifacts", "Libdl"]
+deps = ["Artifacts", "JLLWrappers", "Libdl"]
+git-tree-sha1 = "926c6af3a037c68d02596a44c22ec3595f5f760b"
 uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
 version = "2.28.6+0"
 
@@ -1320,7 +1331,7 @@ version = "0.3.7"
 
 [[deps.MozillaCACerts_jll]]
 uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
-version = "2023.12.12"
+version = "2025.11.4"
 
 [[deps.MultivariatePolynomials]]
 deps = ["DataStructures", "LinearAlgebra", "MutableArithmetics"]
@@ -1348,7 +1359,7 @@ version = "1.1.3"
 
 [[deps.NetworkOptions]]
 uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
-version = "1.2.0"
+version = "1.3.0"
 
 [[deps.Ogg_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1359,12 +1370,12 @@ version = "1.3.6+0"
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.27+1"
+version = "0.3.29+0"
 
 [[deps.OpenLibm_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "05823500-19ac-5b8b-9628-191a04bc5112"
-version = "0.8.1+2"
+version = "0.8.7+0"
 
 [[deps.OpenSSL]]
 deps = ["BitFlags", "Dates", "MozillaCACerts_jll", "NetworkOptions", "OpenSSL_jll", "Sockets"]
@@ -1373,8 +1384,7 @@ uuid = "4d8831e6-92b7-49fb-bdf8-b643e874388c"
 version = "1.6.0"
 
 [[deps.OpenSSL_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "f19301ae653233bc88b1810ae908194f07f8db9d"
+deps = ["Artifacts", "Libdl"]
 uuid = "458c3c95-2e84-50aa-8efc-19380b2a3a95"
 version = "3.5.4+0"
 
@@ -1398,7 +1408,7 @@ version = "1.8.1"
 [[deps.PCRE2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "efcefdf7-47ab-520b-bdef-62a2eaa19f15"
-version = "10.42.0+1"
+version = "10.44.0+1"
 
 [[deps.Pango_jll]]
 deps = ["Artifacts", "Cairo_jll", "Fontconfig_jll", "FreeType2_jll", "FriBidi_jll", "Glib_jll", "HarfBuzz_jll", "JLLWrappers", "Libdl"]
@@ -1421,7 +1431,7 @@ version = "0.44.2+0"
 [[deps.Pkg]]
 deps = ["Artifacts", "Dates", "Downloads", "FileWatching", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "Random", "SHA", "TOML", "Tar", "UUIDs", "p7zip_jll"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
-version = "1.11.0"
+version = "1.12.1"
 weakdeps = ["REPL"]
 
     [deps.Pkg.extensions]
@@ -1518,7 +1528,7 @@ uuid = "e99dba38-086e-5de3-a5b1-6e4c66e897c3"
 version = "6.8.2+2"
 
 [[deps.REPL]]
-deps = ["InteractiveUtils", "Markdown", "Sockets", "StyledStrings", "Unicode"]
+deps = ["InteractiveUtils", "JuliaSyntaxHighlighting", "Markdown", "Sockets", "StyledStrings", "Unicode"]
 uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 version = "1.11.0"
 
@@ -1616,7 +1626,7 @@ version = "1.2.2"
 [[deps.SparseArrays]]
 deps = ["Libdl", "LinearAlgebra", "Random", "Serialization", "SuiteSparse_jll"]
 uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
-version = "1.11.0"
+version = "1.12.0"
 
 [[deps.SpecialFunctions]]
 deps = ["IrrationalConstants", "LogExpFunctions", "OpenLibm_jll", "OpenSpecFun_jll"]
@@ -1698,7 +1708,7 @@ version = "1.11.0"
 [[deps.SuiteSparse_jll]]
 deps = ["Artifacts", "Libdl", "libblastrampoline_jll"]
 uuid = "bea87d4a-7f5b-5778-9afe-8cc45184846c"
-version = "7.7.0+0"
+version = "7.8.3+2"
 
 [[deps.SymbolicIndexingInterface]]
 deps = ["Accessors", "ArrayInterface", "RuntimeGeneratedFunctions", "StaticArraysCore"]
@@ -1997,7 +2007,7 @@ version = "1.6.0+0"
 [[deps.Zlib_jll]]
 deps = ["Libdl"]
 uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
-version = "1.2.13+1"
+version = "1.3.1+2"
 
 [[deps.Zstd_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -2032,7 +2042,7 @@ version = "0.17.4+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.11.0+0"
+version = "5.15.0+0"
 
 [[deps.libdecor_jll]]
 deps = ["Artifacts", "Dbus_jll", "JLLWrappers", "Libdl", "Libglvnd_jll", "Pango_jll", "Wayland_jll", "xkbcommon_jll"]
@@ -2079,12 +2089,12 @@ version = "1.1.7+0"
 [[deps.nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850ede-7688-5339-a07c-302acd2aaf8d"
-version = "1.59.0+0"
+version = "1.64.0+1"
 
 [[deps.p7zip_jll]]
-deps = ["Artifacts", "Libdl"]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
-version = "17.4.0+2"
+version = "17.7.0+0"
 
 [[deps.x264_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -2153,7 +2163,7 @@ version = "1.13.0+0"
 # ╟─b87fcbff-9f3b-4135-935a-59e8068f1fcc
 # ╟─36e2c9f2-42fc-4126-9197-81fff837399e
 # ╟─50250407-3fd3-43da-8d18-b8a53eddeaf4
-# ╠═09f917f6-7fc3-4977-9af0-25adebe0c118
+# ╟─09f917f6-7fc3-4977-9af0-25adebe0c118
 # ╟─eba86e53-615a-49fe-9e55-2ffe24e6402d
 # ╠═22b6acd3-a782-4986-bd1c-6e7afae9dbbf
 # ╟─bacd3120-7faa-4f41-9d94-6c311f081db8
