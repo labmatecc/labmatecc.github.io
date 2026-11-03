@@ -66,7 +66,7 @@ function busqueda_secuencial(arr::Vector{Int}, objetivo::Int)
 begin
 	# Ejemplo de uso
   arrlin = [1, 3, 5, 7, 9, 11]
-  println("Elemento encontrado en la posición: \$(busqueda_secuencial(arrlin, 7))")  # Imprime 4
+  println("Elemento encontrado en la posición: $(busqueda_secuencial(arrlin, 7))")  # Imprime 4
 end
 
 # ╔═╡ bca9d6be-4c6f-4fc4-9ed9-17e0afe6a4f4
@@ -92,7 +92,7 @@ end
 begin
 	#Ejemplo de uso
 	arr = [1, 3, 5, 7, 9, 11]
-  	println("Elemento encontrado en la posición: \$(busqueda_binaria(arr, 7, 1, length(arr)))")  # Imprime 4
+  	println("Elemento encontrado en la posición: $(busqueda_binaria(arr, 7, 1, length(arr)))")  # Imprime 4
 end
 
 # ╔═╡ 82445c12-a1eb-4cf9-bf4c-cbaf62013a8f
@@ -115,6 +115,13 @@ md"""
 - Búsqueda Lineal: $O(n) = $ $n$
 - Búsqueda Binaria: $O(log(n)) = $ $(Int(log2(n)))$
 """
+
+# ╔═╡ d05e44bf-67d6-4221-a0de-c814e5879b70
+begin
+	println("Comparación de complejidad para n = $n")
+	println("Búsqueda lineal O(n): $n")
+	println("Búsqueda binaria O(log n): $(round(Int, log2(n)))")
+end
 
 # ╔═╡ fa200449-0664-46fd-a2df-b42a9fbe2e77
 md"""### Graficación del Tiempo de Ejecución
@@ -1753,6 +1760,7 @@ version = "1.4.1+1"
 # ╟─82445c12-a1eb-4cf9-bf4c-cbaf62013a8f
 # ╟─81d8abf8-dbb3-493d-971b-003d1ae2614f
 # ╟─774c0d7e-1ae5-4d9b-8399-e3313a14ca59
+# ╟─d05e44bf-67d6-4221-a0de-c814e5879b70
 # ╟─fa200449-0664-46fd-a2df-b42a9fbe2e77
 # ╟─d8f5618c-9087-444a-a424-e91fa063e80e
 # ╟─60e6628e-e77d-4c20-afd9-daaae674d235
