@@ -1,21 +1,26 @@
 ### A Pluto.jl notebook ###
-# v0.19.46
+# v0.20.24
 
 using Markdown
 using InteractiveUtils
 
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
-    quote
+    #! format: off
+    return quote
         local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
     end
+    #! format: on
 end
 
 # ╔═╡ e70f3b31-76ac-49c0-8f8d-92a4d5601ee6
 using PlutoUI, Random, Primes, SHA, Plots
+
+# ╔═╡ 6d889921-3e0d-4215-ba26-ecff3bd739c8
+PlutoUI.TableOfContents(title="Introducción a la criptografía", aside=true)
 
 # ╔═╡ e13f5982-1834-49e9-b7ff-7f27592fbd0c
 md"""Este cuaderno está en construcción y puede ser modificado en el futuro para mejorar su contenido. En caso de comentarios o sugerencias, por favor escribir a labmatecc_bog@unal.edu.co.
@@ -25,9 +30,6 @@ Tu participación es fundamental para hacer de este curso una experiencia aún m
 Elaborado por Juan Galvis, Francisco Gómez y Sergio Nuñez.
 
 Usaremos las siguientes librerías:"""
-
-# ╔═╡ 6d889921-3e0d-4215-ba26-ecff3bd739c8
-PlutoUI.TableOfContents(title="Introducción a la criptografía", aside=true)
 
 # ╔═╡ a3f01d75-32e3-40fc-a114-a6d988a6f312
 md"""
@@ -79,9 +81,9 @@ md"""
 
 El **Cifrado César** es una técnica clásica de la criptografía de sustitución en la que cada letra del texto original se reemplaza por otra situada un número fijo de posiciones hacia adelante o atrás en el alfabeto. Matemáticamente, el cifrado se define como:
 
-$$C(x)=(x+k)\mod n$$
+$$C(x)=(x+k)\mod n,$$
 
-Donde:
+donde:
 -  $C(x)$ es la letra cifrada.
 -  $x$ es la posición de la letra original en el alfabeto.
 -  $k$ es el desplazamiento (clave).
@@ -89,7 +91,7 @@ Donde:
 
 El descifrado utiliza la fórmula inversa:
 
-$$P(x)=(x-k)\mod n$$
+$$P(x)=(x-k)\mod n.$$
 """
 
 # ╔═╡ 7c226acf-4035-404b-bb8a-891d0a954481
@@ -149,9 +151,9 @@ md"""
 
 El **Cifrado XOR** (o "Exclusive OR") es un método simple pero poderoso para cifrar y descifrar datos. Se basa en la operación lógica XOR, que devuelve `1` si los bits de entrada son diferentes y `0` si son iguales. Matemáticamente, el cifrado se define como:
 
-$$C(x) = P(x) \oplus K(x)$$
+$$C(x) = P(x) \oplus K(x),$$
 
-Donde:
+donde:
 -  $C(x)$ es el carácter cifrado.
 -  $P(x)$ es el carácter original (plaintext).
 -  $K(x)$ es la clave (key).
@@ -159,7 +161,7 @@ Donde:
 
 Para descifrar, se aplica nuevamente XOR con la misma clave:
 
-$$P(x) = C(x) \oplus K(x)$$
+$$P(x) = C(x) \oplus K(x).$$
 
 """
 
@@ -282,8 +284,8 @@ md"""
 
 2. **Fórmulas:**
    - Generación del flujo de clave: $$S=S_1,S_2,\dots,S_n$$ donde $$S_i$$ depende de la clave.
-   - Cifrado: $$C_i=P_i\oplus S_i$$
-   - Descifrado: $$P_i=C_i\oplus S_i$$
+   - Cifrado: $$C_i=P_i\oplus S_i.$$
+   - Descifrado: $$P_i=C_i\oplus S_i.$$
 
 3. **Ventajas:**
    - El flujo de claves introduce más variabilidad, haciendo que el texto cifrado sea más difícil de romper.
@@ -297,8 +299,8 @@ md"""
    - La clave tiene el mismo tamaño que el texto (o se reutiliza si es más corta).
 
 2. **Fórmulas:**
-   - Cifrado: $$C_i=P_i\oplus K$$
-   - Descifrado: $$P_i=C_i\oplus K$$
+   - Cifrado: $$C_i=P_i\oplus K.$$
+   - Descifrado: $$P_i=C_i\oplus K.$$
 
 3. **Limitaciones:**
    - Si la clave es corta o constante, es vulnerable a ataques de análisis estadístico.
@@ -431,15 +433,15 @@ AES es robusto frente a ataques modernos gracias a:
 
 #### Fórmulación
 1. Operación XOR utilizada en `AddRoundKey`:
-   $$C(x) = P(x) \oplus K(x)$$
-   Donde:
+   $$C(x) = P(x) \oplus K(x),$$
+   donde:
    -  $C(x)$: Texto cifrado.
    -  $P(x)$: Texto plano.
    -  $K(x)$: Clave.
 
 2. Transformación en `MixColumns` (ejemplo para un byte):
-   $$b' = M \cdot b$$
-   Donde:
+   $$b' = M \cdot b,$$	
+   donde:
    -  $M$: Matriz fija en $GF(2^8)$.
    -  $b$: Vector de bytes de una columna.
 
@@ -573,9 +575,9 @@ El hashing se utiliza ampliamente en seguridad informática, incluyendo:
 #### Ejemplo simple de Hashing: Suma de Bytes
 Un ejemplo básico de hashing sería sumar los valores ASCII de los caracteres de una cadena, y luego tomar el residuo respecto a un número primo:
 
-$$H(m) = \left(\sum_{i=1}^{n} \text{ASCII}(m_i) \right) \mod p$$
+$$H(m) = \left(\sum_{i=1}^{n} \text{ASCII}(m_i) \right) \mod p,$$
 
-Donde:
+donde:
 -  $m$ es la entrada.
 -  $m_i$ son los caracteres individuales de $m$.
 -  $p$ es un número primo.
@@ -913,9 +915,9 @@ OAEP es un esquema de relleno que asegura la aleatorización y la integridad de 
 OAEP depende de funciones hash (como SHA-256) y de una MGF (Mask Generation Function) que genera máscaras basadas en los datos de entrada.
 
 #### Fórmulas utilizadas:
-1. Generación de máscara: $\text{MGF1}(X, l) \rightarrow \text{hash}(X || \text{contador})$
-2. Mezcla de datos: $\text{maskedDB} = \text{DB} \oplus \text{mask}$
-3. Cifrado: $\text{cifrado} = \text{RSA}(\text{relleno})$
+1. Generación de máscara: $\text{MGF1}(X, l) \rightarrow \text{hash}(X || \text{contador})$.
+2. Mezcla de datos: $\text{maskedDB} = \text{DB} \oplus \text{mask}$.
+3. Cifrado: $\text{cifrado} = \text{RSA}(\text{relleno})$.
     """
 
 # ╔═╡ ad734cb9-917f-4670-8686-8c64348842bf
@@ -987,7 +989,9 @@ Los algoritmos de cifrado de curvas elípticas (ECC) son una forma avanzada de c
 ### Teoría de Curvas Elípticas
 
 Una curva elíptica está definida por una ecuación de la forma:
-$$y^2 = x^3 + ax + b$$
+
+$$y^2 = x^3 + ax + b,$$
+
 donde los coeficientes $a$ y $b$ deben cumplir con la condición de no singularidad:
 $$4a^3 + 27b^2 \neq 0$$
 
@@ -1268,7 +1272,7 @@ end
 # ╔═╡ 71ba7076-3d9d-46d9-aa2f-472089f7cfd3
 md""" # Bibliografía y Webgrafía
 
-- **Stallings, William.** *Cryptography and Network Security: Principles and Practice.*  
+- **Stallings W.,** *Cryptography and Network Security: Principles and Practice. Editorial Pearson*  
 - [Enlace a Cryptopals](https://cryptopals.com/)
 
 """
@@ -1292,9 +1296,9 @@ Primes = "~0.5.6"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.11.0"
+julia_version = "1.12.6"
 manifest_format = "2.0"
-project_hash = "a0fc3cd55f0db739df8c5794715f47e70868cd1b"
+project_hash = "7bd83a7625f8ec60ac3a6e51584be4b4debd5b84"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -1386,7 +1390,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.1.1+0"
+version = "1.3.0+1"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
@@ -1436,7 +1440,7 @@ version = "0.9.3"
 [[deps.Downloads]]
 deps = ["ArgTools", "FileWatching", "LibCURL", "NetworkOptions"]
 uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
-version = "1.6.0"
+version = "1.7.0"
 
 [[deps.EpollShim_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1611,6 +1615,11 @@ git-tree-sha1 = "3447a92280ecaad1bd93d3fce3d408b6cfff8913"
 uuid = "aacddb02-875f-59d6-b918-886e6ef4fbf8"
 version = "3.1.0+1"
 
+[[deps.JuliaSyntaxHighlighting]]
+deps = ["StyledStrings"]
+uuid = "ac6e5ff7-fb65-4e79-a425-ec3bc9c03011"
+version = "1.12.0"
+
 [[deps.LAME_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
 git-tree-sha1 = "170b660facf5df5de098d866564877e119141cbd"
@@ -1662,24 +1671,24 @@ uuid = "b27032c2-a3e7-50c8-80cd-2d36dbcbfd21"
 version = "0.6.4"
 
 [[deps.LibCURL_jll]]
-deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll", "Zlib_jll", "nghttp2_jll"]
+deps = ["Artifacts", "LibSSH2_jll", "Libdl", "OpenSSL_jll", "Zlib_jll", "nghttp2_jll"]
 uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
-version = "8.6.0+0"
+version = "8.15.0+0"
 
 [[deps.LibGit2]]
-deps = ["Base64", "LibGit2_jll", "NetworkOptions", "Printf", "SHA"]
+deps = ["LibGit2_jll", "NetworkOptions", "Printf", "SHA"]
 uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
 version = "1.11.0"
 
 [[deps.LibGit2_jll]]
-deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll"]
+deps = ["Artifacts", "LibSSH2_jll", "Libdl", "OpenSSL_jll"]
 uuid = "e37daf67-58a4-590a-8e99-b0245dd2ffc5"
-version = "1.7.2+0"
+version = "1.9.0+0"
 
 [[deps.LibSSH2_jll]]
-deps = ["Artifacts", "Libdl", "MbedTLS_jll"]
+deps = ["Artifacts", "Libdl", "OpenSSL_jll"]
 uuid = "29816b5a-b9ab-546f-933c-edad1886dfa8"
-version = "1.11.0+1"
+version = "1.11.3+1"
 
 [[deps.Libdl]]
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
@@ -1736,7 +1745,7 @@ version = "2.40.2+1"
 [[deps.LinearAlgebra]]
 deps = ["Libdl", "OpenBLAS_jll", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
-version = "1.11.0"
+version = "1.12.0"
 
 [[deps.LogExpFunctions]]
 deps = ["DocStringExtensions", "IrrationalConstants", "LinearAlgebra"]
@@ -1776,7 +1785,7 @@ uuid = "1914dd2f-81c6-5fcd-8719-6d5c9610ff09"
 version = "0.5.13"
 
 [[deps.Markdown]]
-deps = ["Base64"]
+deps = ["Base64", "JuliaSyntaxHighlighting", "StyledStrings"]
 uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 version = "1.11.0"
 
@@ -1787,7 +1796,8 @@ uuid = "739be429-bea8-5141-9913-cc70e7f3736d"
 version = "1.1.9"
 
 [[deps.MbedTLS_jll]]
-deps = ["Artifacts", "Libdl"]
+deps = ["Artifacts", "JLLWrappers", "Libdl"]
+git-tree-sha1 = "926c6af3a037c68d02596a44c22ec3595f5f760b"
 uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
 version = "2.28.6+0"
 
@@ -1808,7 +1818,7 @@ version = "1.11.0"
 
 [[deps.MozillaCACerts_jll]]
 uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
-version = "2023.12.12"
+version = "2025.11.4"
 
 [[deps.NaNMath]]
 deps = ["OpenLibm_jll"]
@@ -1818,7 +1828,7 @@ version = "1.0.2"
 
 [[deps.NetworkOptions]]
 uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
-version = "1.2.0"
+version = "1.3.0"
 
 [[deps.Ogg_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1829,12 +1839,12 @@ version = "1.3.5+1"
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.27+1"
+version = "0.3.29+0"
 
 [[deps.OpenLibm_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "05823500-19ac-5b8b-9628-191a04bc5112"
-version = "0.8.1+2"
+version = "0.8.7+0"
 
 [[deps.OpenSSL]]
 deps = ["BitFlags", "Dates", "MozillaCACerts_jll", "OpenSSL_jll", "Sockets"]
@@ -1843,10 +1853,9 @@ uuid = "4d8831e6-92b7-49fb-bdf8-b643e874388c"
 version = "1.4.3"
 
 [[deps.OpenSSL_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "f58782a883ecbf9fb48dcd363f9ccd65f36c23a8"
+deps = ["Artifacts", "Libdl"]
 uuid = "458c3c95-2e84-50aa-8efc-19380b2a3a95"
-version = "3.0.15+2"
+version = "3.5.4+0"
 
 [[deps.Opus_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -1862,7 +1871,7 @@ version = "1.7.0"
 [[deps.PCRE2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "efcefdf7-47ab-520b-bdef-62a2eaa19f15"
-version = "10.42.0+1"
+version = "10.44.0+1"
 
 [[deps.Pango_jll]]
 deps = ["Artifacts", "Cairo_jll", "Fontconfig_jll", "FreeType2_jll", "FriBidi_jll", "Glib_jll", "HarfBuzz_jll", "JLLWrappers", "Libdl"]
@@ -1890,7 +1899,7 @@ version = "0.43.4+0"
 [[deps.Pkg]]
 deps = ["Artifacts", "Dates", "Downloads", "FileWatching", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "Random", "SHA", "TOML", "Tar", "UUIDs", "p7zip_jll"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
-version = "1.11.0"
+version = "1.12.1"
 weakdeps = ["REPL"]
 
     [deps.Pkg.extensions]
@@ -1987,7 +1996,7 @@ uuid = "e99dba38-086e-5de3-a5b1-6e4c66e897c3"
 version = "6.7.1+1"
 
 [[deps.REPL]]
-deps = ["InteractiveUtils", "Markdown", "Sockets", "StyledStrings", "Unicode"]
+deps = ["InteractiveUtils", "JuliaSyntaxHighlighting", "Markdown", "Sockets", "StyledStrings", "Unicode"]
 uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 version = "1.11.0"
 
@@ -2063,7 +2072,7 @@ version = "1.2.1"
 [[deps.SparseArrays]]
 deps = ["Libdl", "LinearAlgebra", "Random", "Serialization", "SuiteSparse_jll"]
 uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
-version = "1.11.0"
+version = "1.12.0"
 
 [[deps.StableRNGs]]
 deps = ["Random"]
@@ -2100,7 +2109,7 @@ version = "1.11.0"
 [[deps.SuiteSparse_jll]]
 deps = ["Artifacts", "Libdl", "libblastrampoline_jll"]
 uuid = "bea87d4a-7f5b-5778-9afe-8cc45184846c"
-version = "7.7.0+0"
+version = "7.8.3+2"
 
 [[deps.TOML]]
 deps = ["Dates"]
@@ -2361,7 +2370,7 @@ version = "1.5.0+2"
 [[deps.Zlib_jll]]
 deps = ["Libdl"]
 uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
-version = "1.2.13+1"
+version = "1.3.1+2"
 
 [[deps.Zstd_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
@@ -2402,7 +2411,7 @@ version = "0.15.2+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.11.0+0"
+version = "5.15.0+0"
 
 [[deps.libdecor_jll]]
 deps = ["Artifacts", "Dbus_jll", "JLLWrappers", "Libdl", "Libglvnd_jll", "Pango_jll", "Wayland_jll", "xkbcommon_jll"]
@@ -2449,12 +2458,12 @@ version = "1.1.6+0"
 [[deps.nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850ede-7688-5339-a07c-302acd2aaf8d"
-version = "1.59.0+0"
+version = "1.64.0+1"
 
 [[deps.p7zip_jll]]
-deps = ["Artifacts", "Libdl"]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
-version = "17.4.0+2"
+version = "17.7.0+0"
 
 [[deps.x264_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
