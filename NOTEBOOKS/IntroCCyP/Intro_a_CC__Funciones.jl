@@ -287,7 +287,7 @@ end
 # ╔═╡ a01e1abc-77d4-4c21-88db-9ad722c7039b
 begin
 	x = -10:0.1:10
-	plot(x, cuadratica.(x, a, b, c), label="f(x) = \$(a)x^2 + \$(b)x + \$(c)", legend=:topright)
+	plot(x, cuadratica.(x, a, b, c), label="f(x) = $(a)x^2 + $(b)x + $(c)", legend=:topright)
 end
 
 # ╔═╡ ea03bd97-fe63-4727-99b0-724aca9198b1
@@ -307,7 +307,7 @@ end
 # ╔═╡ f527d309-6f25-4e41-9700-72017d4fef7b
 begin
 	t = 0:0.1:20
-	plot(t, seno.(t, frecuencia), label="f(x) = sin(\$(frecuencia) * x)", legend=:topright)
+	plot(t, seno.(t, frecuencia), label="f(x) = sin($(frecuencia) * x)", legend=:topright)
 end
 
 # ╔═╡ 3eb28709-2333-4ccc-b149-63284996d3cb
