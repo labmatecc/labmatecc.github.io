@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.46
+# v0.20.24
 
 using Markdown
 using InteractiveUtils
@@ -12,7 +12,7 @@ PlutoUI.TableOfContents(title="Listas, Arreglos y Secuencias", aside=true)
 
 # ╔═╡ 76e62111-2a7e-4634-ab44-9014c009988c
 md"""
-# ¡Bienvenido a la Introducción a la introducción de Listas, Arreglos y Secuencias!
+# ¡Bienvenido a la introducción de Listas, Arreglos y Secuencias!
 En Julia, las estructuras de datos como listas, arreglos y secuencias permiten almacenar y manipular conjuntos de valores. En este conjunto de ejercicios, exploraremos cómo crear, manipular y aplicar operaciones sobre estas estructuras, así como conceptos intermedios y avanzados relacionados con ellas.
 
 ### Listas
@@ -95,19 +95,19 @@ Las secuencias en Julia son una manera conveniente de representar un rango de n�
 # Ejercicio 1: Creación y manipulación de listas
 println("Ejercicio 1: Creación y manipulación de listas")
 lista = [3, 1, 4, 1, 5, 9]
-println("Lista original: \$lista")
+println("Lista original: $lista")
 
 # Agregar elementos
 push!(lista, 2)
-println("Lista después de agregar 2: \$lista")
+println("Lista después de agregar 2: $lista")
 
 # Eliminar el último elemento
 pop!(lista)
-println("Lista después de eliminar el último elemento: \$lista")
+println("Lista después de eliminar el último elemento: $lista")
 
 # Ordenar la lista
 lista_ordenada = sort(lista)
-println("Lista ordenada: \$lista_ordenada")
+println("Lista ordenada: $lista_ordenada")
 println("---------------------------")
 ```
 """
@@ -133,11 +133,11 @@ println("Matriz 2x3:")
 println(matriz)
 
 # Acceder a un elemento específico
-println("Elemento en la fila 1, columna 2: \$(matriz[1, 2])")
+println("Elemento en la fila 1, columna 2: $(matriz[1, 2])")
 
 # Sumar todos los elementos de la matriz
 suma_total = sum(matriz)
-println("Suma de todos los elementos: \$suma_total")
+println("Suma de todos los elementos: $suma_total")
 println("---------------------------")
 ```
 """
@@ -158,15 +158,15 @@ Las secuencias en Julia permiten representar conjuntos ordenados de elementos. P
 # Ejercicio 3: Uso de map y filter
 println("Ejercicio 3: Uso de map y filter")
 secuencia = 1:10
-println("Secuencia original: \$(collect(secuencia))")
+println("Secuencia original: $(collect(secuencia))")
 
 # Elevar al cuadrado cada elemento de la secuencia
 cuadrados = map(x -> x^2, secuencia)
-println("Cuadrados de la secuencia: \$(collect(cuadrados))")
+println("Cuadrados de la secuencia: $(collect(cuadrados))")
 
 # Filtrar los elementos pares
 pares = filter(x -> x % 2 == 0, secuencia)
-println("Elementos pares de la secuencia: \$(collect(pares))")
+println("Elementos pares de la secuencia: $(collect(pares))")
 println("---------------------------")
 ```
 """
@@ -189,15 +189,15 @@ arreglo = [3, 5, 7, 2, 8, 6]
 
 # Sumar todos los elementos usando reduce
 suma = reduce(+, arreglo)
-println("Suma de todos los elementos: \$suma")
+println("Suma de todos los elementos: $suma")
 
 # Encontrar el valor máximo
 maximo = maximum(arreglo)
-println("Valor máximo del arreglo: \$maximo")
+println("Valor máximo del arreglo: $maximo")
 
 # Encontrar el valor mínimo
 minimo = minimum(arreglo)
-println("Valor mínimo del arreglo: \$minimo")
+println("Valor mínimo del arreglo: $minimo")
 println("---------------------------")
 ```
 """
@@ -215,8 +215,8 @@ Este ejercicio consiste en invertir los elementos de una lista dada.
 println("Ejercicio Clásico 1: Invertir una Lista")
 lista = [10, 20, 30, 40, 50]
 lista_invertida = reverse(lista)
-println("Lista original: \$lista")
-println("Lista invertida: \$lista_invertida")
+println("Lista original: $lista")
+println("Lista invertida: $lista_invertida")
 println("---------------------------")
 ```
 
@@ -228,8 +228,8 @@ Este ejercicio consiste en eliminar los elementos duplicados de una lista para d
 println("Ejercicio Clásico 2: Eliminar Elementos Duplicados")
 lista_con_duplicados = [1, 2, 2, 3, 4, 4, 5]
 lista_unica = unique(lista_con_duplicados)
-println("Lista original: \$lista_con_duplicados")
-println("Lista sin duplicados: \$lista_unica")
+println("Lista original: $lista_con_duplicados")
+println("Lista sin duplicados: $lista_unica")
 println("---------------------------")
 ```
 
@@ -241,14 +241,14 @@ Este ejercicio consiste en rotar los elementos de una lista hacia la derecha un 
 println("Ejercicio Avanzado: Rotar una Lista")
 lista = [1, 2, 3, 4, 5]
 n = 2  # Número de posiciones a rotar
-println("Lista original: \$lista")
+println("Lista original: $lista")
 
 for _ in 1:n
     elemento = pop!(lista)
     insert!(lista, 1, elemento)
 end
 
-println("Lista después de rotar \$n posiciones: \$lista")
+println("Lista después de rotar $n posiciones: \$lista")
 println("---------------------------")
 ```
 
@@ -260,8 +260,8 @@ Este ejercicio calcula la suma acumulada de los elementos de una secuencia.
 println("Ejercicio Clásico 3: Suma Acumulada de una Secuencia")
 secuencia = 1:5
 suma_acumulada = cumsum(secuencia)
-println("Secuencia original: \$(collect(secuencia))")
-println("Suma acumulada: \$(collect(suma_acumulada))")
+println("Secuencia original: $(collect(secuencia))")
+println("Suma acumulada: $(collect(suma_acumulada))")
 println("---------------------------")
 ```
 """
@@ -280,9 +280,9 @@ PlutoUI = "~0.7.60"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.11.0"
+julia_version = "1.12.6"
 manifest_format = "2.0"
-project_hash = "8aa109ae420d50afa1101b40d1430cf3ec96e03e"
+project_hash = "9c9a0986cd2aeb771b961ed0c3e9b6da6b71a391"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -311,7 +311,7 @@ version = "0.11.5"
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.1.1+0"
+version = "1.3.0+1"
 
 [[deps.Dates]]
 deps = ["Printf"]
@@ -321,7 +321,7 @@ version = "1.11.0"
 [[deps.Downloads]]
 deps = ["ArgTools", "FileWatching", "LibCURL", "NetworkOptions"]
 uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
-version = "1.6.0"
+version = "1.7.0"
 
 [[deps.FileWatching]]
 uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
@@ -362,30 +362,35 @@ git-tree-sha1 = "31e996f0a15c7b280ba9f76636b3ff9e2ae58c9a"
 uuid = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 version = "0.21.4"
 
+[[deps.JuliaSyntaxHighlighting]]
+deps = ["StyledStrings"]
+uuid = "ac6e5ff7-fb65-4e79-a425-ec3bc9c03011"
+version = "1.12.0"
+
 [[deps.LibCURL]]
 deps = ["LibCURL_jll", "MozillaCACerts_jll"]
 uuid = "b27032c2-a3e7-50c8-80cd-2d36dbcbfd21"
 version = "0.6.4"
 
 [[deps.LibCURL_jll]]
-deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll", "Zlib_jll", "nghttp2_jll"]
+deps = ["Artifacts", "LibSSH2_jll", "Libdl", "OpenSSL_jll", "Zlib_jll", "nghttp2_jll"]
 uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
-version = "8.6.0+0"
+version = "8.15.0+0"
 
 [[deps.LibGit2]]
-deps = ["Base64", "LibGit2_jll", "NetworkOptions", "Printf", "SHA"]
+deps = ["LibGit2_jll", "NetworkOptions", "Printf", "SHA"]
 uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
 version = "1.11.0"
 
 [[deps.LibGit2_jll]]
-deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll"]
+deps = ["Artifacts", "LibSSH2_jll", "Libdl", "OpenSSL_jll"]
 uuid = "e37daf67-58a4-590a-8e99-b0245dd2ffc5"
-version = "1.7.2+0"
+version = "1.9.0+0"
 
 [[deps.LibSSH2_jll]]
-deps = ["Artifacts", "Libdl", "MbedTLS_jll"]
+deps = ["Artifacts", "Libdl", "OpenSSL_jll"]
 uuid = "29816b5a-b9ab-546f-933c-edad1886dfa8"
-version = "1.11.0+1"
+version = "1.11.3+1"
 
 [[deps.Libdl]]
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
@@ -394,7 +399,7 @@ version = "1.11.0"
 [[deps.LinearAlgebra]]
 deps = ["Libdl", "OpenBLAS_jll", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
-version = "1.11.0"
+version = "1.12.0"
 
 [[deps.Logging]]
 uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
@@ -406,14 +411,9 @@ uuid = "6c6e2e6c-3030-632d-7369-2d6c69616d65"
 version = "0.1.4"
 
 [[deps.Markdown]]
-deps = ["Base64"]
+deps = ["Base64", "JuliaSyntaxHighlighting", "StyledStrings"]
 uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 version = "1.11.0"
-
-[[deps.MbedTLS_jll]]
-deps = ["Artifacts", "Libdl"]
-uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
-version = "2.28.6+0"
 
 [[deps.Mmap]]
 uuid = "a63ad114-7e13-5084-954f-fe012c677804"
@@ -421,16 +421,21 @@ version = "1.11.0"
 
 [[deps.MozillaCACerts_jll]]
 uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
-version = "2023.12.12"
+version = "2025.11.4"
 
 [[deps.NetworkOptions]]
 uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
-version = "1.2.0"
+version = "1.3.0"
 
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.27+1"
+version = "0.3.29+0"
+
+[[deps.OpenSSL_jll]]
+deps = ["Artifacts", "Libdl"]
+uuid = "458c3c95-2e84-50aa-8efc-19380b2a3a95"
+version = "3.5.4+0"
 
 [[deps.Parsers]]
 deps = ["Dates", "PrecompileTools", "UUIDs"]
@@ -441,7 +446,7 @@ version = "2.8.1"
 [[deps.Pkg]]
 deps = ["Artifacts", "Dates", "Downloads", "FileWatching", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "Random", "SHA", "TOML", "Tar", "UUIDs", "p7zip_jll"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
-version = "1.11.0"
+version = "1.12.1"
 
     [deps.Pkg.extensions]
     REPLExt = "REPL"
@@ -502,6 +507,10 @@ version = "1.11.1"
     [deps.Statistics.weakdeps]
     SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 
+[[deps.StyledStrings]]
+uuid = "f489334b-da3d-4c2e-b8f0-e476e12c162b"
+version = "1.11.0"
+
 [[deps.TOML]]
 deps = ["Dates"]
 uuid = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
@@ -539,22 +548,22 @@ version = "1.11.0"
 [[deps.Zlib_jll]]
 deps = ["Libdl"]
 uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
-version = "1.2.13+1"
+version = "1.3.1+2"
 
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.11.0+0"
+version = "5.15.0+0"
 
 [[deps.nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850ede-7688-5339-a07c-302acd2aaf8d"
-version = "1.59.0+0"
+version = "1.64.0+1"
 
 [[deps.p7zip_jll]]
-deps = ["Artifacts", "Libdl"]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
-version = "17.4.0+2"
+version = "17.7.0+0"
 """
 
 # ╔═╡ Cell order:
